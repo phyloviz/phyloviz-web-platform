@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 /**
  * Main class for the Phyloviz Web Platform application.
  */
-@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
+@SpringBootApplication
 public class PhylovizWebPlatformApplication {
 
     public static void main(String[] args) {

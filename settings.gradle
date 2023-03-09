@@ -1,1 +1,2 @@
 rootProject.name = 'phyloviz-web-platform'
+include 'uploader'
