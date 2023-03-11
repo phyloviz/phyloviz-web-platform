@@ -1,4 +1,4 @@
-package phylovizwebplatform.uploader.repository.metadata.objects;
+package uploader.repository.metadata.objects;
 
 /**
  * Represents the metadata for a saved profile dataset resource.

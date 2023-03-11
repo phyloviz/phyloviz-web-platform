@@ -1,4 +1,4 @@
-package phylovizwebplatform.uploader.http.models;
+package uploader.http.models;
 
 public enum FileType {
     PROFILE,

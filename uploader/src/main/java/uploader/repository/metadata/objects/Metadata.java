@@ -1,4 +1,4 @@
-package phylovizwebplatform.uploader.repository.metadata.objects;
+package uploader.repository.metadata.objects;
 
 import org.springframework.data.annotation.Id;
 

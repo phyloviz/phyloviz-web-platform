@@ -1,13 +1,15 @@
-package phylovizwebplatform.uploader.service;
+package uploader.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import phylovizwebplatform.uploader.http.models.FileType;
-import phylovizwebplatform.uploader.repository.UploadRepository;
-import phylovizwebplatform.uploader.repository.metadata.UploadMetadataRepository;
-import phylovizwebplatform.uploader.repository.metadata.objects.Metadata;
-import phylovizwebplatform.uploader.repository.metadata.objects.ProfileMetadata;
+import uploader.http.models.FileType;
+import uploader.repository.data.UploadRepository;
+import uploader.repository.metadata.UploadMetadataRepository;
+import uploader.repository.metadata.objects.Metadata;
+import uploader.repository.metadata.objects.ProfileMetadata;
+import uploader.repository.project.Project;
 
+import java.util.Collections;
 import java.util.UUID;
 
 @Service
@@ -40,5 +42,12 @@ public class UploadServiceImpl implements UploadService {
         if (!stored) {
             throw new RuntimeException("Could not store file");
         }
+    }
+
+    @Override
+    public void createProject(String name, String description, String owner) {
+        Project project = new Project(name, description, owner, Collections.emptyList());
+
+        uploadMetadataRepository.storeProject(project);
     }
 }

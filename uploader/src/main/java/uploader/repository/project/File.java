@@ -1,4 +1,4 @@
-package phylovizwebplatform.uploader.repository.project;
+package uploader.repository.project;
 
 public class File {
     private final String id;

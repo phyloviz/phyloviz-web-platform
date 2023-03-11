@@ -1,5 +1,6 @@
-package phylovizwebplatform.uploader.repository;
+package uploader.repository.data;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,18 +11,11 @@ import java.io.IOException;
  * Implementation of the repository for the uploader module that stores the data in the disk.
  */
 @Repository
+@Primary
 public class UploadRepositoryDisk implements UploadRepository {
 
-    // TODO: To be changed
     private final String path = new File("").getAbsolutePath() + "\\diskUploadedFiles";
 
-    /**
-     * Stores the data in the disk.
-     *
-     * @param location      location where the file will be stored
-     * @param multipartFile file to be stored
-     * @return true if the data was stored successfully, false otherwise
-     */
     @Override
     public boolean store(String location, MultipartFile multipartFile) {
         File file = new File(path + location);

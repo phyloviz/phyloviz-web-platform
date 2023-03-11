@@ -1,8 +1,13 @@
-package phylovizwebplatform.uploader.repository.project;
+package uploader.repository.project;
+
+import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
 public class Project {
+    @Id
+    private String id;
+
     private final String name;
     private final String description;
     private final String owner;

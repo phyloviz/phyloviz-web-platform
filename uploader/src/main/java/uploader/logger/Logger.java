@@ -1,4 +1,4 @@
-package phylovizwebplatform.uploader.logger;
+package uploader.logger;
 
 public class Logger {
 

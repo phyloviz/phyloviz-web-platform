@@ -1,9 +1,9 @@
-package phylovizwebplatform.uploader.repository;
+package uploader.repository.data;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
-import phylovizwebplatform.uploader.http.models.FileType;
+import uploader.http.models.FileType;
 
 import java.io.IOException;
 
@@ -14,14 +14,18 @@ import java.io.IOException;
 public interface UploadRepository {
 
     /**
-     * Stores the uploaded file.
+     * Stores the data.
      *
+     * @param location      location where the file will be stored
      * @param multipartFile file to be stored
+     * @return true if the data was stored successfully, false otherwise
      */
     boolean store(String location, MultipartFile multipartFile);
 
     /**
      * Get location of the repository.
+     *
+     * @return location of the repository
      */
     String getLocation();
 }
