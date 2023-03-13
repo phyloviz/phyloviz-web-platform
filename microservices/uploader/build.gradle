@@ -17,7 +17,9 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'org.jclouds:jclouds-allblobstore'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.6'

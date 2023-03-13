@@ -1,0 +1,41 @@
+server:
+  port: 8083
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay=
+      redis:
+        enabled: false
+      routes:
+        - id: uploader
+          uri: http://localhost:8084
+          predicates:
+            - Path=/uploader/**
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8082/realms/phyloviz-web-platform
+
+        registration:
+          phyloviz-web-platform-client:
+            provider: keycloak
+            client-id: phyloviz-web-platform-client
+            client-secret: pMSHvXI4MiinYpRoN9QHGMcR5uIswFjJ
+            scope:
+              - openid
+              - email
+              - profile
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          server:
+            adapter:
+              AbstractReactiveWebInitializer: DEBUG
+        security:
+          web: DEBUG
+    web: DEBUG

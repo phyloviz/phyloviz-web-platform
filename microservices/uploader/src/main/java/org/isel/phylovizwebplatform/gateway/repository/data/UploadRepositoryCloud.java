@@ -1,0 +1,21 @@
+package org.isel.phylovizwebplatform.gateway.repository.data;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
+
+/**
+ * Implementation of the {@link UploadRepository} interface for the Cloud environment.
+ */
+@Repository
+public class UploadRepositoryCloud implements UploadRepository {
+
+    @Override
+    public boolean store(String location, MultipartFile multipartFile) {
+        return false;
+    }
+
+    @Override
+    public String getLocation() {
+        return null;
+    }
+}
