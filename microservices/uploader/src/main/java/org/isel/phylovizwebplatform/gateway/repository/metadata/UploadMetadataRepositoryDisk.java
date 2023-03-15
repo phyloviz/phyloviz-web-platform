@@ -1,10 +1,10 @@
 package org.isel.phylovizwebplatform.gateway.repository.metadata;
 
 import com.google.gson.Gson;
-import org.isel.phylovizwebplatform.gateway.repository.metadata.objects.Metadata;
+import org.isel.phylovizwebplatform.gateway.repository.metadata.objects.ProfileMetadata;
+import org.isel.phylovizwebplatform.gateway.repository.project.Project;
 import org.isel.phylovizwebplatform.gateway.utils.UploaderLogger;
 import org.springframework.stereotype.Repository;
-import org.isel.phylovizwebplatform.gateway.repository.project.Project;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,23 +20,23 @@ public class UploadMetadataRepositoryDisk implements UploadMetadataRepository {
     private final String metadataPath = new File("").getAbsolutePath() + "\\diskMetadataFiles";
 
     @Override
-    public Metadata store(Metadata metadata) {
+    public ProfileMetadata store(ProfileMetadata profileMetadata) {
         String id = UUID.randomUUID().toString();
 
         File file = new File(metadataPath + "\\metadata\\" + id + ".json");
 
         try (FileWriter fileWriter = new FileWriter(file)) {
-            new Gson().toJson(metadata, fileWriter);
+            new Gson().toJson(profileMetadata, fileWriter);
         } catch (IOException e) {
             UploaderLogger.warn("Error while storing metadata in disk" + e.getMessage());
             return null;
         }
 
-        return metadata;
+        return new ProfileMetadata(id, profileMetadata.getProjectId(), profileMetadata.getLocation(), profileMetadata.getOriginalFileName());
     }
 
     @Override
-    public void storeProject(Project project) {
+    public Project storeProject(Project project) {
         String id = UUID.randomUUID().toString();
 
         File file = new File(metadataPath + "\\project\\" + id + ".json");
@@ -46,5 +46,7 @@ public class UploadMetadataRepositoryDisk implements UploadMetadataRepository {
         } catch (IOException e) {
             UploaderLogger.warn("Error while storing project in disk" + e.getMessage());
         }
+
+        return new Project(id, project.getName(), project.getDescription(), project.getOwner(), project.getFiles());
     }
 }

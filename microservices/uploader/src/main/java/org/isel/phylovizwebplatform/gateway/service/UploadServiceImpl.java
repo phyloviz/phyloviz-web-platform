@@ -1,13 +1,15 @@
 package org.isel.phylovizwebplatform.gateway.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.isel.phylovizwebplatform.gateway.http.models.FileType;
 import org.isel.phylovizwebplatform.gateway.repository.data.UploadRepository;
 import org.isel.phylovizwebplatform.gateway.repository.metadata.UploadMetadataRepository;
-import org.isel.phylovizwebplatform.gateway.repository.metadata.objects.Metadata;
 import org.isel.phylovizwebplatform.gateway.repository.metadata.objects.ProfileMetadata;
 import org.isel.phylovizwebplatform.gateway.repository.project.Project;
+import org.isel.phylovizwebplatform.gateway.service.dtos.CreateProjectInputDTO;
+import org.isel.phylovizwebplatform.gateway.service.dtos.CreateProjectOutputDTO;
+import org.isel.phylovizwebplatform.gateway.service.dtos.UploadProfileOutputDTO;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.UUID;
@@ -27,31 +29,36 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
-    public void store(String projectName, FileType fileType, MultipartFile multipartFile) {
-        UUID id = UUID.randomUUID();
-        String location = "\\" + projectName + "\\" + id + fileType.getFileExtension();
+    public UploadProfileOutputDTO storeProfile(String projectId, MultipartFile multipartFile) {
+        String id = UUID.randomUUID().toString();
+        String location = "\\" + projectId + "\\" + id + FileType.PROFILE.getFileExtension();
 
-        final Metadata metadata = switch (fileType) {
-            case PROFILE, FASTA, NEWICK, AUXILIARY -> new ProfileMetadata(
-                    projectName,
-                    uploadRepository.getLocation() + location,
-                    fileType.toString(),
-                    multipartFile.getOriginalFilename()
-            );
-        };
+        final ProfileMetadata profileMetadata = new ProfileMetadata(
+                projectId,
+                uploadRepository.getLocation() + location,
+                multipartFile.getOriginalFilename()
+        );
 
-        uploadMetadataRepository.store(metadata);
+        ProfileMetadata storedProfileMetadata = uploadMetadataRepository.store(profileMetadata);
 
-        boolean stored = uploadRepository.store(location, multipartFile);
+        boolean stored = uploadRepository.storeProfile(location, multipartFile);
 
         if (!stored)
             throw new RuntimeException("Could not store file");
+
+        return new UploadProfileOutputDTO(id);
     }
 
     @Override
-    public void createProject(String name, String description, String owner) {
-        Project project = new Project(name, description, owner, Collections.emptyList());
+    public CreateProjectOutputDTO createProject(CreateProjectInputDTO createProjectInputDTO) {
+        Project project = new Project(
+                createProjectInputDTO.getName(),
+                createProjectInputDTO.getDescription(),
+                createProjectInputDTO.getOwner(),
+                Collections.emptyList()
+        );
 
-        uploadMetadataRepository.storeProject(project);
+        Project storedProject = uploadMetadataRepository.storeProject(project);
+        return new CreateProjectOutputDTO(storedProject.getId());
     }
 }

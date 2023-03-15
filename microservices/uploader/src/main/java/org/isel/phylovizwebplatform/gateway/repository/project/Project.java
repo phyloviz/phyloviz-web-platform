@@ -20,6 +20,18 @@ public class Project {
         this.files = files;
     }
 
+    public Project(String id, String name, String description, String owner, List<File> files) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.owner = owner;
+        this.files = files;
+    }
+
+    public String getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }

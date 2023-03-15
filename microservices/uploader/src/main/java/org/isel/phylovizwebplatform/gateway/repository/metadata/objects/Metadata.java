@@ -1,5 +1,6 @@
 package org.isel.phylovizwebplatform.gateway.repository.metadata.objects;
 
+import org.isel.phylovizwebplatform.gateway.http.models.FileType;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -9,13 +10,20 @@ public abstract class Metadata {
     @Id
     private String id;
 
-    private final String project;
+    private final String projectId;
     private final String location;
-    private final String type;
+    private final FileType type;
 
-    public Metadata(String project, String path, String type) {
-        this.project = project;
-        this.location = path;
+    public Metadata(String projectId, String location, FileType type) {
+        this.projectId = projectId;
+        this.location = location;
+        this.type = type;
+    }
+
+    public Metadata(String id, String projectId, String location, FileType type) {
+        this.id = id;
+        this.projectId = projectId;
+        this.location = location;
         this.type = type;
     }
 
@@ -23,15 +31,15 @@ public abstract class Metadata {
         return id;
     }
 
-    public String getProject() {
-        return project;
+    public String getProjectId() {
+        return projectId;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public String getType() {
+    public FileType getType() {
         return type;
     }
 }

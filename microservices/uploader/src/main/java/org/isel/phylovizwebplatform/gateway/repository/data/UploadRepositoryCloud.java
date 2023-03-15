@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadRepositoryCloud implements UploadRepository {
 
     @Override
-    public boolean store(String location, MultipartFile multipartFile) {
+    public boolean storeProfile(String location, MultipartFile multipartFile) {
         return false;
     }
 

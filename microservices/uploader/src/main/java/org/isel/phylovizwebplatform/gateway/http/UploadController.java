@@ -1,16 +1,14 @@
 package org.isel.phylovizwebplatform.gateway.http;
 
-import org.isel.phylovizwebplatform.gateway.http.models.CreateProjectModel;
-import org.isel.phylovizwebplatform.gateway.http.models.FileType;
+import org.isel.phylovizwebplatform.gateway.http.models.createProject.CreateProjectInputModel;
+import org.isel.phylovizwebplatform.gateway.http.models.createProject.CreateProjectOutputModel;
+import org.isel.phylovizwebplatform.gateway.http.models.uploadProfile.UploadProfileOutputModel;
 import org.isel.phylovizwebplatform.gateway.service.UploadService;
+import org.isel.phylovizwebplatform.gateway.service.dtos.CreateProjectOutputDTO;
+import org.isel.phylovizwebplatform.gateway.service.dtos.UploadProfileOutputDTO;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -26,44 +24,38 @@ public class UploadController {
     }
 
     /**
-     * Uploads the data from the uploader module.
-     * The user can load a profile, fasta, newick datasets or auxiliary data.
+     * Uploads a profile dataset.
      *
-     * @param projectName the name of the project to which the data will be uploaded
-     * @param type        the type of the data to be uploaded (profile, fasta, newick, auxiliary)
-     * @param file        the file to be uploaded
+     * @param projectId the name of the project to which the profile data will be uploaded
+     * @param file      the file to be uploaded
      * @return a message indicating that the data was successfully uploaded
      */
-    @PostMapping(path = "/storage", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public String uploadData(
-            @RequestParam String projectName,
-            @RequestParam String type,
+    @PostMapping(path = "/profiles", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public UploadProfileOutputModel uploadProfile(
+            @RequestParam String projectId,
             @RequestPart MultipartFile file,
-            BearerTokenAuthentication auth
-            ) {
-        uploadService.store(projectName, FileType.valueOf(type), file);
+            BearerTokenAuthentication auth // TODO: 3/15/2023 Add interceptor
+    ) {
+        UploadProfileOutputDTO uploadProfileOutputDTO = uploadService.storeProfile(projectId, file);
 
-        return "You successfully uploaded";
+        return new UploadProfileOutputModel(uploadProfileOutputDTO);
     }
 
     /**
      * Creates a project.
      *
-     * @param createProjectModel the project to be created following the CreateProjectModel format
+     * @param createProjectInputModel the project to be created following the CreateProjectModel format
      * @return a message indicating that the project was successfully created
      */
     @PostMapping("/project")
-    public String createProject(
-            @RequestBody CreateProjectModel createProjectModel,
+    public CreateProjectOutputModel createProject(
+            @RequestBody CreateProjectInputModel createProjectInputModel,
             BearerTokenAuthentication auth
     ) {
-        uploadService.createProject(
-                createProjectModel.getName(),
-                createProjectModel.getDescription(),
-                "user"
-        ); // TODO: 11/03/2023 Change owner based on the user logged in
+        CreateProjectOutputDTO createProjectOutputDTO = uploadService.createProject(
+                createProjectInputModel.toDTO(auth) // TODO: 11/03/2023 Change owner based on the user logged in
+        );
 
-        return "You successfully created a project";
+        return new CreateProjectOutputModel(createProjectOutputDTO);
     }
-
 }

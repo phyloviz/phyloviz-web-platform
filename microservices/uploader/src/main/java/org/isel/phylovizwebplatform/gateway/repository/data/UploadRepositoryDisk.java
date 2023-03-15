@@ -18,7 +18,7 @@ public class UploadRepositoryDisk implements UploadRepository {
     private final String path = new File("").getAbsolutePath() + "\\diskUploadedFiles";
 
     @Override
-    public boolean store(String location, MultipartFile multipartFile) {
+    public boolean storeProfile(String location, MultipartFile multipartFile) {
         File file = new File(path + location);
 
         try {

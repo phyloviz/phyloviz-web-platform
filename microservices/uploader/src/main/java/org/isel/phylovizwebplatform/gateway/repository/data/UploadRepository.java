@@ -16,7 +16,7 @@ public interface UploadRepository {
      * @param multipartFile file to be stored
      * @return true if the data was stored successfully, false otherwise
      */
-    boolean store(String location, MultipartFile multipartFile);
+    boolean storeProfile(String location, MultipartFile multipartFile);
 
     /**
      * Get location of the repository.

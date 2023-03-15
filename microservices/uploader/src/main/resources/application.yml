@@ -5,6 +5,7 @@ spring:
     mongodb:
       host: localhost
       port: 28017
+      database: phyloviz-web-platform
 
 
   security:

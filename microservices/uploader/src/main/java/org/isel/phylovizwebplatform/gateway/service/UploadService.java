@@ -1,8 +1,10 @@
 package org.isel.phylovizwebplatform.gateway.service;
 
+import org.isel.phylovizwebplatform.gateway.service.dtos.CreateProjectInputDTO;
+import org.isel.phylovizwebplatform.gateway.service.dtos.CreateProjectOutputDTO;
+import org.isel.phylovizwebplatform.gateway.service.dtos.UploadProfileOutputDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.isel.phylovizwebplatform.gateway.http.models.FileType;
 
 /**
  * Service for the Uploader Microservice.
@@ -13,18 +15,17 @@ public interface UploadService {
     /**
      * Stores the uploaded file.
      *
-     * @param projectName   name of the project
-     * @param fileType      type of the file
+     * @param projectId     id of the project
      * @param multipartFile file to be stored
+     * @return the output data for the profile upload
      */
-    void store(String projectName, FileType fileType, MultipartFile multipartFile);
+    UploadProfileOutputDTO storeProfile(String projectId, MultipartFile multipartFile);
 
     /**
      * Creates a project.
      *
-     * @param name        name of the project
-     * @param description description of the project
-     * @param owner       owner of the project
+     * @param createProjectInputDTO the input data for the project creation
+     * @return the output data for the project creation
      */
-    void createProject(String name, String description, String owner);
+    CreateProjectOutputDTO createProject(CreateProjectInputDTO createProjectInputDTO);
 }
