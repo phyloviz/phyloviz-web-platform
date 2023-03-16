@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.uploader.config;
+package org.phyloviz.pwp.visualization.config;
 
 import org.phyloviz.pwp.shared.auth.UserArgumentResolverConfig;
 import org.phyloviz.pwp.shared.mongo.MongoConfig;
@@ -7,4 +7,4 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({UserArgumentResolverConfig.class, MongoConfig.class})
-public class UploaderMicroserviceConfig {}
+public class VisualizationConfig {}

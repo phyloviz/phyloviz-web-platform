@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'org.springframework.boot' version '3.0.4'
     id 'io.spring.dependency-management' version '1.1.0'
     id "io.freefair.lombok" version "8.0.0-rc2"
@@ -9,24 +9,17 @@ group 'phylovizwebplatform'
 version '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
-ext {
-    set('jupiterVersion', "5.8.1")
-}
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-
-    implementation project(path: ':microservices:shared')
-    testImplementation 'org.junit.jupiter:junit-jupiter-api' version { jupiterVersion }
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine' version { jupiterVersion }
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
-    implementation 'org.zalando:problem-spring-web-starter:0.27.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -35,4 +28,12 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
 }

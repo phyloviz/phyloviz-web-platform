@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.uploader.service;
 
-import org.phyloviz.pwp.uploader.http.models.FileType;
+import org.phyloviz.pwp.uploader.http.controllers.models.FileType;
 import org.phyloviz.pwp.uploader.repository.data.UploadRepository;
 import org.phyloviz.pwp.uploader.repository.metadata.UploadMetadataRepository;
 import org.phyloviz.pwp.uploader.repository.metadata.objects.ProfileMetadata;
