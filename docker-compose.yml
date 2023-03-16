@@ -15,8 +15,8 @@ services:
       - '8082:8080'
     command: start-dev --import-realm
     volumes:
-      - ./keycloak/imports:/opt/keycloak/data/import
-      - ./keycloak/keystore:/opt/conf
+      - ./src/backend/keycloak/imports:/opt/keycloak/data/import
+      - ./src/backend/keycloak/keystore:/opt/conf
     # TODO: Fix this warning, (main) Datasource <default> enables XA but transaction recovery is not enabled. Please enable transaction recovery by setting quarkus.transaction-manager.enable-recovery=true, otherwise data may be lost if the application is terminated abruptly
     environment:
       - KC_DB=postgres

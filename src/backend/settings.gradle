@@ -3,7 +3,4 @@ include 'microservices:uploader'
 include 'microservices:visualization'
 include 'microservices:compute'
 include 'microservices:authentication'
-findProject(':microservices:authentication')?.name = 'authentication'
 include 'microservices:gateway'
-findProject(':microservices:gateway')?.name = 'gateway'
-

@@ -14,7 +14,7 @@ spring:
         opaquetoken:
           introspection-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/token/introspect
           client-id: phyloviz-web-platform-client
-          client-secret: pMSHvXI4MiinYpRoN9QHGMcR5uIswFjJ
+          client-secret: dwPM4foH1UxuwQ1DfYaRbZN195Jjw5Gb
         jwt:
           jwk-set-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/certs
 

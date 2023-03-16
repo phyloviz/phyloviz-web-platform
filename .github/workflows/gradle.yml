@@ -29,8 +29,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Make Gradlew executable
+        working-directory: ./src/backend
         run: chmod +x gradlew
       - name: Build with Gradle
+        working-directory: ./src/backend
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
