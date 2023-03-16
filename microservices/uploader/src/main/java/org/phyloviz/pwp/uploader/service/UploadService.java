@@ -19,7 +19,7 @@ public interface UploadService {
      * @param multipartFile file to be stored
      * @return the output data for the profile upload
      */
-    UploadProfileOutputDTO storeProfile(String projectId, MultipartFile multipartFile);
+    UploadProfileOutputDTO uploadProfile(String projectId, MultipartFile multipartFile);
 
     /**
      * Creates a project.

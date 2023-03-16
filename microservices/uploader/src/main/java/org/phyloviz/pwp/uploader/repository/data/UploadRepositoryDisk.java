@@ -16,6 +16,7 @@ import java.io.IOException;
 public class UploadRepositoryDisk implements UploadRepository {
 
     private final String path = new File("").getAbsolutePath() + "\\diskUploadedFiles";
+    private final String adapterId = "disk";
 
     @Override
     public boolean storeProfile(String location, MultipartFile multipartFile) {
@@ -33,5 +34,10 @@ public class UploadRepositoryDisk implements UploadRepository {
     @Override
     public String getLocation() {
         return path;
+    }
+
+    @Override
+    public String getAdapterId() {
+        return adapterId;
     }
 }

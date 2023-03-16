@@ -1,6 +1,5 @@
 package org.phyloviz.pwp.uploader.repository.metadata.objects;
 
-import org.phyloviz.pwp.uploader.http.models.FileType;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -9,26 +8,20 @@ import org.springframework.data.annotation.Id;
 public abstract class Metadata {
     @Id
     private String id;
-
+    private final String resourceId;
     private final String projectId;
     private final String location;
-    private final FileType type;
+    private final String adapterId;
 
-    public Metadata(String projectId, String location, FileType type) {
+    public Metadata(String resourceId, String projectId, String location, String adapter) {
+        this.resourceId = resourceId;
         this.projectId = projectId;
         this.location = location;
-        this.type = type;
+        this.adapterId = adapter;
     }
 
-    public Metadata(String id, String projectId, String location, FileType type) {
-        this.id = id;
-        this.projectId = projectId;
-        this.location = location;
-        this.type = type;
-    }
-
-    public String getId() {
-        return id;
+    public String getResourceId() {
+        return resourceId;
     }
 
     public String getProjectId() {
@@ -39,7 +32,7 @@ public abstract class Metadata {
         return location;
     }
 
-    public FileType getType() {
-        return type;
+    public String getAdapterId() {
+        return adapterId;
     }
 }

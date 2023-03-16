@@ -24,4 +24,11 @@ public interface UploadRepository {
      * @return location of the repository
      */
     String getLocation();
+
+    /**
+     * Get the adapter id.
+     *
+     * @return adapter id
+     */
+    String getAdapterId();
 }

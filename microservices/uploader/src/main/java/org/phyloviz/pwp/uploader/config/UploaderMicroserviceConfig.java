@@ -12,8 +12,9 @@ public class UploaderMicroserviceConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .anyRequest().authenticated()
+        http.authorizeHttpRequests()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .oauth2ResourceServer()
                 .opaqueToken();

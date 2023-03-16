@@ -36,7 +36,7 @@ public class UploadController {
             @RequestPart MultipartFile file,
             BearerTokenAuthentication auth // TODO: 3/15/2023 Add interceptor
     ) {
-        UploadProfileOutputDTO uploadProfileOutputDTO = uploadService.storeProfile(projectId, file);
+        UploadProfileOutputDTO uploadProfileOutputDTO = uploadService.uploadProfile(projectId, file);
 
         return new UploadProfileOutputModel(uploadProfileOutputDTO);
     }

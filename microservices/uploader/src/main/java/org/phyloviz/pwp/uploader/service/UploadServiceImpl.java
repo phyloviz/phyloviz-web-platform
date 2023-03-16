@@ -29,13 +29,15 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
-    public UploadProfileOutputDTO storeProfile(String projectId, MultipartFile multipartFile) {
+    public UploadProfileOutputDTO uploadProfile(String projectId, MultipartFile multipartFile) {
         String id = UUID.randomUUID().toString();
         String location = "\\" + projectId + "\\" + id + FileType.PROFILE.getFileExtension();
 
         final ProfileMetadata profileMetadata = new ProfileMetadata(
                 projectId,
+                id,
                 uploadRepository.getLocation() + location,
+                uploadRepository.getAdapterId(),
                 multipartFile.getOriginalFilename()
         );
 

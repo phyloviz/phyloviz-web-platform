@@ -18,4 +18,9 @@ public class UploadRepositoryCloud implements UploadRepository {
     public String getLocation() {
         return null;
     }
+
+    @Override
+    public String getAdapterId() {
+        return null;
+    }
 }

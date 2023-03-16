@@ -32,7 +32,7 @@ public class UploadMetadataRepositoryDisk implements UploadMetadataRepository {
             return null;
         }
 
-        return new ProfileMetadata(id, profileMetadata.getProjectId(), profileMetadata.getLocation(), profileMetadata.getOriginalFileName());
+        return profileMetadata;
     }
 
     @Override
