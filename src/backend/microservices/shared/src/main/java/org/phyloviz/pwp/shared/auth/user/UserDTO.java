@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.shared.auth;
+package org.phyloviz.pwp.shared.auth.user;
 
 import lombok.Data;
 

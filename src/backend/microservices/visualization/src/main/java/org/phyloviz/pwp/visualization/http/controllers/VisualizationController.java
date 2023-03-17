@@ -1,5 +1,6 @@
 package org.phyloviz.pwp.visualization.http.controllers;
 
+import lombok.AllArgsConstructor;
 import org.phyloviz.pwp.visualization.http.controllers.models.getDatasetProfiles.GetDatasetProfilesOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.getTreeView.GetTreeViewOutputModel;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +16,10 @@ import org.phyloviz.pwp.visualization.service.VisualizationService;
  */
 @RestController
 @RequestMapping("/visualization")
+@AllArgsConstructor
 public class VisualizationController {
 
     private final VisualizationService visualizationService;
-
-    public VisualizationController(VisualizationService visualizationService) {
-        this.visualizationService = visualizationService;
-    }
 
     /**
      * Gets the dataset information, given its id.

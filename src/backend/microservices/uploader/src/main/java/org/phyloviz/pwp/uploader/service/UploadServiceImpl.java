@@ -1,5 +1,6 @@
 package org.phyloviz.pwp.uploader.service;
 
+import lombok.AllArgsConstructor;
 import org.phyloviz.pwp.uploader.http.controllers.models.FileType;
 import org.phyloviz.pwp.uploader.repository.data.UploadRepository;
 import org.phyloviz.pwp.uploader.repository.metadata.UploadMetadataRepository;
@@ -18,15 +19,11 @@ import java.util.UUID;
  * Implementation of the {@link UploadService} interface.
  */
 @Service
+@AllArgsConstructor
 public class UploadServiceImpl implements UploadService {
 
     private final UploadRepository uploadRepository;
     private final UploadMetadataRepository uploadMetadataRepository;
-
-    public UploadServiceImpl(UploadRepository uploadRepository, UploadMetadataRepository uploadMetadataRepository) {
-        this.uploadRepository = uploadRepository;
-        this.uploadMetadataRepository = uploadMetadataRepository;
-    }
 
     @Override
     public UploadProfileOutputDTO uploadProfile(String projectId, MultipartFile multipartFile) {

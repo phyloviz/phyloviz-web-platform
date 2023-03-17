@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.phyloviz.pwp.administration.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.administration.service.exceptions.UnauthorizedExcception;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.zalando.problem.Problem;
@@ -41,13 +43,25 @@ public class AdministrationExceptionHandler {
     @ExceptionHandler(value = {
             UnauthorizedExcception.class
     })
-    public Problem handleUnauthorizedException(Exception e) {
+    public Problem handleForbiddenException(Exception e) {
         return Problem.builder()
                 .withTitle("Forbidden")
                 .withDetail(e.getMessage())
                 .withStatus(Status.FORBIDDEN)
                 .build();
     }
+
+    @ExceptionHandler(value = {
+            AuthenticationException.class,
+            AccessDeniedException.class,
+    })
+    public Problem handleUnauthorizedException() {
+        return Problem.builder()
+                .withTitle("Unauthorized")
+                .withStatus(Status.UNAUTHORIZED)
+                .build();
+    }
+
 
     /**
      * Handles HttpMessageNotReadableExceptions.

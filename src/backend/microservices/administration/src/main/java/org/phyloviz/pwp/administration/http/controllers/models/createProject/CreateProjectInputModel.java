@@ -2,7 +2,7 @@ package org.phyloviz.pwp.administration.http.controllers.models.createProject;
 
 import lombok.Data;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectInputDTO;
-import org.phyloviz.pwp.shared.auth.User;
+import org.phyloviz.pwp.shared.auth.user.User;
 
 /**
  * Model for the creation of a new project.

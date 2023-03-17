@@ -1,5 +1,6 @@
 package org.phyloviz.pwp.uploader.repository.data;
 
+import lombok.AllArgsConstructor;
 import org.phyloviz.pwp.uploader.utils.UploaderLogger;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,7 @@ public class UploadRepositoryDisk implements UploadRepository {
 
     @Override
     public boolean storeProfile(String location, MultipartFile multipartFile) {
+
         File file = new File(path + location);
 
         try {

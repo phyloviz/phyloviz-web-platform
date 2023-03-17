@@ -1,10 +1,9 @@
 package org.phyloviz.pwp.visualization.config;
 
-import org.phyloviz.pwp.shared.auth.UserArgumentResolverConfig;
-import org.phyloviz.pwp.shared.mongo.MongoConfig;
+import org.phyloviz.pwp.shared.SharedConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({UserArgumentResolverConfig.class, MongoConfig.class})
+@Import({SharedConfig.class})
 public class VisualizationConfig {}

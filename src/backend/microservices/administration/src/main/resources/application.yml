@@ -21,18 +21,18 @@ spring:
 #        jwt:
 #          jwk-set-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/certs
 
-#logging:
-#  level:
-#    org:
-#      springframework:
-#        data:
-#          mongodb:
-#            core:
-#              MongoTemplate: DEBUG
-#        web:
-#          server:
-#            adapter:
-#              AbstractReactiveWebInitializer: DEBUG
-#        security:
-#          web: DEBUG
-#    web: DEBUG
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
+        web:
+          server:
+            adapter:
+                DefaultServerWebExchange: DEBUG
+        security:
+          web: DEBUG
+    web: DEBUG

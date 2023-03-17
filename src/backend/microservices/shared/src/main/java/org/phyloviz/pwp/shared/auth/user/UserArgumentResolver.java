@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.shared.auth;
+package org.phyloviz.pwp.shared.auth.user;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthentication;
