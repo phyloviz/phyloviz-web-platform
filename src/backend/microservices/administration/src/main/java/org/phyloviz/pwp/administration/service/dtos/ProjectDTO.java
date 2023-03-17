@@ -9,13 +9,13 @@ public class ProjectDTO {
     private final String name;
     private final String description;
     private final String owner;
-    private final FileDTO[] files;
+    private final ResourceDTO[] resourceDTOs;
 
     public ProjectDTO(Project project) {
         this.id = project.getId();
         this.name = project.getName();
         this.description = project.getDescription();
         this.owner = project.getOwner();
-        this.files = project.getFiles().stream().map(FileDTO::new).toArray(FileDTO[]::new);
+        this.resourceDTOs = project.getResources().stream().map(ResourceDTO::new).toArray(ResourceDTO[]::new);
     }
 }

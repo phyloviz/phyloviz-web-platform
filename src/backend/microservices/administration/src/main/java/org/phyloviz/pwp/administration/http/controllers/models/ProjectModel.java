@@ -10,13 +10,13 @@ public class ProjectModel {
     private String name;
     private String description;
     private String owner;
-    private FileModel[] files;
+    private ResourceModel[] resources;
 
     public ProjectModel(ProjectDTO projectDTO) {
         this.id = projectDTO.getId();
         this.name = projectDTO.getName();
         this.description = projectDTO.getDescription();
         this.owner = projectDTO.getOwner();
-        this.files = Arrays.stream(projectDTO.getFiles()).map(FileModel::new).toArray(FileModel[]::new);
+        this.resources = Arrays.stream(projectDTO.getResourceDTOs()).map(ResourceModel::new).toArray(ResourceModel[]::new);
     }
 }

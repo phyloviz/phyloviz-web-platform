@@ -1,38 +1,26 @@
 package org.phyloviz.pwp.uploader.repository.metadata.documents;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 /**
  * Metadata of the uploaded file.
  */
+@Data
 public abstract class Metadata {
-    private final String resourceId;
-    private final String projectId;
-    private final String location;
-    private final String adapterId;
     @Id
     private String id;
 
-    public Metadata(String resourceId, String projectId, String location, String adapter) {
+    private final String resourceId;
+    private final String projectId;
+    private final String url;
+    private final String adapterId;
+
+    public Metadata(String resourceId, String projectId, String url, String adapter) {
         this.resourceId = resourceId;
         this.projectId = projectId;
-        this.location = location;
+        this.url = url;
         this.adapterId = adapter;
-    }
-
-    public String getResourceId() {
-        return resourceId;
-    }
-
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getAdapterId() {
-        return adapterId;
     }
 }

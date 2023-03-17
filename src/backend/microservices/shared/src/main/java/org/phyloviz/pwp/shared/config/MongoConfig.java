@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "org.phyloviz.pwp") //TODO: Could be slow
+@EnableMongoRepositories(basePackages = "org.phyloviz.pwp")
 public class MongoConfig {
 
     @Bean

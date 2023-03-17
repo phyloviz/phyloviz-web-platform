@@ -2,8 +2,8 @@ package org.phyloviz.pwp.uploader.service;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import org.phyloviz.pwp.shared.repository.metadata.documents.File;
 import org.phyloviz.pwp.shared.repository.metadata.documents.Project;
+import org.phyloviz.pwp.shared.repository.metadata.documents.Resource;
 import org.phyloviz.pwp.shared.repository.metadata.mongo.ProjectMongoRepository;
 import org.phyloviz.pwp.shared.service.dtos.UserDTO;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
@@ -27,6 +27,8 @@ public class UploadServiceImpl implements UploadService {
     private final UploadRepository uploadRepository;
     private final UploadMetadataRepository uploadMetadataRepository;
     private final ProjectMongoRepository projectMongoRepository;
+
+    private static final String PROFILE_COLLECTION = "profiles";
 
     @Override
     public UploadProfileOutputDTO uploadProfile(String projectId, MultipartFile multipartFile, UserDTO userDTO) {
@@ -54,7 +56,7 @@ public class UploadServiceImpl implements UploadService {
         if (!stored)
             throw new RuntimeException("Could not store file");
 
-        project.getFiles().add(new File(id, profileMetadata.getOriginalFileName()));
+        project.getResources().add(new Resource(id, PROFILE_COLLECTION));
 
         projectMongoRepository.save(project);
 

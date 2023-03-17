@@ -16,12 +16,12 @@ public class Project {
     private String name;
     private String description;
     private String owner;
-    private List<File> files;
+    private List<Resource> resources;
 
-    public Project(String name, String description, String owner, List<File> files) {
+    public Project(String name, String description, String owner, List<Resource> resources) {
         this.name = name;
         this.description = description;
         this.owner = owner;
-        this.files = files;
+        this.resources = resources;
     }
 }

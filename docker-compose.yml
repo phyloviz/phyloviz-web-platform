@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.7'
 services:
   keycloak_db:
     image: postgres:10
@@ -40,6 +40,21 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
+
+  registry:
+    container_name: "registry_web"
+    image: registry:2.8.1
+    ports:
+      - '5001:5001'
+    environment:
+      REGISTRY_HTTP_ADDR: :5001
+      REGISTRY_STORAGE: filesystem
+      REGISTRY_STORAGE_DELETE_ENABLED: 'true'
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+    volumes:
+      - ./registry/data:/var/lib/registry
+      - ./registry/config/config.yml:/etc/docker/registry/config.yml
+    restart: always
 volumes:
   keycloak_db_data:
     driver: local

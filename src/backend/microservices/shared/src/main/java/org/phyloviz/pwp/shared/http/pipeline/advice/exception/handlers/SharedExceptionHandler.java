@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.exc.IgnoredPropertyException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -14,23 +16,6 @@ import org.zalando.problem.Status;
 
 @RestControllerAdvice
 public class SharedExceptionHandler {
-
-    /**
-     * Handles Not Found Exceptions.
-     *
-     * @param e the exception
-     * @return a Problem with the status NOT_FOUND
-     */
-    @ExceptionHandler(value = {
-            ProjectNotFoundException.class
-    })
-    public Problem handleNotFoundException(Exception e) {
-        return Problem.builder()
-                .withTitle("Not Found")
-                .withDetail(e.getMessage())
-                .withStatus(Status.NOT_FOUND)
-                .build();
-    }
 
     /**
      * Handles Unauthorized Exceptions.
@@ -59,7 +44,7 @@ public class SharedExceptionHandler {
     public Problem handleHttpMessageNotReadableExceptions(
             HttpMessageNotReadableException ex
     ) {
-
+        //TODO: Improve this
         String title = "Invalid request body:";
 
         if (ex.getRootCause() instanceof UnrecognizedPropertyException) {

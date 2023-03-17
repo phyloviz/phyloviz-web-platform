@@ -3,7 +3,7 @@ package org.phyloviz.pwp.shared.repository.metadata.documents;
 import lombok.Data;
 
 @Data
-public class File {
+public class Resource {
     private final String id;
-    private final String originalFileName;
+    private final String collection;
 }
