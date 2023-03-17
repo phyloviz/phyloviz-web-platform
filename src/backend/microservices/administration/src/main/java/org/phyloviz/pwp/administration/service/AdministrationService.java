@@ -4,8 +4,8 @@ import java.util.List;
 import org.phyloviz.pwp.administration.service.dtos.ProjectDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectOutputDTO;
-import org.phyloviz.pwp.administration.service.exceptions.ProjectNotFoundException;
-import org.phyloviz.pwp.shared.auth.user.UserDTO;
+import org.phyloviz.pwp.shared.service.dtos.UserDTO;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,7 +34,7 @@ public interface AdministrationService {
      * Gets a project.
      *
      * @param projectId id of the project
-     * @param toDTO    user that wants to get the project
+     * @param toDTO     user that wants to get the project
      * @return the project
      */
     ProjectDTO getProject(String projectId, UserDTO toDTO);
@@ -42,6 +42,7 @@ public interface AdministrationService {
 
     /**
      * Gets all projects of a user.
+     *
      * @param userDTO user that wants to get the projects
      * @return the projects
      */

@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.service.dtos.createProject;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.auth.user.UserDTO;
+import org.phyloviz.pwp.shared.service.dtos.UserDTO;
 
 @Data
 public class CreateProjectInputDTO {

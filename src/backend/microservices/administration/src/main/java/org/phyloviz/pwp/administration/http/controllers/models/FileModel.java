@@ -5,11 +5,11 @@ import org.phyloviz.pwp.administration.service.dtos.FileDTO;
 
 @Data
 public class FileModel {
-    private final String id;
-    private final String type;
+    private String id;
+    private String type;
 
     public FileModel(FileDTO fileDTO) {
         this.id = fileDTO.getId();
-        this.type = fileDTO.getType();
+        this.type = fileDTO.getOriginalFileName();
     }
 }

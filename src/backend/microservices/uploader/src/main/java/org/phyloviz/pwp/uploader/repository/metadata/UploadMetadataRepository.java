@@ -1,8 +1,7 @@
 package org.phyloviz.pwp.uploader.repository.metadata;
 
-import org.phyloviz.pwp.uploader.repository.metadata.objects.ProfileMetadata;
+import org.phyloviz.pwp.uploader.repository.metadata.documents.ProfileMetadata;
 import org.springframework.stereotype.Repository;
-import org.phyloviz.pwp.uploader.repository.project.Project;
 
 /**
  * Repository for the metadata of the Uploader Microservice.
@@ -18,11 +17,4 @@ public interface UploadMetadataRepository {
      */
     ProfileMetadata store(ProfileMetadata profileMetadata);
 
-    /**
-     * Stores a project metadata.
-     *
-     * @param project the project to be stored
-     * @return the stored project
-     */
-    Project storeProject(Project project);
 }

@@ -6,12 +6,14 @@ import org.phyloviz.pwp.administration.service.dtos.ProjectDTO;
 
 @Data
 public class ProjectModel {
-    private final String name;
-    private final String description;
-    private final String owner;
-    private final FileModel[] files;
+    private String id;
+    private String name;
+    private String description;
+    private String owner;
+    private FileModel[] files;
 
     public ProjectModel(ProjectDTO projectDTO) {
+        this.id = projectDTO.getId();
         this.name = projectDTO.getName();
         this.description = projectDTO.getDescription();
         this.owner = projectDTO.getOwner();

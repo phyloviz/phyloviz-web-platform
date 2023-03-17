@@ -1,7 +1,6 @@
 package org.phyloviz.pwp.uploader.service;
 
-import org.phyloviz.pwp.uploader.service.dtos.createProject.CreateProjectInputDTO;
-import org.phyloviz.pwp.uploader.service.dtos.createProject.CreateProjectOutputDTO;
+import org.phyloviz.pwp.shared.service.dtos.UserDTO;
 import org.phyloviz.pwp.uploader.service.dtos.uploadeProfile.UploadProfileOutputDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,15 +16,9 @@ public interface UploadService {
      *
      * @param projectId     id of the project
      * @param multipartFile file to be stored
+     * @param userDTO
      * @return the output data for the profile upload
      */
-    UploadProfileOutputDTO uploadProfile(String projectId, MultipartFile multipartFile);
+    UploadProfileOutputDTO uploadProfile(String projectId, MultipartFile multipartFile, UserDTO userDTO);
 
-    /**
-     * Creates a project.
-     *
-     * @param createProjectInputDTO the input data for the project creation
-     * @return the output data for the project creation
-     */
-    CreateProjectOutputDTO createProject(CreateProjectInputDTO createProjectInputDTO);
 }

@@ -1,10 +1,8 @@
 package org.phyloviz.pwp.uploader.repository.metadata;
 
 import lombok.AllArgsConstructor;
+import org.phyloviz.pwp.uploader.repository.metadata.documents.ProfileMetadata;
 import org.phyloviz.pwp.uploader.repository.metadata.mongo.ProfileMetadataMongoRepository;
-import org.phyloviz.pwp.uploader.repository.metadata.mongo.ProjectMongoRepository;
-import org.phyloviz.pwp.uploader.repository.metadata.objects.ProfileMetadata;
-import org.phyloviz.pwp.uploader.repository.project.Project;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
@@ -17,15 +15,10 @@ import org.springframework.stereotype.Repository;
 public class UploadMetadataRepositoryMongo implements UploadMetadataRepository {
 
     private final ProfileMetadataMongoRepository profileMetadataMongoRepository;
-    private final ProjectMongoRepository projectMongoRepository;
 
     @Override
     public ProfileMetadata store(ProfileMetadata profileMetadata) {
         return profileMetadataMongoRepository.save(profileMetadata);
     }
 
-    @Override
-    public Project storeProject(Project project) {
-        return projectMongoRepository.save(project);
-    }
 }

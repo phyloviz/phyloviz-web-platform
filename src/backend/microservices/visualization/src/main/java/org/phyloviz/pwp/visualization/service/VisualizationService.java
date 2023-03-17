@@ -1,9 +1,9 @@
 package org.phyloviz.pwp.visualization.service;
 
 import org.phyloviz.pwp.visualization.service.dtos.getDatasetDetais.GetDatasetDetailsOutputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.getDatasetProfiles.GetDatasetProfilesOutputDTO;
 import org.phyloviz.pwp.visualization.service.dtos.getTreeView.GetTreeViewOutputDTO;
 import org.springframework.stereotype.Service;
-import org.phyloviz.pwp.visualization.service.dtos.getDatasetProfiles.GetDatasetProfilesOutputDTO;
 
 /**
  * Service for the Visualization Microservice.

@@ -1,13 +1,8 @@
 package org.phyloviz.pwp.uploader.http.controllers.models.uploadProfile;
 
+import lombok.Data;
+
+@Data
 public class UploadProfileInputModel {
     private final String projectId;
-
-    public UploadProfileInputModel(String projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getProjectId() {
-        return projectId;
-    }
 }

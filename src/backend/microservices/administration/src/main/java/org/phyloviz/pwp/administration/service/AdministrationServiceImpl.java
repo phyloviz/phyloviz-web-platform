@@ -3,14 +3,14 @@ package org.phyloviz.pwp.administration.service;
 import java.util.Collections;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.phyloviz.pwp.administration.repository.metadata.ProjectMongoRepository;
-import org.phyloviz.pwp.administration.repository.project.Project;
 import org.phyloviz.pwp.administration.service.dtos.ProjectDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectOutputDTO;
-import org.phyloviz.pwp.administration.service.exceptions.ProjectNotFoundException;
-import org.phyloviz.pwp.administration.service.exceptions.UnauthorizedExcception;
-import org.phyloviz.pwp.shared.auth.user.UserDTO;
+import org.phyloviz.pwp.shared.repository.metadata.documents.Project;
+import org.phyloviz.pwp.shared.repository.metadata.mongo.ProjectMongoRepository;
+import org.phyloviz.pwp.shared.service.dtos.UserDTO;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,7 +44,7 @@ public class AdministrationServiceImpl implements AdministrationService {
                 .orElseThrow(() -> new ProjectNotFoundException("Project not found"));
 
         if (!project.getOwner().equals(userDTO.getId()))
-            throw new UnauthorizedExcception("User is not the owner of the project");
+            throw new UnauthorizedException("User is not the owner of the project");
 
         projectMongoRepository.delete(project);
     }
@@ -56,7 +56,7 @@ public class AdministrationServiceImpl implements AdministrationService {
                 .orElseThrow(() -> new ProjectNotFoundException("Project not found"));
 
         if (!project.getOwner().equals(toDTO.getId()))
-            throw new UnauthorizedExcception("User is not the owner of the project");
+            throw new UnauthorizedException("User is not the owner of the project");
 
         return new ProjectDTO(project);
     }

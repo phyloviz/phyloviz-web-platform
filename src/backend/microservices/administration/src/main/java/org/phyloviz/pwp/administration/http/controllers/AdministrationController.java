@@ -9,7 +9,7 @@ import org.phyloviz.pwp.administration.http.controllers.models.getProjects.GetPr
 import org.phyloviz.pwp.administration.service.AdministrationService;
 import org.phyloviz.pwp.administration.service.dtos.ProjectDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectOutputDTO;
-import org.phyloviz.pwp.shared.auth.user.User;
+import org.phyloviz.pwp.shared.domain.User;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

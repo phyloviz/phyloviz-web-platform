@@ -1,9 +1,8 @@
 package org.phyloviz.pwp.visualization.http.controllers.models.getDatasetProfiles;
 
+import java.util.Arrays;
 import org.phyloviz.pwp.visualization.http.controllers.models.shared.ProfileModel;
 import org.phyloviz.pwp.visualization.service.dtos.getDatasetProfiles.GetDatasetProfilesOutputDTO;
-
-import java.util.Arrays;
 
 /**
  * Output model for the get dataset profiles endpoint.

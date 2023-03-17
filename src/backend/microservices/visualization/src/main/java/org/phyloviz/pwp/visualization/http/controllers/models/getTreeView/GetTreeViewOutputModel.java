@@ -1,9 +1,8 @@
 package org.phyloviz.pwp.visualization.http.controllers.models.getTreeView;
 
-import org.phyloviz.pwp.visualization.service.dtos.getTreeView.GetTreeViewOutputDTO;
-import org.phyloviz.pwp.visualization.http.controllers.models.shared.NodeModel;
-
 import java.util.Arrays;
+import org.phyloviz.pwp.visualization.http.controllers.models.shared.NodeModel;
+import org.phyloviz.pwp.visualization.service.dtos.getTreeView.GetTreeViewOutputDTO;
 
 /**
  * Output model for the get tree view endpoint.

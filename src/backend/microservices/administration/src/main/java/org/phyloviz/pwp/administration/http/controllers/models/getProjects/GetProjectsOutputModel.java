@@ -7,7 +7,7 @@ import org.phyloviz.pwp.administration.service.dtos.ProjectDTO;
 
 @Data
 public class GetProjectsOutputModel {
-    private final List<ProjectModel> projects;
+    private List<ProjectModel> projects;
 
     public GetProjectsOutputModel(List<ProjectDTO> projectDTOs) {
         this.projects = projectDTOs.stream().map(ProjectModel::new).toList();

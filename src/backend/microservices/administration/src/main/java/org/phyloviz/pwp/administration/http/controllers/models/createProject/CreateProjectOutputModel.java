@@ -6,7 +6,7 @@ import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectO
 
 @Data
 public class CreateProjectOutputModel {
-    private final String projectId;
+    private String projectId;
 
     public CreateProjectOutputModel(CreateProjectOutputDTO createProjectOutputDTO) {
         this.projectId = createProjectOutputDTO.getProjectId();

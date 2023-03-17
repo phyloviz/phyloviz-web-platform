@@ -1,5 +1,38 @@
+server:
+  port: 8085
+
 spring:
   data:
     mongodb:
       host: localhost
       port: 28017
+      username: root
+      password: root
+      database: phyloviz-web-platform
+      authentication-database: admin
+      auto-index-creation: true
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/token/introspect
+          client-id: phyloviz-web-platform-client
+          client-secret: 5gzNuZ01EAAJnOdjROyORRrThl7fiDFW
+#        jwt:
+#          jwk-set-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/certs
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
+        web:
+          server:
+            adapter:
+              DefaultServerWebExchange: DEBUG
+        security:
+          web: DEBUG
+    web: DEBUG
