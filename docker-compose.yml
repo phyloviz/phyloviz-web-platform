@@ -40,21 +40,32 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
-
+  cache:
+    image: redis:7.0.9-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: >
+      --include /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./src/backend/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - cache:/data
   registry:
     container_name: "registry_web"
     image: registry:2.8.1
     ports:
-      - '5001:5001'
+      - '5000:5000'
     environment:
-      REGISTRY_HTTP_ADDR: :5001
+      REGISTRY_HTTP_ADDR: :5000
       REGISTRY_STORAGE: filesystem
       REGISTRY_STORAGE_DELETE_ENABLED: 'true'
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
     volumes:
-      - ./registry/data:/var/lib/registry
-      - ./registry/config/config.yml:/etc/docker/registry/config.yml
+      - ./src/backend/registry/data:/var/lib/registry
+      - ./src/backend/registry/config/config.yml:/etc/docker/registry/config.yml
     restart: always
 volumes:
   keycloak_db_data:
+    driver: local
+  cache:
     driver: local
