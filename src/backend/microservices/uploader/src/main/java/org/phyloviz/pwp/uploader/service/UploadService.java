@@ -16,9 +16,8 @@ public interface UploadService {
      *
      * @param projectId     id of the project
      * @param multipartFile file to be stored
-     * @param userDTO
+     * @param userDTO       user who is uploading the file
      * @return the output data for the profile upload
      */
     UploadProfileOutputDTO uploadProfile(String projectId, MultipartFile multipartFile, UserDTO userDTO);
-
 }

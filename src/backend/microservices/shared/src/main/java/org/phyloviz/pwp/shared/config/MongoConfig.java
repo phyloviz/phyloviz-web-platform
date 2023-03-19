@@ -16,8 +16,11 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class MongoConfig {
 
     @Bean
-    public MappingMongoConverter mappingMongoConverter(MongoDatabaseFactory factory, MongoMappingContext context,
-                                                       BeanFactory beanFactory) {
+    public MappingMongoConverter mappingMongoConverter(
+            MongoDatabaseFactory factory,
+            MongoMappingContext context,
+            BeanFactory beanFactory
+    ) {
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(factory);
         MappingMongoConverter mappingConverter = new MappingMongoConverter(dbRefResolver, context);
         mappingConverter.setTypeMapper(new DefaultMongoTypeMapper(null));

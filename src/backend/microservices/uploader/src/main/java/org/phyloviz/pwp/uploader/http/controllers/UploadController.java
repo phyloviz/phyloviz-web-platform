@@ -38,6 +38,4 @@ public class UploadController {
 
         return new UploadProfileOutputModel(uploadProfileOutputDTO);
     }
-
-
 }

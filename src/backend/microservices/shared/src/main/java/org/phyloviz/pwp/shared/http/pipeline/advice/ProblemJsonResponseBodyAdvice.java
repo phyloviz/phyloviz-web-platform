@@ -20,7 +20,14 @@ public class ProblemJsonResponseBodyAdvice implements ResponseBodyAdvice<Problem
     }
 
     @Override
-    public Problem beforeBodyWrite(Problem problem, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+    public Problem beforeBodyWrite(
+            Problem problem,
+            MethodParameter returnType,
+            MediaType selectedContentType,
+            Class<? extends HttpMessageConverter<?>> selectedConverterType,
+            ServerHttpRequest request,
+            ServerHttpResponse response
+    ) {
         if (problem == null)
             return null;
 

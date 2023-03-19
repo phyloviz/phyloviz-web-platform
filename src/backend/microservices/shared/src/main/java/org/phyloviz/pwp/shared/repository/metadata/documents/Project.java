@@ -1,11 +1,15 @@
 package org.phyloviz.pwp.shared.repository.metadata.documents;
 
-import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
+/**
+ * A project is a collection of resources.
+ */
 @Data
 @NoArgsConstructor
 @Document(collection = "projects")

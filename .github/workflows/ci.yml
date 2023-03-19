@@ -1,11 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
-name: Java CI with Gradle
+name: Continuous Integration
 
 on:
   push:
@@ -18,8 +11,9 @@ permissions:
 
 jobs:
   build:
-
+    name: Build with Gradle
     runs-on: ubuntu-latest
+    working-directory: ./src/backend
 
     steps:
       - uses: actions/checkout@v3
@@ -29,10 +23,18 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Make Gradlew executable
-        working-directory: ./src/backend
         run: chmod +x gradlew
       - name: Build with Gradle
-        working-directory: ./src/backend
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
+
+  docker-compose:
+    name: Docker Compose
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: isbang/compose-action@v1.4.1
+        with:
+          compose-file: "./docker-compose.yml"

@@ -30,9 +30,7 @@ dependencies {
     testImplementation 'org.springframework.cloud:spring-cloud-starter-gateway'
     testImplementation 'org.springframework.boot:spring-boot-starter-data-redis'
     testImplementation 'org.springframework.session:spring-session-data-redis'
-
 }
-
 
 dependencyManagement {
     imports {

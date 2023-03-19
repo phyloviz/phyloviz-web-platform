@@ -1,6 +1,5 @@
 package org.phyloviz.pwp.uploader.service;
 
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.phyloviz.pwp.shared.repository.metadata.documents.Project;
 import org.phyloviz.pwp.shared.repository.metadata.documents.Resource;
@@ -15,6 +14,8 @@ import org.phyloviz.pwp.uploader.service.dtos.uploadeProfile.UploadProfileOutput
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.UUID;
 
 /**
  * Implementation of the {@link UploadService} interface.
@@ -32,7 +33,8 @@ public class UploadServiceImpl implements UploadService {
 
     @Override
     public UploadProfileOutputDTO uploadProfile(String projectId, MultipartFile multipartFile, UserDTO userDTO) {
-        Project project = projectMongoRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
+        Project project = projectMongoRepository.findById(projectId)
+                .orElseThrow(() -> new ProjectNotFoundException(projectId));
 
         if (!project.getOwner().equals(userDTO.getId()))
             throw new UnauthorizedException("User does not have permission to upload to this project");
@@ -49,7 +51,6 @@ public class UploadServiceImpl implements UploadService {
         );
 
         uploadMetadataRepository.store(profileMetadata);
-
 
         boolean stored = uploadRepository.storeProfile(location, multipartFile);
 

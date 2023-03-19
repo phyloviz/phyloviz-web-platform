@@ -15,9 +15,7 @@ public class AdministrationExceptionHandler {
      * @param e the exception
      * @return a Problem with the status NOT_FOUND
      */
-    @ExceptionHandler(value = {
-            ProjectNotFoundException.class
-    })
+    @ExceptionHandler(value = {ProjectNotFoundException.class})
     public Problem handleNotFoundException(Exception e) {
         return Problem.builder()
                 .withTitle("Not Found")

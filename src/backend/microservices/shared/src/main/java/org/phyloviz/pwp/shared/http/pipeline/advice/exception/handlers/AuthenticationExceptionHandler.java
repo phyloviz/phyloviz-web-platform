@@ -9,9 +9,7 @@ import org.zalando.problem.Status;
 @RestControllerAdvice
 public class AuthenticationExceptionHandler {
 
-    @ExceptionHandler(value = {
-            AuthenticationException.class,
-    })
+    @ExceptionHandler(value = {AuthenticationException.class,})
     public Problem handleUnauthorizedException() {
         return Problem.builder()
                 .withTitle("Unauthorized")
