@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.uploader.service;
 
 import org.phyloviz.pwp.shared.service.dtos.UserDTO;
-import org.phyloviz.pwp.uploader.service.dtos.uploadeProfile.UploadProfileOutputDTO;
+import org.phyloviz.pwp.uploader.service.dtos.uploadTypingDataset.UploadTypingDatasetOutputDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,5 +19,5 @@ public interface UploadService {
      * @param userDTO       user who is uploading the file
      * @return the output data for the profile upload
      */
-    UploadProfileOutputDTO uploadProfile(String projectId, MultipartFile multipartFile, UserDTO userDTO);
+    UploadTypingDatasetOutputDTO uploadTypingDataset(String projectId, MultipartFile multipartFile, UserDTO userDTO);
 }

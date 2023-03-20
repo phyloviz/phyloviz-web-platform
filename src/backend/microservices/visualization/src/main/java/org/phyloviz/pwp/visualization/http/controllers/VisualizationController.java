@@ -1,8 +1,8 @@
 package org.phyloviz.pwp.visualization.http.controllers;
 
 import lombok.AllArgsConstructor;
-import org.phyloviz.pwp.visualization.http.controllers.models.getDatasetDetais.GetDatasetDetailsOutputModel;
-import org.phyloviz.pwp.visualization.http.controllers.models.getDatasetProfiles.GetDatasetProfilesOutputModel;
+import org.phyloviz.pwp.visualization.http.controllers.models.getTypingDatasetDetais.GetDatasetDetailsOutputModel;
+import org.phyloviz.pwp.visualization.http.controllers.models.getTypingDatasetProfiles.GetTypingDatasetProfilesOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.getTreeView.GetTreeViewOutputModel;
 import org.phyloviz.pwp.visualization.service.VisualizationService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,20 +33,20 @@ public class VisualizationController {
     }
 
     /**
-     * Gets the profiles of a dataset, given its id.
+     * Gets the profiles of a typing dataset, given its id.
      *
-     * @param id     the id of the dataset
+     * @param id     the id of the typing dataset
      * @param limit  the number of profiles to be returned
      * @param offset the offset of the profiles to be returned
-     * @return the profiles of the dataset
+     * @return the profiles of the typing dataset
      */
-    @GetMapping("/datasets/{id}/profiles")
-    public GetDatasetProfilesOutputModel getDatasetProfiles(
+    @GetMapping("/typing-datasets/{id}/profiles")
+    public GetTypingDatasetProfilesOutputModel getTypingDatasetProfiles(
             @PathVariable String id,
             @RequestParam("limit") int limit,
             @RequestParam("offset") int offset
     ) {
-        return new GetDatasetProfilesOutputModel(visualizationService.getDatasetProfiles(id, limit, offset));
+        return new GetTypingDatasetProfilesOutputModel(visualizationService.getTypingDatasetProfiles(id, limit, offset));
     }
 
     /**

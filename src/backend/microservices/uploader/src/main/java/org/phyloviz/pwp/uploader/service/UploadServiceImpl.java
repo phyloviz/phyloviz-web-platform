@@ -1,20 +1,21 @@
 package org.phyloviz.pwp.uploader.service;
 
 import lombok.AllArgsConstructor;
-import org.phyloviz.pwp.shared.repository.metadata.documents.Project;
-import org.phyloviz.pwp.shared.repository.metadata.documents.Resource;
-import org.phyloviz.pwp.shared.repository.metadata.mongo.ProjectMongoRepository;
+import org.phyloviz.pwp.shared.repository.data.ObjectStorageRepository;
+import org.phyloviz.pwp.shared.repository.metadata.typing_dataset.TypingDatasetMetadataRepository;
+import org.phyloviz.pwp.shared.repository.metadata.typing_dataset.documents.TypingDatasetMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
+import org.phyloviz.pwp.shared.repository.metadata.project.documents.Resource;
 import org.phyloviz.pwp.shared.service.dtos.UserDTO;
-import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
-import org.phyloviz.pwp.uploader.repository.data.UploadRepository;
-import org.phyloviz.pwp.uploader.repository.metadata.UploadMetadataRepository;
-import org.phyloviz.pwp.uploader.repository.metadata.documents.ProfileMetadata;
-import org.phyloviz.pwp.uploader.service.dtos.uploadeProfile.UploadProfileOutputDTO;
+import org.phyloviz.pwp.uploader.repository.metadata.documents.TypingDatasetS3AdapterSpecificData;
+import org.phyloviz.pwp.uploader.service.dtos.uploadTypingDataset.UploadTypingDatasetOutputDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collections;
 import java.util.UUID;
 
 /**
@@ -25,43 +26,43 @@ import java.util.UUID;
 @Transactional
 public class UploadServiceImpl implements UploadService {
 
-    private final UploadRepository uploadRepository;
-    private final UploadMetadataRepository uploadMetadataRepository;
-    private final ProjectMongoRepository projectMongoRepository;
+    private final ObjectStorageRepository objectStorageRepository;
 
-    private static final String PROFILE_COLLECTION = "profiles";
+    private final ProjectRepository projectRepository;
+    private final TypingDatasetMetadataRepository typingDatasetMetadataRepository;
+
+    private static final String TYPING_DATASET_COLLECTION = "typing-datasets";
 
     @Override
-    public UploadProfileOutputDTO uploadProfile(String projectId, MultipartFile multipartFile, UserDTO userDTO) {
-        Project project = projectMongoRepository.findById(projectId)
-                .orElseThrow(() -> new ProjectNotFoundException(projectId));
+    public UploadTypingDatasetOutputDTO uploadTypingDataset(String projectId, MultipartFile multipartFile, UserDTO userDTO) {
+        Project project = projectRepository.findById(projectId);
 
-        if (!project.getOwner().equals(userDTO.getId()))
+        if (!project.getOwnerId().equals(userDTO.getId()))
             throw new UnauthorizedException("User does not have permission to upload to this project");
 
-        String id = UUID.randomUUID().toString();
-        String location = "/" + projectId + "/" + id;
+        String resourceId = UUID.randomUUID().toString();
+        String location = "/" + projectId + "/" + resourceId;
 
-        final ProfileMetadata profileMetadata = new ProfileMetadata(
+        final TypingDatasetMetadata typingDatasetMetadata = new TypingDatasetMetadata(
                 projectId,
-                id,
-                uploadRepository.getLocation() + location,
-                uploadRepository.getAdapterId(),
-                multipartFile.getOriginalFilename()
+                resourceId,
+                objectStorageRepository.getLocation() + location,
+                objectStorageRepository.getAdapterId(),
+                new TypingDatasetS3AdapterSpecificData(multipartFile.getOriginalFilename()),
+                Collections.emptyList()
         );
 
-        uploadMetadataRepository.store(profileMetadata);
+        typingDatasetMetadataRepository.save(typingDatasetMetadata);
 
-        boolean stored = uploadRepository.storeProfile(location, multipartFile);
+        boolean stored = objectStorageRepository.store(location, multipartFile);
 
         if (!stored)
             throw new RuntimeException("Could not store file");
 
-        project.getResources().add(new Resource(id, PROFILE_COLLECTION));
+        project.getResources().add(new Resource(resourceId, TYPING_DATASET_COLLECTION));
 
-        projectMongoRepository.save(project);
+        projectRepository.save(project);
 
-        return new UploadProfileOutputDTO(id);
+        return new UploadTypingDatasetOutputDTO(resourceId);
     }
-
 }

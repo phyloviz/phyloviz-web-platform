@@ -3,7 +3,7 @@ server:
 
 openstack:
   identity:
-    url: http://192.168.1.93/identity/v3
+    url: http://192.168.1.165/identity/v3
     username: admin
     password: secret
     domain:
@@ -11,7 +11,7 @@ openstack:
     project:
       name: admin
   object-storage:
-    url: http://192.168.1.93:8080/v1/AUTH_1fd7ab23dada42b38e0a5f7b700ac439
+    url: http://192.168.1.165:8080/v1/AUTH_1495c69058174462b73ea23d378c7b37
     container: phyloviz-web-platform
 
 spring:
@@ -30,16 +30,21 @@ spring:
         opaquetoken:
           introspection-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/token/introspect
           client-id: phyloviz-web-platform-client
-          client-secret: whCCD9r37qj8mx9H7R4mzIrSezYf3H7R
+          client-secret: pZW9kZ05jHjLiOlYYhBAa9CGk1uL7bob
 
-#logging:
-#  level:
-#    org:
-#      springframework:
-#        web:
-#          server:
-#            adapter:
-#              AbstractReactiveWebInitializer: DEBUG
-#        security:
-#          web: DEBUG
-#    web: DEBUG
+  servlet:
+    multipart:
+      max-file-size: "100GB"
+      max-request-size: "100GB"
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          server:
+            adapter:
+              AbstractReactiveWebInitializer: DEBUG
+        security:
+          web: DEBUG
+    web: DEBUG

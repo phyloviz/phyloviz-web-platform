@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.visualization.service;
 
-import org.phyloviz.pwp.visualization.service.dtos.getDatasetDetais.GetDatasetDetailsOutputDTO;
-import org.phyloviz.pwp.visualization.service.dtos.getDatasetProfiles.GetDatasetProfilesOutputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.getTypingDatasetDetais.GetDatasetDetailsOutputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.getTypingDatasetProfiles.GetTypingDatasetProfilesOutputDTO;
 import org.phyloviz.pwp.visualization.service.dtos.getTreeView.GetTreeViewOutputDTO;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +20,14 @@ public interface VisualizationService {
     GetDatasetDetailsOutputDTO getDatasetDetails(String id);
 
     /**
-     * Gets the profiles of a dataset, given its id.
+     * Gets the profiles of a typing dataset, given its id.
      *
-     * @param id     the id of the dataset
+     * @param id     the id of the typing dataset
      * @param limit  the number of profiles to be returned
      * @param offset the offset of the profiles to be returned
-     * @return the profiles of the dataset
+     * @return the profiles of the typing dataset
      */
-    GetDatasetProfilesOutputDTO getDatasetProfiles(String id, int limit, int offset);
+    GetTypingDatasetProfilesOutputDTO getTypingDatasetProfiles(String id, int limit, int offset);
 
     /**
      * Gets the tree view, given its id.

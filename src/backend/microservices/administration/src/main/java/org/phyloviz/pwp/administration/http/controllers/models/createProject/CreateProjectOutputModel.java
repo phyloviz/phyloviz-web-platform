@@ -11,5 +11,4 @@ public class CreateProjectOutputModel {
     public CreateProjectOutputModel(CreateProjectOutputDTO createProjectOutputDTO) {
         this.projectId = createProjectOutputDTO.getProjectId();
     }
-
 }

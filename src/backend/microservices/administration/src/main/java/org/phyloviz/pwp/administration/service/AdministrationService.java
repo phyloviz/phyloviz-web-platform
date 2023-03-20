@@ -3,6 +3,16 @@ package org.phyloviz.pwp.administration.service;
 import org.phyloviz.pwp.administration.service.dtos.ProjectDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteDistanceMatrix.DeleteDistanceMatrixInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteDistanceMatrix.DeleteDistanceMatrixOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteInferenceTree.DeleteInferenceTreeInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteInferenceTree.DeleteInferenceTreeOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteProject.DeleteProjectInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteProject.DeleteProjectOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteTreeView.DeleteTreeViewInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteTreeView.DeleteTreeViewOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteTypingDataset.DeleteTypingDatasetInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteTypingDataset.DeleteTypingDatasetOutputDTO;
 import org.phyloviz.pwp.shared.service.dtos.UserDTO;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.springframework.stereotype.Service;
@@ -26,10 +36,42 @@ public interface AdministrationService {
     /**
      * Deletes a project.
      *
-     * @param projectId id of the project
-     * @param userDTO   user that wants to delete the project
+     * @param deleteProjectInputDTO the input data for the project deletion
+     * @return the output data for the project deletion
      */
-    void deleteProject(String projectId, UserDTO userDTO) throws ProjectNotFoundException;
+    DeleteProjectOutputDTO deleteProject(DeleteProjectInputDTO deleteProjectInputDTO) throws ProjectNotFoundException;
+
+    /**
+     * Deletes a typing dataset.
+     *
+     * @param deleteTypingDatasetInputDTO the input data for the typing dataset deletion
+     * @return the output data for the typing dataset deletion
+     */
+    DeleteTypingDatasetOutputDTO deleteTypingDataset(DeleteTypingDatasetInputDTO deleteTypingDatasetInputDTO);
+
+    /**
+     * Deletes a distance matrix.
+     *
+     * @param deleteDistanceMatrixInputDTO the input data for the distance matrix deletion
+     * @return the output data for the distance matrix deletion
+     */
+    DeleteDistanceMatrixOutputDTO deleteDistanceMatrix(DeleteDistanceMatrixInputDTO deleteDistanceMatrixInputDTO);
+
+    /**
+     * Deletes an inference tree.
+     *
+     * @param deleteInferenceTreeInputDTO the input data for the inference tree deletion
+     * @return the output data for the inference tree deletion
+     */
+    DeleteInferenceTreeOutputDTO deleteInferenceTree(DeleteInferenceTreeInputDTO deleteInferenceTreeInputDTO);
+
+    /**
+     * Deletes a tree view.
+     *
+     * @param deleteTreeViewInputDTO the input data for the tree view deletion
+     * @return the output data for the tree view deletion
+     */
+    DeleteTreeViewOutputDTO deleteTreeView(DeleteTreeViewInputDTO deleteTreeViewInputDTO);
 
     /**
      * Gets a project.

@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.service.dtos;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.repository.metadata.documents.Project;
+import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 
 @Data
 public class ProjectDTO {
@@ -15,7 +15,7 @@ public class ProjectDTO {
         this.id = project.getId();
         this.name = project.getName();
         this.description = project.getDescription();
-        this.owner = project.getOwner();
+        this.owner = project.getOwnerId();
         this.resourceDTOs = project.getResources().stream().map(ResourceDTO::new).toArray(ResourceDTO[]::new);
     }
 }

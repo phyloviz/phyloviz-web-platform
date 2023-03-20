@@ -1,21 +1,32 @@
 package org.phyloviz.pwp.administration.http.controllers;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.phyloviz.pwp.administration.http.controllers.models.createProject.CreateProjectInputModel;
 import org.phyloviz.pwp.administration.http.controllers.models.createProject.CreateProjectOutputModel;
+import org.phyloviz.pwp.administration.http.controllers.models.deleteDistanceMatrix.DeleteDistanceMatrixOutputModel;
+import org.phyloviz.pwp.administration.http.controllers.models.deleteInferenceTree.DeleteInferenceTreeOutputModel;
+import org.phyloviz.pwp.administration.http.controllers.models.deleteProject.DeleteProjectOutputModel;
+import org.phyloviz.pwp.administration.http.controllers.models.deleteTreeView.DeleteTreeViewOutputModel;
+import org.phyloviz.pwp.administration.http.controllers.models.deleteTypingDataset.DeleteTypingDatasetOutputModel;
 import org.phyloviz.pwp.administration.http.controllers.models.getProject.GetProjectOutputModel;
 import org.phyloviz.pwp.administration.http.controllers.models.getProjects.GetProjectsOutputModel;
 import org.phyloviz.pwp.administration.service.AdministrationService;
 import org.phyloviz.pwp.administration.service.dtos.ProjectDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteDistanceMatrix.DeleteDistanceMatrixInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteDistanceMatrix.DeleteDistanceMatrixOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteInferenceTree.DeleteInferenceTreeInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteInferenceTree.DeleteInferenceTreeOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteProject.DeleteProjectInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteProject.DeleteProjectOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteTreeView.DeleteTreeViewInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteTreeView.DeleteTreeViewOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteTypingDataset.DeleteTypingDatasetInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.deleteTypingDataset.DeleteTypingDatasetOutputDTO;
 import org.phyloviz.pwp.shared.domain.User;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Controller for the Administration Microservice.
@@ -47,15 +58,91 @@ public class AdministrationController {
     /**
      * Deletes a project.
      *
-     * @param projectId the id of the project to be deleted
-     * @param user      the user that is deleting the project
+     * @param id   the id of the project to be deleted
+     * @param user the user that is deleting the project
      */
-    @DeleteMapping("/projects/{projectId}")
-    public void deleteProject(
-            @PathVariable String projectId,
+    @DeleteMapping("/projects/{id}")
+    public DeleteProjectOutputModel deleteProject(
+            @PathVariable String id,
             User user
     ) {
-        administrationService.deleteProject(projectId, user.toDTO());
+        DeleteProjectOutputDTO deleteProjectOutputDTO = administrationService.deleteProject(
+                new DeleteProjectInputDTO(id, user.toDTO())
+        );
+
+        return new DeleteProjectOutputModel(deleteProjectOutputDTO);
+    }
+
+    /**
+     * Deletes a typing dataset.
+     *
+     * @param id   the id of the typing dataset to be deleted
+     * @param user the user that is deleting the typing dataset
+     */
+    @DeleteMapping("/typing-datasets/{id}")
+    public DeleteTypingDatasetOutputModel deleteTypingDataset(
+            @PathVariable String id,
+            User user
+    ) {
+        DeleteTypingDatasetOutputDTO deleteTypingDatasetOutputDTO = administrationService.deleteTypingDataset(
+                new DeleteTypingDatasetInputDTO(id, user.toDTO())
+        );
+
+        return new DeleteTypingDatasetOutputModel(deleteTypingDatasetOutputDTO);
+    }
+
+    /**
+     * Deletes a distance matrix.
+     *
+     * @param id   the id of the distance matrix to be deleted
+     * @param user the user that is deleting the distance matrix
+     */
+    @DeleteMapping("/distance-matrices/{id}")
+    public DeleteDistanceMatrixOutputModel deleteDistanceMatrix(
+            @PathVariable String id,
+            User user
+    ) {
+        DeleteDistanceMatrixOutputDTO deleteDistanceMatrixOutputDTO = administrationService.deleteDistanceMatrix(
+                new DeleteDistanceMatrixInputDTO(id, user.toDTO())
+        );
+
+        return new DeleteDistanceMatrixOutputModel(deleteDistanceMatrixOutputDTO);
+    }
+
+    /**
+     * Deletes an inference tree.
+     *
+     * @param id   the id of the inference tree to be deleted
+     * @param user the user that is deleting the inference tree
+     */
+    @DeleteMapping("/inference-trees/{id}")
+    public DeleteInferenceTreeOutputModel deleteInferenceTree(
+            @PathVariable String id,
+            User user
+    ) {
+        DeleteInferenceTreeOutputDTO deleteInferenceTreeOutputDTO = administrationService.deleteInferenceTree(
+                new DeleteInferenceTreeInputDTO(id, user.toDTO())
+        );
+
+        return new DeleteInferenceTreeOutputModel(deleteInferenceTreeOutputDTO);
+    }
+
+    /**
+     * Deletes a tree view.
+     *
+     * @param id   the id of the tree view to be deleted
+     * @param user the user that is deleting the tree view
+     */
+    @DeleteMapping("/tree-views/{id}")
+    public DeleteTreeViewOutputModel deleteTreeView(
+            @PathVariable String id,
+            User user
+    ) {
+        DeleteTreeViewOutputDTO deleteTreeViewOutputDTO = administrationService.deleteTreeView(
+                new DeleteTreeViewInputDTO(id, user.toDTO())
+        );
+
+        return new DeleteTreeViewOutputModel(deleteTreeViewOutputDTO);
     }
 
     /**

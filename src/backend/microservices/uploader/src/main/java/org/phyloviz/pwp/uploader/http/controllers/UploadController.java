@@ -2,9 +2,9 @@ package org.phyloviz.pwp.uploader.http.controllers;
 
 import lombok.AllArgsConstructor;
 import org.phyloviz.pwp.shared.domain.User;
-import org.phyloviz.pwp.uploader.http.controllers.models.uploadProfile.UploadProfileOutputModel;
+import org.phyloviz.pwp.uploader.http.controllers.models.uploadTypingDataset.UploadTypingDatasetOutputModel;
 import org.phyloviz.pwp.uploader.service.UploadService;
-import org.phyloviz.pwp.uploader.service.dtos.uploadeProfile.UploadProfileOutputDTO;
+import org.phyloviz.pwp.uploader.service.dtos.uploadTypingDataset.UploadTypingDatasetOutputDTO;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,20 +22,20 @@ public class UploadController {
     private final UploadService uploadService;
 
     /**
-     * Uploads a profile dataset.
+     * Uploads a typing dataset.
      *
-     * @param projectId the name of the project to which the profile data will be uploaded
+     * @param projectId the name of the project to which the typing dataset will be uploaded
      * @param file      the file to be uploaded
      * @return a message indicating that the data was successfully uploaded
      */
-    @PostMapping(path = "/profiles", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public UploadProfileOutputModel uploadProfile(
+    @PostMapping(path = "/typing-datasets", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public UploadTypingDatasetOutputModel uploadTypingDataset(
             @RequestParam String projectId,
             @RequestPart MultipartFile file,
             User user
     ) {
-        UploadProfileOutputDTO uploadProfileOutputDTO = uploadService.uploadProfile(projectId, file, user.toDTO());
+        UploadTypingDatasetOutputDTO uploadTypingDatasetOutputDTO = uploadService.uploadTypingDataset(projectId, file, user.toDTO());
 
-        return new UploadProfileOutputModel(uploadProfileOutputDTO);
+        return new UploadTypingDatasetOutputModel(uploadTypingDatasetOutputDTO);
     }
 }
