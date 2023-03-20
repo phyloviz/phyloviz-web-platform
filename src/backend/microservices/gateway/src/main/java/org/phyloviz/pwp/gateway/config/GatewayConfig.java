@@ -17,8 +17,6 @@ public class GatewayConfig {
                 .and()
                 .oauth2Login()
                 .and()
-                .csrf()
-                .and()
                 .oauth2Client((oauth2Client) ->
                         // Saves the authorized client (containing access, refresh token, etc)
                         // in the spring session. since we included the redis session dependency

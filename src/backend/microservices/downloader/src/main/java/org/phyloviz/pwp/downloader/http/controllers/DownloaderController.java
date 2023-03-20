@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.downloader.http.controllers;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.downloader.service.DownloaderService;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller for the Downloader Microservice.
  */
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DownloaderController {
 
     private final DownloaderService downloaderService;

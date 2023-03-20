@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.visualization.http.controllers;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.visualization.http.controllers.models.getTypingDatasetDetais.GetDatasetDetailsOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.getTypingDatasetProfiles.GetTypingDatasetProfilesOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.getTreeView.GetTreeViewOutputModel;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/visualization")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class VisualizationController {
 
     private final VisualizationService visualizationService;

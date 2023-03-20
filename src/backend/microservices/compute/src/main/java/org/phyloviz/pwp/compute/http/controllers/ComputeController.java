@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.compute.http.controllers;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.compute.service.ComputeService;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller for the Compute Microservice.
  */
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ComputeController {
 
     private final ComputeService computeService;

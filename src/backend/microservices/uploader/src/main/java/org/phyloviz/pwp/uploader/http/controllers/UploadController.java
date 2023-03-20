@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.uploader.http.controllers;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.uploader.http.controllers.models.uploadTypingDataset.UploadTypingDatasetOutputModel;
 import org.phyloviz.pwp.uploader.service.UploadService;
@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
  * Controller for the Uploader Microservice.
  */
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UploadController {
 
     private final UploadService uploadService;

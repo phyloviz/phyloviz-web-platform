@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.uploader.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.repository.data.ObjectStorageRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_dataset.TypingDatasetMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_dataset.documents.TypingDatasetMetadata;
@@ -22,7 +22,7 @@ import java.util.UUID;
  * Implementation of the {@link UploadService} interface.
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class UploadServiceImpl implements UploadService {
 

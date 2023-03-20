@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.administration.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.service.dtos.ProjectDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectOutputDTO;
@@ -38,7 +38,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AdministrationServiceImpl implements AdministrationService {
 
     private final ObjectStorageRepository objectStorageRepository;

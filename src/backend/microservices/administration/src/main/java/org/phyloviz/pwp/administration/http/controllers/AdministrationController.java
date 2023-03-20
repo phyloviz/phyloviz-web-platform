@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.administration.http.controllers;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.http.controllers.models.createProject.CreateProjectInputModel;
 import org.phyloviz.pwp.administration.http.controllers.models.createProject.CreateProjectOutputModel;
 import org.phyloviz.pwp.administration.http.controllers.models.deleteDistanceMatrix.DeleteDistanceMatrixOutputModel;
@@ -32,7 +32,7 @@ import java.util.List;
  * Controller for the Administration Microservice.
  */
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AdministrationController {
 
     private final AdministrationService administrationService;
