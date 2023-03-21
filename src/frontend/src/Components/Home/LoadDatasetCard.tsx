@@ -6,19 +6,20 @@ import * as React from "react";
 import {useNavigate} from "react-router-dom";
 import {Uris} from "../../Utils/navigation/Uris";
 
+/**
+ * Card for the load dataset feature in the home page.
+ */
 export function LoadDatasetCard() {
     const navigate = useNavigate();
 
-    return <Paper
-        sx={{
-            p: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            width: "32%",
-            justifyContent: "space-between"
-        }}
-    >
+    return <Paper sx={{
+        p: 4,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "32%",
+        justifyContent: "space-between"
+    }}>
         <Typography component="h1" variant="h5">
             <strong>Load Dataset</strong>
         </Typography>

@@ -32,8 +32,6 @@ interface DashboardProps {
 
 /**
  * Dashboard component that contains the sidebar and the main content.
- *
- * @param children the main content.
  */
 export default function Dashboard({children}: DashboardProps) {
     const [open, setOpen] = useState(true);
@@ -83,10 +81,7 @@ export default function Dashboard({children}: DashboardProps) {
                         <MenuIcon/>
                     </IconButton>
                     <Box sx={{flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Avatar alt="logo" src={Logo} sx={{
-                            mr: 1,
-                        }}
-                        />
+                        <img alt="logo" src={Logo} width={40} height={40} style={{marginRight: '10px'}}/>
                         <Typography
                             component="h1"
                             variant="body1"

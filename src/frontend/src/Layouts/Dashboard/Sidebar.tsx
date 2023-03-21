@@ -11,7 +11,9 @@ import NewsIcon from "@mui/icons-material/Newspaper";
 import ApiIcon from "@mui/icons-material/Api";
 import {Uris} from "../../Utils/navigation/Uris";
 
-
+/**
+ * List of the main items in the sidebar.
+ */
 export const mainListItems = [
     {
         name: 'Home',
@@ -35,6 +37,9 @@ export const mainListItems = [
     },
 ];
 
+/**
+ * List of the secondary items in the sidebar.
+ */
 export const secondaryListItems = [
     {
         name: 'Load Dataset',
@@ -53,6 +58,9 @@ export const secondaryListItems = [
     },
 ];
 
+/**
+ * Drawer component.
+ */
 export const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})(
     ({theme, open}) => ({
         '& .MuiDrawer-paper': {

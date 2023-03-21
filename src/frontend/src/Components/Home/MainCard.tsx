@@ -3,6 +3,9 @@ import Logo from "../../Assets/logo.png";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 
+/**
+ * Main card of the home page.
+ */
 export function MainCard() {
     return (
         <Paper sx={{
