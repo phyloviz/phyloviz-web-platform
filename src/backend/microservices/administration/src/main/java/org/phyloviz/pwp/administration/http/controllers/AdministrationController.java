@@ -1,5 +1,6 @@
 package org.phyloviz.pwp.administration.http.controllers;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.http.controllers.models.createProject.CreateProjectInputModel;
 import org.phyloviz.pwp.administration.http.controllers.models.createProject.CreateProjectOutputModel;
@@ -10,6 +11,7 @@ import org.phyloviz.pwp.administration.http.controllers.models.deleteTreeView.De
 import org.phyloviz.pwp.administration.http.controllers.models.deleteTypingDataset.DeleteTypingDatasetOutputModel;
 import org.phyloviz.pwp.administration.http.controllers.models.getProject.GetProjectOutputModel;
 import org.phyloviz.pwp.administration.http.controllers.models.getProjects.GetProjectsOutputModel;
+import org.phyloviz.pwp.administration.http.controllers.models.uploadTypingDataset.UploadTypingDatasetOutputModel;
 import org.phyloviz.pwp.administration.service.AdministrationService;
 import org.phyloviz.pwp.administration.service.dtos.ProjectDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectOutputDTO;
@@ -23,10 +25,18 @@ import org.phyloviz.pwp.administration.service.dtos.deleteTreeView.DeleteTreeVie
 import org.phyloviz.pwp.administration.service.dtos.deleteTreeView.DeleteTreeViewOutputDTO;
 import org.phyloviz.pwp.administration.service.dtos.deleteTypingDataset.DeleteTypingDatasetInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.deleteTypingDataset.DeleteTypingDatasetOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.uploadTypingDataset.UploadTypingDatasetOutputDTO;
 import org.phyloviz.pwp.shared.domain.User;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Controller for the Administration Microservice.
@@ -55,6 +65,7 @@ public class AdministrationController {
         return new CreateProjectOutputModel(createProjectOutputDTO);
     }
 
+
     /**
      * Deletes a project.
      *
@@ -71,6 +82,24 @@ public class AdministrationController {
         );
 
         return new DeleteProjectOutputModel(deleteProjectOutputDTO);
+    }
+
+    /**
+     * Uploads a typing dataset.
+     *
+     * @param projectId the name of the project to which the typing dataset will be uploaded
+     * @param file      the file to be uploaded
+     * @return a message indicating that the data was successfully uploaded
+     */
+    @PostMapping(path = "/typing-datasets", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public UploadTypingDatasetOutputModel uploadTypingDataset(
+            @RequestParam String projectId,
+            @RequestPart MultipartFile file,
+            User user
+    ) {
+        UploadTypingDatasetOutputDTO uploadTypingDatasetOutputDTO = administrationService.uploadTypingDataset(projectId, file, user.toDTO());
+
+        return new UploadTypingDatasetOutputModel(uploadTypingDatasetOutputDTO);
     }
 
     /**

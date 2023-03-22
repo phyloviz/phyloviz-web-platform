@@ -27,7 +27,7 @@ spring:
           phyloviz-web-platform-client:
             provider: keycloak
             client-id: phyloviz-web-platform-client
-            client-secret: pZW9kZ05jHjLiOlYYhBAa9CGk1uL7bob
+            client-secret: whCCD9r37qj8mx9H7R4mzIrSezYf3H7R
             scope:
               - openid
               - email

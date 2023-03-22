@@ -13,11 +13,13 @@ import org.phyloviz.pwp.administration.service.dtos.deleteTreeView.DeleteTreeVie
 import org.phyloviz.pwp.administration.service.dtos.deleteTreeView.DeleteTreeViewOutputDTO;
 import org.phyloviz.pwp.administration.service.dtos.deleteTypingDataset.DeleteTypingDatasetInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.deleteTypingDataset.DeleteTypingDatasetOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.uploadTypingDataset.UploadTypingDatasetOutputDTO;
 import org.phyloviz.pwp.shared.service.dtos.UserDTO;
-import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
+import org.phyloviz.pwp.administration.service.exceptions.ProjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Service for the Uploader Microservice.
@@ -40,6 +42,16 @@ public interface AdministrationService {
      * @return the output data for the project deletion
      */
     DeleteProjectOutputDTO deleteProject(DeleteProjectInputDTO deleteProjectInputDTO) throws ProjectNotFoundException;
+
+    /**
+     * Stores the uploaded file.
+     *
+     * @param projectId     id of the project
+     * @param multipartFile file to be stored
+     * @param userDTO       user who is uploading the file
+     * @return the output data for the profile upload
+     */
+    UploadTypingDatasetOutputDTO uploadTypingDataset(String projectId, MultipartFile multipartFile, UserDTO userDTO);
 
     /**
      * Deletes a typing dataset.

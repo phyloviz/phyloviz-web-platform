@@ -1,6 +1,10 @@
 package org.phyloviz.pwp.administration.service;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.administration.repository.metadata.documents.TypingDatasetS3AdapterSpecificData;
 import org.phyloviz.pwp.administration.service.dtos.ProjectDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.createProject.CreateProjectOutputDTO;
@@ -14,13 +18,15 @@ import org.phyloviz.pwp.administration.service.dtos.deleteTreeView.DeleteTreeVie
 import org.phyloviz.pwp.administration.service.dtos.deleteTreeView.DeleteTreeViewOutputDTO;
 import org.phyloviz.pwp.administration.service.dtos.deleteTypingDataset.DeleteTypingDatasetInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.deleteTypingDataset.DeleteTypingDatasetOutputDTO;
-import org.phyloviz.pwp.shared.repository.data.ObjectStorageRepository;
+import org.phyloviz.pwp.administration.service.dtos.uploadTypingDataset.UploadTypingDatasetOutputDTO;
+import org.phyloviz.pwp.administration.repository.data.ObjectStorageRepository;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.DistanceMatrixMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.DistanceMatrixMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.inference_tree.InferenceTreeMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.inference_tree.documents.InferenceTreeMetadata;
-import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
+import org.phyloviz.pwp.administration.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.administration.repository.metadata.project.documents.Project;
+import org.phyloviz.pwp.administration.repository.metadata.project.documents.Resource;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.TreeViewMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.TreeViewMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.typing_dataset.TypingDatasetMetadataRepository;
@@ -29,9 +35,7 @@ import org.phyloviz.pwp.shared.service.dtos.UserDTO;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collections;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Implementation of the {@link AdministrationService} interface.
@@ -84,6 +88,40 @@ public class AdministrationServiceImpl implements AdministrationService {
         projectRepository.delete(project);
 
         return new DeleteProjectOutputDTO(projectId);
+    }
+
+
+    @Override
+    public UploadTypingDatasetOutputDTO uploadTypingDataset(String projectId, MultipartFile multipartFile, UserDTO userDTO) {
+        Project project = projectRepository.findById(projectId);
+
+        if (!project.getOwnerId().equals(userDTO.getId()))
+            throw new UnauthorizedException("User does not have permission to upload to this project");
+
+        String resourceId = UUID.randomUUID().toString();
+        String location = "/" + projectId + "/" + resourceId;
+
+        final TypingDatasetMetadata typingDatasetMetadata = new TypingDatasetMetadata(
+                projectId,
+                resourceId,
+                objectStorageRepository.getLocation() + location,
+                objectStorageRepository.getAdapterId(),
+                new TypingDatasetS3AdapterSpecificData(multipartFile.getOriginalFilename()),
+                Collections.emptyList()
+        );
+
+        typingDatasetMetadataRepository.save(typingDatasetMetadata);
+
+        boolean stored = objectStorageRepository.store(location, multipartFile);
+
+        if (!stored)
+            throw new RuntimeException("Could not store file");
+
+        project.getResources().add(new Resource(resourceId, TYPING_DATASET_COLLECTION));
+
+        projectRepository.save(project);
+
+        return new UploadTypingDatasetOutputDTO(resourceId);
     }
 
     @Override

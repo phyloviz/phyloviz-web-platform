@@ -20,8 +20,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-    implementation 'com.github.openstack4j.core:openstack4j:3.11'
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'

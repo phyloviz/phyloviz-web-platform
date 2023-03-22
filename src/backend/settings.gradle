@@ -1,8 +1,6 @@
 rootProject.name = 'phyloviz-web-platform'
-include 'microservices:uploader'
 include 'microservices:visualization'
 include 'microservices:compute'
 include 'microservices:gateway'
 include 'microservices:shared'
 include 'microservices:administration'
-include 'microservices:downloader'

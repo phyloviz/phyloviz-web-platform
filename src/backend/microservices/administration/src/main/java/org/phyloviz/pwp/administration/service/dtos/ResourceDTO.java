@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.service.dtos;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.Resource;
+import org.phyloviz.pwp.administration.repository.metadata.project.documents.Resource;
 
 @Data
 public class ResourceDTO {
