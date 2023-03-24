@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import NextIcon from "@mui/icons-material/ArrowForwardIos";
 import BackIcon from "@mui/icons-material/ArrowBackIos";
 import FinishIcon from "@mui/icons-material/Done";
-import {DatasetInfoStepCard} from "../../Components/LoadDataset/DatasetInfoStepCardProps";
+import {DatasetInfoStepCard} from "../../Components/LoadDataset/DatasetInfoStepCard";
 import {DatasetType} from "../../Domain/DatasetType";
 import {TypingDataStepCard} from "../../Components/LoadDataset/TypingDataStepCard";
 import {IsolateDataStepCard} from "../../Components/LoadDataset/IsolateDataStepCard";

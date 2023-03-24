@@ -15,6 +15,10 @@ import {Drawer, mainListItems, secondaryListItems} from "./Sidebar";
 import {useNavigate} from "react-router-dom";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import RegisterIcon from "@mui/icons-material/PersonAdd";
+import ProfileIcon from "@mui/icons-material/AccountCircle";
 import ListItemText from "@mui/material/ListItemText";
 import {Avatar, Menu, MenuItem, Tooltip} from "@mui/material";
 import Logo from "../../Assets/logo.png";
@@ -34,7 +38,7 @@ interface DashboardProps {
  * Dashboard component that contains the sidebar and the main content.
  */
 export default function Dashboard({children}: DashboardProps) {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const navigate = useNavigate();
     const toggleDrawer = () => {
         setOpen(!open);
@@ -46,22 +50,36 @@ export default function Dashboard({children}: DashboardProps) {
     }
     const handleCloseUserMenu = () => setAnchorElUser(null)
 
-    const settings = [
+    const loggedIn = false; // TODO: To be replaced with a real check
+
+    const authSettings = [
         {
             name: 'Profile',
-            callback: () => navigate(Uris.PROFILE),
-            auth: true
+            icon: <ProfileIcon/>,
+            callback: () => navigate(Uris.PROFILE)
         },
         {
             name: 'Logout',
+            icon: <LogoutIcon/>,
             callback: async () => {
                 // TODO: logout
                 navigate(Uris.HOME)
-            },
-            auth: true
+            }
         }
     ]
 
+    const nonAuthSettings = [
+        {
+            name: 'Login',
+            icon: <LoginIcon/>,
+            callback: () => navigate(Uris.LOGIN)
+        },
+        {
+            name: 'Register',
+            icon: <RegisterIcon/>,
+            callback: () => navigate(Uris.REGISTER)
+        },
+    ]
 
     return (
         <Box sx={{display: 'flex'}}>
@@ -113,14 +131,21 @@ export default function Dashboard({children}: DashboardProps) {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting.name} onClick={() => {
-                                    handleCloseUserMenu()
-                                    setting.callback()
-                                }}>
-                                    <Typography textAlign="center">{setting.name}</Typography>
-                                </MenuItem>
-                            ))}
+                            {
+                                (
+                                    loggedIn
+                                        ? authSettings
+                                        : nonAuthSettings
+                                ).map((setting) => (
+                                    <MenuItem key={setting.name} onClick={() => {
+                                        handleCloseUserMenu()
+                                        setting.callback()
+                                    }}>
+                                        {setting.icon}
+                                        <Divider sx={{mr: 1}}/>
+                                        <Typography textAlign="center">{setting.name}</Typography>
+                                    </MenuItem>
+                                ))}
                         </Menu>
                     </Box>
                 </Toolbar>

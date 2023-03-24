@@ -10,7 +10,7 @@ import {DatasetType} from "../../Domain/DatasetType";
  * @param datasetType the type of the dataset
  * @param onChange the function to be called when the dataset type is changed
  */
-interface DatasetInfoStepCardProps {
+interface DatasetInfoStepCard {
     datasetType: DatasetType,
     onChange: (event: SelectChangeEvent, child: ReactNode) => void
 }
@@ -18,7 +18,7 @@ interface DatasetInfoStepCardProps {
 /**
  * Card for the Dataset Info step of the Load Dataset page.
  */
-export function DatasetInfoStepCard({datasetType, onChange}: DatasetInfoStepCardProps) {
+export function DatasetInfoStepCard({datasetType, onChange}: DatasetInfoStepCard) {
     return <>
         <TextField label="Dataset Name" variant="outlined" required sx={{
             width: "100%", mb: 1

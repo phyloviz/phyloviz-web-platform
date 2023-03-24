@@ -11,6 +11,7 @@ import {Uris} from "../../Utils/navigation/Uris";
  */
 export function NewProjectCard() {
     const navigate = useNavigate();
+    const loggedIn = true; // TODO: replace with actual login status
 
     return (
         <Paper sx={{
@@ -18,19 +19,24 @@ export function NewProjectCard() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            width: "32%",
+            width: "48%",
             justifyContent: "space-between"
         }}>
             <Typography component="h1" variant="h5">
                 <strong>New Project</strong>
             </Typography>
-            <Typography component="h1" variant="body1" align={"justify"}>
-                Create a new project and save your data in the cloud.<br/>
-                You will need to create an account to use this feature.
+            <Typography component="h1" variant="body1">
+                Create a new project, load a dataset and start exploring your data!
+                You need to be logged in to create a new project.
             </Typography>
             <Button variant="contained"
                     startIcon={<NewProjectIcon/>}
-                    onClick={() => navigate(Uris.NEW_PROJECT)}
+                    onClick={() => {
+                        if (!loggedIn)
+                            navigate(Uris.LOGIN)
+                        else
+                            navigate(Uris.NEW_PROJECT)
+                    }}
                     sx={{
                         marginTop: 4,
                         width: "75%"

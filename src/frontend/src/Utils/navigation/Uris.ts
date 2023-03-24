@@ -13,6 +13,8 @@ export namespace Uris {
     export const LOAD_DATASET = "/loadDataset"
     export const NEW_PROJECT = "/newProject"
     export const OPEN_PROJECT = "/openProject"
-    export const PROJECT = "/project"
+    export const PROJECT = "/project/:projectId"
     export const PROFILE = "/profile"
+
+    export const project = (projectId: string) => `/project/${projectId}`
 }

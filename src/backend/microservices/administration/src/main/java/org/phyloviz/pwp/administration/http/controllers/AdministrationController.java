@@ -51,7 +51,7 @@ public class AdministrationController {
      * Creates a project.
      *
      * @param createProjectInputModel the project to be created following the CreateProjectModel format
-     * @return a message indicating that the project was successfully created
+     * @return a message indicating that the project was successfully created // TODO: Review and fix this comments
      */
     @PostMapping("/projects")
     public CreateProjectOutputModel createProject(

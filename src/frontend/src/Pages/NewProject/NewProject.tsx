@@ -73,7 +73,9 @@ export default function NewProject() {
                         <Button
                             variant="contained"
                             startIcon={<FinishIcon/>}
-                            onClick={() => {/*TODO*/
+                            onClick={() => {
+                                /*TODO: handleFinish*/
+                                navigate(Uris.project("test")); // TODO: Change to a real project ID
                             }}
                             sx={{
                                 marginTop: 4,

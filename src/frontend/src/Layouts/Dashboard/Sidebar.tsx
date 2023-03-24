@@ -1,5 +1,4 @@
 import * as React from "react";
-import UploadIcon from "@mui/icons-material/Upload";
 import NewProjectIcon from "@mui/icons-material/CreateNewFolder";
 import OpenProjectIcon from "@mui/icons-material/FolderOpen";
 import {styled} from "@mui/material/styles";
@@ -41,11 +40,11 @@ export const mainListItems = [
  * List of the secondary items in the sidebar.
  */
 export const secondaryListItems = [
-    {
+    /*{
         name: 'Load Dataset',
         href: Uris.LOAD_DATASET,
         icon: <UploadIcon/>,
-    },
+    },*/
     {
         name: 'New Project',
         href: Uris.NEW_PROJECT,

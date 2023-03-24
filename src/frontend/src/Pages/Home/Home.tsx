@@ -1,6 +1,5 @@
-import {MainCard} from "../../Components/Home/MainCard";
+import {HomeMainCard} from "../../Components/Home/HomeMainCard";
 import Box from "@mui/material/Box";
-import {LoadDatasetCard} from "../../Components/Home/LoadDatasetCard";
 import {NewProjectCard} from "../../Components/Home/NewProjectCard";
 import {OpenProjectCard} from "../../Components/Home/OpenProjectCard";
 import * as React from "react";
@@ -11,7 +10,7 @@ import * as React from "react";
 export function Home() {
     return (
         <>
-            <MainCard/>
+            <HomeMainCard/>
             <Box
                 sx={{
                     display: "flex",
@@ -22,7 +21,7 @@ export function Home() {
                     width: "100%"
                 }}
             >
-                <LoadDatasetCard/>
+                {/*<LoadDatasetCard/>*/}
                 <NewProjectCard/>
                 <OpenProjectCard/>
             </Box>
