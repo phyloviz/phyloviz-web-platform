@@ -1,5 +1,7 @@
 package org.phyloviz.pwp.compute.service;
 
+import org.phyloviz.pwp.compute.service.dtos.computeDistanceMatrix.ComputeDistanceMatrixOutputDTO;
+import org.phyloviz.pwp.shared.service.dtos.UserDTO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,5 +10,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ComputeService {
 
-    // TODO: 11/03/2023 To be implemented.
+    ComputeDistanceMatrixOutputDTO computeDistanceMatrix(String projectId, String typingDatasetId, UserDTO toDTO);
 }

@@ -3,12 +3,11 @@ package org.phyloviz.pwp.compute.service.flowviz.models.tool.access.library;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NonNull;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.AccessDetails;
 
 @Data
 @Builder
-public class LibraryAccess implements AccessDetails {
+public class LibraryAccessDetails implements AccessDetails {
     
     private final String address;
     

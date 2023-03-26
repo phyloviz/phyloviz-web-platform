@@ -15,7 +15,5 @@ public class Task {
 
     private final Action action;
 
-    private final List<String> parents;
-
     private final List<String> children;
 }

@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  s3ninja:
+    container_name: s3ninja
+    image: scireum/s3-ninja:latest
+    ports:
+      - "9444:9000"
+    volumes:
+      - "./s3ninja-data:/data"

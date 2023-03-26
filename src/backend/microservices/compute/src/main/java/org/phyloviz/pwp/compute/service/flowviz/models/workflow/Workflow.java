@@ -17,14 +17,8 @@ public class Workflow {
 
     private final String description;
 
-
     @SerializedName("start_date")
     private final LocalDateTime startDate;
-
-
-    @SerializedName("end_date")
-    private final LocalDateTime endDate;
-
 
     private final List<Task> tasks;
 }

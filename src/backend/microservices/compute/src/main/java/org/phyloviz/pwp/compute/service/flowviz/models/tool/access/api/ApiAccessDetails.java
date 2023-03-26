@@ -1,11 +1,12 @@
 package org.phyloviz.pwp.compute.service.flowviz.models.tool.access.api;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.NonNull;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.AccessDetails;
 
 @Data
-public class ApiAccess implements AccessDetails {
+@Builder
+public class ApiAccessDetails implements AccessDetails {
     
     private final String url;
     

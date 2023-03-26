@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.IgnoredPropertyException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
+import org.phyloviz.pwp.shared.utils.Logger;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -64,9 +65,11 @@ public class SharedExceptionHandler {
      */
     @ExceptionHandler(value = {Exception.class})
     public Problem handleInternalServerError(Exception e) {
+
         return Problem.builder()
                 .withTitle("Internal Server Error")
                 .withStatus(Status.INTERNAL_SERVER_ERROR)
                 .build();
     }
+
 }

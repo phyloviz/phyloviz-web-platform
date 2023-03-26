@@ -1,6 +1,11 @@
 server:
   port: 8086
 
+flowviz:
+  url: http://localhost:3000/flowapi
+  username: admin
+  password: admin
+
 spring:
   data:
     mongodb:

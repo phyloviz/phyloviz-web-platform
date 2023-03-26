@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class MongoConfig {
 
     @Bean
-    public MappingMongoConverter mappingMongoConverter(
+    public MappingMongoConverter customMappingMongoConverter(
             MongoDatabaseFactory factory,
             MongoMappingContext context,
             BeanFactory beanFactory
