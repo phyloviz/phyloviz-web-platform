@@ -1,8 +1,8 @@
-import {Button} from "@mui/material";
-import UploadIcon from "@mui/icons-material/Upload";
+import {FormControl, InputLabel, Select} from "@mui/material";
 import * as React from "react";
-import {DatasetType} from "../../Domain/DatasetType";
+import {DatasetType} from "../../../../Domain/DatasetType";
 import Typography from "@mui/material/Typography";
+import {FileUploader} from "react-drag-drop-files";
 
 /**
  * Props for the TypingDataStepCard component.
@@ -14,28 +14,33 @@ interface TypingDataStepCardProps {
 }
 
 /**
- * Card for the Typing Data step of the Load Dataset page.
+ * Card for the Typing Data step of the Create Dataset page.
  */
 export function TypingDataStepCard({datasetType}: TypingDataStepCardProps) {
     return (
         <>
-            <Button
-                variant="contained"
-                component="label"
-                startIcon={<UploadIcon/>}
-                sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: "100%"
-                }}
-            >
-                Upload Dataset
-                <input type="file" hidden/>
-            </Button>
+            <Typography variant="caption" align={"justify"} sx={{mb: 1, width: "100%"}}>
+                Select the typing data file from the project files or upload a new one.
+            </Typography>
+            <FormControl sx={{width: "100%", mb: 1}}>
+                <InputLabel id="typing-key">Typing Data</InputLabel>
+                <Select
+                    labelId="typing-key"
+                    //value={}
+                    label="Typing Data"
+                >
+                </Select>
+            </FormControl>
+            <Typography variant="body2" align={"center"} sx={{mb: 1, width: "100%"}}>
+                Or
+            </Typography>
+            <FileUploader
+                //handleChange={handleChange}
+                name="file"
+                required
+            />
 
-            {/*Maybe use this: https://github.com/iamchathu/react-material-file-upload*/}
-
-            <Typography variant="caption" align={"justify"} sx={{mb: 2, width: "100%"}}>
+            <Typography variant="caption" align={"justify"} sx={{mt: 2, mb: 2, width: "100%"}}>
                 The {datasetType.valueOf()} type is chosen.
             </Typography>
 

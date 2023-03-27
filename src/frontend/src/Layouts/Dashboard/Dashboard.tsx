@@ -7,11 +7,10 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import {AppBar} from "./AppBar";
-import {Drawer, mainListItems, secondaryListItems} from "./Sidebar";
+import {Drawer, mainListItems, secondaryListItems} from "./Drawer";
 import {useNavigate} from "react-router-dom";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -22,7 +21,7 @@ import ProfileIcon from "@mui/icons-material/AccountCircle";
 import ListItemText from "@mui/material/ListItemText";
 import {Avatar, Menu, MenuItem, Tooltip} from "@mui/material";
 import Logo from "../../Assets/logo.png";
-import {Uris} from "../../Utils/navigation/Uris";
+import {WebUiUris} from "../../Utils/navigation/WebUiUris";
 
 
 /**
@@ -56,14 +55,14 @@ export default function Dashboard({children}: DashboardProps) {
         {
             name: 'Profile',
             icon: <ProfileIcon/>,
-            callback: () => navigate(Uris.PROFILE)
+            callback: () => navigate(WebUiUris.PROFILE)
         },
         {
             name: 'Logout',
             icon: <LogoutIcon/>,
             callback: async () => {
                 // TODO: logout
-                navigate(Uris.HOME)
+                navigate(WebUiUris.HOME)
             }
         }
     ]
@@ -72,12 +71,12 @@ export default function Dashboard({children}: DashboardProps) {
         {
             name: 'Login',
             icon: <LoginIcon/>,
-            callback: () => navigate(Uris.LOGIN)
+            callback: () => navigate(WebUiUris.LOGIN)
         },
         {
             name: 'Register',
             icon: <RegisterIcon/>,
-            callback: () => navigate(Uris.REGISTER)
+            callback: () => navigate(WebUiUris.REGISTER)
         },
     ]
 
@@ -112,7 +111,9 @@ export default function Dashboard({children}: DashboardProps) {
                     <Box sx={{flexGrow: 0}}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                <Avatar alt="User Avatar" src=""/>
+                                <Avatar
+                                    alt="User Avatar"
+                                    src=""/> {/*TODO: Maybe change to this: https://mui.com/material-ui/react-menu/#account-menu*/}
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -205,9 +206,7 @@ export default function Dashboard({children}: DashboardProps) {
                 }}
             >
                 <Toolbar/>
-                <Container maxWidth="lg">
-                    {children}
-                </Container>
+                {children}
             </Box>
         </Box>
     );

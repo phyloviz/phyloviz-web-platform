@@ -7,8 +7,7 @@ import {DeleteTypingDatasetOutputModel} from "./models/deleteTypingDataset/Delet
 import {GetProjectOutputModel} from "./models/getProject/GetProjectOutputModel";
 import {DeleteInferenceTreeOutputModel} from "./models/deleteInferenceTree/DeleteInferenceTreeOutputModel";
 import {DeleteTreeViewOutputModel} from "./models/deleteTreeView/DeleteTreeViewOutputModel";
-
-export const API_BASE_URL = "http://localhost:8080/api"; // TODO: To be changed and moved to a config file
+import {API_BASE_URL} from "../../Utils/navigation/WebApiUris";
 
 export namespace AdministrationService {
 

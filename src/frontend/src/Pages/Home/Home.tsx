@@ -3,13 +3,14 @@ import Box from "@mui/material/Box";
 import {NewProjectCard} from "../../Components/Home/NewProjectCard";
 import {OpenProjectCard} from "../../Components/Home/OpenProjectCard";
 import * as React from "react";
+import {Container} from "@mui/material";
 
 /**
  * Home page.
  */
 export function Home() {
     return (
-        <>
+        <Container>
             <HomeMainCard/>
             <Box
                 sx={{
@@ -21,10 +22,9 @@ export function Home() {
                     width: "100%"
                 }}
             >
-                {/*<LoadDatasetCard/>*/}
                 <NewProjectCard/>
                 <OpenProjectCard/>
             </Box>
-        </>
+        </Container>
     );
 }

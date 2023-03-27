@@ -1,3 +1,4 @@
 export interface CreateProjectInputModel {
-    name: string;
+    projectName: string;
+    projectDescription: string;
 }

@@ -1,17 +1,18 @@
 import * as React from "react"
 import {useEffect} from "react"
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {useParams} from "react-router-dom";
+import {useOutlet, useParams} from "react-router-dom";
 import {AdministrationService} from "../../Services/administration/AdministrationService";
 import {ProjectModel} from "../../Services/administration/models/ProjectModel";
-import {FileManager} from "../../Components/Project/FileManager";
+import {FileManager} from "../../Components/Project/FileManager/FileManager";
+import Box from "@mui/material/Box";
+import EmptyProject from "./EmptyProject";
 
 /**
  * Project page.
  */
 export default function Project() {
     const {projectId} = useParams<{ projectId: string }>();
+    const outlet = useOutlet();
     const [project, setProject] = React.useState<ProjectModel | null>(null);
 
     useEffect(() => {
@@ -32,19 +33,17 @@ export default function Project() {
     }
 
     return (
-        <Paper sx={{
-            p: 4,
+        <Box sx={{
             display: "flex",
-            flexDirection: "column",
-            marginTop: 4,
-            height: "500px",
-            alignItems: "center"
+            flexDirection: "row",
+            height: '90%',
+            width: '100%',
         }}>
-            <Typography component="h1" variant="h4">
-                Project
-            </Typography>
             <FileManager/>
-            {/*Add content*/}
-        </Paper>
+            {outlet || <EmptyProject
+                projectName={"Project Name"}
+                projectDescription={"Project Description"}
+            />}
+        </Box>
     );
 }

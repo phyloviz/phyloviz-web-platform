@@ -4,7 +4,7 @@ import {Button} from "@mui/material";
 import OpenProjectIcon from "@mui/icons-material/FolderOpen";
 import * as React from "react";
 import {useNavigate} from "react-router-dom";
-import {Uris} from "../../Utils/navigation/Uris";
+import {WebUiUris} from "../../Utils/navigation/WebUiUris";
 
 /**
  * Card for the open project feature in the home page.
@@ -34,9 +34,9 @@ export function OpenProjectCard() {
                     startIcon={<OpenProjectIcon/>}
                     onClick={() => {
                         if (!loggedIn)
-                            navigate(Uris.LOGIN)
+                            navigate(WebUiUris.LOGIN)
                         else
-                            navigate(Uris.OPEN_PROJECT)
+                            navigate(WebUiUris.OPEN_PROJECT)
                     }}
                     sx={{
                         marginTop: 4,

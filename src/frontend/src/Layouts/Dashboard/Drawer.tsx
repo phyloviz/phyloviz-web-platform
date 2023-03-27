@@ -8,7 +8,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import AboutIcon from "@mui/icons-material/Info";
 import NewsIcon from "@mui/icons-material/Newspaper";
 import ApiIcon from "@mui/icons-material/Api";
-import {Uris} from "../../Utils/navigation/Uris";
+import {WebUiUris} from "../../Utils/navigation/WebUiUris";
 
 /**
  * List of the main items in the sidebar.
@@ -16,22 +16,22 @@ import {Uris} from "../../Utils/navigation/Uris";
 export const mainListItems = [
     {
         name: 'Home',
-        href: Uris.HOME,
+        href: WebUiUris.HOME,
         icon: <HomeIcon/>,
     },
     {
         name: 'About',
-        href: Uris.ABOUT,
+        href: WebUiUris.ABOUT,
         icon: <AboutIcon/>,
     },
     {
         name: 'News',
-        href: Uris.NEWS,
+        href: WebUiUris.NEWS,
         icon: <NewsIcon/>,
     },
     {
         name: 'API',
-        href: Uris.API_INFO,
+        href: WebUiUris.API_INFO,
         icon: <ApiIcon/>,
     },
 ];
@@ -47,12 +47,12 @@ export const secondaryListItems = [
     },*/
     {
         name: 'New Project',
-        href: Uris.NEW_PROJECT,
+        href: WebUiUris.NEW_PROJECT,
         icon: <NewProjectIcon/>,
     },
     {
         name: 'Open Project',
-        href: Uris.OPEN_PROJECT,
+        href: WebUiUris.OPEN_PROJECT,
         icon: <OpenProjectIcon/>,
     },
 ];

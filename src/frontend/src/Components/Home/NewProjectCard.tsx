@@ -4,7 +4,7 @@ import {Button} from "@mui/material";
 import NewProjectIcon from "@mui/icons-material/CreateNewFolder";
 import * as React from "react";
 import {useNavigate} from "react-router-dom";
-import {Uris} from "../../Utils/navigation/Uris";
+import {WebUiUris} from "../../Utils/navigation/WebUiUris";
 
 /**
  * Card for the new project feature in the home page.
@@ -33,9 +33,9 @@ export function NewProjectCard() {
                     startIcon={<NewProjectIcon/>}
                     onClick={() => {
                         if (!loggedIn)
-                            navigate(Uris.LOGIN)
+                            navigate(WebUiUris.LOGIN)
                         else
-                            navigate(Uris.NEW_PROJECT)
+                            navigate(WebUiUris.NEW_PROJECT)
                     }}
                     sx={{
                         marginTop: 4,

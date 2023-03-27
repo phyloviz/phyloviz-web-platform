@@ -1,8 +1,8 @@
 import * as React from "react";
 import {ReactNode} from "react";
-import UploadIcon from "@mui/icons-material/Upload";
-import {Button, FormControl, InputLabel, Select, SelectChangeEvent} from "@mui/material";
+import {FormControl, InputLabel, Select, SelectChangeEvent} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import {FileUploader} from "react-drag-drop-files";
 
 /**
  * Props for the IsolateDataStepCard component.
@@ -14,25 +14,35 @@ interface IsolateDataStepCardProps {
 }
 
 /**
- * Card for the Isolate Data step of the Load Dataset page.
+ * Card for the Isolate Data step of the Create Dataset page.
  */
 export function IsolateDataStepCard({onChange}: IsolateDataStepCardProps) {
     return (
         <>
-            <Button
-                variant="contained"
-                component="label"
-                startIcon={<UploadIcon/>}
-                sx={{
-                    mt: 4,
-                    mb: 2,
-                    width: "100%"
-                }}
-            >
-                Upload Isolate Data
-                <input type="file" hidden/>
-            </Button>
+            <Typography variant="caption" align={"justify"} sx={{mb: 1, width: "100%"}}>
+                Select the isolate data file from the project files or upload a new one.
+            </Typography>
+            <FormControl sx={{width: "100%", mb: 1}}>
+                <InputLabel id="isolate-key">Isolate Data</InputLabel>
+                <Select
+                    labelId="isolate-key"
+                    //value={}
+                    label="Isolate Data"
+                >
+                </Select>
+            </FormControl>
+            <Typography variant="body2" align={"center"} sx={{mb: 1, width: "100%"}}>
+                Or
+            </Typography>
+            <FileUploader
+                //handleChange={handleChange}
+                name="file"
+                required
+            />
 
+            <Typography variant="caption" align={"justify"} sx={{mt: 4, width: "100%"}}>
+                Select the isolate data key.
+            </Typography>
             <FormControl sx={{width: "100%", mb: 2}}>
                 <InputLabel id="isolate-key">Key</InputLabel>
                 <Select

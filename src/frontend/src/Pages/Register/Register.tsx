@@ -17,7 +17,7 @@ export default function Register() {
             <Typography component="h1" variant="h4">
                 Register
             </Typography>
-            {/*Add content*/}
+            {/*TODO: Add content*/}
         </Paper>
     );
 }

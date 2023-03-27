@@ -4,12 +4,12 @@ import {Button} from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
 import * as React from "react";
 import {useNavigate} from "react-router-dom";
-import {Uris} from "../../Utils/navigation/Uris";
+import {WebUiUris} from "../../../../Utils/navigation/WebUiUris";
 
 /**
- * Card for the load dataset feature in the home page.
+ * Card for the upload files feature.
  */
-export function LoadDatasetCard() {
+export function UploadFilesCard() {
     const navigate = useNavigate();
 
     return <Paper sx={{
@@ -17,26 +17,27 @@ export function LoadDatasetCard() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        width: "32%",
-        justifyContent: "space-between"
+        width: "48%",
+        justifyContent: "space-between",
+        boxShadow: 12
     }}>
         <Typography component="h1" variant="h5">
-            <strong>Load Dataset</strong>
+            <strong>Upload Files</strong>
         </Typography>
-        <Typography component="h1" variant="body1" align={"justify"}>
-            Load your dataset and start your analysis in a few seconds.<br/>
-            Do not require authentication, but you will lose your data when you close the
-            browser.
+        <Typography component="h1" variant="body1" sx={{mt: 2}}>
+            Upload your files.<br/>
+            You can upload the typing data and isolate data separately, and then
+            create a dataset with them.
         </Typography>
         <Button variant="contained"
                 startIcon={<UploadIcon/>}
-                onClick={() => navigate(Uris.LOAD_DATASET)}
+                onClick={() => navigate(WebUiUris.UPLOAD_FILES)}
                 sx={{
                     marginTop: 4,
                     width: "75%"
                 }}
         >
-            Load Dataset
+            Upload Files
         </Button>
     </Paper>;
 }
