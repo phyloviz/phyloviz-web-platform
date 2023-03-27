@@ -1,0 +1,2431 @@
+{
+	"info": {
+		"_postman_id": "669bc3ed-309e-429a-aab8-86f3de1b41a7",
+		"name": "PHYLOViZ Web Platform",
+		"description": "# Introduction\nWhat does your API do?\n\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests a user can send?",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10069981"
+	},
+	"item": [
+		{
+			"name": "Visualization",
+			"item": [
+				{
+					"name": "Datasets",
+					"item": [
+						{
+							"name": "Trees",
+							"item": [
+								{
+									"name": "Get Tree",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{visualization_url}}/projects/:projectId/datasets/:datasetId/trees/:treeId",
+											"host": [
+												"{{visualization_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"datasets",
+												":datasetId",
+												"trees",
+												":treeId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "datasetId",
+													"value": null
+												},
+												{
+													"key": "treeId",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Get Tree",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{visualization_url}}/projects/:projectId/datasets/:datasetId/trees/:treeId",
+													"host": [
+														"{{visualization_url}}"
+													],
+													"path": [
+														"projects",
+														":projectId",
+														"datasets",
+														":datasetId",
+														"trees",
+														":treeId"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "datasetId",
+															"value": null
+														},
+														{
+															"key": "treeId",
+															"value": null
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "(11222:1.0,3555:1.0,(625:2.0)2975:1.0,3362:1.0,3683:1.0,3686:1.0,9325:1.0,(7210:2.0)2182:1.0,(235:1.0)283:1.0,(1793:1.0)6382:1.0,8202:1.0,6234:1.0,3884:1.0,(4347:1.0)4180:1.0,5167:1.0,8863:1.0,5761:1.0,(7651:2.0))"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Tree Views",
+							"item": [
+								{
+									"name": "Get Tree View",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{visualization_url}}/projects/:projectId/datasets/:datasetId/tree-views/:treeViewId",
+											"host": [
+												"{{visualization_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"datasets",
+												":datasetId",
+												"tree-views",
+												":treeViewId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "datasetId",
+													"value": null
+												},
+												{
+													"key": "treeViewId",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Get Tree View",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{visualization_url}}/visualization/tree-views/:id",
+													"host": [
+														"{{visualization_url}}"
+													],
+													"path": [
+														"visualization",
+														"tree-views",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "fc240a31-17f0-4315-8bda-154665729f6b\n"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"nodes\": [\n        {\n            \"st\": \"30\",\n            \"coordinates\": [\n                0,\n                0\n            ],\n            \"profile\": [\n                \"2\",\n                \"1\",\n                \"54\",\n                \"3\",\n                \"4\",\n                \"1\",\n                \"5\"\n            ],\n            \"auxiliaryData\": {\n                \"country\": \"Portugal\"\n            }\n        }\n    ],\n    \"totalCount\": 1\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "distance-matrices",
+							"item": [
+								{
+									"name": "Get Distance Matrix",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{visualization_url}}/projects/:projectId/datasets/:datasetId/distance-matrices/:distanceMatrixId",
+											"host": [
+												"{{visualization_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"datasets",
+												":datasetId",
+												"distance-matrices",
+												":distanceMatrixId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "datasetId",
+													"value": null
+												},
+												{
+													"key": "distanceMatrixId",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Get Distance Matrix",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{visualization_url}}/projects/:projectId/datasets/:datasetId/distance-matrices/:distanceMatrixId",
+													"host": [
+														"{{visualization_url}}"
+													],
+													"path": [
+														"projects",
+														":projectId",
+														"datasets",
+														":datasetId",
+														"distance-matrices",
+														":distanceMatrixId"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "datasetId",
+															"value": null
+														},
+														{
+															"key": "distanceMatrixId",
+															"value": null
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"distances\": {\n        \"1\": [\n            \"7.0\",\n            \"2.0\"\n        ],\n        \"2\": [\n            \"3.0\",\n            \"4.0\",\n            \"5.0\"\n        ]\n    },\n    \"totalCount\": 12322\n}"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "files",
+					"item": [
+						{
+							"name": "isolate-data",
+							"item": [
+								{
+									"name": "Get Isolate Data Schema",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{visualization_url}}/projects/:projectId/files/isolate-data/:isolateDataId",
+											"host": [
+												"{{visualization_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"files",
+												"isolate-data",
+												":isolateDataId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "isolateDataId",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Get Isolate Data Schema",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{visualization_url}}/projects/:projectId/files/isolate-data/:isolateDataId",
+													"host": [
+														"{{visualization_url}}"
+													],
+													"path": [
+														"projects",
+														":projectId",
+														"files",
+														"isolate-data",
+														":isolateDataId"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "isolateDataId",
+															"value": null
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\r\n    \"type\": \"mlst7\",\r\n    \"headers\": [\r\n        \"aspA\",\r\n        \"glnA\",\r\n        \"gltA\",\r\n        \"glyA\",\r\n        \"pgm\",\r\n        \"tkt\",\r\n        \"uncA\"\r\n    ],\r\n    \"totalCount\": 1000\r\n}"
+										}
+									]
+								},
+								{
+									"name": "Get Isolate Data Rows",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{visualization_url}}/projects/:projectId/files/isolate-data/:isolateDataId/rows",
+											"host": [
+												"{{visualization_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"files",
+												"isolate-data",
+												":isolateDataId",
+												"rows"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "isolateDataId",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Get Isolate Data Rows",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{visualization_url}}/projects/:projectId/files/isolate-data/:isolateDataId/rows?limit=100&offset=0",
+													"host": [
+														"{{visualization_url}}"
+													],
+													"path": [
+														"projects",
+														":projectId",
+														"files",
+														"isolate-data",
+														":isolateDataId",
+														"rows"
+													],
+													"query": [
+														{
+															"key": "limit",
+															"value": "100"
+														},
+														{
+															"key": "offset",
+															"value": "0"
+														}
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "isolateDataId",
+															"value": null
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\r\n    \"data\": [\r\n        {\r\n            \"id\": 1,\r\n            \"row\": [\r\n                \"2\",\r\n                \"1\",\r\n                \"54\",\r\n                \"3\",\r\n                \"4\",\r\n                \"1\",\r\n                \"5\"\r\n            ]\r\n        },\r\n        {\r\n            \"id\": 2,\r\n            \"row\": [\r\n                \"4\",\r\n                \"7\",\r\n                \"51\",\r\n                \"4\",\r\n                \"1\",\r\n                \"7\",\r\n                \"1\"\r\n            ]\r\n        }\r\n    ],\r\n    \"totalCount\": 1000\r\n}"
+										}
+									]
+								},
+								{
+									"name": "Download Isolate Data File",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{visualization_url}}/projects/:projectId/files/isolate-data/:isolateDataId/file",
+											"host": [
+												"{{visualization_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"files",
+												"isolate-data",
+												":isolateDataId",
+												"file"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "isolateDataId",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Download Isolate Data File",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{visualization_url}}/projects/:projectId/files/isolate-data/:isolateDataId/file",
+													"host": [
+														"{{visualization_url}}"
+													],
+													"path": [
+														"projects",
+														":projectId",
+														"files",
+														"isolate-data",
+														":isolateDataId",
+														"file"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "isolateDataId",
+															"value": null
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": null,
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/octet-stream",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": null
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "typing-data",
+							"item": [
+								{
+									"name": "Get Typing Data Schema",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{visualization_url}}/projects/:projectId/files/typing-data/:typingDataId",
+											"host": [
+												"{{visualization_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"files",
+												"typing-data",
+												":typingDataId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "typingDataId",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Get Dataset Details",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{visualization_url}}/projects/:projectId/files/typing-data/:typingDataId",
+													"host": [
+														"{{visualization_url}}"
+													],
+													"path": [
+														"projects",
+														":projectId",
+														"files",
+														"typing-data",
+														":typingDataId"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "typingDataId",
+															"value": null
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\r\n    \"type\": \"mlst7\",\r\n    \"loci\": [\r\n        \"aspA\",\r\n        \"glnA\",\r\n        \"gltA\",\r\n        \"glyA\",\r\n        \"pgm\",\r\n        \"tkt\",\r\n        \"uncA\"\r\n    ],\r\n    \"totalCount\": 1000\r\n}"
+										}
+									]
+								},
+								{
+									"name": "Get Typing Data Profiles",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{visualization_url}}/projects/:projectId/files/typing-data/:typingDataId/profiles?limit=100&offset=0",
+											"host": [
+												"{{visualization_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"files",
+												"typing-data",
+												":typingDataId",
+												"profiles"
+											],
+											"query": [
+												{
+													"key": "limit",
+													"value": "100"
+												},
+												{
+													"key": "offset",
+													"value": "0"
+												}
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "typingDataId",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Get Typing Data Profiles",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{visualization_url}}/projects/:projectId/files/typing-data/:typingDataId/profiles?limit=100&offset=0",
+													"host": [
+														"{{visualization_url}}"
+													],
+													"path": [
+														"projects",
+														":projectId",
+														"files",
+														"typing-data",
+														":typingDataId",
+														"profiles"
+													],
+													"query": [
+														{
+															"key": "limit",
+															"value": "100"
+														},
+														{
+															"key": "offset",
+															"value": "0"
+														}
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "typingDataId",
+															"value": null
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\r\n    \"data\": [\r\n        {\r\n            \"id\": 1,\r\n            \"profile\": [\r\n                \"2\",\r\n                \"1\",\r\n                \"54\",\r\n                \"3\",\r\n                \"4\",\r\n                \"1\",\r\n                \"5\"\r\n            ]\r\n        },\r\n        {\r\n            \"id\": 2,\r\n            \"profile\": [\r\n                \"4\",\r\n                \"7\",\r\n                \"51\",\r\n                \"4\",\r\n                \"1\",\r\n                \"7\",\r\n                \"1\"\r\n            ]\r\n        }\r\n    ],\r\n    \"totalCount\": 2\r\n}"
+										}
+									]
+								},
+								{
+									"name": "Download Typing Data File",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{visualization_url}}/projects/:projectId/files/typing-data/:typingDataId/file",
+											"host": [
+												"{{visualization_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"files",
+												"typing-data",
+												":typingDataId",
+												"file"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "typingDataId",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Download Typing Data File",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{visualization_url}}/projects/:projectId/files/typing-data/:typingDataId/file",
+													"host": [
+														"{{visualization_url}}"
+													],
+													"path": [
+														"projects",
+														":projectId",
+														"files",
+														"typing-data",
+														":typingDataId",
+														"file"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "typingDataId",
+															"value": null
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": null,
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/octet-stream",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": null
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Compute",
+			"item": [
+				{
+					"name": "Jobs",
+					"item": [
+						{
+							"name": "Create Job",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"type\": \"create-typing-data-db\",\r\n    \"properties\": {\r\n        \"typingDataId\": \"\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{compute_url}}/projects/:projectId/jobs",
+									"host": [
+										"{{compute_url}}"
+									],
+									"path": [
+										"projects",
+										":projectId",
+										"jobs"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create Isolate Data Database Representation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"type\": \"create-typing-data-db\",\r\n    \"properties\": {\r\n        \"isolateDataId\": \"\"\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{compute_url}}/projects/:projectId/jobs",
+											"host": [
+												"{{compute_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"jobs"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												}
+											]
+										}
+									},
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"jobId\": \"8039f350-e12f-4877-8887-67caa258a133\"\n}"
+								},
+								{
+									"name": "Create Typing Data Database Representation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"type\": \"create-typing-data-db\",\r\n    \"properties\": {\r\n        \"typingDataId\": \"8039f350-e12f-4877-8887-67caa258a133\"\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{compute_url}}/projects/:projectId/jobs",
+											"host": [
+												"{{compute_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"jobs"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"jobId\": \"8039f350-e12f-4877-8887-67caa258a133\"\n}"
+								},
+								{
+									"name": "Compute Tree View",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"type\": \"compute-tree-view\",\r\n    \"properties\": {\r\n        \"treeId\": \"7cfc8729-cd5f-47bd-80d1-2efb2dcc9fbb\",\r\n        \"layout\": \"radial\"\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{compute_url}}/projects/:projectId/jobs",
+											"host": [
+												"{{compute_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"jobs"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"jobId\": \"8039f350-e12f-4877-8887-67caa258a133\"\n}"
+								},
+								{
+									"name": "Compute Tree",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"type\": \"compute-tree\",\r\n    \"properties\": {\r\n        \"distanceMatrixId\": \"7cfc8729-cd5f-47bd-80d1-2efb2dcc9fbb\",\r\n        \"algorithm\": \"goeburst\"\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{compute_url}}/projects/:projectId/jobs",
+											"host": [
+												"{{compute_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"jobs"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"jobId\": \"8039f350-e12f-4877-8887-67caa258a133\"\n}"
+								},
+								{
+									"name": "Compute Distance Matrix",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"type\": \"compute-distance-matrix\",\r\n    \"properties\": {\r\n        \"datasetId\": \"7cfc8729-cd5f-47bd-80d1-2efb2dcc9fbb\",\r\n        \"algorithm\": \"hamming\"\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{compute_url}}/projects/:projectId/jobs",
+											"host": [
+												"{{compute_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"jobs"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												}
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"jobId\": \"8039f350-e12f-4877-8887-67caa258a133\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Job Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{compute_url}}/projects/:projectId/jobs/:jobId",
+									"host": [
+										"{{compute_url}}"
+									],
+									"path": [
+										"projects",
+										":projectId",
+										"jobs",
+										":jobId"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": null
+										},
+										{
+											"key": "jobId",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Distance Matrix Job Status Completed",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{compute_url}}/projects/:projectId/jobs/:jobId",
+											"host": [
+												"{{compute_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"jobs",
+												":jobId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "jobId",
+													"value": null
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"jobId\": \"8039f350-e12f-4877-8887-67caa258a133\",\n    \"type\": \"compute-distance-matrix\",\n    \"status\": \"COMPLETED\",\n    \"data\": {\n        \"distanceMatrixId\": \"8039f350-e12f-4877-8887-67caa258a143\"\n    }\n}"
+								},
+								{
+									"name": "Get Distance Matrix Job Status Running",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{compute_url}}/projects/:projectId/jobs/:jobId",
+											"host": [
+												"{{compute_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"jobs",
+												":jobId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "jobId",
+													"value": null
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"jobId\": \"8039f350-e12f-4877-8887-67caa258a133\",\n    \"type\": \"compute-distance-matrix\",\n    \"status\": \"RUNNING\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Jobs",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{compute_url}}/projects/:projectId/jobs",
+									"host": [
+										"{{compute_url}}"
+									],
+									"path": [
+										"projects",
+										":projectId",
+										"jobs"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Distance Matrix Job Status Completed",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{compute_url}}/projects/:projectId/jobs/:jobId",
+											"host": [
+												"{{compute_url}}"
+											],
+											"path": [
+												"projects",
+												":projectId",
+												"jobs",
+												":jobId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "jobId",
+													"value": null
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"jobs\": [\n        {\n            \"jobId\": \"8039f350-e12f-4877-8887-67caa258a133\",\n            \"type\": \"compute-distance-matrix\",\n            \"status\": \"COMPLETED\",\n            \"data\": {\n                \"distanceMatrixId\": \"8039f350-e12f-4877-8887-67caa258a143\"\n            }\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Administration",
+			"item": [
+				{
+					"name": "projects",
+					"item": [
+						{
+							"name": "datasets",
+							"item": [
+								{
+									"name": "distance-matrices",
+									"item": [
+										{
+											"name": "Delete Distance Matrix",
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{administration_url}}/projects/:projectId/datasets/:datasetId/distance-matrices/:distanceMatrixId",
+													"host": [
+														"{{administration_url}}"
+													],
+													"path": [
+														"projects",
+														":projectId",
+														"datasets",
+														":datasetId",
+														"distance-matrices",
+														":distanceMatrixId"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "datasetId",
+															"value": null
+														},
+														{
+															"key": "distanceMatrixId",
+															"value": null
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Delete Distance Matrix",
+													"originalRequest": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{administration_url}}/projects/:projectId/datasets/:datasetId/distance-matrices/:distanceMatrixId",
+															"host": [
+																"{{administration_url}}"
+															],
+															"path": [
+																"projects",
+																":projectId",
+																"datasets",
+																":datasetId",
+																"distance-matrices",
+																":distanceMatrixId"
+															],
+															"variable": [
+																{
+																	"key": "projectId",
+																	"value": null
+																},
+																{
+																	"key": "datasetId",
+																	"value": null
+																},
+																{
+																	"key": "distanceMatrixId",
+																	"value": null
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\r\n    \"distanceMatrixId\": \"\"\r\n}"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "trees",
+									"item": [
+										{
+											"name": "Delete Tree",
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{administration_url}}/projects/:projectId/datasets/:datasetId/trees/:treeId",
+													"host": [
+														"{{administration_url}}"
+													],
+													"path": [
+														"projects",
+														":projectId",
+														"datasets",
+														":datasetId",
+														"trees",
+														":treeId"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "datasetId",
+															"value": null
+														},
+														{
+															"key": "treeId",
+															"value": null
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Delete tree",
+													"originalRequest": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{administration_url}}/projects/:projectId/datasets/:datasetId/trees/:treeId",
+															"host": [
+																"{{administration_url}}"
+															],
+															"path": [
+																"projects",
+																":projectId",
+																"datasets",
+																":datasetId",
+																"trees",
+																":treeId"
+															],
+															"variable": [
+																{
+																	"key": "projectId",
+																	"value": null
+																},
+																{
+																	"key": "datasetId",
+																	"value": null
+																},
+																{
+																	"key": "treeId",
+																	"value": null
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"treeId\": \"\"\n}"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "tree-views",
+									"item": [
+										{
+											"name": "Delete Tree View",
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{administration_url}}/projects/:projectId/datasets/:datasetId/tree-views/:treeViewId",
+													"host": [
+														"{{administration_url}}"
+													],
+													"path": [
+														"projects",
+														":projectId",
+														"datasets",
+														":datasetId",
+														"tree-views",
+														":treeViewId"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "datasetId",
+															"value": null
+														},
+														{
+															"key": "treeViewId",
+															"value": null
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Delete Tree Views",
+													"originalRequest": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{administration_url}}/projects/:projectId/datasets/:datasetId/tree-views/:treeViewId",
+															"host": [
+																"{{administration_url}}"
+															],
+															"path": [
+																"projects",
+																":projectId",
+																"datasets",
+																":datasetId",
+																"tree-views",
+																":treeViewId"
+															],
+															"variable": [
+																{
+																	"key": "projectId",
+																	"value": null
+																},
+																{
+																	"key": "datasetId",
+																	"value": null
+																},
+																{
+																	"key": "treeViewId",
+																	"value": null
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"treeViewId\": \"\"\n}"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "Create Dataset",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"\",\r\n    \"description\": \"\",\r\n    \"typingDataId\": \"\",\r\n    \"isolateDataId\": \"\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{administration_url}}/project/:projectId/datasets",
+											"host": [
+												"{{administration_url}}"
+											],
+											"path": [
+												"project",
+												":projectId",
+												"datasets"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Create Dataset",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"typingDataId\": \"\",\r\n    \"isolateDataId\": \"\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{administration_url}}/project/:projectId/datasets",
+													"host": [
+														"{{administration_url}}"
+													],
+													"path": [
+														"project",
+														":projectId",
+														"datasets"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														}
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\r\n    \"datasetId\": \"\"\r\n}"
+										}
+									]
+								},
+								{
+									"name": "Get Dataset",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{administration_url}}/project/:projectId/datasets/:datasetId",
+											"host": [
+												"{{administration_url}}"
+											],
+											"path": [
+												"project",
+												":projectId",
+												"datasets",
+												":datasetId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "datasetId",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Get Dataset",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{administration_url}}/project/:projectId/datasets/:datasetId",
+													"host": [
+														"{{administration_url}}"
+													],
+													"path": [
+														"project",
+														":projectId",
+														"datasets",
+														":datasetId"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "datasetId",
+															"value": null
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\r\n    \"datasetId\": \"\",\r\n    \"typingDataId\": \"\",\r\n    \"isolateDataId\": \"\",\r\n    \"distanceMatrices\": [\r\n        {\r\n            \"distanceMatrixId\": \"\",\r\n            \"name\": \"Hamming\",\r\n            \"algorithm\": \"hamming\",\r\n            \"trees\": [\r\n                {\r\n                    \"treeId\": \"\",\r\n                    \"name\": \"GoeBurst\",\r\n                    \"algorithm\": \"goeburst\",\r\n                    \"treeViews\": [\r\n                        {\r\n                            \"treeViewId\": \"\",\r\n                            \"name\": \"Radial\",\r\n                            \"layout\": \"radial\"\r\n                        }\r\n                    ]\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"distanceMatrixId\": \"\",\r\n            \"name\": \"Hamming2\",\r\n            \"algorithm\": \"hamming\",\r\n            \"trees\": []\r\n        }\r\n    ]\r\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete Dataset",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{administration_url}}/project/:projectId/datasets/:datasetId",
+											"host": [
+												"{{administration_url}}"
+											],
+											"path": [
+												"project",
+												":projectId",
+												"datasets",
+												":datasetId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												},
+												{
+													"key": "datasetId",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Delete Dataset",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{administration_url}}/project/:projectId/datasets/:datasetId",
+													"host": [
+														"{{administration_url}}"
+													],
+													"path": [
+														"project",
+														":projectId",
+														"datasets",
+														":datasetId"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "datasetId",
+															"value": null
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"datasetId\": \"\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "files",
+							"item": [
+								{
+									"name": "typing-data",
+									"item": [
+										{
+											"name": "Upload Typing Data File",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "formdata",
+													"formdata": [
+														{
+															"key": "file",
+															"type": "file",
+															"src": "/C:/ISEL/6th semester/PFC/README.md"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{administration_url}}/project/:projectId/files/typing-data",
+													"host": [
+														"{{administration_url}}"
+													],
+													"path": [
+														"project",
+														":projectId",
+														"files",
+														"typing-data"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Upload Typing Data",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "formdata",
+															"formdata": [
+																{
+																	"key": "file",
+																	"type": "file",
+																	"src": "/C:/ISEL/6th semester/PFC/README.md"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{administration_url}}/project/:projectId/files/typing-data",
+															"host": [
+																"{{administration_url}}"
+															],
+															"path": [
+																"project",
+																":projectId",
+																"files",
+																"typing-data"
+															],
+															"variable": [
+																{
+																	"key": "projectId",
+																	"value": null
+																}
+															]
+														}
+													},
+													"status": "Created",
+													"code": 201,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"typingDataFileId\": \"\"\n}"
+												}
+											]
+										},
+										{
+											"name": "Delete Typing Data File",
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{administration_url}}/project/:projectId/files/typing-data/:typingDataId",
+													"host": [
+														"{{administration_url}}"
+													],
+													"path": [
+														"project",
+														":projectId",
+														"files",
+														"typing-data",
+														":typingDataId"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "typingDataId",
+															"value": null
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Delete Typing Data File",
+													"originalRequest": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{administration_url}}/project/:projectId/files/typing-data/:typingDataId",
+															"host": [
+																"{{administration_url}}"
+															],
+															"path": [
+																"project",
+																":projectId",
+																"files",
+																"typing-data",
+																":typingDataId"
+															],
+															"variable": [
+																{
+																	"key": "projectId",
+																	"value": null
+																},
+																{
+																	"key": "typingDataId",
+																	"value": null
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"typingDataId\": \"\"\n}"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "isolate-data",
+									"item": [
+										{
+											"name": "Upload Isolate Data File",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "formdata",
+													"formdata": [
+														{
+															"key": "file",
+															"type": "file",
+															"src": "/C:/ISEL/6th semester/PFC/README.md"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{administration_url}}/project/:projectId/files/isolate-data",
+													"host": [
+														"{{administration_url}}"
+													],
+													"path": [
+														"project",
+														":projectId",
+														"files",
+														"isolate-data"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Upload Isolate Data",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "formdata",
+															"formdata": [
+																{
+																	"key": "file",
+																	"type": "file",
+																	"src": "/C:/ISEL/6th semester/PFC/README.md"
+																}
+															]
+														},
+														"url": {
+															"raw": "{{administration_url}}/project/:projectId/files/isolate-data",
+															"host": [
+																"{{administration_url}}"
+															],
+															"path": [
+																"project",
+																":projectId",
+																"files",
+																"isolate-data"
+															],
+															"variable": [
+																{
+																	"key": "projectId",
+																	"value": null
+																}
+															]
+														}
+													},
+													"status": "Created",
+													"code": 201,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isolateDataFileId\": \"\"\n}"
+												}
+											]
+										},
+										{
+											"name": "Delete Isolate Data File",
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{administration_url}}/project/:projectId/files/isolate-data/:isolateDataId",
+													"host": [
+														"{{administration_url}}"
+													],
+													"path": [
+														"project",
+														":projectId",
+														"files",
+														"isolate-data",
+														":isolateDataId"
+													],
+													"variable": [
+														{
+															"key": "projectId",
+															"value": null
+														},
+														{
+															"key": "isolateDataId",
+															"value": null
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "Delete Isolate Data File",
+													"originalRequest": {
+														"method": "DELETE",
+														"header": [],
+														"url": {
+															"raw": "{{administration_url}}/project/:projectId/files/isolate-data/:isolateDataId",
+															"host": [
+																"{{administration_url}}"
+															],
+															"path": [
+																"project",
+																":projectId",
+																"files",
+																"isolate-data",
+																":isolateDataId"
+															],
+															"variable": [
+																{
+																	"key": "projectId",
+																	"value": null
+																},
+																{
+																	"key": "isolateDataId",
+																	"value": null
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isolateDataId\": \"\"\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Create Project",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Project1\",\r\n    \"description\": \"My first project.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{administration_url}}/projects",
+									"host": [
+										"{{administration_url}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create Project",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Project1\",\r\n    \"description\": \"My first project.\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{uploader_url}}/administration/project",
+											"host": [
+												"{{uploader_url}}"
+											],
+											"path": [
+												"administration",
+												"project"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\r\n    \"projectId\": \"0f333f3e-a94b-4464-8c50-5fcc81fa7e27\"\r\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Project",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{administration_url}}/project/:projectId",
+									"host": [
+										"{{administration_url}}"
+									],
+									"path": [
+										"project",
+										":projectId"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Project",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{administration_url}}/project/:projectId",
+											"host": [
+												"{{administration_url}}"
+											],
+											"path": [
+												"project",
+												":projectId"
+											],
+											"variable": [
+												{
+													"key": "projectId",
+													"value": null
+												}
+											]
+										}
+									},
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\r\n    \"projectId\": \"\",\r\n    \"name\": \"\",\r\n    \"description\": \"\",\r\n    \"owner\": \"\",\r\n    \"datasets\": [\r\n        {\r\n            \"datasetId\": \"\",\r\n            \"typingDataId\": \"\",\r\n            \"isolateDataId\": \"\",\r\n            \"distanceMatrices\": [\r\n                {\r\n                    \"distanceMatrixId\": \"\",\r\n                    \"name\": \"Hamming\",\r\n                    \"algorithm\": \"hamming\",\r\n                    \"trees\": [\r\n                        {\r\n                            \"treeId\": \"\",\r\n                            \"name\": \"GoeBurst\",\r\n                            \"algorithm\": \"goeburst\",\r\n                            \"treeViews\": [\r\n                                {\r\n                                    \"treeViewId\": \"\",\r\n                                    \"name\": \"Radial\",\r\n                                    \"layout\": \"radial\"\r\n                                }\r\n                            ]\r\n                        }\r\n                    ]\r\n                },\r\n                {\r\n                    \"distanceMatrixId\": \"\",\r\n                    \"name\": \"Hamming2\",\r\n                    \"algorithm\": \"hamming\",\r\n                    \"trees\": []\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"files\": {\r\n        \"typing-data\": [\r\n            {\r\n                \"typingDataId\": \"\",\r\n                \"name\": \"\"\r\n            }\r\n        ],\r\n        \"isolate-data\": [\r\n            {\r\n                \"isolateDataId\": \"\",\r\n                \"name\": \"\"\r\n            }\r\n        ]\r\n    }\r\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Project",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{administration_url}}/projects/:id",
+									"host": [
+										"{{administration_url}}"
+									],
+									"path": [
+										"projects",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "641b192701e70f57f102a811"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete Project",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{administration_url}}/projects/:id",
+											"host": [
+												"{{administration_url}}"
+											],
+											"path": [
+												"projects",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "641b192701e70f57f102a811"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\r\n    \"projectId\": \"\"\r\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Projects",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{administration_url}}/projects",
+									"host": [
+										"{{administration_url}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Projects",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{administration_url}}/projects",
+											"host": [
+												"{{administration_url}}"
+											],
+											"path": [
+												"projects"
+											]
+										}
+									},
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\r\n    \"projects\": [\r\n        {\r\n            \"projectId\": \"\",\r\n            \"name\": \"\",\r\n            \"description\":\"\"\r\n        }\r\n    ]\r\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{test_access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "uploader_url",
+			"value": "localhost:8084",
+			"type": "string"
+		},
+		{
+			"key": "visualization_url",
+			"value": "localhost:8085",
+			"type": "string"
+		},
+		{
+			"key": "compute_url",
+			"value": "localhost:8086",
+			"type": "string"
+		},
+		{
+			"key": "downloader_url",
+			"value": "localhost:8087",
+			"type": "string"
+		},
+		{
+			"key": "administration_url",
+			"value": "localhost:8088",
+			"type": "string"
+		},
+		{
+			"key": "KEYCLOAK_URL",
+			"value": "localhost:8082",
+			"type": "string"
+		},
+		{
+			"key": "KEYCLOAK_CLIENT_ID",
+			"value": "phyloviz-web-platform-client",
+			"type": "string"
+		},
+		{
+			"key": "KEYCLOAK_CLIENT_SECRET",
+			"value": "pZW9kZ05jHjLiOlYYhBAa9CGk1uL7bob",
+			"type": "string"
+		},
+		{
+			"key": "test_device_code",
+			"value": ""
+		},
+		{
+			"key": "test_access_token",
+			"value": ""
+		},
+		{
+			"key": "OPENSTACK_URL",
+			"value": "192.168.1.93"
+		}
+	]
+}
