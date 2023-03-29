@@ -206,4 +206,9 @@ public class AdministrationController {
 
         return new GetProjectsOutputModel(projectDTOS);
     }
+
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
 }

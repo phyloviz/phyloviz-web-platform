@@ -1,5 +1,14 @@
+pwp:
+  base-url: http://localhost:8083
+  react-client-url: http://localhost:4200
+  security:
+    logout-url: /api/logout
+    oauth2:
+      redirect-uri: "/api/login/oauth2/code/{registrationId}"
+
 server:
   port: 8083
+
 spring:
   data:
     redis:
@@ -12,10 +21,18 @@ spring:
         - TokenRelay=
 
       routes:
-        - id: uploader
-          uri: http://localhost:8084
+        - id: administration
+          uri: http://localhost:8088
           predicates:
-            - Path=/uploader/**
+            - Path=/api/**
+          filters:
+            - StripPrefix=1
+        - id: home
+          uri: ${pwp.react-client-url}
+          predicates:
+            - Path=/**
+
+
   security:
     oauth2:
       client:
@@ -28,18 +45,12 @@ spring:
             provider: keycloak
             client-id: phyloviz-web-platform-client
             client-secret: whCCD9r37qj8mx9H7R4mzIrSezYf3H7R
+            redirect-uri: "{baseUrl}/${pwp.security.oauth2.redirect-uri}"
+
             scope:
               - openid
               - email
               - profile
 logging:
   level:
-    org:
-      springframework:
-        web:
-          server:
-            adapter:
-              AbstractReactiveWebInitializer: DEBUG
-        security:
-          web: DEBUG
-    web: DEBUG
+    root: debug

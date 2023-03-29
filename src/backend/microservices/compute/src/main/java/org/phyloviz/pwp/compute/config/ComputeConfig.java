@@ -5,7 +5,7 @@ import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.conve
 import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.converters.AccessTemplateSerializer;
 import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.converters.CaseInsensitiveEnumDeserializerFactory;
 import org.phyloviz.pwp.compute.service.flowviz.FlowVizClient;
-import org.phyloviz.pwp.shared.config.SharedConfig;
+import org.phyloviz.pwp.shared.config.ResourceServerSharedConfig;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +26,7 @@ import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 
 @Configuration
-@Import({SharedConfig.class})
+@Import({ResourceServerSharedConfig.class})
 public class ComputeConfig {
 
     private final String flowVizUsername;

@@ -5,4 +5,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackages = "org.phyloviz.pwp.shared")
-public class SharedConfig {}
+public class ResourceServerSharedConfig {}

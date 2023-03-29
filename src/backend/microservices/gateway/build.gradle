@@ -2,6 +2,7 @@ plugins {
     id 'application'
     id 'org.springframework.boot' version '3.0.4'
     id 'io.spring.dependency-management' version '1.1.0'
+    id "io.freefair.lombok" version "8.0.0-rc2"
 }
 
 group 'phylovizwebplatform'
@@ -22,8 +23,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.session:spring-session-data-redis'
-
     implementation 'io.projectreactor:reactor-tools'
+    implementation 'org.zalando:problem-spring-web-starter:0.27.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-oauth2-client'

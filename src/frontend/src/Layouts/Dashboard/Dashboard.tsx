@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,7 +16,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import RegisterIcon from "@mui/icons-material/PersonAdd";
 import ProfileIcon from "@mui/icons-material/AccountCircle";
 import ListItemText from "@mui/material/ListItemText";
 import {Avatar, Menu, MenuItem, Tooltip} from "@mui/material";
@@ -49,20 +48,41 @@ export default function Dashboard({children}: DashboardProps) {
     }
     const handleCloseUserMenu = () => setAnchorElUser(null)
 
-    const loggedIn = false; // TODO: To be replaced with a real check
+    const [loggedIn, setLoggedIn] = useState(false)
+    const [user, setUser] = useState({username: '', picture: '', email: ''})
+
+    useEffect(() => {
+        async function checkLoggedIn() {
+            const response = await fetch('/api/session', {
+                method: 'GET'
+            })
+
+            const data = await response.json()
+
+            if (response.status === 200) {
+                setLoggedIn(true)
+                setUser(data)
+            }
+        }
+
+        checkLoggedIn()
+    }, [])
+    console.log(user)
 
     const authSettings = [
         {
             name: 'Profile',
-            icon: <ProfileIcon/>,
+            icon:  <ProfileIcon/>,
             callback: () => navigate(WebUiUris.PROFILE)
         },
         {
             name: 'Logout',
             icon: <LogoutIcon/>,
             callback: async () => {
-                // TODO: logout
-                navigate(WebUiUris.HOME)
+                setLoggedIn(false)
+                await fetch('/api/logout', {
+                    method: 'POST'
+                })
             }
         }
     ]
@@ -71,14 +91,10 @@ export default function Dashboard({children}: DashboardProps) {
         {
             name: 'Login',
             icon: <LoginIcon/>,
-            callback: () => navigate(WebUiUris.LOGIN)
-        },
-        {
-            name: 'Register',
-            icon: <RegisterIcon/>,
-            callback: () => navigate(WebUiUris.REGISTER)
-        },
+            callback: () => window.location.href = "/oauth2/authorization/phyloviz-web-platform-client"
+        }
     ]
+
 
     return (
         <Box sx={{display: 'flex'}}>
@@ -113,7 +129,8 @@ export default function Dashboard({children}: DashboardProps) {
                             <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
                                 <Avatar
                                     alt="User Avatar"
-                                    src=""/> {/*TODO: Maybe change to this: https://mui.com/material-ui/react-menu/#account-menu*/}
+                                    src= { loggedIn && user.picture ? user.picture : ""}/> {/*TODO: Maybe change to this: https://mui.com/material-ui/react-menu/#account-menu*/}
+
                             </IconButton>
                         </Tooltip>
                         <Menu
