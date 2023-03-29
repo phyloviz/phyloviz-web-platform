@@ -11,7 +11,6 @@ import {WebUiUris} from "../../Utils/navigation/WebUiUris";
  */
 export function NewProjectCard() {
     const navigate = useNavigate();
-    const loggedIn = true; // TODO: replace with actual login status
 
     return (
         <Paper sx={{
@@ -32,10 +31,7 @@ export function NewProjectCard() {
             <Button variant="contained"
                     startIcon={<NewProjectIcon/>}
                     onClick={() => {
-                        if (!loggedIn)
-                            navigate(WebUiUris.LOGIN)
-                        else
-                            navigate(WebUiUris.NEW_PROJECT)
+                        navigate(WebUiUris.NEW_PROJECT)
                     }}
                     sx={{
                         marginTop: 4,

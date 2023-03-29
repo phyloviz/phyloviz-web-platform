@@ -11,7 +11,6 @@ import {WebUiUris} from "../../Utils/navigation/WebUiUris";
  */
 export function OpenProjectCard() {
     const navigate = useNavigate();
-    const loggedIn = true; // TODO: replace with actual login status
 
     return (
         <Paper sx={{
@@ -26,17 +25,13 @@ export function OpenProjectCard() {
                 <strong>Open Project</strong>
             </Typography>
             <Typography component="h1" variant="body1">
-                Open a project that you have created before.
+                Open a project that you have created before.<br/>
                 The project can be in the cloud or you can upload it from your computer.
-                You need to be logged in to create a new project.
             </Typography>
             <Button variant="contained"
                     startIcon={<OpenProjectIcon/>}
                     onClick={() => {
-                        if (!loggedIn)
-                            navigate(WebUiUris.LOGIN)
-                        else
-                            navigate(WebUiUris.OPEN_PROJECT)
+                        navigate(WebUiUris.OPEN_PROJECT)
                     }}
                     sx={{
                         marginTop: 4,

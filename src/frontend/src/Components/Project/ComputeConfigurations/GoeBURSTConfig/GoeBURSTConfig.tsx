@@ -7,32 +7,27 @@ import Box from "@mui/material/Box";
 import NextIcon from "@mui/icons-material/ArrowForwardIos";
 import BackIcon from "@mui/icons-material/ArrowBackIos";
 import FinishIcon from "@mui/icons-material/Done";
-import {DatasetInfoStepCard} from "../../Components/Project/CreateDataset/DatasetInfoStepCard";
-import {DatasetType} from "../../Domain/DatasetType";
-import {TypingDataStepCard} from "../../Components/Project/CreateDataset/TypingDataStepCard";
-import {IsolateDataStepCard} from "../../Components/Project/CreateDataset/IsolateDataStepCard";
 import CancelIcon from "@mui/icons-material/Cancel";
 import {useNavigate} from "react-router-dom";
+import {GoeBURSTConfigDistanceStep} from "./GoeBURSTConfigDistanceStep";
+import {GoeBURSTConfigLevelStep} from "./GoeBURSTConfigLevelStep";
 
-enum CreateDatasetStep {
-    INFO = "Dataset Info",
-    TYPING_DATA = "Typing Data",
-    ISOLATE_DATA = "Isolate Data",
+enum GoeBURSTConfigurationStep {
+    DISTANCE = "Distance",
+    LEVEL = "Level",
 }
 
 // TODO: Sus, criei para fazer o stepper
 const steps = [
-    'Dataset Info',
-    'Typing Data',
-    'Isolate Data',
+    'Distance',
+    'Level',
 ];
 
 /**
- * CreateDataset page.
+ * GoeBURSTConfig page.
  */
-export default function CreateDataset() {
-    const [datasetType, setDatasetType] = useState(DatasetType.MLST);
-    const [createDatasetStep, setCreateDatasetStep] = useState(CreateDatasetStep.INFO);
+export default function GoeBURSTConfig() {
+    const [step, setStep] = useState(GoeBURSTConfigurationStep.DISTANCE);
     const [currStep, setCurrStep] = useState(0);
     const navigate = useNavigate();
 
@@ -53,7 +48,7 @@ export default function CreateDataset() {
                     width: "50%"
                 }}>
                     <Typography component="h1" variant="h4">
-                        Create Dataset
+                        goeBURST Configuration
                     </Typography>
                     <Stepper activeStep={currStep} alternativeLabel
                              sx={{
@@ -82,18 +77,9 @@ export default function CreateDataset() {
                             justifyContent: "left",
                         }}>
                             {
-                                createDatasetStep === CreateDatasetStep.INFO
-                                    ? <DatasetInfoStepCard
-                                        datasetType={datasetType}
-                                        onChange={(event) => {
-                                            setDatasetType(event.target.value as DatasetType);
-                                        }}
-                                    />
-                                    : createDatasetStep === CreateDatasetStep.TYPING_DATA
-                                        ? <TypingDataStepCard datasetType={datasetType}/>
-                                        : <IsolateDataStepCard onChange={(event) => {
-                                            // TODO
-                                        }}/>
+                                step === GoeBURSTConfigurationStep.DISTANCE
+                                    ? <GoeBURSTConfigDistanceStep/>
+                                    : <GoeBURSTConfigLevelStep/>
                             }
                         </Box>
 
@@ -120,14 +106,11 @@ export default function CreateDataset() {
                             <Button
                                 variant="contained"
                                 startIcon={<BackIcon/>}
-                                disabled={createDatasetStep === CreateDatasetStep.INFO}
+                                disabled={step === GoeBURSTConfigurationStep.DISTANCE}
                                 onClick={() => {
-                                    if (createDatasetStep === CreateDatasetStep.TYPING_DATA) {
-                                        setCreateDatasetStep(CreateDatasetStep.INFO)
+                                    if (step === GoeBURSTConfigurationStep.LEVEL) {
+                                        setStep(GoeBURSTConfigurationStep.DISTANCE)
                                         setCurrStep(0)
-                                    } else if (createDatasetStep === CreateDatasetStep.ISOLATE_DATA) {
-                                        setCreateDatasetStep(CreateDatasetStep.TYPING_DATA)
-                                        setCurrStep(1)
                                     }
                                 }}
                                 sx={{
@@ -141,17 +124,14 @@ export default function CreateDataset() {
                             <Button
                                 variant="contained"
                                 startIcon={
-                                    createDatasetStep === CreateDatasetStep.ISOLATE_DATA
+                                    step === GoeBURSTConfigurationStep.LEVEL
                                         ? <FinishIcon/>
                                         : <NextIcon/>
                                 }
                                 onClick={() => {
-                                    if (createDatasetStep === CreateDatasetStep.INFO) {
-                                        setCreateDatasetStep(CreateDatasetStep.TYPING_DATA)
+                                    if (step === GoeBURSTConfigurationStep.DISTANCE) {
+                                        setStep(GoeBURSTConfigurationStep.LEVEL)
                                         setCurrStep(1)
-                                    } else if (createDatasetStep === CreateDatasetStep.TYPING_DATA) {
-                                        setCreateDatasetStep(CreateDatasetStep.ISOLATE_DATA)
-                                        setCurrStep(2)
                                     }
                                     // TODO: else, finish
                                 }}
@@ -161,7 +141,7 @@ export default function CreateDataset() {
                                 }}
                             >
                                 {
-                                    createDatasetStep === CreateDatasetStep.ISOLATE_DATA
+                                    step === GoeBURSTConfigurationStep.LEVEL
                                         ? "Finish"
                                         : "Next"
                                 }

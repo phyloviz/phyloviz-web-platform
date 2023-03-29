@@ -1,6 +1,6 @@
 import {FormControl, InputLabel, Select} from "@mui/material";
 import * as React from "react";
-import {DatasetType} from "../../../../Domain/DatasetType";
+import {DatasetType} from "../../../Domain/DatasetType";
 import Typography from "@mui/material/Typography";
 import {FileUploader} from "react-drag-drop-files";
 
@@ -98,7 +98,7 @@ const typingDataExamples = {
     "    ATATTAGTTTATATGGCCCGAT\n" +
     "    >aaa 5\n",
 
-    [DatasetType.ALIGNED]: "The dataset type Aligned Sequences (without explicit ID) is designed to analyze " +
+    [DatasetType.ALIGNED_SEQUENCES]: "The dataset type Aligned Sequences (without explicit ID) is designed to analyze " +
     "sequence data without having a predefined ID selected. The sequences need to be all of the same size. " +
     "Sequences of different sizes will be excluded.",
 

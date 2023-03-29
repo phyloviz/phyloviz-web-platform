@@ -2,12 +2,13 @@ import {CreateProjectInputModel} from "./models/createProject/CreateProjectInput
 import {CreateProjectOutputModel} from "./models/createProject/CreateProjectOutputModel";
 import {GetProjectsOutputModel} from "./models/getProjects/GetProjectsOutputModel";
 import {DeleteProjectOutputModel} from "./models/deleteProject/DeleteProjectOutputModel";
-import {UploadTypingDatasetOutputModel} from "./models/uploadTypingDataset/UploadTypingDatasetOutputModel";
+import {UploadTypingDataOutputModel} from "./models/uploadTypingData/UploadTypingDataOutputModel";
 import {DeleteTypingDatasetOutputModel} from "./models/deleteTypingDataset/DeleteTypingDatasetOutputModel";
 import {GetProjectOutputModel} from "./models/getProject/GetProjectOutputModel";
 import {DeleteInferenceTreeOutputModel} from "./models/deleteInferenceTree/DeleteInferenceTreeOutputModel";
 import {DeleteTreeViewOutputModel} from "./models/deleteTreeView/DeleteTreeViewOutputModel";
-import {API_BASE_URL} from "../../Utils/navigation/WebApiUris";
+import {API_BASE_URL, WebApiUris} from "../../Utils/navigation/WebApiUris";
+import {UploadIsolateDataOutputModel} from "./models/uploadIsolateData/UploadIsolateDataOutputModel";
 
 export namespace AdministrationService {
 
@@ -17,7 +18,7 @@ export namespace AdministrationService {
      * @return the projects
      */
     export async function getProjects(): Promise<GetProjectsOutputModel> {
-        return await fetch(`${API_BASE_URL}/projects`, {
+        return await fetch(WebApiUris.getProjects, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -39,7 +40,7 @@ export namespace AdministrationService {
     export async function getProject(
         projectId: string
     ): Promise<GetProjectOutputModel> {
-        return await fetch(`${API_BASE_URL}/projects/${projectId}`, {
+        return await fetch(WebApiUris.getProject(projectId), {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -61,7 +62,7 @@ export namespace AdministrationService {
     export async function createProject(
         createProjectInputModel: CreateProjectInputModel
     ): Promise<CreateProjectOutputModel> {
-        return await fetch(`${API_BASE_URL}/projects`, {
+        return await fetch(WebApiUris.createProject, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -84,7 +85,7 @@ export namespace AdministrationService {
     export async function deleteProject(
         projectId: string
     ): Promise<DeleteProjectOutputModel> {
-        return await fetch(`${API_BASE_URL}/projects/${projectId}`, {
+        return await fetch(WebApiUris.deleteProject(projectId), {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -98,20 +99,48 @@ export namespace AdministrationService {
     }
 
     /**
-     * Uploads a typing dataset.
+     * Uploads a typing data file to a project.
      *
-     * @param projectId the name of the project to which the typing dataset will be uploaded
+     * @param projectId the name of the project to which the typing data will be uploaded
      * @param file      the file to be uploaded
-     * @return a message indicating that the data was successfully uploaded
+     * @return a promise that resolves to the uploaded typing data information
      */
-    export async function uploadTypingDataset(
+    export async function uploadTypingData(
         projectId: string,
         file: File
-    ): Promise<UploadTypingDatasetOutputModel> {
+    ): Promise<UploadTypingDataOutputModel> {
         const formData = new FormData();
         formData.append("file", file);
 
-        return await fetch(`${API_BASE_URL}/projects/${projectId}/typing-datasets`, {
+        return await fetch(WebApiUris.uploadTypingData(projectId), {
+            method: "POST",
+            headers: {
+                "Content-Type": "multipart/form-data"
+            },
+            body: formData
+        }).then(res => {
+            if (res.ok)
+                return res.json();
+            else
+                throw new Error(res.statusText);
+        });
+    }
+
+    /**
+     * Uploads an isolate data file to a project.
+     *
+     * @param projectId the name of the project to which the isolate data will be uploaded
+     * @param file      the file to be uploaded
+     * @return a promise that resolves to the uploaded isolate data information
+     */
+    export async function uploadIsolateData(
+        projectId: string,
+        file: File
+    ): Promise<UploadIsolateDataOutputModel> {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        return await fetch(WebApiUris.uploadIsolateData(projectId), {
             method: "POST",
             headers: {
                 "Content-Type": "multipart/form-data"

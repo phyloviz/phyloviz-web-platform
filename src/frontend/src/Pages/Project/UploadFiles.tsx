@@ -8,6 +8,7 @@ import FinishIcon from "@mui/icons-material/Done";
 import {FileUploader} from "react-drag-drop-files";
 import CancelIcon from "@mui/icons-material/Cancel";
 import {useNavigate} from "react-router-dom";
+import {Alert} from "@mui/lab";
 
 enum FileType {
     TYPING_DATA = "Typing Data",
@@ -18,14 +19,28 @@ enum FileType {
  * Upload Files page.
  */
 export default function UploadFiles() {
-    const [fileType, setfileType] = useState<FileType | null>(null);
+    const [fileType, setfileType] = useState<FileType>(FileType.TYPING_DATA);
 
     const [file, setFile] = useState(null);
     const handleChange = (file: React.SetStateAction<null>) => {
         setFile(file);
     };
 
+    const [error, setError] = useState<string | null>(null);
+
     const navigate = useNavigate();
+
+    function handleSubmit() {
+        if (!fileType) {
+            setError("Please select a data type.");
+            return;
+        }
+        if (!file) {
+            setError("Please select a file.");
+            return;
+        }
+        // TODO: Upload file using Administration API
+    }
 
     return (
         <Container>
@@ -65,7 +80,9 @@ export default function UploadFiles() {
                                 }}
                             >
                                 <FormLabel>Data Type</FormLabel>
-                                <RadioGroup row>
+                                <RadioGroup
+                                    defaultValue={fileType}
+                                    row>
                                     {
                                         Object.values(FileType).map((value) => (
                                             <FormControlLabel
@@ -85,6 +102,7 @@ export default function UploadFiles() {
                                 name="file"
                                 required
                             />
+                            {error && <Alert severity="error" sx={{mt: 2}}>{error}</Alert>}
                         </Box>
 
                         <Box
@@ -112,7 +130,7 @@ export default function UploadFiles() {
                                 variant="contained"
                                 startIcon={<FinishIcon/>}
                                 onClick={() => {
-                                    // TODO
+                                    handleSubmit();
                                 }}
                                 sx={{
                                     marginTop: 4,

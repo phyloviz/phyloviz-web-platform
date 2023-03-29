@@ -2,7 +2,7 @@ import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField}
 import * as React from "react";
 import {ReactNode} from "react";
 import Typography from "@mui/material/Typography";
-import {DatasetType} from "../../../../Domain/DatasetType";
+import {DatasetType} from "../../../Domain/DatasetType";
 
 /**
  * Props for the DatasetInfoStepCard component.
@@ -39,7 +39,7 @@ export function DatasetInfoStepCard({datasetType, onChange}: DatasetInfoStepCard
                 <MenuItem value={DatasetType.MLST}>{DatasetType.MLST.valueOf()}</MenuItem>
                 <MenuItem value={DatasetType.MLVA}>{DatasetType.MLVA.valueOf()}</MenuItem>
                 <MenuItem value={DatasetType.FASTA}>{DatasetType.FASTA.valueOf()}</MenuItem>
-                <MenuItem value={DatasetType.ALIGNED}>{DatasetType.ALIGNED.valueOf()}</MenuItem>
+                <MenuItem value={DatasetType.ALIGNED_SEQUENCES}>{DatasetType.ALIGNED_SEQUENCES.valueOf()}</MenuItem>
                 <MenuItem value={DatasetType.SNP}>{DatasetType.SNP.valueOf()}</MenuItem>
                 <MenuItem value={DatasetType.SNP_WITHOUT_EXPLICIT_ID}>
                     {DatasetType.SNP_WITHOUT_EXPLICIT_ID.valueOf()}
@@ -66,7 +66,7 @@ const datasetDescriptions = {
     "available in FASTA format. The sequences need to be all of the same size. " +
     "Sequences of different sizes will be excluded.",
 
-    [DatasetType.ALIGNED]: "The dataset type Aligned Sequences (without explicit ID) is designed to analyze " +
+    [DatasetType.ALIGNED_SEQUENCES]: "The dataset type Aligned Sequences (without explicit ID) is designed to analyze " +
     "sequence data without having a predefined ID selected. The sequences need to be all of the same size. " +
     "Sequences of different sizes will be excluded.",
 

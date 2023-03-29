@@ -1,11 +1,11 @@
 import * as React from "react"
-import {useEffect} from "react"
+import {useEffect, useState} from "react"
 import {useOutlet, useParams} from "react-router-dom";
 import {AdministrationService} from "../../Services/administration/AdministrationService";
-import {ProjectModel} from "../../Services/administration/models/ProjectModel";
 import {FileManager} from "../../Components/Project/FileManager/FileManager";
 import Box from "@mui/material/Box";
 import EmptyProject from "./EmptyProject";
+import {GetProjectOutputModel} from "../../Services/administration/models/getProject/GetProjectOutputModel";
 
 /**
  * Project page.
@@ -13,7 +13,7 @@ import EmptyProject from "./EmptyProject";
 export default function Project() {
     const {projectId} = useParams<{ projectId: string }>();
     const outlet = useOutlet();
-    const [project, setProject] = React.useState<ProjectModel | null>(null);
+    const [project, setProject] = useState<GetProjectOutputModel | null>(null);
 
     useEffect(() => {
         //TODO: fetchProject();
@@ -39,7 +39,7 @@ export default function Project() {
             height: '90%',
             width: '100%',
         }}>
-            <FileManager/>
+            <FileManager project={project}/>
             {outlet || <EmptyProject
                 projectName={"Project Name"}
                 projectDescription={"Project Description"}

@@ -1,4 +1,5 @@
 import * as React from "react"
+import {useState} from "react"
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -9,6 +10,7 @@ import {WebUiUris} from "../../Utils/navigation/WebUiUris";
 import {useNavigate} from "react-router-dom";
 import {AdministrationService} from "../../Services/administration/AdministrationService";
 import {CreateProjectInputModel} from "../../Services/administration/models/createProject/CreateProjectInputModel";
+import {Alert} from "@mui/lab";
 
 /**
  * NewProject page.
@@ -16,18 +18,28 @@ import {CreateProjectInputModel} from "../../Services/administration/models/crea
 export default function NewProject() {
     const navigate = useNavigate();
 
-    const [projectName, setProjectName] = React.useState<string | null>(null);
-    const [projectDescription, setProjectDescription] = React.useState<string | null>(null);
+    const [projectName, setProjectName] = useState<string | null>(null);
+    const [projectDescription, setProjectDescription] = useState<string | null>(null);
 
+    const [error, setError] = useState<string | null>(null);
 
     function handleSubmit() {
-        AdministrationService.createProject({projectName, projectDescription} as CreateProjectInputModel)
+        if (projectName == null || projectName === "" || projectDescription == null || projectDescription === "") {
+            setError("Please fill out all fields");
+            return;
+        }
+
+        navigate(WebUiUris.project("test")); // TODO: Remove this when the backend is ready
+
+        AdministrationService.createProject({
+            name: projectName,
+            description: projectDescription
+        } as CreateProjectInputModel)
             .then(res => {
-                console.log(res);
-                // TODO: Navigate to the new project
+                navigate(WebUiUris.project(res.projectId));
             })
             .catch(err => {
-                console.log(err);
+                setError(err.message);
             });
     }
 
@@ -93,6 +105,8 @@ export default function NewProject() {
                             <Typography variant="caption" align={"justify"} sx={{mb: 4, width: "100%"}}>
                                 Describe your project.
                             </Typography>
+
+                            {error && <Alert severity="error">{error}</Alert>}
                         </Box>
 
                         <Box
@@ -120,8 +134,7 @@ export default function NewProject() {
                                 variant="contained"
                                 startIcon={<FinishIcon/>}
                                 onClick={() => {
-                                    handleSubmit();
-                                    navigate(WebUiUris.project("test")); // TODO: Change to a real project ID
+                                    handleSubmit()
                                 }}
                                 sx={{
                                     marginTop: 4,

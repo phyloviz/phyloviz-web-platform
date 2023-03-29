@@ -21,6 +21,8 @@ import ListItemText from "@mui/material/ListItemText";
 import {Avatar, Menu, MenuItem, Tooltip} from "@mui/material";
 import Logo from "../../Assets/logo.png";
 import {WebUiUris} from "../../Utils/navigation/WebUiUris";
+import {WebApiUris} from "../../Utils/navigation/WebApiUris";
+import {useLoggedIn, useSession, useSessionManager} from "../../Session/Session";
 
 
 /**
@@ -48,39 +50,37 @@ export default function Dashboard({children}: DashboardProps) {
     }
     const handleCloseUserMenu = () => setAnchorElUser(null)
 
-    const [loggedIn, setLoggedIn] = useState(false)
-    const [user, setUser] = useState({username: '', picture: '', email: ''})
+    const loggedIn = useLoggedIn()
+    const session = useSession()
+    const sessionManager = useSessionManager()
 
     useEffect(() => {
         async function checkLoggedIn() {
-            const response = await fetch('/api/session', {
+            const response = await fetch(WebApiUris.getSession, {
                 method: 'GET'
             })
 
             const data = await response.json()
 
-            if (response.status === 200) {
-                setLoggedIn(true)
-                setUser(data)
-            }
+            if (response.status === 200)
+                sessionManager.setSession(data)
         }
 
         checkLoggedIn()
     }, [])
-    console.log(user)
 
     const authSettings = [
         {
             name: 'Profile',
-            icon:  <ProfileIcon/>,
+            icon: <ProfileIcon/>,
             callback: () => navigate(WebUiUris.PROFILE)
         },
         {
             name: 'Logout',
             icon: <LogoutIcon/>,
             callback: async () => {
-                setLoggedIn(false)
-                await fetch('/api/logout', {
+                sessionManager.clearSession()
+                await fetch(WebApiUris.logout, {
                     method: 'POST'
                 })
             }
@@ -91,7 +91,7 @@ export default function Dashboard({children}: DashboardProps) {
         {
             name: 'Login',
             icon: <LoginIcon/>,
-            callback: () => window.location.href = "/oauth2/authorization/phyloviz-web-platform-client"
+            callback: () => window.location.href = WebApiUris.login
         }
     ]
 
@@ -129,8 +129,8 @@ export default function Dashboard({children}: DashboardProps) {
                             <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
                                 <Avatar
                                     alt="User Avatar"
-                                    src= { loggedIn && user.picture ? user.picture : ""}/> {/*TODO: Maybe change to this: https://mui.com/material-ui/react-menu/#account-menu*/}
-
+                                    src={loggedIn && session?.picture ? session!.picture : ""}
+                                /> {/*TODO: Maybe change to this: https://mui.com/material-ui/react-menu/#account-menu*/}
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -186,7 +186,7 @@ export default function Dashboard({children}: DashboardProps) {
                     {
                         mainListItems.map((item) => {
                             return (
-                                <ListItemButton onClick={() => navigate(item.href)}>
+                                <ListItemButton onClick={() => navigate(item.href)} key={item.name}>
                                     <ListItemIcon>
                                         {item.icon}
                                     </ListItemIcon>
@@ -199,7 +199,7 @@ export default function Dashboard({children}: DashboardProps) {
                     {
                         secondaryListItems.map((item) => {
                             return (
-                                <ListItemButton onClick={() => navigate(item.href)}>
+                                <ListItemButton onClick={() => navigate(item.href)} key={item.name}>
                                     <ListItemIcon>
                                         {item.icon}
                                     </ListItemIcon>

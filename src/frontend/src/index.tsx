@@ -5,6 +5,7 @@ import App from './App'
 import {BrowserRouter as Router} from 'react-router-dom'
 import {createTheme, ThemeProvider} from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
+import {AuthProvider} from "./Session/AuthProvider";
 
 const root = createRoot(document.getElementById('root') as HTMLElement)
 const theme = createTheme({
@@ -291,7 +292,9 @@ root.render(
     <Router>
         <ThemeProvider theme={theme}>
             <CssBaseline/>
-            <App/>
+            <AuthProvider>
+                <App/>
+            </AuthProvider>
         </ThemeProvider>
     </Router>
 )

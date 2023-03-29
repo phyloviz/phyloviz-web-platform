@@ -4,7 +4,7 @@ import {Button} from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
 import * as React from "react";
 import {useNavigate} from "react-router-dom";
-import {WebUiUris} from "../../../../Utils/navigation/WebUiUris";
+import {WebUiUris} from "../../../Utils/navigation/WebUiUris";
 
 /**
  * Card for the upload files feature.

@@ -1,30 +1,32 @@
 import * as React from "react";
 import {useState} from "react";
 import {StyledTreeItem} from "./StyledTreeItem";
-import {Folder} from "@mui/icons-material";
+import {Sync} from "@mui/icons-material";
 import {Menu, MenuItem} from "@mui/material";
-import UploadIcon from "@mui/icons-material/Upload";
+import DatasetIcon from "@mui/icons-material/Dataset";
 import {useNavigate} from "react-router-dom";
-import {WebUiUris} from "../../../Utils/navigation/WebUiUris";
+import {Dataset} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
 
 /**
- * Props for the FilesTreeItem component.
+ * Props for the DatasetTreeItem component.
  *
  * @param nodeId id of the tree item
+ * @param dataset dataset of the tree item
  * @param children children of the tree item
  */
-interface FilesTreeItemProps {
+interface DatasetTreeItemProps {
     nodeId: string;
+    dataset: Dataset;
     children?: React.ReactNode;
 }
 
 /**
- * Tree item for the files of a project.
+ * Tree item for a dataset of a project.
  *
  * @param nodeId id of the tree item
  * @param children children of the tree item
  */
-export function FilesTreeItem({nodeId, children}: FilesTreeItemProps) {
+export function DatasetTreeItem({nodeId, dataset, children}: DatasetTreeItemProps) {
     const [contextMenu, setContextMenu] = useState<{
         mouseX: number;
         mouseY: number;
@@ -55,8 +57,8 @@ export function FilesTreeItem({nodeId, children}: FilesTreeItemProps) {
         <>
             <StyledTreeItem
                 nodeId={nodeId}
-                labelText="Files"
-                labelIcon={Folder}
+                labelText={"Dataset" + dataset.datasetId} // TODO: Change to dataset name
+                labelIcon={DatasetIcon}
                 onContextMenu={handleContextMenu}
             >
                 {children}
@@ -72,11 +74,10 @@ export function FilesTreeItem({nodeId, children}: FilesTreeItemProps) {
                 }
             >
                 <MenuItem onClick={() => {
-                    handleClose();
-                    navigate(WebUiUris.UPLOAD_FILES);
+                    // TODO
                 }}>
-                    <UploadIcon color={"primary"}/>
-                    Upload Files
+                    <Sync color={"primary"}/>
+                    Compute
                 </MenuItem>
             </Menu>
         </>
