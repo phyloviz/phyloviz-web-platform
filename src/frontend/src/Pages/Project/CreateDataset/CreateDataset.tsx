@@ -1,5 +1,4 @@
 import * as React from "react"
-import {useState} from "react"
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import {Button, Container, Step, StepLabel, Stepper} from "@mui/material";
@@ -7,34 +6,28 @@ import Box from "@mui/material/Box";
 import NextIcon from "@mui/icons-material/ArrowForwardIos";
 import BackIcon from "@mui/icons-material/ArrowBackIos";
 import FinishIcon from "@mui/icons-material/Done";
-import {DatasetInfoStepCard} from "../../Components/Project/CreateDataset/DatasetInfoStepCard";
-import {DatasetType} from "../../Domain/DatasetType";
-import {TypingDataStepCard} from "../../Components/Project/CreateDataset/TypingDataStepCard";
-import {IsolateDataStepCard} from "../../Components/Project/CreateDataset/IsolateDataStepCard";
+import {DatasetInfoStepCard} from "../../../Components/Project/CreateDataset/DatasetInfoStepCard";
+import {TypingDataStepCard} from "../../../Components/Project/CreateDataset/TypingDataStepCard";
+import {IsolateDataStepCard} from "../../../Components/Project/CreateDataset/IsolateDataStepCard";
 import CancelIcon from "@mui/icons-material/Cancel";
-import {useNavigate} from "react-router-dom";
+import {CreateDatasetStep, steps, useCreateDataset} from "./useCreateDataset";
 
-enum CreateDatasetStep {
-    INFO = "Dataset Info",
-    TYPING_DATA = "Typing Data",
-    ISOLATE_DATA = "Isolate Data",
-}
-
-// TODO: Sus, criei para fazer o stepper
-const steps = [
-    'Dataset Info',
-    'Typing Data',
-    'Isolate Data',
-];
 
 /**
  * CreateDataset page.
  */
 export default function CreateDataset() {
-    const [datasetType, setDatasetType] = useState(DatasetType.MLST);
-    const [createDatasetStep, setCreateDatasetStep] = useState(CreateDatasetStep.INFO);
-    const [currStep, setCurrStep] = useState(0);
-    const navigate = useNavigate();
+    const {
+        datasetType,
+        handleDatasetTypeChange,
+        handleTypingDataChange,
+        handleIsolateDataChange,
+        handleCancel,
+        handleBack,
+        handleNext,
+        createDatasetStep,
+        currStep,
+    } = useCreateDataset();
 
     return (
         <Container>
@@ -48,20 +41,14 @@ export default function CreateDataset() {
                     p: 4,
                     display: "flex",
                     flexDirection: "column",
-                    marginTop: 4,
+                    mt: 4,
                     alignItems: "center",
                     width: "50%"
                 }}>
                     <Typography component="h1" variant="h4">
                         Create Dataset
                     </Typography>
-                    <Stepper activeStep={currStep} alternativeLabel
-                             sx={{
-                                 width: '100%',
-                                 mt: 2,
-                                 mb: 2
-                             }}
-                    >
+                    <Stepper activeStep={currStep} alternativeLabel sx={{width: '100%', mt: 2, mb: 2}}>
                         {steps.map((label) => (
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
@@ -85,15 +72,11 @@ export default function CreateDataset() {
                                 createDatasetStep === CreateDatasetStep.INFO
                                     ? <DatasetInfoStepCard
                                         datasetType={datasetType}
-                                        onChange={(event) => {
-                                            setDatasetType(event.target.value as DatasetType);
-                                        }}
+                                        onChange={handleDatasetTypeChange}
                                     />
                                     : createDatasetStep === CreateDatasetStep.TYPING_DATA
-                                        ? <TypingDataStepCard datasetType={datasetType}/>
-                                        : <IsolateDataStepCard onChange={(event) => {
-                                            // TODO
-                                        }}/>
+                                        ? <TypingDataStepCard datasetType={datasetType} onChange={handleTypingDataChange}/>
+                                        : <IsolateDataStepCard onChange={handleIsolateDataChange}/>
                             }
                         </Box>
 
@@ -106,13 +89,8 @@ export default function CreateDataset() {
                             <Button
                                 variant="contained"
                                 startIcon={<CancelIcon/>}
-                                onClick={() => {
-                                    navigate(-1); // Back to project page
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                onClick={handleCancel}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 Cancel
                             </Button>
@@ -121,19 +99,8 @@ export default function CreateDataset() {
                                 variant="contained"
                                 startIcon={<BackIcon/>}
                                 disabled={createDatasetStep === CreateDatasetStep.INFO}
-                                onClick={() => {
-                                    if (createDatasetStep === CreateDatasetStep.TYPING_DATA) {
-                                        setCreateDatasetStep(CreateDatasetStep.INFO)
-                                        setCurrStep(0)
-                                    } else if (createDatasetStep === CreateDatasetStep.ISOLATE_DATA) {
-                                        setCreateDatasetStep(CreateDatasetStep.TYPING_DATA)
-                                        setCurrStep(1)
-                                    }
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                onClick={handleBack}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 Back
                             </Button>
@@ -145,20 +112,8 @@ export default function CreateDataset() {
                                         ? <FinishIcon/>
                                         : <NextIcon/>
                                 }
-                                onClick={() => {
-                                    if (createDatasetStep === CreateDatasetStep.INFO) {
-                                        setCreateDatasetStep(CreateDatasetStep.TYPING_DATA)
-                                        setCurrStep(1)
-                                    } else if (createDatasetStep === CreateDatasetStep.TYPING_DATA) {
-                                        setCreateDatasetStep(CreateDatasetStep.ISOLATE_DATA)
-                                        setCurrStep(2)
-                                    }
-                                    // TODO: else, finish
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                onClick={handleNext}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 {
                                     createDatasetStep === CreateDatasetStep.ISOLATE_DATA

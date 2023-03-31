@@ -62,17 +62,9 @@ const StyledTreeItemRoot = styled(TreeItem)(({theme}) => ({
  *
  * @param props props for the StyledTreeItem component
  */
-export function StyledTreeItem(props: StyledTreeItemProps) {
-    const {
-        bgColor,
-        color,
-        labelIcon: LabelIcon,
-        labelInfo,
-        labelText,
-        handleContextMenu,
-        ...other
-    } = props;
-
+export function StyledTreeItem(
+    {bgColor, color, labelIcon: LabelIcon, labelInfo, labelText, handleContextMenu, ...other}: StyledTreeItemProps
+) {
     return (
         <StyledTreeItemRoot
             label={

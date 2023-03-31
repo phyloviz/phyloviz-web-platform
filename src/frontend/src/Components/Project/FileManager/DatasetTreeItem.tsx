@@ -4,7 +4,6 @@ import {StyledTreeItem} from "./StyledTreeItem";
 import {Sync} from "@mui/icons-material";
 import {Menu, MenuItem} from "@mui/material";
 import DatasetIcon from "@mui/icons-material/Dataset";
-import {useNavigate} from "react-router-dom";
 import {Dataset} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
 
 /**
@@ -22,17 +21,12 @@ interface DatasetTreeItemProps {
 
 /**
  * Tree item for a dataset of a project.
- *
- * @param nodeId id of the tree item
- * @param children children of the tree item
  */
 export function DatasetTreeItem({nodeId, dataset, children}: DatasetTreeItemProps) {
     const [contextMenu, setContextMenu] = useState<{
         mouseX: number;
         mouseY: number;
     } | null>(null);
-
-    const navigate = useNavigate();
 
     const handleContextMenu = (event: React.MouseEvent) => {
         event.preventDefault();

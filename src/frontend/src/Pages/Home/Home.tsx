@@ -16,8 +16,8 @@ export function Home() {
                 sx={{
                     display: "flex",
                     flexDirection: "row",
-                    marginTop: 4,
-                    marginBottom: 4,
+                    mt: 4,
+                    mb: 4,
                     justifyContent: "space-between",
                     width: "100%"
                 }}

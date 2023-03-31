@@ -30,13 +30,11 @@ export function CreateDatasetCard() {
             The dataset will be stored in this project, and you will be able to access it
             whenever you want.
         </Typography>
-        <Button variant="contained"
-                startIcon={<Add/>}
-                onClick={() => navigate(WebUiUris.LOAD_DATASET)}
-                sx={{
-                    marginTop: 4,
-                    width: "75%"
-                }}
+        <Button
+            variant="contained"
+            startIcon={<Add/>}
+            onClick={() => navigate(WebUiUris.LOAD_DATASET)}
+            sx={{mt: 4, width: "75%"}}
         >
             Create Dataset
         </Button>

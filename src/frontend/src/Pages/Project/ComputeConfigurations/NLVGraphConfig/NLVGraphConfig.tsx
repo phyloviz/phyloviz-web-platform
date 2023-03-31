@@ -5,14 +5,19 @@ import {Button, Container} from "@mui/material";
 import Box from "@mui/material/Box";
 import FinishIcon from "@mui/icons-material/Done";
 import CancelIcon from "@mui/icons-material/Cancel";
-import {useNavigate} from "react-router-dom";
-import {NLVGraphConfigDistanceStep} from "./NLVGraphConfigDistanceStep";
+import {
+    NLVGraphConfigDistanceStep
+} from "../../../../Components/Project/ComputeConfigurations/NLVGraphConfig/NLVGraphConfigDistanceStep";
+import {useNLVGraphConfig} from "./useNLVGraphConfig";
 
 /**
  * NLVGraphConfig page.
  */
 export default function NLVGraphConfig() {
-    const navigate = useNavigate();
+    const {
+        handleCancel,
+        handleFinish
+    } = useNLVGraphConfig();
 
     return (
         <Container>
@@ -26,7 +31,7 @@ export default function NLVGraphConfig() {
                     p: 4,
                     display: "flex",
                     flexDirection: "column",
-                    marginTop: 4,
+                    mt: 4,
                     alignItems: "center",
                     width: "50%"
                 }}>
@@ -58,13 +63,8 @@ export default function NLVGraphConfig() {
                             <Button
                                 variant="contained"
                                 startIcon={<CancelIcon/>}
-                                onClick={() => {
-                                    navigate(-1); // Back to project page
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                onClick={handleCancel}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 Cancel
                             </Button>
@@ -72,13 +72,8 @@ export default function NLVGraphConfig() {
                             <Button
                                 variant="contained"
                                 startIcon={<FinishIcon/>}
-                                onClick={() => {
-                                    // TODO:finish
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                onClick={handleFinish}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 Finish
                             </Button>

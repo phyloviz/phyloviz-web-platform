@@ -1,5 +1,4 @@
 import * as React from "react"
-import {useState} from "react"
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import {Button, Container, Step, StepLabel, Stepper} from "@mui/material";
@@ -8,28 +7,25 @@ import NextIcon from "@mui/icons-material/ArrowForwardIos";
 import BackIcon from "@mui/icons-material/ArrowBackIos";
 import FinishIcon from "@mui/icons-material/Done";
 import CancelIcon from "@mui/icons-material/Cancel";
-import {useNavigate} from "react-router-dom";
-import {NeighborJoiningConfigDistanceStep} from "./NeighborJoiningConfigDistanceStep";
-import {NeighborJoiningConfigMethodStep} from "./NeighborJoiningConfigMethodStep";
-
-enum NeighborJoiningConfigurationStep {
-    DISTANCE = "Distance",
-    METHOD = "Method",
-}
-
-// TODO: Sus, criei para fazer o stepper
-const steps = [
-    'Distance',
-    'Method',
-];
+import {
+    GoeBURSTConfigDistanceStep
+} from "../../../../Components/Project/ComputeConfigurations/GoeBURSTConfig/GoeBURSTConfigDistanceStep";
+import {
+    GoeBURSTConfigLevelStep
+} from "../../../../Components/Project/ComputeConfigurations/GoeBURSTConfig/GoeBURSTConfigLevelStep";
+import {GoeBURSTConfigurationStep, steps, useGoeBURSTConfig} from "./useGoeBURSTConfig";
 
 /**
- * NeighborJoiningConfig page.
+ * GoeBURSTConfig page.
  */
-export default function NeighborJoiningConfig() {
-    const [step, setStep] = useState(NeighborJoiningConfigurationStep.DISTANCE);
-    const [currStep, setCurrStep] = useState(0);
-    const navigate = useNavigate();
+export default function GoeBURSTConfig() {
+    const {
+        step,
+        currStep,
+        handleCancel,
+        handleBack,
+        handleNext
+    } = useGoeBURSTConfig();
 
     return (
         <Container>
@@ -43,20 +39,14 @@ export default function NeighborJoiningConfig() {
                     p: 4,
                     display: "flex",
                     flexDirection: "column",
-                    marginTop: 4,
+                    mt: 4,
                     alignItems: "center",
                     width: "50%"
                 }}>
                     <Typography component="h1" variant="h4">
-                        Neighbor-Joining Configuration
+                        goeBURST Configuration
                     </Typography>
-                    <Stepper activeStep={currStep} alternativeLabel
-                             sx={{
-                                 width: '100%',
-                                 mt: 2,
-                                 mb: 2
-                             }}
-                    >
+                    <Stepper activeStep={currStep} alternativeLabel sx={{width: '100%', mt: 2, mb: 2}}>
                         {steps.map((label) => (
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
@@ -77,9 +67,9 @@ export default function NeighborJoiningConfig() {
                             justifyContent: "left",
                         }}>
                             {
-                                step === NeighborJoiningConfigurationStep.DISTANCE
-                                    ? <NeighborJoiningConfigDistanceStep/>
-                                    : <NeighborJoiningConfigMethodStep/>
+                                step === GoeBURSTConfigurationStep.DISTANCE
+                                    ? <GoeBURSTConfigDistanceStep/>
+                                    : <GoeBURSTConfigLevelStep/>
                             }
                         </Box>
 
@@ -92,13 +82,8 @@ export default function NeighborJoiningConfig() {
                             <Button
                                 variant="contained"
                                 startIcon={<CancelIcon/>}
-                                onClick={() => {
-                                    navigate(-1); // Back to project page
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                onClick={handleCancel}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 Cancel
                             </Button>
@@ -106,17 +91,9 @@ export default function NeighborJoiningConfig() {
                             <Button
                                 variant="contained"
                                 startIcon={<BackIcon/>}
-                                disabled={step === NeighborJoiningConfigurationStep.DISTANCE}
-                                onClick={() => {
-                                    if (step === NeighborJoiningConfigurationStep.METHOD) {
-                                        setStep(NeighborJoiningConfigurationStep.DISTANCE)
-                                        setCurrStep(0)
-                                    }
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                disabled={step === GoeBURSTConfigurationStep.DISTANCE}
+                                onClick={handleBack}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 Back
                             </Button>
@@ -124,24 +101,15 @@ export default function NeighborJoiningConfig() {
                             <Button
                                 variant="contained"
                                 startIcon={
-                                    step === NeighborJoiningConfigurationStep.METHOD
+                                    step === GoeBURSTConfigurationStep.LEVEL
                                         ? <FinishIcon/>
                                         : <NextIcon/>
                                 }
-                                onClick={() => {
-                                    if (step === NeighborJoiningConfigurationStep.DISTANCE) {
-                                        setStep(NeighborJoiningConfigurationStep.METHOD)
-                                        setCurrStep(1)
-                                    }
-                                    // TODO: else, finish
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                onClick={handleNext}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 {
-                                    step === NeighborJoiningConfigurationStep.METHOD
+                                    step === GoeBURSTConfigurationStep.LEVEL
                                         ? "Finish"
                                         : "Next"
                                 }

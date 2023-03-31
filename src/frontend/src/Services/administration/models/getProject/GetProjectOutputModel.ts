@@ -1,21 +1,52 @@
+export interface Source {
+
+}
+
+export interface FileSource extends Source {
+    fileType: string;
+    fileName: string;
+}
+
+export interface TreeViewSource extends Source {
+    treeId: string;
+    typingDataId: string | null;
+    isolateDataId: string | null;
+}
+
+export interface AlgorithmTypingDataSource extends Source {
+    algorithm: string;
+    parameters: string;
+}
+
+export interface AlgorithmDistanceMatrixSource extends Source {
+    algorithm: string;
+    distanceMatrixId: string;
+    parameters: string;
+}
+
+export interface FunctionDistanceMatrixSource extends Source {
+    function: string;
+}
+
 export interface TreeView {
     treeViewId: string;
     name: string;
     layout: string;
+    source: TreeViewSource;
 }
 
 export interface Tree {
     treeId: string;
     name: string;
-    algorithm: string;
-    treeViews: TreeView[];
+    sourceType: string;
+    source: Source;
 }
 
 export interface DistanceMatrix {
     distanceMatrixId: string;
     name: string;
-    algorithm: string;
-    trees: Tree[]
+    sourceType: string;
+    source: Source;
 }
 
 export interface Dataset {
@@ -23,6 +54,8 @@ export interface Dataset {
     typingDataId: string;
     isolateDataId: string;
     distanceMatrices: DistanceMatrix[];
+    trees: Tree[];
+    treeViews: TreeView[];
 }
 
 interface TypingDataFile {

@@ -8,15 +8,17 @@ import {FileUploader} from "react-drag-drop-files";
  * Props for the TypingDataStepCard component.
  *
  * @param datasetType the type of the dataset
+ * @param onChange the function to be called when the typing data file is changed
  */
 interface TypingDataStepCardProps {
-    datasetType: DatasetType
+    datasetType: DatasetType;
+    onChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
 }
 
 /**
  * Card for the Typing Data step of the Create Dataset page.
  */
-export function TypingDataStepCard({datasetType}: TypingDataStepCardProps) {
+export function TypingDataStepCard({datasetType, onChange}: TypingDataStepCardProps) {
     return (
         <>
             <Typography variant="caption" align={"justify"} sx={{mb: 1, width: "100%"}}>
@@ -35,7 +37,7 @@ export function TypingDataStepCard({datasetType}: TypingDataStepCardProps) {
                 Or
             </Typography>
             <FileUploader
-                //handleChange={handleChange}
+                handleChange={onChange}
                 name="file"
                 required
             />

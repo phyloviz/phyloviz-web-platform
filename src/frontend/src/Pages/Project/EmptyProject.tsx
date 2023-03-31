@@ -5,31 +5,36 @@ import {Container} from "@mui/material";
 import Box from "@mui/material/Box";
 import {CreateDatasetCard} from "../../Components/Project/CreateDataset/CreateDatasetCard";
 import {UploadFilesCard} from "../../Components/Project/UploadFiles/UploadFilesCard";
+import {GetProjectOutputModel} from "../../Services/administration/models/getProject/GetProjectOutputModel";
 
+/**
+ * Props for the EmptyProject page.
+ *
+ * @param project The project.
+ */
 interface EmptyProjectProps {
-    projectName: string;
-    projectDescription: string;
+    project: GetProjectOutputModel | null;
 }
 
 /**
  * EmptyProject page.
  */
-export default function EmptyProject({projectName, projectDescription}: EmptyProjectProps) {
+export default function EmptyProject({project}: EmptyProjectProps) {
     return (
         <Container>
             <Paper sx={{
                 p: 4,
                 display: "flex",
                 flexDirection: "column",
-                marginTop: 4,
+                mt: 4,
                 alignItems: "center",
                 width: "100%"
             }}>
                 <Typography component="h1" variant="h4">
-                    {projectName}
+                    {project?.name}
                 </Typography>
                 <Typography component="h1" variant="h6">
-                    {projectDescription}
+                    {project?.description}
                 </Typography>
                 <Box sx={{
                     width: "100%",

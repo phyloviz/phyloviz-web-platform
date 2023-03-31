@@ -30,13 +30,8 @@ export function NewProjectCard() {
             </Typography>
             <Button variant="contained"
                     startIcon={<NewProjectIcon/>}
-                    onClick={() => {
-                        navigate(WebUiUris.NEW_PROJECT)
-                    }}
-                    sx={{
-                        marginTop: 4,
-                        width: "75%"
-                    }}
+                    onClick={() => navigate(WebUiUris.NEW_PROJECT)}
+                    sx={{mt: 4, width: "75%"}}
             >
                 New Project
             </Button>

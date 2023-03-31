@@ -13,7 +13,7 @@ export default function News() {
                 p: 4,
                 display: "flex",
                 flexDirection: "column",
-                marginTop: 4,
+                mt: 4,
                 alignItems: "center"
             }}>
                 <Typography component="h1" variant="h4">

@@ -29,13 +29,11 @@ export function UploadFilesCard() {
             You can upload the typing data and isolate data separately, and then
             create a dataset with them.
         </Typography>
-        <Button variant="contained"
-                startIcon={<UploadIcon/>}
-                onClick={() => navigate(WebUiUris.UPLOAD_FILES)}
-                sx={{
-                    marginTop: 4,
-                    width: "75%"
-                }}
+        <Button
+            variant="contained"
+            startIcon={<UploadIcon/>}
+            onClick={() => navigate(WebUiUris.UPLOAD_FILES)}
+            sx={{mt: 4, width: "75%"}}
         >
             Upload Files
         </Button>

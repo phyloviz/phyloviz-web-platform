@@ -49,6 +49,7 @@ export function FilesTreeItem({nodeId, children}: FilesTreeItemProps) {
 
     const handleClose = () => {
         setContextMenu(null);
+        navigate(WebUiUris.UPLOAD_FILES);
     };
 
     return (
@@ -71,10 +72,7 @@ export function FilesTreeItem({nodeId, children}: FilesTreeItemProps) {
                         : undefined
                 }
             >
-                <MenuItem onClick={() => {
-                    handleClose();
-                    navigate(WebUiUris.UPLOAD_FILES);
-                }}>
+                <MenuItem onClick={handleClose}>
                     <UploadIcon color={"primary"}/>
                     Upload Files
                 </MenuItem>

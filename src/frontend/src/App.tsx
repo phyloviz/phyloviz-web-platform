@@ -7,22 +7,24 @@ import Dashboard from "./Layouts/Dashboard/Dashboard";
 import {Home} from "./Pages/Home/Home";
 import News from "./Pages/News/News";
 import ApiInfo from "./Pages/ApiInfo/ApiInfo";
-import CreateDataset from "./Pages/Project/CreateDataset";
+import CreateDataset from "./Pages/Project/CreateDataset/CreateDataset";
 import NewProject from "./Pages/NewProject/NewProject";
 import OpenProject from "./Pages/OpenProject/OpenProject";
 import Project from "./Pages/Project/Project";
 import {NotFoundPage} from "./Pages/NotFoundPage";
-import UploadFiles from "./Pages/Project/UploadFiles";
+import UploadFiles from "./Pages/Project/UploadFiles/UploadFiles";
 import {useLoggedIn} from "./Session/Session";
-import {WebApiUris} from "./Utils/navigation/WebApiUris";
-import GoeBURSTConfig from "./Components/Project/ComputeConfigurations/GoeBURSTConfig/GoeBURSTConfig";
-import GoeBURSTFullMSTConfig
-    from "./Components/Project/ComputeConfigurations/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfig";
+import GoeBURSTConfig from "./Pages/Project/ComputeConfigurations/GoeBURSTConfig/GoeBURSTConfig";
+import GoeBURSTFullMSTConfig from "./Pages/Project/ComputeConfigurations/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfig";
 import HierarchicalClusteringConfig
-    from "./Components/Project/ComputeConfigurations/HierarchicalClusteringConfig/HierarchicalClusteringConfig";
-import NeighborJoiningConfig
-    from "./Components/Project/ComputeConfigurations/NeighborJoiningConfig/NeighborJoiningConfig";
-import NLVGraphConfig from "./Components/Project/ComputeConfigurations/NLVGraphConfig/NLVGraphConfig";
+    from "./Pages/Project/ComputeConfigurations/HierarchicalClusteringConfig/HierarchicalClusteringConfig";
+import NeighborJoiningConfig from "./Pages/Project/ComputeConfigurations/NeighborJoiningConfig/NeighborJoiningConfig";
+import NLVGraphConfig from "./Pages/Project/ComputeConfigurations/NLVGraphConfig/NLVGraphConfig";
+import Profile from "./Pages/Profile/Profile";
+import TreeView from "./Pages/Project/TreeView/TreeView";
+import DistanceMatrix from "./Pages/Project/DistanceMatrix/DistanceMatrix";
+import IsolateData from "./Pages/Project/IsolateData/IsolateData";
+import TypingData from "./Pages/Project/TypingData/TypingData";
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;
@@ -57,7 +59,7 @@ export default function App() {
      */
     function ProtectedRoute({children}: { children: React.ReactElement }) {
         if (!loggedIn) {
-            window.location.href = WebApiUris.login;
+            window.location.href = WebUiUris.LOGIN;
             return null;
         }
 
@@ -73,10 +75,7 @@ export default function App() {
                         <Route path={ABOUT} element={<About/>}/>
                         <Route path={NEWS} element={<News/>}/>
                         <Route path={API_INFO} element={<ApiInfo/>}/>
-
-                        <Route path={PROFILE} element={<ProtectedRoute>
-                            <div>Profile</div>
-                        </ProtectedRoute>}/>
+                        <Route path={PROFILE} element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
 
                         <Route path={NEW_PROJECT} element={<ProtectedRoute><NewProject/></ProtectedRoute>}/>
                         <Route path={OPEN_PROJECT} element={<ProtectedRoute><OpenProject/></ProtectedRoute>}/>
@@ -85,19 +84,19 @@ export default function App() {
                             <Route path={UPLOAD_FILES} element={<ProtectedRoute><UploadFiles/></ProtectedRoute>}/>
                             <Route
                                 path={TYPING_DATA}
-                                element={<ProtectedRoute><div>Typing data</div></ProtectedRoute>}
+                                element={<ProtectedRoute><TypingData/></ProtectedRoute>}
                             />
                             <Route
                                 path={ISOLATE_DATA}
-                                element={<ProtectedRoute><div>Isolate data</div></ProtectedRoute>}
+                                element={<ProtectedRoute><IsolateData/></ProtectedRoute>}
                             />
                             <Route
                                 path={DISTANCE_MATRIX}
-                                element={<ProtectedRoute><div>Distance matrix</div></ProtectedRoute>}
+                                element={<ProtectedRoute><DistanceMatrix/></ProtectedRoute>}
                             />
                             <Route
                                 path={TREE_VIEW}
-                                element={<ProtectedRoute><div>Tree view</div></ProtectedRoute>}
+                                element={<ProtectedRoute><TreeView/></ProtectedRoute>}
                             />
                             <Route
                                 path={COMPUTE_CONFIG_GOEBURST}

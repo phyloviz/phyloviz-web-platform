@@ -1,5 +1,4 @@
 import * as React from "react"
-import {useState} from "react"
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import {Button, Container, Step, StepLabel, Stepper} from "@mui/material";
@@ -8,28 +7,25 @@ import NextIcon from "@mui/icons-material/ArrowForwardIos";
 import BackIcon from "@mui/icons-material/ArrowBackIos";
 import FinishIcon from "@mui/icons-material/Done";
 import CancelIcon from "@mui/icons-material/Cancel";
-import {useNavigate} from "react-router-dom";
-import {HierarchicalClusteringConfigDistanceStep} from "./HierarchicalClusteringConfigDistanceStep";
-import {HierarchicalClusteringConfigMethodStep} from "./HierarchicalClusteringConfigMethodStep";
-
-enum HierarchicalClusteringConfigStep {
-    DISTANCE = "Distance",
-    METHOD = "Method",
-}
-
-// TODO: Sus, criei para fazer o stepper
-const steps = [
-    'Distance',
-    'Method',
-];
+import {
+    NeighborJoiningConfigDistanceStep
+} from "../../../../Components/Project/ComputeConfigurations/NeighborJoiningConfig/NeighborJoiningConfigDistanceStep";
+import {
+    NeighborJoiningConfigMethodStep
+} from "../../../../Components/Project/ComputeConfigurations/NeighborJoiningConfig/NeighborJoiningConfigMethodStep";
+import {NeighborJoiningConfigurationStep, steps, useNeighborJoiningConfig} from "./useNeighborJoiningConfig";
 
 /**
- * HierarchicalClusteringConfig page.
+ * NeighborJoiningConfig page.
  */
-export default function HierarchicalClusteringConfig() {
-    const [step, setStep] = useState(HierarchicalClusteringConfigStep.DISTANCE);
-    const [currStep, setCurrStep] = useState(0);
-    const navigate = useNavigate();
+export default function NeighborJoiningConfig() {
+    const {
+        step,
+        currStep,
+        handleCancel,
+        handleBack,
+        handleNext
+    } = useNeighborJoiningConfig();
 
     return (
         <Container>
@@ -43,20 +39,14 @@ export default function HierarchicalClusteringConfig() {
                     p: 4,
                     display: "flex",
                     flexDirection: "column",
-                    marginTop: 4,
+                    mt: 4,
                     alignItems: "center",
                     width: "50%"
                 }}>
                     <Typography component="h1" variant="h4">
-                        Hierarchical Clustering Configuration
+                        Neighbor-Joining Configuration
                     </Typography>
-                    <Stepper activeStep={currStep} alternativeLabel
-                             sx={{
-                                 width: '100%',
-                                 mt: 2,
-                                 mb: 2
-                             }}
-                    >
+                    <Stepper activeStep={currStep} alternativeLabel sx={{width: '100%', mt: 2, mb: 2}}>
                         {steps.map((label) => (
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
@@ -77,9 +67,9 @@ export default function HierarchicalClusteringConfig() {
                             justifyContent: "left",
                         }}>
                             {
-                                step === HierarchicalClusteringConfigStep.DISTANCE
-                                    ? <HierarchicalClusteringConfigDistanceStep/>
-                                    : <HierarchicalClusteringConfigMethodStep/>
+                                step === NeighborJoiningConfigurationStep.DISTANCE
+                                    ? <NeighborJoiningConfigDistanceStep/>
+                                    : <NeighborJoiningConfigMethodStep/>
                             }
                         </Box>
 
@@ -92,13 +82,8 @@ export default function HierarchicalClusteringConfig() {
                             <Button
                                 variant="contained"
                                 startIcon={<CancelIcon/>}
-                                onClick={() => {
-                                    navigate(-1); // Back to project page
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                onClick={handleCancel}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 Cancel
                             </Button>
@@ -106,17 +91,9 @@ export default function HierarchicalClusteringConfig() {
                             <Button
                                 variant="contained"
                                 startIcon={<BackIcon/>}
-                                disabled={step === HierarchicalClusteringConfigStep.DISTANCE}
-                                onClick={() => {
-                                    if (step === HierarchicalClusteringConfigStep.METHOD) {
-                                        setStep(HierarchicalClusteringConfigStep.DISTANCE)
-                                        setCurrStep(0)
-                                    }
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                disabled={step === NeighborJoiningConfigurationStep.DISTANCE}
+                                onClick={handleBack}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 Back
                             </Button>
@@ -124,24 +101,15 @@ export default function HierarchicalClusteringConfig() {
                             <Button
                                 variant="contained"
                                 startIcon={
-                                    step === HierarchicalClusteringConfigStep.METHOD
+                                    step === NeighborJoiningConfigurationStep.METHOD
                                         ? <FinishIcon/>
                                         : <NextIcon/>
                                 }
-                                onClick={() => {
-                                    if (step === HierarchicalClusteringConfigStep.DISTANCE) {
-                                        setStep(HierarchicalClusteringConfigStep.METHOD)
-                                        setCurrStep(1)
-                                    }
-                                    // TODO: else, finish
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                onClick={handleNext}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 {
-                                    step === HierarchicalClusteringConfigStep.METHOD
+                                    step === NeighborJoiningConfigurationStep.METHOD
                                         ? "Finish"
                                         : "Next"
                                 }

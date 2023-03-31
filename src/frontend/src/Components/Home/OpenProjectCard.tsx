@@ -28,15 +28,11 @@ export function OpenProjectCard() {
                 Open a project that you have created before.<br/>
                 The project can be in the cloud or you can upload it from your computer.
             </Typography>
-            <Button variant="contained"
-                    startIcon={<OpenProjectIcon/>}
-                    onClick={() => {
-                        navigate(WebUiUris.OPEN_PROJECT)
-                    }}
-                    sx={{
-                        marginTop: 4,
-                        width: "75%"
-                    }}
+            <Button
+                variant="contained"
+                startIcon={<OpenProjectIcon/>}
+                onClick={() => navigate(WebUiUris.OPEN_PROJECT)}
+                sx={{mt: 4, width: "75%"}}
             >
                 Open Project
             </Button>

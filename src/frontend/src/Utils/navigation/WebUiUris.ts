@@ -7,6 +7,7 @@ export namespace WebUiUris { // TODO: I think some of these URIs are sus, we sho
     export const NEWS = "/news"
     export const API_INFO = "/api-info"
     export const PROFILE = "/profile"
+    export const LOGIN = "/oauth2/authorization/phyloviz-web-platform-client"
 
     export const NEW_PROJECT = "/new-project"
     export const OPEN_PROJECT = "/open-project"

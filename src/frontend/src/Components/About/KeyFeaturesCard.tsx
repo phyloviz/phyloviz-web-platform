@@ -17,7 +17,7 @@ export function KeyFeaturesCard() {
         <Typography component="h1" variant="h5">
             Key Features
         </Typography>
-        <Typography component="h1" variant="body1" align={"justify"} sx={{marginTop: 4}}>
+        <Typography component="h1" variant="body1" align={"justify"} sx={{mt: 4}}>
             <ul>
                 <li><strong>Modular Architecture:</strong> The platform has a modular architecture that unifies
                     both

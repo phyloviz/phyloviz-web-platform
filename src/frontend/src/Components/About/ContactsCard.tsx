@@ -21,7 +21,7 @@ export function ContactsCard() {
         <Typography component="h1" variant="h5">
             Contacts
         </Typography>
-        <Typography component="h1" variant="body1" sx={{marginTop: 4}}>
+        <Typography component="h1" variant="body1" sx={{mt: 4}}>
             André Jesus (1) - <a href={"mailto:andre.jesus.pilar@gmail.com"}>andre.jesus.pilar@gmail.com</a>
             <br/>
             André Páscoa (1) - <a href={"mailto:andre@pascoa.org"}>andre@pascoa.org</a>
@@ -33,7 +33,7 @@ export function ContactsCard() {
             Alexandre P. Francisco (2,3) - <a href={"mailto:aplf@ist.utl.pt"}>aplf@ist.utl.pt</a>
         </Typography>
         <Box sx={{
-            marginTop: 2,
+            mt: 2,
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between"

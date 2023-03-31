@@ -14,7 +14,7 @@ export default function ApiInfo() {
                 p: 4,
                 display: "flex",
                 flexDirection: "column",
-                marginTop: 4,
+                mt: 4,
                 alignItems: "center"
             }}>
                 <img src={Logo} alt="Logo" width="10%"/>
@@ -24,7 +24,7 @@ export default function ApiInfo() {
                 <Typography component="h1" variant="h5">
                     A Modular and Web-Based Tool for Phylogenetic Analysis
                 </Typography>
-                <Typography component="h1" variant="body1" sx={{marginTop: 4}}>
+                <Typography component="h1" variant="body1" sx={{mt: 4}}>
                     A RESTful API was developed to allow the access to a range of services so that more advanced users
                     can programmatically use some of PHYLOViZ Web Platform features without using the application's
                     graphical interface.

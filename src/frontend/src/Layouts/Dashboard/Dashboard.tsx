@@ -21,7 +21,7 @@ import ListItemText from "@mui/material/ListItemText";
 import {Avatar, Menu, MenuItem, Tooltip} from "@mui/material";
 import Logo from "../../Assets/logo.png";
 import {WebUiUris} from "../../Utils/navigation/WebUiUris";
-import {WebApiUris} from "../../Utils/navigation/WebApiUris";
+import {WebApiUris} from "../../Services/WebApiUris";
 import {useLoggedIn, useSession, useSessionManager} from "../../Session/Session";
 
 
@@ -91,7 +91,7 @@ export default function Dashboard({children}: DashboardProps) {
         {
             name: 'Login',
             icon: <LoginIcon/>,
-            callback: () => window.location.href = WebApiUris.login
+            callback: () => window.location.href = WebUiUris.LOGIN
         }
     ]
 
@@ -107,7 +107,7 @@ export default function Dashboard({children}: DashboardProps) {
                         aria-label="open drawer"
                         onClick={toggleDrawer}
                         sx={{
-                            marginRight: '36px',
+                            mr: '36px',
                             ...(open && {display: 'none'}),
                         }}
                     >

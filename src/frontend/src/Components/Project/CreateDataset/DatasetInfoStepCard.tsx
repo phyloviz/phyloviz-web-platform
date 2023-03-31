@@ -20,9 +20,7 @@ interface DatasetInfoStepCard {
  */
 export function DatasetInfoStepCard({datasetType, onChange}: DatasetInfoStepCard) {
     return <>
-        <TextField label="Dataset Name" variant="outlined" required sx={{
-            width: "100%", mb: 1
-        }}/>
+        <TextField label="Dataset Name" variant="outlined" required sx={{width: "100%", mb: 1}}/>
         <Typography variant="caption" align={"justify"} sx={{mb: 4, width: "100%"}}>
             Choose a Dataset name to identify your analysis and choose the Dataset type depending on the
             typing data to be used.

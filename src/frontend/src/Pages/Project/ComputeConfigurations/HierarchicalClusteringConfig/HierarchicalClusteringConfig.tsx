@@ -1,5 +1,4 @@
 import * as React from "react"
-import {useState} from "react"
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import {Button, Container, Step, StepLabel, Stepper} from "@mui/material";
@@ -8,28 +7,29 @@ import NextIcon from "@mui/icons-material/ArrowForwardIos";
 import BackIcon from "@mui/icons-material/ArrowBackIos";
 import FinishIcon from "@mui/icons-material/Done";
 import CancelIcon from "@mui/icons-material/Cancel";
-import {useNavigate} from "react-router-dom";
-import {GoeBURSTConfigDistanceStep} from "./GoeBURSTConfigDistanceStep";
-import {GoeBURSTConfigLevelStep} from "./GoeBURSTConfigLevelStep";
-
-enum GoeBURSTConfigurationStep {
-    DISTANCE = "Distance",
-    LEVEL = "Level",
-}
-
-// TODO: Sus, criei para fazer o stepper
-const steps = [
-    'Distance',
-    'Level',
-];
+import {
+    HierarchicalClusteringConfigDistanceStep
+} from "../../../../Components/Project/ComputeConfigurations/HierarchicalClusteringConfig/HierarchicalClusteringConfigDistanceStep";
+import {
+    HierarchicalClusteringConfigMethodStep
+} from "../../../../Components/Project/ComputeConfigurations/HierarchicalClusteringConfig/HierarchicalClusteringConfigMethodStep";
+import {
+    HierarchicalClusteringConfigStep,
+    steps,
+    useHierarchicalClusteringConfig
+} from "./useHierarchicalClusteringConfig";
 
 /**
- * GoeBURSTConfig page.
+ * HierarchicalClusteringConfig page.
  */
-export default function GoeBURSTConfig() {
-    const [step, setStep] = useState(GoeBURSTConfigurationStep.DISTANCE);
-    const [currStep, setCurrStep] = useState(0);
-    const navigate = useNavigate();
+export default function HierarchicalClusteringConfig() {
+    const {
+        step,
+        currStep,
+        handleCancel,
+        handleBack,
+        handleNext
+    } = useHierarchicalClusteringConfig();
 
     return (
         <Container>
@@ -43,20 +43,14 @@ export default function GoeBURSTConfig() {
                     p: 4,
                     display: "flex",
                     flexDirection: "column",
-                    marginTop: 4,
+                    mt: 4,
                     alignItems: "center",
                     width: "50%"
                 }}>
                     <Typography component="h1" variant="h4">
-                        goeBURST Configuration
+                        Hierarchical Clustering Configuration
                     </Typography>
-                    <Stepper activeStep={currStep} alternativeLabel
-                             sx={{
-                                 width: '100%',
-                                 mt: 2,
-                                 mb: 2
-                             }}
-                    >
+                    <Stepper activeStep={currStep} alternativeLabel sx={{width: '100%', mt: 2, mb: 2}}>
                         {steps.map((label) => (
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
@@ -77,9 +71,9 @@ export default function GoeBURSTConfig() {
                             justifyContent: "left",
                         }}>
                             {
-                                step === GoeBURSTConfigurationStep.DISTANCE
-                                    ? <GoeBURSTConfigDistanceStep/>
-                                    : <GoeBURSTConfigLevelStep/>
+                                step === HierarchicalClusteringConfigStep.DISTANCE
+                                    ? <HierarchicalClusteringConfigDistanceStep/>
+                                    : <HierarchicalClusteringConfigMethodStep/>
                             }
                         </Box>
 
@@ -92,13 +86,8 @@ export default function GoeBURSTConfig() {
                             <Button
                                 variant="contained"
                                 startIcon={<CancelIcon/>}
-                                onClick={() => {
-                                    navigate(-1); // Back to project page
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                onClick={handleCancel}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 Cancel
                             </Button>
@@ -106,17 +95,9 @@ export default function GoeBURSTConfig() {
                             <Button
                                 variant="contained"
                                 startIcon={<BackIcon/>}
-                                disabled={step === GoeBURSTConfigurationStep.DISTANCE}
-                                onClick={() => {
-                                    if (step === GoeBURSTConfigurationStep.LEVEL) {
-                                        setStep(GoeBURSTConfigurationStep.DISTANCE)
-                                        setCurrStep(0)
-                                    }
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                disabled={step === HierarchicalClusteringConfigStep.DISTANCE}
+                                onClick={handleBack}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 Back
                             </Button>
@@ -124,24 +105,15 @@ export default function GoeBURSTConfig() {
                             <Button
                                 variant="contained"
                                 startIcon={
-                                    step === GoeBURSTConfigurationStep.LEVEL
+                                    step === HierarchicalClusteringConfigStep.METHOD
                                         ? <FinishIcon/>
                                         : <NextIcon/>
                                 }
-                                onClick={() => {
-                                    if (step === GoeBURSTConfigurationStep.DISTANCE) {
-                                        setStep(GoeBURSTConfigurationStep.LEVEL)
-                                        setCurrStep(1)
-                                    }
-                                    // TODO: else, finish
-                                }}
-                                sx={{
-                                    marginTop: 4,
-                                    width: "30%"
-                                }}
+                                onClick={handleNext}
+                                sx={{mt: 4, width: "30%"}}
                             >
                                 {
-                                    step === GoeBURSTConfigurationStep.LEVEL
+                                    step === HierarchicalClusteringConfigStep.METHOD
                                         ? "Finish"
                                         : "Next"
                                 }
