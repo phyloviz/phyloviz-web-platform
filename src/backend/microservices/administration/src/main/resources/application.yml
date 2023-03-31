@@ -2,9 +2,9 @@ server:
   port: 8088
 
 s3:
-  access-key_id: AKIAIOSFODNN7EXAMPLE
+  access-key-id: AKIAIOSFODNN7EXAMPLE
   secret-access-key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-  bucket: phyloviz
+  bucket: phyloviz-web-platform/ # TODO Ver esta BARRA! Lá no S3 Ninja o ficheiro fica com 2 barras atrás, SUS
   endpoint: http://localhost:9444
 
 spring:
@@ -23,22 +23,10 @@ spring:
         opaquetoken:
           introspection-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/token/introspect
           client-id: phyloviz-web-platform-client
-          client-secret: whCCD9r37qj8mx9H7R4mzIrSezYf3H7R
+          client-secret: pZW9kZ05jHjLiOlYYhBAa9CGk1uL7bob
 #        jwt:
 #          jwk-set-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/certs
 
 logging:
   level:
-    org:
-      springframework:
-        data:
-          mongodb:
-            core:
-              MongoTemplate: DEBUG
-        web:
-          server:
-            adapter:
-              DefaultServerWebExchange: DEBUG
-        security:
-          web: DEBUG
-    web: DEBUG
+    root: debug

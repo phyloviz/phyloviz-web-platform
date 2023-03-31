@@ -1,0 +1,33 @@
+package org.phyloviz.pwp.administration.service.projects.datasets.tree_views;
+
+import org.phyloviz.pwp.administration.service.dtos.tree_views.TreeViewDTO;
+import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewOutputDTO;
+
+public interface TreeViewsService {
+
+    /**
+     * Deletes a tree view.
+     *
+     * @param deleteTreeViewInputDTO the input data for the tree view deletion
+     * @return the output data for the tree view deletion
+     */
+    DeleteTreeViewOutputDTO deleteTreeView(DeleteTreeViewInputDTO deleteTreeViewInputDTO);
+
+    /**
+     * Deletes a tree view.
+     * This method is also used by other services (DatasetsService) to allow for the recursive deletion of resources.
+     *
+     * @param treeViewId id of the tree view
+     */
+    void deleteTreeView(String treeViewId);
+
+    /**
+     * Gets a tree view.
+     * This method is also used by other services (DatasetsService) to allow for the recursive retrieval of resources.
+     *
+     * @param treeViewId id of the tree view
+     * @return the tree view
+     */
+    TreeViewDTO getTreeView(String treeViewId);
+}

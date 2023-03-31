@@ -1,8 +1,7 @@
 package org.phyloviz.pwp.visualization.http.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.visualization.http.controllers.models.getTypingDatasetDetais.GetDatasetDetailsOutputModel;
-import org.phyloviz.pwp.visualization.http.controllers.models.getTypingDatasetProfiles.GetTypingDatasetProfilesOutputModel;
+import org.phyloviz.pwp.visualization.http.controllers.models.getTypingDataProfiles.GetTypingDataProfilesOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.getTreeView.GetTreeViewOutputModel;
 import org.phyloviz.pwp.visualization.service.VisualizationService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,25 +27,25 @@ public class VisualizationController {
      * @return the dataset information
      */
     @GetMapping("/datasets/{id}")
-    public GetDatasetDetailsOutputModel getDatasetDetails(@PathVariable String id) {
-        return new GetDatasetDetailsOutputModel(visualizationService.getDatasetDetails(id));
+    public org.phyloviz.pwp.visualization.http.controllers.models.getTypingDataDetails.GetTypingDataDetailsOutputModel getDatasetDetails(@PathVariable String id) {
+        return new org.phyloviz.pwp.visualization.http.controllers.models.getTypingDataDetails.GetTypingDataDetailsOutputModel(visualizationService.getDatasetDetails(id));
     }
 
     /**
-     * Gets the profiles of a typing dataset, given its id.
+     * Gets the profiles of a typing data, given its id.
      *
-     * @param id     the id of the typing dataset
+     * @param id     the id of the typing data
      * @param limit  the number of profiles to be returned
      * @param offset the offset of the profiles to be returned
-     * @return the profiles of the typing dataset
+     * @return the profiles of the typing data
      */
-    @GetMapping("/typing-datasets/{id}/profiles")
-    public GetTypingDatasetProfilesOutputModel getTypingDatasetProfiles(
+    @GetMapping("/typing-data/{id}/profiles")
+    public GetTypingDataProfilesOutputModel getTypingDataProfiles(
             @PathVariable String id,
             @RequestParam("limit") int limit,
             @RequestParam("offset") int offset
     ) {
-        return new GetTypingDatasetProfilesOutputModel(visualizationService.getTypingDatasetProfiles(id, limit, offset));
+        return new GetTypingDataProfilesOutputModel(visualizationService.getTypingDataProfiles(id, limit, offset));
     }
 
     /**

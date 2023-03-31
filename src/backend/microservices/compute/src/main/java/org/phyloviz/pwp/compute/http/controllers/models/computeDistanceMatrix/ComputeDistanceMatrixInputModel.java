@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class ComputeDistanceMatrixInputModel {
     private String projectId;
-    private String typingDatasetId;
+    private String typingDataId;
 }

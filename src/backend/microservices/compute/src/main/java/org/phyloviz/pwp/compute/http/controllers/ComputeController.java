@@ -26,7 +26,7 @@ public class ComputeController {
             @RequestBody ComputeDistanceMatrixInputModel inputModel,
             User user
     ) {
-        ComputeDistanceMatrixOutputDTO computeDistanceMatrixOutputDTO = computeService.computeDistanceMatrix(inputModel.getProjectId(), inputModel.getTypingDatasetId(), user.toDTO());
+        ComputeDistanceMatrixOutputDTO computeDistanceMatrixOutputDTO = computeService.computeDistanceMatrix(inputModel.getProjectId(), inputModel.getTypingDataId(), user.toDTO());
 
         return new ComputeDistanceMatrixOutputModel(computeDistanceMatrixOutputDTO);
     }

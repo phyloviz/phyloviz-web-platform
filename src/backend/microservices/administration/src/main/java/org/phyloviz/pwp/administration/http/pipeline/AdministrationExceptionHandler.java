@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.administration.http.pipeline;
 
-import org.phyloviz.pwp.administration.service.exceptions.ProjectNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.zalando.problem.Problem;

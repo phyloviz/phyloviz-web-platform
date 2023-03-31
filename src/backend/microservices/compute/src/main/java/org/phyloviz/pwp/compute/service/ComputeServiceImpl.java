@@ -52,7 +52,7 @@ public class ComputeServiceImpl implements ComputeService {
     private final String computeDistanceMatrixWorkflowTemplateName = "computeDistanceMatrix";
 
     @Override
-    public ComputeDistanceMatrixOutputDTO computeDistanceMatrix(String projectId, String typingDatasetId, UserDTO toDTO) {
+    public ComputeDistanceMatrixOutputDTO computeDistanceMatrix(String projectId, String typingDataId, UserDTO toDTO) {
         // Maybe we should only retrieve the workflow template on startup?
 
         //TODO: Fix transactions
@@ -94,7 +94,7 @@ public class ComputeServiceImpl implements ComputeService {
 
         WorkflowTemplateData workflowTemplateData = WorkflowTemplateData.builder()
                 .workflowId(workflowId)
-                .put("typingDatasetId", typingDatasetId)
+                .put("typingDataId", typingDataId)
                 .build();
 
         Workflow workflow = workflowTemplate.buildWorkflow(workflowTemplateData);

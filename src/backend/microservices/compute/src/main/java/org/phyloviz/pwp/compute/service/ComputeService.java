@@ -10,5 +10,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ComputeService {
 
-    ComputeDistanceMatrixOutputDTO computeDistanceMatrix(String projectId, String typingDatasetId, UserDTO toDTO);
+    ComputeDistanceMatrixOutputDTO computeDistanceMatrix(String projectId, String typingDataId, UserDTO toDTO);
 }
