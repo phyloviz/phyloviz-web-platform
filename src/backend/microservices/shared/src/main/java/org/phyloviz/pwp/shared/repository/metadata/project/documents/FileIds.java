@@ -1,11 +1,15 @@
 package org.phyloviz.pwp.shared.repository.metadata.project.documents;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FileIds {
-    private final List<String> typingDataIds;
-    private final List<String> isolateDataIds;
+    private List<String> typingDataIds;
+    private List<String> isolateDataIds;
 }

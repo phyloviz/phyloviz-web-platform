@@ -2,9 +2,9 @@ package org.phyloviz.pwp.administration.service.dtos.trees;
 
 import lombok.Data;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeSourceAlgorithmDistanceMatrix;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeSourceAlgorithmTypingData;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeSourceFile;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceAlgorithmDistanceMatrix;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceAlgorithmTypingData;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceFile;
 
 @Data
 public class TreeDTO {

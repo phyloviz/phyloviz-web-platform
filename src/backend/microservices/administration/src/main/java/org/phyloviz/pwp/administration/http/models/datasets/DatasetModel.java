@@ -11,6 +11,8 @@ import java.util.List;
 @Data
 public class DatasetModel {
     private String datasetId;
+    private String name;
+    private String description;
     private String typingDataId;
     private String isolateDataId;
     private List<DistanceMatrixOutputModel> distanceMatrices;
@@ -19,6 +21,8 @@ public class DatasetModel {
 
     public DatasetModel(DatasetDTO datasetDTO) {
         this.datasetId = datasetDTO.getDatasetId();
+        this.name = datasetDTO.getName();
+        this.description = datasetDTO.getDescription();
         this.typingDataId = datasetDTO.getTypingDataId();
         this.isolateDataId = datasetDTO.getIsolateDataId();
         this.distanceMatrices = datasetDTO.getDistanceMatrices().stream().map(DistanceMatrixOutputModel::new).toList();

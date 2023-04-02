@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.shared.repository.metadata.typingData.documents.converter;
+package org.phyloviz.pwp.shared.repository.metadata.typingData.documents.deserializer;
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
@@ -21,16 +21,16 @@ public class TypingDataMetadataDeserializer implements Converter<Document, Typin
         try {
             String adapterId = document.getString("adapterId");
 
-            Class<? extends TypingDataAdapterSpecificData> c;
+            Class<? extends TypingDataAdapterSpecificData> adapterSpecificDataClass;
 
             if (adapterId.equals("s3")) { // TODO change this
-                c = TypingDataS3AdapterSpecificData.class;
+                adapterSpecificDataClass = TypingDataS3AdapterSpecificData.class;
             } else {
                 throw new RuntimeException("Unknown adapterId: " + adapterId);
             }
 
             Document adapterSpecificDataDocument = (Document) document.get("adapterSpecificData");
-            TypingDataAdapterSpecificData adapterSpecificData = mongoConverter.read(c, adapterSpecificDataDocument);
+            TypingDataAdapterSpecificData adapterSpecificData = mongoConverter.read(adapterSpecificDataClass, adapterSpecificDataDocument);
 
             return new TypingDataMetadata(
                     document.getObjectId("_id").toString(),

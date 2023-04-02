@@ -17,6 +17,14 @@ public interface TypingDataService {
     UploadTypingDataOutputDTO uploadTypingData(UploadTypingDataInputDTO uploadTypingDataInputDTO);
 
     /**
+     * Deletes a typing data file.
+     *
+     * @param deleteTypingDataInputDTO the input data
+     * @return
+     */
+    DeleteTypingDataOutputDTO deleteTypingData(DeleteTypingDataInputDTO deleteTypingDataInputDTO);
+
+    /**
      * Get a typing data file information.
      * This method is also used by other services (ProjectsService) to allow for the recursive retrieval of resources.
      *
@@ -27,9 +35,10 @@ public interface TypingDataService {
 
     /**
      * Deletes a typing data file.
+     * This method is also used by other services (ProjectsService) to allow for the recursive deletion of resources.
+     * Does not delete its own id from the project.
      *
-     * @param deleteTypingDataInputDTO the input data
-     * @return
+     * @param typingDataId the id of the typing data
      */
-    DeleteTypingDataOutputDTO deleteTypingData(DeleteTypingDataInputDTO deleteTypingDataInputDTO);
+    void deleteTypingData(String typingDataId);
 }

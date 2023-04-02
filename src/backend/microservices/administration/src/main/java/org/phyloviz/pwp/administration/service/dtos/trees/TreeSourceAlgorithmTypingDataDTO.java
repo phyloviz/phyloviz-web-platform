@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.service.dtos.trees;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeSourceAlgorithmTypingData;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceAlgorithmTypingData;
 
 @Data
 public class TreeSourceAlgorithmTypingDataDTO implements TreeSourceDTO {

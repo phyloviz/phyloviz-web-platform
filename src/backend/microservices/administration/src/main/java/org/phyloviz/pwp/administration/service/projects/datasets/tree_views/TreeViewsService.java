@@ -25,6 +25,7 @@ public interface TreeViewsService {
     /**
      * Gets a tree view.
      * This method is also used by other services (DatasetsService) to allow for the recursive retrieval of resources.
+     * Does not delete its own id from the dataset.
      *
      * @param treeViewId id of the tree view
      * @return the tree view

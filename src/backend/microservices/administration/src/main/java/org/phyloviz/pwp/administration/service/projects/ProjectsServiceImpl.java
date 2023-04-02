@@ -70,6 +70,8 @@ public class ProjectsServiceImpl implements ProjectsService {
             throw new UnauthorizedException("User is not the owner of the project");
 
         project.getDatasetIds().forEach(datasetsService::deleteDataset);
+        project.getFileIds().getTypingDataIds().forEach(typingDataService::deleteTypingData);
+        project.getFileIds().getIsolateDataIds().forEach(isolateDataService::deleteIsolateData);
 
         projectRepository.delete(project);
 

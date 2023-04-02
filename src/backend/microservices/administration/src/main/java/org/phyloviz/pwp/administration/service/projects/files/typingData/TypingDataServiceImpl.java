@@ -58,20 +58,9 @@ public class TypingDataServiceImpl implements TypingDataService {
             throw new RuntimeException("Could not store file");
 
         project.getFileIds().getTypingDataIds().add(typingDataId);
-
         projectRepository.save(project);
 
         return new UploadTypingDataOutputDTO(projectId, typingDataId);
-    }
-
-    @Override
-    public TypingDataDTO getTypingData(String typingDataId) {
-        TypingDataMetadata typingDataMetadata = typingDataMetadataRepository.findByTypingDataId(typingDataId);
-
-        return new TypingDataDTO(
-                typingDataMetadata.getTypingDataId(),
-                typingDataMetadata.getName()
-        );
     }
 
     @Override
@@ -89,6 +78,26 @@ public class TypingDataServiceImpl implements TypingDataService {
                         "Delete the datasets first.");
         });
 
+        deleteTypingData(typingDataId);
+
+        project.getFileIds().getTypingDataIds().remove(typingDataId);
+        projectRepository.save(project);
+
+        return new DeleteTypingDataOutputDTO(projectId, typingDataId);
+    }
+
+    @Override
+    public TypingDataDTO getTypingData(String typingDataId) {
+        TypingDataMetadata typingDataMetadata = typingDataMetadataRepository.findByTypingDataId(typingDataId);
+
+        return new TypingDataDTO(
+                typingDataMetadata.getTypingDataId(),
+                typingDataMetadata.getName()
+        );
+    }
+
+    @Override
+    public void deleteTypingData(String typingDataId) {
         typingDataMetadataRepository.findAllByTypingDataId(typingDataId).forEach(typingDataMetadata -> {
             if (typingDataMetadata.getAdapterId().equals(fileStorageRepository.getAdapterId())) {
                 fileStorageRepository.delete(typingDataMetadata.getUrl());
@@ -98,10 +107,5 @@ public class TypingDataServiceImpl implements TypingDataService {
 
             typingDataMetadataRepository.delete(typingDataMetadata);
         });
-
-        project.getFileIds().getTypingDataIds().remove(typingDataId);
-        projectRepository.save(project);
-
-        return new DeleteTypingDataOutputDTO(projectId, typingDataId);
     }
 }

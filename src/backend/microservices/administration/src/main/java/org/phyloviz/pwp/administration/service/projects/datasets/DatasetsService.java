@@ -55,8 +55,9 @@ public interface DatasetsService {
     /**
      * Deletes a dataset.
      * This method is also used by other services (ProjectsService) to allow for the recursive deletion of resources.
+     * Does not delete its own id from the project.
      *
-     * @param datasetId id of the dataset
+     * @param datasetId the id of the dataset
      */
     void deleteDataset(String datasetId);
 }

@@ -2,6 +2,8 @@ package org.phyloviz.pwp.administration.service.projects.datasets.distance_matri
 
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.repository.data.FileStorageRepository;
+import org.phyloviz.pwp.administration.repository.metadata.dataset.DatasetRepository;
+import org.phyloviz.pwp.administration.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.administration.service.dtos.distance_matrices.DistanceMatrixDTO;
@@ -18,6 +20,7 @@ public class DistanceMatricesServiceImpl implements DistanceMatricesService {
 
     private final DistanceMatrixMetadataRepository distanceMatrixMetadataRepository;
     private final ProjectRepository projectRepository;
+    private final DatasetRepository datasetRepository;
     private final FileStorageRepository fileStorageRepository;
 
     @Override
@@ -32,7 +35,12 @@ public class DistanceMatricesServiceImpl implements DistanceMatricesService {
         if (!project.getOwnerId().equals(userId))
             throw new UnauthorizedException("User is not the owner of the project");
 
+        Dataset dataset = datasetRepository.findById(datasetId);
+
         deleteDistanceMatrix(distanceMatrixId);
+
+        dataset.getDistanceMatrixIds().remove(distanceMatrixId);
+        datasetRepository.save(dataset);
 
         return new DeleteDistanceMatrixOutputDTO(projectId, datasetId, distanceMatrixId);
     }

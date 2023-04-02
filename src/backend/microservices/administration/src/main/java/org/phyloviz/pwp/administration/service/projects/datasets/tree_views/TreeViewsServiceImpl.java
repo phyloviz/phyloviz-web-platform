@@ -2,11 +2,13 @@ package org.phyloviz.pwp.administration.service.projects.datasets.tree_views;
 
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.repository.data.FileStorageRepository;
-import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
+import org.phyloviz.pwp.administration.repository.metadata.dataset.DatasetRepository;
+import org.phyloviz.pwp.administration.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.administration.service.dtos.tree_views.TreeViewDTO;
 import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewOutputDTO;
+import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.TreeViewMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.TreeViewMetadata;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
@@ -18,6 +20,7 @@ public class TreeViewsServiceImpl implements TreeViewsService {
 
     private final TreeViewMetadataRepository treeViewMetadataRepository;
     private final ProjectRepository projectRepository;
+    private final DatasetRepository datasetRepository;
     private final FileStorageRepository fileStorageRepository;
 
     @Override
@@ -32,7 +35,12 @@ public class TreeViewsServiceImpl implements TreeViewsService {
         if (!project.getOwnerId().equals(userId))
             throw new UnauthorizedException("User is not the owner of the project");
 
+        Dataset dataset = datasetRepository.findById(datasetId);
+
         deleteTreeView(treeViewId);
+
+        dataset.getTreeViewIds().remove(treeViewId);
+        datasetRepository.save(dataset);
 
         return new DeleteTreeViewOutputDTO(projectId, datasetId, treeViewId);
     }

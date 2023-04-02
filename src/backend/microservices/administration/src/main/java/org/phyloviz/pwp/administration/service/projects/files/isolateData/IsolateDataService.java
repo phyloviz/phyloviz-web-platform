@@ -17,6 +17,14 @@ public interface IsolateDataService {
     UploadIsolateDataOutputDTO uploadIsolateData(UploadIsolateDataInputDTO uploadIsolateDataInputDTO);
 
     /**
+     * Deletes an isolate data file.
+     *
+     * @param deleteIsolateDataInputDTO the input data
+     * @return
+     */
+    DeleteIsolateDataOutputDTO deleteIsolateData(DeleteIsolateDataInputDTO deleteIsolateDataInputDTO);
+
+    /**
      * Get an isolate data file information.
      * This method is also used by other services (ProjectsService) to allow for the recursive retrieval of resources.
      *
@@ -27,9 +35,10 @@ public interface IsolateDataService {
 
     /**
      * Deletes an isolate data file.
+     * This method is also used by other services (ProjectsService) to allow for the recursive deletion of resources.
+     * Does not delete its own id from the project.
      *
-     * @param deleteIsolateDataInputDTO the input data
-     * @return
+     * @param isolateDataId the id of the isolate data
      */
-    DeleteIsolateDataOutputDTO deleteIsolateData(DeleteIsolateDataInputDTO deleteIsolateDataInputDTO);
+    void deleteIsolateData(String isolateDataId);
 }

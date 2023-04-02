@@ -58,20 +58,9 @@ public class IsolateDataServiceImpl implements IsolateDataService {
             throw new RuntimeException("Could not store file");
 
         project.getFileIds().getIsolateDataIds().add(isolateDataId);
-
         projectRepository.save(project);
 
         return new UploadIsolateDataOutputDTO(projectId, isolateDataId);
-    }
-
-    @Override
-    public IsolateDataDTO getIsolateData(String isolateDataId) {
-        IsolateDataMetadata isolateDataMetadata = isolateDataMetadataRepository.findByIsolateDataId(isolateDataId);
-
-        return new IsolateDataDTO(
-                isolateDataMetadata.getIsolateDataId(),
-                isolateDataMetadata.getName()
-        );
     }
 
     @Override
@@ -89,6 +78,26 @@ public class IsolateDataServiceImpl implements IsolateDataService {
                         "Delete the datasets first.");
         });
 
+        deleteIsolateData(isolateDataId);
+
+        project.getFileIds().getIsolateDataIds().remove(isolateDataId);
+        projectRepository.save(project);
+
+        return new DeleteIsolateDataOutputDTO(projectId, isolateDataId);
+    }
+
+    @Override
+    public IsolateDataDTO getIsolateData(String isolateDataId) {
+        IsolateDataMetadata isolateDataMetadata = isolateDataMetadataRepository.findByIsolateDataId(isolateDataId);
+
+        return new IsolateDataDTO(
+                isolateDataMetadata.getIsolateDataId(),
+                isolateDataMetadata.getName()
+        );
+    }
+
+    @Override
+    public void deleteIsolateData(String isolateDataId) {
         isolateDataMetadataRepository.findAllByIsolateDataId(isolateDataId).forEach(isolateDataMetadata -> {
             if (isolateDataMetadata.getAdapterId().equals(fileStorageRepository.getAdapterId())) {
                 fileStorageRepository.delete(isolateDataMetadata.getUrl());
@@ -98,10 +107,5 @@ public class IsolateDataServiceImpl implements IsolateDataService {
 
             isolateDataMetadataRepository.delete(isolateDataMetadata);
         });
-
-        project.getFileIds().getIsolateDataIds().remove(isolateDataId);
-        projectRepository.save(project);
-
-        return new DeleteIsolateDataOutputDTO(projectId, isolateDataId);
     }
 }
