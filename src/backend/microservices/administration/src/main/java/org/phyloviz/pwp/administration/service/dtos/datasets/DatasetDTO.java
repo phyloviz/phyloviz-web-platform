@@ -1,7 +1,6 @@
 package org.phyloviz.pwp.administration.service.dtos.datasets;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.administration.service.dtos.distance_matrices.DistanceMatrixDTO;
 import org.phyloviz.pwp.administration.service.dtos.tree_views.TreeViewDTO;
 import org.phyloviz.pwp.administration.service.dtos.trees.TreeDTO;

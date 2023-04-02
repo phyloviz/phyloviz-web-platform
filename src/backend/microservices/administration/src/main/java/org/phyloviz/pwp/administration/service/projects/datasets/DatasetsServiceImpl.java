@@ -1,8 +1,8 @@
 package org.phyloviz.pwp.administration.service.projects.datasets;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.administration.repository.metadata.dataset.DatasetRepository;
-import org.phyloviz.pwp.administration.repository.metadata.dataset.documents.Dataset;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.administration.service.dtos.datasets.DatasetDTO;
 import org.phyloviz.pwp.administration.service.dtos.datasets.createDataset.CreateDatasetInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.datasets.createDataset.CreateDatasetOutputDTO;

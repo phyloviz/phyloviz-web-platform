@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.administration.repository.metadata.dataset.documents;
+package org.phyloviz.pwp.shared.repository.metadata.dataset.documents;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

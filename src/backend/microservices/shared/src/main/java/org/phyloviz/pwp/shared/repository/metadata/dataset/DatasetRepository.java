@@ -1,6 +1,6 @@
-package org.phyloviz.pwp.administration.repository.metadata.dataset;
+package org.phyloviz.pwp.shared.repository.metadata.dataset;
 
-import org.phyloviz.pwp.administration.repository.metadata.dataset.documents.Dataset;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 
 public interface DatasetRepository {
 

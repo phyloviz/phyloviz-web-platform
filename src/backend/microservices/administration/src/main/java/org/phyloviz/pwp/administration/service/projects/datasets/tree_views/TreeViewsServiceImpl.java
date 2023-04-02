@@ -2,8 +2,8 @@ package org.phyloviz.pwp.administration.service.projects.datasets.tree_views;
 
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.repository.data.FileStorageRepository;
-import org.phyloviz.pwp.administration.repository.metadata.dataset.DatasetRepository;
-import org.phyloviz.pwp.administration.repository.metadata.dataset.documents.Dataset;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.administration.service.dtos.tree_views.TreeViewDTO;
 import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewOutputDTO;

@@ -1,9 +1,9 @@
-package org.phyloviz.pwp.administration.repository.metadata.dataset.mongo;
+package org.phyloviz.pwp.shared.repository.metadata.dataset.mongo;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.administration.repository.metadata.dataset.DatasetRepository;
-import org.phyloviz.pwp.administration.repository.metadata.dataset.documents.Dataset;
-import org.phyloviz.pwp.administration.service.exceptions.DatasetNotFoundException;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
+import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.springframework.stereotype.Repository;
 
 @Repository
