@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "distance-matrices")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TypeAlias("distanceMatrixMetadata")
 public class DistanceMatrixMetadata {
     @Id
     private String id;

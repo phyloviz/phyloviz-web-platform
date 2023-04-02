@@ -2,6 +2,7 @@ package org.phyloviz.pwp.shared.repository.metadata.typingData.documents;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TypeAlias("typingDataMetadata")
 public class TypingDataMetadata {
     @Id
     private String id;
