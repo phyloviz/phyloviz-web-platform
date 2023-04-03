@@ -6,6 +6,72 @@ pwp:
     oauth2:
       redirect-uri: "/api/login/oauth2/code/{registrationId}"
 
+  microservices:
+    administration:
+      uri: http://localhost:8088
+      routes:
+        - method: POST
+          path: /projects
+        - method: GET
+          path: /projects
+        - method: GET
+          path: /project/{projectId}
+        - method: DELETE
+          path: /projects/{id}
+        - method: POST
+          path: /project/{projectId}/datasets
+        - method: GET
+          path: /project/{projectId}/datasets/{datasetId}
+        - method: DELETE
+          path: /project/{projectId}/datasets/{datasetId}
+        - method: DELETE
+          path: /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}
+        - method: DELETE
+          path: /projects/{projectId}/datasets/{datasetId}/trees/{treeId}
+        - method: DELETE
+          path: /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}
+        - method: POST
+          path: /project/{projectId}/files/typing-data
+        - method: DELETE
+          path: /project/{projectId}/files/typing-data/{typingDataId}
+        - method: POST
+          path: /project/{projectId}/files/isolate-data
+        - method: DELETE
+          path: /project/{projectId}/files/isolate-data/{isolateDataId}
+
+    compute:
+      uri: http://localhost:8086
+      routes:
+        - method: POST
+          path: /projects/{projectId}/jobs
+        - method: GET
+          path: /projects/{projectId}/jobs
+        - method: GET
+          path: /projects/{projectId}/jobs/{jobId}
+
+    visualization:
+      uri: http://localhost:8085
+      routes:
+        - method: GET
+          path: /projects/{projectId}/datasets/{datasetId}/trees/{treeId}
+        - method: GET
+          path: /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}
+        - method: GET
+          path: /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}
+        - method: GET
+          path: /projects/{projectId}/files/isolate-data/{isolateDataId}
+        - method: GET
+          path: /projects/{projectId}/files/isolate-data/{isolateDataId}/rows
+        - method: GET
+          path: /projects/{projectId}/files/isolate-data/{isolateDataId}/file
+        - method: GET
+          path: /projects/{projectId}/files/typing-data/{typingDataId}
+        - method: GET
+          path: /projects/{projectId}/files/typing-data/{typingDataId}/profiles
+        - method: GET
+          path: /projects/{projectId}/files/typing-data/{typingDataId}/file
+
+
 server:
   port: 8083
 
@@ -44,7 +110,7 @@ spring:
           phyloviz-web-platform-client:
             provider: keycloak
             client-id: phyloviz-web-platform-client
-            client-secret: pZW9kZ05jHjLiOlYYhBAa9CGk1uL7bob
+            client-secret: whCCD9r37qj8mx9H7R4mzIrSezYf3H7R
             redirect-uri: "{baseUrl}/${pwp.security.oauth2.redirect-uri}"
 
             scope:

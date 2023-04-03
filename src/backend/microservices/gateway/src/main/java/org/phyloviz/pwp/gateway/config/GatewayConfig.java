@@ -3,18 +3,17 @@ package org.phyloviz.pwp.gateway.config;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
+import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.phyloviz.pwp.gateway.config.MicroservicesProperties.ApiRoute;
+import org.phyloviz.pwp.gateway.config.MicroservicesProperties.MicroserviceProperties;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.oauth2.client.reactive.ReactiveOAuth2ClientAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration;
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
-import org.springframework.core.ReactiveAdapterRegistry;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.client.oidc.web.server.logout.OidcClientInitiatedServerLogoutSuccessHandler;
@@ -29,18 +28,12 @@ import org.springframework.security.web.server.authentication.ServerAuthenticati
 import org.springframework.security.web.server.authentication.logout.ServerLogoutHandler;
 import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
 import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
-import org.springframework.security.web.server.ui.LogoutPageGeneratingWebFilter;
 import org.springframework.security.web.server.util.matcher.PathPatternParserServerWebExchangeMatcher;
-import org.springframework.web.reactive.accept.RequestedContentTypeResolver;
-import org.springframework.web.reactive.config.WebFluxConfigurer;
-import org.springframework.web.reactive.function.server.support.ServerResponseResultHandler;
-import org.springframework.web.reactive.result.method.annotation.ResponseBodyResultHandler;
-import org.zalando.problem.jackson.ProblemModule;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableWebFluxSecurity
-public class GatewayConfig  {
+public class GatewayConfig {
     private final ReactiveClientRegistrationRepository clientRegistrationRepository;
 
     @Value("${pwp.security.logout-url}")
@@ -51,6 +44,9 @@ public class GatewayConfig  {
 
     @Value("${pwp.security.oauth2.redirect-uri}")
     private String redirectUri;
+
+    @Value("${pwp.react-client-url}")
+    private String reactClientUrl;
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(
@@ -134,4 +130,42 @@ public class GatewayConfig  {
         return new ObjectMapper()
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
+
+    @Bean
+    public RouteLocator customRouteLocator(RouteLocatorBuilder builder, MicroservicesProperties microservicesProperties) {
+        RouteLocatorBuilder.Builder routesBuilder = builder.routes();
+
+        Map<String, MicroserviceProperties> microservices = microservicesProperties.getMicroservices();
+
+        for (String name : microservices.keySet()) {
+            MicroserviceProperties properties = microservices.get(name);
+
+            routesBuilder = createApiRoutes(routesBuilder, properties.getUri(), properties.getRoutes());
+        }
+
+        routesBuilder.route("home",
+                routeSpec -> routeSpec
+                        .path("/**")
+                        .filters(filterSpec -> filterSpec.stripPrefix(1).tokenRelay())
+                        .uri(reactClientUrl)
+        );
+
+        return routesBuilder.build();
+    }
+
+
+    private RouteLocatorBuilder.Builder createApiRoutes(RouteLocatorBuilder.Builder routeBuilder, String uri, List<ApiRoute> routes) {
+        for (ApiRoute route : routes) {
+            routeBuilder = routeBuilder.route(
+                    routeSpec -> routeSpec
+                            .path("/api/" + route.getPath())
+                            .and()
+                            .method(route.getMethod())
+                            .filters(filterSpec -> filterSpec.stripPrefix(1).tokenRelay())
+                            .uri(uri)
+            );
+        }
+        return routeBuilder;
+    }
+
 }
