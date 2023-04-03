@@ -4,6 +4,7 @@
  * @param input the URL to fetch
  * @param method the HTTP method to use
  * @param body the body of the request
+ * @param headers the headers of the request
  *
  * @returns the response body
  */
@@ -11,14 +12,13 @@ async function apiFetch<T>(
     input: RequestInfo | URL,
     method?: string,
     body?: BodyInit,
+    headers?: HeadersInit,
 ): Promise<T> {
-    const headers: HeadersInit = {
-        'Content-Type': 'application/json',
-    }
-
     const [err, res] = await to<Response>(fetch(input, {
         method,
-        headers,
+        headers: headers ? headers : {
+            'Content-Type': 'application/json',
+        },
         body
     }));
 
@@ -79,10 +79,11 @@ export async function get<T>(input: RequestInfo | URL): Promise<T> {
  * Sends a POST request to the web API.
  *
  * @param input the URL to fetch
+ * @param headers the headers of the request
  * @param body the body of the request
  */
-export async function post<T>(input: RequestInfo | URL, body: BodyInit): Promise<T> {
-    return await apiFetch<T>(input, 'POST', body);
+export async function post<T>(input: RequestInfo | URL, body: BodyInit, headers?: HeadersInit): Promise<T> {
+    return await apiFetch<T>(input, 'POST', body, headers);
 }
 
 /**

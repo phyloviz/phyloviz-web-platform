@@ -8,7 +8,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import AboutIcon from "@mui/icons-material/Info";
 import NewsIcon from "@mui/icons-material/Newspaper";
 import ApiIcon from "@mui/icons-material/Api";
-import {WebUiUris} from "../../Utils/navigation/WebUiUris";
+import {WebUiUris} from "../../../Utils/WebUiUris";
 
 /**
  * List of the main items in the sidebar.
@@ -40,11 +40,6 @@ export const mainListItems = [
  * List of the secondary items in the sidebar.
  */
 export const secondaryListItems = [
-    /*{
-        name: 'Load Dataset',
-        href: Uris.LOAD_DATASET,
-        icon: <UploadIcon/>,
-    },*/
     {
         name: 'New Project',
         href: WebUiUris.NEW_PROJECT,

@@ -1,22 +1,42 @@
 import * as React from "react";
 import {ReactNode} from "react";
-import {FormControl, InputLabel, Select, SelectChangeEvent} from "@mui/material";
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {FileUploader} from "react-drag-drop-files";
+import {IsolateDataFile} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
 
 /**
  * Props for the IsolateDataStepCard component.
  *
- * @param onChange the function to be called when the isolate key is changed
+ * @param isolateData the isolate data files of the project
+ * @param selectedIsolateData the selected isolate data file
+ * @param onFileSelecterChange the function to call when the file on the file selecter changes
+ * @param onFileUploaderChange the function to call when the file on the file uploader changes
  */
 interface IsolateDataStepCardProps {
-    onChange: (event: SelectChangeEvent, child: ReactNode) => void
+    isolateData: IsolateDataFile[];
+    selectedIsolateData: string | null;
+    onFileSelecterChange: (event: SelectChangeEvent<string>, child: ReactNode) => void;
+    onFileUploaderChange: (file: React.SetStateAction<File | null>) => void;
+    isolateDataKeys: string[];
+    selectedIsolateDataKey: string | null;
+    onIsolateDataKeyChange: (event: SelectChangeEvent<string>, child: ReactNode) => void;
 }
 
 /**
  * Card for the Isolate Data step of the Create Dataset page.
  */
-export function IsolateDataStepCard({onChange}: IsolateDataStepCardProps) {
+export function IsolateDataStepCard(
+    {
+        isolateData,
+        selectedIsolateData,
+        onFileSelecterChange,
+        onFileUploaderChange,
+        isolateDataKeys,
+        selectedIsolateDataKey,
+        onIsolateDataKeyChange
+    }: IsolateDataStepCardProps
+) {
     return (
         <>
             <Typography variant="caption" align={"justify"} sx={{mb: 1, width: "100%"}}>
@@ -26,16 +46,21 @@ export function IsolateDataStepCard({onChange}: IsolateDataStepCardProps) {
                 <InputLabel id="isolate-key">Isolate Data</InputLabel>
                 <Select
                     labelId="isolate-key"
-                    //value={}
                     label="Isolate Data"
+                    value={selectedIsolateData ?? ""}
+                    onChange={onFileSelecterChange}
                 >
+                    {isolateData.map((isolateDataFile) => (
+                        <MenuItem key={isolateDataFile.isolateDataId}
+                                  value={isolateDataFile.isolateDataId}>{isolateDataFile.name}</MenuItem>
+                    ))}
                 </Select>
             </FormControl>
             <Typography variant="body2" align={"center"} sx={{mb: 1, width: "100%"}}>
                 Or
             </Typography>
             <FileUploader
-                //handleChange={handleChange}
+                handleChange={onFileUploaderChange}
                 name="file"
                 required
             />
@@ -47,10 +72,13 @@ export function IsolateDataStepCard({onChange}: IsolateDataStepCardProps) {
                 <InputLabel id="isolate-key">Key</InputLabel>
                 <Select
                     labelId="isolate-key"
-                    //value={}
                     label="Key"
-                    onChange={onChange}
+                    value={selectedIsolateDataKey ?? ""}
+                    onChange={onIsolateDataKeyChange}
                 >
+                    {isolateDataKeys.map((isolateDataKey) => (
+                        <MenuItem key={isolateDataKey} value={isolateDataKey}>{isolateDataKey}</MenuItem>
+                    ))}
                 </Select>
             </FormControl>
 

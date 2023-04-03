@@ -6,8 +6,8 @@ import Typography from "@mui/material/Typography";
 import FinishIcon from "@mui/icons-material/Done";
 import {FileUploader} from "react-drag-drop-files";
 import CancelIcon from "@mui/icons-material/Cancel";
-import {Alert} from "@mui/lab";
 import {FileType, useUploadFiles} from "./useUploadFiles";
+import Alert from '@mui/material/Alert';
 
 /**
  * Upload Files page.
@@ -55,7 +55,7 @@ export default function UploadFiles() {
                         }}>
                             <FormControl required sx={{mb: 4}}>
                                 <FormLabel>Data Type</FormLabel>
-                                <RadioGroup defaultValue={fileType} row>
+                                <RadioGroup value={fileType} row>
                                     {
                                         Object.values(FileType).map((value) => (
                                             <FormControlLabel

@@ -41,7 +41,7 @@ export default function EmptyProject({project}: EmptyProjectProps) {
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    mt: 4
+                    mt: 8
                 }}>
                     <CreateDatasetCard/>
                     <UploadFilesCard/>

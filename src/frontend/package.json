@@ -9,6 +9,7 @@
     "@mui/icons-material": "^5.10.14",
     "@mui/lab": "^5.0.0-alpha.124",
     "@mui/material": "^5.10.14",
+    "mui-nested-menu": "^3.2.0",
     "react-dom": "^18.2.0",
     "react-drag-drop-files": "^2.3.9",
     "react-draggable": "^4.4.5",

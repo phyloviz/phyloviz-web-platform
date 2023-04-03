@@ -1,8 +1,9 @@
 import * as React from 'react'
+import {useEffect} from 'react'
 import './App.css'
 import {Route, Routes} from 'react-router-dom'
 import About from "./Pages/About/About"
-import {WebUiUris} from "./Utils/navigation/WebUiUris"
+import {WebUiUris} from "./Utils/WebUiUris"
 import Dashboard from "./Layouts/Dashboard/Dashboard";
 import {Home} from "./Pages/Home/Home";
 import News from "./Pages/News/News";
@@ -13,7 +14,7 @@ import OpenProject from "./Pages/OpenProject/OpenProject";
 import Project from "./Pages/Project/Project";
 import {NotFoundPage} from "./Pages/NotFoundPage";
 import UploadFiles from "./Pages/Project/UploadFiles/UploadFiles";
-import {useLoggedIn} from "./Session/Session";
+import {useLoggedIn, useSessionManager} from "./Session/Session";
 import GoeBURSTConfig from "./Pages/Project/ComputeConfigurations/GoeBURSTConfig/GoeBURSTConfig";
 import GoeBURSTFullMSTConfig from "./Pages/Project/ComputeConfigurations/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfig";
 import HierarchicalClusteringConfig
@@ -29,7 +30,7 @@ import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;
 import API_INFO = WebUiUris.API_INFO;
-import LOAD_DATASET = WebUiUris.LOAD_DATASET;
+import CREATE_DATASET = WebUiUris.CREATE_DATASET;
 import OPEN_PROJECT = WebUiUris.OPEN_PROJECT;
 import PROJECT = WebUiUris.PROJECT;
 import TYPING_DATA = WebUiUris.TYPING_DATA;
@@ -50,7 +51,13 @@ import COMPUTE_CONFIG_NLV_GRAPH = WebUiUris.COMPUTE_CONFIG_NLV_GRAPH;
  */
 export default function App() {
 
+    const sessionManager = useSessionManager();
     const loggedIn = useLoggedIn();
+
+    // Clear session on app start
+    useEffect(() => {
+        sessionManager.clearSession();
+    }, []);
 
     /**
      * Protection route component, redirects to login page if not logged in.
@@ -80,7 +87,7 @@ export default function App() {
                         <Route path={NEW_PROJECT} element={<ProtectedRoute><NewProject/></ProtectedRoute>}/>
                         <Route path={OPEN_PROJECT} element={<ProtectedRoute><OpenProject/></ProtectedRoute>}/>
                         <Route path={PROJECT} element={<ProtectedRoute><Project/></ProtectedRoute>}>
-                            <Route path={LOAD_DATASET} element={<ProtectedRoute><CreateDataset/></ProtectedRoute>}/>
+                            <Route path={CREATE_DATASET} element={<ProtectedRoute><CreateDataset/></ProtectedRoute>}/>
                             <Route path={UPLOAD_FILES} element={<ProtectedRoute><UploadFiles/></ProtectedRoute>}/>
                             <Route
                                 path={TYPING_DATA}

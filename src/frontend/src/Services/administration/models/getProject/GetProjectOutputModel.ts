@@ -51,6 +51,7 @@ export interface DistanceMatrix {
 
 export interface Dataset {
     datasetId: string;
+    name: string;
     typingDataId: string;
     isolateDataId: string;
     distanceMatrices: DistanceMatrix[];
@@ -58,12 +59,12 @@ export interface Dataset {
     treeViews: TreeView[];
 }
 
-interface TypingDataFile {
+export interface TypingDataFile {
     typingDataId: string;
     name: string;
 }
 
-interface IsolateDataFile {
+export interface IsolateDataFile {
     isolateDataId: string;
     name: string;
 }

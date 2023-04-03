@@ -4,12 +4,12 @@ import {SessionManagerContext} from "./AuthProvider";
 /**
  * Holds the session data.
  *
- * @property username the username of the user
+ * @property name the username of the user
  * @property picture the URL of the user's profile picture
  * @property email the email of the user
  */
 export interface Session {
-    readonly username: string,
+    readonly name: string,
     readonly picture: string,
     readonly email: string,
 }

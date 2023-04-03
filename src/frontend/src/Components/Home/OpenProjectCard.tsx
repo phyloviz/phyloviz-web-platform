@@ -4,7 +4,7 @@ import {Button} from "@mui/material";
 import OpenProjectIcon from "@mui/icons-material/FolderOpen";
 import * as React from "react";
 import {useNavigate} from "react-router-dom";
-import {WebUiUris} from "../../Utils/navigation/WebUiUris";
+import {WebUiUris} from "../../Utils/WebUiUris";
 
 /**
  * Card for the open project feature in the home page.

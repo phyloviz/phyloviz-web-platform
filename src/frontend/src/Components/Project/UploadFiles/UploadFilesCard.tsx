@@ -3,14 +3,15 @@ import Typography from "@mui/material/Typography";
 import {Button} from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
 import * as React from "react";
-import {useNavigate} from "react-router-dom";
-import {WebUiUris} from "../../../Utils/navigation/WebUiUris";
+import {useNavigate, useParams} from "react-router-dom";
+import {WebUiUris} from "../../../Utils/WebUiUris";
 
 /**
  * Card for the upload files feature.
  */
 export function UploadFilesCard() {
     const navigate = useNavigate();
+    const {projectId} = useParams<{ projectId: string }>();
 
     return <Paper sx={{
         p: 4,
@@ -32,7 +33,7 @@ export function UploadFilesCard() {
         <Button
             variant="contained"
             startIcon={<UploadIcon/>}
-            onClick={() => navigate(WebUiUris.UPLOAD_FILES)}
+            onClick={() => navigate(WebUiUris.uploadFiles(projectId!))}
             sx={{mt: 4, width: "75%"}}
         >
             Upload Files

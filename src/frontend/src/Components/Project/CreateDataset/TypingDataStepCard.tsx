@@ -1,24 +1,40 @@
-import {FormControl, InputLabel, Select} from "@mui/material";
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 import * as React from "react";
+import {ReactNode} from "react";
 import {DatasetType} from "../../../Domain/DatasetType";
 import Typography from "@mui/material/Typography";
 import {FileUploader} from "react-drag-drop-files";
+import {TypingDataFile} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
 
 /**
  * Props for the TypingDataStepCard component.
  *
  * @param datasetType the type of the dataset
- * @param onChange the function to be called when the typing data file is changed
+ * @param typingData the typing data files of the project
+ * @param selectedTypingData the selected typing data file
+ * @param onFileSelecterChange the function to call when the file on the file selecter changes
+ * @param onFileUploaderChange the function to call when the file on the file uploader changes
  */
 interface TypingDataStepCardProps {
     datasetType: DatasetType;
-    onChange: (event: React.ChangeEvent<{ value: unknown }>) => void;
+    typingData: TypingDataFile[];
+    selectedTypingData: string | null;
+    onFileSelecterChange: (event: SelectChangeEvent<string>, child: ReactNode) => void;
+    onFileUploaderChange: (file: React.SetStateAction<File | null>) => void;
 }
 
 /**
  * Card for the Typing Data step of the Create Dataset page.
  */
-export function TypingDataStepCard({datasetType, onChange}: TypingDataStepCardProps) {
+export function TypingDataStepCard(
+    {
+        datasetType,
+        typingData,
+        selectedTypingData,
+        onFileSelecterChange,
+        onFileUploaderChange
+    }: TypingDataStepCardProps
+) {
     return (
         <>
             <Typography variant="caption" align={"justify"} sx={{mb: 1, width: "100%"}}>
@@ -28,16 +44,21 @@ export function TypingDataStepCard({datasetType, onChange}: TypingDataStepCardPr
                 <InputLabel id="typing-key">Typing Data</InputLabel>
                 <Select
                     labelId="typing-key"
-                    //value={}
                     label="Typing Data"
+                    value={selectedTypingData ?? ""}
+                    onChange={onFileSelecterChange}
                 >
+                    {typingData.map((typingDataFile) => (
+                        <MenuItem key={typingDataFile.typingDataId}
+                                  value={typingDataFile.typingDataId}>{typingDataFile.name}</MenuItem>
+                    ))}
                 </Select>
             </FormControl>
             <Typography variant="body2" align={"center"} sx={{mb: 1, width: "100%"}}>
                 Or
             </Typography>
             <FileUploader
-                handleChange={onChange}
+                handleChange={onFileUploaderChange}
                 name="file"
                 required
             />

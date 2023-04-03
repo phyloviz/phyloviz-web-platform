@@ -1,10 +1,14 @@
 import * as React from "react";
-import {useState} from "react";
 import {StyledTreeItem} from "./StyledTreeItem";
-import {Sync} from "@mui/icons-material";
+import {Description, FilePresent, ScatterPlot, Sync, TableView} from "@mui/icons-material";
 import {Menu, MenuItem} from "@mui/material";
 import DatasetIcon from "@mui/icons-material/Dataset";
 import {Dataset} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
+import {useContextMenu} from "./useContextMenu";
+import {NestedMenuItem} from "mui-nested-menu";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import {WebUiUris} from "../../../Utils/WebUiUris";
+import {useNavigate, useParams} from "react-router-dom";
 
 /**
  * Props for the DatasetTreeItem component.
@@ -16,46 +20,75 @@ import {Dataset} from "../../../Services/administration/models/getProject/GetPro
 interface DatasetTreeItemProps {
     nodeId: string;
     dataset: Dataset;
-    children?: React.ReactNode;
 }
 
 /**
  * Tree item for a dataset of a project.
  */
-export function DatasetTreeItem({nodeId, dataset, children}: DatasetTreeItemProps) {
-    const [contextMenu, setContextMenu] = useState<{
-        mouseX: number;
-        mouseY: number;
-    } | null>(null);
+export function DatasetTreeItem({nodeId, dataset}: DatasetTreeItemProps) {
+    const {
+        contextMenu,
+        handleContextMenu,
+        handleClose
+    } = useContextMenu();
 
-    const handleContextMenu = (event: React.MouseEvent) => {
-        event.preventDefault();
-        setContextMenu(
-            contextMenu === null
-                ? {
-                    mouseX: event.clientX + 2,
-                    mouseY: event.clientY - 6,
-                }
-                : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
-                  // Other native context menus might behave different.
-                  // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
-                null,
-        );
-    };
 
-    const handleClose = () => {
-        setContextMenu(null);
-    };
+    const {projectId} = useParams<{ projectId: string }>();
+    const navigate = useNavigate();
+    const computeOptions = [
+        {
+            label: "goeBURST",
+            url: WebUiUris.computeConfigGoeburst(projectId!, dataset.datasetId)
+        },
+        {
+            label: "goeBURST Full MST",
+            url: WebUiUris.computeConfigGoeburstFullMst(projectId!, dataset.datasetId)
+        },
+        {
+            label: "Hierarchical Clustering",
+            url: WebUiUris.computeConfigHierarchicalClustering(projectId!, dataset.datasetId)
+        },
+        {
+            label: "Neighbor Joining",
+            url: WebUiUris.computeConfigNeighborJoining(projectId!, dataset.datasetId)
+        },
+        {
+            label: "nLV Graph",
+            url: WebUiUris.computeConfigNlvGraph(projectId!, dataset.datasetId)
+        }
+    ]
 
     return (
         <>
             <StyledTreeItem
                 nodeId={nodeId}
-                labelText={"Dataset" + dataset.datasetId} // TODO: Change to dataset name
+                labelText={dataset.name}
                 labelIcon={DatasetIcon}
                 onContextMenu={handleContextMenu}
             >
-                {children}
+                {/*TODO: Create a component to each file, with each own right click menu, etc*/}
+                <StyledTreeItem nodeId="5" labelText="Isolate Data" labelIcon={FilePresent}/>
+                <StyledTreeItem nodeId="4" labelText="Typing Data" labelIcon={Description}/>
+                <StyledTreeItem nodeId="7" labelText="Distances" labelIcon={TableView}>
+                    {
+                        dataset.distanceMatrices.map((distance, index) => {
+                            return (
+                                <StyledTreeItem nodeId={index.toString()} labelText={distance.name}
+                                                labelIcon={TableView}/>
+                            );
+                        })
+                    }
+                </StyledTreeItem>
+                <StyledTreeItem nodeId="10" labelText="Trees" labelIcon={ScatterPlot}>
+                    {
+                        dataset.trees.map((tree, index) => {
+                            return (
+                                <StyledTreeItem nodeId={index.toString()} labelText={tree.name}
+                                                labelIcon={ScatterPlot}/>
+                            );
+                        })
+                    }
+                </StyledTreeItem>
             </StyledTreeItem>
             <Menu
                 open={contextMenu !== null}
@@ -67,12 +100,25 @@ export function DatasetTreeItem({nodeId, dataset, children}: DatasetTreeItemProp
                         : undefined
                 }
             >
-                <MenuItem onClick={() => {
-                    // TODO
-                }}>
-                    <Sync color={"primary"}/>
-                    Compute
-                </MenuItem>
+                <NestedMenuItem
+                    left={<Sync color={"primary"}/>}
+                    rightIcon={<ArrowRightIcon/>}
+                    label={"Compute"}
+                    parentMenuOpen={true}
+                >
+                    {
+                        computeOptions.map((option, index) => {
+                            return (
+                                <MenuItem key={index} onClick={() => {
+                                    handleClose();
+                                    navigate(option.url)
+                                }}>
+                                    {option.label}
+                                </MenuItem>
+                            );
+                        })
+                    }
+                </NestedMenuItem>
             </Menu>
         </>
     );

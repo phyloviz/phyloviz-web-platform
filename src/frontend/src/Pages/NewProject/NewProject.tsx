@@ -22,10 +22,7 @@ export default function NewProject() {
 
     return (
         <Container>
-            <Box
-                display="flex"
-                justifyContent="center"
-            >
+            <Box display="flex" justifyContent="center">
                 <Paper sx={{
                     p: 4,
                     display: "flex",
@@ -76,13 +73,12 @@ export default function NewProject() {
                             {error && <Alert severity="error">{error}</Alert>}
                         </Box>
 
-                        <Box
-                            sx={{
-                                width: "100%",
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "space-between"
-                            }}>
+                        <Box sx={{
+                            width: "100%",
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between"
+                        }}>
                             <Button
                                 variant="contained"
                                 startIcon={<CancelIcon/>}

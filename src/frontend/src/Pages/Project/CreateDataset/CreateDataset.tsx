@@ -19,9 +19,18 @@ import {CreateDatasetStep, steps, useCreateDataset} from "./useCreateDataset";
 export default function CreateDataset() {
     const {
         datasetType,
+        project,
+        handleDatasetNameChange,
         handleDatasetTypeChange,
-        handleTypingDataChange,
-        handleIsolateDataChange,
+        selectedTypingData,
+        handleTypingDataFileSelectorChange,
+        handleTypingDataFileUploaderChange,
+        selectedIsolateData,
+        handleIsolateDataFileSelectorChange,
+        handleIsolateDataFileUploaderChange,
+        isolateDataKeys,
+        selectedIsolateDataKey,
+        handleIsolateDataKeyChange,
         handleCancel,
         handleBack,
         handleNext,
@@ -72,11 +81,26 @@ export default function CreateDataset() {
                                 createDatasetStep === CreateDatasetStep.INFO
                                     ? <DatasetInfoStepCard
                                         datasetType={datasetType}
-                                        onChange={handleDatasetTypeChange}
+                                        onDatasetNameChange={handleDatasetNameChange}
+                                        onDatasetTypeChange={handleDatasetTypeChange}
                                     />
                                     : createDatasetStep === CreateDatasetStep.TYPING_DATA
-                                        ? <TypingDataStepCard datasetType={datasetType} onChange={handleTypingDataChange}/>
-                                        : <IsolateDataStepCard onChange={handleIsolateDataChange}/>
+                                        ? <TypingDataStepCard
+                                            datasetType={datasetType}
+                                            selectedTypingData={selectedTypingData}
+                                            typingData={project?.files.typingData!}
+                                            onFileSelecterChange={handleTypingDataFileSelectorChange}
+                                            onFileUploaderChange={handleTypingDataFileUploaderChange}
+                                        />
+                                        : <IsolateDataStepCard
+                                            selectedIsolateData={selectedIsolateData}
+                                            isolateData={project?.files.isolateData!}
+                                            onFileSelecterChange={handleIsolateDataFileSelectorChange}
+                                            onFileUploaderChange={handleIsolateDataFileUploaderChange}
+                                            isolateDataKeys={isolateDataKeys}
+                                            selectedIsolateDataKey={selectedIsolateDataKey}
+                                            onIsolateDataKeyChange={handleIsolateDataKeyChange}
+                                        />
                             }
                         </Box>
 

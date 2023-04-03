@@ -2,8 +2,8 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import {Button} from "@mui/material";
 import * as React from "react";
-import {useNavigate} from "react-router-dom";
-import {WebUiUris} from "../../../Utils/navigation/WebUiUris";
+import {useNavigate, useParams} from "react-router-dom";
+import {WebUiUris} from "../../../Utils/WebUiUris";
 import {Add} from "@mui/icons-material";
 
 /**
@@ -11,6 +11,7 @@ import {Add} from "@mui/icons-material";
  */
 export function CreateDatasetCard() {
     const navigate = useNavigate();
+    const {projectId} = useParams<{ projectId: string }>();
 
     return <Paper sx={{
         p: 4,
@@ -33,7 +34,7 @@ export function CreateDatasetCard() {
         <Button
             variant="contained"
             startIcon={<Add/>}
-            onClick={() => navigate(WebUiUris.LOAD_DATASET)}
+            onClick={() => navigate(WebUiUris.createDataset(projectId!))}
             sx={{mt: 4, width: "75%"}}
         >
             Create Dataset

@@ -1,12 +1,16 @@
 import {useEffect, useState} from "react";
 import {ProjectModel} from "../../Services/administration/models/ProjectModel";
 import {AdministrationService} from "../../Services/administration/AdministrationService";
+import {useNavigate} from "react-router-dom";
+import {WebUiUris} from "../../Utils/WebUiUris";
 
 /**
  * Hook for the OpenProject page.
  */
 export function useOpenProject() {
-    const [projects, setProjects] = useState<ProjectModel[]>([]);
+    const [projects, setProjects] = useState<ProjectModel[] | null>(null);
+    const navigate = useNavigate();
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         AdministrationService.getProjects()
@@ -14,14 +18,13 @@ export function useOpenProject() {
                 setProjects(res.projects);
             })
             .catch((err) => {
-                console.log(err); // TODO: Handle error
+                setError(err.message);
             });
     }, []);
 
     return {
         projects,
-        handleOpenProject: (projectId: string) => {
-            // TODO: Navigate to project page
-        }
+        handleOpenProject: (projectId: string) => navigate(WebUiUris.project(projectId)),
+        error
     }
 }

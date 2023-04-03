@@ -82,7 +82,13 @@ export namespace AdministrationService {
         const formData = new FormData();
         formData.append("file", file);
 
-        return await post<UploadTypingDataOutputModel>(WebApiUris.uploadTypingData(projectId), formData);
+        return await post<UploadTypingDataOutputModel>(
+            WebApiUris.uploadTypingData(projectId),
+            formData,
+            {
+                "Content-Length": file.size.toString()
+            }
+        );
     }
 
     /**
@@ -112,7 +118,13 @@ export namespace AdministrationService {
         const formData = new FormData();
         formData.append("file", file);
 
-        return await post<UploadIsolateDataOutputModel>(WebApiUris.uploadIsolateData(projectId), formData);
+        return await post<UploadIsolateDataOutputModel>(
+            WebApiUris.uploadIsolateData(projectId),
+            formData,
+            {
+                "Content-Length": file.size.toString()
+            }
+        );
     }
 
     /**

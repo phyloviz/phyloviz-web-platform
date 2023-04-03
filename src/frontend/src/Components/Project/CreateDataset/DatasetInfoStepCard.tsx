@@ -8,19 +8,26 @@ import {DatasetType} from "../../../Domain/DatasetType";
  * Props for the DatasetInfoStepCard component.
  *
  * @param datasetType the type of the dataset
- * @param onChange the function to be called when the dataset type is changed
+ * @param onDatasetNameChange the function to be called when the dataset name is changed
+ * @param onDatasetTypeChange the function to be called when the dataset type is changed
  */
 interface DatasetInfoStepCard {
     datasetType: DatasetType,
-    onChange: (event: SelectChangeEvent, child: ReactNode) => void
+    onDatasetNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    onDatasetTypeChange: (event: SelectChangeEvent, child: ReactNode) => void
 }
 
 /**
  * Card for the Dataset Info step of the Create Dataset page.
  */
-export function DatasetInfoStepCard({datasetType, onChange}: DatasetInfoStepCard) {
+export function DatasetInfoStepCard({datasetType, onDatasetNameChange, onDatasetTypeChange}: DatasetInfoStepCard) {
     return <>
-        <TextField label="Dataset Name" variant="outlined" required sx={{width: "100%", mb: 1}}/>
+        <TextField
+            label="Dataset Name"
+            variant="outlined"
+            onChange={onDatasetNameChange}
+            required sx={{width: "100%", mb: 1}}
+        />
         <Typography variant="caption" align={"justify"} sx={{mb: 4, width: "100%"}}>
             Choose a Dataset name to identify your analysis and choose the Dataset type depending on the
             typing data to be used.
@@ -32,7 +39,7 @@ export function DatasetInfoStepCard({datasetType, onChange}: DatasetInfoStepCard
                 labelId="dataset-type"
                 value={datasetType.valueOf()}
                 label="Dataset Type"
-                onChange={onChange}
+                onChange={onDatasetTypeChange}
             >
                 <MenuItem value={DatasetType.MLST}>{DatasetType.MLST.valueOf()}</MenuItem>
                 <MenuItem value={DatasetType.MLVA}>{DatasetType.MLVA.valueOf()}</MenuItem>

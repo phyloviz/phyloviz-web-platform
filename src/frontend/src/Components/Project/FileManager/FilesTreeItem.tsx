@@ -1,55 +1,43 @@
 import * as React from "react";
-import {useState} from "react";
 import {StyledTreeItem} from "./StyledTreeItem";
-import {Folder} from "@mui/icons-material";
+import {Description, FilePresent, Folder} from "@mui/icons-material";
 import {Menu, MenuItem} from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
-import {useNavigate} from "react-router-dom";
-import {WebUiUris} from "../../../Utils/navigation/WebUiUris";
+import {useNavigate, useParams} from "react-router-dom";
+import {WebUiUris} from "../../../Utils/WebUiUris";
+import {ProjectFiles} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
+import {useContextMenu} from "./useContextMenu";
 
 /**
  * Props for the FilesTreeItem component.
  *
  * @param nodeId id of the tree item
- * @param children children of the tree item
+ * @param files files to display
  */
 interface FilesTreeItemProps {
     nodeId: string;
-    children?: React.ReactNode;
+    files: ProjectFiles;
 }
 
 /**
  * Tree item for the files of a project.
  *
  * @param nodeId id of the tree item
- * @param children children of the tree item
+ * @param files files to display
  */
-export function FilesTreeItem({nodeId, children}: FilesTreeItemProps) {
-    const [contextMenu, setContextMenu] = useState<{
-        mouseX: number;
-        mouseY: number;
-    } | null>(null);
-
+export function FilesTreeItem({nodeId, files}: FilesTreeItemProps) {
     const navigate = useNavigate();
+    const {projectId} = useParams<{ projectId: string }>();
 
-    const handleContextMenu = (event: React.MouseEvent) => {
-        event.preventDefault();
-        setContextMenu(
-            contextMenu === null
-                ? {
-                    mouseX: event.clientX + 2,
-                    mouseY: event.clientY - 6,
-                }
-                : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
-                  // Other native context menus might behave different.
-                  // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
-                null,
-        );
-    };
+    const {
+        contextMenu,
+        handleContextMenu,
+        handleClose
+    } = useContextMenu();
 
-    const handleClose = () => {
-        setContextMenu(null);
-        navigate(WebUiUris.UPLOAD_FILES);
+    const handleUploadFiles = () => {
+        handleClose();
+        navigate(WebUiUris.uploadFiles(projectId!));
     };
 
     return (
@@ -60,7 +48,18 @@ export function FilesTreeItem({nodeId, children}: FilesTreeItemProps) {
                 labelIcon={Folder}
                 onContextMenu={handleContextMenu}
             >
-                {children}
+                {
+                    files.typingData.map((file, index) => {
+                        return <StyledTreeItem nodeId={"0" + index.toString()} key={"0" + index.toString()}
+                                               labelText={file.name} labelIcon={Description}/>
+                    })
+                }
+                {
+                    files.isolateData.map((file, index) => {
+                        return <StyledTreeItem nodeId={"1" + index.toString()} key={"1" + index.toString()}
+                                               labelText={file.name} labelIcon={FilePresent}/>
+                    })
+                }
             </StyledTreeItem>
             <Menu
                 open={contextMenu !== null}
@@ -72,7 +71,7 @@ export function FilesTreeItem({nodeId, children}: FilesTreeItemProps) {
                         : undefined
                 }
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleUploadFiles}>
                     <UploadIcon color={"primary"}/>
                     Upload Files
                 </MenuItem>

@@ -12,16 +12,14 @@ export function Home() {
     return (
         <Container>
             <HomeMainCard/>
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    mt: 4,
-                    mb: 4,
-                    justifyContent: "space-between",
-                    width: "100%"
-                }}
-            >
+            <Box sx={{
+                display: "flex",
+                flexDirection: "row",
+                mt: 4,
+                mb: 4,
+                justifyContent: "space-between",
+                width: "100%"
+            }}>
                 <NewProjectCard/>
                 <OpenProjectCard/>
             </Box>

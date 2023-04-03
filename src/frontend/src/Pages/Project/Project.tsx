@@ -1,5 +1,5 @@
 import * as React from "react"
-import {useOutlet} from "react-router-dom";
+import {Outlet, useOutlet} from "react-router-dom";
 import {FileManager} from "../../Components/Project/FileManager/FileManager";
 import Box from "@mui/material/Box";
 import EmptyProject from "./EmptyProject";
@@ -10,7 +10,7 @@ import {useProject} from "./useProject";
  */
 export default function Project() {
     const outlet = useOutlet();
-    const {project} = useProject();
+    const {project, onUpdated} = useProject();
 
     return (
         <Box sx={{
@@ -21,7 +21,9 @@ export default function Project() {
         }}>
             <FileManager project={project}/>
             {
-                outlet || <EmptyProject project={project}/>
+                outlet
+                    ? <Outlet context={{project, onUpdated}}/>
+                    : <EmptyProject project={project}/>
             }
         </Box>
     );

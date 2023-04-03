@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import * as React from "react";
 import {useState} from "react";
-import {WebUiUris} from "../../Utils/navigation/WebUiUris";
+import {WebUiUris} from "../../Utils/WebUiUris";
 import {AdministrationService} from "../../Services/administration/AdministrationService";
 import {CreateProjectInputModel} from "../../Services/administration/models/createProject/CreateProjectInputModel";
 
@@ -28,8 +28,6 @@ export function useNewProject() {
                 setError("Please fill out all fields");
                 return;
             }
-
-            navigate(WebUiUris.project("test")); // TODO: Remove this when the backend is ready
 
             AdministrationService.createProject({
                     name: projectName,
