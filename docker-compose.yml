@@ -40,6 +40,9 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
+    volumes:
+      - ./src/backend/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongodb-data:/data/db
   cache:
     image: redis:7.0.9-alpine
     restart: always
@@ -51,7 +54,6 @@ services:
       - ./src/backend/redis/redis.conf:/usr/local/etc/redis/redis.conf
       - cache:/data
   registry:
-    container_name: "registry_web"
     image: registry:2.8.1
     ports:
       - '5000:5000'
@@ -64,8 +66,20 @@ services:
       - ./src/backend/registry/data:/var/lib/registry
       - ./src/backend/registry/config/config.yml:/etc/docker/registry/config.yml
     restart: always
+  registry_ui:
+    image: joxit/docker-registry-ui:2.4.1
+    ports:
+      - '8081:80'
+    environment:
+      - REGISTRY_TITLE=My Private Docker Registry
+      - REGISTRY_URL=http://localhost:5000
+      - SINGLE_REGISTRY=true
+    depends_on:
+      - registry
 volumes:
   keycloak_db_data:
     driver: local
   cache:
+    driver: local
+  mongodb-data:
     driver: local

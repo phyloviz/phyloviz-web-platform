@@ -1,0 +1,3 @@
+[default]
+region = custom
+endpoint_url = http://localhost:9444

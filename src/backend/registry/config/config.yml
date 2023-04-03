@@ -2,21 +2,20 @@ version: 0.1
 log:
   fields:
     service: registry
-
 storage:
+  delete:
+    enabled: true
   cache:
     blobdescriptor: inmemory
   filesystem:
     rootdirectory: /var/lib/registry
-  delete:
-    enabled: true
 http:
   addr: :5000
   headers:
-    X-Content-Type-Options: [ nosniff ]
-
-health:
-  storagedriver:
-    enabled: true
-    interval: 10s
-    threshold: 3
+    X-Content-Type-Options: [nosniff]
+    Access-Control-Allow-Origin: ['http://localhost:8081']
+    Access-Control-Allow-Methods: ['HEAD', 'GET', 'OPTIONS', 'DELETE']
+    Access-Control-Allow-Headers: ['Authorization', 'Accept']
+    Access-Control-Max-Age: [1728000]
+    Access-Control-Allow-Credentials: [true]
+    Access-Control-Expose-Headers: ['Docker-Content-Digest']
