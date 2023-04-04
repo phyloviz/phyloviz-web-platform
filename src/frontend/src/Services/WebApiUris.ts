@@ -7,6 +7,7 @@ export namespace WebApiUris {
     export const getSession = `${API_BASE_URL}/session`
     export const logout = `${API_BASE_URL}/logout`
 
+    // Administation
     export const getProjects = `${API_BASE_URL}/projects`
     export const getProject = (projectId: string) => `${API_BASE_URL}/projects/${projectId}`
     export const createProject = `${API_BASE_URL}/projects`
@@ -26,4 +27,24 @@ export namespace WebApiUris {
     export const deleteDistanceMatrix = (projectId: string, datasetId: string, distanceMatrixId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/distance-matrices/${distanceMatrixId}`
     export const deleteTree = (projectId: string, datasetId: string, treeId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/trees/${treeId}`
     export const deleteTreeView = (projectId: string, datasetId: string, treeViewId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/tree-views/${treeViewId}`
+
+
+    // Compute
+    export const createJob = (projectId: string) => `${API_BASE_URL}/projects/${projectId}/jobs`
+    export const getJobStatus = (projectId: string, jobId: string) => `${API_BASE_URL}/projects/${projectId}/jobs/${jobId}`
+    export const getJobs = (projectId: string) => `${API_BASE_URL}/projects/${projectId}/jobs`
+
+
+    // Visualization
+    export const getTypingDataSchema = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/typing-data/${typingDataId}`
+    export const getTypingDataProfiles = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/typing-data/${typingDataId}/profiles`
+    export const getTypingDataFile = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/typing-data/${typingDataId}/file`
+
+    export const getIsolateDataSchema = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/isolate-data/${isolateDataId}`
+    export const getIsolateDataRows = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/isolate-data/${isolateDataId}/profiles`
+    export const getIsolateDataFile = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/isolate-data/${isolateDataId}/file`
+
+    export const getDistanceMatrix = (projectId: string, datasetId: string, distanceMatrixId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/distance-matrices/${distanceMatrixId}`
+    export const getTree = (projectId: string, datasetId: string, treeId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/trees/${treeId}`
+    export const getTreeView = (projectId: string, datasetId: string, treeViewId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/tree-views/${treeViewId}`
 }

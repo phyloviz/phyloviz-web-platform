@@ -7,6 +7,8 @@ import {Container} from "@mui/material"
  * IsolateData page.
  */
 export default function IsolateData() {
+    // const { } = useIsolateData()
+
     return (
         <Container>
             <Paper sx={{

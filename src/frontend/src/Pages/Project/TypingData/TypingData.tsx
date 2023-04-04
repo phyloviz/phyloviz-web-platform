@@ -7,6 +7,8 @@ import {Container} from "@mui/material"
  * TypingData page.
  */
 export default function TypingData() {
+    // const { } = useTypingData()
+
     return (
         <Container>
             <Paper sx={{
