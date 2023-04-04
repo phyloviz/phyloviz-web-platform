@@ -1,5 +1,5 @@
-import {useContext} from "react";
-import {SessionManagerContext} from "./AuthProvider";
+import {useContext} from "react"
+import {SessionManagerContext} from "./AuthProvider"
 
 /**
  * Holds the session data.
@@ -9,9 +9,9 @@ import {SessionManagerContext} from "./AuthProvider";
  * @property email the email of the user
  */
 export interface Session {
-    readonly name: string,
-    readonly picture: string,
-    readonly email: string,
+    readonly name: string
+    readonly picture: string
+    readonly email: string
 }
 
 /**

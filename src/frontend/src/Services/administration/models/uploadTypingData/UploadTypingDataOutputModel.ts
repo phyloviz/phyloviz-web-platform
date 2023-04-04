@@ -1,4 +1,4 @@
 export interface UploadTypingDataOutputModel {
-    projectId: string;
-    typingDataId: string;
+    projectId: string
+    typingDataId: string
 }

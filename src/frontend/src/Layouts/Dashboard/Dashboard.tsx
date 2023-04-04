@@ -1,30 +1,30 @@
-import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import {AppBar} from "./components/AppBar";
-import {Drawer, mainListItems, secondaryListItems} from "./components/Drawer";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Logo from "../../Assets/logo.png";
-import AccountMenu from "./components/AccountMenu";
-import {useDashboard} from "./useDashboard";
+import * as React from 'react'
+import CssBaseline from '@mui/material/CssBaseline'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import List from '@mui/material/List'
+import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import {AppBar} from "./components/AppBar"
+import {Drawer, mainListItems, secondaryListItems} from "./components/Drawer"
+import ListItemButton from "@mui/material/ListItemButton"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import ListItemText from "@mui/material/ListItemText"
+import Logo from "../../Assets/logo.png"
+import AccountMenu from "./components/AccountMenu"
+import {useDashboard} from "./useDashboard"
 
 
 /**
  * Props of the Dashboard component.
  *
- * @param children the main content of the dashboard
+ * @property children the main content of the dashboard
  */
 interface DashboardProps {
-    children: React.ReactNode;
+    children: React.ReactNode
 }
 
 /**
@@ -51,10 +51,7 @@ export default function Dashboard({children}: DashboardProps) {
                         color="inherit"
                         aria-label="open drawer"
                         onClick={toggleDrawer}
-                        sx={{
-                            mr: '36px',
-                            ...(open && {display: 'none'}),
-                        }}
+                        sx={{mr: '36px', ...(open && {display: 'none'})}}
                     >
                         <MenuIcon/>
                     </IconButton>
@@ -97,7 +94,7 @@ export default function Dashboard({children}: DashboardProps) {
                                     </ListItemIcon>
                                     <ListItemText primary={item.name}/>
                                 </ListItemButton>
-                            );
+                            )
                         })
                     }
                     <Divider sx={{my: 1}}/>
@@ -110,7 +107,7 @@ export default function Dashboard({children}: DashboardProps) {
                                     </ListItemIcon>
                                     <ListItemText primary={item.name}/>
                                 </ListItemButton>
-                            );
+                            )
                         })
                     }
                 </List>
@@ -128,5 +125,5 @@ export default function Dashboard({children}: DashboardProps) {
                 {children}
             </Box>
         </Box>
-    );
+    )
 }

@@ -1,26 +1,26 @@
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import * as React from "react";
-import {ReactNode} from "react";
-import {DatasetType} from "../../../Domain/DatasetType";
-import Typography from "@mui/material/Typography";
-import {FileUploader} from "react-drag-drop-files";
-import {TypingDataFile} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
+import * as React from "react"
+import {ReactNode} from "react"
+import {DatasetType} from "../../../Domain/DatasetType"
+import Typography from "@mui/material/Typography"
+import {FileUploader} from "react-drag-drop-files"
+import {TypingDataFile} from "../../../Services/administration/models/getProject/GetProjectOutputModel"
 
 /**
  * Props for the TypingDataStepCard component.
  *
- * @param datasetType the type of the dataset
- * @param typingData the typing data files of the project
- * @param selectedTypingData the selected typing data file
- * @param onFileSelecterChange the function to call when the file on the file selecter changes
- * @param onFileUploaderChange the function to call when the file on the file uploader changes
+ * @property datasetType the type of the dataset
+ * @property typingData the typing data files of the project
+ * @property selectedTypingData the selected typing data file
+ * @property onFileSelecterChange the function to call when the file on the file selecter changes
+ * @property onFileUploaderChange the function to call when the file on the file uploader changes
  */
 interface TypingDataStepCardProps {
-    datasetType: DatasetType;
-    typingData: TypingDataFile[];
-    selectedTypingData: string | null;
-    onFileSelecterChange: (event: SelectChangeEvent<string>, child: ReactNode) => void;
-    onFileUploaderChange: (file: React.SetStateAction<File | null>) => void;
+    datasetType: DatasetType
+    typingData: TypingDataFile[]
+    selectedTypingData: string | null
+    onFileSelecterChange: (event: SelectChangeEvent<string>, child: ReactNode) => void
+    onFileUploaderChange: (file: React.SetStateAction<File | null>) => void
 }
 
 /**
@@ -71,7 +71,7 @@ export function TypingDataStepCard(
                 {typingDataExamples[datasetType]}
             </Typography>
         </>
-    );
+    )
 }
 
 /**

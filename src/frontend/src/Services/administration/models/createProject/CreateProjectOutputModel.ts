@@ -1,3 +1,3 @@
 export interface CreateProjectOutputModel {
-    projectId: string;
+    projectId: string
 }

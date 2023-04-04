@@ -1,4 +1,4 @@
 export interface DeleteTypingDataOutputModel {
-    projectId: string;
-    typingDataId: string;
+    projectId: string
+    typingDataId: string
 }

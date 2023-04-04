@@ -1,4 +1,4 @@
 export interface CreateDatasetOutputModel {
-    projectId: string;
-    datasetId: string;
+    projectId: string
+    datasetId: string
 }

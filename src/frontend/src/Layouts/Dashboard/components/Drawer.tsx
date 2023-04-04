@@ -1,14 +1,14 @@
-import * as React from "react";
-import NewProjectIcon from "@mui/icons-material/CreateNewFolder";
-import OpenProjectIcon from "@mui/icons-material/FolderOpen";
-import {styled} from "@mui/material/styles";
-import MuiDrawer from "@mui/material/Drawer";
-import {drawerWidth} from "./AppBar";
-import HomeIcon from "@mui/icons-material/Home";
-import AboutIcon from "@mui/icons-material/Info";
-import NewsIcon from "@mui/icons-material/Newspaper";
-import ApiIcon from "@mui/icons-material/Api";
-import {WebUiUris} from "../../../Utils/WebUiUris";
+import * as React from "react"
+import NewProjectIcon from "@mui/icons-material/CreateNewFolder"
+import OpenProjectIcon from "@mui/icons-material/FolderOpen"
+import {styled} from "@mui/material/styles"
+import MuiDrawer from "@mui/material/Drawer"
+import {drawerWidth} from "./AppBar"
+import HomeIcon from "@mui/icons-material/Home"
+import AboutIcon from "@mui/icons-material/Info"
+import NewsIcon from "@mui/icons-material/Newspaper"
+import ApiIcon from "@mui/icons-material/Api"
+import {WebUiUris} from "../../../Utils/WebUiUris"
 
 /**
  * List of the main items in the sidebar.
@@ -34,7 +34,7 @@ export const mainListItems = [
         href: WebUiUris.API_INFO,
         icon: <ApiIcon/>,
     },
-];
+]
 
 /**
  * List of the secondary items in the sidebar.
@@ -50,7 +50,7 @@ export const secondaryListItems = [
         href: WebUiUris.OPEN_PROJECT,
         icon: <OpenProjectIcon/>,
     },
-];
+]
 
 /**
  * Drawer component.
@@ -79,4 +79,4 @@ export const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== '
             }),
         },
     }),
-);
+)

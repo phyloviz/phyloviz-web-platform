@@ -1,5 +1,5 @@
-import * as React from "react";
-import {Slider} from "@mui/material";
+import * as React from "react"
+import {Slider} from "@mui/material"
 
 /**
  * Card for the level step in the GoeBURSTConfig page.
@@ -30,4 +30,4 @@ const marks = [
         value: 3,
         label: 'TLV',
     }
-];
+]

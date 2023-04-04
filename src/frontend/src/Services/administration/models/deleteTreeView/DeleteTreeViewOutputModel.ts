@@ -1,5 +1,5 @@
 export interface DeleteTreeViewOutputModel {
-    projectId: string;
-    datasetId: string;
-    treeViewId: string;
+    projectId: string
+    datasetId: string
+    treeViewId: string
 }

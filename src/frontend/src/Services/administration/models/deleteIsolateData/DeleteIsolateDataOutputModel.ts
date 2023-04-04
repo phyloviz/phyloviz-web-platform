@@ -1,4 +1,4 @@
 export interface DeleteIsolateDataOutputModel {
-    projectId: string;
-    isolateDataId: string;
+    projectId: string
+    isolateDataId: string
 }

@@ -1,7 +1,7 @@
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import * as React from "react";
-import {PhylovizHeader} from "../Shared/PhylovizHeader";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import * as React from "react"
+import {PhylovizHeader} from "../Shared/PhylovizHeader"
 
 /**
  * Main card of the home page.
@@ -23,5 +23,5 @@ export function HomeMainCard() {
                 platform.
             </Typography>
         </Paper>
-    );
+    )
 }

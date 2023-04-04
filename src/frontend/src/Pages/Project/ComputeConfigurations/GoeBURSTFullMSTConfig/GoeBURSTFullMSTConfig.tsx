@@ -1,14 +1,14 @@
 import * as React from "react"
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {Button, Container} from "@mui/material";
-import Box from "@mui/material/Box";
-import FinishIcon from "@mui/icons-material/Done";
-import CancelIcon from "@mui/icons-material/Cancel";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import {Button, Container} from "@mui/material"
+import Box from "@mui/material/Box"
+import FinishIcon from "@mui/icons-material/Done"
+import CancelIcon from "@mui/icons-material/Cancel"
 import {
     GoeBURSTFullMSTConfigDistanceStep
-} from "../../../../Components/Project/ComputeConfigurations/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfigDistanceStep";
-import {useGoeBURSTFullMSTConfig} from "./useGoeBURSTFullMSTConfig";
+} from "../../../../Components/Project/ComputeConfigurations/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfigDistanceStep"
+import {useGoeBURSTFullMSTConfig} from "./useGoeBURSTFullMSTConfig"
 
 /**
  * GoeBURSTFullMSTConfig page.
@@ -17,14 +17,13 @@ export default function GoeBURSTFullMSTConfig() {
     const {
         handleCancel,
         handleFinish
-    } = useGoeBURSTFullMSTConfig();
+    } = useGoeBURSTFullMSTConfig()
 
     return (
         <Container>
             <Box
                 display="flex"
                 justifyContent="center"
-                height={'810px'}
                 sx={{mb: 4}}
             >
                 <Paper sx={{
@@ -32,6 +31,7 @@ export default function GoeBURSTFullMSTConfig() {
                     display: "flex",
                     flexDirection: "column",
                     mt: 4,
+                    mb: 4,
                     alignItems: "center",
                     width: "50%"
                 }}>
@@ -46,7 +46,6 @@ export default function GoeBURSTFullMSTConfig() {
                     }}>
                         <Box sx={{
                             width: "100%",
-                            height: "510px",
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "left",
@@ -82,5 +81,5 @@ export default function GoeBURSTFullMSTConfig() {
                 </Paper>
             </Box>
         </Container>
-    );
+    )
 }

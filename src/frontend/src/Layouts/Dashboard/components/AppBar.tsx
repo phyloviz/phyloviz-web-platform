@@ -1,15 +1,15 @@
-import {styled} from "@mui/material/styles";
-import MuiAppBar, {AppBarProps as MuiAppBarProps} from "@mui/material/AppBar";
+import {styled} from "@mui/material/styles"
+import MuiAppBar, {AppBarProps as MuiAppBarProps} from "@mui/material/AppBar"
 
-export const drawerWidth: number = 200;
+export const drawerWidth: number = 200
 
 /**
  * Props for the AppBar component.
  *
- * @param open whether the drawer is open
+ * @property open whether the drawer is open
  */
 interface AppBarProps extends MuiAppBarProps {
-    open?: boolean;
+    open?: boolean
 }
 
 /**
@@ -31,4 +31,4 @@ export const AppBar = styled(MuiAppBar, {
             duration: theme.transitions.duration.enteringScreen,
         }),
     }),
-}));
+}))

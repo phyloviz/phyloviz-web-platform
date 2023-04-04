@@ -1,17 +1,17 @@
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {Button} from "@mui/material";
-import UploadIcon from "@mui/icons-material/Upload";
-import * as React from "react";
-import {useNavigate, useParams} from "react-router-dom";
-import {WebUiUris} from "../../../Utils/WebUiUris";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import {Button} from "@mui/material"
+import UploadIcon from "@mui/icons-material/Upload"
+import * as React from "react"
+import {useNavigate, useParams} from "react-router-dom"
+import {WebUiUris} from "../../../Utils/WebUiUris"
 
 /**
  * Card for the upload files feature.
  */
 export function UploadFilesCard() {
-    const navigate = useNavigate();
-    const {projectId} = useParams<{ projectId: string }>();
+    const navigate = useNavigate()
+    const {projectId} = useParams<{ projectId: string }>()
 
     return <Paper sx={{
         p: 4,
@@ -38,5 +38,5 @@ export function UploadFilesCard() {
         >
             Upload Files
         </Button>
-    </Paper>;
+    </Paper>
 }

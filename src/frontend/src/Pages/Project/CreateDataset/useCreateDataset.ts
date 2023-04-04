@@ -1,10 +1,10 @@
-import * as React from "react";
-import {useState} from "react";
-import {DatasetType} from "../../../Domain/DatasetType";
-import {useNavigate} from "react-router-dom";
-import {SelectChangeEvent} from "@mui/material";
-import {useProjectContext} from "../useProject";
-import {AdministrationService} from "../../../Services/administration/AdministrationService";
+import * as React from "react"
+import {useState} from "react"
+import {DatasetType} from "../../../Domain/DatasetType"
+import {useNavigate} from "react-router-dom"
+import {SelectChangeEvent} from "@mui/material"
+import {useProjectContext} from "../useProject"
+import {AdministrationService} from "../../../Services/administration/AdministrationService"
 
 export enum CreateDatasetStep {
     INFO = "Dataset Info",
@@ -12,52 +12,51 @@ export enum CreateDatasetStep {
     ISOLATE_DATA = "Isolate Data",
 }
 
-// TODO: Sus, criei para fazer o stepper
-export const steps = [
-    'Dataset Info',
-    'Typing Data',
-    'Isolate Data',
-];
+// TODO: This hook and the CreateDataset page are very extensive.
+//  I think we should split it into smaller hooks, one for each step maybe?
 
 /**
  * Hook for the CreateDataset page.
  */
 export function useCreateDataset() {
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [datasetType, setDatasetType] = useState(DatasetType.MLST);
+    const [name, setName] = useState("")
+    const [description, setDescription] = useState("")
+    const [datasetType, setDatasetType] = useState(DatasetType.MLST)
 
-    const [createDatasetStep, setCreateDatasetStep] = useState(CreateDatasetStep.INFO);
-    const [currStep, setCurrStep] = useState(0);
+    const [createDatasetStep, setCreateDatasetStep] = useState(CreateDatasetStep.INFO)
+    const [currStep, setCurrStep] = useState(0)
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
-    const {project, onUpdated} = useProjectContext();
+    const {project, onProjectUpdate} = useProjectContext()
 
-    const [selectedTypingData, setSelectedTypingData] = useState<string | null>(null);
-    const [typingDataFile, setTypingDataFile] = useState<File | null>(null);
+    const [selectedTypingData, setSelectedTypingData] = useState<string | null>(null)
+    const [typingDataFile, setTypingDataFile] = useState<File | null>(null)
 
-    const [selectedIsolateData, setSelectedIsolateData] = useState<string | null>(null);
-    const [isolateDataKeys, setIsolateDataKeys] = useState<string[]>([]);
-    const [selectedIsolateDataKey, setSelectedIsolateDataKey] = useState<string | null>(null);
-    const [isolateDataFile, setIsolateDataFile] = useState<File | null>(null);
+    const [selectedIsolateData, setSelectedIsolateData] = useState<string | null>(null)
+    const [isolateDataKeys, setIsolateDataKeys] = useState<string[]>([])
+    const [selectedIsolateDataKey, setSelectedIsolateDataKey] = useState<string | null>(null)
+    const [isolateDataFile, setIsolateDataFile] = useState<File | null>(null)
 
     return {
         datasetType,
         project,
         handleDatasetNameChange: (event: SelectChangeEvent) => setName(event.target.value as string),
+        handleDatasetDescriptionChange: (event: SelectChangeEvent) => setDescription(event.target.value as string),
         handleDatasetTypeChange: (event: SelectChangeEvent) => setDatasetType(event.target.value as DatasetType),
         selectedTypingData,
         handleTypingDataFileSelectorChange: (event: SelectChangeEvent) => setSelectedTypingData(event.target.value),
         handleTypingDataFileUploaderChange: (file: React.SetStateAction<File | null>) => setTypingDataFile(file),
         selectedIsolateData,
         handleIsolateDataFileSelectorChange: (event: SelectChangeEvent) => {
-            setSelectedIsolateData(event.target.value);
+            setSelectedIsolateData(event.target.value)
             // TODO: get keys
+            setIsolateDataKeys(["key1", "key2"])
         },
         handleIsolateDataFileUploaderChange: (file: React.SetStateAction<File | null>) => {
             setIsolateDataFile(file)
             // TODO: get keys
+            setIsolateDataKeys(["key1", "key2"])
         },
         isolateDataKeys,
         selectedIsolateDataKey,
@@ -91,10 +90,10 @@ export function useCreateDataset() {
                     }
                 )
                     .then(() => {
-                        onUpdated();
-                        navigate(-1);
+                        onProjectUpdate()
+                        navigate(-1)
                     })
-                    .catch(console.error);
+                    .catch(console.error)
             }
         },
         createDatasetStep,

@@ -1,3 +1,3 @@
 export interface DeleteProjectOutputModel {
-    projectId: string;
+    projectId: string
 }

@@ -1,6 +1,6 @@
-import {Session, SessionManager} from "./Session";
-import * as React from "react";
-import {createContext, useState} from "react";
+import {Session, SessionManager} from "./Session"
+import * as React from "react"
+import {createContext, useState} from "react"
 
 export const SessionManagerContext = createContext<SessionManager>({
     session: null,
@@ -13,11 +13,20 @@ export const SessionManagerContext = createContext<SessionManager>({
 const sessionStorageKey = 'session'
 
 /**
+ * Props for the AuthProvider component.
+ *
+ * @property children the children to render
+ */
+interface AuthProviderProps {
+    children: React.ReactNode
+}
+
+/**
  * Provides the session data to the children.
  *
  * @param children the children to render
  */
-export function AuthProvider({children}: { children: React.ReactNode }) {
+export function AuthProvider({children}: AuthProviderProps) {
     const [session, setSession] = useState<Session | null>(() => {
         const sessionJson = localStorage.getItem(sessionStorageKey)
         if (!sessionJson)
@@ -31,12 +40,10 @@ export function AuthProvider({children}: { children: React.ReactNode }) {
             session,
             setSession: (session: Session) => {
                 setSession(session)
-
                 localStorage.setItem(sessionStorageKey, JSON.stringify(session))
             },
             clearSession: () => {
                 localStorage.removeItem(sessionStorageKey)
-
                 setSession(null)
             }
         }}>

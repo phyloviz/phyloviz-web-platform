@@ -1,5 +1,5 @@
-import {Dataset} from "../getProject/GetProjectOutputModel";
+import {Dataset} from "../getProject/GetProjectOutputModel"
 
 export interface GetDatasetsOutputModel {
-    datasets: Dataset[];
+    datasets: Dataset[]
 }

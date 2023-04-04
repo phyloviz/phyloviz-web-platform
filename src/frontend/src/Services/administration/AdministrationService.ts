@@ -1,22 +1,22 @@
-import {CreateProjectInputModel} from "./models/createProject/CreateProjectInputModel";
-import {CreateProjectOutputModel} from "./models/createProject/CreateProjectOutputModel";
-import {GetProjectsOutputModel} from "./models/getProjects/GetProjectsOutputModel";
-import {DeleteProjectOutputModel} from "./models/deleteProject/DeleteProjectOutputModel";
-import {UploadTypingDataOutputModel} from "./models/uploadTypingData/UploadTypingDataOutputModel";
-import {DeleteTypingDataOutputModel} from "./models/deleteTypingData/DeleteTypingDataOutputModel";
-import {GetProjectOutputModel} from "./models/getProject/GetProjectOutputModel";
-import {DeleteTreeViewOutputModel} from "./models/deleteTreeView/DeleteTreeViewOutputModel";
-import {WebApiUris} from "../WebApiUris";
-import {UploadIsolateDataOutputModel} from "./models/uploadIsolateData/UploadIsolateDataOutputModel";
-import {DeleteIsolateDataOutputModel} from "./models/deleteIsolateData/DeleteIsolateDataOutputModel";
-import {DeleteTreeOutputModel} from "./models/deleteTree/DeleteTreeOutputModel";
-import {DeleteDistanceMatrixOutputModel} from "./models/deleteDistanceMatrix/DeleteDistanceMatrixOutputModel";
-import {CreateDatasetInputModel} from "./models/createDataset/CreateDatasetInputModel";
-import {CreateDatasetOutputModel} from "./models/createDataset/CreateDatasetOutputModel";
-import {GetDatasetOutputModel} from "./models/getDataset/GetDatasetOutputModel";
-import {GetDatasetsOutputModel} from "./models/getDatasets/GetDatasetsOutputModel";
-import {DeleteDatasetOutputModel} from "./models/deleteDataset/DeleteDatasetOutputModel";
-import {del, get, post} from "../utils/apiFetch";
+import {CreateProjectInputModel} from "./models/createProject/CreateProjectInputModel"
+import {CreateProjectOutputModel} from "./models/createProject/CreateProjectOutputModel"
+import {GetProjectsOutputModel} from "./models/getProjects/GetProjectsOutputModel"
+import {DeleteProjectOutputModel} from "./models/deleteProject/DeleteProjectOutputModel"
+import {UploadTypingDataOutputModel} from "./models/uploadTypingData/UploadTypingDataOutputModel"
+import {DeleteTypingDataOutputModel} from "./models/deleteTypingData/DeleteTypingDataOutputModel"
+import {GetProjectOutputModel} from "./models/getProject/GetProjectOutputModel"
+import {DeleteTreeViewOutputModel} from "./models/deleteTreeView/DeleteTreeViewOutputModel"
+import {WebApiUris} from "../WebApiUris"
+import {UploadIsolateDataOutputModel} from "./models/uploadIsolateData/UploadIsolateDataOutputModel"
+import {DeleteIsolateDataOutputModel} from "./models/deleteIsolateData/DeleteIsolateDataOutputModel"
+import {DeleteTreeOutputModel} from "./models/deleteTree/DeleteTreeOutputModel"
+import {DeleteDistanceMatrixOutputModel} from "./models/deleteDistanceMatrix/DeleteDistanceMatrixOutputModel"
+import {CreateDatasetInputModel} from "./models/createDataset/CreateDatasetInputModel"
+import {CreateDatasetOutputModel} from "./models/createDataset/CreateDatasetOutputModel"
+import {GetDatasetOutputModel} from "./models/getDataset/GetDatasetOutputModel"
+import {GetDatasetsOutputModel} from "./models/getDatasets/GetDatasetsOutputModel"
+import {DeleteDatasetOutputModel} from "./models/deleteDataset/DeleteDatasetOutputModel"
+import {del, get, post} from "../utils/apiFetch"
 
 export namespace AdministrationService {
 
@@ -26,7 +26,7 @@ export namespace AdministrationService {
      * @return the projects
      */
     export async function getProjects(): Promise<GetProjectsOutputModel> {
-        return await get<GetProjectsOutputModel>(WebApiUris.getProjects);
+        return await get<GetProjectsOutputModel>(WebApiUris.getProjects)
     }
 
     /**
@@ -38,7 +38,7 @@ export namespace AdministrationService {
     export async function getProject(
         projectId: string
     ): Promise<GetProjectOutputModel> {
-        return await get<GetProjectOutputModel>(WebApiUris.getProject(projectId));
+        return await get<GetProjectOutputModel>(WebApiUris.getProject(projectId))
     }
 
     /**
@@ -53,7 +53,7 @@ export namespace AdministrationService {
         return await post<CreateProjectOutputModel>(
             WebApiUris.createProject,
             JSON.stringify(createProjectInputModel)
-        );
+        )
     }
 
     /**
@@ -65,7 +65,7 @@ export namespace AdministrationService {
     export async function deleteProject(
         projectId: string
     ): Promise<DeleteProjectOutputModel> {
-        return await del<DeleteProjectOutputModel>(WebApiUris.deleteProject(projectId));
+        return await del<DeleteProjectOutputModel>(WebApiUris.deleteProject(projectId))
     }
 
     /**
@@ -79,8 +79,8 @@ export namespace AdministrationService {
         projectId: string,
         file: File
     ): Promise<UploadTypingDataOutputModel> {
-        const formData = new FormData();
-        formData.append("file", file);
+        const formData = new FormData()
+        formData.append("file", file)
 
         return await post<UploadTypingDataOutputModel>(
             WebApiUris.uploadTypingData(projectId),
@@ -88,7 +88,7 @@ export namespace AdministrationService {
             {
                 "Content-Length": file.size.toString()
             }
-        );
+        )
     }
 
     /**
@@ -101,7 +101,7 @@ export namespace AdministrationService {
         projectId: string,
         typingDataId: string
     ): Promise<DeleteTypingDataOutputModel> {
-        return await del<DeleteTypingDataOutputModel>(WebApiUris.deleteTypingData(projectId, typingDataId));
+        return await del<DeleteTypingDataOutputModel>(WebApiUris.deleteTypingData(projectId, typingDataId))
     }
 
     /**
@@ -115,8 +115,8 @@ export namespace AdministrationService {
         projectId: string,
         file: File
     ): Promise<UploadIsolateDataOutputModel> {
-        const formData = new FormData();
-        formData.append("file", file);
+        const formData = new FormData()
+        formData.append("file", file)
 
         return await post<UploadIsolateDataOutputModel>(
             WebApiUris.uploadIsolateData(projectId),
@@ -124,7 +124,7 @@ export namespace AdministrationService {
             {
                 "Content-Length": file.size.toString()
             }
-        );
+        )
     }
 
     /**
@@ -138,7 +138,7 @@ export namespace AdministrationService {
         projectId: string,
         isolateDataId: string
     ): Promise<DeleteIsolateDataOutputModel> {
-        return await del<DeleteIsolateDataOutputModel>(WebApiUris.deleteIsolateData(projectId, isolateDataId));
+        return await del<DeleteIsolateDataOutputModel>(WebApiUris.deleteIsolateData(projectId, isolateDataId))
     }
 
     /**
@@ -154,7 +154,7 @@ export namespace AdministrationService {
         datasetId: string,
         distanceMatrixId: string
     ): Promise<DeleteDistanceMatrixOutputModel> {
-        return await del<DeleteDistanceMatrixOutputModel>(WebApiUris.deleteDistanceMatrix(projectId, datasetId, distanceMatrixId));
+        return await del<DeleteDistanceMatrixOutputModel>(WebApiUris.deleteDistanceMatrix(projectId, datasetId, distanceMatrixId))
     }
 
     /**
@@ -170,7 +170,7 @@ export namespace AdministrationService {
         datasetId: string,
         treeId: string
     ): Promise<DeleteTreeOutputModel> {
-        return await del<DeleteTreeOutputModel>(WebApiUris.deleteTree(projectId, datasetId, treeId));
+        return await del<DeleteTreeOutputModel>(WebApiUris.deleteTree(projectId, datasetId, treeId))
     }
 
     /**
@@ -186,7 +186,7 @@ export namespace AdministrationService {
         datasetId: string,
         treeViewId: string
     ): Promise<DeleteTreeViewOutputModel> {
-        return await del<DeleteTreeViewOutputModel>(WebApiUris.deleteTreeView(projectId, datasetId, treeViewId));
+        return await del<DeleteTreeViewOutputModel>(WebApiUris.deleteTreeView(projectId, datasetId, treeViewId))
     }
 
     /**
@@ -203,7 +203,7 @@ export namespace AdministrationService {
         return await post<CreateDatasetOutputModel>(
             WebApiUris.createDataset(projectId),
             JSON.stringify(createDatasetInputModel)
-        );
+        )
     }
 
     /**
@@ -217,7 +217,7 @@ export namespace AdministrationService {
         projectId: string,
         datasetId: string
     ): Promise<GetDatasetOutputModel> {
-        return await get<GetDatasetOutputModel>(WebApiUris.getDataset(projectId, datasetId));
+        return await get<GetDatasetOutputModel>(WebApiUris.getDataset(projectId, datasetId))
     }
 
     /**
@@ -229,7 +229,7 @@ export namespace AdministrationService {
     export async function getDatasets(
         projectId: string
     ): Promise<GetDatasetsOutputModel> {
-        return await get<GetDatasetsOutputModel>(WebApiUris.getDatasets(projectId));
+        return await get<GetDatasetsOutputModel>(WebApiUris.getDatasets(projectId))
     }
 
     /**
@@ -243,6 +243,6 @@ export namespace AdministrationService {
         projectId: string,
         datasetId: string
     ): Promise<DeleteDatasetOutputModel> {
-        return await del<DeleteDatasetOutputModel>(WebApiUris.deleteDataset(projectId, datasetId));
+        return await del<DeleteDatasetOutputModel>(WebApiUris.deleteDataset(projectId, datasetId))
     }
 }

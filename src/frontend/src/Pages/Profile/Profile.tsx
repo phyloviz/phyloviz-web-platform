@@ -1,9 +1,9 @@
 import * as React from "react"
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {Container} from "@mui/material";
-import {useLoggedIn, useSession} from "../../Session/Session";
-import Avatar from "@mui/material/Avatar";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import {Container} from "@mui/material"
+import {useLoggedIn, useSession} from "../../Session/Session"
+import Avatar from "@mui/material/Avatar"
 
 /**
  * Profile page.
@@ -39,5 +39,5 @@ export default function Profile() {
                 }
             </Paper>
         </Container>
-    );
+    )
 }

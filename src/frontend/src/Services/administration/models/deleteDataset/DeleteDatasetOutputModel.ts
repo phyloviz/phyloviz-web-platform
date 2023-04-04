@@ -1,4 +1,4 @@
 export interface DeleteDatasetOutputModel {
-    projectId: string;
-    datasetId: string;
+    projectId: string
+    datasetId: string
 }

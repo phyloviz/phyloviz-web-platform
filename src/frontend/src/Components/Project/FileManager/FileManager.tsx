@@ -1,24 +1,24 @@
 import * as React from "react"
-import {TreeView} from "@mui/lab";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import {AccountTree} from "@mui/icons-material";
-import {StyledTreeItem} from "./StyledTreeItem";
-import {FilesTreeItem} from "./FilesTreeItem";
-import {GetProjectOutputModel} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
-import {DatasetsTreeItem} from "./DatasetsTreeItem";
+import {TreeView} from "@mui/lab"
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import ArrowRightIcon from '@mui/icons-material/ArrowRight'
+import {AccountTree} from "@mui/icons-material"
+import {StyledTreeItem} from "./StyledTreeItem"
+import {FilesTreeItem} from "./Files/FilesTreeItem"
+import {GetProjectOutputModel} from "../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {DatasetsTreeItem} from "./Datasets/DatasetsTreeItem"
+
+// TODO: maybe improve the styling of the file manager to be more responsive, maybe use
+//  https://mui.com/material-ui/react-drawer/ to make it collapsible, and check the height and other properties
 
 /**
  * Properties of the file manager.
  *
- * @param project project to display the files and folders of
+ * @property project project to display the files and folders of
  */
 interface FileManagerProps {
-    project: GetProjectOutputModel | null;
+    project: GetProjectOutputModel | null
 }
-
-// TODO: maybe improve the styling of the file manager to be more responsive, maybe use
-//  https://mui.com/material-ui/react-drawer/ to make it collapsible, and check the height and other properties
 
 /**
  * File manager of a project.

@@ -1,12 +1,12 @@
 import * as React from "react"
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {Container} from "@mui/material";
-import {useOpenProject} from "./useOpenProject";
-import {ProjectCard} from "../../Components/OpenProject/ProjectCard";
-import Box from "@mui/material/Box";
-import LoadingSpinner from "../../Components/Shared/LoadingSpinner";
-import Alert from "@mui/material/Alert";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import {Container} from "@mui/material"
+import {useOpenProject} from "./useOpenProject"
+import {ProjectCard} from "../../Components/OpenProject/ProjectCard"
+import Box from "@mui/material/Box"
+import LoadingSpinner from "../../Components/Shared/LoadingSpinner"
+import Alert from "@mui/material/Alert"
 
 /**
  * OpenProject page.
@@ -16,7 +16,7 @@ export default function OpenProject() {
         projects,
         handleOpenProject,
         error
-    } = useOpenProject();
+    } = useOpenProject()
 
     return (
         <Container>
@@ -61,11 +61,11 @@ export default function OpenProject() {
                                     project={project}
                                     handleOpenProject={handleOpenProject}
                                 />
-                            );
+                            )
                         })
                     }
                 </Box>
             </Paper>
         </Container>
-    );
+    )
 }

@@ -1,6 +1,6 @@
-import * as React from "react";
-import Typography from "@mui/material/Typography";
-import {FormControl, InputLabel, Select} from "@mui/material";
+import * as React from "react"
+import Typography from "@mui/material/Typography"
+import {FormControl, InputLabel, Select} from "@mui/material"
 
 /**
  * Card for the distance step in the GoeBURSTFullMSTConfig page.
@@ -38,5 +38,5 @@ export function GoeBURSTFullMSTConfigDistanceStep() {
                 }
             </Typography>
         </>
-    );
+    )
 }

@@ -1,9 +1,9 @@
-import {HomeMainCard} from "../../Components/Home/HomeMainCard";
-import Box from "@mui/material/Box";
-import {NewProjectCard} from "../../Components/Home/NewProjectCard";
-import {OpenProjectCard} from "../../Components/Home/OpenProjectCard";
-import * as React from "react";
-import {Container} from "@mui/material";
+import {HomeMainCard} from "../../Components/Home/HomeMainCard"
+import Box from "@mui/material/Box"
+import {NewProjectCard} from "../../Components/Home/NewProjectCard"
+import {OpenProjectCard} from "../../Components/Home/OpenProjectCard"
+import * as React from "react"
+import {Container} from "@mui/material"
 
 /**
  * Home page.
@@ -24,5 +24,5 @@ export function Home() {
                 <OpenProjectCard/>
             </Box>
         </Container>
-    );
+    )
 }

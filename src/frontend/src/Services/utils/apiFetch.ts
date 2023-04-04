@@ -1,3 +1,5 @@
+import {Problem, problemMediaType} from "./Problem"
+
 /**
  * Fetches a resource from the web API.
  *
@@ -20,18 +22,22 @@ async function apiFetch<T>(
             'Content-Type': 'application/json',
         },
         body
-    }));
+    }))
 
     if (err)
-        throw new NetworkError(err.message);
+        throw new NetworkError(err.message)
 
+    if (!res.ok) {
+        if (res?.headers.get('Content-Type') !== problemMediaType)
+            throw new UnexpectedResponseError(`Unexpected response type: ${res.headers.get('Content-Type')}`)
+
+        throw new Problem(await res.json())
+    }
     if (res?.headers.get('Content-Type') !== 'application/json')
         throw new UnexpectedResponseError(`Unexpected response type: ${res.headers.get('Content-Type')}`)
 
-    if (!res.ok)
-        throw new Error((await res.json()).message); // TODO: Maybe use problem?
 
-    return await res.json();
+    return await res.json()
 }
 
 /**
@@ -72,7 +78,7 @@ export class UnexpectedResponseError extends Error {
  * @returns the response body
  */
 export async function get<T>(input: RequestInfo | URL): Promise<T> {
-    return await apiFetch<T>(input, 'GET');
+    return await apiFetch<T>(input, 'GET')
 }
 
 /**
@@ -83,7 +89,7 @@ export async function get<T>(input: RequestInfo | URL): Promise<T> {
  * @param body the body of the request
  */
 export async function post<T>(input: RequestInfo | URL, body: BodyInit, headers?: HeadersInit): Promise<T> {
-    return await apiFetch<T>(input, 'POST', body, headers);
+    return await apiFetch<T>(input, 'POST', body, headers)
 }
 
 /**
@@ -93,5 +99,5 @@ export async function post<T>(input: RequestInfo | URL, body: BodyInit, headers?
  * @param body the body of the request
  */
 export async function del<T>(input: RequestInfo | URL, body?: BodyInit): Promise<T> {
-    return await apiFetch<T>(input, 'DELETE', body);
+    return await apiFetch<T>(input, 'DELETE', body)
 }

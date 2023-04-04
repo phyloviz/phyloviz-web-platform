@@ -1,7 +1,7 @@
 import * as React from "react"
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {Container} from "@mui/material";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import {Container} from "@mui/material"
 
 /**
  * TypingData page.
@@ -24,5 +24,5 @@ export default function TypingData() {
                 }
             </Paper>
         </Container>
-    );
+    )
 }

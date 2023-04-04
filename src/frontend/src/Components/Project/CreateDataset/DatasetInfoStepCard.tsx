@@ -1,26 +1,35 @@
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
-import * as React from "react";
-import {ReactNode} from "react";
-import Typography from "@mui/material/Typography";
-import {DatasetType} from "../../../Domain/DatasetType";
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material"
+import * as React from "react"
+import {ReactNode} from "react"
+import Typography from "@mui/material/Typography"
+import {DatasetType} from "../../../Domain/DatasetType"
 
 /**
  * Props for the DatasetInfoStepCard component.
  *
- * @param datasetType the type of the dataset
- * @param onDatasetNameChange the function to be called when the dataset name is changed
- * @param onDatasetTypeChange the function to be called when the dataset type is changed
+ * @property datasetType the type of the dataset
+ * @property onDatasetNameChange the function to be called when the dataset name is changed
+ * @property onDatasetDescriptionChange the function to be called when the dataset description is changed
+ * @property onDatasetTypeChange the function to be called when the dataset type is changed
  */
 interface DatasetInfoStepCard {
     datasetType: DatasetType,
     onDatasetNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    onDatasetDescriptionChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
     onDatasetTypeChange: (event: SelectChangeEvent, child: ReactNode) => void
 }
 
 /**
  * Card for the Dataset Info step of the Create Dataset page.
  */
-export function DatasetInfoStepCard({datasetType, onDatasetNameChange, onDatasetTypeChange}: DatasetInfoStepCard) {
+export function DatasetInfoStepCard(
+    {
+        datasetType,
+        onDatasetNameChange,
+        onDatasetDescriptionChange,
+        onDatasetTypeChange
+    }: DatasetInfoStepCard
+) {
     return <>
         <TextField
             label="Dataset Name"
@@ -31,6 +40,18 @@ export function DatasetInfoStepCard({datasetType, onDatasetNameChange, onDataset
         <Typography variant="caption" align={"justify"} sx={{mb: 4, width: "100%"}}>
             Choose a Dataset name to identify your analysis and choose the Dataset type depending on the
             typing data to be used.
+        </Typography>
+
+        <TextField
+            label="Dataset Description"
+            variant="outlined"
+            onChange={onDatasetDescriptionChange}
+            multiline
+            rows={4}
+            required sx={{width: "100%", mb: 1}}
+        />
+        <Typography variant="caption" align={"justify"} sx={{mb: 4, width: "100%"}}>
+            Describe your Dataset to help you identify it later.
         </Typography>
 
         <FormControl sx={{width: "100%", mb: 1}}>
@@ -54,7 +75,7 @@ export function DatasetInfoStepCard({datasetType, onDatasetNameChange, onDataset
         <Typography variant="caption" align={"justify"} sx={{mb: 4, width: "100%"}}>
             {datasetDescriptions[datasetType]}
         </Typography>
-    </>;
+    </>
 }
 
 /**
@@ -83,4 +104,4 @@ const datasetDescriptions = {
     "(without explicit ID) is designed to analyze SNP data based on the presence and absence of a SNP, and no " +
     "explicit ID was attributed to the entire SNP profile. The sequences need to be all of the same size. " +
     "Sequences of different sizes will be excluded."
-};
+}

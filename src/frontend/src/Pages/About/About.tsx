@@ -1,8 +1,8 @@
 import * as React from "react"
-import {AboutMainCard} from "../../Components/About/AboutMainCard";
-import {KeyFeaturesCard} from "../../Components/About/KeyFeaturesCard";
-import {ContactsCard} from "../../Components/About/ContactsCard";
-import {Container} from "@mui/material";
+import {AboutMainCard} from "../../Components/About/AboutMainCard"
+import {KeyFeaturesCard} from "../../Components/About/KeyFeaturesCard"
+import {ContactsCard} from "../../Components/About/ContactsCard"
+import {Container} from "@mui/material"
 
 /**
  * About page.
@@ -14,5 +14,5 @@ export default function About() {
             <KeyFeaturesCard/>
             <ContactsCard/>
         </Container>
-    );
+    )
 }

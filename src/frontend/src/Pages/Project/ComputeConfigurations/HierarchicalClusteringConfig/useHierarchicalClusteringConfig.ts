@@ -1,24 +1,18 @@
-import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useState} from "react"
+import {useNavigate} from "react-router-dom"
 
 export enum HierarchicalClusteringConfigStep {
     DISTANCE = "Distance",
     METHOD = "Method",
 }
 
-// TODO: Sus, criei para fazer o stepper
-export const steps = [
-    'Distance',
-    'Method',
-];
-
 /**
  * Hook for the HierarchicalClusteringConfig page.
  */
 export function useHierarchicalClusteringConfig() {
-    const [step, setStep] = useState(HierarchicalClusteringConfigStep.DISTANCE);
-    const [currStep, setCurrStep] = useState(0);
-    const navigate = useNavigate();
+    const [step, setStep] = useState(HierarchicalClusteringConfigStep.DISTANCE)
+    const [currStep, setCurrStep] = useState(0)
+    const navigate = useNavigate()
 
     return {
         step,

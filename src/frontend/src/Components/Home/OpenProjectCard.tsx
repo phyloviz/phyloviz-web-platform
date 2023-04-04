@@ -1,16 +1,16 @@
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {Button} from "@mui/material";
-import OpenProjectIcon from "@mui/icons-material/FolderOpen";
-import * as React from "react";
-import {useNavigate} from "react-router-dom";
-import {WebUiUris} from "../../Utils/WebUiUris";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import {Button} from "@mui/material"
+import OpenProjectIcon from "@mui/icons-material/FolderOpen"
+import * as React from "react"
+import {useNavigate} from "react-router-dom"
+import {WebUiUris} from "../../Utils/WebUiUris"
 
 /**
  * Card for the open project feature in the home page.
  */
 export function OpenProjectCard() {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     return (
         <Paper sx={{
@@ -37,5 +37,5 @@ export function OpenProjectCard() {
                 Open Project
             </Button>
         </Paper>
-    );
+    )
 }

@@ -1,44 +1,41 @@
-import * as React from "react";
-import {StyledTreeItem} from "./StyledTreeItem";
-import {Description, FilePresent, Folder} from "@mui/icons-material";
-import {Menu, MenuItem} from "@mui/material";
-import UploadIcon from "@mui/icons-material/Upload";
-import {useNavigate, useParams} from "react-router-dom";
-import {WebUiUris} from "../../../Utils/WebUiUris";
-import {ProjectFiles} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
-import {useContextMenu} from "./useContextMenu";
+import * as React from "react"
+import {Description, FilePresent, Folder} from "@mui/icons-material"
+import {Menu, MenuItem} from "@mui/material"
+import UploadIcon from "@mui/icons-material/Upload"
+import {useNavigate, useParams} from "react-router-dom"
+import {WebUiUris} from "../../../../Utils/WebUiUris"
+import {ProjectFiles} from "../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {useContextMenu} from "../useContextMenu"
+import {StyledTreeItem} from "../StyledTreeItem"
 
 /**
  * Props for the FilesTreeItem component.
  *
- * @param nodeId id of the tree item
- * @param files files to display
+ * @property nodeId id of the tree item
+ * @property files files to display
  */
 interface FilesTreeItemProps {
-    nodeId: string;
-    files: ProjectFiles;
+    nodeId: string
+    files: ProjectFiles
 }
 
 /**
  * Tree item for the files of a project.
- *
- * @param nodeId id of the tree item
- * @param files files to display
  */
 export function FilesTreeItem({nodeId, files}: FilesTreeItemProps) {
-    const navigate = useNavigate();
-    const {projectId} = useParams<{ projectId: string }>();
+    const navigate = useNavigate()
+    const {projectId} = useParams<{ projectId: string }>()
 
     const {
         contextMenu,
         handleContextMenu,
         handleClose
-    } = useContextMenu();
+    } = useContextMenu()
 
     const handleUploadFiles = () => {
-        handleClose();
-        navigate(WebUiUris.uploadFiles(projectId!));
-    };
+        handleClose()
+        navigate(WebUiUris.uploadFiles(projectId!))
+    }
 
     return (
         <>
@@ -46,7 +43,7 @@ export function FilesTreeItem({nodeId, files}: FilesTreeItemProps) {
                 nodeId={nodeId}
                 labelText="Files"
                 labelIcon={Folder}
-                onContextMenu={handleContextMenu}
+                handleContextMenu={handleContextMenu}
             >
                 {
                     files.typingData.map((file, index) => {
@@ -77,5 +74,5 @@ export function FilesTreeItem({nodeId, files}: FilesTreeItemProps) {
                 </MenuItem>
             </Menu>
         </>
-    );
+    )
 }

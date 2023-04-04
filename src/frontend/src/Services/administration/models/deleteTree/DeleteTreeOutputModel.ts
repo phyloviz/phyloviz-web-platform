@@ -1,4 +1,4 @@
 export interface DeleteTreeOutputModel {
-    projectId: string;
-    treeId: string;
+    projectId: string
+    treeId: string
 }

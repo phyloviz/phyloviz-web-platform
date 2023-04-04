@@ -4,28 +4,28 @@ import './App.css'
 import {Route, Routes} from 'react-router-dom'
 import About from "./Pages/About/About"
 import {WebUiUris} from "./Utils/WebUiUris"
-import Dashboard from "./Layouts/Dashboard/Dashboard";
-import {Home} from "./Pages/Home/Home";
-import News from "./Pages/News/News";
-import ApiInfo from "./Pages/ApiInfo/ApiInfo";
-import CreateDataset from "./Pages/Project/CreateDataset/CreateDataset";
-import NewProject from "./Pages/NewProject/NewProject";
-import OpenProject from "./Pages/OpenProject/OpenProject";
-import Project from "./Pages/Project/Project";
-import {NotFoundPage} from "./Pages/NotFoundPage";
-import UploadFiles from "./Pages/Project/UploadFiles/UploadFiles";
-import {useLoggedIn, useSessionManager} from "./Session/Session";
-import GoeBURSTConfig from "./Pages/Project/ComputeConfigurations/GoeBURSTConfig/GoeBURSTConfig";
-import GoeBURSTFullMSTConfig from "./Pages/Project/ComputeConfigurations/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfig";
+import Dashboard from "./Layouts/Dashboard/Dashboard"
+import {Home} from "./Pages/Home/Home"
+import News from "./Pages/News/News"
+import ApiInfo from "./Pages/ApiInfo/ApiInfo"
+import CreateDataset from "./Pages/Project/CreateDataset/CreateDataset"
+import NewProject from "./Pages/NewProject/NewProject"
+import OpenProject from "./Pages/OpenProject/OpenProject"
+import Project from "./Pages/Project/Project"
+import {NotFoundPage} from "./Pages/NotFoundPage"
+import UploadFiles from "./Pages/Project/UploadFiles/UploadFiles"
+import {useLoggedIn, useSessionManager} from "./Session/Session"
+import GoeBURSTConfig from "./Pages/Project/ComputeConfigurations/GoeBURSTConfig/GoeBURSTConfig"
+import GoeBURSTFullMSTConfig from "./Pages/Project/ComputeConfigurations/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfig"
 import HierarchicalClusteringConfig
-    from "./Pages/Project/ComputeConfigurations/HierarchicalClusteringConfig/HierarchicalClusteringConfig";
-import NeighborJoiningConfig from "./Pages/Project/ComputeConfigurations/NeighborJoiningConfig/NeighborJoiningConfig";
-import NLVGraphConfig from "./Pages/Project/ComputeConfigurations/NLVGraphConfig/NLVGraphConfig";
-import Profile from "./Pages/Profile/Profile";
-import TreeView from "./Pages/Project/TreeView/TreeView";
-import DistanceMatrix from "./Pages/Project/DistanceMatrix/DistanceMatrix";
-import IsolateData from "./Pages/Project/IsolateData/IsolateData";
-import TypingData from "./Pages/Project/TypingData/TypingData";
+    from "./Pages/Project/ComputeConfigurations/HierarchicalClusteringConfig/HierarchicalClusteringConfig"
+import NeighborJoiningConfig from "./Pages/Project/ComputeConfigurations/NeighborJoiningConfig/NeighborJoiningConfig"
+import NLVGraphConfig from "./Pages/Project/ComputeConfigurations/NLVGraphConfig/NLVGraphConfig"
+import Profile from "./Pages/Profile/Profile"
+import TreeView from "./Pages/Project/TreeView/TreeView"
+import DistanceMatrix from "./Pages/Project/DistanceMatrix/DistanceMatrix"
+import IsolateData from "./Pages/Project/IsolateData/IsolateData"
+import TypingData from "./Pages/Project/TypingData/TypingData"
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;
@@ -51,13 +51,13 @@ import COMPUTE_CONFIG_NLV_GRAPH = WebUiUris.COMPUTE_CONFIG_NLV_GRAPH;
  */
 export default function App() {
 
-    const sessionManager = useSessionManager();
-    const loggedIn = useLoggedIn();
+    const sessionManager = useSessionManager()
+    const loggedIn = useLoggedIn()
 
     // Clear session on app start
     useEffect(() => {
-        sessionManager.clearSession();
-    }, []);
+        sessionManager.clearSession()
+    }, [])
 
     /**
      * Protection route component, redirects to login page if not logged in.
@@ -66,8 +66,8 @@ export default function App() {
      */
     function ProtectedRoute({children}: { children: React.ReactElement }) {
         if (!loggedIn) {
-            window.location.href = WebUiUris.LOGIN;
-            return null;
+            window.location.href = WebUiUris.LOGIN
+            return null
         }
 
         return children

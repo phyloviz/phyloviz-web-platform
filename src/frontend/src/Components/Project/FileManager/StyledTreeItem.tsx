@@ -1,36 +1,36 @@
-import {TreeItem, treeItemClasses, TreeItemProps} from "@mui/lab";
-import * as React from "react";
-import {MouseEventHandler} from "react";
-import {SvgIconProps} from "@mui/material";
-import {styled} from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import {TreeItem, treeItemClasses, TreeItemProps} from "@mui/lab"
+import * as React from "react"
+import {MouseEventHandler} from "react"
+import {SvgIconProps} from "@mui/material"
+import {styled} from "@mui/material/styles"
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
 
 declare module 'react' {
     interface CSSProperties {
-        '--tree-view-color'?: string;
-        '--tree-view-bg-color'?: string;
+        '--tree-view-color'?: string
+        '--tree-view-bg-color'?: string
     }
 }
 
 /**
  * Props for the StyledTreeItem component.
  *
- * @param bgColor background color of the tree item
- * @param color color of the tree item
- * @param labelIcon icon of the tree item
- * @param labelInfo info of the tree item
- * @param labelText text of the tree item
- * @param handleContextMenu handler for the context menu (right click)
+ * @property bgColor background color of the tree item
+ * @property color color of the tree item
+ * @property labelIcon icon of the tree item
+ * @property labelInfo info of the tree item
+ * @property labelText text of the tree item
+ * @property handleContextMenu handler for the context menu (right click)
  */
 type StyledTreeItemProps = TreeItemProps & {
-    bgColor?: string;
-    color?: string;
-    labelIcon: React.ElementType<SvgIconProps>;
-    labelInfo?: string;
-    labelText: string;
-    handleContextMenu?: MouseEventHandler<HTMLLIElement>;
-};
+    bgColor?: string
+    color?: string
+    labelIcon: React.ElementType<SvgIconProps>
+    labelInfo?: string
+    labelText: string
+    handleContextMenu?: MouseEventHandler<HTMLDivElement>
+}
 
 const StyledTreeItemRoot = styled(TreeItem)(({theme}) => ({
     color: theme.palette.text.secondary,
@@ -55,12 +55,10 @@ const StyledTreeItemRoot = styled(TreeItem)(({theme}) => ({
             color: 'inherit',
         },
     }
-}));
+}))
 
 /**
  * Styled tree item for the files tree.
- *
- * @param props props for the StyledTreeItem component
  */
 export function StyledTreeItem(
     {bgColor, color, labelIcon: LabelIcon, labelInfo, labelText, handleContextMenu, ...other}: StyledTreeItemProps
@@ -68,23 +66,26 @@ export function StyledTreeItem(
     return (
         <StyledTreeItemRoot
             label={
-                <Box sx={{display: 'flex', alignItems: 'center', p: 0.5, pr: 0}}>
-                    <Box component={LabelIcon} color="inherit" sx={{mr: 1}}/>
-                    <Typography variant="body2" sx={{fontWeight: 'inherit'}}>
-                        {labelText}
-                    </Typography>
-                    <Typography variant="caption" color="inherit">
-                        {labelInfo}
-                    </Typography>
-                </Box>
+                <div
+                    style={{'cursor': handleContextMenu ? 'context-menu' : 'default'}}
+                    onContextMenu={handleContextMenu ? handleContextMenu : undefined}
+                >
+                    <Box sx={{display: 'flex', alignItems: 'center', p: 0.5, pr: 0}}>
+                        <Box component={LabelIcon} color="inherit" sx={{mr: 1}}/>
+                        <Typography variant="body2" sx={{fontWeight: 'inherit'}}>
+                            {labelText}
+                        </Typography>
+                        <Typography variant="caption" color="inherit">
+                            {labelInfo}
+                        </Typography>
+                    </Box>
+                </div>
             }
             style={{
                 '--tree-view-color': color,
-                '--tree-view-bg-color': bgColor,
-                'cursor': handleContextMenu ? 'context-menu' : 'default'
+                '--tree-view-bg-color': bgColor
             }}
-            onContextMenu={handleContextMenu ? handleContextMenu : undefined}
             {...other}
         />
-    );
+    )
 }

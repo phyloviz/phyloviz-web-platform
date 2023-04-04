@@ -1,16 +1,16 @@
 import * as React from "react"
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {Button, Container, Step, StepLabel, Stepper} from "@mui/material";
-import Box from "@mui/material/Box";
-import NextIcon from "@mui/icons-material/ArrowForwardIos";
-import BackIcon from "@mui/icons-material/ArrowBackIos";
-import FinishIcon from "@mui/icons-material/Done";
-import {DatasetInfoStepCard} from "../../../Components/Project/CreateDataset/DatasetInfoStepCard";
-import {TypingDataStepCard} from "../../../Components/Project/CreateDataset/TypingDataStepCard";
-import {IsolateDataStepCard} from "../../../Components/Project/CreateDataset/IsolateDataStepCard";
-import CancelIcon from "@mui/icons-material/Cancel";
-import {CreateDatasetStep, steps, useCreateDataset} from "./useCreateDataset";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import {Button, Container, Step, StepLabel, Stepper} from "@mui/material"
+import Box from "@mui/material/Box"
+import NextIcon from "@mui/icons-material/ArrowForwardIos"
+import BackIcon from "@mui/icons-material/ArrowBackIos"
+import FinishIcon from "@mui/icons-material/Done"
+import {DatasetInfoStepCard} from "../../../Components/Project/CreateDataset/DatasetInfoStepCard"
+import {TypingDataStepCard} from "../../../Components/Project/CreateDataset/TypingDataStepCard"
+import {IsolateDataStepCard} from "../../../Components/Project/CreateDataset/IsolateDataStepCard"
+import CancelIcon from "@mui/icons-material/Cancel"
+import {CreateDatasetStep, useCreateDataset} from "./useCreateDataset"
 
 
 /**
@@ -21,6 +21,7 @@ export default function CreateDataset() {
         datasetType,
         project,
         handleDatasetNameChange,
+        handleDatasetDescriptionChange,
         handleDatasetTypeChange,
         selectedTypingData,
         handleTypingDataFileSelectorChange,
@@ -36,14 +37,13 @@ export default function CreateDataset() {
         handleNext,
         createDatasetStep,
         currStep,
-    } = useCreateDataset();
+    } = useCreateDataset()
 
     return (
         <Container>
             <Box
                 display="flex"
                 justifyContent="center"
-                height={'810px'}
                 sx={{mb: 4}}
             >
                 <Paper sx={{
@@ -51,6 +51,7 @@ export default function CreateDataset() {
                     display: "flex",
                     flexDirection: "column",
                     mt: 4,
+                    mb: 4,
                     alignItems: "center",
                     width: "50%"
                 }}>
@@ -58,7 +59,7 @@ export default function CreateDataset() {
                         Create Dataset
                     </Typography>
                     <Stepper activeStep={currStep} alternativeLabel sx={{width: '100%', mt: 2, mb: 2}}>
-                        {steps.map((label) => (
+                        {Object.values(CreateDatasetStep).map((label) => (
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
                             </Step>
@@ -72,7 +73,6 @@ export default function CreateDataset() {
                     }}>
                         <Box sx={{
                             width: "100%",
-                            height: "510px",
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "left",
@@ -82,6 +82,7 @@ export default function CreateDataset() {
                                     ? <DatasetInfoStepCard
                                         datasetType={datasetType}
                                         onDatasetNameChange={handleDatasetNameChange}
+                                        onDatasetDescriptionChange={handleDatasetDescriptionChange}
                                         onDatasetTypeChange={handleDatasetTypeChange}
                                     />
                                     : createDatasetStep === CreateDatasetStep.TYPING_DATA
@@ -150,5 +151,5 @@ export default function CreateDataset() {
                 </Paper>
             </Box>
         </Container>
-    );
+    )
 }

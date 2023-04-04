@@ -1,6 +1,6 @@
-import Typography from "@mui/material/Typography";
-import {FormControl, InputLabel, Select} from "@mui/material";
-import * as React from "react";
+import Typography from "@mui/material/Typography"
+import {FormControl, InputLabel, Select} from "@mui/material"
+import * as React from "react"
 
 /**
  * Card for the distance step in the HierarchicalClusteringConfig page.
@@ -29,5 +29,5 @@ export function HierarchicalClusteringConfigDistanceStep() {
                 }
             </Typography>
         </>
-    );
+    )
 }

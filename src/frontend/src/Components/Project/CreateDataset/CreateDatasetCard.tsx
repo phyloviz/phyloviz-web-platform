@@ -1,17 +1,17 @@
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {Button} from "@mui/material";
-import * as React from "react";
-import {useNavigate, useParams} from "react-router-dom";
-import {WebUiUris} from "../../../Utils/WebUiUris";
-import {Add} from "@mui/icons-material";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import {Button} from "@mui/material"
+import * as React from "react"
+import {useNavigate, useParams} from "react-router-dom"
+import {WebUiUris} from "../../../Utils/WebUiUris"
+import {Add} from "@mui/icons-material"
 
 /**
  * Card for the create dataset feature.
  */
 export function CreateDatasetCard() {
-    const navigate = useNavigate();
-    const {projectId} = useParams<{ projectId: string }>();
+    const navigate = useNavigate()
+    const {projectId} = useParams<{ projectId: string }>()
 
     return <Paper sx={{
         p: 4,
@@ -39,5 +39,5 @@ export function CreateDatasetCard() {
         >
             Create Dataset
         </Button>
-    </Paper>;
+    </Paper>
 }

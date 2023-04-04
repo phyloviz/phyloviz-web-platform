@@ -1,7 +1,7 @@
-import * as React from "react";
-import Typography from "@mui/material/Typography";
-import {Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, Select, TextField} from "@mui/material";
-import Box from "@mui/material/Box";
+import * as React from "react"
+import Typography from "@mui/material/Typography"
+import {Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, Select, TextField} from "@mui/material"
+import Box from "@mui/material/Box"
 
 /**
  * Card for the distance step in the NLVGraphConfig page.
@@ -23,14 +23,17 @@ export function NLVGraphConfigDistanceStep() {
             </FormControl>
             <Box sx={{
                 display: "flex",
-                flexDirection: "row"
+                flexDirection: "row",
+                alignItems: "center",
+                mb: 1, mt: 1
             }}>
-                <TextField // TODO: maybe use input type number
+                <TextField
                     label="Maximum nLV level"
+                    type="number"
                     variant="outlined"
                     //onChange={}
                     value={1}
-                    required sx={{width: "75%", mb: 1}}
+                    required sx={{width: "75%"}}
                 />
                 <FormGroup>
                     <FormControlLabel control={<Checkbox defaultChecked/>} label="InnerEdges"/>
@@ -54,5 +57,5 @@ export function NLVGraphConfigDistanceStep() {
                 }
             </Typography>
         </>
-    );
+    )
 }

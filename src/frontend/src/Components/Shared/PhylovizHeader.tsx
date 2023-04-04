@@ -1,6 +1,6 @@
-import Logo from "../../Assets/logo.png";
-import Typography from "@mui/material/Typography";
-import * as React from "react";
+import Logo from "../../Assets/logo.png"
+import Typography from "@mui/material/Typography"
+import * as React from "react"
 
 /**
  * Header with the logo and the title of the PHYLOViZ Web Platform.
@@ -14,5 +14,5 @@ export function PhylovizHeader() {
         <Typography component="h1" variant="h5">
             A Modular and Web-Based Tool for Phylogenetic Analysis
         </Typography>
-    </>;
+    </>
 }

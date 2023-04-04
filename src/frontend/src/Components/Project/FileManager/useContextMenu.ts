@@ -1,17 +1,17 @@
-import * as React from "react";
-import {useState} from "react";
+import * as React from "react"
+import {useState} from "react"
 
 /**
  * Hook to handle the context menu.
  */
 export function useContextMenu() {
     const [contextMenu, setContextMenu] = useState<{
-        mouseX: number;
-        mouseY: number;
-    } | null>(null);
+        mouseX: number
+        mouseY: number
+    } | null>(null)
 
     const handleContextMenu = (event: React.MouseEvent) => {
-        event.preventDefault();
+        event.preventDefault()
         setContextMenu(
             contextMenu === null
                 ? {
@@ -22,16 +22,16 @@ export function useContextMenu() {
                   // Other native context menus might behave different.
                   // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
                 null,
-        );
-    };
+        )
+    }
 
     const handleClose = () => {
-        setContextMenu(null);
-    };
+        setContextMenu(null)
+    }
 
     return {
         contextMenu,
         handleContextMenu,
         handleClose,
-    };
+    }
 }

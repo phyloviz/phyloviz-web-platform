@@ -1,26 +1,26 @@
-import * as React from "react";
-import {ReactNode} from "react";
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import Typography from "@mui/material/Typography";
-import {FileUploader} from "react-drag-drop-files";
-import {IsolateDataFile} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
+import * as React from "react"
+import {ReactNode} from "react"
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
+import Typography from "@mui/material/Typography"
+import {FileUploader} from "react-drag-drop-files"
+import {IsolateDataFile} from "../../../Services/administration/models/getProject/GetProjectOutputModel"
 
 /**
  * Props for the IsolateDataStepCard component.
  *
- * @param isolateData the isolate data files of the project
- * @param selectedIsolateData the selected isolate data file
- * @param onFileSelecterChange the function to call when the file on the file selecter changes
- * @param onFileUploaderChange the function to call when the file on the file uploader changes
+ * @property isolateData the isolate data files of the project
+ * @property selectedIsolateData the selected isolate data file
+ * @property onFileSelecterChange the function to call when the file on the file selecter changes
+ * @property onFileUploaderChange the function to call when the file on the file uploader changes
  */
 interface IsolateDataStepCardProps {
-    isolateData: IsolateDataFile[];
-    selectedIsolateData: string | null;
-    onFileSelecterChange: (event: SelectChangeEvent<string>, child: ReactNode) => void;
-    onFileUploaderChange: (file: React.SetStateAction<File | null>) => void;
-    isolateDataKeys: string[];
-    selectedIsolateDataKey: string | null;
-    onIsolateDataKeyChange: (event: SelectChangeEvent<string>, child: ReactNode) => void;
+    isolateData: IsolateDataFile[]
+    selectedIsolateData: string | null
+    onFileSelecterChange: (event: SelectChangeEvent<string>, child: ReactNode) => void
+    onFileUploaderChange: (file: React.SetStateAction<File | null>) => void
+    isolateDataKeys: string[]
+    selectedIsolateDataKey: string | null
+    onIsolateDataKeyChange: (event: SelectChangeEvent<string>, child: ReactNode) => void
 }
 
 /**
@@ -91,5 +91,5 @@ export function IsolateDataStepCard(
                 If you don't have any available data or don't wish do load any leave this fields blank an press Finish.
             </Typography>
         </>
-    );
+    )
 }

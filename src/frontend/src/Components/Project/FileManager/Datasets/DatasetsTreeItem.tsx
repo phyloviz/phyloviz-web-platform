@@ -1,43 +1,40 @@
-import {Dataset} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
-import {StyledTreeItem} from "./StyledTreeItem";
-import {Add, Inventory2} from "@mui/icons-material";
-import {DatasetTreeItem} from "./DatasetTreeItem";
-import * as React from "react";
-import {useNavigate, useParams} from "react-router-dom";
-import {WebUiUris} from "../../../Utils/WebUiUris";
-import {Menu, MenuItem} from "@mui/material";
-import {useContextMenu} from "./useContextMenu";
+import {Dataset} from "../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {StyledTreeItem} from "../StyledTreeItem"
+import {Add, Inventory2} from "@mui/icons-material"
+import {DatasetTreeItem} from "./Dataset/DatasetTreeItem"
+import * as React from "react"
+import {useNavigate, useParams} from "react-router-dom"
+import {WebUiUris} from "../../../../Utils/WebUiUris"
+import {Menu, MenuItem} from "@mui/material"
+import {useContextMenu} from "../useContextMenu"
 
 /**
  * Props for the DatasetsTreeItem component.
  *
- * @param nodeId id of the tree item
- * @param datasets datasets to display
+ * @property nodeId id of the tree item
+ * @property datasets datasets to display
  */
 interface DatasetsTreeItemProps {
-    nodeId: string;
-    datasets: Dataset[];
+    nodeId: string
+    datasets: Dataset[]
 }
 
 /**
  * Tree item for the datasets of a project.
- *
- * @param nodeId id of the tree item
- * @param datasets datasets to display
  */
 export function DatasetsTreeItem({nodeId, datasets}: DatasetsTreeItemProps) {
-    const {projectId} = useParams<{ projectId: string }>();
+    const {projectId} = useParams<{ projectId: string }>()
 
     const {
         contextMenu,
         handleContextMenu,
         handleClose
-    } = useContextMenu(); // TODO: useContextMenu is not working when the tree item is nested in another tree item with the other context menu (they both open at the same time)
+    } = useContextMenu()
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const handleCreateDataset = () => {
-        handleClose();
-        navigate(WebUiUris.createDataset(projectId!));
+        handleClose()
+        navigate(WebUiUris.createDataset(projectId!))
     }
 
     return (
@@ -46,7 +43,7 @@ export function DatasetsTreeItem({nodeId, datasets}: DatasetsTreeItemProps) {
                 nodeId={nodeId}
                 labelText="Datasets"
                 labelIcon={Inventory2}
-                onContextMenu={handleContextMenu}
+                handleContextMenu={handleContextMenu}
             >
                 {
                     datasets.map((dataset, index) => {
@@ -71,5 +68,5 @@ export function DatasetsTreeItem({nodeId, datasets}: DatasetsTreeItemProps) {
                 </MenuItem>
             </Menu>
         </>
-    );
+    )
 }

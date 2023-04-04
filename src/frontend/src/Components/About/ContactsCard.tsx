@@ -1,10 +1,10 @@
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import IselLogo from "../../Assets/isel.png";
-import InescLogo from "../../Assets/inesc.png";
-import IstLogo from "../../Assets/ist.png";
-import * as React from "react";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import Box from "@mui/material/Box"
+import IselLogo from "../../Assets/isel.png"
+import InescLogo from "../../Assets/inesc.png"
+import IstLogo from "../../Assets/ist.png"
+import * as React from "react"
 
 /**
  * Contacts Card for the About Page.
@@ -44,11 +44,7 @@ export function ContactsCard() {
                 alignItems: "center",
                 width: "30%"
             }}>
-                <img
-                    src={IselLogo}
-                    alt="ISEL Logo"
-                    width="60%"
-                />
+                <img src={IselLogo} alt="ISEL Logo" width="60%"/>
                 <Typography component="h1" variant="body2">
                     (1) Instituto Superior de Engenharia de Lisboa, Instituto Politécnico de Lisboa, Lisboa,
                     Portugal
@@ -60,11 +56,7 @@ export function ContactsCard() {
                 alignItems: "center",
                 width: "30%"
             }}>
-                <img
-                    src={InescLogo}
-                    alt="INESC-ID Logo"
-                    width="60%"
-                />
+                <img src={InescLogo} alt="INESC-ID Logo" width="60%"/>
                 <Typography component="h1" variant="body2">
                     (2) INESC-ID, R. Alves Redol 9, 1000-029 Lisboa, Portugal
                 </Typography>
@@ -75,15 +67,11 @@ export function ContactsCard() {
                 alignItems: "center",
                 width: "30%"
             }}>
-                <img
-                    src={IstLogo}
-                    alt="IST Logo"
-                    width="60%"
-                />
+                <img src={IstLogo} alt="IST Logo" width="60%"/>
                 <Typography component="h1" variant="body2">
                     (3) Instituto Superior Técnico, Universidade de Lisboa, Lisboa, Portugal
                 </Typography>
             </Box>
         </Box>
-    </Paper>;
+    </Paper>
 }

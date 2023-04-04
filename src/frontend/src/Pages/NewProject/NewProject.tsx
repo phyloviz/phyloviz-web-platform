@@ -1,12 +1,12 @@
 import * as React from "react"
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import {Button, Container, TextField} from "@mui/material";
-import CancelIcon from "@mui/icons-material/Cancel";
-import FinishIcon from "@mui/icons-material/Done";
-import {Alert} from "@mui/lab";
-import {useNewProject} from "./useNewProject";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import Box from "@mui/material/Box"
+import {Button, Container, TextField} from "@mui/material"
+import CancelIcon from "@mui/icons-material/Cancel"
+import FinishIcon from "@mui/icons-material/Done"
+import {Alert} from "@mui/lab"
+import {useNewProject} from "./useNewProject"
 
 /**
  * NewProject page.
@@ -18,7 +18,7 @@ export default function NewProject() {
         handleSubmit,
         handleCancel,
         error
-    } = useNewProject();
+    } = useNewProject()
 
     return (
         <Container>
@@ -101,5 +101,6 @@ export default function NewProject() {
                 </Paper>
             </Box>
         </Container>
-    );
+    )
 }
+

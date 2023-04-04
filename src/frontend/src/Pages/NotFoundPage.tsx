@@ -1,17 +1,17 @@
-import * as React from "react";
-import Typography from "@mui/material/Typography";
-import {Button} from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
-import {useNavigate} from "react-router-dom";
-import {WebUiUris} from "../Utils/WebUiUris";
-import Box from "@mui/material/Box";
-import Logo from "../Assets/logo.png";
+import * as React from "react"
+import Typography from "@mui/material/Typography"
+import {Button} from "@mui/material"
+import HomeIcon from "@mui/icons-material/Home"
+import {useNavigate} from "react-router-dom"
+import {WebUiUris} from "../Utils/WebUiUris"
+import Box from "@mui/material/Box"
+import Logo from "../Assets/logo.png"
 
 /**
  * Page not found component.
  */
 export function NotFoundPage() {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     return (
         <Box sx={{
@@ -61,5 +61,5 @@ export function NotFoundPage() {
                 <img src={Logo} alt="Logo" width="40%"/>
             </Box>
         </Box>
-    );
+    )
 }

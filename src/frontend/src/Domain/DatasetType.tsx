@@ -9,3 +9,5 @@ export enum DatasetType {
     SNP = "Single Nucleotide Polymorphism (SNP)",
     SNP_WITHOUT_EXPLICIT_ID = "Single Nucleotide Polymorphism (SNP) (without explicit ID)",
 }
+
+// TODO: This domain is sus, check if its necessary

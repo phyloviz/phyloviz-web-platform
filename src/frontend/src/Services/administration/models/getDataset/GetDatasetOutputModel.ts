@@ -1,3 +1,3 @@
-import {Dataset} from "../getProject/GetProjectOutputModel";
+import {Dataset} from "../getProject/GetProjectOutputModel"
 
-export type GetDatasetOutputModel = Dataset;
+export type GetDatasetOutputModel = Dataset

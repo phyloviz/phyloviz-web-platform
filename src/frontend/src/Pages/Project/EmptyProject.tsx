@@ -1,19 +1,19 @@
 import * as React from "react"
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {Container} from "@mui/material";
-import Box from "@mui/material/Box";
-import {CreateDatasetCard} from "../../Components/Project/CreateDataset/CreateDatasetCard";
-import {UploadFilesCard} from "../../Components/Project/UploadFiles/UploadFilesCard";
-import {GetProjectOutputModel} from "../../Services/administration/models/getProject/GetProjectOutputModel";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import {Container} from "@mui/material"
+import Box from "@mui/material/Box"
+import {CreateDatasetCard} from "../../Components/Project/CreateDataset/CreateDatasetCard"
+import {UploadFilesCard} from "../../Components/Project/UploadFiles/UploadFilesCard"
+import {GetProjectOutputModel} from "../../Services/administration/models/getProject/GetProjectOutputModel"
 
 /**
  * Props for the EmptyProject page.
  *
- * @param project The project.
+ * @property project The project.
  */
 interface EmptyProjectProps {
-    project: GetProjectOutputModel | null;
+    project: GetProjectOutputModel | null
 }
 
 /**
@@ -48,5 +48,5 @@ export default function EmptyProject({project}: EmptyProjectProps) {
                 </Box>
             </Paper>
         </Container>
-    );
+    )
 }

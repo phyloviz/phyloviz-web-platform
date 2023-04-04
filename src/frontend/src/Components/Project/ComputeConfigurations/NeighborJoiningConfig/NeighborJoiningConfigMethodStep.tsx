@@ -1,6 +1,6 @@
-import Typography from "@mui/material/Typography";
-import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
-import * as React from "react";
+import Typography from "@mui/material/Typography"
+import {FormControl, InputLabel, MenuItem, Select} from "@mui/material"
+import * as React from "react"
 
 enum NeighborJoiningCriteria {
     SAILOU_AND_NEI = "Sailou-Nei",
@@ -11,6 +11,8 @@ enum NeighborJoiningCriteria {
  * Card for the method step in the NeighborJoiningConfig page.
  */
 export function NeighborJoiningConfigMethodStep() {
+    const [criteria, setCriteria] = React.useState<NeighborJoiningCriteria>(NeighborJoiningCriteria.SAILOU_AND_NEI) // TODO: This is hardcoded for now
+
     return (
         <>
             <Typography variant="caption" align={"justify"} sx={{mb: 1, width: "100%"}}>
@@ -34,9 +36,9 @@ export function NeighborJoiningConfigMethodStep() {
             <Typography display="inline" variant="caption" align={"left"} sx={{width: "100%", whiteSpace: "pre-wrap"}}>
                 {
                     "The Neighbor-Joining algorithm\n" +
-                    "This method is based on the minimum evolution principle and provides trees with near-minimal sum of branch-length estimates proposed by Saitou and Nei" // TODO change this using the selected criteria
+                    `This method is based on the minimum evolution principle and provides trees with near-minimal sum of branch-length estimates proposed by ${criteria == NeighborJoiningCriteria.SAILOU_AND_NEI ? "Sailou and Nei" : "Studier and Keppler"}.`
                 }
             </Typography>
         </>
-    );
+    )
 }

@@ -1,8 +1,8 @@
 import * as React from "react"
-import Paper from "@mui/material/Paper";
-import Logo from "../../Assets/logo.png";
-import Typography from "@mui/material/Typography";
-import {Container} from "@mui/material";
+import Paper from "@mui/material/Paper"
+import Logo from "../../Assets/logo.png"
+import Typography from "@mui/material/Typography"
+import {Container} from "@mui/material"
 
 /**
  * ApiInfo page.
@@ -32,5 +32,5 @@ export default function ApiInfo() {
                 {/*TODO: Add content*/}
             </Paper>
         </Container>
-    );
+    )
 }

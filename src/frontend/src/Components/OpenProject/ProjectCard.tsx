@@ -1,10 +1,10 @@
-import {ProjectModel} from "../../Services/administration/models/ProjectModel";
-import Typography from "@mui/material/Typography";
-import {Button} from "@mui/material";
-import * as React from "react";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import {OpenInNew} from "@mui/icons-material";
+import {ProjectModel} from "../../Services/administration/models/ProjectModel"
+import Typography from "@mui/material/Typography"
+import {Button} from "@mui/material"
+import * as React from "react"
+import Paper from "@mui/material/Paper"
+import Box from "@mui/material/Box"
+import {OpenInNew} from "@mui/icons-material"
 
 /**
  * Props for the ProjectCard component.
@@ -13,8 +13,8 @@ import {OpenInNew} from "@mui/icons-material";
  * @property handleOpenProject Callback for when the user wants to open the project.
  */
 interface ProjectCardProps {
-    project: ProjectModel;
-    handleOpenProject: (projectId: string) => void;
+    project: ProjectModel
+    handleOpenProject: (projectId: string) => void
 }
 
 /**
@@ -51,5 +51,5 @@ export function ProjectCard({project, handleOpenProject}: ProjectCardProps) {
                 Open Project
             </Button>
         </Paper>
-    );
+    )
 }

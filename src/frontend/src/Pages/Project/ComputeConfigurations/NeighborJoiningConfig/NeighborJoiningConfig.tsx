@@ -1,19 +1,19 @@
 import * as React from "react"
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {Button, Container, Step, StepLabel, Stepper} from "@mui/material";
-import Box from "@mui/material/Box";
-import NextIcon from "@mui/icons-material/ArrowForwardIos";
-import BackIcon from "@mui/icons-material/ArrowBackIos";
-import FinishIcon from "@mui/icons-material/Done";
-import CancelIcon from "@mui/icons-material/Cancel";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import {Button, Container, Step, StepLabel, Stepper} from "@mui/material"
+import Box from "@mui/material/Box"
+import NextIcon from "@mui/icons-material/ArrowForwardIos"
+import BackIcon from "@mui/icons-material/ArrowBackIos"
+import FinishIcon from "@mui/icons-material/Done"
+import CancelIcon from "@mui/icons-material/Cancel"
 import {
     NeighborJoiningConfigDistanceStep
-} from "../../../../Components/Project/ComputeConfigurations/NeighborJoiningConfig/NeighborJoiningConfigDistanceStep";
+} from "../../../../Components/Project/ComputeConfigurations/NeighborJoiningConfig/NeighborJoiningConfigDistanceStep"
 import {
     NeighborJoiningConfigMethodStep
-} from "../../../../Components/Project/ComputeConfigurations/NeighborJoiningConfig/NeighborJoiningConfigMethodStep";
-import {NeighborJoiningConfigurationStep, steps, useNeighborJoiningConfig} from "./useNeighborJoiningConfig";
+} from "../../../../Components/Project/ComputeConfigurations/NeighborJoiningConfig/NeighborJoiningConfigMethodStep"
+import {NeighborJoiningConfigurationStep, useNeighborJoiningConfig} from "./useNeighborJoiningConfig"
 
 /**
  * NeighborJoiningConfig page.
@@ -25,14 +25,13 @@ export default function NeighborJoiningConfig() {
         handleCancel,
         handleBack,
         handleNext
-    } = useNeighborJoiningConfig();
+    } = useNeighborJoiningConfig()
 
     return (
         <Container>
             <Box
                 display="flex"
                 justifyContent="center"
-                height={'810px'}
                 sx={{mb: 4}}
             >
                 <Paper sx={{
@@ -40,6 +39,7 @@ export default function NeighborJoiningConfig() {
                     display: "flex",
                     flexDirection: "column",
                     mt: 4,
+                    mb: 4,
                     alignItems: "center",
                     width: "50%"
                 }}>
@@ -47,7 +47,7 @@ export default function NeighborJoiningConfig() {
                         Neighbor-Joining Configuration
                     </Typography>
                     <Stepper activeStep={currStep} alternativeLabel sx={{width: '100%', mt: 2, mb: 2}}>
-                        {steps.map((label) => (
+                        {Object.values(NeighborJoiningConfigurationStep).map((label) => (
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
                             </Step>
@@ -61,7 +61,6 @@ export default function NeighborJoiningConfig() {
                     }}>
                         <Box sx={{
                             width: "100%",
-                            height: "510px",
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "left",
@@ -119,5 +118,5 @@ export default function NeighborJoiningConfig() {
                 </Paper>
             </Box>
         </Container>
-    );
+    )
 }

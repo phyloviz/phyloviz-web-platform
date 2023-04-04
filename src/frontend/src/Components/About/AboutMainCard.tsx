@@ -1,10 +1,10 @@
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import * as React from "react";
-import {PhylovizHeader} from "../Shared/PhylovizHeader";
-import Box from "@mui/material/Box";
-import Logo from "../../Assets/logo.png";
-import {Facebook, GitHub, Twitter} from "@mui/icons-material";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import * as React from "react"
+import {PhylovizHeader} from "../Shared/PhylovizHeader"
+import Box from "@mui/material/Box"
+import Logo from "../../Assets/logo.png"
+import {Facebook, GitHub, Twitter} from "@mui/icons-material"
 
 /**
  * Main card of the about page.
@@ -68,5 +68,5 @@ export function AboutMainCard() {
                 </a>
             </Box>
         </Box>
-    </Paper>;
+    </Paper>
 }

@@ -1,6 +1,6 @@
-import Typography from "@mui/material/Typography";
-import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
-import * as React from "react";
+import Typography from "@mui/material/Typography"
+import {FormControl, InputLabel, MenuItem, Select} from "@mui/material"
+import * as React from "react"
 
 enum HierarchicalClusteringMethod {
     COMPLETE_LINKAGE = "Complete-Linkeage",
@@ -37,7 +37,7 @@ export function HierarchicalClusteringConfigMethodStep() {
                 {methodDescriptions[HierarchicalClusteringMethod.COMPLETE_LINKAGE]}
             </Typography>
         </>
-    );
+    )
 }
 
 const methodDescriptions = {

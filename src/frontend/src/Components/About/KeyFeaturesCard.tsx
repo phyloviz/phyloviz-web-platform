@@ -1,6 +1,6 @@
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import * as React from "react";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import * as React from "react"
 
 /**
  * Key Features Card for the About Page.
@@ -27,25 +27,23 @@ export function KeyFeaturesCard() {
                     internet
                     connection, without requiring installation of software or access to high-performance
                     computing
-                    resources;
+                    resources
                 </li>
                 <li><strong>Advanced Data Management:</strong> The platform has advanced data management
-                    capabilities, including efficient storage and retrieval of large phylogenetic datasets;
+                    capabilities, including efficient storage and retrieval of large phylogenetic datasets
                 </li>
                 <li><strong>Optimization Capabilities:</strong> The platform includes optimization capabilities
-                    for
-                    inference and visualization tasks, which are performed server-side to avoid limitations of
-                    the
-                    client-side;
+                    for inference and visualization tasks, which are performed server-side to avoid limitations of
+                    the client-side
                 </li>
                 <li><strong>Support for Epidemiological and Ancillary data:</strong> The platform integrates
                     epidemiological and ancillary data for isolates under study, enhancing the visualization and
-                    exploration of inference results;
+                    exploration of inference results
                 </li>
                 <li><strong>User-friendly interface:</strong> The platform has a user-friendly interface for
                     performing phylogenetic analyses and visualizations.
                 </li>
             </ul>
         </Typography>
-    </Paper>;
+    </Paper>
 }

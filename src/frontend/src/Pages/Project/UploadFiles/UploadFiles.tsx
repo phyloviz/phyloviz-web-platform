@@ -1,13 +1,13 @@
-import * as React from "react";
-import {Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import FinishIcon from "@mui/icons-material/Done";
-import {FileUploader} from "react-drag-drop-files";
-import CancelIcon from "@mui/icons-material/Cancel";
-import {FileType, useUploadFiles} from "./useUploadFiles";
-import Alert from '@mui/material/Alert';
+import * as React from "react"
+import {Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material"
+import Box from "@mui/material/Box"
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import FinishIcon from "@mui/icons-material/Done"
+import {FileUploader} from "react-drag-drop-files"
+import CancelIcon from "@mui/icons-material/Cancel"
+import {FileType, useUploadFiles} from "./useUploadFiles"
+import Alert from '@mui/material/Alert'
 
 /**
  * Upload Files page.
@@ -20,7 +20,7 @@ export default function UploadFiles() {
         handleCancel,
         handleSubmit,
         error
-    } = useUploadFiles();
+    } = useUploadFiles()
 
     return (
         <Container>
@@ -103,5 +103,5 @@ export default function UploadFiles() {
                 </Paper>
             </Box>
         </Container>
-    );
+    )
 }
