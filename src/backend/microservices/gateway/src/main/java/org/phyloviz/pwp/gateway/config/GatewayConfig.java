@@ -2,14 +2,12 @@ package org.phyloviz.pwp.gateway.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.net.URI;
-import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.gateway.config.MicroservicesProperties.ApiRoute;
 import org.phyloviz.pwp.gateway.config.MicroservicesProperties.MicroserviceProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.GatewayFilterSpec;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +27,10 @@ import org.springframework.security.web.server.authentication.logout.ServerLogou
 import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
 import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
 import org.springframework.security.web.server.util.matcher.PathPatternParserServerWebExchangeMatcher;
+
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
@@ -62,7 +64,7 @@ public class GatewayConfig {
                 .cors().disable()
                 .csrf().disable() //TODO: Implement CSRF in client to enable this
                 .exceptionHandling(
-                        (exceptionHandling) -> exceptionHandling.authenticationEntryPoint(
+                        exceptionHandling -> exceptionHandling.authenticationEntryPoint(
                                 serverAuthenticationEntryPoint()
                         )
                 )
@@ -96,12 +98,6 @@ public class GatewayConfig {
     public ServerOAuth2AuthorizedClientRepository authorizedClientRepository() {
         return new WebSessionServerOAuth2AuthorizedClientRepository();
     }
-
-    // Maybe use a service instead of the repository? Storing all the access and refresh tokens in a session is sus...
-//    @Bean
-//    public ReactiveOAuth2AuthorizedClientService authorizedClientService() {
-//        return new RedisReactiveOAuth2AuthorizedClientService();
-//    }
 
     public ServerLogoutHandler logoutHandler() {
         // Deletes Web Sesssion
@@ -137,8 +133,7 @@ public class GatewayConfig {
 
         Map<String, MicroserviceProperties> microservices = microservicesProperties.getMicroservices();
 
-        for (String name : microservices.keySet()) {
-            MicroserviceProperties properties = microservices.get(name);
+        for (MicroserviceProperties properties : microservices.values()) {
 
             routesBuilder = createApiRoutes(routesBuilder, properties.getUri(), properties.getRoutes());
         }
@@ -146,7 +141,7 @@ public class GatewayConfig {
         routesBuilder.route("home",
                 routeSpec -> routeSpec
                         .path("/**")
-                        .filters(filterSpec -> filterSpec.stripPrefix(1).tokenRelay())
+                        .filters(GatewayFilterSpec::tokenRelay)
                         .uri(reactClientUrl)
         );
 
