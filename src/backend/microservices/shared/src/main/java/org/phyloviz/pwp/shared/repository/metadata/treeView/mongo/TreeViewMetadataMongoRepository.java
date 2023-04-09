@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TreeViewMetadataMongoRepository extends MongoRepository<TreeViewMetadata, String> {
@@ -15,7 +16,7 @@ public interface TreeViewMetadataMongoRepository extends MongoRepository<TreeVie
      * @param treeViewId the id of the tree view resource
      * @return a tree view metadata
      */
-    TreeViewMetadata findByTreeViewId(String treeViewId);
+    Optional<TreeViewMetadata> findByTreeViewId(String treeViewId);
 
     /**
      * Find all metadata representations of a tree view resource.

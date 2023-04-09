@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.compute.service.flowviz.models.workflow;
 
-import org.phyloviz.pwp.compute.service.flowviz.exceptions.ConnectionRefusedException;
 import org.phyloviz.pwp.compute.service.flowviz.FlowVizHttpService;
+import org.phyloviz.pwp.compute.service.flowviz.exceptions.ConnectionRefusedException;
 import org.phyloviz.pwp.compute.service.flowviz.exceptions.UnexpectedResponseException;
 import org.phyloviz.pwp.compute.service.flowviz.models.getWorkflow.GetWorkflowResponse;
 

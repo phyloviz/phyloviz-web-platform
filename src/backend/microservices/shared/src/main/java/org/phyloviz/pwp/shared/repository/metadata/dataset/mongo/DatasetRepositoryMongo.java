@@ -3,8 +3,9 @@ package org.phyloviz.pwp.shared.repository.metadata.dataset.mongo;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
-import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -23,9 +24,7 @@ public class DatasetRepositoryMongo implements DatasetRepository {
     }
 
     @Override
-    public Dataset findById(String resourceId) {
-        return datasetMongoRepository
-                .findById(resourceId)
-                .orElseThrow(DatasetNotFoundException::new);
+    public Optional<Dataset> findById(String resourceId) {
+        return datasetMongoRepository.findById(resourceId);
     }
 }

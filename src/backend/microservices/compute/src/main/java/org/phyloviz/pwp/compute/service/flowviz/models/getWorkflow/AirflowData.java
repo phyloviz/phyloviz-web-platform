@@ -1,7 +1,8 @@
 package org.phyloviz.pwp.compute.service.flowviz.models.getWorkflow;
 
-import java.util.List;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class AirflowData {

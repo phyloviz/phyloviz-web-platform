@@ -13,8 +13,8 @@ import java.io.IOException;
 @Repository
 public class FileStorageRepositoryDisk implements FileStorageRepository {
 
-    private final String path = new File("").getAbsolutePath() + "\\diskUploadedFiles";
     private static final String ADAPTER_ID = "disk";
+    private final String path = new File("").getAbsolutePath() + "\\diskUploadedFiles";
 
     @Override
     public boolean store(String url, MultipartFile multipartFile) {

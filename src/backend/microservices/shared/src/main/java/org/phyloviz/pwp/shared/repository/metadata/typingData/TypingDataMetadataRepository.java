@@ -3,6 +3,7 @@ package org.phyloviz.pwp.shared.repository.metadata.typingData;
 import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.TypingDataMetadata;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TypingDataMetadataRepository {
 
@@ -27,7 +28,7 @@ public interface TypingDataMetadataRepository {
      * @param typingDataId the id of the typing data resource
      * @return a typing data metadata
      */
-    TypingDataMetadata findByTypingDataId(String typingDataId);
+    Optional<TypingDataMetadata> findByTypingDataId(String typingDataId);
 
     /**
      * Find all metadata representations of a typing data resource.

@@ -3,6 +3,7 @@ package org.phyloviz.pwp.shared.repository.metadata.treeView;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.TreeViewMetadata;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TreeViewMetadataRepository {
 
@@ -19,7 +20,7 @@ public interface TreeViewMetadataRepository {
      * @param treeViewId the id of the tree view resource
      * @return a tree view metadata
      */
-    TreeViewMetadata findByTreeViewId(String treeViewId);
+    Optional<TreeViewMetadata> findByTreeViewId(String treeViewId);
 
     /**
      * Find all metadata representations of a tree view resource.

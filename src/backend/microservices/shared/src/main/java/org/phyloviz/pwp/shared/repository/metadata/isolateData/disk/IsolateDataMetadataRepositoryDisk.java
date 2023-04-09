@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -43,12 +45,12 @@ public class IsolateDataMetadataRepositoryDisk implements IsolateDataMetadataRep
     }
 
     @Override
-    public IsolateDataMetadata findByIsolateDataId(String isolateDataId) {
-        return null;
+    public Optional<IsolateDataMetadata> findByIsolateDataId(String isolateDataId) {
+        return Optional.empty();
     }
 
     @Override
     public List<IsolateDataMetadata> findAllByIsolateDataId(String isolateDataId) {
-        return null;
+        return Collections.emptyList();
     }
 }

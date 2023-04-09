@@ -2,18 +2,21 @@ package org.phyloviz.pwp.administration.service.projects.files.typingData;
 
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.repository.data.FileStorageRepository;
-import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
-import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.TypingDataS3AdapterSpecificData;
-import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.administration.service.dtos.files.TypingDataDTO;
 import org.phyloviz.pwp.administration.service.dtos.files.deleteTypingData.DeleteTypingDataInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.files.deleteTypingData.DeleteTypingDataOutputDTO;
 import org.phyloviz.pwp.administration.service.dtos.files.uploadTypingData.UploadTypingDataInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.files.uploadTypingData.UploadTypingDataOutputDTO;
 import org.phyloviz.pwp.administration.service.exceptions.DeniedFileDeletionException;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
+import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.repository.metadata.typingData.TypingDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.TypingDataMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.TypingDataS3AdapterSpecificData;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,13 +36,19 @@ public class TypingDataServiceImpl implements TypingDataService {
     public UploadTypingDataOutputDTO uploadTypingData(UploadTypingDataInputDTO uploadTypingDataInputDTO) {
         String projectId = uploadTypingDataInputDTO.getProjectId();
         MultipartFile multipartFile = uploadTypingDataInputDTO.getMultipartFile();
-        Project project = projectRepository.findById(projectId);
+
+        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 
         if (!project.getOwnerId().equals(uploadTypingDataInputDTO.getUser().getId()))
-            throw new UnauthorizedException("User does not have permission to upload to this project");
+            throw new UnauthorizedException();
 
         String typingDataId = UUID.randomUUID().toString();
-        String location = "/" + projectId + "/" + "typingData/" + typingDataId;
+        String location = "/" + projectId + "/typingData/" + typingDataId;
+
+        boolean stored = fileStorageRepository.store(location, multipartFile);
+
+        if (!stored)
+            throw new RuntimeException("Could not store file");
 
         final TypingDataMetadata typingDataMetadata = new TypingDataMetadata(
                 projectId,
@@ -52,11 +61,6 @@ public class TypingDataServiceImpl implements TypingDataService {
 
         typingDataMetadataRepository.save(typingDataMetadata);
 
-        boolean stored = fileStorageRepository.store(location, multipartFile);
-
-        if (!stored)
-            throw new RuntimeException("Could not store file");
-
         project.getFileIds().getTypingDataIds().add(typingDataId);
         projectRepository.save(project);
 
@@ -67,16 +71,21 @@ public class TypingDataServiceImpl implements TypingDataService {
     public DeleteTypingDataOutputDTO deleteTypingData(DeleteTypingDataInputDTO deleteTypingDataInputDTO) {
         String projectId = deleteTypingDataInputDTO.getProjectId();
         String typingDataId = deleteTypingDataInputDTO.getTypingDataId();
-        Project project = projectRepository.findById(projectId);
+
+        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 
         if (!project.getOwnerId().equals(deleteTypingDataInputDTO.getUser().getId()))
-            throw new UnauthorizedException("User does not have permission to delete in this project");
+            throw new UnauthorizedException();
 
         project.getDatasetIds().forEach(datasetId -> {
-            if (datasetRepository.findById(datasetId).getTypingDataId().equals(typingDataId))
+            Dataset dataset = datasetRepository.findById(datasetId).orElse(null);
+
+            if (dataset != null && dataset.getTypingDataId().equals(typingDataId))
                 throw new DeniedFileDeletionException("Cannot delete file. File is still being used in one or more datasets. " +
                         "Delete the datasets first.");
         });
+
+        typingDataMetadataRepository.findByTypingDataId(typingDataId).orElseThrow(TypingDataNotFoundException::new);
 
         deleteTypingData(typingDataId);
 
@@ -88,7 +97,10 @@ public class TypingDataServiceImpl implements TypingDataService {
 
     @Override
     public TypingDataDTO getTypingData(String typingDataId) {
-        TypingDataMetadata typingDataMetadata = typingDataMetadataRepository.findByTypingDataId(typingDataId);
+        TypingDataMetadata typingDataMetadata =
+                typingDataMetadataRepository
+                        .findByTypingDataId(typingDataId)
+                        .orElseThrow(TypingDataNotFoundException::new);
 
         return new TypingDataDTO(
                 typingDataMetadata.getTypingDataId(),

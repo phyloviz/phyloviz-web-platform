@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Primary
@@ -21,7 +22,7 @@ public class TreeMetadataRepositoryMongo implements TreeMetadataRepository {
     }
 
     @Override
-    public TreeMetadata findByTreeId(String treeId) {
+    public Optional<TreeMetadata> findByTreeId(String treeId) {
         return treeMetadataMongoRepository.findByTreeId(treeId);
     }
 

@@ -1,13 +1,14 @@
 package org.phyloviz.pwp.compute.repository.metadata.templates.workflowTemplate.documents;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 import org.phyloviz.pwp.compute.service.flowviz.models.workflow.Workflow;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 
 @Data
@@ -15,13 +16,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "workflow-templates")
 public class WorkflowTemplate {
 
-    @Id
-    private String id;
-
     private final String name;
     private final String description;
-
     private final List<TaskTemplate> tasks;
+    @Id
+    private String id;
 
     public Workflow buildWorkflow(WorkflowTemplateData workflowTemplateData) {
 

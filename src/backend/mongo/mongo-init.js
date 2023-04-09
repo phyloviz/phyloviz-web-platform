@@ -9,7 +9,7 @@ db['workflow-templates'].insertMany([
                 "taskId": "download",
                 "tool": "downloader",
                 "action": {
-                    "command": "--resource-id=${resourceId} --resource-type=typing-data --out:/phyloviz-web-platform/typingDataset.txt"
+                    "command": "--resource-id=${resourceId} --resource-type=typing-data --out:/phyloviz-web-platform/typingData.txt"
                 },
                 "children": [
                     "hamming"
@@ -25,6 +25,13 @@ db['workflow-templates'].insertMany([
                     "upload"
                 ]
             },
+            {
+                "taskId": "upload",
+                "tool": "uploader",
+                "action": {
+                    "command": " --in:/phyloviz-web-platform/distanceMatrix.txt --out:${uploadPath} --resourceId=${resourceId} --workflowId=${workflowId} --resourceType=distance-matrix"
+                }
+            }
             {
                 "taskId": "upload",
                 "tool": "uploader",

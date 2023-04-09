@@ -7,7 +7,9 @@ import org.phyloviz.pwp.shared.utils.Logger;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class ProjectRepositoryDisk implements ProjectRepository {
@@ -35,11 +37,6 @@ public class ProjectRepositoryDisk implements ProjectRepository {
     }
 
     @Override
-    public Project findById(String id) {
-        return null;
-    }
-
-    @Override
     public void delete(Project project) {
         File file = new File(metadataPath + "\\projects\\" + project.getId() + ".json");
 
@@ -49,7 +46,12 @@ public class ProjectRepositoryDisk implements ProjectRepository {
     }
 
     @Override
+    public Optional<Project> findById(String id) {
+        return Optional.empty();
+    }
+
+    @Override
     public List<Project> findAllByOwnerId(String ownerId) {
-        return null;
+        return Collections.emptyList();
     }
 }

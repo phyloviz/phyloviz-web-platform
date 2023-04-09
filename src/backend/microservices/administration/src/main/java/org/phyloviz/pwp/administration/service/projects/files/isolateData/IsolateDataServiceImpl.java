@@ -2,18 +2,21 @@ package org.phyloviz.pwp.administration.service.projects.files.isolateData;
 
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.repository.data.FileStorageRepository;
-import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
-import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.IsolateDataS3AdapterSpecificData;
-import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.administration.service.dtos.files.IsolateDataDTO;
 import org.phyloviz.pwp.administration.service.dtos.files.deleteIsolateData.DeleteIsolateDataInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.files.deleteIsolateData.DeleteIsolateDataOutputDTO;
 import org.phyloviz.pwp.administration.service.dtos.files.uploadIsolateData.UploadIsolateDataInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.files.uploadIsolateData.UploadIsolateDataOutputDTO;
 import org.phyloviz.pwp.administration.service.exceptions.DeniedFileDeletionException;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.isolateData.IsolateDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.IsolateDataMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.IsolateDataS3AdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
+import org.phyloviz.pwp.shared.service.exceptions.IsolateDataNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +26,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class IsolateDataServiceImpl implements IsolateDataService {
-    
+
     private final ProjectRepository projectRepository;
     private final DatasetRepository datasetRepository;
     private final FileStorageRepository fileStorageRepository;
@@ -33,13 +36,19 @@ public class IsolateDataServiceImpl implements IsolateDataService {
     public UploadIsolateDataOutputDTO uploadIsolateData(UploadIsolateDataInputDTO uploadIsolateDataInputDTO) {
         String projectId = uploadIsolateDataInputDTO.getProjectId();
         MultipartFile multipartFile = uploadIsolateDataInputDTO.getMultipartFile();
-        Project project = projectRepository.findById(projectId);
+
+        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 
         if (!project.getOwnerId().equals(uploadIsolateDataInputDTO.getUser().getId()))
-            throw new UnauthorizedException("User does not have permission to upload to this project");
+            throw new UnauthorizedException();
 
         String isolateDataId = UUID.randomUUID().toString();
-        String location = "/" + projectId + "/" + "isolateData/" + isolateDataId;
+        String location = "/" + projectId + "/isolateData/" + isolateDataId;
+
+        boolean stored = fileStorageRepository.store(location, multipartFile);
+
+        if (!stored)
+            throw new RuntimeException("Could not store file");
 
         final IsolateDataMetadata isolateDataMetadata = new IsolateDataMetadata(
                 projectId,
@@ -52,11 +61,6 @@ public class IsolateDataServiceImpl implements IsolateDataService {
 
         isolateDataMetadataRepository.save(isolateDataMetadata);
 
-        boolean stored = fileStorageRepository.store(location, multipartFile);
-
-        if (!stored)
-            throw new RuntimeException("Could not store file");
-
         project.getFileIds().getIsolateDataIds().add(isolateDataId);
         projectRepository.save(project);
 
@@ -67,16 +71,21 @@ public class IsolateDataServiceImpl implements IsolateDataService {
     public DeleteIsolateDataOutputDTO deleteIsolateData(DeleteIsolateDataInputDTO deleteIsolateDataInputDTO) {
         String projectId = deleteIsolateDataInputDTO.getProjectId();
         String isolateDataId = deleteIsolateDataInputDTO.getIsolateDataId();
-        Project project = projectRepository.findById(projectId);
+
+        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 
         if (!project.getOwnerId().equals(deleteIsolateDataInputDTO.getUser().getId()))
-            throw new UnauthorizedException("User does not have permission to delete in this project");
+            throw new UnauthorizedException();
 
         project.getDatasetIds().forEach(datasetId -> {
-            if (datasetRepository.findById(datasetId).getIsolateDataId().equals(isolateDataId))
+            Dataset dataset = datasetRepository.findById(datasetId).orElse(null);
+
+            if (dataset != null && dataset.getIsolateDataId() != null && dataset.getIsolateDataId().equals(isolateDataId))
                 throw new DeniedFileDeletionException("Cannot delete file. File is still being used in one or more datasets. " +
                         "Delete the datasets first.");
         });
+
+        isolateDataMetadataRepository.findByIsolateDataId(isolateDataId).orElseThrow(IsolateDataNotFoundException::new);
 
         deleteIsolateData(isolateDataId);
 
@@ -88,7 +97,10 @@ public class IsolateDataServiceImpl implements IsolateDataService {
 
     @Override
     public IsolateDataDTO getIsolateData(String isolateDataId) {
-        IsolateDataMetadata isolateDataMetadata = isolateDataMetadataRepository.findByIsolateDataId(isolateDataId);
+        IsolateDataMetadata isolateDataMetadata =
+                isolateDataMetadataRepository
+                        .findByIsolateDataId(isolateDataId)
+                        .orElseThrow(IsolateDataNotFoundException::new);
 
         return new IsolateDataDTO(
                 isolateDataMetadata.getIsolateDataId(),

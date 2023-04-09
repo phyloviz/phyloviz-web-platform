@@ -1,17 +1,14 @@
 package org.phyloviz.pwp.compute.service.flowviz.adapters;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import java.lang.reflect.Type;
-import java.util.Map;
+import com.google.gson.*;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.Access;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.AccessDetails;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.AccessType;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.api.ApiAccessDetails;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.library.LibraryAccessDetails;
+
+import java.lang.reflect.Type;
+import java.util.Map;
 
 
 public class AccessDeserializer implements JsonDeserializer<Access> {

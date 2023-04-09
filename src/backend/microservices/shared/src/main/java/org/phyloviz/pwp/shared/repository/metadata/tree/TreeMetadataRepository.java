@@ -4,6 +4,7 @@ import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TreeMetadataRepository {
@@ -21,7 +22,7 @@ public interface TreeMetadataRepository {
      * @param treeId the id of the tree resource
      * @return a tree metadata
      */
-    TreeMetadata findByTreeId(String treeId);
+    Optional<TreeMetadata> findByTreeId(String treeId);
 
     /**
      * Find all metadata representations of a tree resource.

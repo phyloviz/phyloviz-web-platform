@@ -22,6 +22,18 @@ import java.util.stream.Collectors;
 @EnableMongoRepositories(basePackages = "org.phyloviz.pwp")
 public class MongoConfig {
 
+    @Bean
+    public MappingMongoConverter customMappingMongoConverter(
+            MongoDatabaseFactory factory,
+            MongoMappingContext context,
+            BeanFactory beanFactory
+    ) {
+        DbRefResolver dbRefResolver = new DefaultDbRefResolver(factory);
+        MappingMongoConverter mappingConverter = new MappingMongoConverter(dbRefResolver, context);
+        mappingConverter.setTypeMapper(new ReflectiveMongoTypeMapper());
+        return mappingConverter;
+    }
+
     /**
      * A custom type mapper that uses reflection to find all classes annotated with {@link TypeAlias} and
      * register them with the {@link ConfigurableTypeInformationMapper}. This allows us to use
@@ -31,6 +43,7 @@ public class MongoConfig {
      * Fix for the problem of application not maintaining type knowledge between restarts. Would always work correctly
      * within a single run of the application, caching the types of the saved documents appropriately. However, failed
      * when restarting the application, as the type information was lost.
+     *
      * @see <a href="https://blog.monosoul.dev/2022/09/16/spring-data-mongodb-polymorphic-fields/">Monosoul's Dev Blog</a>
      */
     static class ReflectiveMongoTypeMapper extends DefaultMongoTypeMapper {
@@ -50,17 +63,5 @@ public class MongoConfig {
                     new SimpleTypeInformationMapper()
             ));
         }
-    }
-
-    @Bean
-    public MappingMongoConverter customMappingMongoConverter(
-            MongoDatabaseFactory factory,
-            MongoMappingContext context,
-            BeanFactory beanFactory
-    ) {
-        DbRefResolver dbRefResolver = new DefaultDbRefResolver(factory);
-        MappingMongoConverter mappingConverter = new MappingMongoConverter(dbRefResolver, context);
-        mappingConverter.setTypeMapper(new ReflectiveMongoTypeMapper());
-        return mappingConverter;
     }
 }

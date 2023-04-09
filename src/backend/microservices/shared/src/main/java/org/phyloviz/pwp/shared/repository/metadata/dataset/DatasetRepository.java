@@ -2,6 +2,8 @@ package org.phyloviz.pwp.shared.repository.metadata.dataset;
 
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 
+import java.util.Optional;
+
 public interface DatasetRepository {
 
     /**
@@ -25,5 +27,5 @@ public interface DatasetRepository {
      * @param resourceId the id of the dataset
      * @return a dataset
      */
-    Dataset findById(String resourceId);
+    Optional<Dataset> findById(String resourceId);
 }

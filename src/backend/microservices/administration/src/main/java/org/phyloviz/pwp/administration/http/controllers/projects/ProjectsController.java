@@ -26,9 +26,6 @@ public class ProjectsController {
 
     /**
      * Creates a project.
-     *
-     * @param createProjectInputModel the information of the project to be created
-     * @return // TODO: Review and fix this comments
      */
     @PostMapping("/projects")
     public CreateProjectOutputModel createProject(
@@ -66,7 +63,6 @@ public class ProjectsController {
      *
      * @param projectId the id of the project to be deleted
      * @param user      the user that is deleting the project
-     * @return
      */
     @DeleteMapping("/projects/{projectId}")
     public DeleteProjectOutputModel deleteProject(

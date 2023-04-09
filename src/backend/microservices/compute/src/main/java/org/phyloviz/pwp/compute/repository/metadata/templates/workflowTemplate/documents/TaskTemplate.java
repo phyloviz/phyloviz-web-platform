@@ -1,9 +1,10 @@
 package org.phyloviz.pwp.compute.repository.metadata.templates.workflowTemplate.documents;
 
-import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 import org.phyloviz.pwp.compute.service.flowviz.models.workflow.tasks.Task;
+
+import java.util.List;
 
 @Data
 @Builder

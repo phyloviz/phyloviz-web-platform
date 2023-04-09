@@ -1,11 +1,11 @@
 package org.phyloviz.pwp.administration.http.models.projects;
 
-import java.util.List;
-
 import lombok.Data;
 import org.phyloviz.pwp.administration.http.models.datasets.DatasetModel;
 import org.phyloviz.pwp.administration.http.models.files.FilesModel;
 import org.phyloviz.pwp.administration.service.dtos.projects.ProjectDTO;
+
+import java.util.List;
 
 @Data
 public class ProjectModel {

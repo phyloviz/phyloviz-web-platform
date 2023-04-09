@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IsolateDataMetadataMongoRepository extends MongoRepository<IsolateDataMetadata, String> {
@@ -15,7 +16,7 @@ public interface IsolateDataMetadataMongoRepository extends MongoRepository<Isol
      * @param isolateDataId the id of the isolate data resource
      * @return an isolate data metadata
      */
-    IsolateDataMetadata findByIsolateDataId(String isolateDataId);
+    Optional<IsolateDataMetadata> findByIsolateDataId(String isolateDataId);
 
     /**
      * Find all metadata representations of an isolate data resource.

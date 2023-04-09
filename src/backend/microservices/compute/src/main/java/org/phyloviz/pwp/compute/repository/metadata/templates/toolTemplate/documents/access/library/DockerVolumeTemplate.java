@@ -1,7 +1,5 @@
 package org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.documents.access.library;
 
-import com.google.gson.annotations.SerializedName;
-import java.util.Map;
 import lombok.Builder;
 import lombok.Data;
 import org.apache.commons.text.StringSubstitutor;
@@ -9,6 +7,8 @@ import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.docum
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.library.DockerVolume;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.library.VolumeType;
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.util.Map;
 
 @Data
 @Builder

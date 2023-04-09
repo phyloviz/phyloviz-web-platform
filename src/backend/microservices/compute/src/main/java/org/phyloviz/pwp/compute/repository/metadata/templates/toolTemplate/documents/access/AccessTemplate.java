@@ -1,7 +1,5 @@
 package org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.documents.access;
 
-import java.util.List;
-import java.util.Map;
 import lombok.Builder;
 import lombok.Data;
 import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.documents.ToolTemplateData;

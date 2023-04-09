@@ -1,9 +1,9 @@
 package org.phyloviz.pwp.compute.service.flowviz.models.workflow.tasks;
 
-import java.util.List;
 import lombok.Builder;
 import lombok.Data;
-import org.phyloviz.pwp.compute.service.flowviz.models.workflow.tasks.Action;
+
+import java.util.List;
 
 @Data
 @Builder

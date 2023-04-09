@@ -1,8 +1,9 @@
 package org.phyloviz.pwp.compute.service.flowviz.models.tool.library;
 
-import java.util.List;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Builder

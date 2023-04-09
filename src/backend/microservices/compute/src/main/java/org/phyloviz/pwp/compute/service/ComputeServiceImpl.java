@@ -1,7 +1,5 @@
 package org.phyloviz.pwp.compute.service;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.ToolTemplateRepository;
 import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.documents.ToolTemplate;
 import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.documents.ToolTemplateData;
@@ -22,6 +20,9 @@ import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Implementation of the {@link ComputeService} interface.
  */
@@ -33,6 +34,8 @@ public class ComputeServiceImpl implements ComputeService {
     private final ToolTemplateRepository toolTemplateRepository;
     private final FlowVizClient flowVizClient;
     private final TransactionTemplate transactionTemplate;
+    private final String computeDistanceMatrixWorkflowTemplateName = "computeDistanceMatrix";
+
 
     public ComputeServiceImpl(
             WorkflowTemplateRepository workflowTemplateRepository,
@@ -47,9 +50,6 @@ public class ComputeServiceImpl implements ComputeService {
         this.flowVizClient = flowVizClient;
         this.transactionTemplate = new TransactionTemplate(transactionManager);
     }
-
-
-    private final String computeDistanceMatrixWorkflowTemplateName = "computeDistanceMatrix";
 
     @Override
     public ComputeDistanceMatrixOutputDTO computeDistanceMatrix(String projectId, String typingDataId, UserDTO toDTO) {

@@ -3,7 +3,6 @@ package org.phyloviz.pwp.compute.service.flowviz.models.tool.access.library;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @RequiredArgsConstructor

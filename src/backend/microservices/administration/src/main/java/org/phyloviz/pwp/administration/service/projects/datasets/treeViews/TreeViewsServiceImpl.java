@@ -1,16 +1,19 @@
-package org.phyloviz.pwp.administration.service.projects.datasets.tree_views;
+package org.phyloviz.pwp.administration.service.projects.datasets.treeViews;
 
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.repository.data.FileStorageRepository;
-import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
-import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.administration.service.dtos.tree_views.TreeViewDTO;
 import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewOutputDTO;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.TreeViewMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.TreeViewMetadata;
+import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.TreeViewNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +33,14 @@ public class TreeViewsServiceImpl implements TreeViewsService {
         String treeViewId = deleteTreeViewInputDTO.getTreeViewId();
         String userId = deleteTreeViewInputDTO.getUser().getId();
 
-        Project project = projectRepository.findById(projectId);
+        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 
         if (!project.getOwnerId().equals(userId))
-            throw new UnauthorizedException("User is not the owner of the project");
+            throw new UnauthorizedException();
 
-        Dataset dataset = datasetRepository.findById(datasetId);
+        Dataset dataset = datasetRepository.findById(datasetId).orElseThrow(DatasetNotFoundException::new);
+
+        treeViewMetadataRepository.findByTreeViewId(treeViewId).orElseThrow(TreeViewNotFoundException::new);
 
         deleteTreeView(treeViewId);
 
@@ -51,14 +56,16 @@ public class TreeViewsServiceImpl implements TreeViewsService {
                 .forEach(treeViewMetadata -> {
                     fileStorageRepository.delete(treeViewMetadata.getUrl());
 
-                    // Delete the metadata
                     treeViewMetadataRepository.deleteTreeView(treeViewMetadata);
                 });
     }
 
     @Override
     public TreeViewDTO getTreeView(String treeViewId) {
-        TreeViewMetadata treeViewMetadata = treeViewMetadataRepository.findByTreeViewId(treeViewId);
+        TreeViewMetadata treeViewMetadata =
+                treeViewMetadataRepository
+                        .findByTreeViewId(treeViewId)
+                        .orElseThrow(TreeViewNotFoundException::new);
 
         return new TreeViewDTO(treeViewMetadata);
     }

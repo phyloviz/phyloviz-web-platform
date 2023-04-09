@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DistanceMatrixMetadataMongoRepository extends MongoRepository<DistanceMatrixMetadata, String> {
@@ -15,7 +16,7 @@ public interface DistanceMatrixMetadataMongoRepository extends MongoRepository<D
      * @param resourceId the resource id of the distance matrix
      * @return a distance matrix metadata
      */
-    DistanceMatrixMetadata findByDistanceMatrixId(String resourceId);
+    Optional<DistanceMatrixMetadata> findByDistanceMatrixId(String resourceId);
 
     /**
      * Find all metadata representations of a distance matrix resource.

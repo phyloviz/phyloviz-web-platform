@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Primary
@@ -26,7 +27,7 @@ public class TypingDataMetadataRepositoryMongo implements TypingDataMetadataRepo
     }
 
     @Override
-    public TypingDataMetadata findByTypingDataId(String typingDataId) {
+    public Optional<TypingDataMetadata> findByTypingDataId(String typingDataId) {
         return typingDataMetadataMongoRepository.findByTypingDataId(typingDataId);
     }
 

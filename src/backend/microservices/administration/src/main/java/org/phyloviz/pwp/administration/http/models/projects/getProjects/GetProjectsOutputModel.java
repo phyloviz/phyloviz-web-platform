@@ -1,9 +1,9 @@
 package org.phyloviz.pwp.administration.http.models.projects.getProjects;
 
-import java.util.List;
 import lombok.Data;
-import org.phyloviz.pwp.administration.http.models.projects.ProjectModel;
 import org.phyloviz.pwp.administration.service.dtos.projects.ProjectDTO;
+
+import java.util.List;
 
 @Data
 public class GetProjectsOutputModel {

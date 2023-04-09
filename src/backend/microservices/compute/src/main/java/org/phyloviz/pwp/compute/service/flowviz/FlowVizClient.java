@@ -17,16 +17,16 @@ public class FlowVizClient extends FlowVizHttpService {
         this.token = authenticate(credentials);
     }
 
+    public static FlowVizClientBuilder builder() {
+        return new FlowVizClientBuilder();
+    }
+
     private Token authenticate(Credentials credentials) {
         try {
             return this.post("/login", credentials, Token.class);
         } catch (UnexpectedResponseException e) {
             throw new AuthenticationException("Failed to authenticate");
         }
-    }
-
-    public static FlowVizClientBuilder builder() {
-        return new FlowVizClientBuilder();
     }
 
     public ToolService toolService() {

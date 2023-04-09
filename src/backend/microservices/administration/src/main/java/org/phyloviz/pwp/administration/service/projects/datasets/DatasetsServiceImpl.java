@@ -1,8 +1,6 @@
 package org.phyloviz.pwp.administration.service.projects.datasets;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
-import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.administration.service.dtos.datasets.DatasetDTO;
 import org.phyloviz.pwp.administration.service.dtos.datasets.createDataset.CreateDatasetInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.datasets.createDataset.CreateDatasetOutputDTO;
@@ -10,11 +8,23 @@ import org.phyloviz.pwp.administration.service.dtos.datasets.deleteDataset.Delet
 import org.phyloviz.pwp.administration.service.dtos.datasets.deleteDataset.DeleteDatasetOutputDTO;
 import org.phyloviz.pwp.administration.service.dtos.datasets.getDataset.GetDatasetInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.datasets.getDatasets.GetDatasetsInputDTO;
-import org.phyloviz.pwp.administration.service.projects.datasets.distance_matrices.DistanceMatricesService;
-import org.phyloviz.pwp.administration.service.projects.datasets.tree_views.TreeViewsService;
+import org.phyloviz.pwp.administration.service.exceptions.EmptyDatasetNameException;
+import org.phyloviz.pwp.administration.service.exceptions.EmptyTypingDataIdException;
+import org.phyloviz.pwp.administration.service.exceptions.IsolateDataDoesNotExistException;
+import org.phyloviz.pwp.administration.service.exceptions.TypingDataDoesNotExistException;
+import org.phyloviz.pwp.administration.service.projects.datasets.distanceMatrices.DistanceMatricesService;
+import org.phyloviz.pwp.administration.service.projects.datasets.treeViews.TreeViewsService;
 import org.phyloviz.pwp.administration.service.projects.datasets.trees.TreesService;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
+import org.phyloviz.pwp.shared.repository.metadata.isolateData.IsolateDataMetadataRepository;
+import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.IsolateDataMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
+import org.phyloviz.pwp.shared.repository.metadata.typingData.TypingDataMetadataRepository;
+import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.TypingDataMetadata;
+import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +38,8 @@ public class DatasetsServiceImpl implements DatasetsService {
 
     private final DatasetRepository datasetRepository;
     private final ProjectRepository projectRepository;
+    private final TypingDataMetadataRepository typingDataMetadataRepository;
+    private final IsolateDataMetadataRepository isolateDataMetadataRepository;
 
     private final DistanceMatricesService distanceMatricesService;
     private final TreesService treesService;
@@ -37,23 +49,42 @@ public class DatasetsServiceImpl implements DatasetsService {
     public CreateDatasetOutputDTO createDataset(CreateDatasetInputDTO createDatasetInputDTO) {
         String userId = createDatasetInputDTO.getUser().getId();
         String projectId = createDatasetInputDTO.getProjectId();
-        Project project = projectRepository.findById(projectId);
+        String name = createDatasetInputDTO.getName();
+
+        if (name == null || name.isBlank())
+            throw new EmptyDatasetNameException();
+
+        String typingDataId = createDatasetInputDTO.getTypingDataId();
+        if (typingDataId == null || typingDataId.isBlank())
+            throw new EmptyTypingDataIdException();
+
+        String isolateDataId = createDatasetInputDTO.getIsolateDataId();
+        if (isolateDataId == null || isolateDataId.isBlank())
+            isolateDataId = null;
+
+        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 
         if (!project.getOwnerId().equals(userId))
-            throw new UnauthorizedException("User is not the owner of the project");
+            throw new UnauthorizedException();
 
-        String typingDataId = createDatasetInputDTO.getTypingDataId() == null || createDatasetInputDTO.getTypingDataId().equals("")
-                ? null
-                : createDatasetInputDTO.getTypingDataId();
+        TypingDataMetadata typingDataMetadata = typingDataMetadataRepository
+                .findByTypingDataId(typingDataId)
+                .orElseThrow(TypingDataDoesNotExistException::new);
 
-        String isolateDataId = createDatasetInputDTO.getIsolateDataId() == null || createDatasetInputDTO.getIsolateDataId().equals("")
-                ? null
-                : createDatasetInputDTO.getIsolateDataId();
+        if (!typingDataMetadata.getProjectId().equals(projectId))
+            throw new TypingDataDoesNotExistException();
 
-        // TODO: Check if typingDataId and isolateDataId exist
+        if (isolateDataId != null) {
+            IsolateDataMetadata isolateDataMetadata = isolateDataMetadataRepository
+                    .findByIsolateDataId(isolateDataId)
+                    .orElseThrow(IsolateDataDoesNotExistException::new);
+
+            if (!isolateDataMetadata.getProjectId().equals(projectId))
+                throw new IsolateDataDoesNotExistException();
+        }
 
         Dataset dataset = new Dataset(
-                createDatasetInputDTO.getProjectId(),
+                projectId,
                 createDatasetInputDTO.getName(),
                 createDatasetInputDTO.getDescription(),
                 typingDataId,
@@ -78,10 +109,10 @@ public class DatasetsServiceImpl implements DatasetsService {
         String projectId = getDatasetInputDTO.getProjectId();
         String datasetId = getDatasetInputDTO.getDatasetId();
 
-        Project project = projectRepository.findById(projectId);
+        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 
         if (!project.getOwnerId().equals(userId))
-            throw new UnauthorizedException("User is not the owner of the project");
+            throw new UnauthorizedException();
 
         return getDataset(datasetId);
     }
@@ -89,13 +120,13 @@ public class DatasetsServiceImpl implements DatasetsService {
     @Override
     public DeleteDatasetOutputDTO deleteDataset(DeleteDatasetInputDTO deleteDatasetInputDTO) {
         String userId = deleteDatasetInputDTO.getUser().getId();
+        String projectId = deleteDatasetInputDTO.getProjectId();
         String datasetId = deleteDatasetInputDTO.getDatasetId();
 
-        String projectId = datasetRepository.findById(datasetId).getProjectId();
-        Project project = projectRepository.findById(projectId);
+        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 
         if (!project.getOwnerId().equals(userId))
-            throw new UnauthorizedException("User is not the owner of the project");
+            throw new UnauthorizedException();
 
         deleteDataset(datasetId);
 
@@ -110,17 +141,17 @@ public class DatasetsServiceImpl implements DatasetsService {
         String userId = getDatasetsInputDTO.getUser().getId();
         String projectId = getDatasetsInputDTO.getProjectId();
 
-        Project project = projectRepository.findById(projectId);
+        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 
         if (!project.getOwnerId().equals(userId))
-            throw new UnauthorizedException("User is not the owner of the project");
+            throw new UnauthorizedException();
 
         return project.getDatasetIds().stream().map(this::getDataset).toList();
     }
 
     @Override
     public DatasetDTO getDataset(String datasetId) {
-        Dataset dataset = datasetRepository.findById(datasetId);
+        Dataset dataset = datasetRepository.findById(datasetId).orElseThrow(DatasetNotFoundException::new);
 
         return new DatasetDTO(
                 dataset.getId(),
@@ -136,11 +167,11 @@ public class DatasetsServiceImpl implements DatasetsService {
 
     @Override
     public void deleteDataset(String datasetId) {
-        Dataset dataset = datasetRepository.findById(datasetId);
+        Dataset dataset = datasetRepository.findById(datasetId).orElseThrow(DatasetNotFoundException::new);
 
-        dataset.getDistanceMatrixIds().forEach(distanceMatricesService::deleteDistanceMatrix);
-        dataset.getTreeIds().forEach(treesService::deleteTree);
         dataset.getTreeViewIds().forEach(treeViewsService::deleteTreeView);
+        dataset.getTreeIds().forEach(treesService::deleteTree);
+        dataset.getDistanceMatrixIds().forEach(distanceMatricesService::deleteDistanceMatrix);
 
         datasetRepository.delete(dataset);
     }

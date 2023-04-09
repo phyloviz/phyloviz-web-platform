@@ -4,8 +4,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.IgnoredPropertyException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
-import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
-import org.phyloviz.pwp.shared.utils.Logger;
+import org.phyloviz.pwp.shared.service.exceptions.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -27,6 +26,29 @@ public class SharedExceptionHandler {
                 .withTitle("Forbidden")
                 .withDetail(e.getMessage())
                 .withStatus(Status.FORBIDDEN)
+                .build();
+    }
+
+    /**
+     * Handles Not Found Exceptions.
+     *
+     * @param e the exception
+     * @return a Problem with the status NOT_FOUND
+     */
+    @ExceptionHandler(value = {
+            ProjectNotFoundException.class,
+            DatasetNotFoundException.class,
+            DistanceMatrixNotFoundException.class,
+            TreeNotFoundException.class,
+            TreeViewNotFoundException.class,
+            TypingDataNotFoundException.class,
+            IsolateDataNotFoundException.class
+    })
+    public Problem handleNotFoundException(Exception e) {
+        return Problem.builder()
+                .withTitle("Not Found")
+                .withDetail(e.getMessage())
+                .withStatus(Status.NOT_FOUND)
                 .build();
     }
 

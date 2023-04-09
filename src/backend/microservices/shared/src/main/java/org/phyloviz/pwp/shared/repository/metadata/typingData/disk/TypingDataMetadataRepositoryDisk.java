@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -43,12 +45,12 @@ public class TypingDataMetadataRepositoryDisk implements TypingDataMetadataRepos
     }
 
     @Override
-    public TypingDataMetadata findByTypingDataId(String typingDataId) {
-        return null;
+    public Optional<TypingDataMetadata> findByTypingDataId(String typingDataId) {
+        return Optional.empty();
     }
 
     @Override
     public List<TypingDataMetadata> findAllByTypingDataId(String typingDataId) {
-        return null;
+        return Collections.emptyList();
     }
 }

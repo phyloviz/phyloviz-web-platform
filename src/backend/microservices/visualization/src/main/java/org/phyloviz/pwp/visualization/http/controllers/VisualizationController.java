@@ -1,14 +1,10 @@
 package org.phyloviz.pwp.visualization.http.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.visualization.http.controllers.models.getTypingDataProfiles.GetTypingDataProfilesOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.getTreeView.GetTreeViewOutputModel;
+import org.phyloviz.pwp.visualization.http.controllers.models.getTypingDataProfiles.GetTypingDataProfilesOutputModel;
 import org.phyloviz.pwp.visualization.service.VisualizationService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller for the Visualization Microservice.

@@ -8,7 +8,6 @@ import org.phyloviz.pwp.administration.service.dtos.projects.deleteProject.Delet
 import org.phyloviz.pwp.administration.service.dtos.projects.getProject.GetProjectInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.projects.getProjects.GetProjectsInputDTO;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
-import org.phyloviz.pwp.shared.service.dtos.UserDTO;
 
 import java.util.List;
 

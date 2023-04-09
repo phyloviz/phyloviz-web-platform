@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Primary
@@ -26,7 +27,7 @@ public class IsolateDataMetadataRepositoryMongo implements IsolateDataMetadataRe
     }
 
     @Override
-    public IsolateDataMetadata findByIsolateDataId(String isolateDataId) {
+    public Optional<IsolateDataMetadata> findByIsolateDataId(String isolateDataId) {
         return isolateDataMetadataMongoRepository.findByIsolateDataId(isolateDataId);
     }
 

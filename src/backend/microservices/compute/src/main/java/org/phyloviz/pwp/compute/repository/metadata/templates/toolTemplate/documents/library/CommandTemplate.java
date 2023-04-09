@@ -1,9 +1,10 @@
 package org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.documents.library;
 
-import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.library.Command;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -25,7 +26,7 @@ public class CommandTemplate {
         return Command.builder()
                 .name(name)
                 .invocation(List.copyOf(invocation))
-                .allowedValues(List.copyOf(allowedValues ))
+                .allowedValues(List.copyOf(allowedValues))
                 .allowedCommandSets(List.copyOf(allowedCommandSets))
                 .description(description)
                 .build();

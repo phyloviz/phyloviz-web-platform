@@ -1,10 +1,11 @@
 package org.phyloviz.pwp.compute.repository.metadata.templates.workflowInstances.mongo;
 
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflowInstances.WorkflowInstanceRepository;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflowInstances.documents.WorkflowInstance;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor

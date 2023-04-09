@@ -1,8 +1,9 @@
 package org.phyloviz.pwp.compute.repository.metadata.templates.workflowTemplate.documents;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Getter;
 
 public class WorkflowTemplateData {
 
@@ -14,6 +15,10 @@ public class WorkflowTemplateData {
     private WorkflowTemplateData(String workflowId, Map<String, String> values) {
         this.workflowId = workflowId;
         this.values = values;
+    }
+
+    public static WorkflowTemplateDataBuilder builder() {
+        return new WorkflowTemplateDataBuilder();
     }
 
     public Map<String, String> toMap() {
@@ -32,13 +37,9 @@ public class WorkflowTemplateData {
         return Map.copyOf(values);
     }
 
-    public static WorkflowTemplateDataBuilder builder() {
-        return new WorkflowTemplateDataBuilder();
-    }
-
     public static class WorkflowTemplateDataBuilder {
-        private String workflowId;
         private final Map<String, String> values = new HashMap<>();
+        private String workflowId;
 
         public WorkflowTemplateDataBuilder workflowId(String workflowId) {
             this.workflowId = workflowId;
@@ -51,7 +52,7 @@ public class WorkflowTemplateData {
         }
 
         public WorkflowTemplateData build() {
-            if(workflowId == null)
+            if (workflowId == null)
                 throw new IllegalStateException("WorkflowId is required");
 
             return new WorkflowTemplateData(workflowId, values);

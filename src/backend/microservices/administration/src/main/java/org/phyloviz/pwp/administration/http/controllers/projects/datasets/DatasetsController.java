@@ -5,14 +5,14 @@ import org.phyloviz.pwp.administration.http.models.datasets.createDataset.Create
 import org.phyloviz.pwp.administration.http.models.datasets.createDataset.CreateDatasetOutputModel;
 import org.phyloviz.pwp.administration.http.models.datasets.deleteDataset.DeleteDatasetOutputModel;
 import org.phyloviz.pwp.administration.http.models.datasets.getDataset.GetDatasetOutputModel;
-import org.phyloviz.pwp.administration.service.dtos.datasets.getDataset.GetDatasetInputDTO;
-import org.phyloviz.pwp.administration.service.projects.datasets.DatasetsService;
 import org.phyloviz.pwp.administration.service.dtos.datasets.DatasetDTO;
 import org.phyloviz.pwp.administration.service.dtos.datasets.createDataset.CreateDatasetOutputDTO;
 import org.phyloviz.pwp.administration.service.dtos.datasets.deleteDataset.DeleteDatasetInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.datasets.deleteDataset.DeleteDatasetOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.datasets.getDataset.GetDatasetInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.datasets.getDatasets.GetDatasetsInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.datasets.getDatasets.GetDatasetsOutputModel;
+import org.phyloviz.pwp.administration.service.projects.datasets.DatasetsService;
 import org.phyloviz.pwp.shared.domain.User;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +29,6 @@ public class DatasetsController {
      *
      * @param projectId               the id of the project to which the dataset will belong
      * @param createDatasetInputModel the dataset information
-     * @return // TODO: Review and fix these comments
      */
     @PostMapping("/projects/{projectId}/datasets")
     public CreateDatasetOutputModel createDataset(

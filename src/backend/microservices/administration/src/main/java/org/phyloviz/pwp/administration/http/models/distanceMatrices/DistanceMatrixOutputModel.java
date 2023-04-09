@@ -19,7 +19,8 @@ public class DistanceMatrixOutputModel {
             case "function" -> new DistanceMatrixSourceFunctionOutputModel(
                     (DistanceMatrixSourceFunctionDTO) distanceMatrixDTO.getSource()
             );
-            default -> throw new IllegalArgumentException("Unknown distance matrix source type: " + distanceMatrixDTO.getSourceType());
+            default ->
+                    throw new IllegalArgumentException("Unknown distance matrix source type: " + distanceMatrixDTO.getSourceType());
         };
     }
 }

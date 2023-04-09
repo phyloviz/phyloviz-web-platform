@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.administration.http.pipeline;
 
-import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
+import org.phyloviz.pwp.administration.service.exceptions.*;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.zalando.problem.Problem;
@@ -10,17 +10,25 @@ import org.zalando.problem.Status;
 public class AdministrationExceptionHandler {
 
     /**
-     * Handles Not Found Exceptions.
+     * Handles Bad Request Exceptions.
      *
      * @param e the exception
-     * @return a Problem with the status NOT_FOUND
+     * @return a Problem with the status BAD_REQUEST
      */
-    @ExceptionHandler(value = {ProjectNotFoundException.class})
-    public Problem handleNotFoundException(Exception e) {
+    @ExceptionHandler(value = {
+            DeniedFileDeletionException.class,
+            DeniedResourceDeletionException.class,
+            EmptyDatasetNameException.class,
+            EmptyProjectNameException.class,
+            EmptyTypingDataIdException.class,
+            IsolateDataDoesNotExistException.class,
+            TypingDataDoesNotExistException.class
+    })
+    public Problem handleBadRequestException(Exception e) {
         return Problem.builder()
-                .withTitle("Not Found")
+                .withTitle("Bad Request")
                 .withDetail(e.getMessage())
-                .withStatus(Status.NOT_FOUND)
+                .withStatus(Status.BAD_REQUEST)
                 .build();
     }
 }

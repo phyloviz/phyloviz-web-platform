@@ -1,9 +1,10 @@
 package org.phyloviz.pwp.shared.domain;
 
-import java.util.Map;
 import lombok.Data;
 import org.phyloviz.pwp.shared.service.dtos.UserDTO;
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthentication;
+
+import java.util.Map;
 
 @Data
 public class User {

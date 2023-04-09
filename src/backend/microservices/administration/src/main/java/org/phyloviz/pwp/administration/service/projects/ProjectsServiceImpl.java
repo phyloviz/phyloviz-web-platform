@@ -1,9 +1,6 @@
 package org.phyloviz.pwp.administration.service.projects;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.FileIds;
 import org.phyloviz.pwp.administration.service.dtos.files.FilesDTO;
 import org.phyloviz.pwp.administration.service.dtos.projects.ProjectDTO;
 import org.phyloviz.pwp.administration.service.dtos.projects.createProject.CreateProjectInputDTO;
@@ -12,9 +9,13 @@ import org.phyloviz.pwp.administration.service.dtos.projects.deleteProject.Delet
 import org.phyloviz.pwp.administration.service.dtos.projects.deleteProject.DeleteProjectOutputDTO;
 import org.phyloviz.pwp.administration.service.dtos.projects.getProject.GetProjectInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.projects.getProjects.GetProjectsInputDTO;
+import org.phyloviz.pwp.administration.service.exceptions.EmptyProjectNameException;
 import org.phyloviz.pwp.administration.service.projects.datasets.DatasetsService;
 import org.phyloviz.pwp.administration.service.projects.files.isolateData.IsolateDataService;
 import org.phyloviz.pwp.administration.service.projects.files.typingData.TypingDataService;
+import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.shared.repository.metadata.project.documents.FileIds;
+import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,11 @@ public class ProjectsServiceImpl implements ProjectsService {
 
     @Override
     public CreateProjectOutputDTO createProject(CreateProjectInputDTO createProjectInputDTO) {
+        String name = createProjectInputDTO.getName();
+
+        if (name == null || name.isBlank())
+            throw new EmptyProjectNameException();
+
         Project project = new Project(
                 createProjectInputDTO.getName(),
                 createProjectInputDTO.getDescription(),
@@ -51,10 +57,11 @@ public class ProjectsServiceImpl implements ProjectsService {
 
     @Override
     public ProjectDTO getProject(GetProjectInputDTO getProjectInputDTO) {
-        Project project = projectRepository.findById(getProjectInputDTO.getProjectId());
+        Project project = projectRepository.findById(getProjectInputDTO.getProjectId())
+                .orElseThrow(ProjectNotFoundException::new);
 
         if (!project.getOwnerId().equals(getProjectInputDTO.getUser().getId()))
-            throw new UnauthorizedException("User is not the owner of the project");
+            throw new UnauthorizedException();
 
         return getProjectDTO(project);
     }
@@ -64,10 +71,10 @@ public class ProjectsServiceImpl implements ProjectsService {
         String projectId = deleteProjectInputDTO.getProjectId();
         String userId = deleteProjectInputDTO.getUser().getId();
 
-        Project project = projectRepository.findById(projectId);
+        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
 
         if (!project.getOwnerId().equals(userId))
-            throw new UnauthorizedException("User is not the owner of the project");
+            throw new UnauthorizedException();
 
         project.getDatasetIds().forEach(datasetsService::deleteDataset);
         project.getFileIds().getTypingDataIds().forEach(typingDataService::deleteTypingData);

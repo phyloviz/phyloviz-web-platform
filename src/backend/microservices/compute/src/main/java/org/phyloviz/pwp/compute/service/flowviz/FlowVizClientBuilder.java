@@ -25,7 +25,6 @@ public class FlowVizClientBuilder {
             throw new IllegalStateException("credentials are required");
 
 
-
         return new FlowVizClient(baseUrl, credentials);
     }
 }

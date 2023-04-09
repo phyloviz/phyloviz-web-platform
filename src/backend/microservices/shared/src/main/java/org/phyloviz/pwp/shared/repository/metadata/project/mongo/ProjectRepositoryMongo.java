@@ -7,6 +7,7 @@ import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,15 +21,13 @@ public class ProjectRepositoryMongo implements ProjectRepository {
     }
 
     @Override
-    public Project findById(String id) throws ProjectNotFoundException {
-        return projectMongoRepository
-                .findById(id)
-                .orElseThrow(ProjectNotFoundException::new);
+    public void delete(Project project) {
+        projectMongoRepository.delete(project);
     }
 
     @Override
-    public void delete(Project project) {
-        projectMongoRepository.delete(project);
+    public Optional<Project> findById(String id) throws ProjectNotFoundException {
+        return projectMongoRepository.findById(id);
     }
 
     @Override

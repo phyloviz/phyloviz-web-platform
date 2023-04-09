@@ -3,6 +3,7 @@ package org.phyloviz.pwp.shared.repository.metadata.distanceMatrix;
 import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.DistanceMatrixMetadata;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DistanceMatrixMetadataRepository {
 
@@ -19,7 +20,7 @@ public interface DistanceMatrixMetadataRepository {
      * @param distanceMatrixId the id of the distance matrix resource
      * @return a distance matrix metadata
      */
-    DistanceMatrixMetadata findByDistanceMatrixId(String distanceMatrixId);
+    Optional<DistanceMatrixMetadata> findByDistanceMatrixId(String distanceMatrixId);
 
     /**
      * Find all metadata representations of a distance matrix resource.
@@ -27,5 +28,5 @@ public interface DistanceMatrixMetadataRepository {
      * @param distanceMatrixId the id of the distance matrix resource
      * @return a list of distance matrix metadata
      */
-    List<DistanceMatrixMetadata> findAllByResourceId(String distanceMatrixId);
+    List<DistanceMatrixMetadata> findAllByDistanceMatrixId(String distanceMatrixId);
 }

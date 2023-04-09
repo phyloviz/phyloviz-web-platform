@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Primary
@@ -21,12 +22,12 @@ public class DistanceMatrixMetadataRepositoryMongo implements DistanceMatrixMeta
     }
 
     @Override
-    public DistanceMatrixMetadata findByDistanceMatrixId(String distanceMatrixId) {
+    public Optional<DistanceMatrixMetadata> findByDistanceMatrixId(String distanceMatrixId) {
         return distanceMatrixMetadataMongoRepository.findByDistanceMatrixId(distanceMatrixId);
     }
 
     @Override
-    public List<DistanceMatrixMetadata> findAllByResourceId(String distanceMatrixId) {
+    public List<DistanceMatrixMetadata> findAllByDistanceMatrixId(String distanceMatrixId) {
         return distanceMatrixMetadataMongoRepository.findAllByDistanceMatrixId(distanceMatrixId);
     }
 }

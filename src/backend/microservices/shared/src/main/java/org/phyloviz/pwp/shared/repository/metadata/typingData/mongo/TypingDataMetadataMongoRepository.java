@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TypingDataMetadataMongoRepository extends MongoRepository<TypingDataMetadata, String> {
@@ -15,7 +16,7 @@ public interface TypingDataMetadataMongoRepository extends MongoRepository<Typin
      * @param typingDataId the id of the typing data resource
      * @return a typing data metadata
      */
-    TypingDataMetadata findByTypingDataId(String typingDataId);
+    Optional<TypingDataMetadata> findByTypingDataId(String typingDataId);
 
     /**
      * Find all metadata representations of a typing data resource.

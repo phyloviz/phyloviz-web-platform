@@ -4,11 +4,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import java.lang.reflect.Type;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.Access;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.AccessDetails;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.api.ApiAccessDetails;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.library.LibraryAccessDetails;
+
+import java.lang.reflect.Type;
 
 public class AccessSerializer implements JsonSerializer<Access> {
     @Override

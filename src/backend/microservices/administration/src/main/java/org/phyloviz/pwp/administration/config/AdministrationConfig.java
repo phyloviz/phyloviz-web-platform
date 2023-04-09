@@ -6,4 +6,5 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({ResourceServerSharedConfig.class})
-public class AdministrationConfig {}
+public class AdministrationConfig {
+}

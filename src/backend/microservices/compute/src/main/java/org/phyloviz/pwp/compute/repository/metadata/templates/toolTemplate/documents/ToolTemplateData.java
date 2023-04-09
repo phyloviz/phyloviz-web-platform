@@ -1,8 +1,9 @@
 package org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.documents;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Getter;
 
 public class ToolTemplateData {
     @Getter
@@ -17,6 +18,10 @@ public class ToolTemplateData {
         this.projectId = projectId;
         this.workflowId = workflowId;
         this.values = values;
+    }
+
+    public static ToolTemplateDataBuilder builder() {
+        return new ToolTemplateDataBuilder();
     }
 
     public Map<String, String> toMap() {
@@ -36,14 +41,10 @@ public class ToolTemplateData {
         return Map.copyOf(values);
     }
 
-    public static ToolTemplateDataBuilder builder() {
-        return new ToolTemplateDataBuilder();
-    }
-
     public static class ToolTemplateDataBuilder {
+        private final Map<String, String> values = new HashMap<>();
         private String projectId;
         private String workflowId;
-        private final Map<String, String> values = new HashMap<>();
 
         public ToolTemplateDataBuilder projectId(String projectId) {
             this.projectId = projectId;
