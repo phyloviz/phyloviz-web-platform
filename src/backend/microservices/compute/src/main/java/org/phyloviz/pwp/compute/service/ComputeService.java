@@ -1,6 +1,8 @@
 package org.phyloviz.pwp.compute.service;
 
-import org.phyloviz.pwp.compute.service.dtos.computeDistanceMatrix.ComputeDistanceMatrixOutputDTO;
+import java.util.Map;
+import org.phyloviz.pwp.compute.service.dtos.computeDistanceMatrix.CreateWorkflowOutputDTO;
+import org.phyloviz.pwp.compute.service.dtos.getWorkflow.GetWorkflowOutputDTO;
 import org.phyloviz.pwp.shared.service.dtos.UserDTO;
 import org.springframework.stereotype.Service;
 
@@ -10,5 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ComputeService {
 
-    ComputeDistanceMatrixOutputDTO computeDistanceMatrix(String projectId, String typingDataId, UserDTO toDTO);
+    CreateWorkflowOutputDTO createWorkflow(String projectId, String typingDataId, Map<String, String> properties, UserDTO userDTO);
+
+    GetWorkflowOutputDTO getWorkflow(String projectId, String workflowId, UserDTO dto);
 }

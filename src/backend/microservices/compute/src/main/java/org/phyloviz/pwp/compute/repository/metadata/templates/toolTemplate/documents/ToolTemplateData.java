@@ -25,10 +25,9 @@ public class ToolTemplateData {
     }
 
     public Map<String, String> toMap() {
-        HashMap<String, String> map = new HashMap<>();
+        HashMap<String, String> map = new HashMap<>(values);
         map.put("projectId", projectId);
         map.put("workflowId", workflowId);
-        map.putAll(values);
 
         return map;
     }
@@ -61,6 +60,11 @@ public class ToolTemplateData {
             return this;
         }
 
+        public ToolTemplateDataBuilder putAll(Map<String, String> properties) {
+            this.values.putAll(properties);
+            return this;
+        }
+
         public ToolTemplateData build() {
             if (projectId == null)
                 throw new IllegalStateException("ProjectId is required");
@@ -70,5 +74,6 @@ public class ToolTemplateData {
 
             return new ToolTemplateData(projectId, workflowId, values);
         }
+
     }
 }

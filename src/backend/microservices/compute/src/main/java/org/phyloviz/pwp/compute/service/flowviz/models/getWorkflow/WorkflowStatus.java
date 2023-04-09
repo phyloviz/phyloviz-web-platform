@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class WorkflowStatus {
 
-    private final WorkflowState state;
+    private final String state;
 }

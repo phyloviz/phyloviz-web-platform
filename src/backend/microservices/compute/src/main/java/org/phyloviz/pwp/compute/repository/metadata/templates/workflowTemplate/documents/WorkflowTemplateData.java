@@ -22,9 +22,8 @@ public class WorkflowTemplateData {
     }
 
     public Map<String, String> toMap() {
-        HashMap<String, String> map = new HashMap<>();
+        HashMap<String, String> map = new HashMap<>(values);
         map.put("workflowId", workflowId);
-        map.putAll(values);
 
         return map;
     }
@@ -48,6 +47,11 @@ public class WorkflowTemplateData {
 
         public WorkflowTemplateDataBuilder put(String key, String value) {
             values.put(key, value);
+            return this;
+        }
+
+        public WorkflowTemplateDataBuilder putAll(Map<String, String> values) {
+            this.values.putAll(values);
             return this;
         }
 

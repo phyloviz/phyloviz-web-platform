@@ -43,7 +43,7 @@ public class IsolateDataServiceImpl implements IsolateDataService {
             throw new UnauthorizedException();
 
         String isolateDataId = UUID.randomUUID().toString();
-        String location = "/" + projectId + "/isolateData/" + isolateDataId;
+        String location = projectId + "/isolate-data/" + isolateDataId;
 
         boolean stored = fileStorageRepository.store(location, multipartFile);
 

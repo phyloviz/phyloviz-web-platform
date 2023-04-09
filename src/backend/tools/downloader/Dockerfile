@@ -3,21 +3,24 @@ FROM python:3.8-slim
 
 
 # Copy the required files into the /app folder
-COPY downloader/ /app
+COPY downloader/downloader.py /app/downloader.py
+COPY downloader/requirements.txt /app/requirements.txt
 
 
 # Create the AWS config directories
-RUN mkdir -p ~/.aws
+RUN mkdir -p /root/.aws
 
 # Copy the AWS config and credentials files
-COPY aws_config ~/.aws/config
-COPY aws_credentials ~/.aws/credentials
+COPY aws_config /root/.aws/config
+COPY aws_credentials /root/.aws/credentials
 
 # Set the working directory to /app
 WORKDIR /app
+
+ENV MONGO_URI="mongodb://root:root@host.docker.internal:28017/?authMechanism=DEFAULT"
 
 # Install any required packages
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 # Run the script when the container launches
-CMD ["python", "download_s3_object.py"]
+ENTRYPOINT ["python", "downloader.py"]

@@ -27,6 +27,12 @@ public class TreeMetadataRepositoryMongo implements TreeMetadataRepository {
     }
 
     @Override
+    public TreeMetadata findByTreeIdAndAdapterId(String treeId, String adapterId) {
+        return treeMetadataMongoRepository.findByTreeIdAndAdapterId(treeId, adapterId);
+    }
+
+
+    @Override
     public List<TreeMetadata> findAllByTreeId(String treeId) {
         return treeMetadataMongoRepository.findAllByTreeId(treeId);
     }

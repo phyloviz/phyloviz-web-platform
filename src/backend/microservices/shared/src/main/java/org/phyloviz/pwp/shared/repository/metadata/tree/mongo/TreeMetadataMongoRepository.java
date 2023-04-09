@@ -18,6 +18,8 @@ public interface TreeMetadataMongoRepository extends MongoRepository<TreeMetadat
      */
     Optional<TreeMetadata> findByTreeId(String resourceId);
 
+    TreeMetadata findByTreeIdAndAdapterId(String treeId, String adapterId);
+
     /**
      * Find all metadata representations of a tree resource.
      *

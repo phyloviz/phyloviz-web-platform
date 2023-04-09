@@ -24,6 +24,8 @@ public interface TreeMetadataRepository {
      */
     Optional<TreeMetadata> findByTreeId(String treeId);
 
+    TreeMetadata findByTreeIdAndAdapterId(String treeId, String adapterId);
+
     /**
      * Find all metadata representations of a tree resource.
      *

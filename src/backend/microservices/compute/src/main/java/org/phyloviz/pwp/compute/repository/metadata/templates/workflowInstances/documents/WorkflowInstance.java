@@ -13,6 +13,8 @@ public class WorkflowInstance {
     @Id
     private String id;
 
+    private String type;
+
     private Workflow workflow;
 
     private Map<String, Object> results;

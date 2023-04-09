@@ -43,7 +43,7 @@ public class TypingDataServiceImpl implements TypingDataService {
             throw new UnauthorizedException();
 
         String typingDataId = UUID.randomUUID().toString();
-        String location = "/" + projectId + "/typingData/" + typingDataId;
+        String location =  projectId + "/typing-data/" + typingDataId;
 
         boolean stored = fileStorageRepository.store(location, multipartFile);
 
