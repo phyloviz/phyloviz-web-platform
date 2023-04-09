@@ -17,6 +17,7 @@ public class DistanceMatrixMetadata {
     private String id;
 
     private String projectId;
+    private String datasetId;
     private String distanceMatrixId;
     private String name;
     private String sourceType;
@@ -25,10 +26,11 @@ public class DistanceMatrixMetadata {
     private String adapterId;
     private DistanceMatrixAdapterSpecificData adapterSpecificData;
 
-    public DistanceMatrixMetadata(String projectId, String distanceMatrixId, String name, String sourceType,
+    public DistanceMatrixMetadata(String projectId, String datasetId, String distanceMatrixId, String name, String sourceType,
                                   DistanceMatrixSource source, String url, String adapterId,
                                   DistanceMatrixAdapterSpecificData adapterSpecificData) {
         this.projectId = projectId;
+        this.datasetId = datasetId;
         this.distanceMatrixId = distanceMatrixId;
         this.name = name;
         this.sourceType = sourceType;

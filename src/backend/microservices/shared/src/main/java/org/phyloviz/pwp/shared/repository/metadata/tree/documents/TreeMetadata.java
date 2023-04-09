@@ -18,6 +18,7 @@ public class TreeMetadata {
     private String id;
 
     private String projectId;
+    private String datasetId;
     private String treeId;
     private String name;
     private String sourceType;
@@ -26,9 +27,10 @@ public class TreeMetadata {
     private String adapterId;
     private TreeAdapterSpecificData adapterSpecificData;
 
-    public TreeMetadata(String projectId, String treeId, String name, String sourceType, TreeSource source, String url,
+    public TreeMetadata(String projectId, String datasetId, String treeId, String name, String sourceType, TreeSource source, String url,
                         String adapterId, TreeAdapterSpecificData adapterSpecificData) {
         this.projectId = projectId;
+        this.datasetId = datasetId;
         this.treeId = treeId;
         this.name = name;
         this.sourceType = sourceType;
