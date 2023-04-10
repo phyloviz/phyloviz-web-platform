@@ -1,8 +1,17 @@
 package org.phyloviz.pwp.visualization.service;
 
+import org.phyloviz.pwp.visualization.service.dtos.getDistanceMatrix.GetDistanceMatrixInputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.getTree.GetTreeInputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.getTreeView.GetTreeViewInputDTO;
 import org.phyloviz.pwp.visualization.service.dtos.getTreeView.GetTreeViewOutputDTO;
-import org.phyloviz.pwp.visualization.service.dtos.getTypingDataDetails.GetTypingDataDetailsOutputDTO;
-import org.phyloviz.pwp.visualization.service.dtos.getTypingDataProfiles.GetTypingDataProfilesOutputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.isolateData.getIsolateDataRows.GetIsolateDataRowsInputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.isolateData.getIsolateDataRows.GetIsolateDataRowsOutputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.isolateData.getIsolateDataSchema.GetIsolateDataSchemaInputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.isolateData.getIsolateDataSchema.GetIsolateDataSchemaOutputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.typingData.getTypingDataProfiles.GetTypingDataProfilesInputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.typingData.getTypingDataProfiles.GetTypingDataProfilesOutputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.typingData.getTypingDataSchema.GetTypingDataSchemaInputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.typingData.getTypingDataSchema.GetTypingDataSchemaOutputDTO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,28 +21,58 @@ import org.springframework.stereotype.Service;
 public interface VisualizationService {
 
     /**
-     * Gets the dataset information, given its id.
+     * Gets a tree, given its id.
      *
-     * @param id the id of the dataset
-     * @return the dataset information
+     * @param getTreeInputDTO the input DTO
+     * @return the tree
      */
-    GetTypingDataDetailsOutputDTO getDatasetDetails(String id);
+    String getTree(GetTreeInputDTO getTreeInputDTO);
 
     /**
-     * Gets the profiles of a typing data, given its id.
+     * Gets a tree view, given its id.
      *
-     * @param id     the id of the typing data
-     * @param limit  the number of profiles to be returned
-     * @param offset the offset of the profiles to be returned
-     * @return the profiles of the typing data
+     * @param getTreeViewInputDTO the input DTO
+     * @return the tree
      */
-    GetTypingDataProfilesOutputDTO getTypingDataProfiles(String id, int limit, int offset);
+    GetTreeViewOutputDTO getTreeView(GetTreeViewInputDTO getTreeViewInputDTO);
 
     /**
-     * Gets the tree view, given its id.
+     * Gets a distance matrix, given its id.
      *
-     * @param id the id of the tree view
-     * @return the tree view
+     * @param getDistanceMatrixInputDTO the input DTO
+     * @return the distance matrix
      */
-    GetTreeViewOutputDTO getTreeView(String id);
+    String getDistanceMatrix(GetDistanceMatrixInputDTO getDistanceMatrixInputDTO);
+
+    /**
+     * Gets a typing data's schema, given its id.
+     *
+     * @param getTypingDataSchemaInputDTO the input DTO
+     * @return the typing data schema
+     */
+    GetTypingDataSchemaOutputDTO getTypingDataSchema(GetTypingDataSchemaInputDTO getTypingDataSchemaInputDTO);
+
+    /**
+     * Gets a typing data's profiles, given its id, with pagination.
+     *
+     * @param getTypingDataProfilesInputDTO the input DTO
+     * @return the typing data profiles
+     */
+    GetTypingDataProfilesOutputDTO getTypingDataProfiles(GetTypingDataProfilesInputDTO getTypingDataProfilesInputDTO);
+
+    /**
+     * Gets an isolate data's schema, given its id.
+     *
+     * @param getIsolateDataSchemaInputDTO the input DTO
+     * @return the isolate data schema
+     */
+    GetIsolateDataSchemaOutputDTO getIsolateDataSchema(GetIsolateDataSchemaInputDTO getIsolateDataSchemaInputDTO);
+
+    /**
+     * Gets an isolate data's rows, given its id, with pagination.
+     *
+     * @param getIsolateDataRowsInputDTO the input DTO
+     * @return the isolate data rows
+     */
+    GetIsolateDataRowsOutputDTO getIsolateDataRows(GetIsolateDataRowsInputDTO getIsolateDataRowsInputDTO);
 }
