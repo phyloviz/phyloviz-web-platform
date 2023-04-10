@@ -1,5 +1,6 @@
 import {useState} from "react"
 import {useNavigate} from "react-router-dom"
+import {SelectChangeEvent} from "@mui/material";
 
 export enum GoeBURSTConfigurationStep {
     DISTANCE = "Distance",
@@ -14,9 +15,14 @@ export function useGoeBURSTConfig() {
     const [currStep, setCurrStep] = useState(0)
     const navigate = useNavigate()
 
+    const [selectedDistance, setSelectedDistance] = useState<string | null>(null)
+
     return {
         step,
         currStep,
+        distances: [], // TODO: To be implemented
+        selectedDistance,
+        handleDistanceChange: (event: SelectChangeEvent) => setSelectedDistance(event.target.value),
         handleCancel: () => navigate(-1),
         handleBack: () => {
             if (step === GoeBURSTConfigurationStep.LEVEL) {

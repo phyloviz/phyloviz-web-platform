@@ -38,7 +38,7 @@ export function useProject() {
 
     return {
         project,
-        onUpdated: () => setUpdate(!update)
+        onProjectUpdate: () => setUpdate(!update)
     }
 }
 

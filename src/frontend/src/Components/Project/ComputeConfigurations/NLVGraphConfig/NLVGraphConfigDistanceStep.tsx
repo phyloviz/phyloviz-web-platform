@@ -1,12 +1,51 @@
 import * as React from "react"
+import {ReactNode} from "react"
 import Typography from "@mui/material/Typography"
-import {Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, Select, TextField} from "@mui/material"
+import {
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    FormGroup,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+    TextField
+} from "@mui/material"
 import Box from "@mui/material/Box"
+import {DistanceMatrix} from "../../../../Services/administration/models/getProject/GetProjectOutputModel";
+
+/**
+ * Props for the NLVGraphConfigDistanceStep component.
+ *
+ * @property distances the distances of the project
+ * @property selectedDistance the selected distance
+ * @property onDistanceChange the function to call when the distance changes
+ */
+interface NLVGraphConfigDistanceStepProps {
+    distances: DistanceMatrix[]
+    selectedDistance: string | null
+    onDistanceChange: (event: SelectChangeEvent, child: ReactNode) => void
+    currentMaxNLVLevel: number
+    onMaxNLVLevelChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    innerEdges: boolean
+    onInnerEdgesChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
 
 /**
  * Card for the distance step in the NLVGraphConfig page.
  */
-export function NLVGraphConfigDistanceStep() {
+export function NLVGraphConfigDistanceStep(
+    {
+        distances,
+        selectedDistance,
+        onDistanceChange,
+        currentMaxNLVLevel,
+        onMaxNLVLevelChange,
+        innerEdges,
+        onInnerEdgesChange
+    }: NLVGraphConfigDistanceStepProps
+) {
     return (
         <>
             <Typography variant="caption" align={"justify"} sx={{mb: 1, width: "100%"}}>
@@ -16,9 +55,14 @@ export function NLVGraphConfigDistanceStep() {
                 <InputLabel id="distance">Distance</InputLabel>
                 <Select
                     labelId="distance"
-                    //value={}
                     label="Distance"
+                    value={selectedDistance ?? ""}
+                    onChange={onDistanceChange}
                 >
+                    {distances.map((distance) => (
+                        <MenuItem key={distance.distanceMatrixId}
+                                  value={distance.distanceMatrixId}>{distance.name}</MenuItem>
+                    ))}
                 </Select>
             </FormControl>
             <Box sx={{
@@ -31,12 +75,17 @@ export function NLVGraphConfigDistanceStep() {
                     label="Maximum nLV level"
                     type="number"
                     variant="outlined"
-                    //onChange={}
-                    value={1}
+                    value={currentMaxNLVLevel}
+                    onChange={onMaxNLVLevelChange}
                     required sx={{width: "75%"}}
                 />
                 <FormGroup>
-                    <FormControlLabel control={<Checkbox defaultChecked/>} label="InnerEdges"/>
+                    <FormControlLabel label="InnerEdges" control={
+                        <Checkbox
+                            checked={innerEdges}
+                            onChange={onInnerEdgesChange}
+                            defaultChecked/>
+                    }/>
                 </FormGroup>
             </Box>
 

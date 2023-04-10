@@ -55,7 +55,6 @@ public class GatewayConfig {
             ServerHttpSecurity http,
             ServerOAuth2AuthorizedClientRepository authorizedClientRepository
     ) {
-
         http
                 .authorizeExchange()
                 .pathMatchers("/api/**").authenticated()
@@ -70,9 +69,7 @@ public class GatewayConfig {
                 )
                 .oauth2Login(oauth2LoginSpec ->
                         oauth2LoginSpec
-                                .authenticationMatcher(
-                                        new PathPatternParserServerWebExchangeMatcher(redirectUri)
-                                )
+                                .authenticationMatcher(new PathPatternParserServerWebExchangeMatcher(redirectUri))
                                 .authenticationFailureHandler(authenticationFailureHandler())
                 )
                 // This Oauth2Client appears to be adding a web filter that catches the /oauth2/authorization/phyloviz-web-platform-client
@@ -123,8 +120,7 @@ public class GatewayConfig {
 
     @Bean
     public ObjectMapper objectMapper() {
-        return new ObjectMapper()
-                .setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        return new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
     @Bean
@@ -134,12 +130,12 @@ public class GatewayConfig {
         Map<String, MicroserviceProperties> microservices = microservicesProperties.getMicroservices();
 
         for (MicroserviceProperties properties : microservices.values()) {
-
             routesBuilder = createApiRoutes(routesBuilder, properties.getUri(), properties.getRoutes());
         }
 
         routesBuilder.route("home",
                 routeSpec -> routeSpec
+                        .order(Integer.MAX_VALUE)
                         .path("/**")
                         .filters(GatewayFilterSpec::tokenRelay)
                         .uri(reactClientUrl)

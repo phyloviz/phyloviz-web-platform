@@ -1,4 +1,4 @@
-db = db.getSiblingDB('phyloviz-web-platform');
+db = db.getSiblingDB('phyloviz-web-platform')
 
 db['workflow-templates'].insertMany(
     [{

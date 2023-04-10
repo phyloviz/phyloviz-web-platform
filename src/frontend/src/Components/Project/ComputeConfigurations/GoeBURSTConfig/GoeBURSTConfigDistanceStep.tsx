@@ -1,11 +1,32 @@
 import Typography from "@mui/material/Typography"
-import {FormControl, InputLabel, Select} from "@mui/material"
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 import * as React from "react"
+import {ReactNode} from "react"
+import {DistanceMatrix} from "../../../../Services/administration/models/getProject/GetProjectOutputModel";
+
+/**
+ * Props for the GoeBURSTConfigDistanceStep component.
+ *
+ * @property distances the distances of the project
+ * @property selectedDistance the selected distance
+ * @property onDistanceChange the function to call when the distance changes
+ */
+interface GoeBURSTConfigDistanceStepProps {
+    distances: DistanceMatrix[]
+    selectedDistance: string | null
+    onDistanceChange: (event: SelectChangeEvent, child: ReactNode) => void
+}
 
 /**
  * Card for the distance step in the GoeBURSTConfig page.
  */
-export function GoeBURSTConfigDistanceStep() {
+export function GoeBURSTConfigDistanceStep(
+    {
+        distances,
+        selectedDistance,
+        onDistanceChange
+    }: GoeBURSTConfigDistanceStepProps
+) {
     return (
         <>
             <Typography variant="caption" align={"justify"} sx={{mb: 1, width: "100%"}}>
@@ -15,13 +36,19 @@ export function GoeBURSTConfigDistanceStep() {
                 <InputLabel id="distance">Distance</InputLabel>
                 <Select
                     labelId="distance"
-                    //value={}
                     label="Distance"
+                    value={selectedDistance ?? ""}
+                    onChange={onDistanceChange}
                 >
+                    {distances.map((distance) => (
+                        <MenuItem key={distance.distanceMatrixId}
+                                  value={distance.distanceMatrixId}>{distance.name}</MenuItem>
+                    ))}
                 </Select>
             </FormControl>
 
-            <Typography display="inline" variant="caption" align={"left"} sx={{width: "100%", whiteSpace: "pre-wrap"}}>
+            <Typography display="inline" variant="caption" align={"left"}
+                        sx={{width: "100%", whiteSpace: "pre-wrap"}}>
                 {
                     "This distance builds upon the rules defined in the article by Feil et al to select if a link should be drawn. " +
                     "In order to provide an unique minimum spanning tree(MST) like structure, this option can also expand goeBURST rules to the number of loci used in a typing schema.  " +

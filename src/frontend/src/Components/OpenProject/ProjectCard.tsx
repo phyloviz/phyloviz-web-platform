@@ -47,6 +47,7 @@ export function ProjectCard({project, handleOpenProject}: ProjectCardProps) {
                 variant="contained"
                 onClick={() => handleOpenProject(project.projectId)}
                 startIcon={<OpenInNew/>}
+                sx={{maxHeight: "40px"}}
             >
                 Open Project
             </Button>

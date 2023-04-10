@@ -1,18 +1,31 @@
 import Typography from "@mui/material/Typography"
-import {FormControl, InputLabel, MenuItem, Select} from "@mui/material"
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 import * as React from "react"
+import {ReactNode} from "react"
+import {
+    HierarchicalClusteringMethod
+} from "../../../../Pages/Project/ComputeConfigurations/HierarchicalClusteringConfig/useHierarchicalClusteringConfig";
 
-enum HierarchicalClusteringMethod {
-    COMPLETE_LINKAGE = "Complete-Linkeage",
-    SINGLE_LINKAGE = "Single-Linkage",
-    UPGMA = "UPGMA",
-    WPGMA = "WPGMA",
+/**
+ * Props for the HierarchicalClusteringConfigMethodStep component.
+ *
+ * @property selectedMethod the selected method
+ * @property onMethodChange the method change handler
+ */
+interface HierarchicalClusteringConfigMethodStepProps {
+    selectedMethod: string | null
+    onMethodChange: (event: SelectChangeEvent, child: ReactNode) => void
 }
 
 /**
  * Card for the method step in the HierarchicalClusteringConfig page.
  */
-export function HierarchicalClusteringConfigMethodStep() {
+export function HierarchicalClusteringConfigMethodStep(
+    {
+        selectedMethod,
+        onMethodChange
+    }: HierarchicalClusteringConfigMethodStepProps
+) {
     return (
         <>
             <Typography variant="caption" align={"justify"} sx={{mb: 1, width: "100%"}}>
@@ -22,8 +35,9 @@ export function HierarchicalClusteringConfigMethodStep() {
                 <InputLabel id="method">Method</InputLabel>
                 <Select
                     labelId="Method"
-                    //value={}
                     label="Method"
+                    value={selectedMethod ?? ""}
+                    onChange={onMethodChange}
                 >
                     {
                         Object.values(HierarchicalClusteringMethod).map((method) => (

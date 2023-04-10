@@ -33,7 +33,7 @@ export default function EmptyProject({project}: EmptyProjectProps) {
                 <Typography component="h1" variant="h4">
                     {project?.name}
                 </Typography>
-                <Typography component="h1" variant="h6">
+                <Typography component="h1" variant="body1" textAlign={"justify"}>
                     {project?.description}
                 </Typography>
                 <Box sx={{

@@ -12,15 +12,18 @@ import {IsolateDataFile} from "../../../Services/administration/models/getProjec
  * @property selectedIsolateData the selected isolate data file
  * @property onFileSelecterChange the function to call when the file on the file selecter changes
  * @property onFileUploaderChange the function to call when the file on the file uploader changes
+ * @property isolateDataKeys the isolate data keys of the project
+ * @property selectedIsolateDataKey the selected isolate data key
+ * @property onIsolateDataKeyChange the function to call when the isolate data key changes
  */
 interface IsolateDataStepCardProps {
     isolateData: IsolateDataFile[]
     selectedIsolateData: string | null
-    onFileSelecterChange: (event: SelectChangeEvent<string>, child: ReactNode) => void
+    onFileSelecterChange: (event: SelectChangeEvent, child: ReactNode) => void
     onFileUploaderChange: (file: React.SetStateAction<File | null>) => void
     isolateDataKeys: string[]
     selectedIsolateDataKey: string | null
-    onIsolateDataKeyChange: (event: SelectChangeEvent<string>, child: ReactNode) => void
+    onIsolateDataKeyChange: (event: SelectChangeEvent, child: ReactNode) => void
 }
 
 /**

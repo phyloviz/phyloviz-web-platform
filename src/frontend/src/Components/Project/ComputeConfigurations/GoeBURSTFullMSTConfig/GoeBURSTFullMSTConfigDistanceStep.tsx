@@ -1,11 +1,32 @@
 import * as React from "react"
 import Typography from "@mui/material/Typography"
-import {FormControl, InputLabel, Select} from "@mui/material"
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
+import {DistanceMatrix} from "../../../../Services/administration/models/getProject/GetProjectOutputModel";
+import {ReactNode} from "react";
+
+/**
+ * Props for the GoeBURSTFullMSTConfigDistanceStep component.
+ *
+ * @property distances the distances of the project
+ * @property selectedDistance the selected distance
+ * @property onDistanceChange the function to call when the distance changes
+ */
+interface GoeBURSTFullMSTConfigDistanceStepProps {
+    distances: DistanceMatrix[]
+    selectedDistance: string | null
+    onDistanceChange: (event: SelectChangeEvent, child: ReactNode) => void
+}
 
 /**
  * Card for the distance step in the GoeBURSTFullMSTConfig page.
  */
-export function GoeBURSTFullMSTConfigDistanceStep() {
+export function GoeBURSTFullMSTConfigDistanceStep(
+    {
+        distances,
+        selectedDistance,
+        onDistanceChange
+    }: GoeBURSTFullMSTConfigDistanceStepProps
+) {
     return (
         <>
             <Typography variant="caption" align={"justify"} sx={{mb: 1, width: "100%"}}>
@@ -15,9 +36,14 @@ export function GoeBURSTFullMSTConfigDistanceStep() {
                 <InputLabel id="distance">Distance</InputLabel>
                 <Select
                     labelId="distance"
-                    //value={}
                     label="Distance"
+                    value={selectedDistance ?? ""}
+                    onChange={onDistanceChange}
                 >
+                    {distances.map((distance) => (
+                        <MenuItem key={distance.distanceMatrixId}
+                                  value={distance.distanceMatrixId}>{distance.name}</MenuItem>
+                    ))}
                 </Select>
             </FormControl>
 

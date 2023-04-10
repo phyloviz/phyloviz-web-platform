@@ -10,7 +10,7 @@ import {useProject} from "./useProject"
  */
 export default function Project() {
     const outlet = useOutlet()
-    const {project, onUpdated} = useProject()
+    const {project, onProjectUpdate} = useProject()
 
     return (
         <Box sx={{
@@ -22,7 +22,7 @@ export default function Project() {
             <FileManager project={project}/>
             {
                 outlet
-                    ? <Outlet context={{project, onUpdated}}/>
+                    ? <Outlet context={{project, onProjectUpdate}}/>
                     : <EmptyProject project={project}/>
             }
         </Box>

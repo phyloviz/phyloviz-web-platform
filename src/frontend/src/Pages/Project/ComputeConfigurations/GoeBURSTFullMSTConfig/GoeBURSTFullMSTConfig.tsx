@@ -15,6 +15,10 @@ import {useGoeBURSTFullMSTConfig} from "./useGoeBURSTFullMSTConfig"
  */
 export default function GoeBURSTFullMSTConfig() {
     const {
+        distances,
+        selectedDistance,
+        handleDistanceChange,
+
         handleCancel,
         handleFinish
     } = useGoeBURSTFullMSTConfig()
@@ -50,7 +54,11 @@ export default function GoeBURSTFullMSTConfig() {
                             flexDirection: "column",
                             justifyContent: "left",
                         }}>
-                            <GoeBURSTFullMSTConfigDistanceStep/>
+                            <GoeBURSTFullMSTConfigDistanceStep
+                                distances={distances}
+                                selectedDistance={selectedDistance}
+                                onDistanceChange={handleDistanceChange}
+                            />
                         </Box>
 
                         <Box sx={{

@@ -15,6 +15,16 @@ import {useNLVGraphConfig} from "./useNLVGraphConfig"
  */
 export default function NLVGraphConfig() {
     const {
+        distances,
+        selectedDistance,
+        handleDistanceChange,
+
+        currentMaxNLVLevel,
+        handleMaxNLVLevelChange,
+
+        innerEdges,
+        handleInnerEdgesChange,
+
         handleCancel,
         handleFinish
     } = useNLVGraphConfig()
@@ -50,7 +60,15 @@ export default function NLVGraphConfig() {
                             flexDirection: "column",
                             justifyContent: "left",
                         }}>
-                            <NLVGraphConfigDistanceStep/>
+                            <NLVGraphConfigDistanceStep
+                                distances={distances}
+                                selectedDistance={selectedDistance}
+                                onDistanceChange={handleDistanceChange}
+                                currentMaxNLVLevel={currentMaxNLVLevel}
+                                onMaxNLVLevelChange={handleMaxNLVLevelChange}
+                                innerEdges={innerEdges}
+                                onInnerEdgesChange={handleInnerEdgesChange}
+                            />
                         </Box>
 
                         <Box sx={{

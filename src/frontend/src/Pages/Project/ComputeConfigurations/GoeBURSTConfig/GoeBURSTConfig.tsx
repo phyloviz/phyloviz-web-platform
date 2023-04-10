@@ -22,6 +22,11 @@ export default function GoeBURSTConfig() {
     const {
         step,
         currStep,
+
+        distances,
+        selectedDistance,
+        handleDistanceChange,
+
         handleCancel,
         handleBack,
         handleNext
@@ -67,7 +72,11 @@ export default function GoeBURSTConfig() {
                         }}>
                             {
                                 step === GoeBURSTConfigurationStep.DISTANCE
-                                    ? <GoeBURSTConfigDistanceStep/>
+                                    ? <GoeBURSTConfigDistanceStep
+                                        distances={distances}
+                                        selectedDistance={selectedDistance}
+                                        onDistanceChange={handleDistanceChange}
+                                    />
                                     : <GoeBURSTConfigLevelStep/>
                             }
                         </Box>

@@ -17,7 +17,7 @@ export enum FileType {
  */
 export function useUploadFiles() {
     const {projectId} = useParams<{ projectId: string }>()
-    const {onProjectUpdate} = useProjectContext()
+    const {project, onProjectUpdate} = useProjectContext()
     const [fileType, setfileType] = useState<FileType>(FileType.TYPING_DATA)
     const [file, setFile] = useState<File | null>(null)
     const [error, setError] = useState<string | null>(null)

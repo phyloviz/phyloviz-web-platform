@@ -22,6 +22,14 @@ export default function HierarchicalClusteringConfig() {
     const {
         step,
         currStep,
+
+        distances,
+        selectedDistance,
+        handleDistanceChange,
+
+        selectedMethod,
+        handleMethodChange,
+
         handleCancel,
         handleBack,
         handleNext
@@ -67,8 +75,15 @@ export default function HierarchicalClusteringConfig() {
                         }}>
                             {
                                 step === HierarchicalClusteringConfigStep.DISTANCE
-                                    ? <HierarchicalClusteringConfigDistanceStep/>
-                                    : <HierarchicalClusteringConfigMethodStep/>
+                                    ? <HierarchicalClusteringConfigDistanceStep
+                                        distances={distances}
+                                        selectedDistance={selectedDistance}
+                                        onDistanceChange={handleDistanceChange}
+                                    />
+                                    : <HierarchicalClusteringConfigMethodStep
+                                        selectedMethod={selectedMethod}
+                                        onMethodChange={handleMethodChange}
+                                    />
                             }
                         </Box>
 
