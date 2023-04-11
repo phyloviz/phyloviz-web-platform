@@ -1,6 +1,5 @@
 import * as React from "react"
 import {useState} from "react"
-import {DatasetType} from "../../../Domain/DatasetType"
 import {useNavigate} from "react-router-dom"
 import {SelectChangeEvent} from "@mui/material"
 import {useProjectContext} from "../useProject"
@@ -10,6 +9,18 @@ export enum CreateDatasetStep {
     INFO = "Dataset Info",
     TYPING_DATA = "Typing Data",
     ISOLATE_DATA = "Isolate Data",
+}
+
+/**
+ * The type of dataset.
+ */
+export enum DatasetType {
+    MLST = "Multi-Locus Sequence Typing (MLST)",
+    MLVA = "Multi-Locus Variable Number Tandem Repeat Analysis (MLVA)",
+    FASTA = "Aligned Sequences (FASTA)",
+    ALIGNED_SEQUENCES = "Aligned Sequences",
+    SNP = "Single Nucleotide Polymorphism (SNP)",
+    SNP_WITHOUT_EXPLICIT_ID = "Single Nucleotide Polymorphism (SNP) (without explicit ID)",
 }
 
 // TODO: This hook and the CreateDataset page are very extensive.

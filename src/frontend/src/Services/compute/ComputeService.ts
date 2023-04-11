@@ -1,52 +1,52 @@
 import {get, post} from "../utils/apiFetch";
 import {WebApiUris} from "../WebApiUris";
-import {GetJobStatusOutputModel} from "./models/getJobStatus/GetJobStatusOutputModel";
-import {CreateJobOutputModel} from "./models/createJob/CreateJobOutputModel";
-import {CreateJobInputModel} from "./models/createJob/CreateJobInputModel";
-import {GetJobsOutputModel} from "./models/getJobs/GetJobsOutputModel";
+import {GetWorkflowStatusOutputModel} from "./models/getWorkflowStatus/GetWorkflowStatusOutputModel";
+import {CreateWorkflowOutputModel} from "./models/createWorkflow/CreateWorkflowOutputModel";
+import {CreateWorkflowInputModel} from "./models/createWorkflow/CreateWorkflowInputModel";
+import {GetWorkflowsOutputModel} from "./models/getWorkflows/GetWorkflowsOutputModel";
 
 export namespace ComputeService {
 
     /**
-     * Create a job.
+     * Create a workflow.
      *
      * @param projectId The project id.
-     * @param createJobInputModel The create job input model.
-     * @returns The create job output model.
+     * @param createWorkflowInputModel The create workflow input model.
+     * @returns The create workflow output model.
      */
-    export async function createJob(
+    export async function createWorkflow(
         projectId: string,
-        createJobInputModel: CreateJobInputModel
-    ): Promise<CreateJobOutputModel> {
-        return await post<CreateJobOutputModel>(
-            WebApiUris.createJob(projectId),
-            JSON.stringify(createJobInputModel)
+        createWorkflowInputModel: CreateWorkflowInputModel
+    ): Promise<CreateWorkflowOutputModel> {
+        return await post<CreateWorkflowOutputModel>(
+            WebApiUris.createWorkflow(projectId),
+            JSON.stringify(createWorkflowInputModel)
         )
     }
 
     /**
-     * Get the status of a job.
+     * Get the status of a workflow.
      *
      * @param projectId The project id.
-     * @param jobId The job id.
-     * @returns The job status.
+     * @param workflowId The workflow id.
+     * @returns The workflow status.
      */
-    export async function getJobStatus(
+    export async function getWorkflowStatus(
         projectId: string,
-        jobId: string
-    ): Promise<GetJobStatusOutputModel> {
-        return await get<GetJobStatusOutputModel>(WebApiUris.getJobStatus(projectId, jobId))
+        workflowId: string
+    ): Promise<GetWorkflowStatusOutputModel> {
+        return await get<GetWorkflowStatusOutputModel>(WebApiUris.getWorkflowStatus(projectId, workflowId))
     }
 
     /**
-     * Get the jobs of a project.
+     * Get the workflows of a project.
      *
      * @param projectId The project id.
-     * @returns The jobs.
+     * @returns The workflows.
      */
-    export async function getJobs(
+    export async function getWorkflows(
         projectId: string
-    ): Promise<GetJobsOutputModel> {
-        return await get<GetJobsOutputModel>(WebApiUris.getJobs(projectId))
+    ): Promise<GetWorkflowsOutputModel> {
+        return await get<GetWorkflowsOutputModel>(WebApiUris.getWorkflows(projectId))
     }
 }

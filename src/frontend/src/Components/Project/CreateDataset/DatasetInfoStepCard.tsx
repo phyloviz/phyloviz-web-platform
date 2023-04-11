@@ -2,7 +2,7 @@ import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField}
 import * as React from "react"
 import {ReactNode} from "react"
 import Typography from "@mui/material/Typography"
-import {DatasetType} from "../../../Domain/DatasetType"
+import {DatasetType} from "../../../Pages/Project/CreateDataset/useCreateDataset"
 
 /**
  * Props for the DatasetInfoStepCard component.

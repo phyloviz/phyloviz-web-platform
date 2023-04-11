@@ -1,7 +1,7 @@
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 import * as React from "react"
 import {ReactNode} from "react"
-import {DatasetType} from "../../../Domain/DatasetType"
+import {DatasetType} from "../../../Pages/Project/CreateDataset/useCreateDataset"
 import Typography from "@mui/material/Typography"
 import {FileUploader} from "react-drag-drop-files"
 import {TypingDataFile} from "../../../Services/administration/models/getProject/GetProjectOutputModel"

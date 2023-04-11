@@ -23,6 +23,7 @@ export default function IsolateData() {
                 </Typography>
                 {
                     // TODO: Sorting: https://mui.com/material-ui/react-table/#sorting-amp-selecting
+                    // Or use DataGrid like in the typing data page
                 }
                 <TableContainer>
                     <Table sx={{mt: 4}} size="small">
