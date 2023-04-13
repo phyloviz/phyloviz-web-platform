@@ -8,6 +8,7 @@ import {FileUploader} from "react-drag-drop-files"
 import CancelIcon from "@mui/icons-material/Cancel"
 import {FileType, useUploadFiles} from "./useUploadFiles"
 import Alert from '@mui/material/Alert'
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
 
 /**
  * Upload Files page.
@@ -19,6 +20,7 @@ export default function UploadFiles() {
         handleFileChange,
         handleCancel,
         handleSubmit,
+        isUploading,
         error
     } = useUploadFiles()
 
@@ -51,7 +53,8 @@ export default function UploadFiles() {
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
-                            mt: 4
+                            mt: 4,
+                            mb: 4
                         }}>
                             <FormControl required sx={{mb: 4}}>
                                 <FormLabel>Data Type</FormLabel>
@@ -74,6 +77,12 @@ export default function UploadFiles() {
                             {error && <Alert severity="error" sx={{mt: 2}}>{error}</Alert>}
                         </Box>
 
+                        {
+                            isUploading && (
+                                <LoadingSpinner text={"Uploading..."}/>
+                            )
+                        }
+
                         <Box
                             sx={{
                                 width: "100%",
@@ -86,6 +95,7 @@ export default function UploadFiles() {
                                 variant="contained"
                                 startIcon={<CancelIcon/>}
                                 onClick={handleCancel}
+                                disabled={isUploading}
                                 sx={{mt: 4, width: "50%"}}
                             >
                                 Cancel
@@ -94,6 +104,7 @@ export default function UploadFiles() {
                                 variant="contained"
                                 startIcon={<FinishIcon/>}
                                 onClick={handleSubmit}
+                                disabled={isUploading}
                                 sx={{mt: 4, ml: 2, width: "50%"}}
                             >
                                 Upload

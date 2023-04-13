@@ -1,12 +1,14 @@
 import {Dataset} from "../../../../Services/administration/models/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../StyledTreeItem"
-import {Add, Inventory2} from "@mui/icons-material"
+import {Add, Download, Inventory2} from "@mui/icons-material"
 import {DatasetTreeItem} from "./Dataset/DatasetTreeItem"
 import * as React from "react"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../../Utils/WebUiUris"
 import {Menu, MenuItem} from "@mui/material"
 import {useContextMenu} from "../useContextMenu"
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
 /**
  * Props for the DatasetsTreeItem component.
@@ -63,8 +65,8 @@ export function DatasetsTreeItem({nodeId, datasets}: DatasetsTreeItemProps) {
                 }
             >
                 <MenuItem onClick={handleCreateDataset}>
-                    <Add color={"primary"}/>
-                    Create Dataset
+                    <ListItemIcon><Add color={"primary"}/></ListItemIcon>
+                    <ListItemText>Create Dataset</ListItemText>
                 </MenuItem>
             </Menu>
         </>

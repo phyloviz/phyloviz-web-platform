@@ -1,10 +1,12 @@
 import {useContextMenu} from "../../useContextMenu"
 import {StyledTreeItem} from "../../StyledTreeItem"
-import {FilePresent, Visibility} from "@mui/icons-material"
+import {Download, FilePresent, Visibility} from "@mui/icons-material"
 import {Menu, MenuItem} from "@mui/material"
 import * as React from "react"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../../../Utils/WebUiUris"
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
 /**
  * Props for the IsolateDataTreeItem component.
@@ -53,8 +55,13 @@ export function IsolateDataTreeItem({nodeId, isolateDataId}: IsolateDataTreeItem
             }
         >
             <MenuItem onClick={handleViewIsolateData}>
-                <Visibility color={"primary"}/>
-                View
+                <ListItemIcon><Visibility color={"primary"}/></ListItemIcon>
+                <ListItemText>View</ListItemText>
+            </MenuItem>
+            <MenuItem onClick={() => {/*TODO: To be implemented*/
+            }}>
+                <ListItemIcon><Download color={"primary"}/></ListItemIcon>
+                <ListItemText>Export</ListItemText>
             </MenuItem>
         </Menu>
     </>)

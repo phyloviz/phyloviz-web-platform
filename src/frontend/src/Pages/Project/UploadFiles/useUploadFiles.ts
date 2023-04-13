@@ -21,6 +21,7 @@ export function useUploadFiles() {
     const [fileType, setfileType] = useState<FileType>(FileType.TYPING_DATA)
     const [file, setFile] = useState<File | null>(null)
     const [error, setError] = useState<string | null>(null)
+    const [isUploading, setIsUploading] = useState(false)
 
     const navigate = useNavigate()
 
@@ -28,12 +29,14 @@ export function useUploadFiles() {
         fileType,
         handleFileTypeChange: (value: FileType) => setfileType(value),
         handleFileChange: (file: React.SetStateAction<File | null>) => setFile(file),
-        handleCancel: () => navigate(-1),
+        handleCancel: () => navigate(-1), // TODO: Maybe cancel should cancel the upload?
         handleSubmit: () => {
             if (!file) {
                 setError("Please select a file to upload.")
                 return
             }
+
+            setIsUploading(true)
 
             if (fileType === FileType.TYPING_DATA)
                 AdministrationService.uploadTypingData(projectId!, file)
@@ -50,6 +53,7 @@ export function useUploadFiles() {
                     })
                     .catch((err) => setError(err.message))
         },
+        isUploading,
         error
     }
 }

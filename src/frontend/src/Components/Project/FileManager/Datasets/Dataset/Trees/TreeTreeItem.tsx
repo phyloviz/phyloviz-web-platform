@@ -1,14 +1,16 @@
-import {Tree} from "../../../../../Services/administration/models/getProject/GetProjectOutputModel"
-import {useContextMenu} from "../../useContextMenu"
-import {StyledTreeItem} from "../../StyledTreeItem"
-import {ScatterPlot, Visibility} from "@mui/icons-material"
+import {Tree} from "../../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {useContextMenu} from "../../../useContextMenu"
+import {StyledTreeItem} from "../../../StyledTreeItem"
+import {Download, Forest, ScatterPlot, Visibility} from "@mui/icons-material"
 import {Menu, MenuItem} from "@mui/material"
 import * as React from "react"
 import {useNavigate, useParams} from "react-router-dom"
-import {WebUiUris} from "../../../../../Utils/WebUiUris"
+import {WebUiUris} from "../../../../../../Utils/WebUiUris"
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
 /**
- * Props for the TreeTreeItem component.
+ * Props for the TreeViewTreeItem component.
  *
  * @property nodeId id of the tree item
  * @property datasetId id of the dataset
@@ -41,8 +43,8 @@ export function TreeTreeItem({nodeId, datasetId, tree}: TreeTreeItemProps) {
     return (<>
         <StyledTreeItem
             nodeId={nodeId}
-            labelText="Tree"
-            labelIcon={ScatterPlot}
+            labelText={tree.name}
+            labelIcon={Forest}
             handleContextMenu={handleContextMenu}
         />
         <Menu
@@ -56,8 +58,13 @@ export function TreeTreeItem({nodeId, datasetId, tree}: TreeTreeItemProps) {
             }
         >
             <MenuItem onClick={handleViewTree}>
-                <Visibility color={"primary"}/>
-                View
+                <ListItemIcon><Visibility color={"primary"}/></ListItemIcon>
+                <ListItemText>View</ListItemText>
+            </MenuItem>
+            <MenuItem onClick={() => {/*TODO: To be implemented*/
+            }}>
+                <ListItemIcon><Download color={"primary"}/></ListItemIcon>
+                <ListItemText>Export</ListItemText>
             </MenuItem>
         </Menu>
     </>)

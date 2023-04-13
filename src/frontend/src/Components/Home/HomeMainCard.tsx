@@ -17,10 +17,9 @@ export function HomeMainCard() {
         }}>
             <PhylovizHeader/>
             <Typography component="h1" variant="body1" sx={{mt: 4}}>
-                PHYLOViZ Web Platform is a modular and web-based tool for phylogenetic analysis. It is
-                a modular tool that unifies both <a href={"https://www.phyloviz.net"}>PHYLOViZ</a> and
-                <a href={"https://online.phyloviz.net"}> PHYLOViZ Online</a> into a single and new
-                platform.
+                PHYLOViZ Web Platform is a web platform that allows users to access and perform phylogenetic analyses
+                and visualizations from anywhere with an internet connection, without requiring installation of software
+                or access to high-performance computing resources.
             </Typography>
         </Paper>
     )

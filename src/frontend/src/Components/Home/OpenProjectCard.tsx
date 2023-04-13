@@ -26,7 +26,7 @@ export function OpenProjectCard() {
             </Typography>
             <Typography component="h1" variant="body1">
                 Open a project that you have created before.<br/>
-                The project can be in the cloud or you can upload it from your computer.
+                All your projects are stored in our cloud.
             </Typography>
             <Button
                 variant="contained"

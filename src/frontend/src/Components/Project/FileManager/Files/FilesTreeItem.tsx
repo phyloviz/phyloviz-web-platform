@@ -1,5 +1,5 @@
 import * as React from "react"
-import {Description, FilePresent, Folder} from "@mui/icons-material"
+import {Add, Description, FilePresent, Folder} from "@mui/icons-material"
 import {Menu, MenuItem} from "@mui/material"
 import UploadIcon from "@mui/icons-material/Upload"
 import {useNavigate, useParams} from "react-router-dom"
@@ -7,6 +7,8 @@ import {WebUiUris} from "../../../../Utils/WebUiUris"
 import {ProjectFiles} from "../../../../Services/administration/models/getProject/GetProjectOutputModel"
 import {useContextMenu} from "../useContextMenu"
 import {StyledTreeItem} from "../StyledTreeItem"
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
 /**
  * Props for the FilesTreeItem component.
@@ -69,8 +71,8 @@ export function FilesTreeItem({nodeId, files}: FilesTreeItemProps) {
                 }
             >
                 <MenuItem onClick={handleUploadFiles}>
-                    <UploadIcon color={"primary"}/>
-                    Upload Files
+                    <ListItemIcon><UploadIcon color={"primary"}/></ListItemIcon>
+                    <ListItemText>Upload Files</ListItemText>
                 </MenuItem>
             </Menu>
         </>

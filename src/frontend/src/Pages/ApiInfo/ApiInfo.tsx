@@ -29,7 +29,11 @@ export default function ApiInfo() {
                     can programmatically use some of PHYLOViZ Web Platform features without using the application's
                     graphical interface.
                 </Typography>
-                {/*TODO: Add content*/}
+                <Typography component="h1" variant="body1" sx={{mt: 4}}>
+                    The API documentation is available <a
+                    href="https://github.com/bodybuilders-team/phyloviz-web-platform/wiki/api-documentation">here</a>.
+                </Typography>
+                {/*TODO: Maybe add more info here*/}
             </Paper>
         </Container>
     )

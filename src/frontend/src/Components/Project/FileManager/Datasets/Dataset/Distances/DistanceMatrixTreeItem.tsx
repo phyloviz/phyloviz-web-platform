@@ -1,11 +1,13 @@
-import {DistanceMatrix} from "../../../../../Services/administration/models/getProject/GetProjectOutputModel"
-import {useContextMenu} from "../../useContextMenu"
-import {StyledTreeItem} from "../../StyledTreeItem"
-import {TableView, Visibility} from "@mui/icons-material"
+import {DistanceMatrix} from "../../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {useContextMenu} from "../../../useContextMenu"
+import {StyledTreeItem} from "../../../StyledTreeItem"
+import {Download, TableView, Visibility} from "@mui/icons-material"
 import {Menu, MenuItem} from "@mui/material"
 import * as React from "react"
 import {useNavigate, useParams} from "react-router-dom"
-import {WebUiUris} from "../../../../../Utils/WebUiUris"
+import {WebUiUris} from "../../../../../../Utils/WebUiUris"
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
 /**
  * Props for the DistanceMatrixTreeItem component.
@@ -41,7 +43,7 @@ export function DistanceMatrixTreeItem({nodeId, datasetId, distanceMatrix}: Dist
     return (<>
         <StyledTreeItem
             nodeId={nodeId}
-            labelText="Distance Matrix"
+            labelText={distanceMatrix.name}
             labelIcon={TableView}
             handleContextMenu={handleContextMenu}
         />
@@ -56,8 +58,13 @@ export function DistanceMatrixTreeItem({nodeId, datasetId, distanceMatrix}: Dist
             }
         >
             <MenuItem onClick={handleViewDistanceMatrix}>
-                <Visibility color={"primary"}/>
-                View
+                <ListItemIcon><Visibility color={"primary"}/></ListItemIcon>
+                <ListItemText>View</ListItemText>
+            </MenuItem>
+            <MenuItem onClick={() => {/*TODO: To be implemented*/
+            }}>
+                <ListItemIcon><Download color={"primary"}/></ListItemIcon>
+                <ListItemText>Export</ListItemText>
             </MenuItem>
         </Menu>
     </>)

@@ -45,6 +45,8 @@ import COMPUTE_CONFIG_GOEBURST_FULL_MST = WebUiUris.COMPUTE_CONFIG_GOEBURST_FULL
 import COMPUTE_CONFIG_HIERARCHICAL_CLUSTERING = WebUiUris.COMPUTE_CONFIG_HIERARCHICAL_CLUSTERING;
 import COMPUTE_CONFIG_NEIGHBOR_JOINING = WebUiUris.COMPUTE_CONFIG_NEIGHBOR_JOINING;
 import COMPUTE_CONFIG_NLV_GRAPH = WebUiUris.COMPUTE_CONFIG_NLV_GRAPH;
+import TREE = WebUiUris.TREE;
+import Tree from "./Pages/Project/Tree/Tree";
 
 /**
  * App component.
@@ -100,6 +102,10 @@ export default function App() {
                             <Route
                                 path={DISTANCE_MATRIX}
                                 element={<ProtectedRoute><DistanceMatrix/></ProtectedRoute>}
+                            />
+                            <Route
+                                path={TREE}
+                                element={<ProtectedRoute><Tree/></ProtectedRoute>}
                             />
                             <Route
                                 path={TREE_VIEW}

@@ -1,6 +1,6 @@
 import * as React from "react"
 import {StyledTreeItem} from "../../StyledTreeItem"
-import {Cyclone} from "@mui/icons-material"
+import {Cyclone, Download, Info, ScatterPlot, TableView} from "@mui/icons-material"
 import {Menu, MenuItem} from "@mui/material"
 import DatasetIcon from "@mui/icons-material/Dataset"
 import {Dataset} from "../../../../../Services/administration/models/getProject/GetProjectOutputModel"
@@ -9,10 +9,13 @@ import {NestedMenuItem} from "mui-nested-menu"
 import ArrowRightIcon from "@mui/icons-material/ArrowRight"
 import {WebUiUris} from "../../../../../Utils/WebUiUris"
 import {useNavigate, useParams} from "react-router-dom"
-import {TreesTreeItem} from "./TreesTreeItem"
-import {DistancesTreeItem} from "./DistancesTreeItem"
+import {TreesTreeItem} from "./Trees/TreesTreeItem"
+import {DistancesTreeItem} from "./Distances/DistancesTreeItem"
 import {IsolateDataTreeItem} from "./IsolateDataTreeItem"
 import {TypingDataTreeItem} from "./TypingDataTreeItem"
+import {TreeViewsTreeItem} from "./TreeViews/TreeViewsTreeItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
 /**
  * Props for the DatasetTreeItem component.
@@ -39,7 +42,7 @@ export function DatasetTreeItem({nodeId, dataset}: DatasetTreeItemProps) {
 
     const {projectId} = useParams<{ projectId: string }>()
     const navigate = useNavigate()
-    const computeOptions = [
+    const computeTreeOptions = [
         {
             label: "goeBURST",
             url: WebUiUris.computeConfigGoeburst(projectId!, dataset.datasetId)
@@ -62,6 +65,13 @@ export function DatasetTreeItem({nodeId, dataset}: DatasetTreeItemProps) {
         }
     ]
 
+    const computeDistanceMatrixOptions = [
+        {
+            label: "Hamming Distance",
+            url: WebUiUris.computeConfigHammingDistance(projectId!, dataset.datasetId)
+        }
+    ]
+
     return (
         <>
             <StyledTreeItem
@@ -75,6 +85,7 @@ export function DatasetTreeItem({nodeId, dataset}: DatasetTreeItemProps) {
                 <DistancesTreeItem nodeId="7" datasetId={dataset.datasetId}
                                    distanceMatrices={dataset.distanceMatrices}/>
                 <TreesTreeItem nodeId="10" datasetId={dataset.datasetId} trees={dataset.trees}/>
+                <TreeViewsTreeItem nodeId="11" datasetId={dataset.datasetId} treeViews={dataset.treeViews}/>
             </StyledTreeItem>
             <Menu
                 open={contextMenu !== null}
@@ -87,13 +98,14 @@ export function DatasetTreeItem({nodeId, dataset}: DatasetTreeItemProps) {
                 }
             >
                 <NestedMenuItem
-                    leftIcon={<Cyclone color={"primary"}/>}
+                    leftIcon={<TableView color={"primary"}/>}
                     rightIcon={<ArrowRightIcon/>}
-                    label={"Compute"}
+                    label={"Compute Distances"}
                     parentMenuOpen={true}
+                    sx={{pl: 2}}
                 >
                     {
-                        computeOptions.map((option, index) => {
+                        computeDistanceMatrixOptions.map((option, index) => {
                             return (
                                 <MenuItem key={index} onClick={() => {
                                     handleClose()
@@ -105,6 +117,31 @@ export function DatasetTreeItem({nodeId, dataset}: DatasetTreeItemProps) {
                         })
                     }
                 </NestedMenuItem>
+                <NestedMenuItem
+                    leftIcon={<ScatterPlot color={"primary"}/>}
+                    rightIcon={<ArrowRightIcon/>}
+                    label={"Compute Tree"}
+                    parentMenuOpen={true}
+                    sx={{pl: 2}}
+                >
+                    {
+                        computeTreeOptions.map((option, index) => {
+                            return (
+                                <MenuItem key={index} onClick={() => {
+                                    handleClose()
+                                    navigate(option.url)
+                                }}>
+                                    {option.label}
+                                </MenuItem>
+                            )
+                        })
+                    }
+                </NestedMenuItem>
+                <MenuItem onClick={() => {/*TODO: To be implemented*/
+                }}>
+                    <ListItemIcon><Info color={"primary"}/></ListItemIcon>
+                    <ListItemText>Dataset Details</ListItemText>
+                </MenuItem>
             </Menu>
         </>
     )

@@ -37,6 +37,8 @@ export namespace WebUiUris {
     export const tree = (projectId: string, datasetId: string, treeId: string) => `/projects/${projectId}/datasets/${datasetId}/trees/${treeId}`
     export const treeView = (projectId: string, datasetId: string, treeViewId: string) => `/projects/${projectId}/datasets/${datasetId}/tree-views/${treeViewId}`
 
+    export const computeConfigHammingDistance = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute-configs/hamming-distance`
+
     export const computeConfigGoeburst = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute-configs/goeburst`
     export const computeConfigGoeburstFullMst = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute-configs/goeburst-full-mst`
     export const computeConfigHierarchicalClustering = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute-configs/hierarchical-clustering`
