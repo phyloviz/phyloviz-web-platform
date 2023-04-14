@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Map;
 
 @Data
-public class GetWorkflowOutputDTO {
+public class GetWorkflowStatusOutputDTO {
     private final String workflowId;
     private final String type;
     private final String status;

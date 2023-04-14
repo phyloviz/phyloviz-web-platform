@@ -33,6 +33,7 @@ public class FileStorageRepositoryCloud implements FileStorageRepository {
     private final S3AsyncClient s3Client;
     private final S3TransferManager transferManager;
     private final ExecutorService executorService = Executors.newCachedThreadPool();
+    public static final Region REGION = Region.of("custom");
 
     public FileStorageRepositoryCloud(
             @Value("${s3.endpoint}")
@@ -42,14 +43,14 @@ public class FileStorageRepositoryCloud implements FileStorageRepository {
             @Value("${s3.secret-access-key}")
             String secretAccessKey,
             @Value("${s3.bucket}")
-            String bucketName) {
-
+            String bucketName
+    ) {
         AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
 
         S3AsyncClient s3Client = S3AsyncClient.builder()
                 .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
                 .endpointOverride(URI.create(objectStorageEndpoint))
-                .region(Region.of("custom"))
+                .region(REGION)
                 .build();
 
         s3Client.createBucket(r -> r.bucket(bucketName));
@@ -64,12 +65,15 @@ public class FileStorageRepositoryCloud implements FileStorageRepository {
     public boolean store(String url, MultipartFile multipartFile) {
         int lastSlash = url.lastIndexOf("/");
         String path = url.substring(0, lastSlash);
-
         String name = url.substring(lastSlash + 1);
 
         AsyncRequestBody requestBody;
         try {
-            requestBody = AsyncRequestBody.fromInputStream(multipartFile.getInputStream(), multipartFile.getSize(), executorService);
+            requestBody = AsyncRequestBody.fromInputStream(
+                    multipartFile.getInputStream(),
+                    multipartFile.getSize(),
+                    executorService
+            );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -113,5 +117,4 @@ public class FileStorageRepositoryCloud implements FileStorageRepository {
     public String getAdapterId() {
         return ADAPTER_ID;
     }
-
 }

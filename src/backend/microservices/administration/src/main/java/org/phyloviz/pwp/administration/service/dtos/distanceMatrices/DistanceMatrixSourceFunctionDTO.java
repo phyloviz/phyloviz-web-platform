@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.administration.service.dtos.distance_matrices;
+package org.phyloviz.pwp.administration.service.dtos.distanceMatrices;
 
 import lombok.Data;
 import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.source.DistanceMatrixSourceFunction;

@@ -13,13 +13,20 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-//TODO configure this class
+// TODO configure and comment this class
 public class ProblemJsonResponseBodyResultHandler extends ResponseBodyResultHandler {
-    public ProblemJsonResponseBodyResultHandler(List<HttpMessageWriter<?>> writers, RequestedContentTypeResolver resolver) {
+    public ProblemJsonResponseBodyResultHandler(
+            List<HttpMessageWriter<?>> writers,
+            RequestedContentTypeResolver resolver
+    ) {
         super(writers, resolver);
     }
 
-    public ProblemJsonResponseBodyResultHandler(List<HttpMessageWriter<?>> writers, RequestedContentTypeResolver resolver, ReactiveAdapterRegistry registry) {
+    public ProblemJsonResponseBodyResultHandler(
+            List<HttpMessageWriter<?>> writers,
+            RequestedContentTypeResolver resolver,
+            ReactiveAdapterRegistry registry
+    ) {
         super(writers, resolver, registry);
     }
 

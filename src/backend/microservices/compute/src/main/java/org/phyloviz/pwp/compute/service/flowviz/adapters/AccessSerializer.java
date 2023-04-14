@@ -11,6 +11,7 @@ import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.library.Libra
 
 import java.lang.reflect.Type;
 
+// TODO: Comment this class
 public class AccessSerializer implements JsonSerializer<Access> {
     @Override
     public JsonElement serialize(Access access, Type typeOfSrc, JsonSerializationContext context) {
@@ -18,13 +19,12 @@ public class AccessSerializer implements JsonSerializer<Access> {
         json.addProperty("_type", access.getType().toString().toLowerCase());
         AccessDetails details = access.getDetails();
 
-        if (details instanceof LibraryAccessDetails) {
+        if (details instanceof LibraryAccessDetails)
             json.add("library", context.serialize(details, LibraryAccessDetails.class));
-        } else if (details instanceof ApiAccessDetails) {
+        else if (details instanceof ApiAccessDetails)
             json.add("api", context.serialize(details, ApiAccessDetails.class));
-        } else {
+        else
             throw new IllegalArgumentException("Unknown access details type: " + details.getClass().getName());
-        }
 
         return json;
     }

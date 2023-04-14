@@ -23,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
+/**
+ * Implementation of the {@link IsolateDataService} interface.
+ */
 @Service
 @RequiredArgsConstructor
 public class IsolateDataServiceImpl implements IsolateDataService {
@@ -81,8 +84,10 @@ public class IsolateDataServiceImpl implements IsolateDataService {
             Dataset dataset = datasetRepository.findById(datasetId).orElse(null);
 
             if (dataset != null && dataset.getIsolateDataId() != null && dataset.getIsolateDataId().equals(isolateDataId))
-                throw new DeniedFileDeletionException("Cannot delete file. File is still being used in one or more datasets. " +
-                        "Delete the datasets first.");
+                throw new DeniedFileDeletionException(
+                        "Cannot delete file. File is still being used in one or more datasets. " +
+                                "Delete the datasets first."
+                );
         });
 
         isolateDataMetadataRepository.findByIsolateDataId(isolateDataId).orElseThrow(IsolateDataNotFoundException::new);
@@ -111,11 +116,10 @@ public class IsolateDataServiceImpl implements IsolateDataService {
     @Override
     public void deleteIsolateData(String isolateDataId) {
         isolateDataMetadataRepository.findAllByIsolateDataId(isolateDataId).forEach(isolateDataMetadata -> {
-            if (isolateDataMetadata.getAdapterId().equals(fileStorageRepository.getAdapterId())) {
+            if (isolateDataMetadata.getAdapterId().equals(fileStorageRepository.getAdapterId()))
                 fileStorageRepository.delete(isolateDataMetadata.getUrl());
-            } else {
+            else
                 throw new RuntimeException("Unsupported adapter: " + isolateDataMetadata.getAdapterId());
-            }
 
             isolateDataMetadataRepository.delete(isolateDataMetadata);
         });

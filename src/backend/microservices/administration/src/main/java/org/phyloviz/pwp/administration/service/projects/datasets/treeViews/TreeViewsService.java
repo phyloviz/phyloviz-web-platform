@@ -1,9 +1,12 @@
 package org.phyloviz.pwp.administration.service.projects.datasets.treeViews;
 
-import org.phyloviz.pwp.administration.service.dtos.tree_views.TreeViewDTO;
-import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.treeViews.TreeViewDTO;
+import org.phyloviz.pwp.administration.service.dtos.treeViews.deleteTreeView.DeleteTreeViewInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.treeViews.deleteTreeView.DeleteTreeViewOutputDTO;
 
+/**
+ * Service for operations related to tree views.
+ */
 public interface TreeViewsService {
 
     /**

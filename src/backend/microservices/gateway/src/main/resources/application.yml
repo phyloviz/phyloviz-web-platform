@@ -43,11 +43,11 @@ pwp:
       uri: http://localhost:8086
       routes:
         - method: POST
-          path: /projects/{projectId}/jobs
+          path: /projects/{projectId}/workflows
         - method: GET
-          path: /projects/{projectId}/jobs
+          path: /projects/{projectId}/workflows
         - method: GET
-          path: /projects/{projectId}/jobs/{jobId}
+          path: /projects/{projectId}/workflows/{workflowId}
 
     visualization:
       uri: http://localhost:8085
@@ -110,7 +110,7 @@ spring:
           phyloviz-web-platform-client:
             provider: keycloak
             client-id: phyloviz-web-platform-client
-            client-secret: whCCD9r37qj8mx9H7R4mzIrSezYf3H7R
+            client-secret: 3rG9M1rnH7gKX29QujY7HQedPs7KT1Iu
             redirect-uri: "{baseUrl}/${pwp.security.oauth2.redirect-uri}"
 
             scope:
@@ -119,4 +119,4 @@ spring:
               - profile
 logging:
   level:
-    root: debug
+    root: info

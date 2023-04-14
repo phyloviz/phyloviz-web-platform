@@ -11,6 +11,9 @@ import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 
 import java.util.List;
 
+/**
+ * Service for operations related to projects.
+ */
 public interface ProjectsService {
 
     /**

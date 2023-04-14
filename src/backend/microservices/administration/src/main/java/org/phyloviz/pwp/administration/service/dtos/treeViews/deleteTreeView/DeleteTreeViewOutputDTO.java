@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView;
+package org.phyloviz.pwp.administration.service.dtos.treeViews.deleteTreeView;
 
 import lombok.Data;
 

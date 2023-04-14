@@ -4,6 +4,9 @@ import org.phyloviz.pwp.administration.service.dtos.trees.TreeDTO;
 import org.phyloviz.pwp.administration.service.dtos.trees.deleteTree.DeleteTreeInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.trees.deleteTree.DeleteTreeOutputDTO;
 
+/**
+ * Service for operations related to trees.
+ */
 public interface TreesService {
 
     /**

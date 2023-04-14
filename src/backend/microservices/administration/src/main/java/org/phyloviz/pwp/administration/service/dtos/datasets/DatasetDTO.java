@@ -1,8 +1,8 @@
 package org.phyloviz.pwp.administration.service.dtos.datasets;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.distance_matrices.DistanceMatrixDTO;
-import org.phyloviz.pwp.administration.service.dtos.tree_views.TreeViewDTO;
+import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.DistanceMatrixDTO;
+import org.phyloviz.pwp.administration.service.dtos.treeViews.TreeViewDTO;
 import org.phyloviz.pwp.administration.service.dtos.trees.TreeDTO;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.http.models.distanceMatrices.deleteDistanceMatrix;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.distance_matrices.deleteDistanceMatrix.DeleteDistanceMatrixOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.deleteDistanceMatrix.DeleteDistanceMatrixOutputDTO;
 
 @Data
 public class DeleteDistanceMatrixOutputModel {

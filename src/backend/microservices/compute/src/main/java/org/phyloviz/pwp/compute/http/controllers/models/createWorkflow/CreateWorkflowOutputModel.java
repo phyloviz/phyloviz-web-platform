@@ -1,7 +1,7 @@
-package org.phyloviz.pwp.compute.http.controllers.models.computeDistanceMatrix;
+package org.phyloviz.pwp.compute.http.controllers.models.createWorkflow;
 
 import lombok.Data;
-import org.phyloviz.pwp.compute.service.dtos.computeDistanceMatrix.CreateWorkflowOutputDTO;
+import org.phyloviz.pwp.compute.service.dtos.createWorkflow.CreateWorkflowOutputDTO;
 
 @Data
 public class CreateWorkflowOutputModel {

@@ -16,5 +16,4 @@ public class Tool {
     private final Access access;
 
     private final List<Library> library;
-
 }

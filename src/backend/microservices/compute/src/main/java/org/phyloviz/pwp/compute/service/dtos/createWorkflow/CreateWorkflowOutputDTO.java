@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.compute.service.dtos.computeDistanceMatrix;
+package org.phyloviz.pwp.compute.service.dtos.createWorkflow;
 
 import lombok.Data;
 

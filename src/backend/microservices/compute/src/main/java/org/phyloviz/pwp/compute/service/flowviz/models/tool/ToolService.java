@@ -1,12 +1,12 @@
 package org.phyloviz.pwp.compute.service.flowviz.models.tool;
 
-import org.phyloviz.pwp.compute.service.flowviz.FlowVizHttpService;
+import org.phyloviz.pwp.compute.service.flowviz.FLOWViZHttpService;
 import org.phyloviz.pwp.compute.service.flowviz.exceptions.ConnectionRefusedException;
 import org.phyloviz.pwp.compute.service.flowviz.exceptions.UnexpectedResponseException;
 
-public class ToolService extends FlowVizHttpService {
+public class ToolService extends FLOWViZHttpService {
 
-    public ToolService(FlowVizHttpService httpService) {
+    public ToolService(FLOWViZHttpService httpService) {
         super(httpService);
     }
 

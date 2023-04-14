@@ -4,7 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
-import okhttp3.*;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import org.phyloviz.pwp.compute.service.flowviz.adapters.AccessDeserializer;
 import org.phyloviz.pwp.compute.service.flowviz.adapters.AccessSerializer;
 import org.phyloviz.pwp.compute.service.flowviz.adapters.LocalDateTimeDeserializer;
@@ -17,14 +22,19 @@ import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.Access;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-public class FlowVizHttpService {
+// TODO: Comment this class
+
+/**
+ * Service for communicating with FLOWViZ API.
+ */
+public class FLOWViZHttpService {
 
     private final String baseUrl;
     private final OkHttpClient client;
     private final Gson gson;
     protected Token token;
 
-    public FlowVizHttpService(String baseUrl) {
+    public FLOWViZHttpService(String baseUrl) {
         this.baseUrl = baseUrl;
         this.client = new OkHttpClient();
         this.gson = new GsonBuilder()
@@ -35,16 +45,18 @@ public class FlowVizHttpService {
                 .create();
     }
 
-    public FlowVizHttpService(FlowVizHttpService httpService) {
+    public FLOWViZHttpService(FLOWViZHttpService httpService) {
         this.baseUrl = httpService.baseUrl;
         this.client = httpService.client;
         this.gson = httpService.gson;
         this.token = httpService.token;
     }
 
-    private <T> T execute(Request request, Class<T> resClazz) throws ConnectionRefusedException, UnexpectedResponseException {
-        try (Response response = this.client.newCall(request)
-                .execute()) {
+    private <T> T execute(
+            Request request,
+            Class<T> resClazz
+    ) throws ConnectionRefusedException, UnexpectedResponseException {
+        try (Response response = this.client.newCall(request).execute()) {
 
             if (!response.isSuccessful())
                 throw new UnexpectedResponseException(response);
@@ -129,6 +141,4 @@ public class FlowVizHttpService {
                 resClazz
         );
     }
-
-
 }

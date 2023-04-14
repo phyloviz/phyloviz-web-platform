@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.administration.service.dtos.tree_views;
+package org.phyloviz.pwp.administration.service.dtos.treeViews;
 
 import lombok.Data;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.TreeViewMetadata;

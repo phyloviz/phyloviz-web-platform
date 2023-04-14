@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+/**
+ * Controller for authentication related endpoints.
+ */
 @RestController
 @RequestMapping("/api")
 public class AuthController {
-
 
     //TODO: If the user has been deleted in keycloak,
     // maybe the session should be invalidated automatically without logout?

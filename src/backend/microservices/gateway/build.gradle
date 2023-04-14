@@ -23,9 +23,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.session:spring-session-data-redis'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
     implementation 'io.projectreactor:reactor-tools'
     implementation 'org.zalando:problem-spring-web-starter:0.27.0'
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-oauth2-client'

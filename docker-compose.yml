@@ -33,6 +33,7 @@ services:
       - KC_METRICS_ENABLED=true
     depends_on:
       - keycloak_db
+
   mongodb:
     image: mongo:4.4.4
     ports:
@@ -43,6 +44,7 @@ services:
     volumes:
       - ./src/backend/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - mongodb-data:/data/db
+
   cache:
     image: redis:7.0.9-alpine
     restart: always
@@ -53,6 +55,7 @@ services:
     volumes:
       - ./src/backend/redis/redis.conf:/usr/local/etc/redis/redis.conf
       - cache:/data
+
   registry:
     image: registry:2.8.1
     ports:
@@ -76,6 +79,7 @@ services:
       - SINGLE_REGISTRY=true
     depends_on:
       - registry
+
 volumes:
   keycloak_db_data:
     driver: local

@@ -18,7 +18,6 @@ public class FileStorageRepositoryDisk implements FileStorageRepository {
 
     @Override
     public boolean store(String url, MultipartFile multipartFile) {
-
         File file = new File(path + url);
 
         try {
@@ -34,9 +33,8 @@ public class FileStorageRepositoryDisk implements FileStorageRepository {
     public boolean delete(String url) {
         File file = new File(url);
 
-        if (file.exists()) {
+        if (file.exists())
             return file.delete();
-        }
 
         return false;
     }

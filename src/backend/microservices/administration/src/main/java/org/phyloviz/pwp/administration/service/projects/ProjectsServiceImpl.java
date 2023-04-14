@@ -23,6 +23,9 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Implementation of the {@link ProjectsService} interface.
+ */
 @Service
 @RequiredArgsConstructor
 public class ProjectsServiceImpl implements ProjectsService {
@@ -67,7 +70,9 @@ public class ProjectsServiceImpl implements ProjectsService {
     }
 
     @Override
-    public DeleteProjectOutputDTO deleteProject(DeleteProjectInputDTO deleteProjectInputDTO) throws ProjectNotFoundException {
+    public DeleteProjectOutputDTO deleteProject(
+            DeleteProjectInputDTO deleteProjectInputDTO
+    ) throws ProjectNotFoundException {
         String projectId = deleteProjectInputDTO.getProjectId();
         String userId = deleteProjectInputDTO.getUser().getId();
 

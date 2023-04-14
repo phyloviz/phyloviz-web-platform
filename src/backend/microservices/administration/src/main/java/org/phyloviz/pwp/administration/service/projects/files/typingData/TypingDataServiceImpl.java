@@ -23,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
+/**
+ * Implementation of the{@link TypingDataService} interface.
+ */
 @Service
 @RequiredArgsConstructor
 public class TypingDataServiceImpl implements TypingDataService {
@@ -43,7 +46,7 @@ public class TypingDataServiceImpl implements TypingDataService {
             throw new UnauthorizedException();
 
         String typingDataId = UUID.randomUUID().toString();
-        String location =  projectId + "/typing-data/" + typingDataId;
+        String location = projectId + "/typing-data/" + typingDataId;
 
         boolean stored = fileStorageRepository.store(location, multipartFile);
 
@@ -81,8 +84,10 @@ public class TypingDataServiceImpl implements TypingDataService {
             Dataset dataset = datasetRepository.findById(datasetId).orElse(null);
 
             if (dataset != null && dataset.getTypingDataId().equals(typingDataId))
-                throw new DeniedFileDeletionException("Cannot delete file. File is still being used in one or more datasets. " +
-                        "Delete the datasets first.");
+                throw new DeniedFileDeletionException(
+                        "Cannot delete file. File is still being used in one or more datasets. " +
+                                "Delete the datasets first."
+                );
         });
 
         typingDataMetadataRepository.findByTypingDataId(typingDataId).orElseThrow(TypingDataNotFoundException::new);
@@ -111,11 +116,10 @@ public class TypingDataServiceImpl implements TypingDataService {
     @Override
     public void deleteTypingData(String typingDataId) {
         typingDataMetadataRepository.findAllByTypingDataId(typingDataId).forEach(typingDataMetadata -> {
-            if (typingDataMetadata.getAdapterId().equals(fileStorageRepository.getAdapterId())) {
+            if (typingDataMetadata.getAdapterId().equals(fileStorageRepository.getAdapterId()))
                 fileStorageRepository.delete(typingDataMetadata.getUrl());
-            } else {
+            else
                 throw new RuntimeException("Unsupported adapter: " + typingDataMetadata.getAdapterId());
-            }
 
             typingDataMetadataRepository.delete(typingDataMetadata);
         });

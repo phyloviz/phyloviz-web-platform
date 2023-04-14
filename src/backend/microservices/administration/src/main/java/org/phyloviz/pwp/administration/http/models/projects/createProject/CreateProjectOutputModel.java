@@ -1,6 +1,5 @@
 package org.phyloviz.pwp.administration.http.models.projects.createProject;
 
-
 import lombok.Data;
 import org.phyloviz.pwp.administration.service.dtos.projects.createProject.CreateProjectOutputDTO;
 

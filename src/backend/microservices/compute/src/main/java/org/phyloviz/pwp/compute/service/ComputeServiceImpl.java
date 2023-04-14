@@ -1,6 +1,7 @@
 package org.phyloviz.pwp.compute.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.NotImplementedException;
 import org.bson.types.ObjectId;
 import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.ToolTemplateRepository;
 import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.documents.ToolTemplate;
@@ -12,11 +13,11 @@ import org.phyloviz.pwp.compute.repository.metadata.templates.workflowTemplate.W
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflowTemplate.documents.TaskTemplate;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflowTemplate.documents.WorkflowTemplate;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflowTemplate.documents.WorkflowTemplateData;
-import org.phyloviz.pwp.compute.service.dtos.computeDistanceMatrix.CreateWorkflowOutputDTO;
-import org.phyloviz.pwp.compute.service.dtos.getWorkflow.GetWorkflowOutputDTO;
+import org.phyloviz.pwp.compute.service.dtos.createWorkflow.CreateWorkflowOutputDTO;
+import org.phyloviz.pwp.compute.service.dtos.getWorkflow.GetWorkflowStatusOutputDTO;
 import org.phyloviz.pwp.compute.service.exceptions.TemplateNotFound;
 import org.phyloviz.pwp.compute.service.exceptions.WorkflowInstanceNotFoundException;
-import org.phyloviz.pwp.compute.service.flowviz.FlowVizClient;
+import org.phyloviz.pwp.compute.service.flowviz.FLOWViZClient;
 import org.phyloviz.pwp.compute.service.flowviz.models.getWorkflow.GetWorkflowResponse;
 import org.phyloviz.pwp.compute.service.flowviz.models.getWorkflow.WorkflowStatus;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.Tool;
@@ -24,14 +25,10 @@ import org.phyloviz.pwp.compute.service.flowviz.models.workflow.Workflow;
 import org.phyloviz.pwp.compute.utils.UUIDUtils;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
-import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.repository.metadata.tree.TreeMetadataRepository;
 import org.phyloviz.pwp.shared.service.ProjectService;
 import org.phyloviz.pwp.shared.service.dtos.UserDTO;
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -51,7 +48,7 @@ public class ComputeServiceImpl implements ComputeService {
     private final ToolTemplateRepository toolTemplateRepository;
     private final TreeMetadataRepository treeMetadataRepository;
     private final ProjectService projectService;
-    private final FlowVizClient flowVizClient;
+    private final FLOWViZClient flowVizClient;
 
     private static final String COMPUTE_DISTANCE_MATRIX = "compute-distance-matrix";
     private static final String COMPUTE_TREE = "compute-tree";
@@ -59,12 +56,20 @@ public class ComputeServiceImpl implements ComputeService {
     private static final String INDEX_TYPING_DATA = "index-typing-data";
     private static final String INDEX_ISOLATE_DATA = "index-isolate-data";
     private static final String INDEX_TREE = "index-tree";
-    private static final List<String> COMPUTE_DISTANCE_MATRIX_FUNCTIONS = List.of("hamming");
-    private static final List<String> COMPUTE_TREE_ALGORITHMS = List.of("goeburst", "edmonds", "sl", "cl", "upgma", "upgmc", "wpgma", "wpgmc", "saitounei", "studierkepler", "unj");
+    private static final List<String> COMPUTE_DISTANCE_MATRIX_FUNCTIONS = List.of("hamming"); // TODO: Maybe create a enum for this?
+    private static final List<String> COMPUTE_TREE_ALGORITHMS = List.of(
+            "goeburst", "edmonds", "sl", "cl", "upgma", "upgmc", "wpgma", "wpgmc", "saitounei",
+            "studierkepler", "unj"
+    );
     private static final List<String> COMPUTE_TREE_VIEW_LAYOUTS = List.of("radial");
 
     @Override
-    public CreateWorkflowOutputDTO createWorkflow(String projectId, String workflowType, Map<String, String> workflowProperties, UserDTO userDTO) {
+    public CreateWorkflowOutputDTO createWorkflow(
+            String projectId,
+            String workflowType,
+            Map<String, String> workflowProperties,
+            UserDTO userDTO
+    ) {
         projectService.assertHasAccess(projectId, userDTO.getId());
 
         return switch (workflowType) {
@@ -79,16 +84,18 @@ public class ComputeServiceImpl implements ComputeService {
     }
 
     @Override
-    public GetWorkflowOutputDTO getWorkflow(String projectId, String workflowId, UserDTO userDTO) {
+    public GetWorkflowStatusOutputDTO getWorkflowStatus(String projectId, String workflowId, UserDTO userDTO) {
         projectService.assertHasAccess(projectId, userDTO.getId());
 
-        WorkflowInstance workflowInstance = workflowInstanceRepository.findById(workflowId).orElseThrow(WorkflowInstanceNotFoundException::new);
+        WorkflowInstance workflowInstance = workflowInstanceRepository
+                .findById(workflowId)
+                .orElseThrow(WorkflowInstanceNotFoundException::new);
 
         GetWorkflowResponse workflow = flowVizClient.workflowService().getWorkflow(workflowInstance.getWorkflow().getName());
         WorkflowStatus workflowStatus = workflow.getAirflow().getRuns().get(0);
         String airflowStatus = workflowStatus.getState();
 
-        // Could be simplified, but helpful so we know the states.
+        // Could be simplified, but helpful, so we know the states.
         String status = switch (airflowStatus) {
             case "success" -> "SUCCESS";
             case "running", "queued" -> "RUNNING";
@@ -96,9 +103,18 @@ public class ComputeServiceImpl implements ComputeService {
             default -> "FAILED";
         };
 
-        return new GetWorkflowOutputDTO(workflowInstance.getId(), workflowInstance.getType(), status, workflowInstance.getResults());
+        return new GetWorkflowStatusOutputDTO(
+                workflowInstance.getId(),
+                workflowInstance.getType(),
+                status,
+                workflowInstance.getResults()
+        );
     }
 
+    @Override
+    public List<GetWorkflowStatusOutputDTO> getWorkflows(String projectId, UserDTO userDTO) {
+        throw new NotImplementedException("Not implemented yet");
+    }
 
     private CreateWorkflowOutputDTO createComputeDistanceMatrixWorkflow(String projectId, Map<String, String> properties) {
         if (!properties.containsKey("datasetId") || !properties.containsKey("function") || properties.size() != 2)
@@ -125,7 +141,8 @@ public class ComputeServiceImpl implements ComputeService {
     }
 
     private CreateWorkflowOutputDTO createComputeTreeWorkflow(String projectId, Map<String, String> properties) {
-        if (!properties.containsKey("datasetId") || !properties.containsKey("distanceMatrixId") || !properties.containsKey("algorithm") || properties.size() != 3)
+        if (!properties.containsKey("datasetId") || !properties.containsKey("distanceMatrixId") ||
+                !properties.containsKey("algorithm") || properties.size() != 3)
             throw new IllegalArgumentException("Invalid properties for compute tree workflow");
 
         if (!ObjectId.isValid(properties.get("datasetId")))
@@ -144,7 +161,8 @@ public class ComputeServiceImpl implements ComputeService {
     }
 
     private CreateWorkflowOutputDTO createComputeTreeViewWorkflow(String projectId, Map<String, String> properties) {
-        if (!properties.containsKey("datasetId") || !properties.containsKey("treeId") || !properties.containsKey("layout") || properties.size() != 3)
+        if (!properties.containsKey("datasetId") || !properties.containsKey("treeId") ||
+                !properties.containsKey("layout") || properties.size() != 3)
             throw new IllegalArgumentException("Invalid properties for compute tree view workflow");
 
         if (!UUIDUtils.isValidUUID(properties.get("treeId")))
@@ -228,10 +246,12 @@ public class ComputeServiceImpl implements ComputeService {
         //TODO: Fix transactions
 
         // Maybe we should only retrieve the workflow template on startup?
-        WorkflowTemplate workflowTemplate = workflowTemplateRepository.findByName(workflowType)
-                .orElseThrow(() -> new TemplateNotFound("Workflow Template not found")); // TODO: Add more specific exception to send Workflow Type not found.
+        WorkflowTemplate workflowTemplate = workflowTemplateRepository
+                .findByName(workflowType)
+                .orElseThrow(() -> new TemplateNotFound("Workflow Template not found"));
+        // TODO: Add more specific exception to send Workflow Type not found.
 
-        //TODO: Maybe use uuids instead of mongo ids?
+        // TODO: Maybe use uuids instead of mongo ids?
         WorkflowInstance workflowInstance = new WorkflowInstance();
         workflowInstance.setType(workflowType);
         workflowInstance = workflowInstanceRepository.save(workflowInstance);
@@ -246,7 +266,8 @@ public class ComputeServiceImpl implements ComputeService {
             if (tools.containsKey(toolName))
                 continue;
 
-            ToolTemplate toolTemplate = toolTemplateRepository.findByName(taskTemplate.getTool())
+            ToolTemplate toolTemplate = toolTemplateRepository
+                    .findByName(taskTemplate.getTool())
                     .orElseThrow(() -> new TemplateNotFound("Tool template not found"));
 
             AccessTypeTemplate accessType = toolTemplate.getAccess().getType();
@@ -258,11 +279,10 @@ public class ComputeServiceImpl implements ComputeService {
                     .build();
 
             Tool tool;
-            if (accessType == AccessTypeTemplate.LIBRARY) {
+            if (accessType == AccessTypeTemplate.LIBRARY)
                 tool = toolTemplate.buildLibraryTool(toolTemplateData);
-            } else {
+            else
                 tool = toolTemplate.buildApiTool(toolTemplateData);
-            }
 
             tools.put(toolName, tool);
         }
@@ -285,5 +305,4 @@ public class ComputeServiceImpl implements ComputeService {
 
         return new CreateWorkflowOutputDTO(workflowId);
     }
-
 }

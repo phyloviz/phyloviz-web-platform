@@ -21,7 +21,6 @@ public class TaskTemplate {
     public Task buildTask(WorkflowTemplateData workflowTemplateData) {
         List<String> children = this.children == null ? List.of() : List.copyOf(this.children);
 
-
         return Task.builder()
                 .id(taskId)
                 .tool(tool + "-" + workflowTemplateData.getWorkflowId())

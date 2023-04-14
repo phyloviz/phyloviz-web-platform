@@ -8,6 +8,9 @@ import org.springframework.http.HttpMethod;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Configuration for the microservices of the application.
+ */
 @Configuration
 @ConfigurationProperties(prefix = "pwp")
 public class MicroservicesProperties {

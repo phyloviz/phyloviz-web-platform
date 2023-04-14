@@ -14,10 +14,18 @@ import org.phyloviz.pwp.administration.service.dtos.projects.getProject.GetProje
 import org.phyloviz.pwp.administration.service.dtos.projects.getProjects.GetProjectsInputDTO;
 import org.phyloviz.pwp.administration.service.projects.ProjectsService;
 import org.phyloviz.pwp.shared.domain.User;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Controller that handles requests related to projects.
+ */
 @RestController
 @RequiredArgsConstructor
 public class ProjectsController {
@@ -26,6 +34,10 @@ public class ProjectsController {
 
     /**
      * Creates a project.
+     *
+     * @param createProjectInputModel the input model containing the data of the project to be created
+     * @param user                    the user that is creating the project
+     * @return the output model containing the data of the created project
      */
     @PostMapping("/projects")
     public CreateProjectOutputModel createProject(
@@ -63,6 +75,7 @@ public class ProjectsController {
      *
      * @param projectId the id of the project to be deleted
      * @param user      the user that is deleting the project
+     * @return the output model containing the data of the deleted project
      */
     @DeleteMapping("/projects/{projectId}")
     public DeleteProjectOutputModel deleteProject(

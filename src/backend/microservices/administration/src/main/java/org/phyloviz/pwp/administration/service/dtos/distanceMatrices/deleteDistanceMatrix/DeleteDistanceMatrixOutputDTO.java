@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.administration.service.dtos.distance_matrices.deleteDistanceMatrix;
+package org.phyloviz.pwp.administration.service.dtos.distanceMatrices.deleteDistanceMatrix;
 
 import lombok.Data;
 

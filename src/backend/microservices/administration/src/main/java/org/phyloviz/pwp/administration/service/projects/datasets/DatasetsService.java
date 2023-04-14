@@ -10,6 +10,9 @@ import org.phyloviz.pwp.administration.service.dtos.datasets.getDatasets.GetData
 
 import java.util.List;
 
+/**
+ * Service for operations related to datasets.
+ */
 public interface DatasetsService {
 
     /**

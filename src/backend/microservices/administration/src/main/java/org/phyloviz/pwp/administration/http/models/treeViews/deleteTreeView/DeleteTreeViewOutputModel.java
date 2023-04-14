@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.http.models.treeViews.deleteTreeView;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.treeViews.deleteTreeView.DeleteTreeViewOutputDTO;
 
 @Data
 public class DeleteTreeViewOutputModel {

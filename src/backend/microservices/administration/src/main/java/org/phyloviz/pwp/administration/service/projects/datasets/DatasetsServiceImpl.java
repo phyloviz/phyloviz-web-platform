@@ -31,7 +31,9 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
-
+/**
+ * Implementation of {@link DatasetsService} interface.
+ */
 @Service
 @RequiredArgsConstructor
 public class DatasetsServiceImpl implements DatasetsService {

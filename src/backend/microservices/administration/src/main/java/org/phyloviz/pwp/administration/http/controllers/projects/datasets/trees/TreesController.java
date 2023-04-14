@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller that handles requests related to trees.
+ */
 @RestController
 @RequiredArgsConstructor
 public class TreesController {
@@ -23,6 +26,7 @@ public class TreesController {
      * @param datasetId the id of the dataset that contains the tree
      * @param treeId    the id of the tree to be deleted
      * @param user      the user that is deleting the tree
+     * @return information about the deleted tree
      */
     @DeleteMapping("/projects/{projectId}/datasets/{datasetId}/trees/{treeId}")
     public DeleteTreeOutputModel deleteTree(

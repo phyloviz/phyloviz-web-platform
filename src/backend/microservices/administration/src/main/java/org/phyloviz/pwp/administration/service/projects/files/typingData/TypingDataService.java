@@ -6,21 +6,24 @@ import org.phyloviz.pwp.administration.service.dtos.files.deleteTypingData.Delet
 import org.phyloviz.pwp.administration.service.dtos.files.uploadTypingData.UploadTypingDataInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.files.uploadTypingData.UploadTypingDataOutputDTO;
 
+/**
+ * Service for operations related to typing data files.
+ */
 public interface TypingDataService {
 
     /**
      * Uploads a typing data file.
      *
-     * @param uploadTypingDataInputDTO the input data
-     * @return
+     * @param uploadTypingDataInputDTO the input data for the typing data upload
+     * @return information about the uploaded typing data file
      */
     UploadTypingDataOutputDTO uploadTypingData(UploadTypingDataInputDTO uploadTypingDataInputDTO);
 
     /**
      * Deletes a typing data file.
      *
-     * @param deleteTypingDataInputDTO the input data
-     * @return
+     * @param deleteTypingDataInputDTO the input data for the typing data deletion
+     * @return information about the deleted typing data file
      */
     DeleteTypingDataOutputDTO deleteTypingData(DeleteTypingDataInputDTO deleteTypingDataInputDTO);
 

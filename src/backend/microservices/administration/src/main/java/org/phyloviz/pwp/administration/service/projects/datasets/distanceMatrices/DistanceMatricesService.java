@@ -1,9 +1,12 @@
 package org.phyloviz.pwp.administration.service.projects.datasets.distanceMatrices;
 
-import org.phyloviz.pwp.administration.service.dtos.distance_matrices.DistanceMatrixDTO;
-import org.phyloviz.pwp.administration.service.dtos.distance_matrices.deleteDistanceMatrix.DeleteDistanceMatrixInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.distance_matrices.deleteDistanceMatrix.DeleteDistanceMatrixOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.DistanceMatrixDTO;
+import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.deleteDistanceMatrix.DeleteDistanceMatrixInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.deleteDistanceMatrix.DeleteDistanceMatrixOutputDTO;
 
+/**
+ * Service for operations related to distance matrices.
+ */
 public interface DistanceMatricesService {
 
     /**

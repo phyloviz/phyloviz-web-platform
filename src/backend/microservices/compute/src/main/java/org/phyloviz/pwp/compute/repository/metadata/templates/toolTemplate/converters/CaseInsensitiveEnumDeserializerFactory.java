@@ -8,13 +8,12 @@ public class CaseInsensitiveEnumDeserializerFactory implements ConverterFactory<
     @Override
     public <T extends Enum> Converter<String, T> getConverter(Class<T> targetType) {
         Class<?> enumType = targetType;
-        while (enumType != null && !enumType.isEnum()) {
+        while (enumType != null && !enumType.isEnum())
             enumType = enumType.getSuperclass();
-        }
-        if (enumType == null) {
-            throw new IllegalArgumentException(
-                    "The target type " + targetType.getName() + " does not refer to an enum");
-        }
+
+        if (enumType == null)
+            throw new IllegalArgumentException("The target type " + targetType.getName() + " does not refer to an enum");
+
         return new CaseInsensitiveEnumDeserializer(enumType);
     }
 

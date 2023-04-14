@@ -10,7 +10,11 @@ import java.time.ZonedDateTime;
 
 public class LocalDateTimeDeserializer implements JsonDeserializer<LocalDateTime> {
     @Override
-    public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) {
+    public LocalDateTime deserialize(
+            JsonElement json,
+            Type type,
+            JsonDeserializationContext jsonDeserializationContext
+    ) {
         return ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString()).toLocalDateTime();
     }
 }

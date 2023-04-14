@@ -18,21 +18,19 @@ repositories {
 }
 
 dependencies {
-
     implementation project(path: ':microservices:shared')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api' version { jupiterVersion }
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine' version { jupiterVersion }
+
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'org.apache.commons:commons-text:1.10.0'
-//    implementation 'org.mongodb:bson:4.9.0'
-
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.6'
 }

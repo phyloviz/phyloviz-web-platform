@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Main class for the Compute of the PHYLOViZ Web Platform.
+ * Main class for the Compute Microservice.
  */
 @SpringBootApplication
 public class ComputeMicroserviceApplication {

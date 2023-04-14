@@ -1,8 +1,8 @@
 package org.phyloviz.pwp.administration.http.models.distanceMatrices;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.distance_matrices.DistanceMatrixDTO;
-import org.phyloviz.pwp.administration.service.dtos.distance_matrices.DistanceMatrixSourceFunctionDTO;
+import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.DistanceMatrixDTO;
+import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.DistanceMatrixSourceFunctionDTO;
 
 @Data
 public class DistanceMatrixOutputModel {
@@ -19,8 +19,9 @@ public class DistanceMatrixOutputModel {
             case "function" -> new DistanceMatrixSourceFunctionOutputModel(
                     (DistanceMatrixSourceFunctionDTO) distanceMatrixDTO.getSource()
             );
-            default ->
-                    throw new IllegalArgumentException("Unknown distance matrix source type: " + distanceMatrixDTO.getSourceType());
+            default -> throw new IllegalArgumentException(
+                    "Unknown distance matrix source type: " + distanceMatrixDTO.getSourceType()
+            );
         };
     }
 }

@@ -20,6 +20,9 @@ import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of the {@link TreesService} interface.
+ */
 @Service
 @RequiredArgsConstructor
 public class TreesServiceImpl implements TreesService {
@@ -49,8 +52,8 @@ public class TreesServiceImpl implements TreesService {
 
             if (treeViewMetadata != null && treeViewMetadata.getSource().getTreeId().equals(treeId)) {
                 throw new DeniedResourceDeletionException(
-                        "Cannot delete tree. " +
-                                "It is a dependency of a tree view (treeViewId = " + treeViewId + "). Delete the tree view first."
+                        "Cannot delete tree. It is a dependency of a tree view (treeViewId = " + treeViewId + "). " +
+                                "Delete the tree view first."
                 );
             }
         });
@@ -70,14 +73,15 @@ public class TreesServiceImpl implements TreesService {
         treeMetadataRepository.findAllByTreeId(treeId)
                 .forEach(treeMetadata -> {
                     fileStorageRepository.delete(treeMetadata.getUrl());
-
                     treeMetadataRepository.delete(treeMetadata);
                 });
     }
 
     @Override
     public TreeDTO getTree(String treeId) {
-        TreeMetadata treeMetadata = treeMetadataRepository.findByTreeId(treeId).orElseThrow(TreeNotFoundException::new);
+        TreeMetadata treeMetadata = treeMetadataRepository
+                .findByTreeId(treeId)
+                .orElseThrow(TreeNotFoundException::new);
 
         return new TreeDTO(treeMetadata);
     }

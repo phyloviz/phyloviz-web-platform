@@ -40,7 +40,8 @@ public class LibraryAccessDetailsTemplate implements AccessDetailsTemplate {
                 .dockerAutoRemove(dockerAutoRemove.build())
                 .dockerNetworkMode(dockerNetworkMode)
                 .dockerApiVersion(dockerApiVersion)
-                .dockerVolumes(dockerVolumes.stream().map(dockerVolumeTemplate -> dockerVolumeTemplate.buildDockerVolume(data)).toList())
+                .dockerVolumes(dockerVolumes.stream()
+                        .map(dockerVolumeTemplate -> dockerVolumeTemplate.buildDockerVolume(data)).toList())
                 .build();
     }
 

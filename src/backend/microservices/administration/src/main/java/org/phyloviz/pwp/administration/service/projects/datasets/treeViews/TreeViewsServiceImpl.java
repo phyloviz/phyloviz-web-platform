@@ -2,9 +2,9 @@ package org.phyloviz.pwp.administration.service.projects.datasets.treeViews;
 
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.repository.data.FileStorageRepository;
-import org.phyloviz.pwp.administration.service.dtos.tree_views.TreeViewDTO;
-import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.tree_views.deleteTreeView.DeleteTreeViewOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.treeViews.TreeViewDTO;
+import org.phyloviz.pwp.administration.service.dtos.treeViews.deleteTreeView.DeleteTreeViewInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.treeViews.deleteTreeView.DeleteTreeViewOutputDTO;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
@@ -17,6 +17,9 @@ import org.phyloviz.pwp.shared.service.exceptions.TreeViewNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of the{@link TreeViewsService} interface.
+ */
 @Service
 @RequiredArgsConstructor
 public class TreeViewsServiceImpl implements TreeViewsService {
@@ -55,7 +58,6 @@ public class TreeViewsServiceImpl implements TreeViewsService {
         treeViewMetadataRepository.findAllByTreeViewId(treeViewId)
                 .forEach(treeViewMetadata -> {
                     fileStorageRepository.delete(treeViewMetadata.getUrl());
-
                     treeViewMetadataRepository.deleteTreeView(treeViewMetadata);
                 });
     }

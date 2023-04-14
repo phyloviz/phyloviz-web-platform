@@ -2,9 +2,9 @@ package org.phyloviz.pwp.administration.service.projects.datasets.distanceMatric
 
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.repository.data.FileStorageRepository;
-import org.phyloviz.pwp.administration.service.dtos.distance_matrices.DistanceMatrixDTO;
-import org.phyloviz.pwp.administration.service.dtos.distance_matrices.deleteDistanceMatrix.DeleteDistanceMatrixInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.distance_matrices.deleteDistanceMatrix.DeleteDistanceMatrixOutputDTO;
+import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.DistanceMatrixDTO;
+import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.deleteDistanceMatrix.DeleteDistanceMatrixInputDTO;
+import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.deleteDistanceMatrix.DeleteDistanceMatrixOutputDTO;
 import org.phyloviz.pwp.administration.service.exceptions.DeniedResourceDeletionException;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
@@ -21,6 +21,10 @@ import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
 import org.springframework.stereotype.Service;
 
+
+/**
+ * Implementation of the {@link DistanceMatricesService} interface.
+ */
 @Service
 @RequiredArgsConstructor
 public class DistanceMatricesServiceImpl implements DistanceMatricesService {
@@ -52,8 +56,8 @@ public class DistanceMatricesServiceImpl implements DistanceMatricesService {
                     (((TreeSourceAlgorithmDistanceMatrix) treeMetadata.getSource())
                             .getDistanceMatrixId().equals(distanceMatrixId))) {
                 throw new DeniedResourceDeletionException(
-                        "Cannot delete distance matrix. " +
-                                "It is a dependency of a tree (treeId = " + treeId + "). Delete the tree first."
+                        "Cannot delete distance matrix. It is a dependency of a tree (treeId = " + treeId + "). " +
+                                "Delete the tree first."
                 );
             }
         });
@@ -75,7 +79,6 @@ public class DistanceMatricesServiceImpl implements DistanceMatricesService {
         distanceMatrixMetadataRepository.findAllByDistanceMatrixId(distanceMatrixId)
                 .forEach(distanceMatrixMetadata -> {
                     fileStorageRepository.delete(distanceMatrixMetadata.getUrl());
-
                     distanceMatrixMetadataRepository.delete(distanceMatrixMetadata);
                 });
     }

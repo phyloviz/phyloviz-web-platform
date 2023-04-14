@@ -14,10 +14,18 @@ import org.phyloviz.pwp.administration.service.dtos.datasets.getDatasets.GetData
 import org.phyloviz.pwp.administration.service.dtos.datasets.getDatasets.GetDatasetsOutputModel;
 import org.phyloviz.pwp.administration.service.projects.datasets.DatasetsService;
 import org.phyloviz.pwp.shared.domain.User;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Controller that handles requests related to datasets.
+ */
 @RestController
 @RequiredArgsConstructor
 public class DatasetsController {
@@ -29,6 +37,8 @@ public class DatasetsController {
      *
      * @param projectId               the id of the project to which the dataset will belong
      * @param createDatasetInputModel the dataset information
+     * @param user                    the user that is creating the dataset
+     * @return the created dataset
      */
     @PostMapping("/projects/{projectId}/datasets")
     public CreateDatasetOutputModel createDataset(
@@ -70,6 +80,7 @@ public class DatasetsController {
      * @param projectId the id of the project to which the dataset belongs
      * @param datasetId the id of the dataset to be deleted
      * @param user      the user that is deleting the dataset
+     * @return the deleted dataset
      */
     @DeleteMapping("/projects/{projectId}/datasets/{datasetId}")
     public DeleteDatasetOutputModel deleteDataset(

@@ -6,21 +6,24 @@ import org.phyloviz.pwp.administration.service.dtos.files.deleteIsolateData.Dele
 import org.phyloviz.pwp.administration.service.dtos.files.uploadIsolateData.UploadIsolateDataInputDTO;
 import org.phyloviz.pwp.administration.service.dtos.files.uploadIsolateData.UploadIsolateDataOutputDTO;
 
+/**
+ * Service for operations related to isolate data files.
+ */
 public interface IsolateDataService {
 
     /**
      * Uploads an isolate data file.
      *
-     * @param uploadIsolateDataInputDTO the input data
-     * @return
+     * @param uploadIsolateDataInputDTO the input data for the isolate data upload
+     * @return information about the uploaded isolate data file
      */
     UploadIsolateDataOutputDTO uploadIsolateData(UploadIsolateDataInputDTO uploadIsolateDataInputDTO);
 
     /**
      * Deletes an isolate data file.
      *
-     * @param deleteIsolateDataInputDTO the input data
-     * @return
+     * @param deleteIsolateDataInputDTO the input data for the isolate data deletion
+     * @return information about the deleted isolate data file
      */
     DeleteIsolateDataOutputDTO deleteIsolateData(DeleteIsolateDataInputDTO deleteIsolateDataInputDTO);
 

@@ -23,7 +23,7 @@ public class GatewayExceptionHandler {
     @ExceptionHandler(value = {AuthenticationException.class})
     public Problem handleUnauthorizedException(Exception e) {
         return Problem.builder()
-                .withTitle("Unauthorized")
+                .withTitle(Status.UNAUTHORIZED.getReasonPhrase())
                 .withDetail(e.getMessage())
                 .withStatus(Status.UNAUTHORIZED)
                 .build();
@@ -42,11 +42,11 @@ public class GatewayExceptionHandler {
         //TODO: Improve this
         String title = "Invalid request body:";
 
-        if (ex.getRootCause() instanceof UnrecognizedPropertyException unrecognizedPropertyException) {
+        if (ex.getRootCause() instanceof UnrecognizedPropertyException unrecognizedPropertyException)
             title += "Unknown property " + unrecognizedPropertyException.getPropertyName();
-        } else if (ex.getRootCause() instanceof JsonParseException jsonParseException) {
+        else if (ex.getRootCause() instanceof JsonParseException jsonParseException)
             title += jsonParseException.getOriginalMessage();
-        } else if (ex.getRootCause() instanceof IgnoredPropertyException) {
+        else if (ex.getRootCause() instanceof IgnoredPropertyException) {
             JsonMappingException jsonMappingException = (JsonMappingException) ex.getRootCause();
             title += "Missing property " + jsonMappingException.getOriginalMessage();
         }
@@ -66,10 +66,8 @@ public class GatewayExceptionHandler {
     public Problem handleInternalServerError(Exception e) {
 
         return Problem.builder()
-                .withTitle("Internal Server Error")
+                .withTitle(Status.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .withStatus(Status.INTERNAL_SERVER_ERROR)
                 .build();
     }
-
 }
-

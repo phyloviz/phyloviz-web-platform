@@ -1,5 +1,11 @@
 package org.phyloviz.pwp.administration.repository.data;
 
+import org.springframework.stereotype.Repository;
+
+/**
+ * Repository interface for storing data resources.
+ */
+@Repository
 public interface DataStorageRepository {
 
     /**
@@ -12,7 +18,7 @@ public interface DataStorageRepository {
     boolean store(String url, String data); // TODO think about adapter specific object for data
 
     /**
-     * Deletes the file .
+     * Deletes the file.
      *
      * @param url location where the resource is stored
      * @return true if the resource was deleted successfully, false otherwise
