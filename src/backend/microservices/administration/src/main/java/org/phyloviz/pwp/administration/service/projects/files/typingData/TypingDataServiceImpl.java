@@ -14,7 +14,7 @@ import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.repository.metadata.typingData.TypingDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.TypingDataMetadata;
-import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.TypingDataS3AdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.adapterSpecificData.TypingDataS3AdapterSpecificData;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;

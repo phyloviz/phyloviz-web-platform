@@ -12,7 +12,7 @@ import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.isolateData.IsolateDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.IsolateDataMetadata;
-import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.IsolateDataS3AdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.adapterSpecificData.IsolateDataS3AdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.service.exceptions.IsolateDataNotFoundException;

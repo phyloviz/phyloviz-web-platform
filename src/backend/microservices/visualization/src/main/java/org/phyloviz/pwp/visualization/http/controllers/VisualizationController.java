@@ -1,12 +1,12 @@
 package org.phyloviz.pwp.visualization.http.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.visualization.http.controllers.models.getTreeView.GetTreeViewOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.isolateData.getIsolateDataRows.GetIsolateDataRowsOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.isolateData.getIsolateDataSchema.GetIsolateDataSchemaOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.typingData.getTypingDataProfiles.GetTypingDataProfilesOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.typingData.getTypingDataSchema.GetTypingDataSchemaOutputModel;
-import org.phyloviz.pwp.visualization.service.VisualizationService;
 import org.phyloviz.pwp.visualization.service.dtos.getDistanceMatrix.GetDistanceMatrixInputDTO;
 import org.phyloviz.pwp.visualization.service.dtos.getTree.GetTreeInputDTO;
 import org.phyloviz.pwp.visualization.service.dtos.getTreeView.GetTreeViewInputDTO;
@@ -19,6 +19,11 @@ import org.phyloviz.pwp.visualization.service.dtos.typingData.getTypingDataProfi
 import org.phyloviz.pwp.visualization.service.dtos.typingData.getTypingDataProfiles.GetTypingDataProfilesOutputDTO;
 import org.phyloviz.pwp.visualization.service.dtos.typingData.getTypingDataSchema.GetTypingDataSchemaInputDTO;
 import org.phyloviz.pwp.visualization.service.dtos.typingData.getTypingDataSchema.GetTypingDataSchemaOutputDTO;
+import org.phyloviz.pwp.visualization.service.projects.datasets.distanceMatrices.DistanceMatrixVisualizationService;
+import org.phyloviz.pwp.visualization.service.projects.datasets.treeViews.TreeViewVisualizationService;
+import org.phyloviz.pwp.visualization.service.projects.datasets.trees.TreeVisualizationService;
+import org.phyloviz.pwp.visualization.service.projects.files.isolateData.IsolateDataVisualizationService;
+import org.phyloviz.pwp.visualization.service.projects.files.typingData.TypingDataVisualizationService;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,7 +34,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class VisualizationController {
 
-    private final VisualizationService visualizationService;
+    private final TreeVisualizationService treeVisualizationService;
+    private final TreeViewVisualizationService treeViewVisualizationService;
+    private final DistanceMatrixVisualizationService distanceMatrixVisualizationService;
+    private final TypingDataVisualizationService typingDataVisualizationService;
+    private final IsolateDataVisualizationService isolateDataVisualizationService;
 
     /**
      * Gets a tree.
@@ -43,9 +52,10 @@ public class VisualizationController {
     public String getTree(
             @PathVariable String projectId,
             @PathVariable String datasetId,
-            @PathVariable String treeId
+            @PathVariable String treeId,
+            User user
     ) {
-        return visualizationService.getTree(new GetTreeInputDTO(projectId, datasetId, treeId));
+        return treeVisualizationService.getTree(new GetTreeInputDTO(projectId, datasetId, treeId, user.toDTO()));
     }
 
     /**
@@ -60,10 +70,11 @@ public class VisualizationController {
     public GetTreeViewOutputModel getTreeView(
             @PathVariable String projectId,
             @PathVariable String datasetId,
-            @PathVariable String treeViewId
+            @PathVariable String treeViewId,
+            User user
     ) {
-        GetTreeViewOutputDTO getTreeViewOutputDTO = visualizationService.getTreeView(
-                new GetTreeViewInputDTO(projectId, datasetId, treeViewId)
+        GetTreeViewOutputDTO getTreeViewOutputDTO = treeViewVisualizationService.getTreeView(
+                new GetTreeViewInputDTO(projectId, datasetId, treeViewId, user.toDTO())
         );
 
         return new GetTreeViewOutputModel(getTreeViewOutputDTO);
@@ -81,10 +92,11 @@ public class VisualizationController {
     public String getDistanceMatrix(
             @PathVariable String projectId,
             @PathVariable String datasetId,
-            @PathVariable String distanceMatrixId
+            @PathVariable String distanceMatrixId,
+            User user
     ) {
-        return visualizationService.getDistanceMatrix(
-                new GetDistanceMatrixInputDTO(projectId, datasetId, distanceMatrixId)
+        return distanceMatrixVisualizationService.getDistanceMatrix(
+                new GetDistanceMatrixInputDTO(projectId, datasetId, distanceMatrixId, user.toDTO())
         );
     }
 
@@ -98,10 +110,11 @@ public class VisualizationController {
     @GetMapping("/projects/{projectId}/files/typing-data/{typingDataId}")
     public GetTypingDataSchemaOutputModel getTypingDataSchema(
             @PathVariable String projectId,
-            @PathVariable String typingDataId
+            @PathVariable String typingDataId,
+            User user
     ) {
-        GetTypingDataSchemaOutputDTO getTypingDataSchemaOutputDTO = visualizationService.getTypingDataSchema(
-                new GetTypingDataSchemaInputDTO(projectId, typingDataId)
+        GetTypingDataSchemaOutputDTO getTypingDataSchemaOutputDTO = typingDataVisualizationService.getTypingDataSchema(
+                new GetTypingDataSchemaInputDTO(projectId, typingDataId, user.toDTO())
         );
 
         return new GetTypingDataSchemaOutputModel(getTypingDataSchemaOutputDTO);
@@ -121,10 +134,11 @@ public class VisualizationController {
             @PathVariable String projectId,
             @PathVariable String typingDataId,
             @RequestParam int limit,
-            @RequestParam int offset
+            @RequestParam int offset,
+            User user
     ) {
-        GetTypingDataProfilesOutputDTO getTypingDataProfilesOutputDTO = visualizationService.getTypingDataProfiles(
-                new GetTypingDataProfilesInputDTO(projectId, typingDataId, limit, offset)
+        GetTypingDataProfilesOutputDTO getTypingDataProfilesOutputDTO = typingDataVisualizationService.getTypingDataProfiles(
+                new GetTypingDataProfilesInputDTO(projectId, typingDataId, limit, offset, user.toDTO())
         );
 
         return new GetTypingDataProfilesOutputModel(getTypingDataProfilesOutputDTO);
@@ -140,10 +154,11 @@ public class VisualizationController {
     @GetMapping("/projects/{projectId}/files/isolate-data/{isolateDataId}")
     public GetIsolateDataSchemaOutputModel getIsolateDataSchema(
             @PathVariable String projectId,
-            @PathVariable String isolateDataId
+            @PathVariable String isolateDataId,
+            User user
     ) {
-        GetIsolateDataSchemaOutputDTO getIsolateDataSchemaOutputDTO = visualizationService.getIsolateDataSchema(
-                new GetIsolateDataSchemaInputDTO(projectId, isolateDataId)
+        GetIsolateDataSchemaOutputDTO getIsolateDataSchemaOutputDTO = isolateDataVisualizationService.getIsolateDataSchema(
+                new GetIsolateDataSchemaInputDTO(projectId, isolateDataId, user.toDTO())
         );
 
         return new GetIsolateDataSchemaOutputModel(getIsolateDataSchemaOutputDTO);
@@ -163,10 +178,11 @@ public class VisualizationController {
             @PathVariable String projectId,
             @PathVariable String isolateDataId,
             @RequestParam int limit,
-            @RequestParam int offset
+            @RequestParam int offset,
+            User user
     ) {
-        GetIsolateDataRowsOutputDTO getIsolateDataRowsOutputDTO = visualizationService.getIsolateDataRows(
-                new GetIsolateDataRowsInputDTO(projectId, isolateDataId, limit, offset)
+        GetIsolateDataRowsOutputDTO getIsolateDataRowsOutputDTO = isolateDataVisualizationService.getIsolateDataRows(
+                new GetIsolateDataRowsInputDTO(projectId, isolateDataId, limit, offset, user.toDTO())
         );
 
         return new GetIsolateDataRowsOutputModel(getIsolateDataRowsOutputDTO);

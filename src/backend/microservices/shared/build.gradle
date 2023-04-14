@@ -27,6 +27,8 @@ dependencies {
 
     implementation 'org.reflections:reflections:0.10.2'
 
+    implementation files('libs/phylodb-1.0.0.jar')
+
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.6'
 }
 

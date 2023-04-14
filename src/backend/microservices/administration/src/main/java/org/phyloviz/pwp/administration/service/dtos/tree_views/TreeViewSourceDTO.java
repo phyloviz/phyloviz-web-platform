@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.service.dtos.tree_views;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.TreeViewSource;
+import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.source.TreeViewSource;
 
 @Data
 public class TreeViewSourceDTO {

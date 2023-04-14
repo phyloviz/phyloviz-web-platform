@@ -114,13 +114,14 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
         'treeViewId': visualization_id,
         'name': 'Tree View ' + visualization_id,
         'source': {
-            'treeId': tree_id,
+            'treeId': tree_id
         },
         'url': base_url,
         'adapterId': 'phyloDB',
         'adapterSpecificData': {
             'projectId': project_id,
             'datasetId': dataset_id,
+            'inferenceId': inference_id,
             'visualizationId': visualization_id,
         }
     }

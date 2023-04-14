@@ -3,6 +3,7 @@ package org.phyloviz.pwp.shared.repository.metadata.tree.documents;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.adapterSpecificData.TreeAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSource;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;

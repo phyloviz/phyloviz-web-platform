@@ -74,7 +74,7 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, distance_mat
         'name': f'Distance Matrix {distance_matrix_id}',
         'sourceType': 'function',
         'source': {
-            'algorithm': 'hamming',
+            'function': 'hamming'
         },
     }
 

@@ -27,6 +27,7 @@ import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.repository.metadata.tree.TreeMetadataRepository;
+import org.phyloviz.pwp.shared.service.ProjectService;
 import org.phyloviz.pwp.shared.service.dtos.UserDTO;
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
@@ -49,7 +50,7 @@ public class ComputeServiceImpl implements ComputeService {
     private final DatasetRepository datasetRepository;
     private final ToolTemplateRepository toolTemplateRepository;
     private final TreeMetadataRepository treeMetadataRepository;
-    private final ProjectRepository projectRepository;
+    private final ProjectService projectService;
     private final FlowVizClient flowVizClient;
 
     private static final String COMPUTE_DISTANCE_MATRIX = "compute-distance-matrix";
@@ -64,11 +65,7 @@ public class ComputeServiceImpl implements ComputeService {
 
     @Override
     public CreateWorkflowOutputDTO createWorkflow(String projectId, String workflowType, Map<String, String> workflowProperties, UserDTO userDTO) {
-        //Check if user has access to project
-        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
-
-        if (!project.getOwnerId().equals(userDTO.getId()))
-            throw new UnauthorizedException();
+        projectService.assertHasAccess(projectId, userDTO.getId());
 
         return switch (workflowType) {
             case COMPUTE_DISTANCE_MATRIX -> createComputeDistanceMatrixWorkflow(projectId, workflowProperties);
@@ -83,11 +80,7 @@ public class ComputeServiceImpl implements ComputeService {
 
     @Override
     public GetWorkflowOutputDTO getWorkflow(String projectId, String workflowId, UserDTO userDTO) {
-        //Check if user has access to project
-        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
-
-        if (!project.getOwnerId().equals(userDTO.getId()))
-            throw new UnauthorizedException();
+        projectService.assertHasAccess(projectId, userDTO.getId());
 
         WorkflowInstance workflowInstance = workflowInstanceRepository.findById(workflowId).orElseThrow(WorkflowInstanceNotFoundException::new);
 
