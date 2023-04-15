@@ -17,7 +17,7 @@ public class TreeViewMetadataRepositoryMongo implements TreeViewMetadataReposito
     private final TreeViewMetadataMongoRepository treeViewMetadataMongoRepository;
 
     @Override
-    public void deleteTreeView(TreeViewMetadata treeViewMetadata) {
+    public void delete(TreeViewMetadata treeViewMetadata) {
         treeViewMetadataMongoRepository.delete(treeViewMetadata);
     }
 

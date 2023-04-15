@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.compute.http.controllers.models.getWorkflowStatus;
 
 import lombok.Data;
-import org.phyloviz.pwp.compute.service.dtos.getWorkflow.GetWorkflowStatusOutputDTO;
+import org.phyloviz.pwp.compute.service.dtos.getWorkflow.GetWorkflowStatusOutput;
 
 import java.util.Map;
 
@@ -12,10 +12,10 @@ public class GetWorkflowStatusOutputModel {
     private String status;
     private Map<String, Object> data;
 
-    public GetWorkflowStatusOutputModel(GetWorkflowStatusOutputDTO getWorkflowStatusOutputDTO) {
-        this.workflowId = getWorkflowStatusOutputDTO.getWorkflowId();
-        this.type = getWorkflowStatusOutputDTO.getType();
-        this.status = getWorkflowStatusOutputDTO.getStatus();
-        this.data = getWorkflowStatusOutputDTO.getData();
+    public GetWorkflowStatusOutputModel(GetWorkflowStatusOutput getWorkflowStatusOutput) {
+        this.workflowId = getWorkflowStatusOutput.getWorkflowId();
+        this.type = getWorkflowStatusOutput.getType();
+        this.status = getWorkflowStatusOutput.getStatus();
+        this.data = getWorkflowStatusOutput.getData();
     }
 }

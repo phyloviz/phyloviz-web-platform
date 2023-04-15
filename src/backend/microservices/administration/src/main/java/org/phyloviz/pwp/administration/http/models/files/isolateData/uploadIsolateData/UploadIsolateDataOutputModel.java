@@ -1,15 +1,15 @@
 package org.phyloviz.pwp.administration.http.models.files.isolateData.uploadIsolateData;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.files.uploadIsolateData.UploadIsolateDataOutputDTO;
+import org.phyloviz.pwp.shared.service.dtos.files.UploadIsolateDataOutput;
 
 @Data
 public class UploadIsolateDataOutputModel {
     private String projectId;
     private String isolateDataId;
 
-    public UploadIsolateDataOutputModel(UploadIsolateDataOutputDTO uploadIsolateDataOutputDTO) {
-        this.projectId = uploadIsolateDataOutputDTO.getProjectId();
-        this.isolateDataId = uploadIsolateDataOutputDTO.getIsolateDataId();
+    public UploadIsolateDataOutputModel(UploadIsolateDataOutput uploadIsolateDataOutput) {
+        this.projectId = uploadIsolateDataOutput.getProjectId();
+        this.isolateDataId = uploadIsolateDataOutput.getIsolateDataId();
     }
 }

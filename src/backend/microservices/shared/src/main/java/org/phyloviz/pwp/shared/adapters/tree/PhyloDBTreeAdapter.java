@@ -14,4 +14,9 @@ public class PhyloDBTreeAdapter implements TreeAdapter {
     public boolean isFileAdapter() {
         return false;
     }
+
+    @Override
+    public void deleteTree(TreeAdapterSpecificData treeAdapterSpecificData) {
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
 }

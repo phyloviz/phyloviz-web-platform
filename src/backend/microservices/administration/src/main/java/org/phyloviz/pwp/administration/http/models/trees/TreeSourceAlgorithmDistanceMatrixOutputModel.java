@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.http.models.trees;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.trees.TreeSourceAlgorithmDistanceMatrixDTO;
+import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceAlgorithmDistanceMatrixDTO;
 
 @Data
 public class TreeSourceAlgorithmDistanceMatrixOutputModel implements TreeSourceOutputModel {

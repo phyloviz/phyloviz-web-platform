@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.http.models.projects.getProjects;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.projects.ProjectDTO;
+import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
 public class GetProjectsOutputModel {
     private List<GetProjectsProjectModel> projects;
 
-    public GetProjectsOutputModel(List<ProjectDTO> projectDTOs) {
-        this.projects = projectDTOs.stream().map(GetProjectsProjectModel::new).toList();
+    public GetProjectsOutputModel(List<Project> projects) {
+        this.projects = projects.stream().map(GetProjectsProjectModel::new).toList();
     }
 }

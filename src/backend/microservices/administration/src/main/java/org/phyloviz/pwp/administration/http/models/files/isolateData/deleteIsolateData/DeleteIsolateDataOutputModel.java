@@ -1,15 +1,11 @@
 package org.phyloviz.pwp.administration.http.models.files.isolateData.deleteIsolateData;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.files.deleteIsolateData.DeleteIsolateDataOutputDTO;
 
 @Data
+@AllArgsConstructor
 public class DeleteIsolateDataOutputModel {
     private String projectId;
     private String isolateDataId;
-
-    public DeleteIsolateDataOutputModel(DeleteIsolateDataOutputDTO deleteIsolateDataOutputDTO) {
-        this.projectId = deleteIsolateDataOutputDTO.getProjectId();
-        this.isolateDataId = deleteIsolateDataOutputDTO.getIsolateDataId();
-    }
 }

@@ -8,4 +8,5 @@ import org.springframework.data.annotation.TypeAlias;
 @AllArgsConstructor
 @TypeAlias("distanceMatrixS3AdapterSpecificData")
 public class DistanceMatrixS3AdapterSpecificData implements DistanceMatrixAdapterSpecificData {
+    private String url;
 }

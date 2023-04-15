@@ -10,5 +10,6 @@ import org.springframework.data.annotation.TypeAlias;
 @NoArgsConstructor
 @TypeAlias("typingDataS3AdapterSpecificData")
 public class TypingDataS3AdapterSpecificData implements TypingDataAdapterSpecificData {
+    private String url;
     private String originalFilename;
 }

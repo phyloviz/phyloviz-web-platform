@@ -3,7 +3,6 @@ package org.phyloviz.pwp.shared.repository.metadata.project.mongo;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
-import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,7 +25,7 @@ public class ProjectRepositoryMongo implements ProjectRepository {
     }
 
     @Override
-    public Optional<Project> findById(String id) throws ProjectNotFoundException {
+    public Optional<Project> findById(String id) {
         return projectMongoRepository.findById(id);
     }
 

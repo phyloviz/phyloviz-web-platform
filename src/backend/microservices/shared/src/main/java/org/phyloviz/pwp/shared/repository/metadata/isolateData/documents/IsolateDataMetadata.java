@@ -23,16 +23,14 @@ public class IsolateDataMetadata {
     private String projectId;
     private String isolateDataId;
     private String name;
-    private String url;
     private String adapterId;
     private IsolateDataAdapterSpecificData adapterSpecificData;
 
-    public IsolateDataMetadata(String projectId, String isolateDataId, String name, String url, String adapterId,
+    public IsolateDataMetadata(String projectId, String isolateDataId, String name, String adapterId,
                                IsolateDataAdapterSpecificData adapterSpecificData) {
         this.projectId = projectId;
         this.isolateDataId = isolateDataId;
         this.name = name;
-        this.url = url;
         this.adapterId = adapterId;
         this.adapterSpecificData = adapterSpecificData;
     }

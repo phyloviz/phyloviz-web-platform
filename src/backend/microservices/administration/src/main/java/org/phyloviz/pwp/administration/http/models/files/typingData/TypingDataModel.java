@@ -1,15 +1,15 @@
 package org.phyloviz.pwp.administration.http.models.files.typingData;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.files.TypingDataDTO;
+import org.phyloviz.pwp.shared.service.dtos.files.TypingDataMetadataDTO;
 
 @Data
 public class TypingDataModel {
     private String typingDataId;
     private String name;
 
-    public TypingDataModel(TypingDataDTO typingDataDTO) {
-        this.typingDataId = typingDataDTO.getTypingDataId();
-        this.name = typingDataDTO.getName();
+    public TypingDataModel(TypingDataMetadataDTO typingDataMetadataDTO) {
+        this.typingDataId = typingDataMetadataDTO.getTypingDataId();
+        this.name = typingDataMetadataDTO.getName();
     }
 }

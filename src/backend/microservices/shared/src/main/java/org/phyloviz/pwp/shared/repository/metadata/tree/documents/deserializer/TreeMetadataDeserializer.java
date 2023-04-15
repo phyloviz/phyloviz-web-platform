@@ -2,11 +2,11 @@ package org.phyloviz.pwp.shared.repository.metadata.tree.documents.deserializer;
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.adapterSpecificData.TreeAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.adapterSpecificData.TreeAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.adapterSpecificData.TreeAdapterSpecificDataFactory;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.adapterSpecificData.TreeS3AdapterSpecificData;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.*;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSource;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceFactory;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
@@ -40,11 +40,11 @@ public class TreeMetadataDeserializer implements Converter<Document, TreeMetadat
             return new TreeMetadata(
                     document.getObjectId("_id").toString(),
                     document.getString("projectId"),
+                    document.getString("datasetId"),
                     document.getString("treeId"),
                     document.getString("name"),
                     document.getString("sourceType"),
                     source,
-                    document.getString("url"),
                     document.getString("adapterId"),
                     adapterSpecificData
             );

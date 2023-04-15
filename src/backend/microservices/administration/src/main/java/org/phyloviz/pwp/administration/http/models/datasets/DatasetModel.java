@@ -4,7 +4,7 @@ import lombok.Data;
 import org.phyloviz.pwp.administration.http.models.distanceMatrices.DistanceMatrixOutputModel;
 import org.phyloviz.pwp.administration.http.models.treeViews.TreeViewOutputModel;
 import org.phyloviz.pwp.administration.http.models.trees.TreeOutputModel;
-import org.phyloviz.pwp.administration.service.dtos.datasets.DatasetDTO;
+import org.phyloviz.pwp.shared.service.dtos.dataset.DatasetDTO;
 
 import java.util.List;
 

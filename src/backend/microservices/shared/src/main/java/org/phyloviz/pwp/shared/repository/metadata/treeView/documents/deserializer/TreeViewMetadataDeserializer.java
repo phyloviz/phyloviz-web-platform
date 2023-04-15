@@ -2,10 +2,9 @@ package org.phyloviz.pwp.shared.repository.metadata.treeView.documents.deseriali
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
-import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.TreeViewMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewAdapterSpecificDataFactory;
-import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewS3AdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.source.TreeViewSource;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
@@ -34,11 +33,11 @@ public class TreeViewMetadataDeserializer implements Converter<Document, TreeVie
             return new TreeViewMetadata(
                     document.getObjectId("_id").toString(),
                     document.getString("projectId"),
+                    document.getString("datasetId"),
                     document.getString("treeViewId"),
                     document.getString("name"),
                     document.getString("layout"),
                     document.get("source", TreeViewSource.class),
-                    document.getString("url"),
                     document.getString("adapterId"),
                     adapterSpecificData
             );

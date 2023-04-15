@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.visualization.http.pipeline;
 
-import org.phyloviz.pwp.visualization.service.exceptions.TreeIndexingNeededException;
+import org.phyloviz.pwp.shared.service.exceptions.TreeIndexingNeededException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.zalando.problem.Problem;

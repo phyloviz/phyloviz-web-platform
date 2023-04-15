@@ -1,8 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.source;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.adapterSpecificData.DistanceMatrixAdapterSpecificData;
-import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.adapterSpecificData.DistanceMatrixS3AdapterSpecificData;
 import org.springframework.stereotype.Component;
 
 @Component

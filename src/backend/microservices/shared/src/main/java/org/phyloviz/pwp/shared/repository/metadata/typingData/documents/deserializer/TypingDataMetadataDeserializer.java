@@ -2,11 +2,9 @@ package org.phyloviz.pwp.shared.repository.metadata.typingData.documents.deseria
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
-import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.adapterSpecificData.TypingDataAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.TypingDataMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.adapterSpecificData.TypingDataAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.adapterSpecificData.TypingDataAdapterSpecificDataFactory;
-import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.adapterSpecificData.TypingDataS3AdapterSpecificData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
@@ -36,7 +34,6 @@ public class TypingDataMetadataDeserializer implements Converter<Document, Typin
                     document.getString("projectId"),
                     document.getString("typingDataId"),
                     document.getString("name"),
-                    document.getString("url"),
                     document.getString("adapterId"),
                     adapterSpecificData
             );

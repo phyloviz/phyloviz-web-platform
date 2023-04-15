@@ -21,7 +21,12 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.convert.ConfigurableTypeInformationMapper;
 import org.springframework.data.convert.SimpleTypeInformationMapper;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
-import org.springframework.data.mongodb.core.convert.*;
+import org.springframework.data.mongodb.core.convert.DbRefResolver;
+import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
+import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.convert.MongoConverter;
+import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
@@ -34,8 +39,8 @@ public class MongoConfig {
 
     @Bean
     public MappingMongoConverter customMappingMongoConverter(
-            MongoDatabaseFactory factory,
-            MongoMappingContext context,
+            @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") MongoDatabaseFactory factory,
+            @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") MongoMappingContext context,
             BeanFactory beanFactory
     ) {
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(factory);

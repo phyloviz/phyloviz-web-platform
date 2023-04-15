@@ -7,4 +7,6 @@ public interface TreeAdapter {
     String getTree(TreeAdapterSpecificData treeAdapterSpecificData);
 
     boolean isFileAdapter();
+
+    void deleteTree(TreeAdapterSpecificData treeAdapterSpecificData);
 }

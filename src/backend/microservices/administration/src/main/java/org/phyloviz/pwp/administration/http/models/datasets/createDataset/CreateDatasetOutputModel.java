@@ -1,15 +1,15 @@
 package org.phyloviz.pwp.administration.http.models.datasets.createDataset;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.datasets.createDataset.CreateDatasetOutputDTO;
+import org.phyloviz.pwp.shared.service.dtos.dataset.CreateDatasetOutput;
 
 @Data
 public class CreateDatasetOutputModel {
     private String projectId;
     private String datasetId;
 
-    public CreateDatasetOutputModel(CreateDatasetOutputDTO createDatasetOutputDTO) {
-        this.projectId = createDatasetOutputDTO.getProjectId();
-        this.datasetId = createDatasetOutputDTO.getDatasetId();
+    public CreateDatasetOutputModel(CreateDatasetOutput createDatasetOutput) {
+        this.projectId = createDatasetOutput.getProjectId();
+        this.datasetId = createDatasetOutput.getDatasetId();
     }
 }

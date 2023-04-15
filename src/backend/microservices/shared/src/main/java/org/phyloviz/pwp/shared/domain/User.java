@@ -1,7 +1,6 @@
 package org.phyloviz.pwp.shared.domain;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.service.dtos.UserDTO;
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthentication;
 
 import java.util.Map;
@@ -18,9 +17,5 @@ public class User {
         this.id = attributes.get("sub").toString();
         this.username = attributes.get("preferred_username").toString();
         this.email = attributes.get("email").toString();
-    }
-
-    public UserDTO toDTO() {
-        return new UserDTO(id, username, email);
     }
 }

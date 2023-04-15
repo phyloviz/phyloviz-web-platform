@@ -23,16 +23,14 @@ public class TypingDataMetadata {
     private String projectId;
     private String typingDataId;
     private String name;
-    private String url;
     private String adapterId;
     private TypingDataAdapterSpecificData adapterSpecificData;
 
-    public TypingDataMetadata(String projectId, String typingDataId, String name, String url, String adapterId,
+    public TypingDataMetadata(String projectId, String typingDataId, String name, String adapterId,
                               TypingDataAdapterSpecificData adapterSpecificData) {
         this.projectId = projectId;
         this.typingDataId = typingDataId;
         this.name = name;
-        this.url = url;
         this.adapterId = adapterId;
         this.adapterSpecificData = adapterSpecificData;
     }

@@ -14,4 +14,9 @@ public class S3TreeAdapter implements TreeAdapter {
     public boolean isFileAdapter() {
         return true;
     }
+
+    @Override
+    public void deleteTree(TreeAdapterSpecificData treeAdapterSpecificData) {
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
 }

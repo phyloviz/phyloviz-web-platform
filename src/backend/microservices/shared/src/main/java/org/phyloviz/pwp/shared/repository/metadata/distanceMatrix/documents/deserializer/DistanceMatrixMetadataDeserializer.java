@@ -2,17 +2,14 @@ package org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.des
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
-import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.*;
+import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.DistanceMatrixMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.adapterSpecificData.DistanceMatrixAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.adapterSpecificData.DistanceMatrixAdapterSpecificDataFactory;
-import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.adapterSpecificData.DistanceMatrixS3AdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.source.DistanceMatrixSource;
 import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.source.DistanceMatrixSourceFactory;
-import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.source.DistanceMatrixSourceFunction;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
-import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 
@@ -43,11 +40,11 @@ public class DistanceMatrixMetadataDeserializer implements Converter<Document, D
             return new DistanceMatrixMetadata(
                     document.getObjectId("_id").toString(),
                     document.getString("projectId"),
+                    document.getString("datasetId"),
                     document.getString("distanceMatrixId"),
                     document.getString("name"),
                     document.getString("sourceType"),
                     source,
-                    document.getString("url"),
                     document.getString("adapterId"),
                     adapterSpecificData
             );

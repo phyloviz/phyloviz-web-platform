@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.http.models.distanceMatrices;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.DistanceMatrixSourceFunctionDTO;
+import org.phyloviz.pwp.shared.service.dtos.distanceMatrix.DistanceMatrixSourceFunctionDTO;
 
 @Data
 public class DistanceMatrixSourceFunctionOutputModel implements DistanceMatrixSourceOutputModel {

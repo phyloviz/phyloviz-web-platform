@@ -7,4 +7,6 @@ public interface DistanceMatrixAdapter {
     String getDistanceMatrix(DistanceMatrixAdapterSpecificData distanceMatrixAdapterSpecificData);
 
     boolean isFileAdapter();
+
+    void deleteDistanceMatrix(DistanceMatrixAdapterSpecificData distanceMatrixAdapterSpecificData);
 }

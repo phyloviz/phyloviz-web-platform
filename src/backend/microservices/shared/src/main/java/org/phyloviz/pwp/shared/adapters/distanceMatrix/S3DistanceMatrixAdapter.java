@@ -14,4 +14,10 @@ public class S3DistanceMatrixAdapter implements DistanceMatrixAdapter {
     public boolean isFileAdapter() {
         return true;
     }
+
+    @Override
+    public void deleteDistanceMatrix(DistanceMatrixAdapterSpecificData distanceMatrixAdapterSpecificData) {
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
+
 }

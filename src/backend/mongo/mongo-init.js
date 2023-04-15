@@ -33,7 +33,7 @@ db['workflow-templates'].insertMany(
                 }
             }
         ]
-    },{
+    }, {
         "name": "compute-tree",
         "description": "Compute Tree Workflow",
         "tasks": [
@@ -65,7 +65,7 @@ db['workflow-templates'].insertMany(
                 }
             }
         ]
-    },{
+    }, {
         "name": "index-typing-data",
         "description": "Index Typing Data Workflow",
         "tasks": [
@@ -87,7 +87,7 @@ db['workflow-templates'].insertMany(
                 }
             }
         ]
-    },{
+    }, {
         "name": "index-tree",
         "description": "Index Tree Workflow",
         "tasks": [
@@ -109,7 +109,7 @@ db['workflow-templates'].insertMany(
                 }
             }
         ]
-    },{
+    }, {
         "name": "compute-tree-view",
         "description": "Compute Tree View Workflow",
         "tasks": [
@@ -149,7 +149,7 @@ db['tool-templates'].insertMany(
             }
         },
         "library": []
-    },{
+    }, {
         "general": {
             "name": "downloader",
             "description": "The downloader script"
@@ -173,7 +173,7 @@ db['tool-templates'].insertMany(
             }
         },
         "library": []
-    },{
+    }, {
         "general": {
             "name": "phylolib",
             "description": "The phylolib library"
@@ -334,7 +334,7 @@ db['tool-templates'].insertMany(
                 ]
             }
         ]
-    },{
+    }, {
         "general": {
             "name": "tree_indexer",
             "description": "The Tree Indexer script"
@@ -358,7 +358,7 @@ db['tool-templates'].insertMany(
             }
         },
         "library": []
-    },{
+    }, {
         "general": {
             "name": "typing_data_indexer",
             "description": "The Typing Data Indexer script"
@@ -382,7 +382,7 @@ db['tool-templates'].insertMany(
             }
         },
         "library": []
-    },{
+    }, {
         "general": {
             "name": "compute_tree_view",
             "description": "The Compute Tree View script"

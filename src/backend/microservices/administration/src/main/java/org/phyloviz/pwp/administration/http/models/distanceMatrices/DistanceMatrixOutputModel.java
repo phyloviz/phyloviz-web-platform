@@ -1,8 +1,8 @@
 package org.phyloviz.pwp.administration.http.models.distanceMatrices;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.DistanceMatrixDTO;
-import org.phyloviz.pwp.administration.service.dtos.distanceMatrices.DistanceMatrixSourceFunctionDTO;
+import org.phyloviz.pwp.shared.service.dtos.distanceMatrix.DistanceMatrixMetadataDTO;
+import org.phyloviz.pwp.shared.service.dtos.distanceMatrix.DistanceMatrixSourceFunctionDTO;
 
 @Data
 public class DistanceMatrixOutputModel {
@@ -11,16 +11,16 @@ public class DistanceMatrixOutputModel {
     private String sourceType;
     private DistanceMatrixSourceOutputModel source;
 
-    public DistanceMatrixOutputModel(DistanceMatrixDTO distanceMatrixDTO) {
-        this.distanceMatrixId = distanceMatrixDTO.getDistanceMatrixId();
-        this.name = distanceMatrixDTO.getName();
-        this.sourceType = distanceMatrixDTO.getSourceType();
-        this.source = switch (distanceMatrixDTO.getSourceType()) {
+    public DistanceMatrixOutputModel(DistanceMatrixMetadataDTO distanceMatrixMetadataDTO) {
+        this.distanceMatrixId = distanceMatrixMetadataDTO.getDistanceMatrixId();
+        this.name = distanceMatrixMetadataDTO.getName();
+        this.sourceType = distanceMatrixMetadataDTO.getSourceType();
+        this.source = switch (distanceMatrixMetadataDTO.getSourceType()) {
             case "function" -> new DistanceMatrixSourceFunctionOutputModel(
-                    (DistanceMatrixSourceFunctionDTO) distanceMatrixDTO.getSource()
+                    (DistanceMatrixSourceFunctionDTO) distanceMatrixMetadataDTO.getSource()
             );
             default -> throw new IllegalArgumentException(
-                    "Unknown distance matrix source type: " + distanceMatrixDTO.getSourceType()
+                    "Unknown distance matrix source type: " + distanceMatrixMetadataDTO.getSourceType()
             );
         };
     }

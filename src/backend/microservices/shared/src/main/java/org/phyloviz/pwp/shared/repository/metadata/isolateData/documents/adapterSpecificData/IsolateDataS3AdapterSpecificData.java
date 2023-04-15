@@ -10,5 +10,6 @@ import org.springframework.data.annotation.TypeAlias;
 @NoArgsConstructor
 @TypeAlias("isolateDataS3AdapterSpecificData")
 public class IsolateDataS3AdapterSpecificData implements IsolateDataAdapterSpecificData {
+    private String url;
     private String originalFilename;
 }

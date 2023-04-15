@@ -24,11 +24,10 @@ public class TreeMetadata {
     private String name;
     private String sourceType;
     private TreeSource source;
-    private String url;
     private String adapterId;
     private TreeAdapterSpecificData adapterSpecificData;
 
-    public TreeMetadata(String projectId, String datasetId, String treeId, String name, String sourceType, TreeSource source, String url,
+    public TreeMetadata(String projectId, String datasetId, String treeId, String name, String sourceType, TreeSource source,
                         String adapterId, TreeAdapterSpecificData adapterSpecificData) {
         this.projectId = projectId;
         this.datasetId = datasetId;
@@ -36,7 +35,6 @@ public class TreeMetadata {
         this.name = name;
         this.sourceType = sourceType;
         this.source = source;
-        this.url = url;
         this.adapterId = adapterId;
         this.adapterSpecificData = adapterSpecificData;
     }

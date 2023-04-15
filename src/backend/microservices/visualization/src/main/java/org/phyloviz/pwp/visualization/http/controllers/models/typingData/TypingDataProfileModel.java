@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.visualization.http.controllers.models.typingData;
 
 import lombok.Data;
-import org.phyloviz.pwp.visualization.service.dtos.typingData.TypingDataProfileDTO;
+import org.phyloviz.pwp.shared.service.dtos.files.TypingDataProfileDTO;
 
 /**
  * Model for a profile.

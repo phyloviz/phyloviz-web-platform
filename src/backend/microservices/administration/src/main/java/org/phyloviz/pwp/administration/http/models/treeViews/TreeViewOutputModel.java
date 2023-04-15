@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.http.models.treeViews;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.treeViews.TreeViewDTO;
+import org.phyloviz.pwp.shared.service.dtos.treeView.TreeViewMetadataDTO;
 
 @Data
 public class TreeViewOutputModel {
@@ -10,10 +10,10 @@ public class TreeViewOutputModel {
     private String layout;
     private TreeViewSourceOutputModel source;
 
-    public TreeViewOutputModel(TreeViewDTO treeViewDTO) {
-        this.treeViewId = treeViewDTO.getTreeViewId();
-        this.name = treeViewDTO.getName();
-        this.layout = treeViewDTO.getLayout();
-        this.source = new TreeViewSourceOutputModel(treeViewDTO.getSource());
+    public TreeViewOutputModel(TreeViewMetadataDTO treeViewMetadataDTO) {
+        this.treeViewId = treeViewMetadataDTO.getTreeViewId();
+        this.name = treeViewMetadataDTO.getName();
+        this.layout = treeViewMetadataDTO.getLayout();
+        this.source = new TreeViewSourceOutputModel(treeViewMetadataDTO.getSource());
     }
 }

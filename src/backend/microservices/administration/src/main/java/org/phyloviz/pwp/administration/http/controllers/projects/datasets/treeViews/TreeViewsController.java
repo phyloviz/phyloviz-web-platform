@@ -2,10 +2,8 @@ package org.phyloviz.pwp.administration.http.controllers.projects.datasets.treeV
 
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.http.models.treeViews.deleteTreeView.DeleteTreeViewOutputModel;
-import org.phyloviz.pwp.administration.service.dtos.treeViews.deleteTreeView.DeleteTreeViewInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.treeViews.deleteTreeView.DeleteTreeViewOutputDTO;
-import org.phyloviz.pwp.administration.service.projects.datasets.treeViews.TreeViewsService;
 import org.phyloviz.pwp.shared.domain.User;
+import org.phyloviz.pwp.shared.service.project.dataset.treeView.TreeViewService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TreeViewsController {
 
-    private final TreeViewsService treeViewsService;
+    private final TreeViewService treeViewService;
 
     /**
      * Deletes a tree view.
@@ -35,10 +33,8 @@ public class TreeViewsController {
             @PathVariable String treeViewId,
             User user
     ) {
-        DeleteTreeViewOutputDTO deleteTreeViewOutputDTO = treeViewsService.deleteTreeView(
-                new DeleteTreeViewInputDTO(projectId, datasetId, treeViewId, user.toDTO())
-        );
+        treeViewService.deleteTreeView(projectId, datasetId, treeViewId, user.getId());
 
-        return new DeleteTreeViewOutputModel(deleteTreeViewOutputDTO);
+        return new DeleteTreeViewOutputModel(projectId, datasetId, treeViewId);
     }
 }

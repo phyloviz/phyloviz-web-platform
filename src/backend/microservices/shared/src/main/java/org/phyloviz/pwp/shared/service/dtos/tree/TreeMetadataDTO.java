@@ -1,0 +1,34 @@
+package org.phyloviz.pwp.shared.service.dtos.tree;
+
+import lombok.Data;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceAlgorithmDistanceMatrix;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceAlgorithmTypingData;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceFile;
+
+@Data
+public class TreeMetadataDTO {
+    private final String treeId;
+    private final String name;
+    private final String sourceType;
+    private final TreeSourceDTO source;
+
+    public TreeMetadataDTO(TreeMetadata treeMetadata) {
+        this.treeId = treeMetadata.getId();
+        this.name = treeMetadata.getName();
+        this.sourceType = treeMetadata.getSourceType();
+        this.source = switch (treeMetadata.getSourceType()) {
+            case "algorithmDistanceMatrix" -> new TreeSourceAlgorithmDistanceMatrixDTO(
+                    (TreeSourceAlgorithmDistanceMatrix) treeMetadata.getSource()
+            );
+            case "algorithmTypingData" -> new TreeSourceAlgorithmTypingDataDTO(
+                    (TreeSourceAlgorithmTypingData) treeMetadata.getSource()
+            );
+
+            case "file" -> new TreeSourceFileDTO(
+                    (TreeSourceFile) treeMetadata.getSource()
+            );
+            default -> null;
+        };
+    }
+}

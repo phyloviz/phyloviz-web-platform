@@ -3,8 +3,8 @@ package org.phyloviz.pwp.shared.adapters.treeView;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewPhyloDBAdapterSpecificData;
-import org.phyloviz.pwp.shared.service.dtos.NodeDTO;
-import org.phyloviz.pwp.shared.service.exceptions.TreeViewNotFoundException;
+import org.phyloviz.pwp.shared.service.dtos.treeView.GetTreeViewOutput;
+import org.phyloviz.pwp.shared.service.dtos.treeView.NodeDTO;
 import org.springframework.stereotype.Component;
 import pt.ist.meic.phylodb.analysis.visualization.VisualizationService;
 import pt.ist.meic.phylodb.analysis.visualization.model.Visualization;
@@ -21,7 +21,7 @@ public class PhyloDBTreeViewAdapter implements TreeViewAdapter {
     private final ProfileService profileService;
 
     @Override
-    public AdapterGetTreeViewDTO getTreeView(TreeViewAdapterSpecificData treeViewAdapterSpecificData) {
+    public GetTreeViewOutput getTreeView(TreeViewAdapterSpecificData treeViewAdapterSpecificData) {
         TreeViewPhyloDBAdapterSpecificData treeViewPhyloDBAdapterSpecificData =
                 (TreeViewPhyloDBAdapterSpecificData) treeViewAdapterSpecificData;
 
@@ -51,9 +51,14 @@ public class PhyloDBTreeViewAdapter implements TreeViewAdapter {
             );
         }).toList();
 
-        return new AdapterGetTreeViewDTO(
+        return new GetTreeViewOutput(
                 nodes,
                 nodes.size()
         );
+    }
+
+    @Override
+    public void deleteTreeView(TreeViewAdapterSpecificData treeViewAdapterSpecificData) {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 }

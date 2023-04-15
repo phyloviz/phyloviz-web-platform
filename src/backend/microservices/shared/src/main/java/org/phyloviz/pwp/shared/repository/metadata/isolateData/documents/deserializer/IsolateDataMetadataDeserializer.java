@@ -2,10 +2,9 @@ package org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.deseri
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
-import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.adapterSpecificData.IsolateDataAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.IsolateDataMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.adapterSpecificData.IsolateDataAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.adapterSpecificData.IsolateDataAdapterSpecificDataFactory;
-import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.adapterSpecificData.IsolateDataS3AdapterSpecificData;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
@@ -35,7 +34,6 @@ public class IsolateDataMetadataDeserializer implements Converter<Document, Isol
                     document.getString("projectId"),
                     document.getString("isolateDataId"),
                     document.getString("name"),
-                    document.getString("url"),
                     document.getString("adapterId"),
                     adapterSpecificData
             );

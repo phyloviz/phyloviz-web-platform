@@ -8,4 +8,5 @@ import org.springframework.data.annotation.TypeAlias;
 @AllArgsConstructor
 @TypeAlias("treeViewS3AdapterSpecificData")
 public class TreeViewS3AdapterSpecificData implements TreeViewAdapterSpecificData {
+    private String url;
 }

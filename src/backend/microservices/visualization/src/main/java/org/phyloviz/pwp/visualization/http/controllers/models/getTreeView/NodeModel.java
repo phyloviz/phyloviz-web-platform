@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.visualization.http.controllers.models.getTreeView;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.service.dtos.NodeDTO;
+import org.phyloviz.pwp.shared.service.dtos.treeView.NodeDTO;
 
 import java.util.List;
 

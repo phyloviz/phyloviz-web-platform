@@ -1,8 +1,7 @@
 package org.phyloviz.pwp.compute.service;
 
-import org.phyloviz.pwp.compute.service.dtos.createWorkflow.CreateWorkflowOutputDTO;
-import org.phyloviz.pwp.compute.service.dtos.getWorkflow.GetWorkflowStatusOutputDTO;
-import org.phyloviz.pwp.shared.service.dtos.UserDTO;
+import org.phyloviz.pwp.compute.service.dtos.createWorkflow.CreateWorkflowOutput;
+import org.phyloviz.pwp.compute.service.dtos.getWorkflow.GetWorkflowStatusOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,17 +16,17 @@ public interface ComputeService {
     /**
      * Creates a new workflow.
      *
-     * @param projectId    the project id where the workflow will be created
-     * @param typingDataId the typing data id
-     * @param properties   the properties of the workflow
-     * @param userDTO      the userDTO of the user who created the workflow
+     * @param projectId  the project id where the workflow will be created
+     * @param type       the type of the workflow
+     * @param properties the properties of the workflow
+     * @param userId     the id of the user who created the workflow
      * @return the output information of the workflow
      */
-    CreateWorkflowOutputDTO createWorkflow(
+    CreateWorkflowOutput createWorkflow(
             String projectId,
-            String typingDataId,
+            String type,
             Map<String, String> properties,
-            UserDTO userDTO
+            String userId
     );
 
     /**
@@ -35,17 +34,17 @@ public interface ComputeService {
      *
      * @param projectId  the project id where the workflow is located
      * @param workflowId the workflow id
-     * @param userDTO    the userDTO of the user who is requesting the workflow status
+     * @param userId     the id of the user who is requesting the workflow status
      * @return the output information of the workflow
      */
-    GetWorkflowStatusOutputDTO getWorkflowStatus(String projectId, String workflowId, UserDTO userDTO);
+    GetWorkflowStatusOutput getWorkflowStatus(String projectId, String workflowId, String userId);
 
     /**
      * Gets the workflows of a project.
      *
      * @param projectId the project id where the workflows are located
-     * @param userDTO   the userDTO of the user who is requesting the workflows
+     * @param userId    the id of the user who is requesting the workflows
      * @return the output information of the workflows
      */
-    List<GetWorkflowStatusOutputDTO> getWorkflows(String projectId, UserDTO userDTO);
+    List<GetWorkflowStatusOutput> getWorkflows(String projectId, String userId);
 }
