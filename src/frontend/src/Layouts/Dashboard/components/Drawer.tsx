@@ -8,7 +8,7 @@ import HomeIcon from "@mui/icons-material/Home"
 import AboutIcon from "@mui/icons-material/Info"
 import NewsIcon from "@mui/icons-material/Newspaper"
 import ApiIcon from "@mui/icons-material/Api"
-import {WebUiUris} from "../../../Utils/WebUiUris"
+import {WebUiUris} from "../../../Pages/WebUiUris"
 
 /**
  * List of the main items in the sidebar.

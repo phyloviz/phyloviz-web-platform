@@ -2,7 +2,7 @@ import {useEffect, useState} from "react"
 import {ProjectModel} from "../../Services/administration/models/ProjectModel"
 import {AdministrationService} from "../../Services/administration/AdministrationService"
 import {useNavigate} from "react-router-dom"
-import {WebUiUris} from "../../Utils/WebUiUris"
+import {WebUiUris} from "../WebUiUris"
 
 /**
  * Hook for the OpenProject page.

@@ -1,13 +1,8 @@
 import {DistanceMatrix} from "../../../../../../Services/administration/models/getProject/GetProjectOutputModel"
-import {useContextMenu} from "../../../useContextMenu"
-import {StyledTreeItem} from "../../../StyledTreeItem"
-import {Download, TableView, Visibility} from "@mui/icons-material"
-import {Menu, MenuItem} from "@mui/material"
+import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
+import {TableView} from "@mui/icons-material"
 import * as React from "react"
-import {useNavigate, useParams} from "react-router-dom"
-import {WebUiUris} from "../../../../../../Utils/WebUiUris"
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import {useDistanceMatrixTreeItem} from "./useDistanceMatrixTreeItem";
 
 /**
  * Props for the DistanceMatrixTreeItem component.
@@ -26,46 +21,15 @@ interface DistanceMatrixTreeItemProps {
  * Tree item for a distance matrix.
  */
 export function DistanceMatrixTreeItem({nodeId, datasetId, distanceMatrix}: DistanceMatrixTreeItemProps) {
-    const {
-        contextMenu,
-        handleContextMenu,
-        handleClose
-    } = useContextMenu()
+    const {contextMenuItems} = useDistanceMatrixTreeItem(datasetId, distanceMatrix)
 
-    const navigate = useNavigate()
-    const {projectId} = useParams<{ projectId: string }>()
-
-    const handleViewDistanceMatrix = () => {
-        handleClose()
-        navigate(WebUiUris.distanceMatrix(projectId!, datasetId, distanceMatrix.distanceMatrixId))
-    }
-
-    return (<>
+    return (
         <StyledTreeItem
             nodeId={nodeId}
             labelText={distanceMatrix.name}
             labelIcon={TableView}
-            handleContextMenu={handleContextMenu}
+            contextMenuItems={contextMenuItems}
         />
-        <Menu
-            open={contextMenu !== null}
-            onClose={handleClose}
-            anchorReference="anchorPosition"
-            anchorPosition={
-                contextMenu !== null
-                    ? {top: contextMenu.mouseY, left: contextMenu.mouseX}
-                    : undefined
-            }
-        >
-            <MenuItem onClick={handleViewDistanceMatrix}>
-                <ListItemIcon><Visibility color={"primary"}/></ListItemIcon>
-                <ListItemText>View</ListItemText>
-            </MenuItem>
-            <MenuItem onClick={() => {/*TODO: To be implemented*/
-            }}>
-                <ListItemIcon><Download color={"primary"}/></ListItemIcon>
-                <ListItemText>Export</ListItemText>
-            </MenuItem>
-        </Menu>
-    </>)
+    )
 }
+

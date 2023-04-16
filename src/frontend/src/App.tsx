@@ -3,7 +3,7 @@ import {useEffect} from 'react'
 import './App.css'
 import {Route, Routes} from 'react-router-dom'
 import About from "./Pages/About/About"
-import {WebUiUris} from "./Utils/WebUiUris"
+import {WebUiUris} from "./Pages/WebUiUris"
 import Dashboard from "./Layouts/Dashboard/Dashboard"
 import {Home} from "./Pages/Home/Home"
 import News from "./Pages/News/News"
@@ -54,7 +54,7 @@ import Tree from "./Pages/Project/Tree/Tree";
 export default function App() {
 
     const sessionManager = useSessionManager()
-    const loggedIn = useLoggedIn()
+    const loggedIn = true//useLoggedIn()
 
     // Clear session on app start
     useEffect(() => {

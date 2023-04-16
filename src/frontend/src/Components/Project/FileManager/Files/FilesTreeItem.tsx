@@ -1,14 +1,8 @@
 import * as React from "react"
-import {Add, Description, FilePresent, Folder} from "@mui/icons-material"
-import {Menu, MenuItem} from "@mui/material"
-import UploadIcon from "@mui/icons-material/Upload"
-import {useNavigate, useParams} from "react-router-dom"
-import {WebUiUris} from "../../../../Utils/WebUiUris"
+import {Description, FilePresent, Folder} from "@mui/icons-material"
 import {ProjectFiles} from "../../../../Services/administration/models/getProject/GetProjectOutputModel"
-import {useContextMenu} from "../useContextMenu"
-import {StyledTreeItem} from "../StyledTreeItem"
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import {StyledTreeItem} from "../Utils/StyledTreeItem"
+import {useFilesTreeItem} from "./useFilesTreeItem";
 
 /**
  * Props for the FilesTreeItem component.
@@ -25,56 +19,35 @@ interface FilesTreeItemProps {
  * Tree item for the files of a project.
  */
 export function FilesTreeItem({nodeId, files}: FilesTreeItemProps) {
-    const navigate = useNavigate()
-    const {projectId} = useParams<{ projectId: string }>()
-
-    const {
-        contextMenu,
-        handleContextMenu,
-        handleClose
-    } = useContextMenu()
-
-    const handleUploadFiles = () => {
-        handleClose()
-        navigate(WebUiUris.uploadFiles(projectId!))
-    }
+    const {contextMenuItems} = useFilesTreeItem()
 
     return (
-        <>
-            <StyledTreeItem
-                nodeId={nodeId}
-                labelText="Files"
-                labelIcon={Folder}
-                handleContextMenu={handleContextMenu}
-            >
-                {
-                    files.typingData.map((file, index) => {
-                        return <StyledTreeItem nodeId={"0" + index.toString()} key={"0" + index.toString()}
-                                               labelText={file.name} labelIcon={Description}/>
-                    })
-                }
-                {
-                    files.isolateData.map((file, index) => {
-                        return <StyledTreeItem nodeId={"1" + index.toString()} key={"1" + index.toString()}
-                                               labelText={file.name} labelIcon={FilePresent}/>
-                    })
-                }
-            </StyledTreeItem>
-            <Menu
-                open={contextMenu !== null}
-                onClose={handleClose}
-                anchorReference="anchorPosition"
-                anchorPosition={
-                    contextMenu !== null
-                        ? {top: contextMenu.mouseY, left: contextMenu.mouseX}
-                        : undefined
-                }
-            >
-                <MenuItem onClick={handleUploadFiles}>
-                    <ListItemIcon><UploadIcon color={"primary"}/></ListItemIcon>
-                    <ListItemText>Upload Files</ListItemText>
-                </MenuItem>
-            </Menu>
-        </>
+        <StyledTreeItem
+            nodeId={nodeId}
+            labelText="Files"
+            labelIcon={Folder}
+            contextMenuItems={contextMenuItems}
+        >
+            {
+                files.typingData.map((file, index) => {
+                    return <StyledTreeItem
+                        nodeId={"0" + index.toString()}
+                        key={"0" + index.toString()}
+                        labelText={file.name}
+                        labelIcon={Description}
+                    />
+                })
+            }
+            {
+                files.isolateData.map((file, index) => {
+                    return <StyledTreeItem
+                        nodeId={"1" + index.toString()}
+                        key={"1" + index.toString()}
+                        labelText={file.name}
+                        labelIcon={FilePresent}
+                    />
+                })
+            }
+        </StyledTreeItem>
     )
 }

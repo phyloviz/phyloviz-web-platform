@@ -1,5 +1,5 @@
 import {Tree} from "../../../../../../Services/administration/models/getProject/GetProjectOutputModel"
-import {StyledTreeItem} from "../../../StyledTreeItem"
+import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
 import {Forest, ScatterPlot} from "@mui/icons-material"
 import {TreeTreeItem} from "./TreeTreeItem"
 import * as React from "react"

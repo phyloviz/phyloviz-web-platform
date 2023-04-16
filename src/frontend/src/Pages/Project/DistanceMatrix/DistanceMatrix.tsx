@@ -8,14 +8,16 @@ import Box from "@mui/material/Box";
 // @ts-ignore
 import {Colorscale} from 'react-colorscales';
 import {Download, Print} from "@mui/icons-material";
+import {useDistanceMatrix} from "./useDistanceMatrix";
 
 /**
  * DistanceMatrix page.
  */
 export default function DistanceMatrix() {
-    /*const {
+    const {
         data,
-    } = useDistanceMatrix()*/
+        cellStyle
+    } = useDistanceMatrix()
 
     // @ts-ignore
     return (
@@ -43,35 +45,13 @@ export default function DistanceMatrix() {
                     justifyContent: "center",
                     alignItems: "space-between"
                 }}>
-                    <Box sx={{
-                        width: "50%",
-                        height: "100%",
-                    }}>
+                    <Box sx={{width: "50%", height: "100%"}}>
                         <HeatMap
                             xLabels={["", "", "", "", "", "", "", "", "", "", "", "", "", ""]}
                             yLabels={["", "", "", "", "", "", "", "", "", "", "", "", "", ""]}
-                            data={[
-                                [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-                                [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-                                [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
-                                [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
-                                [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
-                                [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-                                [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
-                                [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
-                                [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-                                [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
-                                [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
-                                [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
-                                [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27],
-                                [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]
-                            ]}
+                            data={data}
                             squares
-                            cellStyle={(background: any, value: number, min: number, max: number, data: any, x: any, y: any) => ({
-                                background: `rgb(0, 151, 230, ${1 - (max - value) / (max - min)})`,
-                                fontSize: "11.5px",
-                                color: "#444"
-                            })}
+                            cellStyle={cellStyle}
                             cellRender={(value: number) => value && <div>{value}</div>}
                         />
                     </Box>
@@ -139,6 +119,7 @@ export default function DistanceMatrix() {
                                     variant="contained"
                                     sx={{mt: 2, width: "100%"}}
                                     onClick={() => {
+                                        // TODO: To be implemented
                                     }}
                                     startIcon={<Download/>}
                                 >Export</Button>
@@ -146,6 +127,7 @@ export default function DistanceMatrix() {
                                     variant="contained"
                                     sx={{mt: 2, width: "100%"}}
                                     onClick={() => {
+                                        // TODO: To be implemented
                                     }}
                                     startIcon={<Print/>}
                                 >Print</Button>
