@@ -1,17 +1,12 @@
 package org.phyloviz.pwp.shared.config;
 
-import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.adapterSpecificData.DistanceMatrixAdapterSpecificDataFactory;
 import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.deserializer.DistanceMatrixMetadataDeserializer;
-import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.source.DistanceMatrixSourceFactory;
-import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.adapterSpecificData.IsolateDataAdapterSpecificDataFactory;
-import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.deserializer.IsolateDataMetadataDeserializer;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.adapterSpecificData.TreeAdapterSpecificDataFactory;
+import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.converters.IsolateDataMetadataDeserializer;
+import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.converters.IsolateDataMetadataSerializer;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.deserializer.TreeMetadataDeserializer;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceFactory;
-import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewAdapterSpecificDataFactory;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.deserializer.TreeViewMetadataDeserializer;
-import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.adapterSpecificData.TypingDataAdapterSpecificDataFactory;
-import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.deserializer.TypingDataMetadataDeserializer;
+import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.converters.TypingDataMetadataDeserializer;
+import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.converters.TypingDataMetadataSerializer;
 import org.reflections.Reflections;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +16,12 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.convert.ConfigurableTypeInformationMapper;
 import org.springframework.data.convert.SimpleTypeInformationMapper;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
-import org.springframework.data.mongodb.core.convert.*;
+import org.springframework.data.mongodb.core.convert.DbRefResolver;
+import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
+import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.convert.MongoConverter;
+import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
@@ -34,8 +34,8 @@ public class MongoConfig {
 
     @Bean
     public MappingMongoConverter customMappingMongoConverter(
-            MongoDatabaseFactory factory,
-            MongoMappingContext context,
+            @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") MongoDatabaseFactory factory,
+            @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") MongoMappingContext context,
             BeanFactory beanFactory
     ) {
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(factory);
@@ -49,15 +49,13 @@ public class MongoConfig {
 
     public MongoCustomConversions mongoCustomConversions(MongoConverter mongoConverter) {
         List<Converter<?, ?>> converters = List.of(
-                new TypingDataMetadataDeserializer(mongoConverter, new TypingDataAdapterSpecificDataFactory()),
-                new IsolateDataMetadataDeserializer(mongoConverter, new IsolateDataAdapterSpecificDataFactory()),
-                new DistanceMatrixMetadataDeserializer(mongoConverter,
-                        new DistanceMatrixSourceFactory(),
-                        new DistanceMatrixAdapterSpecificDataFactory()),
-                new TreeMetadataDeserializer(mongoConverter,
-                        new TreeSourceFactory(),
-                        new TreeAdapterSpecificDataFactory()),
-                new TreeViewMetadataDeserializer(mongoConverter, new TreeViewAdapterSpecificDataFactory())
+                new TypingDataMetadataDeserializer(mongoConverter),
+                new TypingDataMetadataSerializer(mongoConverter),
+                new IsolateDataMetadataDeserializer(mongoConverter),
+                new IsolateDataMetadataSerializer(mongoConverter),
+                new DistanceMatrixMetadataDeserializer(mongoConverter),
+                new TreeMetadataDeserializer(mongoConverter),
+                new TreeViewMetadataDeserializer(mongoConverter)
         );
 
         /*return new MongoCustomConversions(

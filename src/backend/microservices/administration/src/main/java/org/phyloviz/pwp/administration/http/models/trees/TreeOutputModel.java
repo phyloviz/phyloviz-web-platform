@@ -1,10 +1,10 @@
 package org.phyloviz.pwp.administration.http.models.trees;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.trees.TreeDTO;
-import org.phyloviz.pwp.administration.service.dtos.trees.TreeSourceAlgorithmDistanceMatrixDTO;
-import org.phyloviz.pwp.administration.service.dtos.trees.TreeSourceAlgorithmTypingDataDTO;
-import org.phyloviz.pwp.administration.service.dtos.trees.TreeSourceFileDTO;
+import org.phyloviz.pwp.shared.service.dtos.tree.TreeMetadataDTO;
+import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceAlgorithmDistanceMatrixDTO;
+import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceAlgorithmTypingDataDTO;
+import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceFileDTO;
 
 @Data
 public class TreeOutputModel {
@@ -13,21 +13,20 @@ public class TreeOutputModel {
     private String sourceType;
     private TreeSourceOutputModel source;
 
-    public TreeOutputModel(TreeDTO treeDTO) {
-        this.treeId = treeDTO.getTreeId();
-        this.name = treeDTO.getName();
-        this.sourceType = treeDTO.getSourceType();
-        this.source = switch (treeDTO.getSourceType()) {
-            case "algorithmDistanceMatrix" -> new TreeSourceAlgorithmDistanceMatrixOutputModel(
-                    (TreeSourceAlgorithmDistanceMatrixDTO) treeDTO.getSource()
+    public TreeOutputModel(TreeMetadataDTO treeMetadataDTO) {
+        this.treeId = treeMetadataDTO.getTreeId();
+        this.name = treeMetadataDTO.getName();
+        this.sourceType = treeMetadataDTO.getSourceType().name().toLowerCase();
+        this.source = switch (treeMetadataDTO.getSourceType()) {
+            case ALGORITHM_DISTANCE_MATRIX -> new TreeSourceAlgorithmDistanceMatrixOutputModel(
+                    (TreeSourceAlgorithmDistanceMatrixDTO) treeMetadataDTO.getSource()
             );
-            case "algorithmTypingData" -> new TreeSourceAlgorithmTypingDataOutputModel(
-                    (TreeSourceAlgorithmTypingDataDTO) treeDTO.getSource()
+            case ALGORITHM_TYPING_DATA -> new TreeSourceAlgorithmTypingDataOutputModel(
+                    (TreeSourceAlgorithmTypingDataDTO) treeMetadataDTO.getSource()
             );
-            case "file" -> new TreeSourceFileOutputModel(
-                    (TreeSourceFileDTO) treeDTO.getSource()
+            case FILE -> new TreeSourceFileOutputModel(
+                    (TreeSourceFileDTO) treeMetadataDTO.getSource()
             );
-            default -> throw new IllegalArgumentException("Unknown tree source type: " + treeDTO.getSourceType());
         };
     }
 }

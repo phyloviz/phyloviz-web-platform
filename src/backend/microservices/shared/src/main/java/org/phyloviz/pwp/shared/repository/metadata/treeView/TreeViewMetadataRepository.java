@@ -12,7 +12,7 @@ public interface TreeViewMetadataRepository {
      *
      * @param treeViewMetadata the tree view metadata to delete
      */
-    void deleteTreeView(TreeViewMetadata treeViewMetadata);
+    void delete(TreeViewMetadata treeViewMetadata);
 
     /**
      * Find a tree view metadata from its id.

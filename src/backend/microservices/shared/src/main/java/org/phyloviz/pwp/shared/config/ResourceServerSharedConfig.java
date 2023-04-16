@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 @Configuration
-@ComponentScan(basePackages = { "org.phyloviz.pwp.shared", "pt.ist.meic.phylodb" })
+@ComponentScan(basePackages = {"org.phyloviz.pwp.shared", "pt.ist.meic.phylodb"})
 public class ResourceServerSharedConfig {
 
 }

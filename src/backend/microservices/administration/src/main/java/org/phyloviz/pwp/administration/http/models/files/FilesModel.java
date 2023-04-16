@@ -3,7 +3,7 @@ package org.phyloviz.pwp.administration.http.models.files;
 import lombok.Data;
 import org.phyloviz.pwp.administration.http.models.files.isolateData.IsolateDataModel;
 import org.phyloviz.pwp.administration.http.models.files.typingData.TypingDataModel;
-import org.phyloviz.pwp.administration.service.dtos.files.FilesDTO;
+import org.phyloviz.pwp.shared.service.dtos.files.FilesDTO;
 
 import java.util.List;
 

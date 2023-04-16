@@ -3,12 +3,9 @@ package org.phyloviz.pwp.administration.http.controllers.projects.files.isolateD
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.http.models.files.isolateData.deleteIsolateData.DeleteIsolateDataOutputModel;
 import org.phyloviz.pwp.administration.http.models.files.isolateData.uploadIsolateData.UploadIsolateDataOutputModel;
-import org.phyloviz.pwp.administration.service.dtos.files.deleteIsolateData.DeleteIsolateDataInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.files.deleteIsolateData.DeleteIsolateDataOutputDTO;
-import org.phyloviz.pwp.administration.service.dtos.files.uploadIsolateData.UploadIsolateDataInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.files.uploadIsolateData.UploadIsolateDataOutputDTO;
-import org.phyloviz.pwp.administration.service.projects.files.isolateData.IsolateDataService;
 import org.phyloviz.pwp.shared.domain.User;
+import org.phyloviz.pwp.shared.service.dtos.files.UploadIsolateDataOutput;
+import org.phyloviz.pwp.shared.service.project.file.isolateData.IsolateDataService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,11 +37,9 @@ public class IsolateDataController {
             @RequestPart MultipartFile file,
             User user
     ) {
-        UploadIsolateDataOutputDTO uploadIsolateDataOutputDTO = isolateDataService.uploadIsolateData(
-                new UploadIsolateDataInputDTO(projectId, file, user.toDTO())
-        );
+        UploadIsolateDataOutput uploadIsolateDataOutput = isolateDataService.uploadIsolateData(projectId, file, user.getId());
 
-        return new UploadIsolateDataOutputModel(uploadIsolateDataOutputDTO);
+        return new UploadIsolateDataOutputModel(uploadIsolateDataOutput);
     }
 
     /**
@@ -61,10 +56,8 @@ public class IsolateDataController {
             @PathVariable String isolateDataId,
             User user
     ) {
-        DeleteIsolateDataOutputDTO deleteIsolateDataOutputDTO = isolateDataService.deleteIsolateData(
-                new DeleteIsolateDataInputDTO(projectId, isolateDataId, user.toDTO())
-        );
+        isolateDataService.deleteIsolateData(projectId, isolateDataId, user.getId());
 
-        return new DeleteIsolateDataOutputModel(deleteIsolateDataOutputDTO);
+        return new DeleteIsolateDataOutputModel(projectId, isolateDataId);
     }
 }

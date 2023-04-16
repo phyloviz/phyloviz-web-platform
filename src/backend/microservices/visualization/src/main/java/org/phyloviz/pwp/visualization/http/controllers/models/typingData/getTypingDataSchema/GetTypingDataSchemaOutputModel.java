@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.visualization.http.controllers.models.typingData.getTypingDataSchema;
 
 import lombok.Data;
-import org.phyloviz.pwp.visualization.service.dtos.typingData.getTypingDataSchema.GetTypingDataSchemaOutputDTO;
+import org.phyloviz.pwp.shared.service.dtos.files.GetTypingDataSchemaOutput;
 
 /**
  * Output model for the get typing data profiles endpoint.
@@ -12,9 +12,9 @@ public class GetTypingDataSchemaOutputModel {
     private final String[] loci;
     private final int totalCount;
 
-    public GetTypingDataSchemaOutputModel(GetTypingDataSchemaOutputDTO getTypingDataSchemaOutputDTO) {
-        this.type = getTypingDataSchemaOutputDTO.getType();
-        this.loci = getTypingDataSchemaOutputDTO.getLoci();
-        this.totalCount = getTypingDataSchemaOutputDTO.getTotalCount();
+    public GetTypingDataSchemaOutputModel(GetTypingDataSchemaOutput getTypingDataSchemaOutput) {
+        this.type = getTypingDataSchemaOutput.getType();
+        this.loci = getTypingDataSchemaOutput.getLoci();
+        this.totalCount = getTypingDataSchemaOutput.getTotalCount();
     }
 }

@@ -1,8 +1,8 @@
 package org.phyloviz.pwp.visualization.http.controllers.models.isolateData.getIsolateDataRows;
 
 import lombok.Data;
+import org.phyloviz.pwp.shared.service.dtos.files.GetIsolateDataRowsOutput;
 import org.phyloviz.pwp.visualization.http.controllers.models.isolateData.IsolateDataRowModel;
-import org.phyloviz.pwp.visualization.service.dtos.isolateData.getIsolateDataRows.GetIsolateDataRowsOutputDTO;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ public class GetIsolateDataRowsOutputModel {
     private List<IsolateDataRowModel> rows;
     private int totalCount;
 
-    public GetIsolateDataRowsOutputModel(GetIsolateDataRowsOutputDTO getIsolateDataRowsOutputDTO) {
-        this.rows = getIsolateDataRowsOutputDTO.getRows().stream().map(IsolateDataRowModel::new).toList();
-        this.totalCount = getIsolateDataRowsOutputDTO.getTotalCount();
+    public GetIsolateDataRowsOutputModel(GetIsolateDataRowsOutput getIsolateDataRowsOutput) {
+        this.rows = getIsolateDataRowsOutput.getRows().stream().map(IsolateDataRowModel::new).toList();
+        this.totalCount = getIsolateDataRowsOutput.getTotalCount();
     }
 }

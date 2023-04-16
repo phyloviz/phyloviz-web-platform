@@ -1,0 +1,19 @@
+adapters:
+  upload-isolate-data-adapter: S3
+  upload-typing-data-adapter: S3
+  get-distance-matrix-adapter-priority: S3 # list of adapter ids, separate by comma.
+  get-tree-adapter-priority: PHYLODB # list of adapter ids, separate by comma.
+  get-tree-view-adapter-priority: PHYLODB # list of adapter ids, separate by comma.
+
+mongo-collections:
+  typing-data-metadata-collection: typing-data
+  isolate-data-metadata-collection: isolate-data
+  distance-matrix-metadata-collection: distance-matrices
+  tree-metadata-collection: trees
+  tree-view-metadata-collection: tree-views
+
+s3:
+  access-key-id: AKIAIOSFODNN7EXAMPLE
+  secret-access-key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  bucket: phyloviz-web-platform/
+  endpoint: http://localhost:9444

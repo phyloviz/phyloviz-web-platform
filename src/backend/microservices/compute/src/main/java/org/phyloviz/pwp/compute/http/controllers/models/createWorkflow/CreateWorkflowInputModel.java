@@ -1,7 +1,8 @@
 package org.phyloviz.pwp.compute.http.controllers.models.createWorkflow;
 
-import java.util.Map;
 import lombok.Data;
+
+import java.util.Map;
 
 @Data
 public class CreateWorkflowInputModel {

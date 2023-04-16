@@ -2,10 +2,9 @@ package org.phyloviz.pwp.shared.repository.metadata.treeView.documents.deseriali
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
-import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.TreeViewMetadata;
-import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewAdapterSpecificDataFactory;
-import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewS3AdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewAdapterId;
+import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.source.TreeViewSource;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
@@ -18,15 +17,14 @@ import javax.validation.constraints.NotNull;
 public class TreeViewMetadataDeserializer implements Converter<Document, TreeViewMetadata> {
     private final MongoConverter mongoConverter;
 
-    private final TreeViewAdapterSpecificDataFactory treeViewAdapterSpecificDataFactory;
-
     @Override
     public TreeViewMetadata convert(@NotNull Document document) {
         try {
-            String adapterId = document.getString("adapterId");
+            TreeViewAdapterId adapterId = TreeViewAdapterId.valueOf(
+                    document.getString("adapterId").toUpperCase()
+            );
 
-            Class<? extends TreeViewAdapterSpecificData> adapterSpecificDataClass =
-                    treeViewAdapterSpecificDataFactory.getClass(adapterId);
+            Class<? extends TreeViewAdapterSpecificData> adapterSpecificDataClass = adapterId.getAdapterSpecificDataClass();
 
             Document adapterSpecificDataDocument = (Document) document.get("adapterSpecificData");
             TreeViewAdapterSpecificData adapterSpecificData = mongoConverter.read(adapterSpecificDataClass, adapterSpecificDataDocument);
@@ -34,12 +32,12 @@ public class TreeViewMetadataDeserializer implements Converter<Document, TreeVie
             return new TreeViewMetadata(
                     document.getObjectId("_id").toString(),
                     document.getString("projectId"),
+                    document.getString("datasetId"),
                     document.getString("treeViewId"),
                     document.getString("name"),
                     document.getString("layout"),
                     mongoConverter.read(TreeViewSource.class, (Document) document.get("source")),
-                    document.getString("url"),
-                    document.getString("adapterId"),
+                    adapterId,
                     adapterSpecificData
             );
         } catch (Exception e) {

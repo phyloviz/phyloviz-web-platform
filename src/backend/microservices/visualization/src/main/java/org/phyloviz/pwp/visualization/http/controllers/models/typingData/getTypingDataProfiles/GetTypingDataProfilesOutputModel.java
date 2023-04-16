@@ -1,8 +1,8 @@
 package org.phyloviz.pwp.visualization.http.controllers.models.typingData.getTypingDataProfiles;
 
 import lombok.Data;
+import org.phyloviz.pwp.shared.service.dtos.files.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.visualization.http.controllers.models.typingData.TypingDataProfileModel;
-import org.phyloviz.pwp.visualization.service.dtos.typingData.getTypingDataProfiles.GetTypingDataProfilesOutputDTO;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ public class GetTypingDataProfilesOutputModel {
     private List<TypingDataProfileModel> profiles;
     private int totalCount;
 
-    public GetTypingDataProfilesOutputModel(GetTypingDataProfilesOutputDTO getTypingDataProfilesOutputDTO) {
-        this.profiles = getTypingDataProfilesOutputDTO.getProfiles().stream().map(TypingDataProfileModel::new).toList();
-        this.totalCount = getTypingDataProfilesOutputDTO.getTotalCount();
+    public GetTypingDataProfilesOutputModel(GetTypingDataProfilesOutput getTypingDataProfilesOutput) {
+        this.profiles = getTypingDataProfilesOutput.getProfiles().stream().map(TypingDataProfileModel::new).toList();
+        this.totalCount = getTypingDataProfilesOutput.getTotalCount();
     }
 }

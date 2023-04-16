@@ -3,12 +3,9 @@ package org.phyloviz.pwp.administration.http.controllers.projects.files.typingDa
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.http.models.files.typingData.deleteTypingData.DeleteTypingDataOutputModel;
 import org.phyloviz.pwp.administration.http.models.files.typingData.uploadTypingData.UploadTypingDataOutputModel;
-import org.phyloviz.pwp.administration.service.dtos.files.deleteTypingData.DeleteTypingDataInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.files.deleteTypingData.DeleteTypingDataOutputDTO;
-import org.phyloviz.pwp.administration.service.dtos.files.uploadTypingData.UploadTypingDataInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.files.uploadTypingData.UploadTypingDataOutputDTO;
-import org.phyloviz.pwp.administration.service.projects.files.typingData.TypingDataService;
 import org.phyloviz.pwp.shared.domain.User;
+import org.phyloviz.pwp.shared.service.dtos.files.UploadTypingDataOutput;
+import org.phyloviz.pwp.shared.service.project.file.typingData.TypingDataService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,11 +37,9 @@ public class TypingDataController {
             @RequestPart MultipartFile file,
             User user
     ) {
-        UploadTypingDataOutputDTO uploadTypingDataOutputDTO = typingDataService.uploadTypingData(
-                new UploadTypingDataInputDTO(projectId, file, user.toDTO())
-        );
+        UploadTypingDataOutput uploadTypingDataOutput = typingDataService.uploadTypingData(projectId, file, user.getId());
 
-        return new UploadTypingDataOutputModel(uploadTypingDataOutputDTO);
+        return new UploadTypingDataOutputModel(uploadTypingDataOutput);
     }
 
     /**
@@ -61,10 +56,8 @@ public class TypingDataController {
             @PathVariable String typingDataId,
             User user
     ) {
-        DeleteTypingDataOutputDTO deleteTypingDataOutputDTO = typingDataService.deleteTypingData(
-                new DeleteTypingDataInputDTO(projectId, typingDataId, user.toDTO())
-        );
+        typingDataService.deleteTypingData(projectId, typingDataId, user.getId());
 
-        return new DeleteTypingDataOutputModel(deleteTypingDataOutputDTO);
+        return new DeleteTypingDataOutputModel(projectId, typingDataId);
     }
 }

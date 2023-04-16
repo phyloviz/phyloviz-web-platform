@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.visualization.http.controllers.models.isolateData;
 
 import lombok.Data;
-import org.phyloviz.pwp.visualization.service.dtos.isolateData.IsolateDataRowDTO;
+import org.phyloviz.pwp.shared.service.dtos.files.IsolateDataRowDTO;
 
 /**
  * Model for the isolate data.
