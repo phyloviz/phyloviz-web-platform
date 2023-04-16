@@ -1,15 +1,17 @@
 package org.phyloviz.pwp.shared.service.project.dataset.treeView;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.adapters.treeView.TreeViewAdapter;
-import org.phyloviz.pwp.shared.adapters.treeView.TreeViewAdapterFactory;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.TreeViewMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.TreeViewMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewAdapterId;
+import org.phyloviz.pwp.shared.service.adapters.treeView.TreeViewAdapter;
+import org.phyloviz.pwp.shared.service.adapters.treeView.TreeViewAdapterFactory;
 import org.phyloviz.pwp.shared.service.dtos.treeView.GetTreeViewOutput;
 import org.phyloviz.pwp.shared.service.dtos.treeView.TreeViewMetadataDTO;
 import org.phyloviz.pwp.shared.service.exceptions.TreeViewNotFoundException;
 import org.phyloviz.pwp.shared.service.project.dataset.DatasetService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +26,8 @@ public class TreeViewServiceImpl implements TreeViewService {
 
     private final TreeViewAdapterFactory treeViewAdapterFactory;
 
-    private final List<String> getTreeViewAdapterPriority = List.of("phylodb");
+    @Value("${adapters.get-tree-view-adapter-priority}")
+    private final List<TreeViewAdapterId> getTreeViewAdapterPriority;
 
     @Override
     public TreeViewMetadata getTreeViewMetadata(String projectId, String datasetId, String treeViewId, String userId) {
@@ -97,7 +100,7 @@ public class TreeViewServiceImpl implements TreeViewService {
         return treeViewAdapter.getTreeView(treeViewMetadata.getAdapterSpecificData());
     }
 
-    private void sortByAdapterPriority(List<TreeViewMetadata> metadataList, List<String> adapterPriority) {
+    private void sortByAdapterPriority(List<TreeViewMetadata> metadataList, List<TreeViewAdapterId> adapterPriority) {
         metadataList.sort((o1, o2) -> {
             int i1 = adapterPriority.indexOf(o1.getAdapterId());
             if (i1 == -1)

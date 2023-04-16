@@ -14,13 +14,10 @@ public class DistanceMatrixOutputModel {
     public DistanceMatrixOutputModel(DistanceMatrixMetadataDTO distanceMatrixMetadataDTO) {
         this.distanceMatrixId = distanceMatrixMetadataDTO.getDistanceMatrixId();
         this.name = distanceMatrixMetadataDTO.getName();
-        this.sourceType = distanceMatrixMetadataDTO.getSourceType();
+        this.sourceType = distanceMatrixMetadataDTO.getSourceType().name().toLowerCase();
         this.source = switch (distanceMatrixMetadataDTO.getSourceType()) {
-            case "function" -> new DistanceMatrixSourceFunctionOutputModel(
+            case FUNCTION -> new DistanceMatrixSourceFunctionOutputModel(
                     (DistanceMatrixSourceFunctionDTO) distanceMatrixMetadataDTO.getSource()
-            );
-            default -> throw new IllegalArgumentException(
-                    "Unknown distance matrix source type: " + distanceMatrixMetadataDTO.getSourceType()
             );
         };
     }

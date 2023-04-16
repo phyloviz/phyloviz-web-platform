@@ -3,17 +3,16 @@ package org.phyloviz.pwp.shared.repository.metadata.treeView.documents;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewAdapterId;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.adapterSpecificData.TreeViewAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.treeView.documents.source.TreeViewSource;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "tree-views")
+@Document(collection = "#{constants.treeViewMetadataCollection}")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TypeAlias("treeViewMetadata")
 public class TreeViewMetadata {
     @Id
     private String id;
@@ -24,11 +23,11 @@ public class TreeViewMetadata {
     private String name;
     private String layout;
     private TreeViewSource source;
-    private String adapterId;
+    private TreeViewAdapterId adapterId;
     private TreeViewAdapterSpecificData adapterSpecificData;
 
     public TreeViewMetadata(String projectId, String datasetId, String treeViewId, String name, String layout, TreeViewSource source,
-                            String adapterId, TreeViewAdapterSpecificData adapterSpecificData) {
+                            TreeViewAdapterId adapterId, TreeViewAdapterSpecificData adapterSpecificData) {
         this.projectId = projectId;
         this.datasetId = datasetId;
         this.treeViewId = treeViewId;

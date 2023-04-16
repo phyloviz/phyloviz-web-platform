@@ -3,10 +3,10 @@ package org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.des
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
 import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.DistanceMatrixMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.adapterSpecificData.DistanceMatrixAdapterId;
 import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.adapterSpecificData.DistanceMatrixAdapterSpecificData;
-import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.adapterSpecificData.DistanceMatrixAdapterSpecificDataFactory;
 import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.source.DistanceMatrixSource;
-import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.source.DistanceMatrixSourceFactory;
+import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.source.DistanceMatrixSourceType;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
@@ -18,18 +18,18 @@ import javax.validation.constraints.NotNull;
 public class DistanceMatrixMetadataDeserializer implements Converter<Document, DistanceMatrixMetadata> {
     private final MongoConverter mongoConverter;
 
-    private final DistanceMatrixSourceFactory distanceMatrixSourceFactory;
-    private final DistanceMatrixAdapterSpecificDataFactory distanceMatrixAdapterSpecificDataFactory;
-
     @Override
     public DistanceMatrixMetadata convert(@NotNull Document document) {
         try {
-            String sourceType = document.getString("sourceType");
-            String adapterId = document.getString("adapterId");
+            DistanceMatrixSourceType sourceType = DistanceMatrixSourceType.valueOf(
+                    document.getString("sourceType").toUpperCase()
+            );
+            DistanceMatrixAdapterId adapterId = DistanceMatrixAdapterId.valueOf(
+                    document.getString("adapterId")
+            );
 
-            Class<? extends DistanceMatrixSource> sourceClass = distanceMatrixSourceFactory.getClass(sourceType);
-            Class<? extends DistanceMatrixAdapterSpecificData> adapterSpecificDataClass =
-                    distanceMatrixAdapterSpecificDataFactory.getClass(adapterId);
+            Class<? extends DistanceMatrixSource> sourceClass = sourceType.getSourceClass();
+            Class<? extends DistanceMatrixAdapterSpecificData> adapterSpecificDataClass = adapterId.getAdapterSpecificDataClass();
 
             Document sourceDocument = (Document) document.get("source");
             DistanceMatrixSource source = mongoConverter.read(sourceClass, sourceDocument);
@@ -43,9 +43,9 @@ public class DistanceMatrixMetadataDeserializer implements Converter<Document, D
                     document.getString("datasetId"),
                     document.getString("distanceMatrixId"),
                     document.getString("name"),
-                    document.getString("sourceType"),
+                    sourceType,
                     source,
-                    document.getString("adapterId"),
+                    adapterId,
                     adapterSpecificData
             );
         } catch (Exception e) {

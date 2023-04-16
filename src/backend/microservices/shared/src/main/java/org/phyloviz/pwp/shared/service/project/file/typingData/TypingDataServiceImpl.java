@@ -1,12 +1,13 @@
 package org.phyloviz.pwp.shared.service.project.file.typingData;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.adapters.typingData.TypingDataAdapterFactory;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.repository.metadata.typingData.TypingDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.TypingDataMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.adapterSpecificData.TypingDataAdapterId;
 import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.adapterSpecificData.TypingDataS3AdapterSpecificData;
+import org.phyloviz.pwp.shared.service.adapters.typingData.TypingDataAdapterFactory;
 import org.phyloviz.pwp.shared.service.dtos.files.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.TypingDataMetadataDTO;
@@ -15,6 +16,7 @@ import org.phyloviz.pwp.shared.service.exceptions.DeniedFileDeletionException;
 import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
 import org.phyloviz.pwp.shared.service.project.ProjectService;
 import org.phyloviz.pwp.shared.service.project.dataset.DatasetService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,21 +32,27 @@ public class TypingDataServiceImpl implements TypingDataService {
     private final ProjectService projectService;
     private final DatasetService datasetService;
 
+    @Value("${adapters.upload-typing-data-adapter}")
+    private final TypingDataAdapterId uploadTypingDataAdapter;
+
     @Override
     public UploadTypingDataOutput uploadTypingData(String projectId, MultipartFile multipartFile, String userId) {
         Project project = projectService.getProject(projectId, userId);
 
         String typingDataId = UUID.randomUUID().toString();
 
-        String url = typingDataAdapterFactory.getTypingDataAdapter("s3")
+        String url = typingDataAdapterFactory.getTypingDataAdapter(uploadTypingDataAdapter)
                 .uploadTypingData(projectId, typingDataId, multipartFile);
 
-        final TypingDataMetadata typingDataMetadata = new TypingDataMetadata(
+        TypingDataMetadata typingDataMetadata = new TypingDataMetadata(
                 projectId,
                 typingDataId,
                 multipartFile.getOriginalFilename(),
-                "s3",
-                new TypingDataS3AdapterSpecificData(url, multipartFile.getOriginalFilename())
+                uploadTypingDataAdapter,
+                switch (uploadTypingDataAdapter) {
+                    case S3 -> new TypingDataS3AdapterSpecificData(url, multipartFile.getOriginalFilename());
+                    case PHYLODB -> throw new UnsupportedOperationException("Not implemented yet");
+                }
         );
 
         typingDataMetadataRepository.save(typingDataMetadata);

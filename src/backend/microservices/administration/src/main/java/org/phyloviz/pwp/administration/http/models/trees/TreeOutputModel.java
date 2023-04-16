@@ -16,19 +16,17 @@ public class TreeOutputModel {
     public TreeOutputModel(TreeMetadataDTO treeMetadataDTO) {
         this.treeId = treeMetadataDTO.getTreeId();
         this.name = treeMetadataDTO.getName();
-        this.sourceType = treeMetadataDTO.getSourceType();
+        this.sourceType = treeMetadataDTO.getSourceType().name().toLowerCase();
         this.source = switch (treeMetadataDTO.getSourceType()) {
-            case "algorithmDistanceMatrix" -> new TreeSourceAlgorithmDistanceMatrixOutputModel(
+            case ALGORITHM_DISTANCE_MATRIX -> new TreeSourceAlgorithmDistanceMatrixOutputModel(
                     (TreeSourceAlgorithmDistanceMatrixDTO) treeMetadataDTO.getSource()
             );
-            case "algorithmTypingData" -> new TreeSourceAlgorithmTypingDataOutputModel(
+            case ALGORITHM_TYPING_DATA -> new TreeSourceAlgorithmTypingDataOutputModel(
                     (TreeSourceAlgorithmTypingDataDTO) treeMetadataDTO.getSource()
             );
-            case "file" -> new TreeSourceFileOutputModel(
+            case FILE -> new TreeSourceFileOutputModel(
                     (TreeSourceFileDTO) treeMetadataDTO.getSource()
             );
-            default ->
-                    throw new IllegalArgumentException("Unknown tree source type: " + treeMetadataDTO.getSourceType());
         };
     }
 }

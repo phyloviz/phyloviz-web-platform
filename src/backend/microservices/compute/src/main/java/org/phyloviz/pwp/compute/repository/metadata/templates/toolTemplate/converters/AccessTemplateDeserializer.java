@@ -18,7 +18,7 @@ public class AccessTemplateDeserializer implements Converter<Document, AccessTem
     @Override
     public AccessTemplate convert(@NotNull Document document) {
         try {
-            AccessTypeTemplate type = AccessTypeTemplate.parse(document.getString("_type"));
+            AccessTypeTemplate type = AccessTypeTemplate.valueOf(document.getString("_type").toUpperCase());
 
             Class<? extends AccessDetailsTemplate> detailsClass = type.getDetailsClass();
             Document detailsDocument = (Document) document.get("details");

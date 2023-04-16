@@ -10,14 +10,6 @@ public enum AccessTypeTemplate {
     LIBRARY,
     API;
 
-    public static AccessTypeTemplate parse(String value) {
-        return switch (value) {
-            case "library" -> LIBRARY;
-            case "api" -> API;
-            default -> throw new IllegalArgumentException("Unknown access type: " + value);
-        };
-    }
-
     public AccessType build() {
         return AccessType.valueOf(this.name());
     }

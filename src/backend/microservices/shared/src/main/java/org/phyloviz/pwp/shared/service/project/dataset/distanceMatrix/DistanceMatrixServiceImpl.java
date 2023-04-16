@@ -1,18 +1,21 @@
 package org.phyloviz.pwp.shared.service.project.dataset.distanceMatrix;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.adapters.distanceMatrix.DistanceMatrixAdapter;
-import org.phyloviz.pwp.shared.adapters.distanceMatrix.DistanceMatrixAdapterFactory;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.DistanceMatrixMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.DistanceMatrixMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.adapterSpecificData.DistanceMatrixAdapterId;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceAlgorithmDistanceMatrix;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceType;
+import org.phyloviz.pwp.shared.service.adapters.distanceMatrix.DistanceMatrixAdapter;
+import org.phyloviz.pwp.shared.service.adapters.distanceMatrix.DistanceMatrixAdapterFactory;
 import org.phyloviz.pwp.shared.service.dtos.distanceMatrix.DistanceMatrixMetadataDTO;
 import org.phyloviz.pwp.shared.service.exceptions.DeniedResourceDeletionException;
 import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
 import org.phyloviz.pwp.shared.service.project.dataset.DatasetService;
 import org.phyloviz.pwp.shared.service.project.dataset.tree.TreeService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +31,8 @@ public class DistanceMatrixServiceImpl implements DistanceMatrixService {
 
     private final DistanceMatrixAdapterFactory distanceMatrixAdapterFactory;
 
-    private final List<String> getDistanceMatrixAdapterPriority = List.of("s3");
+    @Value("${adapters.get-distance-matrix-adapter-priority}")
+    private final List<DistanceMatrixAdapterId> getDistanceMatrixAdapterPriority;
 
     @Override
     public DistanceMatrixMetadata getDistanceMatrixMetadata(String projectId, String datasetId, String distanceMatrixId, String userId) {
@@ -70,7 +74,7 @@ public class DistanceMatrixServiceImpl implements DistanceMatrixService {
         dataset.getTreeIds().forEach(treeId -> {
             TreeMetadata treeMetadata = treeService.getTreeMetadataOrNull(treeId);
 
-            if (treeMetadata != null && treeMetadata.getSourceType().equals("algorithmDistanceMatrix") &&
+            if (treeMetadata != null && treeMetadata.getSourceType().equals(TreeSourceType.ALGORITHM_DISTANCE_MATRIX) &&
                     (((TreeSourceAlgorithmDistanceMatrix) treeMetadata.getSource())
                             .getDistanceMatrixId().equals(distanceMatrixId))) {
                 throw new DeniedResourceDeletionException(
@@ -116,7 +120,7 @@ public class DistanceMatrixServiceImpl implements DistanceMatrixService {
         return distanceMatrixAdapter.getDistanceMatrix(distanceMatrix.getAdapterSpecificData());
     }
 
-    private void sortByAdapterPriority(List<DistanceMatrixMetadata> metadataList, List<String> adapterPriority) {
+    private void sortByAdapterPriority(List<DistanceMatrixMetadata> metadataList, List<DistanceMatrixAdapterId> adapterPriority) {
         metadataList.sort((o1, o2) -> {
             int i1 = adapterPriority.indexOf(o1.getAdapterId());
             if (i1 == -1)
