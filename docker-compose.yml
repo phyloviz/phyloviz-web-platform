@@ -72,7 +72,7 @@ services:
   registry_ui:
     image: joxit/docker-registry-ui:2.4.1
     ports:
-      - '8081:80'
+      - '8084:80'
     environment:
       - REGISTRY_TITLE=My Private Docker Registry
       - REGISTRY_URL=http://localhost:5000

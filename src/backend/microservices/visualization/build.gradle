@@ -9,9 +9,7 @@ group 'phylovizwebplatform'
 version '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
-ext {
-    set('jupiterVersion', "5.8.1")
-}
+ext['jupiterVersion']= "5.8.1"
 
 repositories {
     mavenCentral()
@@ -27,6 +25,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
     implementation 'org.zalando:problem-spring-web-starter:0.27.0'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
