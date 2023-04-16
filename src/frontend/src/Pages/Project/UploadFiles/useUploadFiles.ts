@@ -2,7 +2,7 @@ import * as React from "react"
 import {useState} from "react"
 import {useNavigate, useParams} from "react-router-dom"
 import {AdministrationService} from "../../../Services/administration/AdministrationService"
-import {WebUiUris} from "../../../Utils/WebUiUris"
+import {WebUiUris} from "../../WebUiUris"
 import {useProjectContext} from "../useProject"
 
 export enum FileType {

@@ -24,7 +24,7 @@ interface Setting {
 /**
  * Props for the AccountMenu component.
  *
- * @property avatar avatar of the user
+ * @property avatar avatar of the userDTO
  * @property settings settings for the menu
  */
 interface AccountMenuProps {
@@ -35,7 +35,7 @@ interface AccountMenuProps {
 /**
  * Account menu for the dashboard.
  *
- * @param avatar avatar of the user
+ * @param avatar avatar of the userDTO
  * @param settings settings for the menu
  */
 export default function AccountMenu({avatar, settings}: AccountMenuProps) {

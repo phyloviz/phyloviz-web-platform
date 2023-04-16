@@ -32,6 +32,8 @@ dependencies {
 
     implementation files('libs/phylodb-1.0.0.jar')
 
+    implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.6'
 }
 

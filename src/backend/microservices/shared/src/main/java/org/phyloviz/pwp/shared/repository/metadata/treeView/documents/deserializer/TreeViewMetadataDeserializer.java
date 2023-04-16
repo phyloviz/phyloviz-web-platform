@@ -36,7 +36,7 @@ public class TreeViewMetadataDeserializer implements Converter<Document, TreeVie
                     document.getString("treeViewId"),
                     document.getString("name"),
                     document.getString("layout"),
-                    document.get("source", TreeViewSource.class),
+                    mongoConverter.read(TreeViewSource.class, (Document) document.get("source")),
                     adapterId,
                     adapterSpecificData
             );

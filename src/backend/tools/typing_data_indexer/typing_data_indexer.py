@@ -6,6 +6,7 @@ import uuid
 from bson.objectid import ObjectId
 from concurrent.futures import ThreadPoolExecutor
 from pymongo import MongoClient
+import csv
 
 base_url = os.environ.get("PHYLODB_URL")
 
@@ -139,6 +140,21 @@ def upload_loci(taxon_id, typing_data_file_path):
     return loci_list
 
 
+def upload_allelic_sequences(taxon_id, loci_id, file):
+    files = {
+        'file': open(file, 'rb')
+    }
+
+    response = requests.request(
+        "PUT", f"{base_url}/taxa/{taxon_id}/loci/{loci_id}/alleles/files", files=files)
+
+    if response.status_code not in range(200, 299):
+        raise Exception(
+            f"Allelic sequences upload failed with status_code {response.status_code} \n{response.text}")
+
+    return response.json()
+
+
 def upload_allele_profiles(project_id, dataset_id, file):
     files = {
         'file': open(file, 'rb')
@@ -178,6 +194,27 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
 
     loci_list = upload_loci(taxon_id, typing_data_file_path)
     print("Done uploading loci")
+
+    allele_ids = {}
+
+    with open(typing_data_file_path, newline='') as tsvfile:
+        reader = csv.DictReader(tsvfile, delimiter='\t')
+        for row in reader:
+            for gene in row.keys():
+                if gene not in allele_ids:
+                    allele_ids[gene] = set()
+                allele_ids[gene].add(row[gene])
+
+    for gene in allele_ids.keys():
+        fasta_file = f"./fasta_{gene}.fasta"
+        with open(fasta_file, 'w') as outfile:
+            for allele_id in allele_ids[gene]:
+                outfile.write(f">{allele_id}\n\n")
+
+    for gene in allele_ids.keys():
+        loci_id = gene.split('.')[0]
+        print(f"Uploading {loci_id} sequences")
+        upload_allelic_sequences(taxon_id, loci_id, f'./fasta_{gene}.fasta')
 
     schema_id = str(uuid.uuid4())
     create_mlst_schema(taxon_id, schema_id, loci_list)

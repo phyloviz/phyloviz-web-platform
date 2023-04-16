@@ -3,7 +3,7 @@ import {TreeView} from "@mui/lab"
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import {AccountTree} from "@mui/icons-material"
-import {StyledTreeItem} from "./StyledTreeItem"
+import {StyledTreeItem} from "./Utils/StyledTreeItem"
 import {FilesTreeItem} from "./Files/FilesTreeItem"
 import {GetProjectOutputModel} from "../../../Services/administration/models/getProject/GetProjectOutputModel"
 import {DatasetsTreeItem} from "./Datasets/DatasetsTreeItem"
@@ -26,7 +26,7 @@ interface FileManagerProps {
  */
 export function FileManager({project}: FileManagerProps) {
     return <TreeView
-        defaultExpanded={['1']}
+        defaultExpanded={['3']}
         defaultCollapseIcon={<ArrowDropDownIcon/>}
         defaultExpandIcon={<ArrowRightIcon/>}
         defaultEndIcon={<div style={{width: 24}}/>}
@@ -40,8 +40,8 @@ export function FileManager({project}: FileManagerProps) {
         }}
     >
         <StyledTreeItem nodeId="0" labelText={project?.name ?? "Project"} labelIcon={AccountTree}>
-            <DatasetsTreeItem nodeId="2" datasets={project?.datasets!}/>
-            <FilesTreeItem nodeId="3" files={project?.files!}/>
+            <DatasetsTreeItem nodeId="1" datasets={project?.datasets!}/>
+            <FilesTreeItem nodeId="2" files={project?.files!}/>
         </StyledTreeItem>
     </TreeView>
 }
