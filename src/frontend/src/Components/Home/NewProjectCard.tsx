@@ -4,7 +4,7 @@ import {Button} from "@mui/material"
 import NewProjectIcon from "@mui/icons-material/CreateNewFolder"
 import * as React from "react"
 import {useNavigate} from "react-router-dom"
-import {WebUiUris} from "../../Utils/WebUiUris"
+import {WebUiUris} from "../../Pages/WebUiUris"
 
 /**
  * Card for the new project feature in the home page.

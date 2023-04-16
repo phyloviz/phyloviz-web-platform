@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography"
 import {Button} from "@mui/material"
 import HomeIcon from "@mui/icons-material/Home"
 import {useNavigate} from "react-router-dom"
-import {WebUiUris} from "../Utils/WebUiUris"
+import {WebUiUris} from "./WebUiUris"
 import Box from "@mui/material/Box"
 import Logo from "../Assets/logo.png"
 

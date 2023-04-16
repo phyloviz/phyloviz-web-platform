@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography"
 import {Button} from "@mui/material"
 import * as React from "react"
 import {useNavigate, useParams} from "react-router-dom"
-import {WebUiUris} from "../../../Utils/WebUiUris"
+import {WebUiUris} from "../../../Pages/WebUiUris"
 import {Add} from "@mui/icons-material"
 
 /**

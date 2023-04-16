@@ -1,4 +1,4 @@
-import {StyledTreeItem} from "../../../StyledTreeItem"
+import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
 import {TableView} from "@mui/icons-material"
 import {DistanceMatrixTreeItem} from "./DistanceMatrixTreeItem"
 import * as React from "react"
