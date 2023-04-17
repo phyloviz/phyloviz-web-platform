@@ -5,7 +5,7 @@ import {Container} from "@mui/material"
 import Box from "@mui/material/Box"
 import {CreateDatasetCard} from "../../Components/Project/EmptyProject/CreateDatasetCard"
 import {UploadFilesCard} from "../../Components/Project/EmptyProject/UploadFilesCard"
-import {GetProjectOutputModel} from "../../Services/administration/models/getProject/GetProjectOutputModel"
+import {Project} from "../../Services/administration/models/getProject/GetProjectOutputModel"
 import LoadingSpinner from "../../Components/Shared/LoadingSpinner";
 import Alert from "@mui/material/Alert";
 
@@ -17,7 +17,7 @@ import Alert from "@mui/material/Alert";
  * @property error The error message.
  */
 interface EmptyProjectProps {
-    project: GetProjectOutputModel | null
+    project: Project | null
     loading: boolean
     error: string | null
 }

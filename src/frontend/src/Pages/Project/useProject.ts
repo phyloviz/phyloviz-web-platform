@@ -1,6 +1,6 @@
 import {useOutletContext, useParams} from "react-router-dom"
 import {useEffect, useState} from "react"
-import {GetProjectOutputModel} from "../../Services/administration/models/getProject/GetProjectOutputModel"
+import {Project} from "../../Services/administration/models/getProject/GetProjectOutputModel"
 import {AdministrationService} from "../../Services/administration/AdministrationService"
 
 /**
@@ -10,7 +10,7 @@ import {AdministrationService} from "../../Services/administration/Administratio
  * @property onProjectUpdate callback to update the project
  */
 interface ProjectContext {
-    project: GetProjectOutputModel | null,
+    project: Project | null,
     onProjectUpdate: () => void
 }
 
@@ -20,7 +20,7 @@ interface ProjectContext {
  */
 export function useProject() {
     const {projectId} = useParams<{ projectId: string }>()
-    const [project, setProject] = useState<GetProjectOutputModel | null>(null)
+    const [project, setProject] = useState<Project | null>(null)
     const [update, setUpdate] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)

@@ -1,7 +1,7 @@
-import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {Dataset} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
-import {AdministrationService} from "../../../Services/administration/AdministrationService";
+import {useParams} from "react-router-dom"
+import {useEffect, useState} from "react"
+import {Dataset} from "../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {AdministrationService} from "../../../Services/administration/AdministrationService"
 
 /**
  * Hook for the DatasetDetails page.

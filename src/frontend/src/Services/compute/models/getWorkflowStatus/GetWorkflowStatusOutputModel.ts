@@ -1,6 +1,8 @@
 export interface GetWorkflowStatusOutputModel {
-    workflowId: string;
-    type: string;
-    status: string;
-    data: any;
+    workflowId: string
+    type: string
+    status: "RUNNING" | "COMPLETED"
+    data?: any
 }
+
+export type Workflow = GetWorkflowStatusOutputModel

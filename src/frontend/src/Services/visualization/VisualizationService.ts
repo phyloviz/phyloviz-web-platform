@@ -1,15 +1,15 @@
-import {get} from "../utils/apiFetch";
-import {WebApiUris} from "../WebApiUris";
-import {GetTypingDataSchemaOutputModel} from "./models/getTypingDataSchema/GetTypingDataSchemaOutputModel";
-import {GetTypingDataProfilesOutputModel} from "./models/getTypingDataProfiles/GetTypingDataProfilesOutputModel";
-import {GetTypingDataFileOutputModel} from "./models/getTypingDataFile/GetTypingDataFileOutputModel";
-import {GetIsolateDataSchemaOutputModel} from "./models/getIsolateDataSchema/GetIsolateDataSchemaOutputModel";
-import {GetIsolateDataRowsOutputModel} from "./models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel";
-import {GetIsolateDataFileOutputModel} from "./models/getIsolateDataFile/GetIsolateDataFileOutputModel";
-import {GetDistanceMatrixOutputModel} from "./models/getDistanceMatrix/GetDistanceMatrixOutputModel";
-import {GetTreeOutputModel} from "./models/getTree/GetTreeOutputModel";
-import {GetTreeViewOutputModel} from "./models/getTreeView/GetTreeViewOutputModel";
-import {MockVisualizationService} from "./MockVisualizationService";
+import {get} from "../utils/apiFetch"
+import {WebApiUris} from "../WebApiUris"
+import {GetTypingDataSchemaOutputModel} from "./models/getTypingDataSchema/GetTypingDataSchemaOutputModel"
+import {GetTypingDataProfilesOutputModel} from "./models/getTypingDataProfiles/GetTypingDataProfilesOutputModel"
+import {GetTypingDataFileOutputModel} from "./models/getTypingDataFile/GetTypingDataFileOutputModel"
+import {GetIsolateDataSchemaOutputModel} from "./models/getIsolateDataSchema/GetIsolateDataSchemaOutputModel"
+import {GetIsolateDataRowsOutputModel} from "./models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel"
+import {GetIsolateDataFileOutputModel} from "./models/getIsolateDataFile/GetIsolateDataFileOutputModel"
+import {GetDistanceMatrixOutputModel} from "./models/getDistanceMatrix/GetDistanceMatrixOutputModel"
+import {GetTreeOutputModel} from "./models/getTree/GetTreeOutputModel"
+import {GetTreeViewOutputModel} from "./models/getTreeView/GetTreeViewOutputModel"
+import {MockVisualizationService} from "./MockVisualizationService"
 
 
 namespace VisualizationService {
@@ -147,6 +147,6 @@ namespace VisualizationService {
     }
 }
 
-const env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV
 
-export default env === "development" ? MockVisualizationService : VisualizationService;
+export default env === "development" ? MockVisualizationService : VisualizationService

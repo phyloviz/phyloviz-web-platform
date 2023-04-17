@@ -83,3 +83,5 @@ export interface GetProjectOutputModel {
     datasets: Dataset[]
     files: ProjectFiles
 }
+
+export type Project = GetProjectOutputModel

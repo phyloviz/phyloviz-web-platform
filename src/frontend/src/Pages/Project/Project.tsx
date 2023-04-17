@@ -1,9 +1,9 @@
 import * as React from "react"
 import {Outlet, useOutlet} from "react-router-dom"
-import {FileManager} from "../../Components/Project/FileManager/FileManager"
 import Box from "@mui/material/Box"
 import EmptyProject from "./EmptyProject"
 import {useProject} from "./useProject"
+import {ProjectStructure} from "../../Components/Project/ProjectStructure/ProjectStructure";
 
 /**
  * Project page.
@@ -24,7 +24,7 @@ export default function Project() {
             height: '90%',
             width: '100%',
         }}>
-            <FileManager project={project}/>
+            <ProjectStructure project={project}/>
             {
                 outlet && !loading && !error
                     ? <Outlet context={{project, onProjectUpdate}}/>

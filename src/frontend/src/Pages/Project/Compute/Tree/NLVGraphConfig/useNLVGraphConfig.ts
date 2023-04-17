@@ -1,8 +1,8 @@
 import {useNavigate, useParams} from "react-router-dom"
-import * as React from "react";
-import {useState} from "react";
-import {SelectChangeEvent} from "@mui/material";
-import {useProjectContext} from "../../../useProject";
+import * as React from "react"
+import {useState} from "react"
+import {SelectChangeEvent} from "@mui/material"
+import {useProjectContext} from "../../../useProject"
 
 /**
  * Hook for the NLVGraphConfig page.

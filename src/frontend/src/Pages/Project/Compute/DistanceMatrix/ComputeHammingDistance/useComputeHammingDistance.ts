@@ -1,9 +1,11 @@
 import {useNavigate, useParams} from "react-router-dom"
-import {ComputeService} from "../../../../../Services/compute/ComputeService";
-import {useState} from "react";
+import ComputeService from "../../../../../Services/compute/ComputeService"
+import {useState} from "react"
+import {useInterval} from "../../../../../Components/Shared/Hooks/useInterval"
+import {WebUiUris} from "../../../../WebUiUris"
 
 /**
- * Hook for the HammingDistanceConfig page.
+ * Hook for the ComputeHammingDistance page.
  */
 export function useComputeHammingDistance() {
     const navigate = useNavigate()
@@ -12,28 +14,20 @@ export function useComputeHammingDistance() {
     const [computing, setComputing] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
 
-    async function handleCompute() {
-        setComputing(true)
-        try {
-            const res = await ComputeService.createWorkflow(
-                projectId!,
-                {
-                    type: "compute-distance-matrix",
-                    properties: {
-                        datasetId: datasetId,
-                        function: "hamming"
-                    }
-                }
-            )
-            setWorkflowId(res.workflowId)
+    useInterval(checkIfWorkflowFinished, 1000, [workflowId])
 
-            // TODO: This file is a mess, I need help
+    async function checkIfWorkflowFinished() {
+        if (workflowId === null)
+            return true
 
-        } catch (err) {
-            setError((err as Error).message)
-        } finally {
+        const workflow = await ComputeService.getWorkflowStatus(projectId!, workflowId)
+        if (workflow.status === "COMPLETED") {
             setComputing(false)
+            navigate(WebUiUris.distanceMatrix(projectId!, datasetId!, workflow.data!.distanceMatrixId))
+            return true
         }
+
+        return false
     }
 
     return {
@@ -50,8 +44,10 @@ export function useComputeHammingDistance() {
                     }
                 }
             )
-                .then((res) => setWorkflowId(res.workflowId))// TODO: Get status until finished
-                .catch((err) => console.error(err)) // TODO: Handle Error
-        }
+                .then((res) => setWorkflowId(res.workflowId))
+                .catch((err) => setError(err.message))
+        },
+        computing,
+        error
     }
 }

@@ -29,6 +29,8 @@ import TypingData from "./Pages/Project/TypingData/TypingData"
 import Tree from "./Pages/Project/Tree/Tree";
 import DatasetDetails from "./Pages/Project/DatasetDetails/DatasetDetails";
 import Report from "./Pages/Project/Report/Report";
+import ComputeHammingDistance
+    from "./Pages/Project/Compute/DistanceMatrix/ComputeHammingDistance/ComputeHammingDistance";
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;
@@ -52,8 +54,6 @@ import TREE = WebUiUris.TREE;
 import DATASET = WebUiUris.DATASET;
 import REPORT = WebUiUris.REPORT;
 import COMPUTE_HAMMING_DISTANCE = WebUiUris.COMPUTE_HAMMING_DISTANCE;
-import ComputeHammingDistance
-    from "./Pages/Project/Compute/DistanceMatrix/ComputeHammingDistance/ComputeHammingDistance";
 
 /**
  * App component.

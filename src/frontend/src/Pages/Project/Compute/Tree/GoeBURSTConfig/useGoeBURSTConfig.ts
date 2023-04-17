@@ -1,8 +1,8 @@
 import {useState} from "react"
 import {useNavigate, useParams} from "react-router-dom"
-import {SelectChangeEvent} from "@mui/material";
-import {ComputeService} from "../../../../../Services/compute/ComputeService";
-import {useProjectContext} from "../../../useProject";
+import {SelectChangeEvent} from "@mui/material"
+import ComputeService from "../../../../../Services/compute/ComputeService"
+import {useProjectContext} from "../../../useProject"
 
 export enum GoeBURSTConfigurationStep {
     DISTANCE = "Distance",

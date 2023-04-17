@@ -1,8 +1,8 @@
 import * as React from "react"
+import {ReactNode} from "react"
 import Typography from "@mui/material/Typography"
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 import {DistanceMatrix} from "../../../../../Services/administration/models/getProject/GetProjectOutputModel";
-import {ReactNode} from "react";
 
 /**
  * Props for the GoeBURSTFullMSTConfigDistanceStep component.

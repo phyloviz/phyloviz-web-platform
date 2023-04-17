@@ -1,8 +1,7 @@
 import {useState} from "react"
 import {useNavigate, useParams} from "react-router-dom"
-import {useProjectContext} from "../../../useProject";
-import {SelectChangeEvent} from "@mui/material";
-import {GoeBURSTConfigurationStep} from "../GoeBURSTConfig/useGoeBURSTConfig";
+import {useProjectContext} from "../../../useProject"
+import {SelectChangeEvent} from "@mui/material"
 
 export enum NeighborJoiningConfigurationStep {
     DISTANCE = "Distance",

@@ -1,11 +1,12 @@
-import {get, post} from "../utils/apiFetch";
-import {WebApiUris} from "../WebApiUris";
-import {GetWorkflowStatusOutputModel} from "./models/getWorkflowStatus/GetWorkflowStatusOutputModel";
-import {CreateWorkflowOutputModel} from "./models/createWorkflow/CreateWorkflowOutputModel";
-import {CreateWorkflowInputModel} from "./models/createWorkflow/CreateWorkflowInputModel";
-import {GetWorkflowsOutputModel} from "./models/getWorkflows/GetWorkflowsOutputModel";
+import {get, post} from "../utils/apiFetch"
+import {WebApiUris} from "../WebApiUris"
+import {GetWorkflowStatusOutputModel} from "./models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+import {CreateWorkflowOutputModel} from "./models/createWorkflow/CreateWorkflowOutputModel"
+import {CreateWorkflowInputModel} from "./models/createWorkflow/CreateWorkflowInputModel"
+import {GetWorkflowsOutputModel} from "./models/getWorkflows/GetWorkflowsOutputModel"
+import {MockComputeService} from "./MockComputeService"
 
-export namespace ComputeService {
+namespace ComputeService {
 
     /**
      * Create a workflow.
@@ -50,3 +51,8 @@ export namespace ComputeService {
         return await get<GetWorkflowsOutputModel>(WebApiUris.getWorkflows(projectId))
     }
 }
+
+
+const env = process.env.NODE_ENV
+
+export default env === "development" ? MockComputeService : ComputeService

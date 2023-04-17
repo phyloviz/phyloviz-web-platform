@@ -4,7 +4,7 @@ import {Button, Menu, MenuItem} from "@mui/material"
 import * as React from "react"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../Pages/WebUiUris"
-import {ScatterPlot, TableView} from "@mui/icons-material"
+import {ScatterPlot} from "@mui/icons-material"
 
 /**
  * Card for the compute trees feature.
