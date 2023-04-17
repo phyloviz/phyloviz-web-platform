@@ -8,11 +8,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DistanceMatrixAdapterFactory {
 
-    private final S3DistanceMatrixAdapter s3DistanceMatrixAdapter;
+    private final DistanceMatrixAdapterRegistry distanceMatrixAdapterRegistry;
 
     public DistanceMatrixAdapter getDistanceMatrixAdapter(DistanceMatrixAdapterId adapterId) {
-        return switch (adapterId) {
-            case S3 -> s3DistanceMatrixAdapter;
-        };
+        return distanceMatrixAdapterRegistry.getDistanceMatrixAdapter(adapterId);
     }
 }

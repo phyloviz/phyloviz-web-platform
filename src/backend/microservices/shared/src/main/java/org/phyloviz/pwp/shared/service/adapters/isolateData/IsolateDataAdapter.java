@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface IsolateDataAdapter {
 
-    String uploadIsolateData(String projectId, String typingDataId, MultipartFile multipartFile);
+    IsolateDataAdapterSpecificData uploadIsolateData(String projectId, String typingDataId, MultipartFile multipartFile);
 
     String getIsolateData(IsolateDataAdapterSpecificData isolateDataAdapterSpecificData);
 

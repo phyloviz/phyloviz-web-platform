@@ -29,5 +29,4 @@ public class S3DistanceMatrixAdapter implements DistanceMatrixAdapter {
 
         s3FileRepository.delete(distanceMatrixS3AdapterSpecificData.getUrl());
     }
-
 }

@@ -8,12 +8,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TypingDataAdapterFactory {
 
-    private final S3TypingDataAdapter s3TypingDataAdapter;
+    private final TypingDataAdapterRegistry typingDataAdapterRegistry;
 
     public TypingDataAdapter getTypingDataAdapter(TypingDataAdapterId adapterId) {
-        return switch (adapterId) {
-            case S3 -> s3TypingDataAdapter;
-            case PHYLODB -> throw new UnsupportedOperationException("Not implemented yet");
-        };
+        return typingDataAdapterRegistry.getTypingDataAdapter(adapterId);
     }
 }

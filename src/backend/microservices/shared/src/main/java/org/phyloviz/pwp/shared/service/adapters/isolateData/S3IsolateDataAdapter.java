@@ -14,12 +14,12 @@ public class S3IsolateDataAdapter implements IsolateDataAdapter {
     private final S3FileRepository s3FileRepository;
 
     @Override
-    public String uploadIsolateData(String projectId, String isolateDataId, MultipartFile multipartFile) {
+    public IsolateDataAdapterSpecificData uploadIsolateData(String projectId, String isolateDataId, MultipartFile multipartFile) {
         String url = projectId + "/isolate-data/" + isolateDataId;
 
         s3FileRepository.store(url, multipartFile);
 
-        return s3FileRepository.getLocation() + "/" + url;
+        return new IsolateDataS3AdapterSpecificData(s3FileRepository.getLocation() + "/" + url, multipartFile.getOriginalFilename());
     }
 
     @Override

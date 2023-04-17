@@ -8,7 +8,6 @@ import org.springframework.data.annotation.TypeAlias;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TypeAlias("treeViewSource")
 public class TreeViewSource {
     private String treeId;
     private String typingDataId;

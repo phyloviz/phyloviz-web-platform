@@ -21,10 +21,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
 
-    private final ProjectRepository projectRepository;
+    private final ProjectAccessService projectAccessService;
 
     private final DatasetService datasetService;
-
     private final TypingDataService typingDataService;
     private final IsolateDataService isolateDataService;
 
@@ -50,12 +49,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project getProject(String projectId, String userId) {
-        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotFoundException::new);
-
-        if (!project.getOwnerId().equals(userId))
-            throw new ProjectNotFoundException();
-
-        return project;
+        return projectAccessService.getProject(projectId, userId);
     }
 
     @Override
@@ -67,7 +61,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> getProjects(String userId) {
-        return projectRepository.findAllByOwnerId(userId);
+        return projectAccessService.getProjects(userId);
     }
 
     @Override
@@ -77,12 +71,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void assertExists(String projectId, String userId) {
-        getProject(projectId, userId);
+        projectAccessService.assertExists(projectId, userId);
     }
 
     @Override
     public Project saveProject(Project project) {
-        return projectRepository.save(project);
+        return projectAccessService.saveProject(project);
     }
 
     @Override
@@ -93,7 +87,7 @@ public class ProjectServiceImpl implements ProjectService {
         project.getFileIds().getTypingDataIds().forEach(typingDataService::deleteTypingData);
         project.getFileIds().getIsolateDataIds().forEach(isolateDataService::deleteIsolateData);
 
-        projectRepository.delete(project);
+        projectAccessService.deleteProject(projectId, userId);
     }
 
     /**

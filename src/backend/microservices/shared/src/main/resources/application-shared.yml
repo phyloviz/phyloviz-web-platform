@@ -6,6 +6,8 @@ adapters:
   get-tree-view-adapter-priority: PHYLODB # list of adapter ids, separate by comma.
 
 mongo-collections:
+  projects-collection: projects
+  datasets-collection: datasets
   typing-data-metadata-collection: typing-data
   isolate-data-metadata-collection: isolate-data
   distance-matrix-metadata-collection: distance-matrices

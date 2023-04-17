@@ -10,7 +10,7 @@ import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSou
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "#{constants.treeMetadataCollection}")
+@Document(collection = "#{@constants.treeMetadataCollection}")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

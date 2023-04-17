@@ -8,7 +8,6 @@ import org.springframework.data.annotation.TypeAlias;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TypeAlias("distanceMatrixSourceFunction")
 public class DistanceMatrixSourceFunction implements DistanceMatrixSource {
     private String function;
 }

@@ -12,11 +12,10 @@ import java.util.List;
 /**
  * A project is a collection of resources.
  */
-@Document(collection = "projects")
+@Document(collection = "#{@constants.projectsCollection}")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TypeAlias("project")
 public class Project {
     @Id
     private String id;

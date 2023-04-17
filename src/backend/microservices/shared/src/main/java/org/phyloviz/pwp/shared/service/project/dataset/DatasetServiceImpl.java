@@ -1,12 +1,10 @@
 package org.phyloviz.pwp.shared.service.project.dataset;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.service.dtos.dataset.CreateDatasetOutput;
 import org.phyloviz.pwp.shared.service.dtos.dataset.DatasetDTO;
-import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.EmptyDatasetNameException;
 import org.phyloviz.pwp.shared.service.exceptions.EmptyTypingDataIdException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidIsolateDataIdException;
@@ -14,12 +12,12 @@ import org.phyloviz.pwp.shared.service.exceptions.IsolateDataDoesNotExistExcepti
 import org.phyloviz.pwp.shared.service.exceptions.IsolateDataNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TypingDataDoesNotExistException;
 import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
-import org.phyloviz.pwp.shared.service.project.ProjectService;
+import org.phyloviz.pwp.shared.service.project.ProjectAccessService;
 import org.phyloviz.pwp.shared.service.project.dataset.distanceMatrix.DistanceMatrixService;
 import org.phyloviz.pwp.shared.service.project.dataset.tree.TreeService;
 import org.phyloviz.pwp.shared.service.project.dataset.treeView.TreeViewService;
-import org.phyloviz.pwp.shared.service.project.file.isolateData.IsolateDataService;
-import org.phyloviz.pwp.shared.service.project.file.typingData.TypingDataService;
+import org.phyloviz.pwp.shared.service.project.file.isolateData.IsolateDataAccessService;
+import org.phyloviz.pwp.shared.service.project.file.typingData.TypingDataAccessService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -29,21 +27,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DatasetServiceImpl implements DatasetService {
 
-    private final DatasetRepository datasetRepository;
+    private final ProjectAccessService projectAccessService;
+    private final DatasetAccessService datasetAccessService;
+    private final TypingDataAccessService typingDataAccessService;
+    private final IsolateDataAccessService isolateDataAccessService;
 
-    private final ProjectService projectService;
     private final DistanceMatrixService distanceMatrixService;
     private final TreeService treeService;
     private final TreeViewService treeViewService;
-    private final TypingDataService typingDataService;
-    private final IsolateDataService isolateDataService;
 
     @Override
     public CreateDatasetOutput createDataset(String name, String description, String typingDataId, String isolateDataId,
                                              String projectId, String userId) {
         validateCreateDatasetParameters(name, typingDataId, isolateDataId, projectId, userId);
 
-        Project project = projectService.getProject(projectId, userId);
+        Project project = projectAccessService.getProject(projectId, userId);
 
         Dataset dataset = new Dataset(
                 projectId,
@@ -60,29 +58,24 @@ public class DatasetServiceImpl implements DatasetService {
         String datasetId = storedDataset.getId();
 
         project.getDatasetIds().add(datasetId);
-        projectService.saveProject(project);
+        projectAccessService.saveProject(project);
 
         return new CreateDatasetOutput(projectId, datasetId);
     }
 
     @Override
     public Dataset getDataset(String projectId, String datasetId, String userId) {
-        Project project = projectService.getProject(projectId, userId);
-
-        if (!project.getDatasetIds().contains(datasetId))
-            throw new DatasetNotFoundException();
-
-        return datasetRepository.findById(datasetId).orElseThrow(DatasetNotFoundException::new);
+        return datasetAccessService.getDataset(projectId, datasetId, userId);
     }
 
     @Override
     public Dataset getDataset(String datasetId) {
-        return datasetRepository.findById(datasetId).orElseThrow(DatasetNotFoundException::new);
+        return datasetAccessService.getDataset(datasetId);
     }
 
     @Override
     public Dataset getDatasetOrNull(String datasetId) {
-        return datasetRepository.findById(datasetId).orElse(null);
+        return datasetAccessService.getDatasetOrNull(datasetId);
     }
 
     @Override
@@ -97,7 +90,7 @@ public class DatasetServiceImpl implements DatasetService {
 
     @Override
     public List<Dataset> getDatasets(String projectId, String userId) {
-        Project project = projectService.getProject(projectId, userId);
+        Project project = projectAccessService.getProject(projectId, userId);
 
         return project.getDatasetIds().stream().map(this::getDataset).toList();
     }
@@ -109,24 +102,24 @@ public class DatasetServiceImpl implements DatasetService {
 
     @Override
     public void assertExists(String projectId, String datasetId, String userId) {
-        getDataset(projectId, datasetId, userId);
+        datasetAccessService.assertExists(projectId, datasetId, userId);
     }
 
     @Override
     public Dataset saveDataset(Dataset dataset) {
-        return datasetRepository.save(dataset);
+        return datasetAccessService.saveDataset(dataset);
     }
 
     @Override
     public void deleteDataset(String projectId, String datasetId, String userId) {
         assertExists(projectId, datasetId, userId);
 
-        Project project = projectService.getProject(projectId, userId);
+        Project project = projectAccessService.getProject(projectId, userId);
 
         deleteDataset(datasetId);
 
         project.getDatasetIds().remove(datasetId);
-        projectService.saveProject(project);
+        projectAccessService.saveProject(project);
     }
 
     @Override
@@ -137,7 +130,7 @@ public class DatasetServiceImpl implements DatasetService {
         dataset.getTreeIds().forEach(treeService::deleteTree);
         dataset.getDistanceMatrixIds().forEach(distanceMatrixService::deleteDistanceMatrix);
 
-        datasetRepository.delete(dataset);
+        datasetAccessService.deleteDataset(datasetId);
     }
 
     /**
@@ -167,17 +160,17 @@ public class DatasetServiceImpl implements DatasetService {
         if (isolateDataId != null && isolateDataId.isBlank())
             throw new InvalidIsolateDataIdException();
 
-        projectService.assertExists(projectId, userId);
+        projectAccessService.assertExists(projectId, userId);
 
         try {
-            typingDataService.assertExists(projectId, typingDataId, userId);
+            typingDataAccessService.assertExists(projectId, typingDataId, userId);
         } catch (TypingDataNotFoundException e) {
             throw new TypingDataDoesNotExistException();
         }
 
         if (isolateDataId != null) {
             try {
-                isolateDataService.assertExists(projectId, isolateDataId, userId);
+                isolateDataAccessService.assertExists(projectId, isolateDataId, userId);
             } catch (IsolateDataNotFoundException e) {
                 throw new IsolateDataDoesNotExistException();
             }

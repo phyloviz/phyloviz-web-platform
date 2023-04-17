@@ -10,7 +10,7 @@ import org.phyloviz.pwp.shared.repository.metadata.distanceMatrix.documents.sour
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "#{constants.distanceMatrixMetadataCollection}")
+@Document(collection = "#{@constants.distanceMatrixMetadataCollection}")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

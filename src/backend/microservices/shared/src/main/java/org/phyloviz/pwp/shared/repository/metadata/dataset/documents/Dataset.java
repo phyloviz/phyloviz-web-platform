@@ -9,11 +9,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "datasets")
+@Document(collection = "#{@constants.datasetsCollection}")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TypeAlias("dataset")
 public class Dataset {
     @Id
     private String id;

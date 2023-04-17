@@ -10,7 +10,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TypeAlias("fileIds")
 public class FileIds {
     private List<String> typingDataIds;
     private List<String> isolateDataIds;

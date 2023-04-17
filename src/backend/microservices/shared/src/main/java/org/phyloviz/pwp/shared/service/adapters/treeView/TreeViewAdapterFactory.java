@@ -8,12 +8,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TreeViewAdapterFactory {
 
-    private final PhyloDBTreeViewAdapter phyloDBTreeViewAdapter;
+    private final TreeViewAdapterRegistry treeViewAdapterRegistry;
 
     public TreeViewAdapter getTreeViewAdapter(TreeViewAdapterId adapterId) {
-        return switch (adapterId) {
-            case PHYLODB -> phyloDBTreeViewAdapter;
-            case S3 -> throw new UnsupportedOperationException("Not implemented yet");
-        };
+        return treeViewAdapterRegistry.getTreeViewAdapter(adapterId);
     }
 }

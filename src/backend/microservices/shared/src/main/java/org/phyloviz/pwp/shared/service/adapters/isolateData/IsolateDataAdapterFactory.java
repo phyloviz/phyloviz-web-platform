@@ -8,11 +8,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class IsolateDataAdapterFactory {
 
-    private final S3IsolateDataAdapter s3IsolateDataAdapter;
+    private final IsolateDataAdapterRegistry isolateDataAdapterRegistry;
 
     public IsolateDataAdapter getIsolateDataAdapter(IsolateDataAdapterId adapterId) {
-        return switch (adapterId) {
-            case S3 -> s3IsolateDataAdapter;
-        };
+        return isolateDataAdapterRegistry.getIsolateDataAdapter(adapterId);
     }
 }

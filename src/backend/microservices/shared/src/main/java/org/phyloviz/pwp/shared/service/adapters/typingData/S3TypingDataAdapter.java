@@ -2,6 +2,7 @@ package org.phyloviz.pwp.shared.service.adapters.typingData;
 
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.repository.data.S3FileRepository;
+import org.phyloviz.pwp.shared.repository.metadata.isolateData.documents.adapterSpecificData.IsolateDataS3AdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.adapterSpecificData.TypingDataAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.typingData.documents.adapterSpecificData.TypingDataS3AdapterSpecificData;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,12 @@ public class S3TypingDataAdapter implements TypingDataAdapter {
     private final S3FileRepository s3FileRepository;
 
     @Override
-    public String uploadTypingData(String projectId, String typingDataId, MultipartFile multipartFile) {
+    public TypingDataAdapterSpecificData uploadTypingData(String projectId, String typingDataId, MultipartFile multipartFile) {
         String url = projectId + "/typing-data/" + typingDataId;
 
         s3FileRepository.store(url, multipartFile);
 
-        return s3FileRepository.getLocation() + "/" + url;
+        return new TypingDataS3AdapterSpecificData(s3FileRepository.getLocation() + "/" + url, multipartFile.getOriginalFilename());
     }
 
     @Override

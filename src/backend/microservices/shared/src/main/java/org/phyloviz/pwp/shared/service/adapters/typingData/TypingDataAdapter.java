@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface TypingDataAdapter {
 
-    String uploadTypingData(String projectId, String typingDataId, MultipartFile multipartFile);
+    TypingDataAdapterSpecificData uploadTypingData(String projectId, String typingDataId, MultipartFile multipartFile);
 
     String getTypingData(TypingDataAdapterSpecificData typingDataAdapterSpecificData);
 
