@@ -1,10 +1,10 @@
 package org.phyloviz.pwp.administration.http.models.trees;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.service.dtos.tree.TreeMetadataDTO;
-import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceAlgorithmDistanceMatrixDTO;
-import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceAlgorithmTypingDataDTO;
-import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceFileDTO;
+import org.phyloviz.pwp.shared.service.dtos.tree.TreeInfo;
+import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceAlgorithmDistanceMatrixInfo;
+import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceAlgorithmTypingDataInfo;
+import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceFileInfo;
 
 @Data
 public class TreeOutputModel {
@@ -13,19 +13,19 @@ public class TreeOutputModel {
     private String sourceType;
     private TreeSourceOutputModel source;
 
-    public TreeOutputModel(TreeMetadataDTO treeMetadataDTO) {
-        this.treeId = treeMetadataDTO.getTreeId();
-        this.name = treeMetadataDTO.getName();
-        this.sourceType = treeMetadataDTO.getSourceType().name().toLowerCase();
-        this.source = switch (treeMetadataDTO.getSourceType()) {
+    public TreeOutputModel(TreeInfo treeInfo) {
+        this.treeId = treeInfo.getTreeId();
+        this.name = treeInfo.getName();
+        this.sourceType = treeInfo.getSourceType().name().toLowerCase();
+        this.source = switch (treeInfo.getSourceType()) {
             case ALGORITHM_DISTANCE_MATRIX -> new TreeSourceAlgorithmDistanceMatrixOutputModel(
-                    (TreeSourceAlgorithmDistanceMatrixDTO) treeMetadataDTO.getSource()
+                    (TreeSourceAlgorithmDistanceMatrixInfo) treeInfo.getSource()
             );
             case ALGORITHM_TYPING_DATA -> new TreeSourceAlgorithmTypingDataOutputModel(
-                    (TreeSourceAlgorithmTypingDataDTO) treeMetadataDTO.getSource()
+                    (TreeSourceAlgorithmTypingDataInfo) treeInfo.getSource()
             );
             case FILE -> new TreeSourceFileOutputModel(
-                    (TreeSourceFileDTO) treeMetadataDTO.getSource()
+                    (TreeSourceFileInfo) treeInfo.getSource()
             );
         };
     }

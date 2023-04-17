@@ -2,9 +2,10 @@ package org.phyloviz.pwp.shared.repository.metadata.tree.documents.deserializer;
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
+import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterId;
+import org.phyloviz.pwp.shared.adapters.tree.adapter.specific_data.TreeAdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.metadata.DocumentConversionException;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.adapterSpecificData.TreeAdapterId;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.adapterSpecificData.TreeAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSource;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceType;
 import org.springframework.core.convert.converter.Converter;
@@ -50,7 +51,7 @@ public class TreeMetadataDeserializer implements Converter<Document, TreeMetadat
                     adapterSpecificData
             );
         } catch (Exception e) {
-            throw new RuntimeException("Error converting Document to TreeAdapterMetadata", e);
+            throw new DocumentConversionException("Error converting Document to TreeAdapterMetadata:" + e);
         }
     }
 }

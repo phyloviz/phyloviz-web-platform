@@ -9,7 +9,6 @@ import software.amazon.awssdk.core.async.AsyncRequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
 import software.amazon.awssdk.transfer.s3.model.Upload;
 
@@ -41,18 +40,18 @@ public class S3FileRepositoryImpl implements S3FileRepository {
     ) {
         AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
 
-        S3AsyncClient s3Client = S3AsyncClient.builder()
+        S3AsyncClient newS3Client = S3AsyncClient.builder()
                 .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
                 .endpointOverride(URI.create(objectStorageEndpoint))
                 .region(REGION)
                 .build();
 
-        s3Client.createBucket(r -> r.bucket(bucketName));
+        newS3Client.createBucket(r -> r.bucket(bucketName));
 
-        this.s3Client = s3Client;
+        this.s3Client = newS3Client;
         this.bucketName = bucketName;
         this.objectStorageEndpoint = objectStorageEndpoint;
-        this.transferManager = S3TransferManager.builder().s3Client(s3Client).build();
+        this.transferManager = S3TransferManager.builder().s3Client(newS3Client).build();
     }
 
     @Override
@@ -68,14 +67,9 @@ public class S3FileRepositoryImpl implements S3FileRepository {
             throw new RuntimeException(e);
         }
 
-        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                .bucket(bucketName)
-                .key(url)
-                .build();
-
         Upload upload = transferManager.upload(p -> {
             p.requestBody(requestBody);
-            p.putObjectRequest(putObjectRequest);
+            p.putObjectRequest(o -> o.bucket(bucketName).key(url));
         });
 
         upload.completionFuture().join();

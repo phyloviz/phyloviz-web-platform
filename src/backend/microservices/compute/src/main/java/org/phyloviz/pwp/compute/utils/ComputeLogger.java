@@ -8,8 +8,12 @@ import org.slf4j.LoggerFactory;
  */
 public class ComputeLogger {
 
-    private final static String loggerName = "compute.logger";
-    private final static Logger logger = LoggerFactory.getLogger(loggerName);
+    private static final String LOGGER_NAME = "compute.logger";
+    private static final Logger LOGGER = LoggerFactory.getLogger(LOGGER_NAME);
+
+    private ComputeLogger() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * Logs a message at the INFO level.
@@ -17,7 +21,7 @@ public class ComputeLogger {
      * @param message the message string to be logged
      */
     public static void info(String message) {
-        logger.info("[" + System.currentTimeMillis() + "]: " + message);
+        LOGGER.info("[{}]: {}", System.currentTimeMillis(), message);
     }
 
     /**
@@ -26,7 +30,7 @@ public class ComputeLogger {
      * @param message the message string to be logged
      */
     public static void debug(String message) {
-        logger.debug("[" + System.currentTimeMillis() + "]: " + message);
+        LOGGER.debug("[{}]: {}", System.currentTimeMillis(), message);
     }
 
     /**
@@ -35,7 +39,7 @@ public class ComputeLogger {
      * @param message the message string to be logged
      */
     public static void warn(String message) {
-        logger.warn("[" + System.currentTimeMillis() + "]: " + message);
+        LOGGER.warn("[{}]: {}", System.currentTimeMillis(), message);
     }
 
     /**
@@ -44,7 +48,7 @@ public class ComputeLogger {
      * @param message the message string to be logged
      */
     public static void error(String message) {
-        logger.error("[" + System.currentTimeMillis() + "]: " + message);
+        LOGGER.error("[{}]: {}", System.currentTimeMillis(), message);
     }
 
     /**
@@ -53,6 +57,6 @@ public class ComputeLogger {
      * @param message the message string to be logged
      */
     public static void trace(String message) {
-        logger.trace("[" + System.currentTimeMillis() + "]: " + message);
+        LOGGER.trace("[{}]: {}", System.currentTimeMillis(), message);
     }
 }

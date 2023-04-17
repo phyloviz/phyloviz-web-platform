@@ -1,4 +1,5 @@
 import argparse
+import csv
 import json
 import os
 import requests
@@ -6,7 +7,6 @@ import uuid
 from bson.objectid import ObjectId
 from concurrent.futures import ThreadPoolExecutor
 from pymongo import MongoClient
-import csv
 
 base_url = os.environ.get("PHYLODB_URL")
 

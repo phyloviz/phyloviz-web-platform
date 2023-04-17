@@ -9,7 +9,7 @@ group 'phylovizwebplatform'
 version '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
-ext['jupiterVersion']= "5.8.1"
+ext['jupiterVersion'] = "5.8.1"
 
 repositories {
     mavenCentral()

@@ -1,8 +1,8 @@
 package org.phyloviz.pwp.compute.config;
 
-import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.converters.AccessTemplateDeserializer;
-import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.converters.AccessTemplateSerializer;
-import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.converters.CaseInsensitiveEnumDeserializerFactory;
+import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.converters.AccessTemplateDeserializer;
+import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.converters.AccessTemplateSerializer;
+import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.converters.CaseInsensitiveEnumDeserializerFactory;
 import org.phyloviz.pwp.compute.service.flowviz.FLOWViZClient;
 import org.phyloviz.pwp.shared.config.ResourceServerSharedConfig;
 import org.springframework.beans.factory.BeanFactory;

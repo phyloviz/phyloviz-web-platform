@@ -1,12 +1,12 @@
 package org.phyloviz.pwp.shared.service.project.dataset.tree;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterFactory;
+import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterId;
+import org.phyloviz.pwp.shared.adapters.tree.adapter.TreeAdapter;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.tree.TreeMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.adapterSpecificData.TreeAdapterId;
-import org.phyloviz.pwp.shared.service.adapters.tree.TreeAdapter;
-import org.phyloviz.pwp.shared.service.adapters.tree.TreeAdapterFactory;
 import org.phyloviz.pwp.shared.service.exceptions.TreeIndexingNeededException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;
 import org.phyloviz.pwp.shared.service.project.dataset.DatasetAccessService;

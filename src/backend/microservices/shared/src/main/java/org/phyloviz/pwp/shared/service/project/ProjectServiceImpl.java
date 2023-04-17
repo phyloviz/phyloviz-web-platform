@@ -1,17 +1,15 @@
 package org.phyloviz.pwp.shared.service.project;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.FileIds;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
-import org.phyloviz.pwp.shared.service.dtos.files.FilesDTO;
+import org.phyloviz.pwp.shared.service.dtos.files.FilesInfo;
 import org.phyloviz.pwp.shared.service.dtos.project.CreateProjectOutput;
-import org.phyloviz.pwp.shared.service.dtos.project.ProjectDTO;
+import org.phyloviz.pwp.shared.service.dtos.project.FullProjectInfo;
 import org.phyloviz.pwp.shared.service.exceptions.EmptyProjectNameException;
-import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.project.dataset.DatasetService;
-import org.phyloviz.pwp.shared.service.project.file.isolateData.IsolateDataService;
-import org.phyloviz.pwp.shared.service.project.file.typingData.TypingDataService;
+import org.phyloviz.pwp.shared.service.project.file.isolate_data.IsolateDataService;
+import org.phyloviz.pwp.shared.service.project.file.typing_data.TypingDataService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -43,20 +41,15 @@ public class ProjectServiceImpl implements ProjectService {
                 )
         );
 
-        Project storedProject = saveProject(project);
+        Project storedProject = projectAccessService.saveProject(project);
         return new CreateProjectOutput(storedProject.getId());
     }
 
     @Override
-    public Project getProject(String projectId, String userId) {
-        return projectAccessService.getProject(projectId, userId);
-    }
+    public FullProjectInfo getFullProjectInfo(String projectId, String userId) {
+        Project project = projectAccessService.getProject(projectId, userId);
 
-    @Override
-    public ProjectDTO getProjectDTO(String projectId, String userId) {
-        Project project = getProject(projectId, userId);
-
-        return getProjectDTO(project);
+        return getFullProjectInfo(project);
     }
 
     @Override
@@ -65,23 +58,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectDTO> getProjectDTOs(String userId) {
-        return getProjects(userId).stream().map(this::getProjectDTO).toList();
-    }
-
-    @Override
-    public void assertExists(String projectId, String userId) {
-        projectAccessService.assertExists(projectId, userId);
-    }
-
-    @Override
-    public Project saveProject(Project project) {
-        return projectAccessService.saveProject(project);
-    }
-
-    @Override
     public void deleteProject(String projectId, String userId) {
-        Project project = getProject(projectId, userId);
+        Project project = projectAccessService.getProject(projectId, userId);
 
         project.getDatasetIds().forEach(datasetService::deleteDataset);
         project.getFileIds().getTypingDataIds().forEach(typingDataService::deleteTypingData);
@@ -93,16 +71,16 @@ public class ProjectServiceImpl implements ProjectService {
     /**
      * Gets a ProjectDTO from a Project, fetching the datasets and files, since the Project only stores the ids.
      */
-    private ProjectDTO getProjectDTO(Project project) {
-        return new ProjectDTO(
+    private FullProjectInfo getFullProjectInfo(Project project) {
+        return new FullProjectInfo(
                 project.getId(),
                 project.getName(),
                 project.getDescription(),
                 project.getOwnerId(),
-                project.getDatasetIds().stream().map(datasetService::getDatasetDTO).toList(),
-                new FilesDTO(
-                        project.getFileIds().getTypingDataIds().stream().map(typingDataService::getTypingDataMetadataDTO).toList(),
-                        project.getFileIds().getIsolateDataIds().stream().map(isolateDataService::getIsolateDataMetadataDTO).toList()
+                project.getDatasetIds().stream().map(datasetService::getFullDatasetInfo).toList(),
+                new FilesInfo(
+                        project.getFileIds().getTypingDataIds().stream().map(typingDataService::getTypingDataInfo).toList(),
+                        project.getFileIds().getIsolateDataIds().stream().map(isolateDataService::getIsolateDataInfo).toList()
                 )
         );
     }

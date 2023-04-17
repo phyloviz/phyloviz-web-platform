@@ -3,7 +3,7 @@ package org.phyloviz.pwp.compute.service.flowviz.models.workflow;
 import org.phyloviz.pwp.compute.service.flowviz.FLOWViZHttpService;
 import org.phyloviz.pwp.compute.service.flowviz.exceptions.ConnectionRefusedException;
 import org.phyloviz.pwp.compute.service.flowviz.exceptions.UnexpectedResponseException;
-import org.phyloviz.pwp.compute.service.flowviz.models.getWorkflow.GetWorkflowResponse;
+import org.phyloviz.pwp.compute.service.flowviz.models.get_workflow.GetWorkflowResponse;
 
 public class WorkflowService extends FLOWViZHttpService {
 

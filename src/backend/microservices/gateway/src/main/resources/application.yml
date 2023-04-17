@@ -110,7 +110,7 @@ spring:
           phyloviz-web-platform-client:
             provider: keycloak
             client-id: phyloviz-web-platform-client
-            client-secret: 3rG9M1rnH7gKX29QujY7HQedPs7KT1Iu
+            client-secret: gmaFeUwf9AXnxMaQyTuXEtTAgbJlBpgy
             redirect-uri: "{baseUrl}/${pwp.security.oauth2.redirect-uri}"
 
             scope:

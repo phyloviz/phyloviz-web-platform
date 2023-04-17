@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.http.controllers.projects.datasets.trees;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.administration.http.models.trees.deleteTree.DeleteTreeOutputModel;
+import org.phyloviz.pwp.administration.http.models.trees.delete_tree.DeleteTreeOutputModel;
 import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.shared.service.project.dataset.tree.TreeService;
 import org.springframework.web.bind.annotation.DeleteMapping;

@@ -7,8 +7,12 @@ import org.slf4j.LoggerFactory;
  */
 public class Logger {
 
-    private final static String loggerName = "pwp.logger";
-    private final static org.slf4j.Logger logger = LoggerFactory.getLogger(loggerName);
+    private static final String LOGGER_NAME = "pwp.logger";
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LOGGER_NAME);
+
+    private Logger() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * Logs a message at the INFO level.
@@ -16,7 +20,7 @@ public class Logger {
      * @param message the message string to be logged
      */
     public static void info(String message) {
-        logger.info("[" + System.currentTimeMillis() + "]: " + message);
+        LOGGER.info("[{}]: {}", System.currentTimeMillis(), message);
     }
 
     /**
@@ -25,7 +29,7 @@ public class Logger {
      * @param message the message string to be logged
      */
     public static void debug(String message) {
-        logger.debug("[" + System.currentTimeMillis() + "]: " + message);
+        LOGGER.debug("[{}]: {}", System.currentTimeMillis(), message);
     }
 
     /**
@@ -34,7 +38,7 @@ public class Logger {
      * @param message the message string to be logged
      */
     public static void warn(String message) {
-        logger.warn("[" + System.currentTimeMillis() + "]: " + message);
+        LOGGER.warn("[{}]: {}", System.currentTimeMillis(), message);
     }
 
     /**
@@ -43,7 +47,7 @@ public class Logger {
      * @param message the message string to be logged
      */
     public static void error(String message) {
-        logger.error("[" + System.currentTimeMillis() + "]: " + message);
+        LOGGER.error("[{}]: {}", System.currentTimeMillis(), message);
     }
 
     /**
@@ -52,6 +56,6 @@ public class Logger {
      * @param message the message string to be logged
      */
     public static void trace(String message) {
-        logger.trace("[" + System.currentTimeMillis() + "]: " + message);
+        LOGGER.trace("[{}]: {}", System.currentTimeMillis(), message);
     }
 }
