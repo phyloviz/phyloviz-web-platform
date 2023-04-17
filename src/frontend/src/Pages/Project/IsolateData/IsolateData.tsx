@@ -5,12 +5,14 @@ import {Container} from "@mui/material"
 import Box from "@mui/material/Box";
 import {DataGrid, GridToolbar} from "@mui/x-data-grid";
 import {useIsolateData} from "./useIsolateData";
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
+import Alert from "@mui/material/Alert";
 
 /**
  * IsolateData page.
  */
 export default function IsolateData() {
-    const {data, loading} = useIsolateData()
+    const {data, loading, error} = useIsolateData()
 
     return (
         <Container>
@@ -22,9 +24,12 @@ export default function IsolateData() {
                 alignItems: "center",
                 height: '98%',
             }}>
-                <Typography component="h1" variant="h4">
+                <Typography component="h1" variant="h4" sx={{mb: 2}}>
                     Isolate Data
                 </Typography>
+
+                {loading && <LoadingSpinner text={"Loading isolate data..."}/>}
+                {error && <Alert severity="error">{error}</Alert>}
 
                 <Box sx={{height: '100%', width: '100%'}}>
                     <DataGrid

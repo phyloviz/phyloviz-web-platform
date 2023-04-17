@@ -12,30 +12,30 @@ export function useDatasetTreeItem(dataset: Dataset) {
     const computeTreeOptions = [
         {
             label: "goeBURST",
-            url: WebUiUris.computeConfigGoeburst(projectId!, dataset.datasetId)
+            url: WebUiUris.computeGoeburst(projectId!, dataset.datasetId)
         },
         {
             label: "goeBURST Full MST",
-            url: WebUiUris.computeConfigGoeburstFullMst(projectId!, dataset.datasetId)
+            url: WebUiUris.computeGoeburstFullMst(projectId!, dataset.datasetId)
         },
         {
             label: "Hierarchical Clustering",
-            url: WebUiUris.computeConfigHierarchicalClustering(projectId!, dataset.datasetId)
+            url: WebUiUris.computeHierarchicalClustering(projectId!, dataset.datasetId)
         },
         {
             label: "Neighbor Joining",
-            url: WebUiUris.computeConfigNeighborJoining(projectId!, dataset.datasetId)
+            url: WebUiUris.computeNeighborJoining(projectId!, dataset.datasetId)
         },
         {
             label: "nLV Graph",
-            url: WebUiUris.computeConfigNlvGraph(projectId!, dataset.datasetId)
+            url: WebUiUris.computeNlvGraph(projectId!, dataset.datasetId)
         }
     ]
 
     const computeDistanceMatrixOptions = [
         {
             label: "Hamming Distance",
-            url: WebUiUris.computeConfigHammingDistance(projectId!, dataset.datasetId)
+            url: WebUiUris.computeHammingDistance(projectId!, dataset.datasetId)
         }
     ]
 
@@ -66,14 +66,12 @@ export function useDatasetTreeItem(dataset: Dataset) {
             {
                 label: "Dataset Details",
                 icon: Info,
-                onClick: () => {/*TODO: To be implemented*/
-                }
+                onClick: () => navigate(WebUiUris.dataset(projectId!, dataset.datasetId))
             },
             {
                 label: "Generate Report",
                 icon: Summarize,
-                onClick: () => {/*TODO: To be implemented*/
-                }
+                onClick: () => navigate(WebUiUris.report(projectId!, dataset.datasetId))
             }
         ]
     }

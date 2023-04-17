@@ -5,12 +5,14 @@ import {Container} from "@mui/material"
 import {DataGrid, GridToolbar} from '@mui/x-data-grid';
 import Box from "@mui/material/Box";
 import {useTypingData} from "./useTypingData";
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
+import Alert from "@mui/material/Alert";
 
 /**
  * TypingData page.
  */
 export default function TypingData() {
-    const {data, loading} = useTypingData()
+    const {data, loading, error} = useTypingData()
 
     return (
         <Container>
@@ -22,9 +24,12 @@ export default function TypingData() {
                 alignItems: "center",
                 height: '98%',
             }}>
-                <Typography component="h1" variant="h4">
+                <Typography component="h1" variant="h4" sx={{mb: 2}}>
                     Typing Data
                 </Typography>
+
+                {loading && <LoadingSpinner text={"Loading typing data..."}/>}
+                {error && <Alert severity="error">{error}</Alert>}
 
                 <Box sx={{height: '100%', width: '100%'}}>
                     <DataGrid

@@ -52,6 +52,7 @@ export interface DistanceMatrix {
 export interface Dataset {
     datasetId: string
     name: string
+    description: string
     typingDataId: string
     isolateDataId: string
     distanceMatrices: DistanceMatrix[]

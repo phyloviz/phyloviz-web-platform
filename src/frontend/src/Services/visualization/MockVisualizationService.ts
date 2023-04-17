@@ -1,5 +1,3 @@
-import {get} from "../utils/apiFetch";
-import {WebApiUris} from "../WebApiUris";
 import {GetTypingDataSchemaOutputModel} from "./models/getTypingDataSchema/GetTypingDataSchemaOutputModel";
 import {GetTypingDataProfilesOutputModel} from "./models/getTypingDataProfiles/GetTypingDataProfilesOutputModel";
 import {GetTypingDataFileOutputModel} from "./models/getTypingDataFile/GetTypingDataFileOutputModel";
@@ -9,10 +7,9 @@ import {GetIsolateDataFileOutputModel} from "./models/getIsolateDataFile/GetIsol
 import {GetDistanceMatrixOutputModel} from "./models/getDistanceMatrix/GetDistanceMatrixOutputModel";
 import {GetTreeOutputModel} from "./models/getTree/GetTreeOutputModel";
 import {GetTreeViewOutputModel} from "./models/getTreeView/GetTreeViewOutputModel";
-import {MockVisualizationService} from "./MockVisualizationService";
 
 
-namespace VisualizationService {
+export namespace MockVisualizationService {
 
     /**
      * Get the typing data schema.
@@ -25,7 +22,19 @@ namespace VisualizationService {
         projectId: string,
         typingDataId: string
     ): Promise<GetTypingDataSchemaOutputModel> {
-        return await get<GetTypingDataSchemaOutputModel>(WebApiUris.getTypingDataSchema(projectId, typingDataId))
+        return Promise.resolve({
+            type: "mlst7",
+            loci: [
+                "aspA",
+                "glnA",
+                "gltA",
+                "glyA",
+                "pgm",
+                "tkt",
+                "uncA"
+            ],
+            totalCount: 7
+        })
     }
 
     /**
@@ -39,7 +48,21 @@ namespace VisualizationService {
         projectId: string,
         typingDataId: string
     ): Promise<GetTypingDataProfilesOutputModel> {
-        return await get<GetTypingDataProfilesOutputModel>(WebApiUris.getTypingDataProfiles(projectId, typingDataId))
+        return Promise.resolve({
+            profiles: [
+                {id: "1", profile: ["1", "2", "1", "54", "3", "4", "1", "5"]},
+                {id: "2", profile: ["2", "4", "7", "51", "4", "1", "7", "1"]},
+                {id: "3", profile: ["3", "3", "2", "5", "10", "11", "11", "6"]},
+                {id: "4", profile: ["4", "10", "11", "16", "7", "10", "5", "7"]},
+                {id: "5", profile: ["5", "7", "2", "5", "2", "10", "3", "6"]},
+                {id: "6", profile: ["6", "63", "34", "27", "33", "45", "5", "7"]},
+                {id: "7", profile: ["7", "8", "10", "2", "2", "14", "12", "6"]},
+                {id: "8", profile: ["8", "2", "1", "1", "3", "2", "1", "6"]},
+                {id: "9", profile: ["9", "1", "6", "22", "24", "12", "7", "1"]},
+                {id: "10", profile: ["10", "2", "59", "4", "38", "17", "12", "5"]}
+            ],
+            totalCount: 10
+        })
     }
 
     /**
@@ -53,7 +76,7 @@ namespace VisualizationService {
         projectId: string,
         typingDataId: string
     ): Promise<GetTypingDataFileOutputModel> {
-        return await get<GetTypingDataFileOutputModel>(WebApiUris.getTypingDataFile(projectId, typingDataId))
+        return Promise.resolve({})
     }
 
     /**
@@ -67,7 +90,11 @@ namespace VisualizationService {
         projectId: string,
         isolateDataId: string
     ): Promise<GetIsolateDataSchemaOutputModel> {
-        return await get<GetIsolateDataSchemaOutputModel>(WebApiUris.getIsolateDataSchema(projectId, isolateDataId))
+        return Promise.resolve({
+            type: "mlst7",
+            headers: ["id", "isolate", "aliases", "country", "continent", "region", "town_or_city", "year", "month", "isolation_date"],
+            totalCount: 10
+        })
     }
 
     /**
@@ -81,7 +108,21 @@ namespace VisualizationService {
         projectId: string,
         isolateDataId: string
     ): Promise<GetIsolateDataRowsOutputModel> {
-        return await get<GetIsolateDataRowsOutputModel>(WebApiUris.getIsolateDataRows(projectId, isolateDataId))
+        return Promise.resolve({
+            rows: [
+                {id: "1", row: ["1", "P09", "", "Unknown", "", "", "", "", "", ""]},
+                {id: "2", row: ["2", "P12", "", "Unknown", "", "", "", "", "", ""]},
+                {id: "3", row: ["3", "P18", "ATCC43439", "Canada", "North America", "", "", "", "", ""]},
+                {id: "4", row: ["4", "P22", "ATCC43448", "Canada", "North America", "", "", "", "", ""]},
+                {id: "5", row: ["5", "P26", "ATCC43477", "Unknown", "", "", "", "", "", ""]},
+                {id: "6", row: ["6", "P27", "", "Unknown", "", "", "", "", "", ""]},
+                {id: "7", row: ["7", "P31", "", "Unknown", "", "", "", "", "", ""]},
+                {id: "8", row: ["8", "P33", "", "Unknown", "", "", "", "", "", ""]},
+                {id: "9", row: ["9", "P43", "", "Canada", "North America", "Vancouver", "", "", "", ""]},
+                {id: "10", row: ["10", "P55", "", "Unknown", "", "", "", "", "", ""]}
+            ],
+            totalCount: 10
+        })
     }
 
     /**
@@ -95,7 +136,7 @@ namespace VisualizationService {
         projectId: string,
         isolateDataId: string
     ): Promise<GetIsolateDataFileOutputModel> {
-        return await get<GetIsolateDataFileOutputModel>(WebApiUris.getIsolateDataFile(projectId, isolateDataId))
+        return Promise.resolve({})
     }
 
     /**
@@ -111,7 +152,10 @@ namespace VisualizationService {
         datasetId: string,
         distanceMatrixId: string
     ): Promise<GetDistanceMatrixOutputModel> {
-        return await get<any>(WebApiUris.getDistanceMatrix(projectId, datasetId, distanceMatrixId))
+        return Promise.resolve({
+            distances: {},
+            totalCount: 0
+        })
     }
 
     /**
@@ -127,7 +171,7 @@ namespace VisualizationService {
         datasetId: string,
         treeId: string
     ): Promise<GetTreeOutputModel> {
-        return await get<any>(WebApiUris.getTree(projectId, datasetId, treeId))
+        return Promise.resolve({})
     }
 
     /**
@@ -143,10 +187,9 @@ namespace VisualizationService {
         datasetId: string,
         treeViewId: string
     ): Promise<GetTreeViewOutputModel> {
-        return await get<any>(WebApiUris.getTreeView(projectId, datasetId, treeViewId))
+        return Promise.resolve({
+            nodes: [],
+            totalCount: 0
+        })
     }
 }
-
-const env = process.env.NODE_ENV;
-
-export default env === "development" ? MockVisualizationService : VisualizationService;

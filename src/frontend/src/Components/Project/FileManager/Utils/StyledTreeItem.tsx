@@ -126,7 +126,7 @@ export function StyledTreeItem(
                             : undefined
                     }
                 >
-                    <ContextMenuItems items={contextMenuItems!}/>
+                    <ContextMenuItems items={contextMenuItems!} handleClose={handleClose}/>
                 </Menu>
             }
         </>
@@ -137,8 +137,9 @@ export function StyledTreeItem(
  * Context menu items.
  *
  * @param items items to display in the context menu
+ * @param handleClose close handler of the context menu
  */
-function ContextMenuItems({items}: { items: ContextMenuItem[] }) {
+function ContextMenuItems({items, handleClose}: { items: ContextMenuItem[], handleClose: () => void }) {
     return (
         <>
             {
@@ -152,9 +153,13 @@ function ContextMenuItems({items}: { items: ContextMenuItem[] }) {
                             parentMenuOpen={true}
                             sx={{pl: 2}}
                         >
-                            <ContextMenuItems items={item.nestedItems}/>
+                            <ContextMenuItems items={item.nestedItems} handleClose={handleClose}/>
                         </NestedMenuItem>
-                        : <MenuItem onClick={item.onClick} key={index}>
+                        : <MenuItem key={index} onClick={(event) => {
+                            handleClose()
+                            if (item.onClick)
+                                item.onClick(event)
+                        }}>
                             <ListItemIcon>
                                 {item.icon && <item.icon color={"primary"}/>}
                             </ListItemIcon>

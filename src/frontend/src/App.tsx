@@ -7,7 +7,7 @@ import {WebUiUris} from "./Pages/WebUiUris"
 import Dashboard from "./Layouts/Dashboard/Dashboard"
 import {Home} from "./Pages/Home/Home"
 import News from "./Pages/News/News"
-import ApiInfo from "./Pages/ApiInfo/ApiInfo"
+import APIInfo from "./Pages/APIInfo/APIInfo"
 import CreateDataset from "./Pages/Project/CreateDataset/CreateDataset"
 import NewProject from "./Pages/NewProject/NewProject"
 import OpenProject from "./Pages/OpenProject/OpenProject"
@@ -15,17 +15,20 @@ import Project from "./Pages/Project/Project"
 import {NotFoundPage} from "./Pages/NotFoundPage"
 import UploadFiles from "./Pages/Project/UploadFiles/UploadFiles"
 import {useLoggedIn, useSessionManager} from "./Session/Session"
-import GoeBURSTConfig from "./Pages/Project/ComputeConfigurations/GoeBURSTConfig/GoeBURSTConfig"
-import GoeBURSTFullMSTConfig from "./Pages/Project/ComputeConfigurations/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfig"
+import GoeBURSTConfig from "./Pages/Project/Compute/Tree/GoeBURSTConfig/GoeBURSTConfig"
+import GoeBURSTFullMSTConfig from "./Pages/Project/Compute/Tree/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfig"
 import HierarchicalClusteringConfig
-    from "./Pages/Project/ComputeConfigurations/HierarchicalClusteringConfig/HierarchicalClusteringConfig"
-import NeighborJoiningConfig from "./Pages/Project/ComputeConfigurations/NeighborJoiningConfig/NeighborJoiningConfig"
-import NLVGraphConfig from "./Pages/Project/ComputeConfigurations/NLVGraphConfig/NLVGraphConfig"
+    from "./Pages/Project/Compute/Tree/HierarchicalClusteringConfig/HierarchicalClusteringConfig"
+import NeighborJoiningConfig from "./Pages/Project/Compute/Tree/NeighborJoiningConfig/NeighborJoiningConfig"
+import NLVGraphConfig from "./Pages/Project/Compute/Tree/NLVGraphConfig/NLVGraphConfig"
 import Profile from "./Pages/Profile/Profile"
 import TreeView from "./Pages/Project/TreeView/TreeView"
 import DistanceMatrix from "./Pages/Project/DistanceMatrix/DistanceMatrix"
 import IsolateData from "./Pages/Project/IsolateData/IsolateData"
 import TypingData from "./Pages/Project/TypingData/TypingData"
+import Tree from "./Pages/Project/Tree/Tree";
+import DatasetDetails from "./Pages/Project/DatasetDetails/DatasetDetails";
+import Report from "./Pages/Project/Report/Report";
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;
@@ -40,13 +43,17 @@ import TREE_VIEW = WebUiUris.TREE_VIEW;
 import UPLOAD_FILES = WebUiUris.UPLOAD_FILES;
 import PROFILE = WebUiUris.PROFILE;
 import NEW_PROJECT = WebUiUris.NEW_PROJECT;
-import COMPUTE_CONFIG_GOEBURST = WebUiUris.COMPUTE_CONFIG_GOEBURST;
-import COMPUTE_CONFIG_GOEBURST_FULL_MST = WebUiUris.COMPUTE_CONFIG_GOEBURST_FULL_MST;
-import COMPUTE_CONFIG_HIERARCHICAL_CLUSTERING = WebUiUris.COMPUTE_CONFIG_HIERARCHICAL_CLUSTERING;
-import COMPUTE_CONFIG_NEIGHBOR_JOINING = WebUiUris.COMPUTE_CONFIG_NEIGHBOR_JOINING;
-import COMPUTE_CONFIG_NLV_GRAPH = WebUiUris.COMPUTE_CONFIG_NLV_GRAPH;
+import COMPUTE_GOEBURST = WebUiUris.COMPUTE_GOEBURST;
+import COMPUTE_GOEBURST_FULL_MST = WebUiUris.COMPUTE_GOEBURST_FULL_MST;
+import COMPUTE_HIERARCHICAL_CLUSTERING = WebUiUris.COMPUTE_HIERARCHICAL_CLUSTERING;
+import COMPUTE_NEIGHBOR_JOINING = WebUiUris.COMPUTE_NEIGHBOR_JOINING;
+import COMPUTE_NLV_GRAPH = WebUiUris.COMPUTE_NLV_GRAPH;
 import TREE = WebUiUris.TREE;
-import Tree from "./Pages/Project/Tree/Tree";
+import DATASET = WebUiUris.DATASET;
+import REPORT = WebUiUris.REPORT;
+import COMPUTE_HAMMING_DISTANCE = WebUiUris.COMPUTE_HAMMING_DISTANCE;
+import ComputeHammingDistance
+    from "./Pages/Project/Compute/DistanceMatrix/ComputeHammingDistance/ComputeHammingDistance";
 
 /**
  * App component.
@@ -54,7 +61,7 @@ import Tree from "./Pages/Project/Tree/Tree";
 export default function App() {
 
     const sessionManager = useSessionManager()
-    const loggedIn = true//useLoggedIn()
+    const loggedIn = useLoggedIn()
 
     // Clear session on app start
     useEffect(() => {
@@ -83,7 +90,7 @@ export default function App() {
                         <Route path={HOME} element={<Home/>}/>
                         <Route path={ABOUT} element={<About/>}/>
                         <Route path={NEWS} element={<News/>}/>
-                        <Route path={API_INFO} element={<ApiInfo/>}/>
+                        <Route path={API_INFO} element={<APIInfo/>}/>
                         <Route path={PROFILE} element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
 
                         <Route path={NEW_PROJECT} element={<ProtectedRoute><NewProject/></ProtectedRoute>}/>
@@ -100,6 +107,10 @@ export default function App() {
                                 element={<ProtectedRoute><IsolateData/></ProtectedRoute>}
                             />
                             <Route
+                                path={DATASET}
+                                element={<ProtectedRoute><DatasetDetails/></ProtectedRoute>}
+                            />
+                            <Route
                                 path={DISTANCE_MATRIX}
                                 element={<ProtectedRoute><DistanceMatrix/></ProtectedRoute>}
                             />
@@ -112,23 +123,31 @@ export default function App() {
                                 element={<ProtectedRoute><TreeView/></ProtectedRoute>}
                             />
                             <Route
-                                path={COMPUTE_CONFIG_GOEBURST}
+                                path={REPORT}
+                                element={<ProtectedRoute><Report/></ProtectedRoute>}
+                            />
+                            <Route
+                                path={COMPUTE_HAMMING_DISTANCE}
+                                element={<ProtectedRoute><ComputeHammingDistance/></ProtectedRoute>}
+                            />
+                            <Route
+                                path={COMPUTE_GOEBURST}
                                 element={<ProtectedRoute><GoeBURSTConfig/></ProtectedRoute>}
                             />
                             <Route
-                                path={COMPUTE_CONFIG_GOEBURST_FULL_MST}
+                                path={COMPUTE_GOEBURST_FULL_MST}
                                 element={<ProtectedRoute><GoeBURSTFullMSTConfig/></ProtectedRoute>}
                             />
                             <Route
-                                path={COMPUTE_CONFIG_HIERARCHICAL_CLUSTERING}
+                                path={COMPUTE_HIERARCHICAL_CLUSTERING}
                                 element={<ProtectedRoute><HierarchicalClusteringConfig/></ProtectedRoute>}
                             />
                             <Route
-                                path={COMPUTE_CONFIG_NEIGHBOR_JOINING}
+                                path={COMPUTE_NEIGHBOR_JOINING}
                                 element={<ProtectedRoute><NeighborJoiningConfig/></ProtectedRoute>}
                             />
                             <Route
-                                path={COMPUTE_CONFIG_NLV_GRAPH}
+                                path={COMPUTE_NLV_GRAPH}
                                 element={<ProtectedRoute><NLVGraphConfig/></ProtectedRoute>}/>
                         </Route>
 

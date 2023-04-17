@@ -22,23 +22,31 @@ export function useProject() {
     const {projectId} = useParams<{ projectId: string }>()
     const [project, setProject] = useState<GetProjectOutputModel | null>(null)
     const [update, setUpdate] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
         if (projectId === undefined)
             throw new Error("Project id is undefined")
 
+        setLoading(true)
+
         AdministrationService.getProject(projectId)
             .then((res) => {
                 setProject(res)
+                setLoading(false)
             })
             .catch((err) => {
-                console.log(err)
+                setError(err)
+                setLoading(false)
             })
     }, [projectId, update])
 
     return {
         project,
-        onProjectUpdate: () => setUpdate(!update)
+        onProjectUpdate: () => setUpdate(!update),
+        loading,
+        error
     }
 }
 
