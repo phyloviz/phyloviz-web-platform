@@ -26,11 +26,11 @@ import TreeView from "./Pages/Project/TreeView/TreeView"
 import DistanceMatrix from "./Pages/Project/DistanceMatrix/DistanceMatrix"
 import IsolateData from "./Pages/Project/IsolateData/IsolateData"
 import TypingData from "./Pages/Project/TypingData/TypingData"
-import Tree from "./Pages/Project/Tree/Tree";
-import DatasetDetails from "./Pages/Project/DatasetDetails/DatasetDetails";
-import Report from "./Pages/Project/Report/Report";
+import Tree from "./Pages/Project/Tree/Tree"
+import DatasetDetails from "./Pages/Project/DatasetDetails/DatasetDetails"
+import Report from "./Pages/Project/Report/Report"
 import ComputeHammingDistance
-    from "./Pages/Project/Compute/DistanceMatrix/ComputeHammingDistance/ComputeHammingDistance";
+    from "./Pages/Project/Compute/DistanceMatrix/ComputeHammingDistance/ComputeHammingDistance"
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;

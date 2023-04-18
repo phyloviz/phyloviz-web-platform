@@ -5,11 +5,11 @@ import {Menu, MenuItem, SvgIconProps} from "@mui/material"
 import {styled} from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import {useContextMenu} from "./useContextMenu";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import {NestedMenuItem} from "mui-nested-menu";
+import {useContextMenu} from "./useContextMenu"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import ListItemText from "@mui/material/ListItemText"
+import ArrowRightIcon from "@mui/icons-material/ArrowRight"
+import {NestedMenuItem} from "mui-nested-menu"
 
 declare module 'react' {
     interface CSSProperties {
@@ -24,15 +24,15 @@ declare module 'react' {
  * @property bgColor background color of the tree item
  * @property color color of the tree item
  * @property labelIcon icon of the tree item
- * @property labelInfo info of the tree item
+ * @property rightContent content to display on the right side of the tree item
  * @property labelText text of the tree item
  * @property contextMenuItems items to display in the context menu
  */
 type StyledTreeItemProps = TreeItemProps & {
     bgColor?: string
     color?: string
-    labelIcon: React.ElementType<SvgIconProps>
-    labelInfo?: string
+    labelIcon?: React.ElementType<SvgIconProps>
+    rightContent?: React.ReactNode
     labelText: string
     contextMenuItems?: ContextMenuItem[]
 }
@@ -81,7 +81,7 @@ const StyledTreeItemRoot = styled(TreeItem)(({theme}) => ({
  * Styled tree item for the files tree.
  */
 export function StyledTreeItem(
-    {bgColor, color, labelIcon: LabelIcon, labelInfo, labelText, contextMenuItems, ...other}: StyledTreeItemProps
+    {bgColor, color, labelIcon: LabelIcon, rightContent, labelText, contextMenuItems, ...other}: StyledTreeItemProps
 ) {
     const {
         contextMenu,
@@ -98,13 +98,11 @@ export function StyledTreeItem(
                         onContextMenu={contextMenuItems ? handleContextMenu : undefined}
                     >
                         <Box sx={{display: 'flex', alignItems: 'center', p: 0.5, pr: 0}}>
-                            <Box component={LabelIcon} color="inherit" sx={{mr: 1}}/>
+                            {LabelIcon && <LabelIcon color="inherit" sx={{mr: 1}}/>}
                             <Typography variant="body2" sx={{fontWeight: 'inherit'}}>
                                 {labelText}
                             </Typography>
-                            <Typography variant="caption" color="inherit">
-                                {labelInfo}
-                            </Typography>
+                            {rightContent}
                         </Box>
                     </div>
                 }

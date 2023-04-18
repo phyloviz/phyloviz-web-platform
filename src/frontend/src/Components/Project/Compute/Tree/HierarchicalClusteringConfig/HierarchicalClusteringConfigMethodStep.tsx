@@ -4,7 +4,7 @@ import * as React from "react"
 import {ReactNode} from "react"
 import {
     HierarchicalClusteringMethod
-} from "../../../../../Pages/Project/Compute/Tree/HierarchicalClusteringConfig/useHierarchicalClusteringConfig";
+} from "../../../../../Pages/Project/Compute/Tree/HierarchicalClusteringConfig/useHierarchicalClusteringConfig"
 
 /**
  * Props for the HierarchicalClusteringConfigMethodStep component.

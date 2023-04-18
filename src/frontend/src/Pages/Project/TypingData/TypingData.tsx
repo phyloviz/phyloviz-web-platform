@@ -2,11 +2,11 @@ import * as React from "react"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import {Container} from "@mui/material"
-import {DataGrid, GridToolbar} from '@mui/x-data-grid';
-import Box from "@mui/material/Box";
-import {useTypingData} from "./useTypingData";
-import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
-import Alert from "@mui/material/Alert";
+import {DataGrid, GridToolbar} from '@mui/x-data-grid'
+import Box from "@mui/material/Box"
+import {useTypingData} from "./useTypingData"
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner"
+import Alert from "@mui/material/Alert"
 
 /**
  * TypingData page.

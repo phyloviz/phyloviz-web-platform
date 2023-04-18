@@ -1,17 +1,30 @@
 import Typography from "@mui/material/Typography"
-import {FormControl, InputLabel, MenuItem, Select} from "@mui/material"
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 import * as React from "react"
+import {
+    NeighborJoiningCriteria
+} from "../../../../../Pages/Project/Compute/Tree/NeighborJoiningConfig/useNeighborJoiningConfig"
 
-enum NeighborJoiningCriteria {
-    SAILOU_AND_NEI = "Sailou-Nei",
-    STUDIER_AND_KEPPLER = "Studier-Keppler",
+/**
+ * Props of the NeighborJoiningConfigMethodStep.
+ *
+ * @property selectedCriteria selected criteria
+ * @property onCriteriaChange callback to handle the criteria change
+ */
+interface NeighborJoiningConfigMethodStepProps {
+    selectedCriteria: NeighborJoiningCriteria | null
+    onCriteriaChange: (event: SelectChangeEvent) => void
 }
 
 /**
  * Card for the method step in the NeighborJoiningConfig page.
  */
-export function NeighborJoiningConfigMethodStep() {
-    const [criteria, setCriteria] = React.useState<NeighborJoiningCriteria>(NeighborJoiningCriteria.SAILOU_AND_NEI) // TODO: This is hardcoded for now
+export function NeighborJoiningConfigMethodStep(
+    {
+        selectedCriteria,
+        onCriteriaChange
+    }: NeighborJoiningConfigMethodStepProps
+) {
 
     return (
         <>
@@ -22,8 +35,9 @@ export function NeighborJoiningConfigMethodStep() {
                 <InputLabel id="criteria">Criteria</InputLabel>
                 <Select
                     labelId="criteria"
-                    //value={}
                     label="Criteria"
+                    value={selectedCriteria ?? ""}
+                    onChange={onCriteriaChange}
                 >
                     {
                         Object.values(NeighborJoiningCriteria).map((criteria) => (
@@ -36,7 +50,7 @@ export function NeighborJoiningConfigMethodStep() {
             <Typography display="inline" variant="caption" align={"left"} sx={{width: "100%", whiteSpace: "pre-wrap"}}>
                 {
                     "The Neighbor-Joining algorithm\n" +
-                    `This method is based on the minimum evolution principle and provides trees with near-minimal sum of branch-length estimates proposed by ${criteria == NeighborJoiningCriteria.SAILOU_AND_NEI ? "Sailou and Nei" : "Studier and Keppler"}.`
+                    `This method is based on the minimum evolution principle and provides trees with near-minimal sum of branch-length estimates proposed by ${selectedCriteria == NeighborJoiningCriteria.SAILOU_AND_NEI ? "Sailou and Nei" : "Studier and Keppler"}.`
                 }
             </Typography>
         </>

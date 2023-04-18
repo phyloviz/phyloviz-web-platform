@@ -1,14 +1,14 @@
 import * as React from "react"
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {Container} from "@mui/material";
-import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
-import Alert from "@mui/material/Alert";
-import Box from "@mui/material/Box";
-import {useDatasetDetails} from "./useDatasetDetails";
-import {ComputeDistancesCard} from "../../../Components/Project/DatasetDetails/ComputeDistancesCard";
-import {ComputeTreesCard} from "../../../Components/Project/DatasetDetails/ComputeTreesCard";
-import {GenerateReportCard} from "../../../Components/Project/DatasetDetails/GenerateReportCard";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import {Container} from "@mui/material"
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner"
+import Alert from "@mui/material/Alert"
+import Box from "@mui/material/Box"
+import {useDatasetDetails} from "./useDatasetDetails"
+import {ComputeDistancesCard} from "../../../Components/Project/DatasetDetails/ComputeDistancesCard"
+import {ComputeTreesCard} from "../../../Components/Project/DatasetDetails/ComputeTreesCard"
+import {GenerateReportCard} from "../../../Components/Project/DatasetDetails/GenerateReportCard"
 
 /**
  * DatasetDetails page.

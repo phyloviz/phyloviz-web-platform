@@ -8,7 +8,7 @@ import {FileUploader} from "react-drag-drop-files"
 import CancelIcon from "@mui/icons-material/Cancel"
 import {FileType, useUploadFiles} from "./useUploadFiles"
 import Alert from '@mui/material/Alert'
-import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner"
 
 /**
  * Upload Files page.

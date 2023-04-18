@@ -3,7 +3,7 @@ import {useState} from "react"
 import {useNavigate} from "react-router-dom"
 import {SelectChangeEvent} from "@mui/material"
 import {useProjectContext} from "../useProject"
-import {AdministrationService} from "../../../Services/administration/AdministrationService"
+import AdministrationService from "../../../Services/administration/AdministrationService"
 
 export enum CreateDatasetStep {
     INFO = "Dataset Info",
@@ -39,7 +39,7 @@ export function useCreateDataset() {
 
     const navigate = useNavigate()
 
-    const {project, onProjectUpdate} = useProjectContext()
+    const {project, onFileStructureUpdate} = useProjectContext()
 
     const [selectedTypingData, setSelectedTypingData] = useState<string | null>(null)
     const [typingDataFile, setTypingDataFile] = useState<File | null>(null)
@@ -101,7 +101,7 @@ export function useCreateDataset() {
                     }
                 )
                     .then(() => {
-                        onProjectUpdate()
+                        onFileStructureUpdate()
                         navigate(-1)
                     })
                     .catch(console.error)

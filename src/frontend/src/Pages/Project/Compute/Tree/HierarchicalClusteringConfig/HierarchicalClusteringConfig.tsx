@@ -14,6 +14,7 @@ import {
     HierarchicalClusteringConfigMethodStep
 } from "../../../../../Components/Project/Compute/Tree/HierarchicalClusteringConfig/HierarchicalClusteringConfigMethodStep"
 import {HierarchicalClusteringConfigStep, useHierarchicalClusteringConfig} from "./useHierarchicalClusteringConfig"
+import Alert from "@mui/material/Alert"
 
 /**
  * HierarchicalClusteringConfig page.
@@ -32,7 +33,8 @@ export default function HierarchicalClusteringConfig() {
 
         handleCancel,
         handleBack,
-        handleNext
+        handleNext,
+        error
     } = useHierarchicalClusteringConfig()
 
     return (
@@ -61,6 +63,7 @@ export default function HierarchicalClusteringConfig() {
                             </Step>
                         ))}
                     </Stepper>
+                    {error && <Alert severity="error">{error}</Alert>}
                     <Box sx={{
                         width: "100%",
                         display: "flex",

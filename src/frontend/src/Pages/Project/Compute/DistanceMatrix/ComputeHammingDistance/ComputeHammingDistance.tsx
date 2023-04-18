@@ -5,9 +5,8 @@ import {Button, Container} from "@mui/material"
 import Box from "@mui/material/Box"
 import FinishIcon from "@mui/icons-material/Done"
 import CancelIcon from "@mui/icons-material/Cancel"
-import {useComputeHammingDistance} from "./useComputeHammingDistance";
-import LoadingSpinner from "../../../../../Components/Shared/LoadingSpinner";
-import Alert from "@mui/material/Alert";
+import {useComputeHammingDistance} from "./useComputeHammingDistance"
+import Alert from "@mui/material/Alert"
 
 /**
  * ComputeHammingDistance page.
@@ -16,7 +15,6 @@ export default function ComputeHammingDistance() {
     const {
         handleCancel,
         handleCompute,
-        computing,
         error
     } = useComputeHammingDistance()
 
@@ -45,7 +43,6 @@ export default function ComputeHammingDistance() {
                         flexDirection: "column",
                         justifyContent: "left",
                     }}>
-                        {computing && <LoadingSpinner text={"Computing Hamming Distance..."}/>}
                         {error && <Alert severity="error">{error}</Alert>}
 
                         <Box sx={{

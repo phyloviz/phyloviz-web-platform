@@ -2,7 +2,7 @@ import * as React from "react"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import {Container} from "@mui/material"
-import Alert from "@mui/material/Alert";
+import Alert from "@mui/material/Alert"
 
 /**
  * Report page.

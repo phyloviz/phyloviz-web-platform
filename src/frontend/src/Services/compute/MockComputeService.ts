@@ -1,11 +1,11 @@
-import {GetWorkflowStatusOutputModel} from "./models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+import {GetWorkflowStatusOutputModel, Workflow} from "./models/getWorkflowStatus/GetWorkflowStatusOutputModel"
 import {CreateWorkflowOutputModel} from "./models/createWorkflow/CreateWorkflowOutputModel"
 import {CreateWorkflowInputModel} from "./models/createWorkflow/CreateWorkflowInputModel"
 import {GetWorkflowsOutputModel} from "./models/getWorkflows/GetWorkflowsOutputModel"
 
 export namespace MockComputeService {
 
-    const projectsWorkflows = new Map<string, Map<string, GetWorkflowStatusOutputModel>>()
+    const projectsWorkflows = new Map<string, Map<string, Workflow>>()
     const WORKFLOW_DURATION = 5000
 
     const mockDatas = new Map<string, any>([
@@ -61,7 +61,7 @@ export namespace MockComputeService {
         workflowId: string
     ): Promise<GetWorkflowStatusOutputModel> {
         if (!projectsWorkflows.has(projectId))
-            throw new Error("Project not found")
+            projectsWorkflows.set(projectId, new Map<string, GetWorkflowStatusOutputModel>())
 
         const workflows = projectsWorkflows.get(projectId)
         if (!workflows!.has(workflowId))
@@ -86,6 +86,9 @@ export namespace MockComputeService {
     export async function getWorkflows(
         projectId: string
     ): Promise<GetWorkflowsOutputModel> {
+        if (!projectsWorkflows.has(projectId))
+            projectsWorkflows.set(projectId, new Map<string, GetWorkflowStatusOutputModel>())
+
         return {
             workflows: Array.from(projectsWorkflows.get(projectId)!.values())
         }

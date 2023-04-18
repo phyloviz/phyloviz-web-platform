@@ -3,6 +3,7 @@ import * as React from "react"
 import {useState} from "react"
 import {SelectChangeEvent} from "@mui/material"
 import {useProjectContext} from "../../../useProject"
+import {useCompute} from "../../useCompute"
 
 /**
  * Hook for the NLVGraphConfig page.
@@ -10,7 +11,7 @@ import {useProjectContext} from "../../../useProject"
 export function useNLVGraphConfig() {
     const navigate = useNavigate()
     const {projectId, datasetId} = useParams<{ projectId: string, datasetId: string }>()
-    const {project, onProjectUpdate} = useProjectContext()
+    const {project} = useProjectContext()
 
     const [selectedDistance, setSelectedDistance] = useState<string | null>(null)
     const distances = project?.datasets
@@ -20,7 +21,7 @@ export function useNLVGraphConfig() {
     const [currentMaxNLVLevel, setCurrentMaxNLVLevel] = useState<number>(1)
     const [innerEdges, setInnerEdges] = useState<boolean>(false)
 
-    const [workflowId, setWorkflowId] = useState<string | null>(null)
+    const {createWorkflow} = useCompute()
 
     return {
         distances,

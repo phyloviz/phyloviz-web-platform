@@ -4,11 +4,11 @@ import Typography from "@mui/material/Typography"
 import {Button, Container, FormControl, InputLabel, MenuItem, Select} from "@mui/material"
 // @ts-ignore
 import HeatMap from "react-heatmap-grid"
-import Box from "@mui/material/Box";
+import Box from "@mui/material/Box"
 // @ts-ignore
-import {Colorscale} from 'react-colorscales';
-import {Download, Print} from "@mui/icons-material";
-import {useDistanceMatrix} from "./useDistanceMatrix";
+import {Colorscale} from 'react-colorscales'
+import {Download, Print} from "@mui/icons-material"
+import {useDistanceMatrix} from "./useDistanceMatrix"
 
 /**
  * DistanceMatrix page.

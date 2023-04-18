@@ -14,6 +14,7 @@ import {
     GoeBURSTConfigLevelStep
 } from "../../../../../Components/Project/Compute/Tree/GoeBURSTConfig/GoeBURSTConfigLevelStep"
 import {GoeBURSTConfigurationStep, useGoeBURSTConfig} from "./useGoeBURSTConfig"
+import Alert from "@mui/material/Alert"
 
 /**
  * GoeBURSTConfig page.
@@ -29,7 +30,8 @@ export default function GoeBURSTConfig() {
 
         handleCancel,
         handleBack,
-        handleNext
+        handleNext,
+        error
     } = useGoeBURSTConfig()
 
     return (
@@ -58,6 +60,7 @@ export default function GoeBURSTConfig() {
                             </Step>
                         ))}
                     </Stepper>
+                    {error && <Alert severity="error">{error}</Alert>}
                     <Box sx={{
                         width: "100%",
                         display: "flex",

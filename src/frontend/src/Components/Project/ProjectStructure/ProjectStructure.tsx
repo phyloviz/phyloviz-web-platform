@@ -2,30 +2,40 @@ import * as React from "react"
 import {TreeView} from "@mui/lab"
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
-import {AccountTree} from "@mui/icons-material"
-import {FileManager} from "./FileManager/FileManager";
-import {WorkflowManager} from "./WorkflowManager/WorkflowManager";
-import {Project} from "../../../Services/administration/models/getProject/GetProjectOutputModel";
-import {StyledTreeItem} from "./Utils/StyledTreeItem";
+import {WorkflowsTreeItem} from "./Workflows/WorkflowsTreeItem"
+import {Project} from "../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {Workflow} from "../../../Services/compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+import {AccountTree, Info} from "@mui/icons-material"
+import {WebUiUris} from "../../../Pages/WebUiUris"
+import {DatasetsTreeItem} from "./Datasets/DatasetsTreeItem"
+import {StyledTreeItem} from "./Utils/StyledTreeItem"
+import {useNavigate} from "react-router-dom"
+import LoadingSpinner from "../../Shared/LoadingSpinner"
+import {FilesTreeItem} from "./Files/FilesTreeItem"
 
 /**
  * Properties of the project structure.
  *
  * @property project project to display the files and folders of
+ * @property workflows workflows to display
+ * @property loading whether the project is loading
  */
 interface ProjectStructureProps {
     project: Project | null
+    workflows: Workflow[]
+    loading: boolean
 }
 
 /**
  * ProjectStructureProps of a project.
  */
-export function ProjectStructure({project}: ProjectStructureProps) {
+export function ProjectStructure({project, workflows, loading}: ProjectStructureProps) {
+    const navigate = useNavigate()
+
     return <TreeView
-        defaultExpanded={['3']}
+        defaultExpanded={['fileManager', 'workflows']}
         defaultCollapseIcon={<ArrowDropDownIcon/>}
         defaultExpandIcon={<ArrowRightIcon/>}
-        defaultEndIcon={<div style={{width: 24}}/>}
         sx={{
             height: '100%',
             flexGrow: 1,
@@ -35,9 +45,27 @@ export function ProjectStructure({project}: ProjectStructureProps) {
             overflowY: 'auto'
         }}
     >
-        <StyledTreeItem nodeId="projectStructure" labelText={project?.name ?? "Project"} labelIcon={AccountTree}>
-            <FileManager project={project}/>
-            <WorkflowManager/>
+        <StyledTreeItem
+            nodeId="fileManager"
+            labelText={project?.name ?? "Project"}
+            labelIcon={AccountTree}
+            contextMenuItems={[
+                {
+                    label: "Project Details",
+                    icon: Info,
+                    onClick: () => navigate(WebUiUris.project(project?.projectId!))
+                }
+            ]}
+        >
+            {
+                loading
+                    ? <LoadingSpinner text={"Loading project..."}/>
+                    : <>
+                        <DatasetsTreeItem nodeId="datasets" datasets={project?.datasets!}/>
+                        <FilesTreeItem nodeId="files" files={project?.files!}/>
+                        <WorkflowsTreeItem workflows={workflows}/>
+                    </>
+            }
         </StyledTreeItem>
     </TreeView>
 }

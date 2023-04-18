@@ -14,6 +14,7 @@ import {
     NeighborJoiningConfigMethodStep
 } from "../../../../../Components/Project/Compute/Tree/NeighborJoiningConfig/NeighborJoiningConfigMethodStep"
 import {NeighborJoiningConfigurationStep, useNeighborJoiningConfig} from "./useNeighborJoiningConfig"
+import Alert from "@mui/material/Alert"
 
 /**
  * NeighborJoiningConfig page.
@@ -27,9 +28,13 @@ export default function NeighborJoiningConfig() {
         selectedDistance,
         handleDistanceChange,
 
+        selectedCriteria,
+        handleCriteriaChange,
+
         handleCancel,
         handleBack,
-        handleNext
+        handleNext,
+        error
     } = useNeighborJoiningConfig()
 
     return (
@@ -58,6 +63,7 @@ export default function NeighborJoiningConfig() {
                             </Step>
                         ))}
                     </Stepper>
+                    {error && <Alert severity="error">{error}</Alert>}
                     <Box sx={{
                         width: "100%",
                         display: "flex",
@@ -77,7 +83,10 @@ export default function NeighborJoiningConfig() {
                                         selectedDistance={selectedDistance}
                                         onDistanceChange={handleDistanceChange}
                                     />
-                                    : <NeighborJoiningConfigMethodStep/>
+                                    : <NeighborJoiningConfigMethodStep
+                                        selectedCriteria={selectedCriteria}
+                                        onCriteriaChange={handleCriteriaChange}
+                                    />
                             }
                         </Box>
 

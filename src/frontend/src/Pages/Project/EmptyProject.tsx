@@ -6,8 +6,8 @@ import Box from "@mui/material/Box"
 import {CreateDatasetCard} from "../../Components/Project/EmptyProject/CreateDatasetCard"
 import {UploadFilesCard} from "../../Components/Project/EmptyProject/UploadFilesCard"
 import {Project} from "../../Services/administration/models/getProject/GetProjectOutputModel"
-import LoadingSpinner from "../../Components/Shared/LoadingSpinner";
-import Alert from "@mui/material/Alert";
+import LoadingSpinner from "../../Components/Shared/LoadingSpinner"
+import Alert from "@mui/material/Alert"
 
 /**
  * Props for the EmptyProject page.

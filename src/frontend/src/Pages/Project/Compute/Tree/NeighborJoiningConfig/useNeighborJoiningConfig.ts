@@ -2,10 +2,16 @@ import {useState} from "react"
 import {useNavigate, useParams} from "react-router-dom"
 import {useProjectContext} from "../../../useProject"
 import {SelectChangeEvent} from "@mui/material"
+import {useCompute} from "../../useCompute"
 
 export enum NeighborJoiningConfigurationStep {
     DISTANCE = "Distance",
     METHOD = "Method",
+}
+
+export enum NeighborJoiningCriteria {
+    SAILOU_AND_NEI = "Sailou-Nei",
+    STUDIER_AND_KEPPLER = "Studier-Keppler",
 }
 
 /**
@@ -17,14 +23,17 @@ export function useNeighborJoiningConfig() {
 
     const navigate = useNavigate()
     const {projectId, datasetId} = useParams<{ projectId: string, datasetId: string }>()
-    const {project, onProjectUpdate} = useProjectContext()
+    const {project} = useProjectContext()
 
     const [selectedDistance, setSelectedDistance] = useState<string | null>(null)
     const distances = project?.datasets
         .find((dataset) => dataset.datasetId === datasetId)
         ?.distanceMatrices ?? []
 
-    const [workflowId, setWorkflowId] = useState<string | null>(null)
+    const [selectedCriteria, setSelectedCriteria] = useState<NeighborJoiningCriteria | null>(null)
+
+    const {createWorkflow} = useCompute()
+    const [error, setError] = useState<string | null>(null)
 
     return {
         step,
@@ -33,6 +42,9 @@ export function useNeighborJoiningConfig() {
         distances,
         selectedDistance,
         handleDistanceChange: (event: SelectChangeEvent) => setSelectedDistance(event.target.value),
+
+        selectedCriteria,
+        handleCriteriaChange: (event: SelectChangeEvent) => setSelectedCriteria(event.target.value as NeighborJoiningCriteria),
 
         handleCancel: () => navigate(-1),
         handleBack: () => {
@@ -45,8 +57,30 @@ export function useNeighborJoiningConfig() {
             if (step === NeighborJoiningConfigurationStep.DISTANCE) {
                 setStep(NeighborJoiningConfigurationStep.METHOD)
                 setCurrStep(1)
+                return
             }
-            // TODO: else, finish
-        }
+
+            if (selectedDistance === null) {
+                setError("Please select a distance matrix.")
+                return
+            }
+
+            if (selectedCriteria === null) {
+                setError("Please select a criteria.")
+                return
+            }
+
+            createWorkflow(
+                {
+                    type: "compute-tree",
+                    properties: {
+                        datasetId: datasetId,
+                        distanceMatrixId: selectedDistance,
+                        algorithm: selectedCriteria === NeighborJoiningCriteria.SAILOU_AND_NEI ? "saitounei" : "studierkepler"
+                    }
+                }
+            )
+        },
+        error
     }
 }

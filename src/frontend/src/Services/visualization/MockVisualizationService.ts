@@ -11,7 +11,7 @@ import {GetTreeViewOutputModel} from "./models/getTreeView/GetTreeViewOutputMode
 
 export namespace MockVisualizationService {
 
-    const DELAY = 3000
+    const DELAY = 1000
 
     /**
      * Get the typing data schema.

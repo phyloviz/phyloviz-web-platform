@@ -54,7 +54,7 @@ export interface Dataset {
     name: string
     description: string
     typingDataId: string
-    isolateDataId: string
+    isolateDataId: string | null
     distanceMatrices: DistanceMatrix[]
     trees: Tree[]
     treeViews: TreeView[]
