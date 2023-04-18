@@ -6,7 +6,7 @@ import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.service.dtos.files.FilesInfo;
 import org.phyloviz.pwp.shared.service.dtos.project.CreateProjectOutput;
 import org.phyloviz.pwp.shared.service.dtos.project.FullProjectInfo;
-import org.phyloviz.pwp.shared.service.exceptions.EmptyProjectNameException;
+import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.project.dataset.DatasetService;
 import org.phyloviz.pwp.shared.service.project.file.isolate_data.IsolateDataService;
 import org.phyloviz.pwp.shared.service.project.file.typing_data.TypingDataService;
@@ -28,7 +28,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public CreateProjectOutput createProject(String name, String description, String userId) {
         if (name == null || name.isBlank())
-            throw new EmptyProjectNameException();
+            throw new InvalidArgumentException("Dataset name cannot be empty");
 
         Project project = new Project(
                 name,

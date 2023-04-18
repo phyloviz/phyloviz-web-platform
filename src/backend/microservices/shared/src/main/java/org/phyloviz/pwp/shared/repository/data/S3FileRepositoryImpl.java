@@ -21,7 +21,6 @@ import java.util.concurrent.Executors;
 public class S3FileRepositoryImpl implements S3FileRepository {
 
     public static final Region REGION = Region.of("custom");
-    private static final String ADAPTER_ID = "s3";
     private final String bucketName;
     private final String objectStorageEndpoint;
     private final S3AsyncClient s3Client;
@@ -64,7 +63,7 @@ public class S3FileRepositoryImpl implements S3FileRepository {
                     executorService
             );
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new MultipartFileReadException("Error while obtaining multipart file's input stream", e);
         }
 
         Upload upload = transferManager.upload(p -> {
@@ -80,7 +79,7 @@ public class S3FileRepositoryImpl implements S3FileRepository {
     @Override
     public boolean delete(String url) {
         if (!url.startsWith(getLocation()))
-            throw new RuntimeException("URL does not start with the object storage endpoint");
+            throw new IllegalArgumentException("URL does not start with the object storage endpoint");
 
         DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                 .bucket(bucketName)
@@ -95,10 +94,5 @@ public class S3FileRepositoryImpl implements S3FileRepository {
     @Override
     public String getLocation() {
         return objectStorageEndpoint + "/" + bucketName;
-    }
-
-    @Override
-    public String getAdapterId() {
-        return ADAPTER_ID;
     }
 }

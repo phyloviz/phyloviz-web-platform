@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "#{@constants.datasetsCollection}")
+@Document(collection = "#{@mongoMetadataCollectionNames.datasetsCollection}")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

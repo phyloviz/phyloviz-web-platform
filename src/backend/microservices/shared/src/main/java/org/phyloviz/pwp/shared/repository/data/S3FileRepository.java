@@ -27,11 +27,4 @@ public interface S3FileRepository {
      * @return location of the repository
      */
     String getLocation();
-
-    /**
-     * Get the adapter id.
-     *
-     * @return adapter id
-     */
-    String getAdapterId();
 }

@@ -17,11 +17,7 @@ import org.phyloviz.pwp.visualization.http.controllers.models.isolate_data.get_i
 import org.phyloviz.pwp.visualization.http.controllers.models.isolate_data.get_isolate_data_schema.GetIsolateDataSchemaOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.typing_data.get_typing_data_profiles.GetTypingDataProfilesOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.typing_data.get_typing_data_schema.GetTypingDataSchemaOutputModel;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller for the Visualization Microservice.

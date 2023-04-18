@@ -3,6 +3,7 @@ package org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.conve
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
 import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterId;
+import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterRegistry;
 import org.phyloviz.pwp.shared.adapters.isolate_data.adapter.specific_data.IsolateDataAdapterSpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.DocumentConversionException;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
@@ -17,6 +18,8 @@ import javax.validation.constraints.NotNull;
 public class IsolateDataMetadataDeserializer implements Converter<Document, IsolateDataMetadata> {
     private final MongoConverter mongoConverter;
 
+    private final IsolateDataAdapterRegistry isolateDataAdapterRegistry;
+
     @Override
     public IsolateDataMetadata convert(@NotNull Document document) {
         try {
@@ -24,7 +27,8 @@ public class IsolateDataMetadataDeserializer implements Converter<Document, Isol
                     document.getString("adapterId").toUpperCase()
             );
 
-            Class<? extends IsolateDataAdapterSpecificData> adapterSpecificDataClass = adapterId.getAdapterSpecificDataClass();
+            Class<? extends IsolateDataAdapterSpecificData> adapterSpecificDataClass =
+                    isolateDataAdapterRegistry.getIsolateDataAdapterSpecificDataClass(adapterId);
 
             Document adapterSpecificDataDocument = (Document) document.get("adapterSpecificData");
             IsolateDataAdapterSpecificData adapterSpecificData = mongoConverter.read(adapterSpecificDataClass, adapterSpecificDataDocument);

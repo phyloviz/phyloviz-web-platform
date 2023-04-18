@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * A project is a collection of resources.
  */
-@Document(collection = "#{@constants.projectsCollection}")
+@Document(collection = "#{@mongoMetadataCollectionNames.projectsCollection}")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

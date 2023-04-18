@@ -9,7 +9,7 @@ import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.source.Tr
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "#{@constants.treeViewMetadataCollection}")
+@Document(collection = "#{@mongoMetadataCollectionNames.treeViewMetadataCollection}")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Metadata for a representation of an isolate data.
  */
-@Document(collection = "#{@constants.isolateDataMetadataCollection}")
+@Document(collection = "#{@mongoMetadataCollectionNames.isolateDataMetadataCollection}")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

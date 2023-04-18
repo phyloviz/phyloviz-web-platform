@@ -30,12 +30,8 @@ pwp:
           path: /projects/{projectId}/datasets/{datasetId}/trees/{treeId}
         - method: DELETE
           path: /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}
-        - method: POST
-          path: /project/{projectId}/files/typing-data
         - method: DELETE
           path: /project/{projectId}/files/typing-data/{typingDataId}
-        - method: POST
-          path: /project/{projectId}/files/isolate-data
         - method: DELETE
           path: /project/{projectId}/files/isolate-data/{isolateDataId}
 
@@ -70,6 +66,14 @@ pwp:
           path: /projects/{projectId}/files/typing-data/{typingDataId}/profiles
         - method: GET
           path: /projects/{projectId}/files/typing-data/{typingDataId}/file
+
+    file-transfer:
+      uri: http://localhost:8089
+      routes:
+        - method: POST
+          path: /project/{projectId}/files/typing-data
+        - method: POST
+          path: /project/{projectId}/files/isolate-data
 
 
 server:

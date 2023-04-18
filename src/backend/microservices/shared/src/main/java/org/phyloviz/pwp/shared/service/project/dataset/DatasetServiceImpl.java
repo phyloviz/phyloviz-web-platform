@@ -5,13 +5,7 @@ import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.service.dtos.dataset.CreateDatasetOutput;
 import org.phyloviz.pwp.shared.service.dtos.dataset.FullDatasetInfo;
-import org.phyloviz.pwp.shared.service.exceptions.EmptyDatasetNameException;
-import org.phyloviz.pwp.shared.service.exceptions.EmptyTypingDataIdException;
-import org.phyloviz.pwp.shared.service.exceptions.InvalidIsolateDataIdException;
-import org.phyloviz.pwp.shared.service.exceptions.IsolateDataDoesNotExistException;
-import org.phyloviz.pwp.shared.service.exceptions.IsolateDataNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.TypingDataDoesNotExistException;
-import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.*;
 import org.phyloviz.pwp.shared.service.project.ProjectAccessService;
 import org.phyloviz.pwp.shared.service.project.dataset.distance_matrix.DistanceMatrixService;
 import org.phyloviz.pwp.shared.service.project.dataset.tree.TreeService;
@@ -127,13 +121,13 @@ public class DatasetServiceImpl implements DatasetService {
 
     private void validateCreateDatasetParameters(String name, String typingDataId, String isolateDataId, String projectId, String userId) {
         if (name == null || name.isBlank())
-            throw new EmptyDatasetNameException();
+            throw new InvalidArgumentException("Dataset name cannot be empty");
 
         if (typingDataId == null || typingDataId.isBlank())
-            throw new EmptyTypingDataIdException();
+            throw new InvalidArgumentException("Typing data id cannot be empty");
 
         if (isolateDataId != null && isolateDataId.isBlank())
-            throw new InvalidIsolateDataIdException();
+            throw new InvalidArgumentException("Isolate data id cannot be empty (but can be null).");
 
         projectAccessService.assertExists(projectId, userId);
 

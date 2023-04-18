@@ -1,10 +1,16 @@
 package org.phyloviz.pwp.shared.config;
 
-import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.deserializer.DistanceMatrixMetadataDeserializer;
+import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.shared.adapters.distance_matrix.DistanceMatrixAdapterRegistry;
+import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterRegistry;
+import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterRegistry;
+import org.phyloviz.pwp.shared.adapters.tree_view.TreeViewAdapterRegistry;
+import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterRegistry;
+import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.converters.DistanceMatrixMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataSerializer;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.deserializer.TreeMetadataDeserializer;
-import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.deserializer.TreeViewMetadataDeserializer;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.converters.TreeMetadataDeserializer;
+import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.converters.TreeViewMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.converters.TypingDataMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.converters.TypingDataMetadataSerializer;
 import org.springframework.beans.factory.BeanFactory;
@@ -12,12 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
-import org.springframework.data.mongodb.core.convert.DbRefResolver;
-import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
-import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
-import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
-import org.springframework.data.mongodb.core.convert.MongoConverter;
-import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
+import org.springframework.data.mongodb.core.convert.*;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
@@ -25,7 +26,14 @@ import java.util.List;
 
 @Configuration
 @EnableMongoRepositories(basePackages = "org.phyloviz.pwp")
+@RequiredArgsConstructor
 public class MongoConfig {
+
+    private final TypingDataAdapterRegistry typingDataAdapterRegistry;
+    private final IsolateDataAdapterRegistry isolateDataAdapterRegistry;
+    private final DistanceMatrixAdapterRegistry distanceMatrixAdapterRegistry;
+    private final TreeAdapterRegistry treeAdapterRegistry;
+    private final TreeViewAdapterRegistry treeViewAdapterRegistry;
 
     @Bean
     public MappingMongoConverter customMappingMongoConverter(
@@ -43,26 +51,14 @@ public class MongoConfig {
 
     public MongoCustomConversions mongoCustomConversions(MongoConverter mongoConverter) {
         List<Converter<?, ?>> converters = List.of(
-                new TypingDataMetadataDeserializer(mongoConverter),
+                new TypingDataMetadataDeserializer(mongoConverter, typingDataAdapterRegistry),
                 new TypingDataMetadataSerializer(mongoConverter),
-                new IsolateDataMetadataDeserializer(mongoConverter),
+                new IsolateDataMetadataDeserializer(mongoConverter, isolateDataAdapterRegistry),
                 new IsolateDataMetadataSerializer(mongoConverter),
-                new DistanceMatrixMetadataDeserializer(mongoConverter),
-                new TreeMetadataDeserializer(mongoConverter),
-                new TreeViewMetadataDeserializer(mongoConverter)
+                new DistanceMatrixMetadataDeserializer(mongoConverter, distanceMatrixAdapterRegistry),
+                new TreeMetadataDeserializer(mongoConverter, treeAdapterRegistry),
+                new TreeViewMetadataDeserializer(mongoConverter, treeViewAdapterRegistry)
         );
-
-        /*return new MongoCustomConversions(
-                new Reflections("org.phyloviz.pwp").getTypesAnnotatedWith(ReadingConverter.class).stream()
-                        .map(clazz -> {
-                            try {
-                                return clazz.getDeclaredConstructor().newInstance(mongoConverter);
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                        })
-                        .toList()
-        );*/
 
         return new MongoCustomConversions(converters);
     }
