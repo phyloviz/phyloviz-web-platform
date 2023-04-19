@@ -6,13 +6,13 @@ import Box from "@mui/material/Box"
 import {DataGrid, GridToolbar} from "@mui/x-data-grid"
 import {useIsolateData} from "./useIsolateData"
 import LoadingSpinner from "../../../Components/Shared/LoadingSpinner"
-import Alert from "@mui/material/Alert"
+import {ErrorAlert} from "../../../Components/Shared/ErrorAlert"
 
 /**
  * IsolateData page.
  */
 export default function IsolateData() {
-    const {data, loading, error} = useIsolateData()
+    const {data, loading, error, clearError} = useIsolateData()
 
     return (
         <Container>
@@ -29,22 +29,15 @@ export default function IsolateData() {
                 </Typography>
 
                 {loading && <LoadingSpinner text={"Loading isolate data..."}/>}
-                {error && <Alert severity="error">{error}</Alert>}
-
+                <ErrorAlert error={error} clearError={clearError}/>
                 <Box sx={{height: '100%', width: '100%'}}>
-                    <DataGrid
+                    <DataGrid // If you want to customize this more, see https://mui.com/x/api/data-grid/data-grid/
                         rows={data.rows}
                         columns={data.columns}
-                        initialState={{ // TODO: Explore the interfaces for DataGrid to customize the grid
-                            pagination: {
-                                paginationModel: {
-                                    pageSize: 10
-                                }
-                            },
-                        }}
                         autoPageSize
                         disableRowSelectionOnClick
                         loading={loading}
+                        density="compact"
                         slots={{toolbar: GridToolbar}}
                         sx={{height: '100%', width: '100%'}}
                     />

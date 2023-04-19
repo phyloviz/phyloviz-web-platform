@@ -43,6 +43,7 @@ export function useGoeBURSTFullMSTConfig() {
                 }
             )
         },
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

@@ -17,7 +17,8 @@ export default function Project() {
         workflows,
         loadingWorkflows,
         onWorkflowsUpdate,
-        error
+        error,
+        clearError
     } = useProject()
 
     return (
@@ -31,7 +32,7 @@ export default function Project() {
             {
                 outlet && !loadingFiles && !error
                     ? <Outlet context={{project, onFileStructureUpdate, onWorkflowsUpdate}}/>
-                    : <EmptyProject project={project} loading={loadingFiles} error={error}/>
+                    : <EmptyProject project={project} loading={loadingFiles} error={error} clearError={clearError}/>
             }
         </Box>
     )

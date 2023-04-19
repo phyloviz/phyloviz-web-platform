@@ -1,7 +1,10 @@
 import {Dataset} from "../../../../../Services/administration/models/getProject/GetProjectOutputModel"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../../../Pages/WebUiUris"
-import {Info, ScatterPlot, Summarize, TableView} from "@mui/icons-material"
+import {Delete, Info, ScatterPlot, Summarize, TableView} from "@mui/icons-material"
+import {useDeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdrop"
+import AdministrationService from "../../../../../Services/administration/AdministrationService"
+import {useState} from "react"
 
 /**
  * Hook for the DatasetTreeItem component.
@@ -9,6 +12,9 @@ import {Info, ScatterPlot, Summarize, TableView} from "@mui/icons-material"
 export function useDatasetTreeItem(dataset: Dataset) {
     const {projectId} = useParams<{ projectId: string }>()
     const navigate = useNavigate()
+    const {deleteBackdropOpen, handleDeleteBackdropOpen, handleDeleteBackdropClose} = useDeleteResourceBackdrop()
+    const [error, setError] = useState<string | null>(null)
+
     const computeTreeOptions = [
         {
             label: "goeBURST",
@@ -44,7 +50,7 @@ export function useDatasetTreeItem(dataset: Dataset) {
             {
                 label: "Compute Distances",
                 icon: TableView,
-                nestedItems: computeDistanceMatrixOptions.map((option, index) => {
+                nestedItems: computeDistanceMatrixOptions.map((option) => {
                     return {
                         label: option.label,
                         icon: TableView,
@@ -55,7 +61,7 @@ export function useDatasetTreeItem(dataset: Dataset) {
             {
                 label: "Compute Tree",
                 icon: ScatterPlot,
-                nestedItems: computeTreeOptions.map((option, index) => {
+                nestedItems: computeTreeOptions.map((option) => {
                     return {
                         label: option.label,
                         icon: ScatterPlot,
@@ -64,15 +70,32 @@ export function useDatasetTreeItem(dataset: Dataset) {
                 })
             },
             {
+                label: "Generate Report",
+                icon: Summarize,
+                onClick: () => navigate(WebUiUris.report(projectId!, dataset.datasetId))
+            },
+            {
                 label: "Dataset Details",
                 icon: Info,
                 onClick: () => navigate(WebUiUris.dataset(projectId!, dataset.datasetId))
             },
             {
-                label: "Generate Report",
-                icon: Summarize,
-                onClick: () => navigate(WebUiUris.report(projectId!, dataset.datasetId))
+                label: "Delete",
+                icon: Delete,
+                onClick: handleDeleteBackdropOpen
             }
-        ]
+        ],
+        deleteBackdropOpen,
+        handleDeleteBackdropClose,
+        handleDelete: () => {
+            AdministrationService.deleteDataset(projectId!, dataset.datasetId)
+                .then(() => {
+                    handleDeleteBackdropClose()
+                    navigate(WebUiUris.project(projectId!))
+                })
+                .catch(error => setError(error.message))
+        },
+        error,
+        clearError: () => setError(null)
     }
 }

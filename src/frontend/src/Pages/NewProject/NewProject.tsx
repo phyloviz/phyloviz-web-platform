@@ -5,8 +5,8 @@ import Box from "@mui/material/Box"
 import {Button, Container, TextField} from "@mui/material"
 import CancelIcon from "@mui/icons-material/Cancel"
 import FinishIcon from "@mui/icons-material/Done"
-import {Alert} from "@mui/lab"
 import {useNewProject} from "./useNewProject"
+import {ErrorAlert} from "../../Components/Shared/ErrorAlert"
 
 /**
  * NewProject page.
@@ -17,7 +17,8 @@ export default function NewProject() {
         handleProjectDescriptionChange,
         handleSubmit,
         handleCancel,
-        error
+        error,
+        clearError
     } = useNewProject()
 
     return (
@@ -69,8 +70,7 @@ export default function NewProject() {
                             <Typography variant="caption" align={"justify"} sx={{mb: 4, width: "100%"}}>
                                 Describe your project.
                             </Typography>
-
-                            {error && <Alert severity="error">{error}</Alert>}
+                            <ErrorAlert error={error} clearError={clearError}/>
                         </Box>
 
                         <Box sx={{

@@ -64,14 +64,12 @@ export function useProject() {
      * Updates the workflows.
      */
     async function updateWorkflows() {
-        console.log("Updating workflows: " + workflows.length)
         if (workflows.length === 0)
             return false
 
         for (const workflow of workflows) {
             const updatedWorkflow = await ComputeService.getWorkflowStatus(projectId!, workflow.workflowId)
             if (updatedWorkflow.status !== workflow.status) {
-                console.log("Workflow status changed")
                 setWorkflowsUpdated(workflowsUpdated => !workflowsUpdated)
                 setFilesUpdated(filesUpdated => !filesUpdated)
             }
@@ -90,7 +88,8 @@ export function useProject() {
         loadingWorkflows,
         onWorkflowsUpdate: () => setWorkflowsUpdated(workflowsUpdated => !workflowsUpdated),
 
-        error
+        error,
+        clearError: () => setError(null)
     }
 }
 

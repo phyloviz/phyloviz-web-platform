@@ -28,6 +28,7 @@ export function useCompute() {
 
     return {
         createWorkflow,
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

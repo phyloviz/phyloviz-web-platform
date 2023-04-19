@@ -33,6 +33,7 @@ export function useDatasetDetails() {
     return {
         dataset,
         loading,
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

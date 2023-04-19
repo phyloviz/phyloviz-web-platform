@@ -3,6 +3,7 @@ import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
 import {TableView} from "@mui/icons-material"
 import * as React from "react"
 import {useDistanceMatrixTreeItem} from "./useDistanceMatrixTreeItem"
+import {DeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBackdrop"
 
 /**
  * Props for the DistanceMatrixTreeItem component.
@@ -21,15 +22,31 @@ interface DistanceMatrixTreeItemProps {
  * Tree item for a distance matrix.
  */
 export function DistanceMatrixTreeItem({nodeId, datasetId, distanceMatrix}: DistanceMatrixTreeItemProps) {
-    const {contextMenuItems} = useDistanceMatrixTreeItem(datasetId, distanceMatrix)
+    const {
+        contextMenuItems,
+        deleteBackdropOpen,
+        handleDeleteBackdropClose,
+        handleDelete,
+        error,
+        clearError
+    } = useDistanceMatrixTreeItem(datasetId, distanceMatrix)
 
-    return (
+    return (<>
         <StyledTreeItem
             nodeId={nodeId}
             labelText={distanceMatrix.name}
             labelIcon={TableView}
             contextMenuItems={contextMenuItems}
         />
-    )
+        <DeleteResourceBackdrop
+            open={deleteBackdropOpen}
+            title={"Delete Distance Matrix?"}
+            subheader={"Are you sure you want to delete this distance matrix? This action cannot be undone."}
+            handleClose={handleDeleteBackdropClose}
+            handleDelete={handleDelete}
+            error={error}
+            clearError={clearError}
+        />
+    </>)
 }
 

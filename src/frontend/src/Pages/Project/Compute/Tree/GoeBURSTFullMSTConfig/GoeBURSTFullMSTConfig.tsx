@@ -9,7 +9,7 @@ import {
     GoeBURSTFullMSTConfigDistanceStep
 } from "../../../../../Components/Project/Compute/Tree/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfigDistanceStep"
 import {useGoeBURSTFullMSTConfig} from "./useGoeBURSTFullMSTConfig"
-import Alert from "@mui/material/Alert"
+import {ErrorAlert} from "../../../../../Components/Shared/ErrorAlert"
 
 /**
  * GoeBURSTFullMSTConfig page.
@@ -22,7 +22,8 @@ export default function GoeBURSTFullMSTConfig() {
 
         handleCancel,
         handleFinish,
-        error
+        error,
+        clearError
     } = useGoeBURSTFullMSTConfig()
 
     return (
@@ -44,7 +45,7 @@ export default function GoeBURSTFullMSTConfig() {
                     <Typography component="h1" variant="h4">
                         goeBURST Full MST Configuration
                     </Typography>
-                    {error && <Alert severity="error" sx={{mt: 2}}>{error}</Alert>}
+                    <ErrorAlert error={error} clearError={clearError}/>
                     <Box sx={{
                         width: "100%",
                         display: "flex",

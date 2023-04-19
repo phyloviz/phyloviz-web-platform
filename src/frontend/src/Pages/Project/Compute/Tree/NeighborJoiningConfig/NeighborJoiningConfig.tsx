@@ -14,7 +14,7 @@ import {
     NeighborJoiningConfigMethodStep
 } from "../../../../../Components/Project/Compute/Tree/NeighborJoiningConfig/NeighborJoiningConfigMethodStep"
 import {NeighborJoiningConfigurationStep, useNeighborJoiningConfig} from "./useNeighborJoiningConfig"
-import Alert from "@mui/material/Alert"
+import {ErrorAlert} from "../../../../../Components/Shared/ErrorAlert"
 
 /**
  * NeighborJoiningConfig page.
@@ -34,7 +34,8 @@ export default function NeighborJoiningConfig() {
         handleCancel,
         handleBack,
         handleNext,
-        error
+        error,
+        clearError
     } = useNeighborJoiningConfig()
 
     return (
@@ -63,7 +64,7 @@ export default function NeighborJoiningConfig() {
                             </Step>
                         ))}
                     </Stepper>
-                    {error && <Alert severity="error">{error}</Alert>}
+                    <ErrorAlert error={error} clearError={clearError}/>
                     <Box sx={{
                         width: "100%",
                         display: "flex",

@@ -7,7 +7,7 @@ import {CreateDatasetCard} from "../../Components/Project/EmptyProject/CreateDat
 import {UploadFilesCard} from "../../Components/Project/EmptyProject/UploadFilesCard"
 import {Project} from "../../Services/administration/models/getProject/GetProjectOutputModel"
 import LoadingSpinner from "../../Components/Shared/LoadingSpinner"
-import Alert from "@mui/material/Alert"
+import {ErrorAlert} from "../../Components/Shared/ErrorAlert"
 
 /**
  * Props for the EmptyProject page.
@@ -15,11 +15,13 @@ import Alert from "@mui/material/Alert"
  * @property project The project.
  * @property loading Whether the project is loading.
  * @property error The error message.
+ * @property clearError Clears the error message.
  */
 interface EmptyProjectProps {
     project: Project | null
     loading: boolean
-    error: string | null
+    error: string | null,
+    clearError: () => void
 }
 
 /**
@@ -29,7 +31,8 @@ export default function EmptyProject(
     {
         project,
         loading,
-        error
+        error,
+        clearError
     }: EmptyProjectProps
 ) {
     return (
@@ -48,12 +51,8 @@ export default function EmptyProject(
                 <Typography component="h1" variant="body1" textAlign={"justify"}>
                     {project?.description ?? "Loading..."}
                 </Typography>
-                {
-                    loading && <LoadingSpinner text={"Loading dataset..."}/>
-                }
-                {
-                    error && <Alert severity="error">{error}</Alert>
-                }
+                {loading && <LoadingSpinner text={"Loading dataset..."}/>}
+                <ErrorAlert error={error} clearError={clearError}/>
                 <Box sx={{
                     width: "100%",
                     display: "flex",

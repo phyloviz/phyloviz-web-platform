@@ -20,7 +20,7 @@ export function useIsolateData() {
     const [isolateDataSchema, setIsolateDataSchema] = useState<GetIsolateDataSchemaOutputModel>()
     const [isolateDataRows, setIsolateDataRows] = useState<GetIsolateDataRowsOutputModel>()
     const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<string>()
+    const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
         setLoading(true)
@@ -55,6 +55,7 @@ export function useIsolateData() {
             }
         },
         loading,
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

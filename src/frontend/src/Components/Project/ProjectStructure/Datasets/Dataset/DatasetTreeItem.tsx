@@ -8,6 +8,7 @@ import {IsolateDataTreeItem} from "./IsolateData/IsolateDataTreeItem"
 import {TypingDataTreeItem} from "./TypingData/TypingDataTreeItem"
 import {TreeViewsTreeItem} from "./TreeViews/TreeViewsTreeItem"
 import {useDatasetTreeItem} from "./useDatasetTreeItem"
+import {DeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdrop"
 
 /**
  * Props for the DatasetTreeItem component.
@@ -26,9 +27,16 @@ interface DatasetTreeItemProps {
  * Tree item for a dataset of a project.
  */
 export function DatasetTreeItem({nodeId, dataset}: DatasetTreeItemProps) {
-    const {contextMenuItems} = useDatasetTreeItem(dataset)
+    const {
+        contextMenuItems,
+        deleteBackdropOpen,
+        handleDeleteBackdropClose,
+        handleDelete,
+        error,
+        clearError
+    } = useDatasetTreeItem(dataset)
 
-    return (
+    return (<>
         <StyledTreeItem
             nodeId={nodeId}
             labelText={dataset.name}
@@ -65,6 +73,15 @@ export function DatasetTreeItem({nodeId, dataset}: DatasetTreeItemProps) {
                 treeViews={dataset.treeViews}
             />
         </StyledTreeItem>
-    )
+        <DeleteResourceBackdrop
+            open={deleteBackdropOpen}
+            title={"Delete Dataset?"}
+            subheader={"Are you sure you want to delete this dataset? This action cannot be undone."}
+            handleClose={handleDeleteBackdropClose}
+            handleDelete={handleDelete}
+            error={error}
+            clearError={clearError}
+        />
+    </>)
 }
 

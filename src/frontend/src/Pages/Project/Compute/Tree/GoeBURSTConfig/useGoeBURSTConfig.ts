@@ -64,6 +64,7 @@ export function useGoeBURSTConfig() {
                 }
             )
         },
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

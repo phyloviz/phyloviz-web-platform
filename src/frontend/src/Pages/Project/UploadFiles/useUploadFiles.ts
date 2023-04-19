@@ -29,7 +29,7 @@ export function useUploadFiles() {
         fileType,
         handleFileTypeChange: (value: FileType) => setfileType(value),
         handleFileChange: (file: React.SetStateAction<File | null>) => setFile(file),
-        handleCancel: () => navigate(-1), // TODO: Maybe cancel should cancel the upload?
+        handleCancel: () => navigate(-1),
         handleSubmit: () => {
             if (!file) {
                 setError("Please select a file to upload.")
@@ -54,6 +54,7 @@ export function useUploadFiles() {
                     .catch((err) => setError(err.message))
         },
         isUploading,
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

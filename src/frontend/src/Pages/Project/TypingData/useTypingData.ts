@@ -20,7 +20,7 @@ export function useTypingData() {
     const [typingDataSchema, setTypingDataSchema] = useState<GetTypingDataSchemaOutputModel>()
     const [typingDataProfiles, setTypingDataProfiles] = useState<GetTypingDataProfilesOutputModel>()
     const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<string>()
+    const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
         setLoading(true)
@@ -55,6 +55,7 @@ export function useTypingData() {
             }
         },
         loading,
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

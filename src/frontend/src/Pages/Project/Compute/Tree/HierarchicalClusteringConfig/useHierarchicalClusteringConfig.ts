@@ -101,6 +101,7 @@ export function useHierarchicalClusteringConfig() {
                 }
             )
         },
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

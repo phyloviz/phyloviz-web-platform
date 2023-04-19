@@ -6,7 +6,7 @@ import Box from "@mui/material/Box"
 import FinishIcon from "@mui/icons-material/Done"
 import CancelIcon from "@mui/icons-material/Cancel"
 import {useComputeHammingDistance} from "./useComputeHammingDistance"
-import Alert from "@mui/material/Alert"
+import {ErrorAlert} from "../../../../../Components/Shared/ErrorAlert"
 
 /**
  * ComputeHammingDistance page.
@@ -15,7 +15,8 @@ export default function ComputeHammingDistance() {
     const {
         handleCancel,
         handleCompute,
-        error
+        error,
+        clearError
     } = useComputeHammingDistance()
 
     return (
@@ -43,8 +44,7 @@ export default function ComputeHammingDistance() {
                         flexDirection: "column",
                         justifyContent: "left",
                     }}>
-                        {error && <Alert severity="error">{error}</Alert>}
-
+                        <ErrorAlert error={error} clearError={clearError}/>
                         <Box sx={{
                             width: "100%",
                             display: "flex",

@@ -42,6 +42,7 @@ export function useNewProject() {
                 })
         },
         handleCancel: () => navigate(WebUiUris.HOME),
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

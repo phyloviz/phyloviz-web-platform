@@ -1,4 +1,8 @@
-import {Workflow} from "../../../../Services/compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+import {
+    Workflow,
+    workflowStatusToWorkflowStatusString,
+    workflowTypeToWorkflowName
+} from "../../../../Services/compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
 import {Cancel} from "@mui/icons-material"
 import * as React from "react"
@@ -25,7 +29,7 @@ export function WorkflowTreeItem({nodeId, workflow}: WorkflowTreeItemProps) {
     return (<>
         <StyledTreeItem
             nodeId={nodeId}
-            labelText={workflow.type}
+            labelText={workflowTypeToWorkflowName(workflow.type)}
             rightContent={
                 workflow.status === "RUNNING"
                     ? <CircularProgress size={12} sx={{ml: 1}}/>
@@ -54,13 +58,15 @@ export function WorkflowTreeItem({nodeId, workflow}: WorkflowTreeItemProps) {
             disableRestoreFocus
         >
             <Box sx={{p: 2}}>
-                <Typography variant={"body1"}>
-                    <strong>{workflow.type}</strong>
+                <Typography variant={"body2"}>
+                    <strong>{workflowTypeToWorkflowName(workflow.type)}</strong>
                 </Typography>
                 <Typography variant={"body2"}>
-                    <strong>Status: </strong>
-                    {workflow.status === "RUNNING" ? "Running" : workflow.status === "COMPLETED" ? "Completed" : "Failed"}
+                    <strong>Status: </strong>{workflowStatusToWorkflowStatusString(workflow.status)}
                 </Typography>
+                {
+                    // TODO: Maybe add results or link to the results
+                }
             </Box>
         </Popover>
     </>)

@@ -81,6 +81,7 @@ export function useNeighborJoiningConfig() {
                 }
             )
         },
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

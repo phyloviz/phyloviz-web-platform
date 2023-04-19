@@ -8,9 +8,11 @@ export namespace MockComputeService {
     const projectsWorkflows = new Map<string, Map<string, Workflow>>()
     const WORKFLOW_DURATION = 5000
 
-    const mockDatas = new Map<string, any>([
+    const mockWorkflowData = new Map<string, any>([
         ["compute-distance-matrix", {distanceMatrixId: "8039f350-e12f-4877-8887-67caa258a143"}],
-        // TODO: Add more mock data if needed for other workflows
+        ["compute-tree", {treeId: "8039f350-e12f-4877-8887-67caa258a143"}],
+        ["compute-tree-view", {treeViewId: "8039f350-e12f-4877-8887-67caa258a143"}],
+        // Add more mock data here if needed
     ])
 
     /**
@@ -40,7 +42,7 @@ export namespace MockComputeService {
                 workflowId,
                 type: createWorkflowInputModel.type,
                 status: "COMPLETED",
-                data: mockDatas.get(createWorkflowInputModel.type)
+                data: mockWorkflowData.get(createWorkflowInputModel.type)
             })
         }, WORKFLOW_DURATION)
 

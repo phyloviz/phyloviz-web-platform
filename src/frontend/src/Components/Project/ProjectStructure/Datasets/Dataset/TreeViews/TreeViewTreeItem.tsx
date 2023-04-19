@@ -3,6 +3,7 @@ import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
 import {ScatterPlot} from "@mui/icons-material"
 import * as React from "react"
 import {useTreeViewTreeItem} from "./useTreeViewTreeItem"
+import {DeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBackdrop"
 
 /**
  * Props for the TreeViewTreeItem component.
@@ -21,14 +22,30 @@ interface TreeViewTreeItemProps {
  * Tree item for a tree view.
  */
 export function TreeViewTreeItem({nodeId, datasetId, treeView}: TreeViewTreeItemProps) {
-    const {contextMenuItems} = useTreeViewTreeItem(datasetId, treeView)
+    const {
+        contextMenuItems,
+        deleteBackdropOpen,
+        handleDeleteBackdropClose,
+        handleDelete,
+        error,
+        clearError
+    } = useTreeViewTreeItem(datasetId, treeView)
 
-    return (
+    return (<>
         <StyledTreeItem
             nodeId={nodeId}
             labelText={treeView.name}
             labelIcon={ScatterPlot}
             contextMenuItems={contextMenuItems}
         />
-    )
+        <DeleteResourceBackdrop
+            open={deleteBackdropOpen}
+            title={"Delete Tree View?"}
+            subheader={"Are you sure you want to delete this tree view? This action cannot be undone."}
+            handleClose={handleDeleteBackdropClose}
+            handleDelete={handleDelete}
+            error={error}
+            clearError={clearError}
+        />
+    </>)
 }

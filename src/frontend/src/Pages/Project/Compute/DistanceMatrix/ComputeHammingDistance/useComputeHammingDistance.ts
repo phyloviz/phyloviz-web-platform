@@ -7,7 +7,7 @@ import {useCompute} from "../../useCompute"
 export function useComputeHammingDistance() {
     const navigate = useNavigate()
     const {projectId, datasetId} = useParams<{ projectId: string, datasetId: string }>()
-    const {createWorkflow, error} = useCompute()
+    const {createWorkflow, error, clearError} = useCompute()
 
     return {
         handleCancel: () => navigate(-1),
@@ -20,6 +20,7 @@ export function useComputeHammingDistance() {
                 }
             }
         ),
-        error
+        error,
+        clearError
     }
 }
