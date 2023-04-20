@@ -1,9 +1,8 @@
 package org.phyloviz.pwp.visualization.http.controllers.models.getTreeView;
 
 import lombok.Data;
-import org.phyloviz.pwp.visualization.service.dtos.getTreeView.GetTreeViewOutputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.getTreeView.GetTreeViewOutput;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,10 +11,10 @@ import java.util.List;
 @Data
 public class GetTreeViewOutputModel {
     private List<NodeModel> nodes;
-    private int totalCount;
+    private List<EdgeModel> edges;
 
-    public GetTreeViewOutputModel(GetTreeViewOutputDTO getTreeViewOutputDTO) {
-        this.nodes = getTreeViewOutputDTO.getNodes().stream().map(NodeModel::new).toList();
-        this.totalCount = getTreeViewOutputDTO.getTotalCount();
+    public GetTreeViewOutputModel(GetTreeViewOutput getTreeViewOutput) {
+        this.nodes = getTreeViewOutput.getNodes().stream().map(NodeModel::new).toList();
+        this.edges = getTreeViewOutput.getEdges().stream().map(EdgeModel::new).toList();
     }
 }

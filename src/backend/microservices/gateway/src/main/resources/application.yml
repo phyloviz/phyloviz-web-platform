@@ -7,6 +7,27 @@ pwp:
       redirect-uri: "/api/login/oauth2/code/{registrationId}"
 
   microservices:
+    visualization:
+      uri: http://localhost:8085
+      routes:
+        - method: GET
+          path: /projects/{projectId}/datasets/{datasetId}/trees/{treeId}
+        - method: GET
+          path: /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}
+        - method: GET
+          path: /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}
+        - method: GET
+          path: /projects/{projectId}/files/isolate-data/{isolateDataId}
+        - method: GET
+          path: /projects/{projectId}/files/isolate-data/{isolateDataId}/rows
+        - method: GET
+          path: /projects/{projectId}/files/isolate-data/{isolateDataId}/file
+        - method: GET
+          path: /projects/{projectId}/files/typing-data/{typingDataId}
+        - method: GET
+          path: /projects/{projectId}/files/typing-data/{typingDataId}/profiles
+        - method: GET
+          path: /projects/{projectId}/files/typing-data/{typingDataId}/file
     administration:
       uri: http://localhost:8088
       routes:
@@ -49,27 +70,7 @@ pwp:
         - method: GET
           path: /projects/{projectId}/workflows/{workflowId}
 
-    visualization:
-      uri: http://localhost:8085
-      routes:
-        - method: GET
-          path: /projects/{projectId}/datasets/{datasetId}/trees/{treeId}
-        - method: GET
-          path: /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}
-        - method: GET
-          path: /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}
-        - method: GET
-          path: /projects/{projectId}/files/isolate-data/{isolateDataId}
-        - method: GET
-          path: /projects/{projectId}/files/isolate-data/{isolateDataId}/rows
-        - method: GET
-          path: /projects/{projectId}/files/isolate-data/{isolateDataId}/file
-        - method: GET
-          path: /projects/{projectId}/files/typing-data/{typingDataId}
-        - method: GET
-          path: /projects/{projectId}/files/typing-data/{typingDataId}/profiles
-        - method: GET
-          path: /projects/{projectId}/files/typing-data/{typingDataId}/file
+
 
 
 server:
@@ -81,22 +82,6 @@ spring:
       host: localhost
       port: 6379
       password: aC29^iCMUfSyk^xpi7e1AUvfu96kbV
-  cloud:
-    gateway:
-      default-filters:
-        - TokenRelay=
-
-      routes:
-        - id: administration
-          uri: http://localhost:8088
-          predicates:
-            - Path=/api/**
-          filters:
-            - StripPrefix=1
-        - id: home
-          uri: ${pwp.react-client-url}
-          predicates:
-            - Path=/**
 
 
   security:
@@ -110,7 +95,7 @@ spring:
           phyloviz-web-platform-client:
             provider: keycloak
             client-id: phyloviz-web-platform-client
-            client-secret: 3rG9M1rnH7gKX29QujY7HQedPs7KT1Iu
+            client-secret: whCCD9r37qj8mx9H7R4mzIrSezYf3H7R
             redirect-uri: "{baseUrl}/${pwp.security.oauth2.redirect-uri}"
 
             scope:
@@ -119,4 +104,4 @@ spring:
               - profile
 logging:
   level:
-    root: info
+    root: debug

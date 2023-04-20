@@ -22,6 +22,7 @@ mongo_uri = os.environ['MONGO_URI']
 client = MongoClient(mongo_uri)
 db = client['phyloviz-web-platform']
 workflows_collection = db['workflow-instances']
+datasets_collection = db['datasets']
 
 
 def tree_handler(s3_output_path, project_id, dataset_id, tree_id, workflow_id):
@@ -46,8 +47,23 @@ def tree_handler(s3_output_path, project_id, dataset_id, tree_id, workflow_id):
         'source': {
             'algorithm': 'goeburst',
             # TODO: Add distance matrix id and parameters
+        },
+        'adapterSpecificData': {
         }
     }
+
+    dataset = datasets_collection.find_one({'_id': ObjectId(dataset_id)})
+
+    ids = dataset['distanceMatrixIds']
+
+    ids.append(tree_id)
+
+    datasets_collection.update_one(
+        {'_id': dataset['_id']},
+        {'$set': {
+            'treeIds': ids
+        }}
+    )
 
     tree_collection.insert_one(tree_metadata)
 
@@ -76,7 +92,21 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, distance_mat
         'source': {
             'function': 'hamming'
         },
+        'adapterSpecificData': {
+        }
     }
+
+    dataset = datasets_collection.find_one({'_id': ObjectId(dataset_id)})
+
+    ids = dataset['distanceMatrixIds']
+
+    ids.append(distance_matrix_id)
+    datasets_collection.update_one(
+        {'_id': dataset['_id']},
+        {'$set': {
+            'distanceMatrixIds': ids
+        }}
+    )
 
     distance_matrix_collection.insert_one(distance_matrix_metadata)
 

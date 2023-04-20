@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "target": "ES6",
+    "target": "es2019",
     "moduleResolution": "node",
     "strict": true,
     "noImplicitAny": true,
     "typeRoots": [
       "node_modules/@types",
       "src/Utils/types"
-    ]
+    ],
+    "allowSyntheticDefaultImports": true
   }
 }

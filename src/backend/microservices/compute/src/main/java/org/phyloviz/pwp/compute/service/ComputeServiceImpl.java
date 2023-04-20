@@ -18,6 +18,7 @@ import org.phyloviz.pwp.compute.service.dtos.getWorkflow.GetWorkflowStatusOutput
 import org.phyloviz.pwp.compute.service.exceptions.TemplateNotFound;
 import org.phyloviz.pwp.compute.service.exceptions.WorkflowInstanceNotFoundException;
 import org.phyloviz.pwp.compute.service.flowviz.FLOWViZClient;
+import org.phyloviz.pwp.compute.service.flowviz.exceptions.UnexpectedResponseException;
 import org.phyloviz.pwp.compute.service.flowviz.models.getWorkflow.GetWorkflowResponse;
 import org.phyloviz.pwp.compute.service.flowviz.models.getWorkflow.WorkflowStatus;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.Tool;
@@ -91,22 +92,39 @@ public class ComputeServiceImpl implements ComputeService {
                 .findById(workflowId)
                 .orElseThrow(WorkflowInstanceNotFoundException::new);
 
-        GetWorkflowResponse workflow = flowVizClient.workflowService().getWorkflow(workflowInstance.getWorkflow().getName());
-        WorkflowStatus workflowStatus = workflow.getAirflow().getRuns().get(0);
-        String airflowStatus = workflowStatus.getState();
+        GetWorkflowResponse workflow;
+        try {
+            workflow = flowVizClient.workflowService().getWorkflow(workflowInstance.getWorkflow().getName());
+        } catch (UnexpectedResponseException e) {
+            if (e.getResponse().code() == 404) {
+                return new GetWorkflowStatusOutputDTO(
+                        workflowInstance.getId(),
+                        workflowInstance.getType(),
+                        "RUNNING",
+                        workflowInstance.getResults()
+                );
+            }
+            throw e;
+        }
 
-        // Could be simplified, but helpful, so we know the states.
-        String status = switch (airflowStatus) {
-            case "success" -> "SUCCESS";
-            case "running", "queued" -> "RUNNING";
-            case "failed" -> "FAILED";
-            default -> "FAILED";
-        };
+        List<WorkflowStatus> workflowRuns = workflow.getAirflow().getRuns();
+
+        if (workflowRuns.isEmpty())
+            return new GetWorkflowStatusOutputDTO(
+                    workflowInstance.getId(),
+                    workflowInstance.getType(),
+                    "RUNNING",
+                    workflowInstance.getResults()
+            );
+
+        WorkflowStatus workflowStatus = workflowRuns.get(0);
+
+        String airflowStatus = workflowStatus.getState();
 
         return new GetWorkflowStatusOutputDTO(
                 workflowInstance.getId(),
                 workflowInstance.getType(),
-                status,
+                airflowStatus.toUpperCase(),
                 workflowInstance.getResults()
         );
     }

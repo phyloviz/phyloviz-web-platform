@@ -60,7 +60,7 @@ def index_tree(tree_file_path, project_id, dataset_id, tree_id, workflow_id):
         'sourceType': tree_metadata['sourceType'],
         'source': tree_metadata['source'],
         'url': base_url,
-        'adapterId': 'phyloDB',
+        'adapterId': 'phylodb',
         'adapterSpecificData': {
             'projectId': project_id,
             'datasetId': dataset_id,

@@ -13,7 +13,7 @@ public class TreeViewAdapterSpecificDataFactory {
     public Class<? extends TreeViewAdapterSpecificData> getClass(String adapterId) {
         return switch (adapterId) {
             case "s3" -> TreeViewS3AdapterSpecificData.class;
-            case "phyloDB" -> TreeViewPhyloDBAdapterSpecificData.class;
+            case "phylodb" -> TreeViewPhyloDBAdapterSpecificData.class;
             default -> throw new IllegalArgumentException("Unknown adapter id: " + adapterId);
         };
     }

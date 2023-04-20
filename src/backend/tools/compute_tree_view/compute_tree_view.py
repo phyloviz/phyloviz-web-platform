@@ -18,7 +18,7 @@ db = client['phyloviz-web-platform']
 workflows_collection = db['workflow-instances']
 tree_views_collection = db['tree-views']
 tree_collection = db['trees']
-
+datasets_collection = db['datasets']
 
 def create_visualization_job(project_id, dataset_id, inference_id):
     data = {
@@ -62,7 +62,7 @@ def get_job(project_id, job_id):
 
 def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
     # Retrieve inference id from the tree
-    tree = tree_collection.find_one({'treeId': tree_id, 'adapterId': 'phyloDB'})
+    tree = tree_collection.find_one({'treeId': tree_id, 'adapterId': 'phylodb'})
     inference_id = tree['adapterSpecificData']['inferenceId']
 
     (vis_job_id, visualization_id) = create_visualization_job(project_id, dataset_id, inference_id)
@@ -118,7 +118,7 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
         },
         'layout': 'radial',
         'url': base_url,
-        'adapterId': 'phyloDB',
+        'adapterId': 'phylodb',
         'adapterSpecificData': {
             'projectId': project_id,
             'datasetId': dataset_id,
@@ -126,6 +126,18 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
             'visualizationId': visualization_id,
         }
     }
+
+    dataset = datasets_collection.find_one({'_id': ObjectId(dataset_id)})
+
+    ids = dataset['distanceMatrixIds']
+    ids.append(visualization_id)
+
+    datasets_collection.update_one(
+        {'_id': dataset['_id']},
+        {'$set': {
+            'treeViewIds': ids
+        }}
+    )
 
     tree_views_collection.insert_one(tree_view_metadata)
 

@@ -1,6 +1,9 @@
 package org.phyloviz.pwp.visualization.service.projects.datasets.treeViews;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.shared.adapters.treeView.TreeViewAdapter;
+import org.phyloviz.pwp.shared.adapters.treeView.TreeViewAdapterFactory;
+import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
@@ -11,10 +14,7 @@ import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeViewNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
-import org.phyloviz.pwp.shared.adapters.treeView.TreeViewAdapter;
-import org.phyloviz.pwp.shared.adapters.treeView.TreeViewAdapterFactory;
-import org.phyloviz.pwp.visualization.service.dtos.getTreeView.GetTreeViewInputDTO;
-import org.phyloviz.pwp.visualization.service.dtos.getTreeView.GetTreeViewOutputDTO;
+import org.phyloviz.pwp.visualization.service.dtos.getTreeView.GetTreeViewOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,18 +32,20 @@ public class TreeViewVisualizationServiceImpl implements TreeViewVisualizationSe
     private final List<String> getTreeViewAdapterPriority = List.of("phylodb");
 
     @Override
-    public GetTreeViewOutputDTO getTreeView(GetTreeViewInputDTO getTreeViewInputDTO) {
-        String projectId = getTreeViewInputDTO.getProjectId();
-        String datasetId = getTreeViewInputDTO.getDatasetId();
-        String treeViewId = getTreeViewInputDTO.getTreeViewId();
+    public GetTreeViewOutput getTreeView(
+            String projectId,
+            String datasetId,
+            String treeViewId,
+            User user
+    ) {
 
-        validateParameters(projectId, datasetId, treeViewId, getTreeViewInputDTO.getUser().getId());
+        validateParameters(projectId, datasetId, treeViewId, user.getId());
 
         TreeViewMetadata treeViewMetadata = getPrioritySortedTreeViewMetadataList(treeViewId).get(0);
 
         TreeViewAdapter treeViewAdapter = treeViewAdapterFactory.getTreeViewAdapter(treeViewMetadata.getAdapterId());
 
-        return new GetTreeViewOutputDTO(treeViewAdapter.getTreeView(treeViewMetadata.getAdapterSpecificData()));
+        return new GetTreeViewOutput(treeViewAdapter.getTreeView(treeViewMetadata.getAdapterSpecificData()));
     }
 
     private List<TreeViewMetadata> getPrioritySortedTreeViewMetadataList(String treeViewId) {

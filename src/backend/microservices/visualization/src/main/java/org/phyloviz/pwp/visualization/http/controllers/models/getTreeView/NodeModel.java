@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.visualization.http.controllers.models.getTreeView;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.service.dtos.NodeDTO;
+import org.phyloviz.pwp.shared.service.dtos.Node;
 
 import java.util.List;
 
@@ -10,15 +10,13 @@ import java.util.List;
  */
 @Data
 public class NodeModel {
-    private int st;
+    private String st;
     private double[] coordinates;
     private List<String> profile;
-    private Object auxiliaryData;
 
-    public NodeModel(NodeDTO nodeDTO) {
-        this.st = nodeDTO.getSt();
-        this.coordinates = nodeDTO.getCoordinates();
-        this.profile = nodeDTO.getProfile();
-        this.auxiliaryData = nodeDTO.getAuxiliaryData();
+    public NodeModel(Node node) {
+        this.st = node.getSt();
+        this.coordinates = node.getCoordinates();
+        this.profile = node.getProfile();
     }
 }
