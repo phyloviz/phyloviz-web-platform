@@ -14,6 +14,9 @@ import Box from "@mui/material/Box"
 
 /**
  * Props of the WorkflowTreeItem.
+ *
+ * @property nodeId id of the node
+ * @property workflow workflow to display
  */
 interface WorkflowTreeItemProps {
     nodeId: string

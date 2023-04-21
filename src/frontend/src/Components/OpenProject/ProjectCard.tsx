@@ -5,15 +5,17 @@ import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import {Delete, OpenInNew} from "@mui/icons-material"
 import {DeleteResourceBackdrop, useDeleteResourceBackdrop} from "../Shared/DeleteResourceBackdrop"
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton"
+import Tooltip from "@mui/material/Tooltip"
 
 /**
  * Props for the ProjectCard component.
  *
- * @property project The project to display.
- * @property handleOpenProject Callback for when the user wants to open the project.
- * @property handleDeleteProject Callback for when the user wants to delete the project.
+ * @property project the project to display
+ * @property handleOpenProject Callback for when the user wants to open the project
+ * @property handleDeleteProject Callback for when the user wants to delete the project
+ * @property error Error message to display
+ * @property clearError Callback for when the error message should be cleared
  */
 interface ProjectCardProps {
     project: ProjectModel

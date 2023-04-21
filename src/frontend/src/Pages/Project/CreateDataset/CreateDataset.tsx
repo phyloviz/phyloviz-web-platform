@@ -11,6 +11,7 @@ import {TypingDataStepCard} from "../../../Components/Project/CreateDataset/Typi
 import {IsolateDataStepCard} from "../../../Components/Project/CreateDataset/IsolateDataStepCard"
 import CancelIcon from "@mui/icons-material/Cancel"
 import {CreateDatasetStep, useCreateDataset} from "./useCreateDataset"
+import {ErrorAlert} from "../../../Components/Shared/ErrorAlert"
 
 
 /**
@@ -37,6 +38,8 @@ export default function CreateDataset() {
         handleNext,
         createDatasetStep,
         currStep,
+        error,
+        clearError
     } = useCreateDataset()
 
     return (
@@ -65,6 +68,7 @@ export default function CreateDataset() {
                             </Step>
                         ))}
                     </Stepper>
+                    <ErrorAlert error={error} clearError={clearError}/>
                     <Box sx={{
                         width: "100%",
                         display: "flex",

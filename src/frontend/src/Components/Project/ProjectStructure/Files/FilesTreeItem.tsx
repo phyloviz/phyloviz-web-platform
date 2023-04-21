@@ -1,8 +1,10 @@
 import * as React from "react"
-import {Description, FilePresent, Folder} from "@mui/icons-material"
+import {Folder} from "@mui/icons-material"
 import {ProjectFiles} from "../../../../Services/administration/models/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
 import {useFilesTreeItem} from "./useFilesTreeItem"
+import {TypingDataFileTreeItem} from "./TypingData/TypingDataFileTreeItem"
+import {IsolateDataFileTreeItem} from "./IsolateData/IsolateDataFileTreeItem"
 
 /**
  * Props for the FilesTreeItem component.
@@ -30,24 +32,23 @@ export function FilesTreeItem({nodeId, files}: FilesTreeItemProps) {
         >
             {
                 files.typingData.map((file, index) => {
-                    return <StyledTreeItem
-                        nodeId={"0" + index.toString()}
-                        key={"0" + index.toString()}
-                        labelText={file.name}
-                        labelIcon={Description}
+                    return <TypingDataFileTreeItem
+                        nodeId={"typingDataFile" + index.toString()}
+                        key={"typingDataFile" + index.toString()}
+                        file={file}
                     />
                 })
             }
             {
                 files.isolateData.map((file, index) => {
-                    return <StyledTreeItem
-                        nodeId={"1" + index.toString()}
-                        key={"1" + index.toString()}
-                        labelText={file.name}
-                        labelIcon={FilePresent}
+                    return <IsolateDataFileTreeItem
+                        nodeId={"isolateDataFile" + index.toString()}
+                        key={"isolateDataFile" + index.toString()}
+                        file={file}
                     />
                 })
             }
         </StyledTreeItem>
     )
 }
+

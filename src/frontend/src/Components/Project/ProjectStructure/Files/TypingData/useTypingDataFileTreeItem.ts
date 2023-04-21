@@ -1,18 +1,17 @@
-import {TreeView} from "../../../../../../Services/administration/models/getProject/GetProjectOutputModel"
-import {useNavigate, useParams} from "react-router-dom"
 import {Delete, Download, Visibility} from "@mui/icons-material"
-import {WebUiUris} from "../../../../../../Pages/WebUiUris"
-import {useDeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBackdrop"
+import {useNavigate, useParams} from "react-router-dom"
 import {useState} from "react"
-import AdministrationService from "../../../../../../Services/administration/AdministrationService"
+import {TypingDataFile} from "../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {useDeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdrop"
+import AdministrationService from "../../../../../Services/administration/AdministrationService"
+import {WebUiUris} from "../../../../../Pages/WebUiUris"
 
 /**
- * Hook for the TreeViewTreeItem component.
+ * Hook for the TypingDataFileTreeItem component.
  *
- * @param datasetId the dataset ID
- * @param treeView the tree view
+ * @param file the typing data file
  */
-export function useTreeViewTreeItem(datasetId: string, treeView: TreeView) {
+export function useTypingDataFileTreeItem(file: TypingDataFile) {
     const navigate = useNavigate()
     const {projectId} = useParams<{ projectId: string }>()
     const {deleteBackdropOpen, handleDeleteBackdropOpen, handleDeleteBackdropClose} = useDeleteResourceBackdrop()
@@ -23,7 +22,7 @@ export function useTreeViewTreeItem(datasetId: string, treeView: TreeView) {
             {
                 label: "View",
                 icon: Visibility,
-                onClick: () => navigate(WebUiUris.treeView(projectId!, datasetId, treeView.treeViewId))
+                onClick: () => navigate(WebUiUris.typingData(projectId!, file.typingDataId))
             },
             {
                 label: "Export",
@@ -40,7 +39,7 @@ export function useTreeViewTreeItem(datasetId: string, treeView: TreeView) {
         deleteBackdropOpen,
         handleDeleteBackdropClose,
         handleDelete: () => {
-            AdministrationService.deleteTreeView(projectId!, datasetId, treeView.treeViewId)
+            AdministrationService.deleteTypingData(projectId!, file.typingDataId)
                 .then(() => {
                     handleDeleteBackdropClose()
                     navigate(WebUiUris.project(projectId!))

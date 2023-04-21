@@ -1,9 +1,9 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { useLoggedIn, useSession, useSessionManager } from "../../Session/Session"
-import { WebApiUris } from "../../Services/WebApiUris"
-import { WebUiUris } from "../../Pages/WebUiUris"
+import {useEffect, useState} from "react"
+import {useNavigate} from "react-router-dom"
+import {useLoggedIn, useSession, useSessionManager} from "../../Session/Session"
+import {WebApiUris} from "../../Services/WebApiUris"
+import {WebUiUris} from "../../Pages/WebUiUris"
 import LoginIcon from "@mui/icons-material/Login"
 import LogoutIcon from "@mui/icons-material/Logout"
 import ProfileIcon from "@mui/icons-material/AccountCircle"
@@ -38,12 +38,12 @@ export function useDashboard() {
     const authSettings = [
         {
             name: 'Profile',
-            icon: <ProfileIcon />,
+            icon: <ProfileIcon/>,
             callback: () => navigate(WebUiUris.PROFILE)
         },
         {
             name: 'Logout',
-            icon: <LogoutIcon />,
+            icon: <LogoutIcon/>,
             callback: async () => {
                 sessionManager.clearSession()
                 await fetch(WebApiUris.logout, {
@@ -56,7 +56,7 @@ export function useDashboard() {
     const nonAuthSettings = [
         {
             name: 'Login',
-            icon: <LoginIcon />,
+            icon: <LoginIcon/>,
             callback: () => window.location.href = WebUiUris.LOGIN
         }
     ]

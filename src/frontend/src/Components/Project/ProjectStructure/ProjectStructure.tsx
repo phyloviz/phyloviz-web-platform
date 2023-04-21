@@ -26,46 +26,52 @@ interface ProjectStructureProps {
     loading: boolean
 }
 
+
 /**
  * ProjectStructureProps of a project.
  */
 export function ProjectStructure({project, workflows, loading}: ProjectStructureProps) {
     const navigate = useNavigate()
+    // TODO: Make the tree view responsive (collapse, or hide, idk)
 
-    return <TreeView
-        defaultExpanded={['fileManager', 'workflows']}
-        defaultCollapseIcon={<ArrowDropDownIcon/>}
-        defaultExpandIcon={<ArrowRightIcon/>}
-        sx={{
-            height: '100%',
-            flexGrow: 1,
-            maxWidth: 300,
-            borderRight: 1,
-            borderColor: 'divider',
-            overflowY: 'auto'
-        }}
-    >
-        <StyledTreeItem
-            nodeId="fileManager"
-            labelText={project?.name ?? "Project"}
-            labelIcon={AccountTree}
-            contextMenuItems={[
-                {
-                    label: "Project Details",
-                    icon: Info,
-                    onClick: () => navigate(WebUiUris.project(project?.projectId!))
-                }
-            ]}
+    return (<>
+        <TreeView
+            defaultExpanded={['fileManager', 'workflows']}
+            defaultCollapseIcon={<ArrowDropDownIcon/>}
+            defaultExpandIcon={<ArrowRightIcon/>}
+            sx={{
+                height: '100%',
+                maxWidth: 300,
+                flexGrow: 1,
+                borderRight: 1,
+                borderBottom: 1,
+                borderColor: 'divider',
+                overflowY: 'auto'
+            }}
         >
-            {
-                loading
-                    ? <LoadingSpinner text={"Loading project..."}/>
-                    : <>
-                        <DatasetsTreeItem nodeId="datasets" datasets={project?.datasets!}/>
-                        <FilesTreeItem nodeId="files" files={project?.files!}/>
-                        <WorkflowsTreeItem workflows={workflows}/>
-                    </>
-            }
-        </StyledTreeItem>
-    </TreeView>
+            <StyledTreeItem
+                nodeId="fileManager"
+                labelText={project?.name ?? "Project"}
+                labelIcon={AccountTree}
+                contextMenuItems={[
+                    {
+                        label: "Project Details",
+                        icon: Info,
+                        onClick: () => navigate(WebUiUris.project(project?.projectId!))
+                    }
+                ]}
+            >
+                {
+                    loading
+                        ? <LoadingSpinner text={"Loading project..."}/>
+                        : <>
+                            <DatasetsTreeItem nodeId="datasets" datasets={project?.datasets!}/>
+                            <FilesTreeItem nodeId="files" files={project?.files!}/>
+                            <WorkflowsTreeItem workflows={workflows}/>
+                        </>
+                }
+            </StyledTreeItem>
+        </TreeView>
+    </>)
 }
+
