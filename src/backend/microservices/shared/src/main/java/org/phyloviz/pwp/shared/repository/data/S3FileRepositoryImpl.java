@@ -9,7 +9,6 @@ import software.amazon.awssdk.core.async.AsyncRequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
 import software.amazon.awssdk.transfer.s3.model.Upload;
 
@@ -22,7 +21,6 @@ import java.util.concurrent.Executors;
 public class S3FileRepositoryImpl implements S3FileRepository {
 
     public static final Region REGION = Region.of("custom");
-    private static final String ADAPTER_ID = "s3";
     private final String bucketName;
     private final String objectStorageEndpoint;
     private final S3AsyncClient s3Client;
@@ -41,18 +39,18 @@ public class S3FileRepositoryImpl implements S3FileRepository {
     ) {
         AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
 
-        S3AsyncClient s3Client = S3AsyncClient.builder()
+        S3AsyncClient newS3Client = S3AsyncClient.builder()
                 .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
                 .endpointOverride(URI.create(objectStorageEndpoint))
                 .region(REGION)
                 .build();
 
-        s3Client.createBucket(r -> r.bucket(bucketName));
+        newS3Client.createBucket(r -> r.bucket(bucketName));
 
-        this.s3Client = s3Client;
+        this.s3Client = newS3Client;
         this.bucketName = bucketName;
         this.objectStorageEndpoint = objectStorageEndpoint;
-        this.transferManager = S3TransferManager.builder().s3Client(s3Client).build();
+        this.transferManager = S3TransferManager.builder().s3Client(newS3Client).build();
     }
 
     @Override
@@ -65,17 +63,12 @@ public class S3FileRepositoryImpl implements S3FileRepository {
                     executorService
             );
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new MultipartFileReadException("Error while obtaining multipart file's input stream", e);
         }
-
-        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                .bucket(bucketName)
-                .key(url)
-                .build();
 
         Upload upload = transferManager.upload(p -> {
             p.requestBody(requestBody);
-            p.putObjectRequest(putObjectRequest);
+            p.putObjectRequest(o -> o.bucket(bucketName).key(url));
         });
 
         upload.completionFuture().join();
@@ -86,7 +79,7 @@ public class S3FileRepositoryImpl implements S3FileRepository {
     @Override
     public boolean delete(String url) {
         if (!url.startsWith(getLocation()))
-            throw new RuntimeException("URL does not start with the object storage endpoint");
+            throw new IllegalArgumentException("URL does not start with the object storage endpoint");
 
         DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                 .bucket(bucketName)
@@ -100,11 +93,6 @@ public class S3FileRepositoryImpl implements S3FileRepository {
 
     @Override
     public String getLocation() {
-        return objectStorageEndpoint + "/" + bucketName;
-    }
-
-    @Override
-    public String getAdapterId() {
-        return ADAPTER_ID;
+        return objectStorageEndpoint + "/" + bucketName.substring(0, bucketName.length() - 1);
     }
 }

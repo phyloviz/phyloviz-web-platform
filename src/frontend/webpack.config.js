@@ -1,3 +1,4 @@
+const Dotenv = require('dotenv-webpack');
 const env = process.env.NODE_ENV || 'development'
 
 module.exports = {
@@ -27,5 +28,8 @@ module.exports = {
                 use: ['file-loader?name=[name].[ext]']
             }
         ]
-    }
+    },
+    plugins: [
+        new Dotenv()
+    ]
 }

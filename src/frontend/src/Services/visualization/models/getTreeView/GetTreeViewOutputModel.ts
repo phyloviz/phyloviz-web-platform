@@ -1,6 +1,11 @@
 export interface GetTreeViewOutputModel {
     nodes: Node[]
-    totalCount: number
+    edges: Edge[]
+}
+
+export interface Edge {
+    from: string
+    to: string
 }
 
 export interface Node {

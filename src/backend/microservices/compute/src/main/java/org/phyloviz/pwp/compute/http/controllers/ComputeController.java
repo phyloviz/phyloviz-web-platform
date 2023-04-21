@@ -1,13 +1,13 @@
 package org.phyloviz.pwp.compute.http.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.compute.http.controllers.models.createWorkflow.CreateWorkflowInputModel;
-import org.phyloviz.pwp.compute.http.controllers.models.createWorkflow.CreateWorkflowOutputModel;
-import org.phyloviz.pwp.compute.http.controllers.models.getWorkflowStatus.GetWorkflowStatusOutputModel;
-import org.phyloviz.pwp.compute.http.controllers.models.getWorkflows.GetWorkflowsOutputModel;
+import org.phyloviz.pwp.compute.http.controllers.models.create_workflow.CreateWorkflowInputModel;
+import org.phyloviz.pwp.compute.http.controllers.models.create_workflow.CreateWorkflowOutputModel;
+import org.phyloviz.pwp.compute.http.controllers.models.get_workflow_status.GetWorkflowStatusOutputModel;
+import org.phyloviz.pwp.compute.http.controllers.models.get_workflows.GetWorkflowsOutputModel;
 import org.phyloviz.pwp.compute.service.ComputeService;
-import org.phyloviz.pwp.compute.service.dtos.createWorkflow.CreateWorkflowOutput;
-import org.phyloviz.pwp.compute.service.dtos.getWorkflow.GetWorkflowStatusOutput;
+import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
+import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
 import org.phyloviz.pwp.shared.domain.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

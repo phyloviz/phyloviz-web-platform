@@ -4,3 +4,7 @@ include 'microservices:compute'
 include 'microservices:gateway'
 include 'microservices:shared'
 include 'microservices:administration'
+include 'microservices:file-transfer'
+include 'microservices:shared-phylodb'
+findProject(':microservices:shared-phylodb')?.name = 'shared-phylodb'
+

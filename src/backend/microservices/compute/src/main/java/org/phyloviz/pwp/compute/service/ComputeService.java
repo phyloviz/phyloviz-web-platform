@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.compute.service;
 
-import org.phyloviz.pwp.compute.service.dtos.createWorkflow.CreateWorkflowOutput;
-import org.phyloviz.pwp.compute.service.dtos.getWorkflow.GetWorkflowStatusOutput;
+import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
+import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,0 +1,34 @@
+mongo-collections:
+  projects-collection: projects
+  datasets-collection: datasets
+  typing-data-metadata-collection: typing-data
+  isolate-data-metadata-collection: isolate-data
+  distance-matrix-metadata-collection: distance-matrices
+  tree-metadata-collection: trees
+  tree-view-metadata-collection: tree-views
+
+s3:
+  access-key-id: AKIAIOSFODNN7EXAMPLE
+  secret-access-key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  bucket: phyloviz-web-platform/
+  endpoint: http://localhost:9444
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 28017
+      username: root
+      password: root
+      database: phyloviz-web-platform
+      authentication-database: admin
+      auto-index-creation: true
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/token/introspect
+          client-id: phyloviz-web-platform-client
+          client-secret: whCCD9r37qj8mx9H7R4mzIrSezYf3H7R
+#        jwt:
+#          jwk-set-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/certs

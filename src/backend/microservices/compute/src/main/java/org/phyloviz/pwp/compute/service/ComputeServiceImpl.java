@@ -3,26 +3,27 @@ package org.phyloviz.pwp.compute.service;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.NotImplementedException;
 import org.bson.types.ObjectId;
-import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.ToolTemplateRepository;
-import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.documents.ToolTemplate;
-import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.documents.ToolTemplateData;
-import org.phyloviz.pwp.compute.repository.metadata.templates.toolTemplate.documents.access.AccessTypeTemplate;
-import org.phyloviz.pwp.compute.repository.metadata.templates.workflowInstances.WorkflowInstanceRepository;
-import org.phyloviz.pwp.compute.repository.metadata.templates.workflowInstances.documents.WorkflowInstance;
-import org.phyloviz.pwp.compute.repository.metadata.templates.workflowTemplate.WorkflowTemplateRepository;
-import org.phyloviz.pwp.compute.repository.metadata.templates.workflowTemplate.documents.TaskTemplate;
-import org.phyloviz.pwp.compute.repository.metadata.templates.workflowTemplate.documents.WorkflowTemplate;
-import org.phyloviz.pwp.compute.repository.metadata.templates.workflowTemplate.documents.WorkflowTemplateData;
-import org.phyloviz.pwp.compute.service.dtos.createWorkflow.CreateWorkflowOutput;
-import org.phyloviz.pwp.compute.service.dtos.getWorkflow.GetWorkflowStatusOutput;
+import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.ToolTemplateRepository;
+import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.documents.ToolTemplate;
+import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.documents.ToolTemplateData;
+import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.documents.access.AccessTypeTemplate;
+import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_instances.WorkflowInstanceRepository;
+import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_instances.documents.WorkflowInstance;
+import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.WorkflowTemplateRepository;
+import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.TaskTemplate;
+import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.WorkflowTemplate;
+import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.WorkflowTemplateData;
+import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
+import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
 import org.phyloviz.pwp.compute.service.exceptions.DatasetDoesNotExistException;
 import org.phyloviz.pwp.compute.service.exceptions.DistanceMatrixDoesNotExistException;
 import org.phyloviz.pwp.compute.service.exceptions.TemplateNotFound;
 import org.phyloviz.pwp.compute.service.exceptions.TreeDoesNotExistException;
 import org.phyloviz.pwp.compute.service.exceptions.WorkflowInstanceNotFoundException;
 import org.phyloviz.pwp.compute.service.flowviz.FLOWViZClient;
-import org.phyloviz.pwp.compute.service.flowviz.models.getWorkflow.GetWorkflowResponse;
-import org.phyloviz.pwp.compute.service.flowviz.models.getWorkflow.WorkflowStatus;
+import org.phyloviz.pwp.compute.service.flowviz.exceptions.UnexpectedResponseException;
+import org.phyloviz.pwp.compute.service.flowviz.models.get_workflow.GetWorkflowResponse;
+import org.phyloviz.pwp.compute.service.flowviz.models.get_workflow.WorkflowStatus;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.Tool;
 import org.phyloviz.pwp.compute.service.flowviz.models.workflow.Workflow;
 import org.phyloviz.pwp.compute.utils.UUIDUtils;
@@ -30,10 +31,10 @@ import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;
-import org.phyloviz.pwp.shared.service.project.ProjectService;
-import org.phyloviz.pwp.shared.service.project.dataset.DatasetService;
-import org.phyloviz.pwp.shared.service.project.dataset.distanceMatrix.DistanceMatrixService;
-import org.phyloviz.pwp.shared.service.project.dataset.tree.TreeService;
+import org.phyloviz.pwp.shared.service.project.ProjectMetadataService;
+import org.phyloviz.pwp.shared.service.project.dataset.DatasetMetadataService;
+import org.phyloviz.pwp.shared.service.project.dataset.distance_matrix.DistanceMatrixMetadataService;
+import org.phyloviz.pwp.shared.service.project.dataset.tree.TreeMetadataService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -59,10 +60,10 @@ public class ComputeServiceImpl implements ComputeService {
             "studierkepler", "unj"
     );
     private static final List<String> COMPUTE_TREE_VIEW_LAYOUTS = List.of("radial");
-    private final ProjectService projectService;
-    private final DatasetService datasetService;
-    private final DistanceMatrixService distanceMatrixService;
-    private final TreeService treeService;
+    private final ProjectMetadataService projectMetadataService;
+    private final DatasetMetadataService datasetMetadataService;
+    private final DistanceMatrixMetadataService distanceMatrixMetadataService;
+    private final TreeMetadataService treeMetadataService;
     private final WorkflowTemplateRepository workflowTemplateRepository;
     private final WorkflowInstanceRepository workflowInstanceRepository;
     private final ToolTemplateRepository toolTemplateRepository;
@@ -75,7 +76,7 @@ public class ComputeServiceImpl implements ComputeService {
             Map<String, String> workflowProperties,
             String userId
     ) {
-        projectService.assertExists(projectId, userId);
+        projectMetadataService.assertExists(projectId, userId);
 
         return switch (workflowType) {
             case COMPUTE_DISTANCE_MATRIX -> createComputeDistanceMatrixWorkflow(projectId, workflowProperties, userId);
@@ -90,35 +91,52 @@ public class ComputeServiceImpl implements ComputeService {
 
     @Override
     public GetWorkflowStatusOutput getWorkflowStatus(String projectId, String workflowId, String userId) {
-        projectService.assertExists(projectId, userId);
+        projectMetadataService.assertExists(projectId, userId);
 
         WorkflowInstance workflowInstance = workflowInstanceRepository
                 .findById(workflowId)
                 .orElseThrow(WorkflowInstanceNotFoundException::new);
 
-        GetWorkflowResponse workflow = flowVizClient.workflowService().getWorkflow(workflowInstance.getWorkflow().getName());
-        WorkflowStatus workflowStatus = workflow.getAirflow().getRuns().get(0);
-        String airflowStatus = workflowStatus.getState();
+        GetWorkflowResponse workflow;
+        try {
+            workflow = flowVizClient.workflowService().getWorkflow(workflowInstance.getWorkflow().getName());
+        } catch (UnexpectedResponseException e) {
+            if (e.getResponse().code() == 404) {
+                return new GetWorkflowStatusOutput(
+                        workflowInstance.getId(),
+                        workflowInstance.getType(),
+                        "RUNNING",
+                        workflowInstance.getData()
+                );
+            }
+            throw e;
+        }
 
-        // Could be simplified, but helpful, so we know the states.
-        String status = switch (airflowStatus) {
-            case "success" -> "SUCCESS";
-            case "running", "queued" -> "RUNNING";
-            case "failed" -> "FAILED";
-            default -> "FAILED";
-        };
+        List<WorkflowStatus> workflowRuns = workflow.getAirflow().getRuns();
+
+        if (workflowRuns.isEmpty())
+            return new GetWorkflowStatusOutput(
+                    workflowInstance.getId(),
+                    workflowInstance.getType(),
+                    "RUNNING",
+                    workflowInstance.getData()
+            );
+
+        WorkflowStatus workflowStatus = workflowRuns.get(0);
+
+        String airflowStatus = workflowStatus.getState();
 
         return new GetWorkflowStatusOutput(
                 workflowInstance.getId(),
                 workflowInstance.getType(),
-                status,
-                workflowInstance.getResults()
+                airflowStatus.toUpperCase(),
+                workflowInstance.getData()
         );
     }
 
     @Override
     public List<GetWorkflowStatusOutput> getWorkflows(String projectId, String userId) {
-        throw new NotImplementedException("Not implemented yet");
+        return List.of();
     }
 
     private CreateWorkflowOutput createComputeDistanceMatrixWorkflow(String projectId, Map<String, String> properties, String userId) {
@@ -134,7 +152,7 @@ public class ComputeServiceImpl implements ComputeService {
             throw new IllegalArgumentException("Invalid algorithm");
 
         try {
-            Dataset dataset = datasetService.getDataset(projectId, datasetId, userId);
+            Dataset dataset = datasetMetadataService.getDataset(projectId, datasetId, userId);
 
             String typingDataId = dataset.getTypingDataId();
 
@@ -166,7 +184,7 @@ public class ComputeServiceImpl implements ComputeService {
             throw new IllegalArgumentException("Invalid algorithm");
 
         try {
-            distanceMatrixService.assertExists(projectId, datasetId, distanceMatrixId, userId);
+            distanceMatrixMetadataService.assertExists(projectId, datasetId, distanceMatrixId, userId);
         } catch (DatasetNotFoundException e) {
             throw new DatasetDoesNotExistException();
         } catch (DistanceMatrixNotFoundException e) {
@@ -197,7 +215,7 @@ public class ComputeServiceImpl implements ComputeService {
             throw new IllegalArgumentException("Invalid layout");
 
         try {
-            treeService.assertExists(projectId, datasetId, treeId, userId);
+            treeMetadataService.assertExists(projectId, datasetId, treeId, userId);
         } catch (DatasetNotFoundException e) {
             throw new DatasetDoesNotExistException();
         } catch (TreeNotFoundException e) {
@@ -220,7 +238,7 @@ public class ComputeServiceImpl implements ComputeService {
             throw new IllegalArgumentException("Invalid datasetId");
 
         try {
-            Dataset dataset = datasetService.getDataset(projectId, datasetId, userId);
+            Dataset dataset = datasetMetadataService.getDataset(projectId, datasetId, userId);
 
             String typingDataId = dataset.getTypingDataId();
 
@@ -245,7 +263,7 @@ public class ComputeServiceImpl implements ComputeService {
             throw new IllegalArgumentException("Invalid datasetId");
 
         try {
-            Dataset dataset = datasetService.getDataset(projectId, datasetId, userId);
+            Dataset dataset = datasetMetadataService.getDataset(projectId, datasetId, userId);
 
             String isolateDataId = dataset.getIsolateDataId();
 
@@ -273,7 +291,7 @@ public class ComputeServiceImpl implements ComputeService {
             throw new IllegalArgumentException("Invalid treeId");
 
         try {
-            treeService.assertExists(projectId, datasetId, treeId, userId);
+            treeMetadataService.assertExists(projectId, datasetId, treeId, userId);
         } catch (DatasetNotFoundException e) {
             throw new DatasetDoesNotExistException();
         } catch (TreeNotFoundException e) {

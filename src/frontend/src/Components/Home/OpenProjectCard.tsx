@@ -11,7 +11,7 @@ import {WebUiUris} from "../../Pages/WebUiUris"
  */
 export function OpenProjectCard() {
     const navigate = useNavigate()
-
+    
     return (
         <Paper sx={{
             p: 4,

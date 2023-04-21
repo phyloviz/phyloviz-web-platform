@@ -1,16 +1,16 @@
 package org.phyloviz.pwp.administration.http.controllers.projects;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.administration.http.models.projects.createProject.CreateProjectInputModel;
-import org.phyloviz.pwp.administration.http.models.projects.createProject.CreateProjectOutputModel;
-import org.phyloviz.pwp.administration.http.models.projects.deleteProject.DeleteProjectOutputModel;
-import org.phyloviz.pwp.administration.http.models.projects.getProject.GetProjectOutputModel;
-import org.phyloviz.pwp.administration.http.models.projects.getProjects.GetProjectsOutputModel;
+import org.phyloviz.pwp.administration.http.models.projects.create_project.CreateProjectInputModel;
+import org.phyloviz.pwp.administration.http.models.projects.create_project.CreateProjectOutputModel;
+import org.phyloviz.pwp.administration.http.models.projects.delete_project.DeleteProjectOutputModel;
+import org.phyloviz.pwp.administration.http.models.projects.get_project.GetProjectOutputModel;
+import org.phyloviz.pwp.administration.http.models.projects.get_projects.GetProjectsOutputModel;
+import org.phyloviz.pwp.administration.http.service.project.ProjectService;
 import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.service.dtos.project.CreateProjectOutput;
-import org.phyloviz.pwp.shared.service.dtos.project.ProjectDTO;
-import org.phyloviz.pwp.shared.service.project.ProjectService;
+import org.phyloviz.pwp.shared.service.dtos.project.FullProjectInfo;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,9 +62,9 @@ public class ProjectsController {
             @PathVariable String projectId,
             User user
     ) {
-        ProjectDTO projectDTO = projectService.getProjectDTO(projectId, user.getId());
+        FullProjectInfo fullProjectInfo = projectService.getFullProjectInfo(projectId, user.getId());
 
-        return new GetProjectOutputModel(projectDTO);
+        return new GetProjectOutputModel(fullProjectInfo);
     }
 
     /**

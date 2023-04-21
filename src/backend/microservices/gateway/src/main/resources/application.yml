@@ -15,29 +15,25 @@ pwp:
         - method: GET
           path: /projects
         - method: GET
-          path: /project/{projectId}
+          path: /projects/{projectId}
         - method: DELETE
-          path: /projects/{id}
+          path: /projects/{projectId}
         - method: POST
-          path: /project/{projectId}/datasets
+          path: /projects/{projectId}/datasets
         - method: GET
-          path: /project/{projectId}/datasets/{datasetId}
+          path: /projects/{projectId}/datasets/{datasetId}
         - method: DELETE
-          path: /project/{projectId}/datasets/{datasetId}
+          path: /projects/{projectId}/datasets/{datasetId}
         - method: DELETE
           path: /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}
         - method: DELETE
           path: /projects/{projectId}/datasets/{datasetId}/trees/{treeId}
         - method: DELETE
           path: /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}
-        - method: POST
-          path: /project/{projectId}/files/typing-data
         - method: DELETE
-          path: /project/{projectId}/files/typing-data/{typingDataId}
-        - method: POST
-          path: /project/{projectId}/files/isolate-data
+          path: /projects/{projectId}/files/typing-data/{typingDataId}
         - method: DELETE
-          path: /project/{projectId}/files/isolate-data/{isolateDataId}
+          path: /projects/{projectId}/files/isolate-data/{isolateDataId}
 
     compute:
       uri: http://localhost:8086
@@ -71,6 +67,14 @@ pwp:
         - method: GET
           path: /projects/{projectId}/files/typing-data/{typingDataId}/file
 
+    file-transfer:
+      uri: http://localhost:8089
+      routes:
+        - method: POST
+          path: /projects/{projectId}/files/typing-data
+        - method: POST
+          path: /projects/{projectId}/files/isolate-data
+
 
 server:
   port: 8083
@@ -81,22 +85,6 @@ spring:
       host: localhost
       port: 6379
       password: aC29^iCMUfSyk^xpi7e1AUvfu96kbV
-  cloud:
-    gateway:
-      default-filters:
-        - TokenRelay=
-
-      routes:
-        - id: administration
-          uri: http://localhost:8088
-          predicates:
-            - Path=/api/**
-          filters:
-            - StripPrefix=1
-        - id: home
-          uri: ${pwp.react-client-url}
-          predicates:
-            - Path=/**
 
 
   security:
@@ -110,7 +98,7 @@ spring:
           phyloviz-web-platform-client:
             provider: keycloak
             client-id: phyloviz-web-platform-client
-            client-secret: 3rG9M1rnH7gKX29QujY7HQedPs7KT1Iu
+            client-secret: whCCD9r37qj8mx9H7R4mzIrSezYf3H7R
             redirect-uri: "{baseUrl}/${pwp.security.oauth2.redirect-uri}"
 
             scope:
@@ -119,4 +107,4 @@ spring:
               - profile
 logging:
   level:
-    root: info
+    root: debug

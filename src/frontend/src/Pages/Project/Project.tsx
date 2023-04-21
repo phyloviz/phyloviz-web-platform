@@ -25,7 +25,7 @@ export default function Project() {
         <Box sx={{
             display: "flex",
             flexDirection: "row",
-            height: '90%',
+            height: '90%', 
             width: '100%',
         }}>
             <ProjectStructure project={project} workflows={workflows} loading={loadingFiles || loadingWorkflows}/>
