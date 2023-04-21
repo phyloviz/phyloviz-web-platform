@@ -52,8 +52,9 @@ export interface DistanceMatrix {
 export interface Dataset {
     datasetId: string
     name: string
+    description: string
     typingDataId: string
-    isolateDataId: string
+    isolateDataId: string | null
     distanceMatrices: DistanceMatrix[]
     trees: Tree[]
     treeViews: TreeView[]
@@ -82,3 +83,5 @@ export interface GetProjectOutputModel {
     datasets: Dataset[]
     files: ProjectFiles
 }
+
+export type Project = GetProjectOutputModel

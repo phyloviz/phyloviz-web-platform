@@ -1,151 +1,61 @@
+import {useParams} from "react-router-dom"
+import {useEffect, useState} from "react"
+import VisualizationService from "../../../Services/visualization/VisualizationService"
+import {
+    GetIsolateDataSchemaOutputModel
+} from "../../../Services/visualization/models/getIsolateDataSchema/GetIsolateDataSchemaOutputModel"
+import {
+    GetIsolateDataRowsOutputModel
+} from "../../../Services/visualization/models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel"
+
 /**
  * Hook for IsolateData page.
  */
 export function useIsolateData() {
-    // TODO: Implement useIsolateData
+    const {projectId, typingDataId} = useParams<{
+        projectId: string,
+        typingDataId: string
+    }>()
+
+    const [isolateDataSchema, setIsolateDataSchema] = useState<GetIsolateDataSchemaOutputModel>()
+    const [isolateDataRows, setIsolateDataRows] = useState<GetIsolateDataRowsOutputModel>()
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<string | null>(null)
+
+    useEffect(() => {
+        setLoading(true)
+        VisualizationService.getIsolateDataSchema(projectId!, typingDataId!)
+            .then((res) => setIsolateDataSchema(res))
+            .catch((err) => setError(err))
+
+        VisualizationService.getIsolateDataRows(projectId!, typingDataId!)
+            .then((res) => setIsolateDataRows(res))
+            .catch((err) => setError(err))
+            .finally(() => setLoading(false))
+    }, [projectId, typingDataId])
 
     return {
         data: {
-            columns: [
-                {field: 'id', headerName: 'ID', width: 70},
-                {field: 'isolate', headerName: 'Isolate', width: 130},
-                {field: 'aliases', headerName: 'Aliases', width: 130},
-                {field: 'country', headerName: 'Country', width: 130},
-                {field: 'continent', headerName: 'Continent', width: 130},
-                {field: 'region', headerName: 'Region', width: 130},
-                {field: 'town_or_city', headerName: 'Town or City', width: 130},
-                {field: 'year', headerName: 'Year', width: 130},
-                {field: 'month', headerName: 'Month', width: 130},
-                {field: 'isolation_date', headerName: 'Isolation Date', width: 130},
-            ],
-            rows: [
+            columns: isolateDataSchema?.headers.map((header) => (
+                {field: header, headerName: header, width: 100}
+            )) ?? [],
+            rows: isolateDataRows?.rows.map((row) => (
                 {
-                    id: 1,
-                    isolate: 'P09',
-                    aliases: '',
-                    country: 'Unknown',
-                    continent: '',
-                    region: '',
-                    town_or_city: '',
-                    year: '',
-                    month: '',
-                    isolation_date: ''
-                },
-                {
-                    id: 2,
-                    isolate: 'P12',
-                    aliases: '',
-                    country: 'Unknown',
-                    continent: '',
-                    region: '',
-                    town_or_city: '',
-                    year: '',
-                    month: '',
-                    isolation_date: ''
-                },
-                {
-                    id: 3,
-                    isolate: 'P18',
-                    aliases: 'ATCC43439',
-                    country: 'Canada',
-                    continent: 'North America',
-                    region: '',
-                    town_or_city: '',
-                    year: '',
-                    month: '',
-                    isolation_date: ''
-                },
-                {
-                    id: 4,
-                    isolate: 'P22',
-                    aliases: 'ATCC43448',
-                    country: 'Canada',
-                    continent: 'North America',
-                    region: '',
-                    town_or_city: '',
-                    year: '',
-                    month: '',
-                    isolation_date: ''
-                },
-                {
-                    id: 5,
-                    isolate: 'P26',
-                    aliases: 'ATCC43477',
-                    country: 'Unknown',
-                    continent: '',
-                    region: '',
-                    town_or_city: '',
-                    year: '',
-                    month: '',
-                    isolation_date: ''
-                },
-                {
-                    id: 6,
-                    isolate: 'P27',
-                    aliases: '',
-                    country: 'Unknown',
-                    continent: '',
-                    region: '',
-                    town_or_city: '',
-                    year: '',
-                    month: '',
-                    isolation_date: ''
-                },
-                {
-                    id: 7,
-                    isolate: 'P31',
-                    aliases: '',
-                    country: 'Unknown',
-                    continent: '',
-                    region: '',
-                    town_or_city: '',
-                    year: '',
-                    month: '',
-                    isolation_date: ''
-                },
-                {
-                    id: 8,
-                    isolate: 'P33',
-                    aliases: '',
-                    country: 'Unknown',
-                    continent: '',
-                    region: '',
-                    town_or_city: '',
-                    year: '',
-                    month: '',
-                    isolation_date: ''
-                },
-                {
-                    id: 9,
-                    isolate: 'P43',
-                    aliases: '',
-                    country: 'Canada',
-                    continent: 'North America',
-                    region: 'Vancouver',
-                    town_or_city: '',
-                    year: '',
-                    month: '',
-                    isolation_date: ''
-                },
-                {
-                    id: 10,
-                    isolate: 'P55',
-                    aliases: '',
-                    country: 'Unknown',
-                    continent: '',
-                    region: '',
-                    town_or_city: '',
-                    year: '',
-                    month: '',
-                    isolation_date: ''
-                },
-            ],
+                    id: row.id,
+                    ...row.row.reduce((acc, curr, index) => {
+                        acc[isolateDataSchema!.headers[index]] = curr
+                        return acc
+                    }, {} as Record<string, string>)
+                }
+            )) ?? [],
             initialState: {
                 rowGrouping: {
                     groupBy: ['commodity'],
                 }
             }
         },
-        loading: false
+        loading,
+        error,
+        clearError: () => setError(null)
     }
 }

@@ -7,8 +7,8 @@ import FinishIcon from "@mui/icons-material/Done"
 import {FileUploader} from "react-drag-drop-files"
 import CancelIcon from "@mui/icons-material/Cancel"
 import {FileType, useUploadFiles} from "./useUploadFiles"
-import Alert from '@mui/material/Alert'
-import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner"
+import {ErrorAlert} from "../../../Components/Shared/ErrorAlert"
 
 /**
  * Upload Files page.
@@ -21,7 +21,8 @@ export default function UploadFiles() {
         handleCancel,
         handleSubmit,
         isUploading,
-        error
+        error,
+        clearError
     } = useUploadFiles()
 
     return (
@@ -74,7 +75,7 @@ export default function UploadFiles() {
                             </FormControl>
 
                             <FileUploader handleChange={handleFileChange} name="file" required/>
-                            {error && <Alert severity="error" sx={{mt: 2}}>{error}</Alert>}
+                            <ErrorAlert error={error} clearError={clearError}/>
                         </Box>
 
                         {

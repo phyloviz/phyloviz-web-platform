@@ -3,11 +3,11 @@ import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import { Container } from "@mui/material"
 import { useRef } from "react"
-import { VisualizationService } from "../../../Services/visualization/VisualizationService"
 import { useProjectContext } from "../useProject"
 import { GetTreeViewOutputModel } from "../../../Services/visualization/models/getTreeView/GetTreeViewOutputModel"
 import { useParams } from "react-router-dom"
 import { GraphConfigInterface, TreeViewGraph } from "./cosmos/TreeViewGraph"
+import VisualizationService from "../../../Services/visualization/VisualizationService";
 
 
 export type Node = {
@@ -35,7 +35,6 @@ export default function TreeView() {
     React.useEffect(() => {
         async function init() {
             const data: GetTreeViewOutputModel = await VisualizationService.getTreeView(projectId!, datasetId!, treeViewId!)
-
             const nodes = data.nodes.map(node => {
                 return {
                     id: node.st,

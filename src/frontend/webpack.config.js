@@ -1,6 +1,7 @@
+const env = process.env.NODE_ENV || 'development'
 
 module.exports = {
-    mode: "development",
+    mode: env,
     resolve: {
         extensions: [".js", ".ts", ".tsx", ".css", ".ico"]
     },

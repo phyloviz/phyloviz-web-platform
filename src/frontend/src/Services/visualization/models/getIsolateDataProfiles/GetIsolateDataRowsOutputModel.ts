@@ -1,5 +1,5 @@
 export interface GetIsolateDataRowsOutputModel {
-    data: Row[]
+    rows: Row[]
     totalCount: number
 }
 

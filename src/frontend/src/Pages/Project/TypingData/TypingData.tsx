@@ -2,15 +2,17 @@ import * as React from "react"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import {Container} from "@mui/material"
-import {DataGrid, GridToolbar} from '@mui/x-data-grid';
-import Box from "@mui/material/Box";
-import {useTypingData} from "./useTypingData";
+import {DataGrid, GridToolbar} from '@mui/x-data-grid'
+import Box from "@mui/material/Box"
+import {useTypingData} from "./useTypingData"
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner"
+import {ErrorAlert} from "../../../Components/Shared/ErrorAlert"
 
 /**
  * TypingData page.
  */
 export default function TypingData() {
-    const {data, loading} = useTypingData()
+    const {data, loading, error, clearError} = useTypingData()
 
     return (
         <Container>
@@ -22,24 +24,21 @@ export default function TypingData() {
                 alignItems: "center",
                 height: '98%',
             }}>
-                <Typography component="h1" variant="h4">
+                <Typography component="h1" variant="h4" sx={{mb: 2}}>
                     Typing Data
                 </Typography>
 
+                {loading && <LoadingSpinner text={"Loading typing data..."}/>}
+                <ErrorAlert error={error} clearError={clearError}/>
+
                 <Box sx={{height: '100%', width: '100%'}}>
-                    <DataGrid
+                    <DataGrid // If you want to customize this more, see https://mui.com/x/api/data-grid/data-grid/
                         rows={data.rows}
                         columns={data.columns}
-                        initialState={{ // TODO: Explore the interfaces for DataGrid to customize the grid
-                            pagination: {
-                                paginationModel: {
-                                    pageSize: 10
-                                }
-                            },
-                        }}
                         autoPageSize
                         disableRowSelectionOnClick
                         loading={loading}
+                        density="compact"
                         slots={{toolbar: GridToolbar}}
                         sx={{height: '100%', width: '100%'}}
                     />

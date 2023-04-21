@@ -17,8 +17,9 @@ import {GetDatasetOutputModel} from "./models/getDataset/GetDatasetOutputModel"
 import {GetDatasetsOutputModel} from "./models/getDatasets/GetDatasetsOutputModel"
 import {DeleteDatasetOutputModel} from "./models/deleteDataset/DeleteDatasetOutputModel"
 import {del, get, post} from "../utils/apiFetch"
+import {MockAdministrationService} from "./MockAdministrationService"
 
-export namespace AdministrationService {
+namespace AdministrationService {
 
     /**
      * Gets all projects belonging to a certain user.
@@ -246,3 +247,7 @@ export namespace AdministrationService {
         return await del<DeleteDatasetOutputModel>(WebApiUris.deleteDataset(projectId, datasetId))
     }
 }
+
+const env = process.env.NODE_ENV
+
+export default env !== "development" ? MockAdministrationService : AdministrationService

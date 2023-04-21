@@ -20,12 +20,20 @@ export namespace WebUiUris {
     export const DISTANCE_MATRIX = `${DATASET}/distance-matrices/:distanceMatrixId`
     export const TREE = `${DATASET}/trees/:treeId`
     export const TREE_VIEW = `${DATASET}/tree-views/:treeViewId`
+    export const REPORT = `${DATASET}/report`
 
-    export const COMPUTE_CONFIG_GOEBURST = `${DATASET}/compute-configs/goeburst`
-    export const COMPUTE_CONFIG_GOEBURST_FULL_MST = `${DATASET}/compute-configs/goeburst-full-mst`
-    export const COMPUTE_CONFIG_HIERARCHICAL_CLUSTERING = `${DATASET}/compute-configs/hierarchical-clustering`
-    export const COMPUTE_CONFIG_NEIGHBOR_JOINING = `${DATASET}/compute-configs/neighbor-joining`
-    export const COMPUTE_CONFIG_NLV_GRAPH = `${DATASET}/compute-configs/nlv-graph`
+    export const COMPUTE = `${DATASET}/compute`
+    export const COMPUTE_DISTANCE_MATRIX = `${COMPUTE}/distance-matrix`
+    export const COMPUTE_TREE = `${COMPUTE}/tree`
+    export const COMPUTE_TREE_VIEW = `${COMPUTE}/tree-view`
+
+    export const COMPUTE_HAMMING_DISTANCE = `${COMPUTE_DISTANCE_MATRIX}/hamming-distance`
+
+    export const COMPUTE_GOEBURST = `${COMPUTE_TREE}/goeburst`
+    export const COMPUTE_GOEBURST_FULL_MST = `${COMPUTE_TREE}/goeburst-full-mst`
+    export const COMPUTE_HIERARCHICAL_CLUSTERING = `${COMPUTE_TREE}/hierarchical-clustering`
+    export const COMPUTE_NEIGHBOR_JOINING = `${COMPUTE_TREE}/neighbor-joining`
+    export const COMPUTE_NLV_GRAPH = `${COMPUTE_TREE}/nlv-graph`
 
     export const project = (projectId: string) => `/projects/${projectId}`
     export const createDataset = (projectId: string) => `/projects/${projectId}/create-dataset`
@@ -36,12 +44,13 @@ export namespace WebUiUris {
     export const distanceMatrix = (projectId: string, datasetId: string, distanceMatrixId: string) => `/projects/${projectId}/datasets/${datasetId}/distance-matrices/${distanceMatrixId}`
     export const tree = (projectId: string, datasetId: string, treeId: string) => `/projects/${projectId}/datasets/${datasetId}/trees/${treeId}`
     export const treeView = (projectId: string, datasetId: string, treeViewId: string) => `/projects/${projectId}/datasets/${datasetId}/tree-views/${treeViewId}`
+    export const report = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/report`
 
-    export const computeConfigHammingDistance = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute-configs/hamming-distance`
+    export const computeHammingDistance = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/distance-matrix/hamming-distance`
 
-    export const computeConfigGoeburst = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute-configs/goeburst`
-    export const computeConfigGoeburstFullMst = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute-configs/goeburst-full-mst`
-    export const computeConfigHierarchicalClustering = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute-configs/hierarchical-clustering`
-    export const computeConfigNeighborJoining = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute-configs/neighbor-joining`
-    export const computeConfigNlvGraph = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute-configs/nlv-graph`
+    export const computeGoeburst = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree/goeburst`
+    export const computeGoeburstFullMst = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree/goeburst-full-mst`
+    export const computeHierarchicalClustering = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree/hierarchical-clustering`
+    export const computeNeighborJoining = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree/neighbor-joining`
+    export const computeNlvGraph = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree/nlv-graph`
 }

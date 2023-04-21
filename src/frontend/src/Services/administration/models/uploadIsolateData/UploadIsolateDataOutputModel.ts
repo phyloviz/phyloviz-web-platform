@@ -1,3 +1,4 @@
 export interface UploadIsolateDataOutputModel {
-    isolateDataFileId: string
+    projectId: string
+    isolateDataId: string
 }

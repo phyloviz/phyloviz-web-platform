@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "target": "es2019",
+    "target": "ES6",
     "moduleResolution": "node",
     "strict": true,
     "noImplicitAny": true,

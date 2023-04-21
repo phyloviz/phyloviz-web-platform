@@ -61,7 +61,7 @@ for [ISEL (Instituto Superior de Engenharia de Lisboa)](https://www.isel.pt/).
   which are performed server-side to avoid limitations of the client-side;
 * **Support for Epidemiological and Ancillary data**: The platform integrates epidemiological and ancillary data for
   isolates under study, enhancing the visualization and exploration of inference results;
-* **User-friendly interface**: The platform has a userDTO-friendly interface for performing phylogenetic analyses and
+* **User-friendly interface**: The platform has a user-friendly interface for performing phylogenetic analyses and
   visualizations.
 
 ---

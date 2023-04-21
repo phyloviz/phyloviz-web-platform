@@ -1,5 +1,5 @@
 export interface GetTypingDataProfilesOutputModel {
-    data: Profile[]
+    profiles: Profile[]
     totalCount: number
 }
 
