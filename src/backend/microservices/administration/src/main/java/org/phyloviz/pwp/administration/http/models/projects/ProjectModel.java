@@ -3,7 +3,7 @@ package org.phyloviz.pwp.administration.http.models.projects;
 import lombok.Data;
 import org.phyloviz.pwp.administration.http.models.datasets.DatasetModel;
 import org.phyloviz.pwp.administration.http.models.files.FilesModel;
-import org.phyloviz.pwp.administration.service.dtos.projects.ProjectDTO;
+import org.phyloviz.pwp.shared.service.dtos.project.FullProjectInfo;
 
 import java.util.List;
 
@@ -16,12 +16,12 @@ public class ProjectModel {
     private List<DatasetModel> datasets;
     private FilesModel files;
 
-    public ProjectModel(ProjectDTO projectDTO) {
-        this.projectId = projectDTO.getProjectId();
-        this.name = projectDTO.getName();
-        this.description = projectDTO.getDescription();
-        this.owner = projectDTO.getOwner();
-        this.datasets = projectDTO.getDatasets().stream().map(DatasetModel::new).toList();
-        this.files = new FilesModel(projectDTO.getFiles());
+    public ProjectModel(FullProjectInfo fullProjectInfo) {
+        this.projectId = fullProjectInfo.getProjectId();
+        this.name = fullProjectInfo.getName();
+        this.description = fullProjectInfo.getDescription();
+        this.owner = fullProjectInfo.getOwner();
+        this.datasets = fullProjectInfo.getDatasets().stream().map(DatasetModel::new).toList();
+        this.files = new FilesModel(fullProjectInfo.getFiles());
     }
 }

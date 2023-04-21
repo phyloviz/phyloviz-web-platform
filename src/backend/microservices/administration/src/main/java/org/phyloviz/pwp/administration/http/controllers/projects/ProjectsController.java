@@ -1,19 +1,16 @@
 package org.phyloviz.pwp.administration.http.controllers.projects;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.administration.http.models.projects.createProject.CreateProjectInputModel;
-import org.phyloviz.pwp.administration.http.models.projects.createProject.CreateProjectOutputModel;
-import org.phyloviz.pwp.administration.http.models.projects.deleteProject.DeleteProjectOutputModel;
-import org.phyloviz.pwp.administration.http.models.projects.getProject.GetProjectOutputModel;
-import org.phyloviz.pwp.administration.http.models.projects.getProjects.GetProjectsOutputModel;
-import org.phyloviz.pwp.administration.service.dtos.projects.ProjectDTO;
-import org.phyloviz.pwp.administration.service.dtos.projects.createProject.CreateProjectOutputDTO;
-import org.phyloviz.pwp.administration.service.dtos.projects.deleteProject.DeleteProjectInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.projects.deleteProject.DeleteProjectOutputDTO;
-import org.phyloviz.pwp.administration.service.dtos.projects.getProject.GetProjectInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.projects.getProjects.GetProjectsInputDTO;
-import org.phyloviz.pwp.administration.service.projects.ProjectsService;
+import org.phyloviz.pwp.administration.http.models.projects.create_project.CreateProjectInputModel;
+import org.phyloviz.pwp.administration.http.models.projects.create_project.CreateProjectOutputModel;
+import org.phyloviz.pwp.administration.http.models.projects.delete_project.DeleteProjectOutputModel;
+import org.phyloviz.pwp.administration.http.models.projects.get_project.GetProjectOutputModel;
+import org.phyloviz.pwp.administration.http.models.projects.get_projects.GetProjectsOutputModel;
+import org.phyloviz.pwp.administration.http.service.project.ProjectService;
 import org.phyloviz.pwp.shared.domain.User;
+import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
+import org.phyloviz.pwp.shared.service.dtos.project.CreateProjectOutput;
+import org.phyloviz.pwp.shared.service.dtos.project.FullProjectInfo;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectsController {
 
-    private final ProjectsService projectsService;
+    private final ProjectService projectService;
 
     /**
      * Creates a project.
@@ -44,11 +41,13 @@ public class ProjectsController {
             @RequestBody CreateProjectInputModel createProjectInputModel,
             User user
     ) {
-        CreateProjectOutputDTO createProjectOutputDTO = projectsService.createProject(
-                createProjectInputModel.toDTO(user)
+        CreateProjectOutput createProjectOutput = projectService.createProject(
+                createProjectInputModel.getName(),
+                createProjectInputModel.getDescription(),
+                user.getId()
         );
 
-        return new CreateProjectOutputModel(createProjectOutputDTO);
+        return new CreateProjectOutputModel(createProjectOutput);
     }
 
     /**
@@ -63,11 +62,9 @@ public class ProjectsController {
             @PathVariable String projectId,
             User user
     ) {
-        ProjectDTO projectDTO = projectsService.getProject(
-                new GetProjectInputDTO(projectId, user.toDTO())
-        );
+        FullProjectInfo fullProjectInfo = projectService.getFullProjectInfo(projectId, user.getId());
 
-        return new GetProjectOutputModel(projectDTO);
+        return new GetProjectOutputModel(fullProjectInfo);
     }
 
     /**
@@ -82,11 +79,9 @@ public class ProjectsController {
             @PathVariable String projectId,
             User user
     ) {
-        DeleteProjectOutputDTO deleteProjectOutputDTO = projectsService.deleteProject(
-                new DeleteProjectInputDTO(projectId, user.toDTO())
-        );
+        projectService.deleteProject(projectId, user.getId());
 
-        return new DeleteProjectOutputModel(deleteProjectOutputDTO);
+        return new DeleteProjectOutputModel(projectId);
     }
 
     /**
@@ -99,10 +94,8 @@ public class ProjectsController {
     public GetProjectsOutputModel getProjects(
             User user
     ) {
-        List<ProjectDTO> projectDTOS = projectsService.getProjects(
-                new GetProjectsInputDTO(user.toDTO())
-        );
+        List<Project> projects = projectService.getProjects(user.getId());
 
-        return new GetProjectsOutputModel(projectDTOS);
+        return new GetProjectsOutputModel(projects);
     }
 }

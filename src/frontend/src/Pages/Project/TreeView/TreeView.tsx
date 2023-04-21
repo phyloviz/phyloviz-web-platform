@@ -1,22 +1,21 @@
 import * as React from "react"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
-import { Container } from "@mui/material"
+import { Box, Container } from "@mui/material"
 import { useRef } from "react"
 import { useProjectContext } from "../useProject"
-import { GetTreeViewOutputModel } from "../../../Services/visualization/models/getTreeView/GetTreeViewOutputModel"
+import { Node, Edge, GetTreeViewOutputModel } from "../../../Services/visualization/models/getTreeView/GetTreeViewOutputModel"
 import { useParams } from "react-router-dom"
 import { GraphConfigInterface, TreeViewGraph } from "./cosmos/TreeViewGraph"
 import VisualizationService from "../../../Services/visualization/VisualizationService";
 
-
-export type Node = {
+export type VizNode = {
     id: string;
     // x: number;
     // y: number;
 };
 
-export type Link = {
+export type VizLink = {
     source: string;
     target: string;
 };
@@ -30,12 +29,52 @@ export default function TreeView() {
     const { projectId, datasetId, treeViewId } = useParams<{ projectId: string, datasetId: string, treeViewId: string }>()
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
-    const graphRef = useRef<TreeViewGraph<Node, Link>>()
+    const graphRef = useRef<TreeViewGraph<VizNode, VizLink>>()
+
 
     React.useEffect(() => {
         async function init() {
             const data: GetTreeViewOutputModel = await VisualizationService.getTreeView(projectId!, datasetId!, treeViewId!)
-            const nodes = data.nodes.map(node => {
+
+
+            function findBiggestGroup(nodes: Node[], edges: Edge[]): Node[] {
+                const visited = new Set<string>();
+                let maxGroup: Node[] = [];
+
+                for (const node of nodes) {
+                    if (!visited.has(node.st)) {
+                        const group = dfs(node, nodes, edges, visited);
+                        if (group.length > maxGroup.length) {
+                            maxGroup = group;
+                        }
+                    }
+                }
+
+                return maxGroup;
+            }
+
+            function dfs(node: Node, nodes: Node[], edges: Edge[], visited: Set<string>): Node[] {
+                const group: Node[] = [];
+                const stack: Node[] = [node];
+
+                while (stack.length > 0) {
+                    const current = stack.pop()!;
+                    visited.add(current.st);
+                    group.push(current);
+
+                    for (const edge of edges) {
+                        if (edge.from === current.st && !visited.has(edge.to)) {
+                            const neighbor = nodes.find(node => node.st === edge.to)!;
+                            stack.push(neighbor);
+                            visited.add(neighbor.st);
+                        }
+                    }
+                }
+
+                return group;
+            }
+
+            const nodes = findBiggestGroup(data.nodes, data.edges).map(node => {
                 return {
                     id: node.st,
                     // x: node.coordinates[0],
@@ -50,7 +89,7 @@ export default function TreeView() {
                 }
             })
 
-            const config: GraphConfigInterface<Node, Link> = {
+            const config: GraphConfigInterface<VizNode, VizLink> = {
                 backgroundColor: "#FFFFFF",
                 nodeSize: 4,
                 nodeColor: "#4B5BBF",
@@ -60,15 +99,18 @@ export default function TreeView() {
                 linkArrows: false,
                 linkGreyoutOpacity: 0,
                 simulation: {
-                    linkDistance: 1,
-                    linkSpring: 2,
+                    decay: Infinity,
+                    gravity: 0.01,
+                    repulsionQuadtreeLevels: 0.3,
+                    repulsionTheta: 0.5,
+                    linkDistance: 10,
+                    linkSpring: 1,
+                    friction: 0.85,
                     repulsion: 0.2,
-                    gravity: 0.1,
-                    decay: 100000
                 }
             }
 
-            const graph = new TreeViewGraph<Node, Link>(canvasRef.current!, config)
+            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, config)
 
             graph.setData(nodes, links)
 
@@ -80,21 +122,13 @@ export default function TreeView() {
 
 
     return (
-        <Container>
-            <Paper sx={{
-                p: 4,
-                display: "flex",
-                flexDirection: "column",
-                mt: 4,
-                alignItems: "center"
-            }}>
-                <Typography component="h1" variant="h4">
-                    Tree View
-                </Typography>
-                <canvas ref={canvasRef}>
+        <Box sx={{ mx: "auto" }}>
+            <Typography component="h1" variant="h4">
+                Tree View
+            </Typography>
+            <canvas ref={canvasRef}>
 
-                </canvas>
-            </Paper>
-        </Container>
+            </canvas>
+        </Box>
     )
 }

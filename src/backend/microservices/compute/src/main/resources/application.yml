@@ -1,30 +1,14 @@
 server:
   port: 8086
 
+spring:
+  config:
+    import: application-shared.yml
+
 flowviz:
   url: http://localhost:3000/flowapi
   username: admin
   password: admin
-
-spring:
-  data:
-    mongodb:
-      host: localhost
-      port: 28017
-      username: root
-      password: root
-      database: phyloviz-web-platform
-      authentication-database: admin
-      auto-index-creation: true
-  security:
-    oauth2:
-      resourceserver:
-        opaquetoken:
-          introspection-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/token/introspect
-          client-id: phyloviz-web-platform-client
-          client-secret: whCCD9r37qj8mx9H7R4mzIrSezYf3H7R
-#        jwt:
-#          jwk-set-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/certs
 
 logging:
   level:

@@ -8,7 +8,6 @@ import {GetDistanceMatrixOutputModel} from "./models/getDistanceMatrix/GetDistan
 import {GetTreeOutputModel} from "./models/getTree/GetTreeOutputModel"
 import {GetTreeViewOutputModel} from "./models/getTreeView/GetTreeViewOutputModel"
 
-
 export namespace MockVisualizationService {
 
     const DELAY = 1000
@@ -194,9 +193,6 @@ export namespace MockVisualizationService {
         datasetId: string,
         treeViewId: string
     ): Promise<GetTreeViewOutputModel> {
-        return {
-            nodes: [],
-            edges: []
-        }
+        return await fetch('/mock/tree-view.json').then(response => response.json())
     }
 }

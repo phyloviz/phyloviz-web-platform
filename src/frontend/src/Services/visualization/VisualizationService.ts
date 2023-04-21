@@ -11,7 +11,6 @@ import {GetTreeOutputModel} from "./models/getTree/GetTreeOutputModel"
 import {GetTreeViewOutputModel} from "./models/getTreeView/GetTreeViewOutputModel"
 import {MockVisualizationService} from "./MockVisualizationService"
 
-
 namespace VisualizationService {
 
     /**
@@ -147,6 +146,6 @@ namespace VisualizationService {
     }
 }
 
-const env = process.env.NODE_ENV
+const env = process.env.MOCK_ENV
 
-export default env !== "development" ? MockVisualizationService : VisualizationService
+export default env === "true" ? MockVisualizationService : VisualizationService

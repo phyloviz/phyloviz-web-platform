@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "strict": true,
     "noImplicitAny": true,
+    "resolveJsonModule": true,
     "typeRoots": [
       "node_modules/@types",
       "src/Utils/types"

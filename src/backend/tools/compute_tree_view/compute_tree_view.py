@@ -117,7 +117,6 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
             'treeId': tree_id
         },
         'layout': 'radial',
-        'url': base_url,
         'adapterId': 'phylodb',
         'adapterSpecificData': {
             'projectId': project_id,

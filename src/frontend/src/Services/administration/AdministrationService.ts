@@ -248,6 +248,6 @@ namespace AdministrationService {
     }
 }
 
-const env = process.env.NODE_ENV
+const env = process.env.MOCK_ENV
 
-export default env !== "development" ? MockAdministrationService : AdministrationService
+export default env === "true" ? MockAdministrationService : AdministrationService

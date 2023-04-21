@@ -1,20 +1,22 @@
 package org.phyloviz.pwp.shared.adapters.tree;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.shared.adapters.tree.adapter.TreeAdapter;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class TreeAdapterFactory {
 
-    private final PhyloDBTreeAdapter phyloDBTreeAdapter;
-    private final S3TreeAdapter s3TreeAdapter;
+    private final TreeAdapterRegistry treeAdapterRegistry;
 
-    public TreeAdapter getTreeAdapter(String adapterId) {
-        return switch (adapterId) {
-            case "phylodb" -> phyloDBTreeAdapter;
-            case "s3" -> s3TreeAdapter;
-            default -> throw new IllegalArgumentException("Unknown adapter id: " + adapterId);
-        };
+    /**
+     * Returns the TreeAdapter for the given adapterId.
+     *
+     * @param adapterId the id of the adapter
+     * @return the TreeAdapter
+     */
+    public TreeAdapter getTreeAdapter(TreeAdapterId adapterId) {
+        return treeAdapterRegistry.getTreeAdapter(adapterId);
     }
 }

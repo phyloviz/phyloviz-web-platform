@@ -25,11 +25,11 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
     implementation 'org.zalando:problem-spring-web-starter:0.27.0'
 
+    implementation 'software.amazon.awssdk:s3:2.20.28'
+    implementation 'software.amazon.awssdk:s3-transfer-manager:2.20.28'
+
     implementation 'org.reflections:reflections:0.10.2'
 
-    implementation files('libs/phylodb-1.0.0.jar')
-
-    implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.6'
 }

@@ -1,9 +1,9 @@
 package org.phyloviz.pwp.administration.http.models.files;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.http.models.files.isolateData.IsolateDataModel;
-import org.phyloviz.pwp.administration.http.models.files.typingData.TypingDataModel;
-import org.phyloviz.pwp.administration.service.dtos.files.FilesDTO;
+import org.phyloviz.pwp.administration.http.models.files.isolate_data.IsolateDataModel;
+import org.phyloviz.pwp.administration.http.models.files.typing_data.TypingDataModel;
+import org.phyloviz.pwp.shared.service.dtos.files.FilesInfo;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ public class FilesModel {
     private List<TypingDataModel> typingData;
     private List<IsolateDataModel> isolateData;
 
-    public FilesModel(FilesDTO filesDTO) {
-        this.typingData = filesDTO.getTypingData().stream().map(TypingDataModel::new).toList();
-        this.isolateData = filesDTO.getIsolateData().stream().map(IsolateDataModel::new).toList();
+    public FilesModel(FilesInfo filesInfo) {
+        this.typingData = filesInfo.getTypingData().stream().map(TypingDataModel::new).toList();
+        this.isolateData = filesInfo.getIsolateData().stream().map(IsolateDataModel::new).toList();
     }
 }

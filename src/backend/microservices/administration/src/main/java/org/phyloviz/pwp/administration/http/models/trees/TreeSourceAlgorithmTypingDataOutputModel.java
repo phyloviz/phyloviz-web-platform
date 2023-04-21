@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.http.models.trees;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.trees.TreeSourceAlgorithmTypingDataDTO;
+import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceAlgorithmTypingDataInfo;
 
 @Data
 public class TreeSourceAlgorithmTypingDataOutputModel implements TreeSourceOutputModel {
@@ -9,7 +9,7 @@ public class TreeSourceAlgorithmTypingDataOutputModel implements TreeSourceOutpu
     private String typingDataId;
     private String parameters;
 
-    public TreeSourceAlgorithmTypingDataOutputModel(TreeSourceAlgorithmTypingDataDTO treeSourceAlgorithmTypingDataDTO) {
+    public TreeSourceAlgorithmTypingDataOutputModel(TreeSourceAlgorithmTypingDataInfo treeSourceAlgorithmTypingDataDTO) {
         this.algorithm = treeSourceAlgorithmTypingDataDTO.getAlgorithm();
         this.typingDataId = treeSourceAlgorithmTypingDataDTO.getTypingDataId();
         this.parameters = treeSourceAlgorithmTypingDataDTO.getParameters();

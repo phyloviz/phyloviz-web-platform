@@ -7,6 +7,44 @@ pwp:
       redirect-uri: "/api/login/oauth2/code/{registrationId}"
 
   microservices:
+    administration:
+      uri: http://localhost:8088
+      routes:
+        - method: POST
+          path: /projects
+        - method: GET
+          path: /projects
+        - method: GET
+          path: /projects/{projectId}
+        - method: DELETE
+          path: /projects/{projectId}
+        - method: POST
+          path: /projects/{projectId}/datasets
+        - method: GET
+          path: /projects/{projectId}/datasets/{datasetId}
+        - method: DELETE
+          path: /projects/{projectId}/datasets/{datasetId}
+        - method: DELETE
+          path: /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}
+        - method: DELETE
+          path: /projects/{projectId}/datasets/{datasetId}/trees/{treeId}
+        - method: DELETE
+          path: /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}
+        - method: DELETE
+          path: /projects/{projectId}/files/typing-data/{typingDataId}
+        - method: DELETE
+          path: /projects/{projectId}/files/isolate-data/{isolateDataId}
+
+    compute:
+      uri: http://localhost:8086
+      routes:
+        - method: POST
+          path: /projects/{projectId}/workflows
+        - method: GET
+          path: /projects/{projectId}/workflows
+        - method: GET
+          path: /projects/{projectId}/workflows/{workflowId}
+
     visualization:
       uri: http://localhost:8085
       routes:
@@ -28,49 +66,14 @@ pwp:
           path: /projects/{projectId}/files/typing-data/{typingDataId}/profiles
         - method: GET
           path: /projects/{projectId}/files/typing-data/{typingDataId}/file
-    administration:
-      uri: http://localhost:8088
+
+    file-transfer:
+      uri: http://localhost:8089
       routes:
         - method: POST
-          path: /projects
-        - method: GET
-          path: /projects
-        - method: GET
-          path: /project/{projectId}
-        - method: DELETE
-          path: /projects/{id}
+          path: /projects/{projectId}/files/typing-data
         - method: POST
-          path: /project/{projectId}/datasets
-        - method: GET
-          path: /project/{projectId}/datasets/{datasetId}
-        - method: DELETE
-          path: /project/{projectId}/datasets/{datasetId}
-        - method: DELETE
-          path: /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}
-        - method: DELETE
-          path: /projects/{projectId}/datasets/{datasetId}/trees/{treeId}
-        - method: DELETE
-          path: /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}
-        - method: POST
-          path: /project/{projectId}/files/typing-data
-        - method: DELETE
-          path: /project/{projectId}/files/typing-data/{typingDataId}
-        - method: POST
-          path: /project/{projectId}/files/isolate-data
-        - method: DELETE
-          path: /project/{projectId}/files/isolate-data/{isolateDataId}
-
-    compute:
-      uri: http://localhost:8086
-      routes:
-        - method: POST
-          path: /projects/{projectId}/workflows
-        - method: GET
-          path: /projects/{projectId}/workflows
-        - method: GET
-          path: /projects/{projectId}/workflows/{workflowId}
-
-
+          path: /projects/{projectId}/files/isolate-data
 
 
 server:

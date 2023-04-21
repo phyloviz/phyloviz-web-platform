@@ -251,7 +251,7 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
             'projectId': project_id,
             'typingDataId': typing_data_id,
             'name': 'Typing Data ' + typing_data_id,
-            'url': base_url,
+
             'adapterId': 'phylodb',
             'adapterSpecificData': {
                 'datasetIds': [dataset_id]

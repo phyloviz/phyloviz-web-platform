@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.visualization.http.controllers.models.getTreeView;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.service.dtos.Edge;
+import org.phyloviz.pwp.shared.service.dtos.tree_view.Edge;
 
 @Data
 public class EdgeModel {

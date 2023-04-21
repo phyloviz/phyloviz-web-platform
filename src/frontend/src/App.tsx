@@ -60,13 +60,7 @@ import COMPUTE_HAMMING_DISTANCE = WebUiUris.COMPUTE_HAMMING_DISTANCE;
  */
 export default function App() {
 
-    const sessionManager = useSessionManager()
     const loggedIn = useLoggedIn()
-
-    // Clear session on app start
-    useEffect(() => {
-        sessionManager.clearSession()
-    }, [])
 
     /**
      * Protection route component, redirects to login page if not logged in.

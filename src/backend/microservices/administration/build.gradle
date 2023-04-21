@@ -18,7 +18,9 @@ repositories {
 }
 
 dependencies {
+    implementation project(path: ':microservices:shared-phylodb')
     implementation project(path: ':microservices:shared')
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api' version { jupiterVersion }
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine' version { jupiterVersion }
@@ -29,9 +31,6 @@ dependencies {
 
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
     implementation 'org.zalando:problem-spring-web-starter:0.27.0'
-
-    implementation 'software.amazon.awssdk:s3:2.20.28'
-    implementation 'software.amazon.awssdk:s3-transfer-manager:2.20.28'
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.6'
 }

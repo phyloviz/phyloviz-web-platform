@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.http.models.trees;
 
 import lombok.Data;
-import org.phyloviz.pwp.administration.service.dtos.trees.TreeSourceAlgorithmDistanceMatrixDTO;
+import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceAlgorithmDistanceMatrixInfo;
 
 @Data
 public class TreeSourceAlgorithmDistanceMatrixOutputModel implements TreeSourceOutputModel {
@@ -9,9 +9,9 @@ public class TreeSourceAlgorithmDistanceMatrixOutputModel implements TreeSourceO
     private String distanceMatrixId;
     private String parameters;
 
-    public TreeSourceAlgorithmDistanceMatrixOutputModel(TreeSourceAlgorithmDistanceMatrixDTO treeSourceAlgorithmDistanceMatrixDTO) {
-        this.algorithm = treeSourceAlgorithmDistanceMatrixDTO.getAlgorithm();
-        this.distanceMatrixId = treeSourceAlgorithmDistanceMatrixDTO.getDistanceMatrixId();
-        this.parameters = treeSourceAlgorithmDistanceMatrixDTO.getParameters();
+    public TreeSourceAlgorithmDistanceMatrixOutputModel(TreeSourceAlgorithmDistanceMatrixInfo treeSourceAlgorithmDistanceMatrixInfo) {
+        this.algorithm = treeSourceAlgorithmDistanceMatrixInfo.getAlgorithm();
+        this.distanceMatrixId = treeSourceAlgorithmDistanceMatrixInfo.getDistanceMatrixId();
+        this.parameters = treeSourceAlgorithmDistanceMatrixInfo.getParameters();
     }
 }

@@ -1,0 +1,14 @@
+server:
+  port: 8089
+
+spring:
+  config:
+    import: application-shared.yml
+
+adapters:
+  upload-isolate-data-adapter: S3
+  upload-typing-data-adapter: S3
+
+logging:
+  level:
+    root: debug

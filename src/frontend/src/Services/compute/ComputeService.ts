@@ -53,6 +53,6 @@ namespace ComputeService {
 }
 
 
-const env = process.env.NODE_ENV
+const env = process.env.MOCK_ENV
 
-export default env !== "development" ? MockComputeService : ComputeService
+export default env === "true" ? MockComputeService : ComputeService

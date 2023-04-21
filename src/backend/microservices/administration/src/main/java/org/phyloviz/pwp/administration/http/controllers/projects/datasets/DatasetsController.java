@@ -1,19 +1,15 @@
 package org.phyloviz.pwp.administration.http.controllers.projects.datasets;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.administration.http.models.datasets.createDataset.CreateDatasetInputModel;
-import org.phyloviz.pwp.administration.http.models.datasets.createDataset.CreateDatasetOutputModel;
-import org.phyloviz.pwp.administration.http.models.datasets.deleteDataset.DeleteDatasetOutputModel;
-import org.phyloviz.pwp.administration.http.models.datasets.getDataset.GetDatasetOutputModel;
-import org.phyloviz.pwp.administration.service.dtos.datasets.DatasetDTO;
-import org.phyloviz.pwp.administration.service.dtos.datasets.createDataset.CreateDatasetOutputDTO;
-import org.phyloviz.pwp.administration.service.dtos.datasets.deleteDataset.DeleteDatasetInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.datasets.deleteDataset.DeleteDatasetOutputDTO;
-import org.phyloviz.pwp.administration.service.dtos.datasets.getDataset.GetDatasetInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.datasets.getDatasets.GetDatasetsInputDTO;
-import org.phyloviz.pwp.administration.service.dtos.datasets.getDatasets.GetDatasetsOutputModel;
-import org.phyloviz.pwp.administration.service.projects.datasets.DatasetsService;
+import org.phyloviz.pwp.administration.http.models.datasets.create_dataset.CreateDatasetInputModel;
+import org.phyloviz.pwp.administration.http.models.datasets.create_dataset.CreateDatasetOutputModel;
+import org.phyloviz.pwp.administration.http.models.datasets.delete_dataset.DeleteDatasetOutputModel;
+import org.phyloviz.pwp.administration.http.models.datasets.get_dataset.GetDatasetOutputModel;
+import org.phyloviz.pwp.administration.http.models.datasets.get_datasets.GetDatasetsOutputModel;
+import org.phyloviz.pwp.administration.http.service.project.dataset.DatasetService;
 import org.phyloviz.pwp.shared.domain.User;
+import org.phyloviz.pwp.shared.service.dtos.dataset.CreateDatasetOutput;
+import org.phyloviz.pwp.shared.service.dtos.dataset.FullDatasetInfo;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DatasetsController {
 
-    private final DatasetsService datasetsService;
+    private final DatasetService datasetService;
 
     /**
      * Creates a dataset.
@@ -46,11 +42,16 @@ public class DatasetsController {
             @RequestBody CreateDatasetInputModel createDatasetInputModel,
             User user
     ) {
-        CreateDatasetOutputDTO createDatasetOutputDTO = datasetsService.createDataset(
-                createDatasetInputModel.toDTO(projectId, user)
+        CreateDatasetOutput createDatasetOutput = datasetService.createDataset(
+                createDatasetInputModel.getName(),
+                createDatasetInputModel.getDescription(),
+                createDatasetInputModel.getTypingDataId(),
+                createDatasetInputModel.getIsolateDataId(),
+                projectId,
+                user.getId()
         );
 
-        return new CreateDatasetOutputModel(createDatasetOutputDTO);
+        return new CreateDatasetOutputModel(createDatasetOutput);
     }
 
     /**
@@ -67,11 +68,9 @@ public class DatasetsController {
             @PathVariable String datasetId,
             User user
     ) {
-        DatasetDTO datasetDTO = datasetsService.getDataset(
-                new GetDatasetInputDTO(projectId, datasetId, user.toDTO())
-        );
+        FullDatasetInfo fullDatasetInfo = datasetService.getFullDatasetInfo(projectId, datasetId, user.getId());
 
-        return new GetDatasetOutputModel(datasetDTO);
+        return new GetDatasetOutputModel(fullDatasetInfo);
     }
 
     /**
@@ -88,11 +87,9 @@ public class DatasetsController {
             @PathVariable String datasetId,
             User user
     ) {
-        DeleteDatasetOutputDTO deleteDatasetOutputDTO = datasetsService.deleteDataset(
-                new DeleteDatasetInputDTO(projectId, datasetId, user.toDTO())
-        );
+        datasetService.deleteDataset(projectId, datasetId, user.getId());
 
-        return new DeleteDatasetOutputModel(deleteDatasetOutputDTO);
+        return new DeleteDatasetOutputModel(projectId, datasetId);
     }
 
     /**
@@ -107,10 +104,8 @@ public class DatasetsController {
             @PathVariable String projectId,
             User user
     ) {
-        List<DatasetDTO> datasetDTOS = datasetsService.getDatasets(
-                new GetDatasetsInputDTO(projectId, user.toDTO())
-        );
+        List<FullDatasetInfo> fullDatasetInfos = datasetService.getFullDatasetInfos(projectId, user.getId());
 
-        return new GetDatasetsOutputModel(datasetDTOS);
+        return new GetDatasetsOutputModel(fullDatasetInfos);
     }
 }

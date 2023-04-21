@@ -1,13 +1,13 @@
 package org.phyloviz.pwp.compute.http.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.compute.http.controllers.models.createWorkflow.CreateWorkflowInputModel;
-import org.phyloviz.pwp.compute.http.controllers.models.createWorkflow.CreateWorkflowOutputModel;
-import org.phyloviz.pwp.compute.http.controllers.models.getWorkflowStatus.GetWorkflowStatusOutputModel;
-import org.phyloviz.pwp.compute.http.controllers.models.getWorkflows.GetWorkflowsOutputModel;
+import org.phyloviz.pwp.compute.http.controllers.models.create_workflow.CreateWorkflowInputModel;
+import org.phyloviz.pwp.compute.http.controllers.models.create_workflow.CreateWorkflowOutputModel;
+import org.phyloviz.pwp.compute.http.controllers.models.get_workflow_status.GetWorkflowStatusOutputModel;
+import org.phyloviz.pwp.compute.http.controllers.models.get_workflows.GetWorkflowsOutputModel;
 import org.phyloviz.pwp.compute.service.ComputeService;
-import org.phyloviz.pwp.compute.service.dtos.createWorkflow.CreateWorkflowOutputDTO;
-import org.phyloviz.pwp.compute.service.dtos.getWorkflow.GetWorkflowStatusOutputDTO;
+import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
+import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
 import org.phyloviz.pwp.shared.domain.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,19 +31,20 @@ public class ComputeController {
      *
      * @param inputModel input model for the workflow
      * @param projectId  the project id of the project to which the workflow belongs
-     * @param user       the user who created the workflow
+     * @param user       the user who is creating the workflow
      * @return information about the created workflow
      */
     @PostMapping("/projects/{projectId}/workflows")
     public CreateWorkflowOutputModel createWorkflow(
-            @RequestBody CreateWorkflowInputModel inputModel,
             @PathVariable String projectId,
+            @RequestBody CreateWorkflowInputModel inputModel,
             User user
     ) {
-        CreateWorkflowOutputDTO createWorkflowOutputDTO = computeService
-                .createWorkflow(projectId, inputModel.getType(), inputModel.getProperties(), user.toDTO());
+        CreateWorkflowOutput createWorkflowOutput = computeService.createWorkflow(
+                projectId, inputModel.getType(), inputModel.getProperties(), user.getId()
+        );
 
-        return new CreateWorkflowOutputModel(createWorkflowOutputDTO);
+        return new CreateWorkflowOutputModel(createWorkflowOutput);
     }
 
     /**
@@ -60,10 +61,11 @@ public class ComputeController {
             @PathVariable String workflowId,
             User user
     ) {
-        GetWorkflowStatusOutputDTO getWorkflowStatusOutputDTO = computeService
-                .getWorkflowStatus(projectId, workflowId, user.toDTO());
+        GetWorkflowStatusOutput getWorkflowStatusOutput = computeService.getWorkflowStatus(
+                projectId, workflowId, user.getId()
+        );
 
-        return new GetWorkflowStatusOutputModel(getWorkflowStatusOutputDTO);
+        return new GetWorkflowStatusOutputModel(getWorkflowStatusOutput);
     }
 
     /**
@@ -78,9 +80,10 @@ public class ComputeController {
             @PathVariable String projectId,
             User user
     ) {
-        List<GetWorkflowStatusOutputDTO> getWorkflowStatusOutputDTOS = computeService
-                .getWorkflows(projectId, user.toDTO());
+        List<GetWorkflowStatusOutput> getWorkflowStatusOutputList = computeService.getWorkflows(
+                projectId, user.getId()
+        );
 
-        return new GetWorkflowsOutputModel(getWorkflowStatusOutputDTOS);
+        return new GetWorkflowsOutputModel(getWorkflowStatusOutputList);
     }
 }

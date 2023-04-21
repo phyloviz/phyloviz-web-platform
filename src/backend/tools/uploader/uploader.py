@@ -37,18 +37,18 @@ def tree_handler(s3_output_path, project_id, dataset_id, tree_id, workflow_id):
         }})
 
     tree_metadata = {
-        'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
         'treeId': tree_id,
         'projectId': project_id,
         'datasetId': dataset_id,
         'adapterId': 's3',
         'name': f'Tree {tree_id}',
-        'sourceType': 'algorithmDistanceMatrix',
+        'sourceType': 'algorithm_distance_matrix',
         'source': {
             'algorithm': 'goeburst',
             # TODO: Add distance matrix id and parameters
         },
         'adapterSpecificData': {
+            'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
         }
     }
 
@@ -84,7 +84,6 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, distance_mat
     distance_matrix_metadata = {
         'projectId': project_id,
         'datasetId': dataset_id,
-        'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
         'distanceMatrixId': distance_matrix_id,
         'adapterId': 's3',
         'name': f'Distance Matrix {distance_matrix_id}',
@@ -93,6 +92,7 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, distance_mat
             'function': 'hamming'
         },
         'adapterSpecificData': {
+            'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
         }
     }
 
@@ -157,5 +157,5 @@ if __name__ == '__main__':
     parser.add_argument('--resource-type', help='The resource type', required=True)
     args = parser.parse_args()
 
-    upload_file_to_s3(args.file_path, args.project_id, args.dataset_id, args.resource_id, args.resource_type,
+    upload_file_to_s3(args.file_path, args.project_id, args.dataset_id, iargs.resource_id, args.resource_type,
                       args.workflow_id)
