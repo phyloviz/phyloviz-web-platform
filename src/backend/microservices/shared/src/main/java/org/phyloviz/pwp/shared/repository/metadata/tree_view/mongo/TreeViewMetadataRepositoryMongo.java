@@ -1,13 +1,16 @@
 package org.phyloviz.pwp.shared.repository.metadata.tree_view.mongo;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.shared.adapters.tree_view.TreeViewAdapterId;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.TreeViewMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.TreeViewMetadata;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 @Primary
@@ -17,17 +20,39 @@ public class TreeViewMetadataRepositoryMongo implements TreeViewMetadataReposito
     private final TreeViewMetadataMongoRepository treeViewMetadataMongoRepository;
 
     @Override
-    public void delete(TreeViewMetadata treeViewMetadata) {
-        treeViewMetadataMongoRepository.delete(treeViewMetadata);
-    }
-
-    @Override
     public Optional<TreeViewMetadata> findByTreeViewId(String treeViewId) {
-        return treeViewMetadataMongoRepository.findByTreeViewId(treeViewId);
+        return treeViewMetadataMongoRepository.findAllByTreeViewId(treeViewId).stream().findAny();
     }
 
     @Override
     public List<TreeViewMetadata> findAllByTreeViewId(String treeViewId) {
         return treeViewMetadataMongoRepository.findAllByTreeViewId(treeViewId);
+    }
+
+    @Override
+    public Optional<TreeViewMetadata> findByTreeViewIdAndAdapterId(String treeViewId, TreeViewAdapterId adapterId) {
+        return treeViewMetadataMongoRepository.findByTreeViewIdAndAdapterId(
+                treeViewId, adapterId.name().toLowerCase()
+        );
+    }
+
+    @Override
+    public List<TreeViewMetadata> findAllByDatasetId(String datasetId) {
+        Set<String> seenTreeViewIds = new HashSet<>();
+
+        return treeViewMetadataMongoRepository.findAllByDatasetId(datasetId).stream()
+                .filter((treeViewMetadata -> {
+                    if (seenTreeViewIds.contains(treeViewMetadata.getTreeViewId())) {
+                        return false;
+                    }
+                    seenTreeViewIds.add(treeViewMetadata.getTreeViewId());
+                    return true;
+                }))
+                .toList();
+    }
+
+    @Override
+    public void delete(TreeViewMetadata treeViewMetadata) {
+        treeViewMetadataMongoRepository.delete(treeViewMetadata);
     }
 }

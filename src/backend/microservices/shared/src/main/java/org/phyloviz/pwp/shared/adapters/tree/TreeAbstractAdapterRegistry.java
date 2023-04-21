@@ -8,6 +8,10 @@ import org.springframework.context.ApplicationContext;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ * Implementation of {@link TreeAdapterRegistry} that uses Spring to
+ * inject the adapters, only needing the classes passed as constructor parameters.
+ */
 public abstract class TreeAbstractAdapterRegistry implements TreeAdapterRegistry {
 
     private final ApplicationContext context;
@@ -37,6 +41,7 @@ public abstract class TreeAbstractAdapterRegistry implements TreeAdapterRegistry
         }
     }
 
+    @Override
     public TreeAdapter getTreeAdapter(TreeAdapterId adapterId) {
         TreeAdapter adapter = adapters.get(adapterId);
         if (adapter == null) {

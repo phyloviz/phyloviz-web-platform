@@ -1,30 +1,20 @@
 package org.phyloviz.pwp.shared.repository.metadata.tree;
 
+import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterId;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 public interface TreeMetadataRepository {
 
     /**
-     * Deletes a tree metadata.
-     *
-     * @param treeMetadata the tree metadata to delete
-     */
-    void delete(TreeMetadata treeMetadata);
-
-    /**
-     * Find a tree metadata from its id.
+     * Find any tree metadata from its id.
      *
      * @param treeId the id of the tree resource
      * @return a tree metadata
      */
     Optional<TreeMetadata> findByTreeId(String treeId);
-
-    TreeMetadata findByTreeIdAndAdapterId(String treeId, String adapterId);
 
     /**
      * Find all metadata representations of a tree resource.
@@ -33,4 +23,28 @@ public interface TreeMetadataRepository {
      * @return a list of tree metadata
      */
     List<TreeMetadata> findAllByTreeId(String treeId);
+
+    /**
+     * Find a tree metadata from its id and adapter id.
+     *
+     * @param treeId    the id of the tree resource
+     * @param adapterId the id of the adapter
+     * @return a tree metadata
+     */
+    Optional<TreeMetadata> findByTreeIdAndAdapterId(String treeId, TreeAdapterId adapterId);
+
+    /**
+     * Find all tree metadata from a dataset id. Only one tree metadata per tree resource.
+     *
+     * @param datasetId the id of the dataset
+     * @return a list of tree metadata
+     */
+    List<TreeMetadata> findAllByDatasetId(String datasetId);
+
+    /**
+     * Deletes a tree metadata.
+     *
+     * @param treeMetadata the tree metadata to delete
+     */
+    void delete(TreeMetadata treeMetadata);
 }

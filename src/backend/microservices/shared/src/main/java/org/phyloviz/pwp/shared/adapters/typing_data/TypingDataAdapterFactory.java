@@ -10,6 +10,12 @@ public class TypingDataAdapterFactory {
 
     private final TypingDataAdapterRegistry typingDataAdapterRegistry;
 
+    /**
+     * Returns the TypingDataAdapter for the given adapterId.
+     *
+     * @param adapterId the id of the adapter
+     * @return the TypingDataAdapter
+     */
     public TypingDataAdapter getTypingDataAdapter(TypingDataAdapterId adapterId) {
         return typingDataAdapterRegistry.getTypingDataAdapter(adapterId);
     }

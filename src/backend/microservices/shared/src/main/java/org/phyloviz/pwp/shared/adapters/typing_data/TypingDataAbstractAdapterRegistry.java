@@ -8,6 +8,10 @@ import org.springframework.context.ApplicationContext;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ * Implementation of {@link TypingDataAdapterRegistry} that uses Spring to
+ * inject the adapters, only needing the classes passed as constructor parameters.
+ */
 public abstract class TypingDataAbstractAdapterRegistry implements TypingDataAdapterRegistry {
 
     private final ApplicationContext context;
@@ -37,6 +41,7 @@ public abstract class TypingDataAbstractAdapterRegistry implements TypingDataAda
         }
     }
 
+    @Override
     public TypingDataAdapter getTypingDataAdapter(TypingDataAdapterId adapterId) {
         TypingDataAdapter adapter = adapters.get(adapterId);
         if (adapter == null) {

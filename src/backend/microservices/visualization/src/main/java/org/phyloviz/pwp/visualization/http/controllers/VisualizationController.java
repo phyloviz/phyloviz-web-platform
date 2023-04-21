@@ -7,17 +7,17 @@ import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataSch
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
-import org.phyloviz.pwp.shared.service.project.dataset.distance_matrix.DistanceMatrixService;
-import org.phyloviz.pwp.shared.service.project.dataset.tree.TreeService;
-import org.phyloviz.pwp.shared.service.project.dataset.tree_view.TreeViewService;
-import org.phyloviz.pwp.shared.service.project.file.isolate_data.IsolateDataService;
-import org.phyloviz.pwp.shared.service.project.file.typing_data.TypingDataService;
 import org.phyloviz.pwp.visualization.http.controllers.models.get_tree_view.GetTreeViewOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.isolate_data.get_isolate_data_rows.GetIsolateDataRowsOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.isolate_data.get_isolate_data_schema.GetIsolateDataSchemaOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.typing_data.get_typing_data_profiles.GetTypingDataProfilesOutputModel;
 import org.phyloviz.pwp.visualization.http.controllers.models.typing_data.get_typing_data_schema.GetTypingDataSchemaOutputModel;
-import org.springframework.web.bind.annotation.*;
+import org.phyloviz.pwp.visualization.service.VisualizationService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller for the Visualization Microservice.
@@ -27,11 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class VisualizationController {
 
-    private final DistanceMatrixService distanceMatrixService;
-    private final TreeService treeService;
-    private final TreeViewService treeViewService;
-    private final TypingDataService typingDataService;
-    private final IsolateDataService isolateDataService;
+    private final VisualizationService visualizationService;
 
     /**
      * Gets a distance matrix.
@@ -39,6 +35,7 @@ public class VisualizationController {
      * @param projectId        the id of the project
      * @param datasetId        the id of the dataset
      * @param distanceMatrixId the id of the distance matrix
+     * @param user             the user
      * @return the distance matrix in string
      */
     @GetMapping("/projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}")
@@ -48,7 +45,7 @@ public class VisualizationController {
             @PathVariable String distanceMatrixId,
             User user
     ) {
-        return distanceMatrixService.getDistanceMatrix(projectId, datasetId, distanceMatrixId, user.getId());
+        return visualizationService.getDistanceMatrix(projectId, datasetId, distanceMatrixId, user.getId());
     }
 
     /**
@@ -57,6 +54,7 @@ public class VisualizationController {
      * @param projectId the id of the project
      * @param datasetId the id of the dataset
      * @param treeId    the id of the tree
+     * @param user      the user
      * @return the tree in newick string format
      */
     @GetMapping("/projects/{projectId}/datasets/{datasetId}/trees/{treeId}")
@@ -66,7 +64,7 @@ public class VisualizationController {
             @PathVariable String treeId,
             User user
     ) {
-        return treeService.getTree(projectId, datasetId, treeId, user.getId());
+        return visualizationService.getTree(projectId, datasetId, treeId, user.getId());
     }
 
     /**
@@ -75,7 +73,8 @@ public class VisualizationController {
      * @param projectId  the id of the project
      * @param datasetId  the id of the dataset
      * @param treeViewId the id of the tree view
-     * @return the tree view output
+     * @param user       the user
+     * @return the tree view
      */
     @GetMapping("/projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}")
     public GetTreeViewOutputModel getTreeView(
@@ -84,7 +83,7 @@ public class VisualizationController {
             @PathVariable String treeViewId,
             User user
     ) {
-        GetTreeViewOutput getTreeViewOutput = treeViewService.getTreeView(projectId, datasetId, treeViewId, user.getId());
+        GetTreeViewOutput getTreeViewOutput = visualizationService.getTreeView(projectId, datasetId, treeViewId, user.getId());
 
         return new GetTreeViewOutputModel(getTreeViewOutput);
     }
@@ -94,6 +93,7 @@ public class VisualizationController {
      *
      * @param projectId    the id of the project
      * @param typingDataId the id of the typing data
+     * @param user         the user
      * @return the typing data schema
      */
     @GetMapping("/projects/{projectId}/files/typing-data/{typingDataId}")
@@ -102,7 +102,7 @@ public class VisualizationController {
             @PathVariable String typingDataId,
             User user
     ) {
-        GetTypingDataSchemaOutput getTypingDataSchemaOutput = typingDataService.getTypingDataSchema(
+        GetTypingDataSchemaOutput getTypingDataSchemaOutput = visualizationService.getTypingDataSchema(
                 projectId, typingDataId, user.getId()
         );
 
@@ -116,6 +116,7 @@ public class VisualizationController {
      * @param typingDataId the id of the typing data
      * @param limit        the limit of profiles to return
      * @param offset       the offset of profiles to return
+     * @param user         the user
      * @return the typing data's profiles
      */
     @GetMapping("/projects/{projectId}/files/typing-data/{typingDataId}/profiles")
@@ -126,7 +127,7 @@ public class VisualizationController {
             @RequestParam int offset,
             User user
     ) {
-        GetTypingDataProfilesOutput getTypingDataProfilesOutput = typingDataService.getTypingDataProfiles(
+        GetTypingDataProfilesOutput getTypingDataProfilesOutput = visualizationService.getTypingDataProfiles(
                 projectId, typingDataId, limit, offset, user.getId()
         );
 
@@ -138,6 +139,7 @@ public class VisualizationController {
      *
      * @param projectId     the id of the project
      * @param isolateDataId the id of the isolate data
+     * @param user          the user
      * @return the isolate data schema
      */
     @GetMapping("/projects/{projectId}/files/isolate-data/{isolateDataId}")
@@ -146,7 +148,7 @@ public class VisualizationController {
             @PathVariable String isolateDataId,
             User user
     ) {
-        GetIsolateDataSchemaOutput getIsolateDataSchemaOutput = isolateDataService.getIsolateDataSchema(
+        GetIsolateDataSchemaOutput getIsolateDataSchemaOutput = visualizationService.getIsolateDataSchema(
                 projectId, isolateDataId, user.getId()
         );
 
@@ -160,6 +162,7 @@ public class VisualizationController {
      * @param isolateDataId the id of the isolate data
      * @param limit         the limit of rows to return
      * @param offset        the offset of rows to return
+     * @param user          the user
      * @return the isolate data's rows
      */
     @GetMapping("/projects/{projectId}/files/isolate-data/{isolateDataId}/rows")
@@ -170,7 +173,7 @@ public class VisualizationController {
             @RequestParam int offset,
             User user
     ) {
-        GetIsolateDataRowsOutput getIsolateDataRowsOutput = isolateDataService.getIsolateDataRows(
+        GetIsolateDataRowsOutput getIsolateDataRowsOutput = visualizationService.getIsolateDataRows(
                 projectId, isolateDataId, limit, offset, user.getId()
         );
 

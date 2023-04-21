@@ -5,6 +5,11 @@ spring:
   config:
     import: application-shared.yml
 
+adapters:
+  get-distance-matrix-adapter: S3
+  get-tree-adapter: PHYLODB
+  get-tree-view-adapter: PHYLODB
+
 logging:
   level:
     root: debug

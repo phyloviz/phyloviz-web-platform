@@ -10,6 +10,12 @@ public class TreeAdapterFactory {
 
     private final TreeAdapterRegistry treeAdapterRegistry;
 
+    /**
+     * Returns the TreeAdapter for the given adapterId.
+     *
+     * @param adapterId the id of the adapter
+     * @return the TreeAdapter
+     */
     public TreeAdapter getTreeAdapter(TreeAdapterId adapterId) {
         return treeAdapterRegistry.getTreeAdapter(adapterId);
     }

@@ -3,11 +3,10 @@ package org.phyloviz.pwp.file_transfer.http.controllers;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.file_transfer.http.models.isolate_data.UploadIsolateDataOutputModel;
 import org.phyloviz.pwp.file_transfer.http.models.typing_data.UploadTypingDataOutputModel;
+import org.phyloviz.pwp.file_transfer.service.FileTransferService;
 import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.UploadIsolateDataOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.UploadTypingDataOutput;
-import org.phyloviz.pwp.shared.service.project.file.isolate_data.IsolateDataService;
-import org.phyloviz.pwp.shared.service.project.file.typing_data.TypingDataService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class FileTransferController {
 
-    private final TypingDataService typingDataService;
-    private final IsolateDataService isolateDataService;
+    private final FileTransferService fileTransferService;
 
     /**
      * Uploads a typing data.
@@ -36,7 +34,7 @@ public class FileTransferController {
             @RequestPart MultipartFile file,
             User user
     ) {
-        UploadTypingDataOutput uploadTypingDataOutput = typingDataService.uploadTypingData(projectId, file, user.getId());
+        UploadTypingDataOutput uploadTypingDataOutput = fileTransferService.uploadTypingData(projectId, file, user.getId());
 
         return new UploadTypingDataOutputModel(uploadTypingDataOutput);
     }
@@ -55,7 +53,7 @@ public class FileTransferController {
             @RequestPart MultipartFile file,
             User user
     ) {
-        UploadIsolateDataOutput uploadIsolateDataOutput = isolateDataService.uploadIsolateData(projectId, file, user.getId());
+        UploadIsolateDataOutput uploadIsolateDataOutput = fileTransferService.uploadIsolateData(projectId, file, user.getId());
 
         return new UploadIsolateDataOutputModel(uploadIsolateDataOutput);
     }

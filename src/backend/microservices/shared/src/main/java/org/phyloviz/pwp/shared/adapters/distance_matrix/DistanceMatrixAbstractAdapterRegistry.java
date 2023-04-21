@@ -8,6 +8,10 @@ import org.springframework.context.ApplicationContext;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ * Implementation of {@link DistanceMatrixAdapterRegistry} that uses Spring to
+ * inject the adapters, only needing the classes passed as constructor parameters.
+ */
 public abstract class DistanceMatrixAbstractAdapterRegistry implements DistanceMatrixAdapterRegistry {
 
     private final ApplicationContext context;
@@ -37,6 +41,7 @@ public abstract class DistanceMatrixAbstractAdapterRegistry implements DistanceM
         }
     }
 
+    @Override
     public DistanceMatrixAdapter getDistanceMatrixAdapter(DistanceMatrixAdapterId adapterId) {
         DistanceMatrixAdapter adapter = adapters.get(adapterId);
         if (adapter == null) {

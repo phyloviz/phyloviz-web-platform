@@ -5,6 +5,7 @@ import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -26,5 +27,10 @@ public class DatasetRepositoryMongo implements DatasetRepository {
     @Override
     public Optional<Dataset> findById(String resourceId) {
         return datasetMongoRepository.findById(resourceId);
+    }
+
+    @Override
+    public List<Dataset> findAllByProjectId(String projectId) {
+        return datasetMongoRepository.findAllByProjectId(projectId);
     }
 }

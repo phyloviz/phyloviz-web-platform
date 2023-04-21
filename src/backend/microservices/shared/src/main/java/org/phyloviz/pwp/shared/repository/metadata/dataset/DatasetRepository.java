@@ -2,6 +2,7 @@ package org.phyloviz.pwp.shared.repository.metadata.dataset;
 
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface DatasetRepository {
@@ -28,4 +29,12 @@ public interface DatasetRepository {
      * @return a dataset
      */
     Optional<Dataset> findById(String resourceId);
+
+    /**
+     * Find all datasets by project id.
+     *
+     * @param projectId the id of the project
+     * @return a list of datasets
+     */
+    List<Dataset> findAllByProjectId(String projectId);
 }

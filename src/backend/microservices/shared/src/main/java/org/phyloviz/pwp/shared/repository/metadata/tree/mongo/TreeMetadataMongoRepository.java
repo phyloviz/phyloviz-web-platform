@@ -2,6 +2,7 @@ package org.phyloviz.pwp.shared.repository.metadata.tree.mongo;
 
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,8 +19,6 @@ public interface TreeMetadataMongoRepository extends MongoRepository<TreeMetadat
      */
     Optional<TreeMetadata> findByTreeId(String resourceId);
 
-    TreeMetadata findByTreeIdAndAdapterId(String treeId, String adapterId);
-
     /**
      * Find all metadata representations of a tree resource.
      *
@@ -27,4 +26,23 @@ public interface TreeMetadataMongoRepository extends MongoRepository<TreeMetadat
      * @return a list of tree metadata
      */
     List<TreeMetadata> findAllByTreeId(String treeId);
+
+    /**
+     * Find a tree metadata from its id and adapter id.
+     * The adapterId is stored as string in the document, so a custom @Query is needed.
+     *
+     * @param treeId    the id of the tree resource
+     * @param adapterId the id of the adapter, as string, like it's stored in the document
+     * @return a tree metadata
+     */
+    @Query("{ 'treeId' : ?0, 'adapterId' : ?1 }")
+    Optional<TreeMetadata> findByTreeIdAndAdapterId(String treeId, String adapterId);
+
+    /**
+     * Find all tree metadata from a dataset id.
+     *
+     * @param datasetId the id of the dataset
+     * @return a list of tree metadata
+     */
+    List<TreeMetadata> findAllByDatasetId(String datasetId);
 }

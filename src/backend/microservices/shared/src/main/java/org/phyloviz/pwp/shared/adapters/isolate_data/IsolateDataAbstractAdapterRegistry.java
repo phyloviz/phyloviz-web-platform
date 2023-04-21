@@ -8,6 +8,10 @@ import org.springframework.context.ApplicationContext;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ * Implementation of {@link IsolateDataAdapterRegistry} that uses Spring to
+ * inject the adapters, only needing the classes passed as constructor parameters.
+ */
 public abstract class IsolateDataAbstractAdapterRegistry implements IsolateDataAdapterRegistry {
 
     private final ApplicationContext context;
@@ -37,6 +41,7 @@ public abstract class IsolateDataAbstractAdapterRegistry implements IsolateDataA
         }
     }
 
+    @Override
     public IsolateDataAdapter getIsolateDataAdapter(IsolateDataAdapterId adapterId) {
         IsolateDataAdapter adapter = adapters.get(adapterId);
         if (adapter == null) {

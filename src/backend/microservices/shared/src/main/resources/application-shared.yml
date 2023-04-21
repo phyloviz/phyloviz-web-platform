@@ -1,10 +1,3 @@
-adapters:
-  upload-isolate-data-adapter: S3
-  upload-typing-data-adapter: S3
-  get-distance-matrix-adapter-priority: S3 # list of adapter ids, separate by comma.
-  get-tree-adapter-priority: PHYLODB # list of adapter ids, separate by comma.
-  get-tree-view-adapter-priority: PHYLODB # list of adapter ids, separate by comma.
-
 mongo-collections:
   projects-collection: projects
   datasets-collection: datasets

@@ -1,5 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.typing_data;
 
+import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterId;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 
 import java.util.List;
@@ -16,14 +17,7 @@ public interface TypingDataMetadataRepository {
     TypingDataMetadata save(TypingDataMetadata typingDataMetadata);
 
     /**
-     * Deletes a typing data metadata.
-     *
-     * @param typingDataMetadata the typing data metadata to delete
-     */
-    void delete(TypingDataMetadata typingDataMetadata);
-
-    /**
-     * Find one metadata representation of a typing data resource.
+     * Find any typing data metadata from its id.
      *
      * @param typingDataId the id of the typing data resource
      * @return a typing data metadata
@@ -37,4 +31,28 @@ public interface TypingDataMetadataRepository {
      * @return a list of typing data metadata
      */
     List<TypingDataMetadata> findAllByTypingDataId(String typingDataId);
+
+    /**
+     * Find a typing data metadata from its id and adapter id.
+     *
+     * @param typingDataId the id of the typing data resource
+     * @param adapterId    the id of the adapter
+     * @return a typing data metadata
+     */
+    Optional<TypingDataMetadata> findByTypingDataIdAndAdapterId(String typingDataId, TypingDataAdapterId adapterId);
+
+    /**
+     * Find all typing data metadata from a project id. Only one typing data metadata per typing data resource.
+     *
+     * @param projectId the id of the project
+     * @return a list of typing data metadata
+     */
+    List<TypingDataMetadata> findAllByProjectId(String projectId);
+
+    /**
+     * Deletes a typing data metadata.
+     *
+     * @param typingDataMetadata the typing data metadata to delete
+     */
+    void delete(TypingDataMetadata typingDataMetadata);
 }

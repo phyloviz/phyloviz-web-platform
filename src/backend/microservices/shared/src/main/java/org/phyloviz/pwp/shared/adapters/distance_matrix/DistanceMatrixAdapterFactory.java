@@ -10,6 +10,12 @@ public class DistanceMatrixAdapterFactory {
 
     private final DistanceMatrixAdapterRegistry distanceMatrixAdapterRegistry;
 
+    /**
+     * Returns the DistanceMatrixAdapter for the given adapterId.
+     *
+     * @param adapterId the id of the adapter
+     * @return the DistanceMatrixAdapter
+     */
     public DistanceMatrixAdapter getDistanceMatrixAdapter(DistanceMatrixAdapterId adapterId) {
         return distanceMatrixAdapterRegistry.getDistanceMatrixAdapter(adapterId);
     }
