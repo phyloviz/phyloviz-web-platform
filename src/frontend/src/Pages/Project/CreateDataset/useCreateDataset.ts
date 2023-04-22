@@ -71,15 +71,22 @@ export function useCreateDataset() {
             setSelectedIsolateData(event.target.value)
             if (isolateDataFile)
                 setIsolateDataFile(null)
-            // TODO: get keys
-            setIsolateDataKeys(["key1", "key2"])
+
+            // TODO: Get the keys from the server
         },
         handleIsolateDataFileUploaderChange: (file: React.SetStateAction<File | null>) => {
             setIsolateDataFile(file)
             if (selectedIsolateData)
                 setSelectedIsolateData(null)
-            // TODO: get keys
-            setIsolateDataKeys(["key1", "key2"])
+
+            // Read and set the keys
+            const fileToRead = file instanceof File ? file : file!(isolateDataFile)
+            fileToRead!.text()
+                .then(text => {
+                    const lines = text.split("\n")
+                    const keys = lines[0].split(/\s+/)
+                    setIsolateDataKeys(keys)
+                })
         },
         isolateDataKeys,
         selectedIsolateDataKey,
@@ -102,14 +109,27 @@ export function useCreateDataset() {
                 setCreateDatasetStep(CreateDatasetStep.ISOLATE_DATA)
                 setCurrStep(2)
             } else {
-                // TODO: Validate data
+                let typingDataId = selectedTypingData
+                let isolateDataId = selectedIsolateData
+
+                if (typingDataFile) {
+                    AdministrationService.uploadTypingData(project?.projectId!, typingDataFile)
+                        .then(res => typingDataId = res.typingDataId)
+                        .catch(err => setError(err.message))
+                }
+                if (isolateDataFile) {
+                    AdministrationService.uploadIsolateData(project?.projectId!, isolateDataFile)
+                        .then(res => isolateDataId = res.isolateDataId)
+                        .catch(err => setError(err.message))
+                }
+
                 AdministrationService.createDataset(
                     project?.projectId!,
                     {
                         name,
                         description,
-                        typingDataId: selectedTypingData!,
-                        isolateDataId: selectedIsolateData, // TODO: And the key? Maybe we should send the key here
+                        typingDataId: typingDataId!,
+                        isolateDataId: isolateDataId, // TODO: And the key? Maybe we should send the key here
                     }
                 )
                     .then(() => {

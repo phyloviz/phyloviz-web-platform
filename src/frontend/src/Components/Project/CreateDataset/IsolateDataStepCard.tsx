@@ -52,6 +52,8 @@ export function IsolateDataStepCard(
                     label="Isolate Data"
                     value={selectedIsolateData ?? ""}
                     onChange={onFileSelecterChange}
+                    // TODO: Limit height of the menu (the code below doesn't work)
+                    MenuProps={{PaperProps: {style: {maxHeight: 100}}}}
                 >
                     {isolateData.map((isolateDataFile) => (
                         <MenuItem key={isolateDataFile.isolateDataId}

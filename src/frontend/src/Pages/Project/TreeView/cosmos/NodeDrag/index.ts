@@ -35,36 +35,36 @@ export class NodeDrag<N extends CosmosInputNode, L extends CosmosInputLink> {
         this.runCommand = reglInstance({
             frag: `
 			#ifdef GL_ES
-		precision highp float
+		precision highp float;
 		#endif
 
-		uniform sampler2D position
-		uniform vec2 draggedIndex
-		uniform vec2 mousePos
+		uniform sampler2D position;
+		uniform vec2 draggedIndex;
+		uniform vec2 mousePos;
 
-		varying vec2 index
+		varying vec2 index;
 
 		void main() {  
-		vec4 pointPosition = texture2D(position, index)
+		vec4 pointPosition = texture2D(position, index);
 		
 		if(index.x == draggedIndex.x && index.y == draggedIndex.y) {
-			pointPosition = vec4(mousePos, 0, 1)
+			pointPosition = vec4(mousePos, 0, 1);
 		}
 
-		gl_FragColor = pointPosition
+		gl_FragColor = pointPosition;
 		} 
 	  `,
             vert: `
 	 #ifdef GL_ES
-precision highp float
+precision highp float;
 #endif
 
-attribute vec2 quad
-varying vec2 index
+attribute vec2 quad;
+varying vec2 index;
 
 void main() {
-    index = (quad + 1.0) / 2.0
-    gl_Position = vec4(quad, 0, 1)
+    index = (quad + 1.0) / 2.0;
+    gl_Position = vec4(quad, 0, 1);
 }
  
 	  `,
