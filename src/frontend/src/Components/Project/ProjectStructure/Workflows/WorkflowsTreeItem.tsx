@@ -2,7 +2,7 @@ import * as React from "react"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
 import {Work} from "@mui/icons-material"
 import {WorkflowTreeItem} from "./WorkflowTreeItem"
-import {Workflow} from "../../../../Services/compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+import {Workflow} from "../../../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
 
 /**
  * Props of the WorkflowsTreeItem.

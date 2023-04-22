@@ -1,9 +1,9 @@
 import {Delete, Download, Visibility} from "@mui/icons-material"
 import {useNavigate, useParams} from "react-router-dom"
 import {useState} from "react"
-import {IsolateDataFile} from "../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {IsolateDataFile} from "../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
 import {useDeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdrop"
-import AdministrationService from "../../../../../Services/administration/AdministrationService"
+import AdministrationService from "../../../../../Services/Administration/AdministrationService"
 import {WebUiUris} from "../../../../../Pages/WebUiUris"
 
 /**

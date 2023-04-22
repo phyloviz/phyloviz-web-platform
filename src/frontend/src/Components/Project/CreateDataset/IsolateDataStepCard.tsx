@@ -3,7 +3,7 @@ import {ReactNode} from "react"
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 import Typography from "@mui/material/Typography"
 import {FileUploader} from "react-drag-drop-files"
-import {IsolateDataFile} from "../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {IsolateDataFile} from "../../../Services/Administration/models/getProject/GetProjectOutputModel"
 
 /**
  * Props for the IsolateDataStepCard component.

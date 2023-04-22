@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography"
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 import * as React from "react"
 import {ReactNode} from "react"
-import {DistanceMatrix} from "../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {DistanceMatrix} from "../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
 
 /**
  * Props for the HierarchicalClusteringConfigDistanceStepStep component.

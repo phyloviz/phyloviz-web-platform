@@ -1,7 +1,7 @@
 import * as React from "react"
 import {StyledTreeItem} from "../../Utils/StyledTreeItem"
 import DatasetIcon from "@mui/icons-material/Dataset"
-import {Dataset} from "../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {Dataset} from "../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
 import {TreesTreeItem} from "./Trees/TreesTreeItem"
 import {DistancesTreeItem} from "./Distances/DistancesTreeItem"
 import {IsolateDataTreeItem} from "./IsolateData/IsolateDataTreeItem"

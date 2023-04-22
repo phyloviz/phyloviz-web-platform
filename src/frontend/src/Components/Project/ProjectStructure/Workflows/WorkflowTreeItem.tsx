@@ -2,7 +2,7 @@ import {
     Workflow,
     workflowStatusToWorkflowStatusString,
     workflowTypeToWorkflowName
-} from "../../../../Services/compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+} from "../../../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
 import {Cancel} from "@mui/icons-material"
 import * as React from "react"

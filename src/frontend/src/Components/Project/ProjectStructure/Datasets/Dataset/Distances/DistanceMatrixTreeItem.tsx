@@ -1,4 +1,4 @@
-import {DistanceMatrix} from "../../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {DistanceMatrix} from "../../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
 import {TableView} from "@mui/icons-material"
 import * as React from "react"

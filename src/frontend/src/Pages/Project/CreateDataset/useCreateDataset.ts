@@ -3,7 +3,8 @@ import {useState} from "react"
 import {useNavigate} from "react-router-dom"
 import {SelectChangeEvent} from "@mui/material"
 import {useProjectContext} from "../useProject"
-import AdministrationService from "../../../Services/administration/AdministrationService"
+import AdministrationService from "../../../Services/Administration/AdministrationService"
+import FileTransferService from "../../../Services/FileTransfer/FileTransferService";
 
 export enum CreateDatasetStep {
     INFO = "Dataset Info",
@@ -113,12 +114,12 @@ export function useCreateDataset() {
                 let isolateDataId = selectedIsolateData
 
                 if (typingDataFile) {
-                    AdministrationService.uploadTypingData(project?.projectId!, typingDataFile)
+                    FileTransferService.uploadTypingData(project?.projectId!, typingDataFile)
                         .then(res => typingDataId = res.typingDataId)
                         .catch(err => setError(err.message))
                 }
                 if (isolateDataFile) {
-                    AdministrationService.uploadIsolateData(project?.projectId!, isolateDataFile)
+                    FileTransferService.uploadIsolateData(project?.projectId!, isolateDataFile)
                         .then(res => isolateDataId = res.isolateDataId)
                         .catch(err => setError(err.message))
                 }

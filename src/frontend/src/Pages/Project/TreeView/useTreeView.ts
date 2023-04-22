@@ -5,9 +5,9 @@ import {
     Edge,
     GetTreeViewOutputModel,
     Node
-} from "../../../Services/visualization/models/getTreeView/GetTreeViewOutputModel"
-import VisualizationService from "../../../Services/visualization/VisualizationService"
-import {TreeView} from "../../../Services/administration/models/getProject/GetProjectOutputModel"
+} from "../../../Services/Visualization/models/getTreeView/GetTreeViewOutputModel"
+import VisualizationService from "../../../Services/Visualization/VisualizationService"
+import {TreeView} from "../../../Services/Administration/models/getProject/GetProjectOutputModel"
 import {useProjectContext} from "../useProject"
 
 export type VizNode = {

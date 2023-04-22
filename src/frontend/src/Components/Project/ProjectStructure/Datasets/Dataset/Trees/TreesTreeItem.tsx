@@ -1,4 +1,4 @@
-import {Tree} from "../../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {Tree} from "../../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
 import {Forest} from "@mui/icons-material"
 import {TreeTreeItem} from "./TreeTreeItem"

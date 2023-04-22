@@ -2,11 +2,9 @@ import {CreateProjectInputModel} from "./models/createProject/CreateProjectInput
 import {CreateProjectOutputModel} from "./models/createProject/CreateProjectOutputModel"
 import {GetProjectsOutputModel} from "./models/getProjects/GetProjectsOutputModel"
 import {DeleteProjectOutputModel} from "./models/deleteProject/DeleteProjectOutputModel"
-import {UploadTypingDataOutputModel} from "./models/uploadTypingData/UploadTypingDataOutputModel"
 import {DeleteTypingDataOutputModel} from "./models/deleteTypingData/DeleteTypingDataOutputModel"
 import {GetProjectOutputModel, Project} from "./models/getProject/GetProjectOutputModel"
 import {DeleteTreeViewOutputModel} from "./models/deleteTreeView/DeleteTreeViewOutputModel"
-import {UploadIsolateDataOutputModel} from "./models/uploadIsolateData/UploadIsolateDataOutputModel"
 import {DeleteIsolateDataOutputModel} from "./models/deleteIsolateData/DeleteIsolateDataOutputModel"
 import {DeleteTreeOutputModel} from "./models/deleteTree/DeleteTreeOutputModel"
 import {DeleteDistanceMatrixOutputModel} from "./models/deleteDistanceMatrix/DeleteDistanceMatrixOutputModel"
@@ -18,7 +16,7 @@ import {DeleteDatasetOutputModel} from "./models/deleteDataset/DeleteDatasetOutp
 
 export namespace MockAdministrationService {
 
-    const projects = new Map<string, Project>(
+    export const mockProjects = new Map<string, Project>(
         [
             ["project1", {
                 projectId: "project1",
@@ -114,7 +112,7 @@ export namespace MockAdministrationService {
     export async function getProjects(): Promise<GetProjectsOutputModel> {
         return new Promise(resolve => setTimeout(resolve, DELAY))
             .then(() => ({
-                projects: Array.from(projects.values()).map(project => ({
+                projects: Array.from(mockProjects.values()).map(project => ({
                     projectId: project.projectId,
                     name: project.name,
                     description: project.description
@@ -131,7 +129,7 @@ export namespace MockAdministrationService {
     export async function getProject(
         projectId: string
     ): Promise<GetProjectOutputModel> {
-        return projects.get(projectId)!
+        return mockProjects.get(projectId)!
     }
 
     /**
@@ -145,7 +143,7 @@ export namespace MockAdministrationService {
     ): Promise<CreateProjectOutputModel> {
         const projectId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
-        projects.set(projectId, {
+        mockProjects.set(projectId, {
             projectId: projectId,
             name: createProjectInputModel.name,
             description: createProjectInputModel.description,
@@ -171,33 +169,10 @@ export namespace MockAdministrationService {
     export async function deleteProject(
         projectId: string
     ): Promise<DeleteProjectOutputModel> {
-        projects.delete(projectId)
+        mockProjects.delete(projectId)
 
         return {
             projectId
-        }
-    }
-
-    /**
-     * Uploads a typing data file to a project.
-     *
-     * @param projectId the name of the project to which the typing data will be uploaded
-     * @param file      the file to be uploaded
-     * @return a promise that resolves to the uploaded typing data information
-     */
-    export async function uploadTypingData(
-        projectId: string,
-        file: File
-    ): Promise<UploadTypingDataOutputModel> {
-        const typingDataId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-        projects.get(projectId)!.files.typingData.push({
-            typingDataId,
-            name: file.name
-        })
-
-        return {
-            projectId,
-            typingDataId
         }
     }
 
@@ -211,36 +186,13 @@ export namespace MockAdministrationService {
         projectId: string,
         typingDataId: string
     ): Promise<DeleteTypingDataOutputModel> {
-        projects.get(projectId)!.files.typingData = projects.get(projectId)!.files.typingData.filter(
+        mockProjects.get(projectId)!.files.typingData = mockProjects.get(projectId)!.files.typingData.filter(
             typingData => typingData.typingDataId !== typingDataId
         )
 
         return {
             projectId,
             typingDataId
-        }
-    }
-
-    /**
-     * Uploads an isolate data file to a project.
-     *
-     * @param projectId the name of the project to which the isolate data will be uploaded
-     * @param file      the file to be uploaded
-     * @return a promise that resolves to the uploaded isolate data information
-     */
-    export async function uploadIsolateData(
-        projectId: string,
-        file: File
-    ): Promise<UploadIsolateDataOutputModel> {
-        const isolateDataId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-        projects.get(projectId)!.files.isolateData.push({
-            isolateDataId,
-            name: file.name
-        })
-
-        return {
-            projectId,
-            isolateDataId
         }
     }
 
@@ -255,7 +207,7 @@ export namespace MockAdministrationService {
         projectId: string,
         isolateDataId: string
     ): Promise<DeleteIsolateDataOutputModel> {
-        projects.get(projectId)!.files.isolateData = projects.get(projectId)!.files.isolateData.filter(
+        mockProjects.get(projectId)!.files.isolateData = mockProjects.get(projectId)!.files.isolateData.filter(
             isolateData => isolateData.isolateDataId !== isolateDataId
         )
 
@@ -278,7 +230,7 @@ export namespace MockAdministrationService {
         datasetId: string,
         distanceMatrixId: string
     ): Promise<DeleteDistanceMatrixOutputModel> {
-        projects.get(projectId)!.datasets = projects.get(projectId)!.datasets.map(dataset => {
+        mockProjects.get(projectId)!.datasets = mockProjects.get(projectId)!.datasets.map(dataset => {
             if (dataset.datasetId === datasetId) {
                 dataset.distanceMatrices = dataset.distanceMatrices.filter(
                     distanceMatrix => distanceMatrix.distanceMatrixId !== distanceMatrixId
@@ -307,7 +259,7 @@ export namespace MockAdministrationService {
         datasetId: string,
         treeId: string
     ): Promise<DeleteTreeOutputModel> {
-        projects.get(projectId)!.datasets = projects.get(projectId)!.datasets.map(dataset => {
+        mockProjects.get(projectId)!.datasets = mockProjects.get(projectId)!.datasets.map(dataset => {
             if (dataset.datasetId === datasetId) {
                 dataset.trees = dataset.trees.filter(tree => tree.treeId !== treeId)
             }
@@ -334,7 +286,7 @@ export namespace MockAdministrationService {
         datasetId: string,
         treeViewId: string
     ): Promise<DeleteTreeViewOutputModel> {
-        projects.get(projectId)!.datasets = projects.get(projectId)!.datasets.map(dataset => {
+        mockProjects.get(projectId)!.datasets = mockProjects.get(projectId)!.datasets.map(dataset => {
             if (dataset.datasetId === datasetId) {
                 dataset.treeViews = dataset.treeViews.filter(treeView => treeView.treeViewId !== treeViewId)
             }
@@ -360,7 +312,7 @@ export namespace MockAdministrationService {
         createDatasetInputModel: CreateDatasetInputModel
     ): Promise<CreateDatasetOutputModel> {
         const datasetId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-        projects.get(projectId)!.datasets.push({
+        mockProjects.get(projectId)!.datasets.push({
             datasetId,
             name: createDatasetInputModel.name,
             description: createDatasetInputModel.description,
@@ -388,7 +340,7 @@ export namespace MockAdministrationService {
         projectId: string,
         datasetId: string
     ): Promise<GetDatasetOutputModel> {
-        return projects.get(projectId)!.datasets.find(dataset => dataset.datasetId === datasetId)!
+        return mockProjects.get(projectId)!.datasets.find(dataset => dataset.datasetId === datasetId)!
     }
 
     /**
@@ -401,7 +353,7 @@ export namespace MockAdministrationService {
         projectId: string
     ): Promise<GetDatasetsOutputModel> {
         return {
-            datasets: projects.get(projectId)!.datasets
+            datasets: mockProjects.get(projectId)!.datasets
         }
     }
 
@@ -416,7 +368,7 @@ export namespace MockAdministrationService {
         projectId: string,
         datasetId: string
     ): Promise<DeleteDatasetOutputModel> {
-        projects.get(projectId)!.datasets = projects.get(projectId)!.datasets.filter(
+        mockProjects.get(projectId)!.datasets = mockProjects.get(projectId)!.datasets.filter(
             dataset => dataset.datasetId !== datasetId
         )
 

@@ -1,6 +1,6 @@
 import * as React from "react"
 import {Folder} from "@mui/icons-material"
-import {ProjectFiles} from "../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {ProjectFiles} from "../../../../Services/Administration/models/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
 import {useFilesTreeItem} from "./useFilesTreeItem"
 import {TypingDataFileTreeItem} from "./TypingData/TypingDataFileTreeItem"

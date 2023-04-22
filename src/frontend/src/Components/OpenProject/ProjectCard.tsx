@@ -1,4 +1,4 @@
-import {ProjectModel} from "../../Services/administration/models/ProjectModel"
+import {ProjectModel} from "../../Services/Administration/models/ProjectModel"
 import Typography from "@mui/material/Typography"
 import * as React from "react"
 import Paper from "@mui/material/Paper"

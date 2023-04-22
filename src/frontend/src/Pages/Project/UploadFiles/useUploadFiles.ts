@@ -1,9 +1,9 @@
 import * as React from "react"
 import {useState} from "react"
 import {useNavigate, useParams} from "react-router-dom"
-import AdministrationService from "../../../Services/administration/AdministrationService"
 import {WebUiUris} from "../../WebUiUris"
 import {useProjectContext} from "../useProject"
+import FileTransferService from "../../../Services/FileTransfer/FileTransferService";
 
 export enum FileType {
     // noinspection JSUnusedGlobalSymbols
@@ -39,14 +39,14 @@ export function useUploadFiles() {
             setIsUploading(true)
 
             if (fileType === FileType.TYPING_DATA)
-                AdministrationService.uploadTypingData(projectId!, file)
+                FileTransferService.uploadTypingData(projectId!, file)
                     .then(() => {
                         onFileStructureUpdate()
                         navigate(WebUiUris.project(projectId!))
                     })
                     .catch((err) => setError(err.message))
             else
-                AdministrationService.uploadIsolateData(projectId!, file)
+                FileTransferService.uploadIsolateData(projectId!, file)
                     .then(() => {
                         onFileStructureUpdate()
                         navigate(WebUiUris.project(projectId!))

@@ -4,7 +4,7 @@ import {ReactNode} from "react"
 import {DatasetType} from "../../../Pages/Project/CreateDataset/useCreateDataset"
 import Typography from "@mui/material/Typography"
 import {FileUploader} from "react-drag-drop-files"
-import {TypingDataFile} from "../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {TypingDataFile} from "../../../Services/Administration/models/getProject/GetProjectOutputModel"
 
 /**
  * Props for the TypingDataStepCard component.

@@ -1,10 +1,10 @@
-import {TreeView} from "../../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {TreeView} from "../../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
 import {useNavigate, useParams} from "react-router-dom"
 import {Delete, Download, Visibility} from "@mui/icons-material"
 import {WebUiUris} from "../../../../../../Pages/WebUiUris"
 import {useDeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBackdrop"
 import {useState} from "react"
-import AdministrationService from "../../../../../../Services/administration/AdministrationService"
+import AdministrationService from "../../../../../../Services/Administration/AdministrationService"
 
 /**
  * Hook for the TreeViewTreeItem component.

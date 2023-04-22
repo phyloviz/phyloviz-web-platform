@@ -1,4 +1,4 @@
-import {IsolateDataFile} from "../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {IsolateDataFile} from "../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../../Utils/StyledTreeItem"
 import {FilePresent} from "@mui/icons-material"
 import * as React from "react"

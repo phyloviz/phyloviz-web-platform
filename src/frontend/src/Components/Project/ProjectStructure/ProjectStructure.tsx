@@ -3,8 +3,8 @@ import {TreeView} from "@mui/lab"
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import {WorkflowsTreeItem} from "./Workflows/WorkflowsTreeItem"
-import {Project} from "../../../Services/administration/models/getProject/GetProjectOutputModel"
-import {Workflow} from "../../../Services/compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+import {Project} from "../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {Workflow} from "../../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
 import {AccountTree, Info} from "@mui/icons-material"
 import {WebUiUris} from "../../../Pages/WebUiUris"
 import {DatasetsTreeItem} from "./Datasets/DatasetsTreeItem"

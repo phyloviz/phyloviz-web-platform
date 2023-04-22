@@ -1,12 +1,12 @@
 import {useParams} from "react-router-dom"
 import {useEffect, useState} from "react"
-import VisualizationService from "../../../Services/visualization/VisualizationService"
+import VisualizationService from "../../../Services/Visualization/VisualizationService"
 import {
     GetIsolateDataSchemaOutputModel
-} from "../../../Services/visualization/models/getIsolateDataSchema/GetIsolateDataSchemaOutputModel"
+} from "../../../Services/Visualization/models/getIsolateDataSchema/GetIsolateDataSchemaOutputModel"
 import {
     GetIsolateDataRowsOutputModel
-} from "../../../Services/visualization/models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel"
+} from "../../../Services/Visualization/models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel"
 
 /**
  * Hook for IsolateData page.

@@ -2,8 +2,8 @@ import {useNavigate} from "react-router-dom"
 import * as React from "react"
 import {useState} from "react"
 import {WebUiUris} from "../WebUiUris"
-import AdministrationService from "../../Services/administration/AdministrationService"
-import {CreateProjectInputModel} from "../../Services/administration/models/createProject/CreateProjectInputModel"
+import AdministrationService from "../../Services/Administration/AdministrationService"
+import {CreateProjectInputModel} from "../../Services/Administration/models/createProject/CreateProjectInputModel"
 
 /**
  * Hook for the NewProject page.

@@ -1,4 +1,4 @@
-import {TypingDataFile} from "../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {TypingDataFile} from "../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../../Utils/StyledTreeItem"
 import {Description} from "@mui/icons-material"
 import * as React from "react"

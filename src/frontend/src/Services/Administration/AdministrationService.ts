@@ -2,12 +2,10 @@ import {CreateProjectInputModel} from "./models/createProject/CreateProjectInput
 import {CreateProjectOutputModel} from "./models/createProject/CreateProjectOutputModel"
 import {GetProjectsOutputModel} from "./models/getProjects/GetProjectsOutputModel"
 import {DeleteProjectOutputModel} from "./models/deleteProject/DeleteProjectOutputModel"
-import {UploadTypingDataOutputModel} from "./models/uploadTypingData/UploadTypingDataOutputModel"
 import {DeleteTypingDataOutputModel} from "./models/deleteTypingData/DeleteTypingDataOutputModel"
 import {GetProjectOutputModel} from "./models/getProject/GetProjectOutputModel"
 import {DeleteTreeViewOutputModel} from "./models/deleteTreeView/DeleteTreeViewOutputModel"
 import {WebApiUris} from "../WebApiUris"
-import {UploadIsolateDataOutputModel} from "./models/uploadIsolateData/UploadIsolateDataOutputModel"
 import {DeleteIsolateDataOutputModel} from "./models/deleteIsolateData/DeleteIsolateDataOutputModel"
 import {DeleteTreeOutputModel} from "./models/deleteTree/DeleteTreeOutputModel"
 import {DeleteDistanceMatrixOutputModel} from "./models/deleteDistanceMatrix/DeleteDistanceMatrixOutputModel"
@@ -70,29 +68,6 @@ namespace AdministrationService {
     }
 
     /**
-     * Uploads a typing data file to a project.
-     *
-     * @param projectId the name of the project to which the typing data will be uploaded
-     * @param file      the file to be uploaded
-     * @return a promise that resolves to the uploaded typing data information
-     */
-    export async function uploadTypingData(
-        projectId: string,
-        file: File
-    ): Promise<UploadTypingDataOutputModel> {
-        const formData = new FormData()
-        formData.append("file", file)
-
-        return await post<UploadTypingDataOutputModel>(
-            WebApiUris.uploadTypingData(projectId),
-            formData,
-            {
-                "Content-Length": file.size.toString()
-            }
-        )
-    }
-
-    /**
      * Deletes a typing data file.
      *
      * @param projectId the name of the project to which the typing data will be deleted
@@ -103,29 +78,6 @@ namespace AdministrationService {
         typingDataId: string
     ): Promise<DeleteTypingDataOutputModel> {
         return await del<DeleteTypingDataOutputModel>(WebApiUris.deleteTypingData(projectId, typingDataId))
-    }
-
-    /**
-     * Uploads an isolate data file to a project.
-     *
-     * @param projectId the name of the project to which the isolate data will be uploaded
-     * @param file      the file to be uploaded
-     * @return a promise that resolves to the uploaded isolate data information
-     */
-    export async function uploadIsolateData(
-        projectId: string,
-        file: File
-    ): Promise<UploadIsolateDataOutputModel> {
-        const formData = new FormData()
-        formData.append("file", file)
-
-        return await post<UploadIsolateDataOutputModel>(
-            WebApiUris.uploadIsolateData(projectId),
-            formData,
-            {
-                "Content-Length": file.size.toString()
-            }
-        )
     }
 
     /**
