@@ -57,6 +57,11 @@ public class TypingDataMetadataRepositoryMongo implements TypingDataMetadataRepo
     }
 
     @Override
+    public boolean existsByProjectIdAndTypingDataId(String projectId, String typingDataId) {
+        return typingDataMetadataMongoRepository.existsByProjectIdAndTypingDataId(projectId, typingDataId);
+    }
+
+    @Override
     public void delete(TypingDataMetadata typingDataMetadata) {
         typingDataMetadataMongoRepository.delete(typingDataMetadata);
     }

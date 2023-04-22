@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.gateway.http.controllers;
 
 import org.phyloviz.pwp.gateway.http.controllers.exceptions.AuthenticationException;
-import org.phyloviz.pwp.gateway.http.controllers.models.getSession.GetSessionOutputModel;
+import org.phyloviz.pwp.gateway.http.controllers.models.get_session.GetSessionOutputModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;

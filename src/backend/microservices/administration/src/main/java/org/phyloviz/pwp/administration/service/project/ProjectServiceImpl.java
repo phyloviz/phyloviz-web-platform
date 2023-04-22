@@ -1,26 +1,25 @@
-package org.phyloviz.pwp.administration.http.service.project;
+package org.phyloviz.pwp.administration.service.project;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.administration.http.service.project.dataset.DatasetService;
-import org.phyloviz.pwp.administration.http.service.project.file.IsolateDataService;
-import org.phyloviz.pwp.administration.http.service.project.file.TypingDataService;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.FileIds;
+import org.phyloviz.pwp.administration.service.project.dataset.DatasetService;
+import org.phyloviz.pwp.administration.service.project.file.IsolateDataService;
+import org.phyloviz.pwp.administration.service.project.file.TypingDataService;
+import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.service.dtos.files.FilesInfo;
 import org.phyloviz.pwp.shared.service.dtos.project.CreateProjectOutput;
 import org.phyloviz.pwp.shared.service.dtos.project.FullProjectInfo;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
-import org.phyloviz.pwp.shared.service.project.ProjectMetadataService;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
 
-    private final ProjectMetadataService projectMetadataService;
+    private final ProjectRepository projectRepository;
 
     private final DatasetService datasetService;
     private final TypingDataService typingDataService;
@@ -34,21 +33,17 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = new Project(
                 name,
                 description,
-                userId,
-                Collections.emptyList(),
-                new FileIds(
-                        Collections.emptyList(),
-                        Collections.emptyList()
-                )
+                userId
         );
 
-        Project storedProject = projectMetadataService.saveProject(project);
+        Project storedProject = projectRepository.save(project);
         return new CreateProjectOutput(storedProject.getId());
     }
 
     @Override
     public FullProjectInfo getFullProjectInfo(String projectId, String userId) {
-        Project project = projectMetadataService.getProject(projectId, userId);
+        Project project = projectRepository.findByIdAndOwnerId(projectId, userId)
+                .orElseThrow(ProjectNotFoundException::new);
 
         return new FullProjectInfo(
                 project.getId(),
@@ -65,23 +60,18 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> getProjects(String userId) {
-        return projectMetadataService.getProjects(userId);
+        return projectRepository.findAllByOwnerId(userId);
     }
 
     @Override
     public void deleteProject(String projectId, String userId) {
-        Project project = projectMetadataService.getProject(projectId, userId);
+        Project project = projectRepository.findByIdAndOwnerId(projectId, userId)
+                .orElseThrow(ProjectNotFoundException::new);
 
-        /*
-        datasetService.deleteAllByProjectId(projectId); TODO potentially implement this, removing ids from the project, do the same for dataset
+        datasetService.deleteAllByProjectId(projectId);
         typingDataService.deleteAllByProjectId(projectId);
         isolateDataService.deleteAllByProjectId(projectId);
-         */
 
-        project.getDatasetIds().forEach(datasetService::deleteDataset);
-        project.getFileIds().getTypingDataIds().forEach(typingDataService::deleteTypingData);
-        project.getFileIds().getIsolateDataIds().forEach(isolateDataService::deleteIsolateData);
-
-        projectMetadataService.deleteProject(project);
+        projectRepository.delete(project);
     }
 }

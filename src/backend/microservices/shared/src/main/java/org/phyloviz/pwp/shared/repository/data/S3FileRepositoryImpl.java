@@ -86,7 +86,7 @@ public class S3FileRepositoryImpl implements S3FileRepository {
                 .key(url.substring(getLocation().length()))
                 .build();
 
-        s3Client.deleteObject(deleteObjectRequest);
+        s3Client.deleteObject(deleteObjectRequest); // TODO throw exception if not successful
 
         return true;
     }

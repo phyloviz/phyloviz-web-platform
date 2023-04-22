@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.administration.http.service.project.file;
+package org.phyloviz.pwp.administration.service.project.file;
 
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.IsolateDataInfo;
 
@@ -9,6 +9,8 @@ public interface IsolateDataService {
     List<IsolateDataInfo> getIsolateDataInfos(String projectId);
 
     void deleteIsolateData(String projectId, String isolateDataId, String userId);
+
+    void deleteAllByProjectId(String projectId);
 
     void deleteIsolateData(String isolateDataId);
 }

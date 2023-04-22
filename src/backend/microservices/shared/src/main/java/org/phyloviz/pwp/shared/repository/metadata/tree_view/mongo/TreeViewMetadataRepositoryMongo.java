@@ -37,6 +37,18 @@ public class TreeViewMetadataRepositoryMongo implements TreeViewMetadataReposito
     }
 
     @Override
+    public Optional<TreeViewMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(String projectId, String datasetId, String treeViewId, TreeViewAdapterId adapterId) {
+        return treeViewMetadataMongoRepository.findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(
+                projectId, datasetId, treeViewId, adapterId.name().toLowerCase()
+        );
+    }
+
+    @Override
+    public List<TreeViewMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId) {
+        return treeViewMetadataMongoRepository.findAllByProjectIdAndDatasetId(projectId, datasetId);
+    }
+
+    @Override
     public List<TreeViewMetadata> findAllByDatasetId(String datasetId) {
         Set<String> seenTreeViewIds = new HashSet<>();
 
@@ -54,5 +66,15 @@ public class TreeViewMetadataRepositoryMongo implements TreeViewMetadataReposito
     @Override
     public void delete(TreeViewMetadata treeViewMetadata) {
         treeViewMetadataMongoRepository.delete(treeViewMetadata);
+    }
+
+    @Override
+    public boolean existsByDatasetIdAndTreeIdSource(String datasetId, String treeId) {
+        return treeViewMetadataMongoRepository.existsByDatasetIdAndTreeIdSource(datasetId, treeId);
+    }
+
+    @Override
+    public boolean existsByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId) {
+        return treeViewMetadataMongoRepository.existsByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId);
     }
 }

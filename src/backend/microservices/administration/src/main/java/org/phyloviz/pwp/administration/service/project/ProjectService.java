@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.administration.http.service.project;
+package org.phyloviz.pwp.administration.service.project;
 
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.service.dtos.project.CreateProjectOutput;

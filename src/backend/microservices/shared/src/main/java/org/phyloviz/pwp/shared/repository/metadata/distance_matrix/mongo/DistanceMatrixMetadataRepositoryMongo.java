@@ -52,6 +52,30 @@ public class DistanceMatrixMetadataRepositoryMongo implements DistanceMatrixMeta
     }
 
     @Override
+    public List<DistanceMatrixMetadata> findAllByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId) {
+        return distanceMatrixMetadataMongoRepository.findAllByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId);
+    }
+
+    @Override
+    public Optional<DistanceMatrixMetadata> findByProjectIdAndDatasetIdAndDistanceMatrixIdAndAdapterId(
+            String projectId, String datasetId, String distanceMatrixId, DistanceMatrixAdapterId adapterId
+    ) {
+        return distanceMatrixMetadataMongoRepository.findByProjectIdAndDatasetIdAndDistanceMatrixIdAndAdapterId(
+                projectId, datasetId, distanceMatrixId, adapterId.name().toLowerCase()
+        );
+    }
+
+    @Override
+    public List<DistanceMatrixMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId) {
+        return distanceMatrixMetadataMongoRepository.findAllByProjectIdAndDatasetId(projectId, datasetId);
+    }
+
+    @Override
+    public boolean existsByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId) {
+        return distanceMatrixMetadataMongoRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId);
+    }
+
+    @Override
     public void delete(DistanceMatrixMetadata distanceMatrixMetadata) {
         distanceMatrixMetadataMongoRepository.delete(distanceMatrixMetadata);
     }

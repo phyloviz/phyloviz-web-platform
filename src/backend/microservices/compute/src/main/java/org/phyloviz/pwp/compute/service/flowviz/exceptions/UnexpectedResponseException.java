@@ -1,6 +1,5 @@
 package org.phyloviz.pwp.compute.service.flowviz.exceptions;
 
-import lombok.Data;
 import lombok.Getter;
 import okhttp3.Response;
 

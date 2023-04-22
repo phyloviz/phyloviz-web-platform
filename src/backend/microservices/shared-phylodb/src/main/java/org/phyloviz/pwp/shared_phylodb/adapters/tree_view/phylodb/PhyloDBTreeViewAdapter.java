@@ -12,7 +12,6 @@ import pt.ist.meic.phylodb.analysis.inference.model.Inference;
 import pt.ist.meic.phylodb.analysis.visualization.VisualizationService;
 import pt.ist.meic.phylodb.analysis.visualization.model.Visualization;
 import pt.ist.meic.phylodb.typing.profile.ProfileRepository;
-import pt.ist.meic.phylodb.typing.profile.ProfileService;
 import pt.ist.meic.phylodb.typing.profile.model.Profile;
 
 import java.util.HashMap;
