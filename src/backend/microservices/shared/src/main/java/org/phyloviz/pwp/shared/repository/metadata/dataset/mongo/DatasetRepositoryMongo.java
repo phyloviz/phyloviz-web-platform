@@ -40,17 +40,17 @@ public class DatasetRepositoryMongo implements DatasetRepository {
     }
 
     @Override
-    public Boolean existsByProjectIdAndId(String projectId, String datasetId) {
+    public boolean existsByProjectIdAndId(String projectId, String datasetId) {
         return datasetMongoRepository.existsByProjectIdAndId(projectId, datasetId);
     }
 
     @Override
-    public Boolean existsByProjectIdAndTypingDataId(String projectId, String typingDataId) {
+    public boolean existsByProjectIdAndTypingDataId(String projectId, String typingDataId) {
         return datasetMongoRepository.existsByProjectIdAndTypingDataId(projectId, typingDataId);
     }
 
     @Override
-    public Boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId) {
+    public boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId) {
         return datasetMongoRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId);
     }
 }

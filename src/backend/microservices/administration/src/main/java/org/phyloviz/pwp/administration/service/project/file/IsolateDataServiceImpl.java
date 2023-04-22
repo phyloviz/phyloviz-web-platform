@@ -33,8 +33,8 @@ public class IsolateDataServiceImpl implements IsolateDataService {
 
     @Override
     public void deleteIsolateData(String projectId, String isolateDataId, String userId) {
-        projectRepository.findByIdAndOwnerId(projectId, userId)
-                .orElseThrow(ProjectNotFoundException::new);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
 
         if (!isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId))
             throw new IsolateDataNotFoundException();

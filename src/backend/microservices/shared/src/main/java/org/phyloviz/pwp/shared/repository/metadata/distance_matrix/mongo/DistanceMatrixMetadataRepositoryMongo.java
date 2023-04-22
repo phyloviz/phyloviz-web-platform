@@ -71,7 +71,7 @@ public class DistanceMatrixMetadataRepositoryMongo implements DistanceMatrixMeta
     }
 
     @Override
-    public Boolean existsByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId) {
+    public boolean existsByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId) {
         return distanceMatrixMetadataMongoRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId);
     }
 

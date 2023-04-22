@@ -58,8 +58,8 @@ public class DatasetServiceImpl implements DatasetService {
 
     @Override
     public List<FullDatasetInfo> getFullDatasetInfos(String projectId, String userId) {
-        projectRepository.findByIdAndOwnerId(projectId, userId)
-                .orElseThrow(ProjectNotFoundException::new);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
 
         return getFullDatasetInfos(projectId);
     }
@@ -72,8 +72,8 @@ public class DatasetServiceImpl implements DatasetService {
 
     @Override
     public void deleteDataset(String projectId, String datasetId, String userId) {
-        projectRepository.findByIdAndOwnerId(projectId, userId)
-                .orElseThrow(ProjectNotFoundException::new);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
 
         Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
                 .orElseThrow(DatasetNotFoundException::new);
@@ -124,8 +124,8 @@ public class DatasetServiceImpl implements DatasetService {
         if (isolateDataId != null && isolateDataId.isBlank())
             throw new InvalidArgumentException("Isolate data id cannot be empty (but can be null).");
 
-        projectRepository.findByIdAndOwnerId(projectId, userId)
-                .orElseThrow(ProjectNotFoundException::new);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
 
         if (!typingDataMetadataRepository.existsByProjectIdAndTypingDataId(projectId, typingDataId))
             throw new TypingDataDoesNotExistException();

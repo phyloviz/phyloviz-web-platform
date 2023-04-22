@@ -40,9 +40,9 @@ public interface DatasetRepository {
 
     Optional<Dataset> findByProjectIdAndId(String projectId, String datasetId);
 
-    Boolean existsByProjectIdAndId(String projectId, String datasetId);
+    boolean existsByProjectIdAndId(String projectId, String datasetId);
 
-    Boolean existsByProjectIdAndTypingDataId(String projectId, String typingDataId);
+    boolean existsByProjectIdAndTypingDataId(String projectId, String typingDataId);
 
-    Boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
+    boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
 }

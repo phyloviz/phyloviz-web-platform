@@ -30,9 +30,10 @@ public interface ProjectMongoRepository extends MongoRepository<Project, String>
 
     /**
      * Checks if a project exists given its id and the id of its owner.
-     * @param id the id of the project
+     *
+     * @param id      the id of the project
      * @param ownerId the id of the owner of the project
      * @return true if the project exists, false otherwise
      */
-    Boolean existsByIdAndOwnerId(String id, String ownerId);
+    boolean existsByIdAndOwnerId(String id, String ownerId);
 }

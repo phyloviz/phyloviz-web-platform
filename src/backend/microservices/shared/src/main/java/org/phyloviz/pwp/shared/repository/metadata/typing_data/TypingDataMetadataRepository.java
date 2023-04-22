@@ -49,7 +49,7 @@ public interface TypingDataMetadataRepository {
      */
     List<TypingDataMetadata> findAllByProjectId(String projectId);
 
-    Boolean existsByProjectIdAndTypingDataId(String projectId, String typingDataId);
+    boolean existsByProjectIdAndTypingDataId(String projectId, String typingDataId);
 
     /**
      * Deletes a typing data metadata.

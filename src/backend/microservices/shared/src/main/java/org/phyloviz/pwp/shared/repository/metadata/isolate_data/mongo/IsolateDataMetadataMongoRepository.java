@@ -46,5 +46,5 @@ public interface IsolateDataMetadataMongoRepository extends MongoRepository<Isol
      */
     List<IsolateDataMetadata> findAllByProjectId(String projectId);
 
-    Boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
+    boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
 }

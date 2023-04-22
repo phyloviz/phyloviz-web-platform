@@ -56,5 +56,5 @@ public interface IsolateDataMetadataRepository {
      */
     void delete(IsolateDataMetadata isolateDataMetadata);
 
-    Boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
+    boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
 }

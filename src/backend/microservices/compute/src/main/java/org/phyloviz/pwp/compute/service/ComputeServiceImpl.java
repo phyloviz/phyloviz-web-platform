@@ -76,7 +76,7 @@ public class ComputeServiceImpl implements ComputeService {
             Map<String, String> workflowProperties,
             String userId
     ) {
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
         return switch (workflowType) {
@@ -92,7 +92,7 @@ public class ComputeServiceImpl implements ComputeService {
 
     @Override
     public GetWorkflowStatusOutput getWorkflowStatus(String projectId, String workflowId, String userId) {
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
         WorkflowInstance workflowInstance = workflowInstanceRepository
@@ -136,7 +136,7 @@ public class ComputeServiceImpl implements ComputeService {
         if (!COMPUTE_DISTANCE_MATRIX_FUNCTIONS.contains(properties.get("function")))
             throw new IllegalArgumentException("Invalid algorithm");
 
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
         Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
                 .orElseThrow(DatasetDoesNotExistException::new);
@@ -167,7 +167,7 @@ public class ComputeServiceImpl implements ComputeService {
         if (!COMPUTE_TREE_ALGORITHMS.contains(properties.get("algorithm")))
             throw new IllegalArgumentException("Invalid algorithm");
 
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
         if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId)) {
             throw new DatasetDoesNotExistException();
@@ -199,7 +199,7 @@ public class ComputeServiceImpl implements ComputeService {
         if (!COMPUTE_TREE_VIEW_LAYOUTS.contains(properties.get("layout")))
             throw new IllegalArgumentException("Invalid layout");
 
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
         if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId)) {
             throw new DatasetDoesNotExistException();
@@ -223,7 +223,7 @@ public class ComputeServiceImpl implements ComputeService {
         if (!ObjectId.isValid(datasetId))
             throw new IllegalArgumentException("Invalid datasetId");
 
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
         Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
                 .orElseThrow(DatasetDoesNotExistException::new);
@@ -247,7 +247,7 @@ public class ComputeServiceImpl implements ComputeService {
         if (!ObjectId.isValid(datasetId))
             throw new IllegalArgumentException("Invalid datasetId");
 
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
         Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
                 .orElseThrow(DatasetDoesNotExistException::new);
@@ -274,7 +274,7 @@ public class ComputeServiceImpl implements ComputeService {
         if (!UUIDUtils.isValidUUID(treeId))
             throw new IllegalArgumentException("Invalid treeId");
 
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
         if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId)) {
             throw new DatasetDoesNotExistException();

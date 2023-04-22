@@ -53,7 +53,7 @@ public interface TreeMetadataRepository {
 
     List<TreeMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);
 
-    Boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
+    boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
 
-    Boolean existsByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
+    boolean existsByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
 }

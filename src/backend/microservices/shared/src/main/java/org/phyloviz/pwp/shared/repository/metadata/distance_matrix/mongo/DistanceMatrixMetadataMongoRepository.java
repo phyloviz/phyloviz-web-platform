@@ -80,5 +80,5 @@ public interface DistanceMatrixMetadataMongoRepository extends MongoRepository<D
      * @param distanceMatrixId the id of the distance matrix
      * @return true if exists, false otherwise
      */
-    Boolean existsByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId);
+    boolean existsByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId);
 }

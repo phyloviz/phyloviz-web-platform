@@ -33,8 +33,8 @@ public class TypingDataServiceImpl implements TypingDataService {
 
     @Override
     public void deleteTypingData(String projectId, String typingDataId, String userId) {
-        projectRepository.findByIdAndOwnerId(projectId, userId)
-                .orElseThrow(ProjectNotFoundException::new);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
 
         if (!typingDataMetadataRepository.existsByProjectIdAndTypingDataId(projectId, typingDataId))
             throw new TypingDataNotFoundException();

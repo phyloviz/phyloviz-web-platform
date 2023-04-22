@@ -34,10 +34,10 @@ public class DistanceMatrixServiceImpl implements DistanceMatrixService {
 
     @Override
     public void deleteDistanceMatrix(String projectId, String datasetId, String distanceMatrixId, String userId) {
-        projectRepository.findByIdAndOwnerId(projectId, userId) // TODO change to existsByIdAndOwnerId, to avoid fetching the whole document
-                .orElseThrow(ProjectNotFoundException::new);
-        datasetRepository.findByProjectIdAndId(projectId, datasetId) // TODO change to existsByProjectIdAndId, to avoid fetching the whole document
-                .orElseThrow(DatasetNotFoundException::new);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
+        if (!datasetRepository.existsByProjectIdAndId(datasetId, projectId))
+            throw new DatasetNotFoundException();
 
         if (!distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
             throw new DistanceMatrixNotFoundException();

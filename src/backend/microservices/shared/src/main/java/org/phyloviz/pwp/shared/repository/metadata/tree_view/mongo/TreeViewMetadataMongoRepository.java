@@ -53,7 +53,7 @@ public interface TreeViewMetadataMongoRepository extends MongoRepository<TreeVie
     List<TreeViewMetadata> findAllByDatasetId(String datasetId);
 
     @Query("{ 'datasetId' : ?0, 'source' : { 'treeId' : ?1 } }")
-    Boolean existsByDatasetIdAndTreeIdSource(String datasetId, String treeId);
+    boolean existsByDatasetIdAndTreeIdSource(String datasetId, String treeId);
 
-    Boolean existsByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId);
+    boolean existsByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId);
 }

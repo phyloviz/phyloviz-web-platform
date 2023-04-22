@@ -54,7 +54,7 @@ public interface TreeMetadataMongoRepository extends MongoRepository<TreeMetadat
     List<TreeMetadata> findAllByDatasetId(String datasetId);
 
     @Query("{ 'datasetId' : ?0, 'source' : { 'distanceMatrixId' : ?1 } }")
-    Boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
+    boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
 
-    Boolean existsByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
+    boolean existsByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
 }

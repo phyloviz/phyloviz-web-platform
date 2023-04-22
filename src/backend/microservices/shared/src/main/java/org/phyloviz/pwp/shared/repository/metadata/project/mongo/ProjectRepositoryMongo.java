@@ -40,7 +40,7 @@ public class ProjectRepositoryMongo implements ProjectRepository {
     }
 
     @Override
-    public Boolean existsByIdAndOwnerId(String id, String ownerId) {
+    public boolean existsByIdAndOwnerId(String id, String ownerId) {
         return projectMongoRepository.existsByIdAndOwnerId(id, ownerId);
     }
 }

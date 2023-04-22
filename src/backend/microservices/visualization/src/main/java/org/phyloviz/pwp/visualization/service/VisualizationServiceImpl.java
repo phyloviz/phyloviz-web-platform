@@ -54,8 +54,8 @@ public class VisualizationServiceImpl implements VisualizationService {
 
     @Override
     public String getDistanceMatrix(String projectId, String datasetId, String distanceMatrixId, String userId) {
-        projectRepository.findByIdAndOwnerId(projectId, userId)
-                .orElseThrow(ProjectNotFoundException::new);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
 
         DistanceMatrixMetadata distanceMatrix =
                 distanceMatrixMetadataRepository.findByProjectIdAndDatasetIdAndDistanceMatrixIdAndAdapterId(
@@ -70,8 +70,8 @@ public class VisualizationServiceImpl implements VisualizationService {
 
     @Override
     public String getTree(String projectId, String datasetId, String treeId, String userId) {
-        projectRepository.findByIdAndOwnerId(projectId, userId)
-                .orElseThrow(ProjectNotFoundException::new);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
 
         TreeMetadata treeMetadata =
                 treeMetadataRepository.findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(
@@ -87,8 +87,8 @@ public class VisualizationServiceImpl implements VisualizationService {
 
     @Override
     public GetTreeViewOutput getTreeView(String projectId, String datasetId, String treeViewId, String userId) {
-        projectRepository.findByIdAndOwnerId(projectId, userId)
-                .orElseThrow(ProjectNotFoundException::new);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
 
         TreeViewMetadata treeViewMetadata =
                 treeViewMetadataRepository.findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(

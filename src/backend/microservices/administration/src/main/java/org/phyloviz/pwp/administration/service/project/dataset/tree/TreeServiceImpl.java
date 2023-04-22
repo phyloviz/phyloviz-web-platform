@@ -34,10 +34,10 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public void deleteTree(String projectId, String datasetId, String treeId, String userId) {
-        projectRepository.findByIdAndOwnerId(projectId, userId)
-                .orElseThrow(ProjectNotFoundException::new);
-        datasetRepository.findByProjectIdAndId(projectId, datasetId)
-                .orElseThrow(DatasetNotFoundException::new);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
+        if(!datasetRepository.existsByProjectIdAndId(projectId, datasetId))
+            throw new DatasetNotFoundException();
 
         if (!treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId))
             throw new TreeNotFoundException();

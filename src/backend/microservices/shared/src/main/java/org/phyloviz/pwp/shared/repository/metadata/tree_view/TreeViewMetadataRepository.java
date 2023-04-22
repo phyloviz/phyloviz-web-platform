@@ -53,7 +53,7 @@ public interface TreeViewMetadataRepository {
      */
     void delete(TreeViewMetadata treeViewMetadata);
 
-    Boolean existsByDatasetIdAndTreeIdSource(String datasetId, String treeId);
+    boolean existsByDatasetIdAndTreeIdSource(String datasetId, String treeId);
 
-    Boolean existsByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId);
+    boolean existsByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId);
 }
