@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProjectServiceImpl implements ProjectService { // f
+public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
 

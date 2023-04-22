@@ -52,19 +52,6 @@ def tree_handler(s3_output_path, project_id, dataset_id, tree_id, workflow_id):
         }
     }
 
-    dataset = datasets_collection.find_one({'_id': ObjectId(dataset_id)})
-
-    ids = dataset['distanceMatrixIds']
-
-    ids.append(tree_id)
-
-    datasets_collection.update_one(
-        {'_id': dataset['_id']},
-        {'$set': {
-            'treeIds': ids
-        }}
-    )
-
     tree_collection.insert_one(tree_metadata)
 
     print(f'File uploaded to S3 and metadata created in the tree collection with treeId: {tree_id}')
@@ -95,18 +82,6 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, distance_mat
             'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
         }
     }
-
-    dataset = datasets_collection.find_one({'_id': ObjectId(dataset_id)})
-
-    ids = dataset['distanceMatrixIds']
-
-    ids.append(distance_matrix_id)
-    datasets_collection.update_one(
-        {'_id': dataset['_id']},
-        {'$set': {
-            'distanceMatrixIds': ids
-        }}
-    )
 
     distance_matrix_collection.insert_one(distance_matrix_metadata)
 
