@@ -1,12 +1,12 @@
-import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import VisualizationService from "../../../Services/visualization/VisualizationService";
+import {useParams} from "react-router-dom"
+import {useEffect, useState} from "react"
+import VisualizationService from "../../../Services/visualization/VisualizationService"
 import {
     GetIsolateDataSchemaOutputModel
-} from "../../../Services/visualization/models/getIsolateDataSchema/GetIsolateDataSchemaOutputModel";
+} from "../../../Services/visualization/models/getIsolateDataSchema/GetIsolateDataSchemaOutputModel"
 import {
     GetIsolateDataRowsOutputModel
-} from "../../../Services/visualization/models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel";
+} from "../../../Services/visualization/models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel"
 
 /**
  * Hook for IsolateData page.
@@ -20,7 +20,7 @@ export function useIsolateData() {
     const [isolateDataSchema, setIsolateDataSchema] = useState<GetIsolateDataSchemaOutputModel>()
     const [isolateDataRows, setIsolateDataRows] = useState<GetIsolateDataRowsOutputModel>()
     const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<string>()
+    const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
         setLoading(true)
@@ -55,6 +55,7 @@ export function useIsolateData() {
             }
         },
         loading,
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

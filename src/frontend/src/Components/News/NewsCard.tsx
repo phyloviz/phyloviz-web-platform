@@ -1,8 +1,8 @@
-import {Button, Card, CardActions, CardContent, CardHeader} from "@mui/material";
-import Typography from "@mui/material/Typography";
-import {Info} from "@mui/icons-material";
-import * as React from "react";
-import {News} from "../../Pages/News/useNews";
+import {Button, Card, CardActions, CardContent, CardHeader} from "@mui/material"
+import Typography from "@mui/material/Typography"
+import {Info} from "@mui/icons-material"
+import * as React from "react"
+import {News} from "../../Pages/News/useNews"
 
 /**
  * Card for a news item.

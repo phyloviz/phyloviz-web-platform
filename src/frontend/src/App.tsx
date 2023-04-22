@@ -1,5 +1,4 @@
 import * as React from 'react'
-import {useEffect} from 'react'
 import './App.css'
 import {Route, Routes} from 'react-router-dom'
 import About from "./Pages/About/About"
@@ -14,7 +13,7 @@ import OpenProject from "./Pages/OpenProject/OpenProject"
 import Project from "./Pages/Project/Project"
 import {NotFoundPage} from "./Pages/NotFoundPage"
 import UploadFiles from "./Pages/Project/UploadFiles/UploadFiles"
-import {useLoggedIn, useSessionManager} from "./Session/Session"
+import {useLoggedIn} from "./Session/Session"
 import GoeBURSTConfig from "./Pages/Project/Compute/Tree/GoeBURSTConfig/GoeBURSTConfig"
 import GoeBURSTFullMSTConfig from "./Pages/Project/Compute/Tree/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfig"
 import HierarchicalClusteringConfig
@@ -26,9 +25,11 @@ import TreeView from "./Pages/Project/TreeView/TreeView"
 import DistanceMatrix from "./Pages/Project/DistanceMatrix/DistanceMatrix"
 import IsolateData from "./Pages/Project/IsolateData/IsolateData"
 import TypingData from "./Pages/Project/TypingData/TypingData"
-import Tree from "./Pages/Project/Tree/Tree";
-import DatasetDetails from "./Pages/Project/DatasetDetails/DatasetDetails";
-import Report from "./Pages/Project/Report/Report";
+import Tree from "./Pages/Project/Tree/Tree"
+import DatasetDetails from "./Pages/Project/DatasetDetails/DatasetDetails"
+import Report from "./Pages/Project/Report/Report"
+import ComputeHammingDistance
+    from "./Pages/Project/Compute/DistanceMatrix/ComputeHammingDistance/ComputeHammingDistance"
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;
@@ -52,21 +53,13 @@ import TREE = WebUiUris.TREE;
 import DATASET = WebUiUris.DATASET;
 import REPORT = WebUiUris.REPORT;
 import COMPUTE_HAMMING_DISTANCE = WebUiUris.COMPUTE_HAMMING_DISTANCE;
-import ComputeHammingDistance
-    from "./Pages/Project/Compute/DistanceMatrix/ComputeHammingDistance/ComputeHammingDistance";
 
 /**
  * App component.
  */
 export default function App() {
 
-    const sessionManager = useSessionManager()
     const loggedIn = useLoggedIn()
-
-    // Clear session on app start
-    useEffect(() => {
-        sessionManager.clearSession()
-    }, [])
 
     /**
      * Protection route component, redirects to login page if not logged in.

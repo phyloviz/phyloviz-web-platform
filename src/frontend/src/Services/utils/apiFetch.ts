@@ -23,7 +23,7 @@ async function apiFetch<T>(
         },
         body
     }))
-
+    console.log(err, res)
     if (err)
         throw new NetworkError(err.message)
 

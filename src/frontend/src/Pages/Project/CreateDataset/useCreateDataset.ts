@@ -3,7 +3,7 @@ import {useState} from "react"
 import {useNavigate} from "react-router-dom"
 import {SelectChangeEvent} from "@mui/material"
 import {useProjectContext} from "../useProject"
-import {AdministrationService} from "../../../Services/administration/AdministrationService"
+import AdministrationService from "../../../Services/administration/AdministrationService"
 
 export enum CreateDatasetStep {
     INFO = "Dataset Info",
@@ -23,8 +23,6 @@ export enum DatasetType {
     SNP_WITHOUT_EXPLICIT_ID = "Single Nucleotide Polymorphism (SNP) (without explicit ID)",
 }
 
-// TODO: This hook and the CreateDataset page are very extensive.
-//  I think we should split it into smaller hooks, one for each step maybe?
 
 /**
  * Hook for the CreateDataset page.
@@ -39,7 +37,7 @@ export function useCreateDataset() {
 
     const navigate = useNavigate()
 
-    const {project, onProjectUpdate} = useProjectContext()
+    const {project, onFileStructureUpdate} = useProjectContext()
 
     const [selectedTypingData, setSelectedTypingData] = useState<string | null>(null)
     const [typingDataFile, setTypingDataFile] = useState<File | null>(null)
@@ -49,6 +47,8 @@ export function useCreateDataset() {
     const [selectedIsolateDataKey, setSelectedIsolateDataKey] = useState<string | null>(null)
     const [isolateDataFile, setIsolateDataFile] = useState<File | null>(null)
 
+    const [error, setError] = useState<string | null>(null)
+
     return {
         datasetType,
         project,
@@ -56,16 +56,28 @@ export function useCreateDataset() {
         handleDatasetDescriptionChange: (event: SelectChangeEvent) => setDescription(event.target.value as string),
         handleDatasetTypeChange: (event: SelectChangeEvent) => setDatasetType(event.target.value as DatasetType),
         selectedTypingData,
-        handleTypingDataFileSelectorChange: (event: SelectChangeEvent) => setSelectedTypingData(event.target.value),
-        handleTypingDataFileUploaderChange: (file: React.SetStateAction<File | null>) => setTypingDataFile(file),
+        handleTypingDataFileSelectorChange: (event: SelectChangeEvent) => {
+            setSelectedTypingData(event.target.value)
+            if (typingDataFile)
+                setTypingDataFile(null)
+        },
+        handleTypingDataFileUploaderChange: (file: React.SetStateAction<File | null>) => {
+            setTypingDataFile(file)
+            if (selectedTypingData)
+                setSelectedTypingData(null)
+        },
         selectedIsolateData,
         handleIsolateDataFileSelectorChange: (event: SelectChangeEvent) => {
             setSelectedIsolateData(event.target.value)
+            if (isolateDataFile)
+                setIsolateDataFile(null)
             // TODO: get keys
             setIsolateDataKeys(["key1", "key2"])
         },
         handleIsolateDataFileUploaderChange: (file: React.SetStateAction<File | null>) => {
             setIsolateDataFile(file)
+            if (selectedIsolateData)
+                setSelectedIsolateData(null)
             // TODO: get keys
             setIsolateDataKeys(["key1", "key2"])
         },
@@ -101,13 +113,15 @@ export function useCreateDataset() {
                     }
                 )
                     .then(() => {
-                        onProjectUpdate()
+                        onFileStructureUpdate()
                         navigate(-1)
                     })
-                    .catch(console.error)
+                    .catch(err => setError(err.message))
             }
         },
         createDatasetStep,
-        currStep
+        currStep,
+        error,
+        clearError: () => setError(null),
     }
 }

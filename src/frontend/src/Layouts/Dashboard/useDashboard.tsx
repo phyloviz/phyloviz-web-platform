@@ -28,6 +28,8 @@ export function useDashboard() {
 
             if (response.status === 200)
                 sessionManager.setSession(data)
+            else
+                sessionManager.clearSession()
         }
 
         checkLoggedIn()

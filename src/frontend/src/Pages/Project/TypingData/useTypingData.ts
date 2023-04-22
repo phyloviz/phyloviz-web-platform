@@ -1,12 +1,12 @@
-import {useParams} from "react-router-dom";
-import VisualizationService from "../../../Services/visualization/VisualizationService";
-import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom"
+import VisualizationService from "../../../Services/visualization/VisualizationService"
+import {useEffect, useState} from "react"
 import {
     GetTypingDataProfilesOutputModel
-} from "../../../Services/visualization/models/getTypingDataProfiles/GetTypingDataProfilesOutputModel";
+} from "../../../Services/visualization/models/getTypingDataProfiles/GetTypingDataProfilesOutputModel"
 import {
     GetTypingDataSchemaOutputModel
-} from "../../../Services/visualization/models/getTypingDataSchema/GetTypingDataSchemaOutputModel";
+} from "../../../Services/visualization/models/getTypingDataSchema/GetTypingDataSchemaOutputModel"
 
 /**
  * Hook for typing data page.
@@ -20,7 +20,7 @@ export function useTypingData() {
     const [typingDataSchema, setTypingDataSchema] = useState<GetTypingDataSchemaOutputModel>()
     const [typingDataProfiles, setTypingDataProfiles] = useState<GetTypingDataProfilesOutputModel>()
     const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<string>()
+    const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
         setLoading(true)
@@ -55,6 +55,7 @@ export function useTypingData() {
             }
         },
         loading,
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

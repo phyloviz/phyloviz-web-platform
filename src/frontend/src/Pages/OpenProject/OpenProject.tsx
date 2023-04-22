@@ -6,7 +6,7 @@ import {useOpenProject} from "./useOpenProject"
 import {ProjectCard} from "../../Components/OpenProject/ProjectCard"
 import Box from "@mui/material/Box"
 import LoadingSpinner from "../../Components/Shared/LoadingSpinner"
-import Alert from "@mui/material/Alert"
+import {ErrorAlert} from "../../Components/Shared/ErrorAlert"
 
 /**
  * OpenProject page.
@@ -15,7 +15,9 @@ export default function OpenProject() {
     const {
         projects,
         handleOpenProject,
-        error
+        handleDeleteProject,
+        error,
+        clearError
     } = useOpenProject()
 
     return (
@@ -34,7 +36,7 @@ export default function OpenProject() {
                 <Typography component="h1" variant="body1" textAlign="justify">
                     Select a project to open
                 </Typography>
-                {error && <Alert severity="error" sx={{mt: 2}}>{error}</Alert>}
+                <ErrorAlert error={error} clearError={clearError}/>
                 <Box sx={{
                     width: "100%",
                     display: "flex",
@@ -59,7 +61,10 @@ export default function OpenProject() {
                                 <ProjectCard
                                     key={index}
                                     project={project}
-                                    handleOpenProject={handleOpenProject}
+                                    handleOpenProject={() => handleOpenProject(project.projectId)}
+                                    handleDeleteProject={() => handleDeleteProject(project.projectId)}
+                                    error={error}
+                                    clearError={clearError}
                                 />
                             )
                         })

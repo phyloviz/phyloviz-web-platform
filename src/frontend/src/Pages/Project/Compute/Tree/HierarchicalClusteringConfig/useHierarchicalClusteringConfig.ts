@@ -1,8 +1,8 @@
 import {useState} from "react"
 import {useNavigate, useParams} from "react-router-dom"
-import {SelectChangeEvent} from "@mui/material";
-import {useProjectContext} from "../../../useProject";
-import {GoeBURSTConfigurationStep} from "../GoeBURSTConfig/useGoeBURSTConfig";
+import {SelectChangeEvent} from "@mui/material"
+import {useProjectContext} from "../../../useProject"
+import {useCompute} from "../../useCompute"
 
 export enum HierarchicalClusteringConfigStep {
     DISTANCE = "Distance",
@@ -25,7 +25,7 @@ export function useHierarchicalClusteringConfig() {
 
     const navigate = useNavigate()
     const {projectId, datasetId} = useParams<{ projectId: string, datasetId: string }>()
-    const {project, onProjectUpdate} = useProjectContext()
+    const {project} = useProjectContext()
 
     const [selectedDistance, setSelectedDistance] = useState<string | null>(null)
     const distances = project?.datasets
@@ -34,7 +34,26 @@ export function useHierarchicalClusteringConfig() {
 
     const [selectedMethod, setSelectedMethod] = useState<string | null>(null)
 
-    const [workflowId, setWorkflowId] = useState<string | null>(null)
+    const {createWorkflow} = useCompute()
+    const [error, setError] = useState<string | null>(null)
+
+    /**
+     * Returns the algorithm string for the selected method.
+     */
+    function getAlgorithm(): string {
+        switch (selectedMethod) {
+            case HierarchicalClusteringMethod.COMPLETE_LINKAGE:
+                return "cl"
+            case HierarchicalClusteringMethod.SINGLE_LINKAGE:
+                return "sl"
+            case HierarchicalClusteringMethod.UPGMA:
+                return "upgma"
+            case HierarchicalClusteringMethod.WPGMA:
+                return "wpgma"
+            default:
+                return "cl"
+        }
+    }
 
     return {
         step,
@@ -58,8 +77,31 @@ export function useHierarchicalClusteringConfig() {
             if (step === HierarchicalClusteringConfigStep.DISTANCE) {
                 setStep(HierarchicalClusteringConfigStep.METHOD)
                 setCurrStep(1)
+                return
             }
-            // TODO: else, finish
-        }
+
+            if (selectedDistance === null) {
+                setError("Please select a distance matrix.")
+                return
+            }
+
+            if (selectedMethod === null) {
+                setError("Please select a method.")
+                return
+            }
+
+            createWorkflow(
+                {
+                    type: "compute-tree",
+                    properties: {
+                        datasetId: datasetId,
+                        distanceMatrixId: selectedDistance,
+                        algorithm: getAlgorithm()
+                    }
+                }
+            )
+        },
+        error,
+        clearError: () => setError(null)
     }
 }

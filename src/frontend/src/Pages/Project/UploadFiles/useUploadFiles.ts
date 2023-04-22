@@ -1,7 +1,7 @@
 import * as React from "react"
 import {useState} from "react"
 import {useNavigate, useParams} from "react-router-dom"
-import {AdministrationService} from "../../../Services/administration/AdministrationService"
+import AdministrationService from "../../../Services/administration/AdministrationService"
 import {WebUiUris} from "../../WebUiUris"
 import {useProjectContext} from "../useProject"
 
@@ -17,7 +17,7 @@ export enum FileType {
  */
 export function useUploadFiles() {
     const {projectId} = useParams<{ projectId: string }>()
-    const {project, onProjectUpdate} = useProjectContext()
+    const {project, onFileStructureUpdate} = useProjectContext()
     const [fileType, setfileType] = useState<FileType>(FileType.TYPING_DATA)
     const [file, setFile] = useState<File | null>(null)
     const [error, setError] = useState<string | null>(null)
@@ -29,7 +29,7 @@ export function useUploadFiles() {
         fileType,
         handleFileTypeChange: (value: FileType) => setfileType(value),
         handleFileChange: (file: React.SetStateAction<File | null>) => setFile(file),
-        handleCancel: () => navigate(-1), // TODO: Maybe cancel should cancel the upload?
+        handleCancel: () => navigate(-1),
         handleSubmit: () => {
             if (!file) {
                 setError("Please select a file to upload.")
@@ -41,19 +41,20 @@ export function useUploadFiles() {
             if (fileType === FileType.TYPING_DATA)
                 AdministrationService.uploadTypingData(projectId!, file)
                     .then(() => {
-                        onProjectUpdate()
+                        onFileStructureUpdate()
                         navigate(WebUiUris.project(projectId!))
                     })
                     .catch((err) => setError(err.message))
             else
                 AdministrationService.uploadIsolateData(projectId!, file)
                     .then(() => {
-                        onProjectUpdate()
+                        onFileStructureUpdate()
                         navigate(WebUiUris.project(projectId!))
                     })
                     .catch((err) => setError(err.message))
         },
         isUploading,
-        error
+        error,
+        clearError: () => setError(null)
     }
 }

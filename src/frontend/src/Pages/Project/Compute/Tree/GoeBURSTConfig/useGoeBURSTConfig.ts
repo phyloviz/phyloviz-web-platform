@@ -1,8 +1,8 @@
 import {useState} from "react"
 import {useNavigate, useParams} from "react-router-dom"
-import {SelectChangeEvent} from "@mui/material";
-import {ComputeService} from "../../../../../Services/compute/ComputeService";
-import {useProjectContext} from "../../../useProject";
+import {SelectChangeEvent} from "@mui/material"
+import {useProjectContext} from "../../../useProject"
+import {useCompute} from "../../useCompute"
 
 export enum GoeBURSTConfigurationStep {
     DISTANCE = "Distance",
@@ -18,14 +18,15 @@ export function useGoeBURSTConfig() {
 
     const navigate = useNavigate()
     const {projectId, datasetId} = useParams<{ projectId: string, datasetId: string }>()
-    const {project, onProjectUpdate} = useProjectContext()
+    const {project} = useProjectContext()
 
     const [selectedDistance, setSelectedDistance] = useState<string | null>(null)
     const distances = project?.datasets
         .find((dataset) => dataset.datasetId === datasetId)
         ?.distanceMatrices ?? []
 
-    const [workflowId, setWorkflowId] = useState<string | null>(null)
+    const {createWorkflow} = useCompute()
+    const [error, setError] = useState<string | null>(null)
 
     return {
         step,
@@ -44,10 +45,15 @@ export function useGoeBURSTConfig() {
             if (step === GoeBURSTConfigurationStep.DISTANCE) {
                 setStep(GoeBURSTConfigurationStep.LEVEL)
                 setCurrStep(1)
+                return
             }
 
-            ComputeService.createWorkflow(
-                projectId!,
+            if (selectedDistance === null) {
+                setError("Please select a distance matrix.")
+                return
+            }
+
+            createWorkflow(
                 {
                     type: "compute-tree",
                     properties: {
@@ -57,8 +63,8 @@ export function useGoeBURSTConfig() {
                     }
                 }
             )
-                .then((res) => setWorkflowId(res.workflowId))// TODO: Get status until finished
-                .catch((err) => console.error(err)) // TODO: Handle Error
-        }
+        },
+        error,
+        clearError: () => setError(null)
     }
 }

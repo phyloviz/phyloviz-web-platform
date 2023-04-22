@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography"
  * @property text the text to be shown below the spinner
  */
 interface LoadingSpinnerProps {
-    text: string
+    text?: string
 }
 
 /**
@@ -24,7 +24,7 @@ export default function LoadingSpinner({text}: LoadingSpinnerProps) {
             alignItems: 'center',
         }}>
             <CircularProgress/>
-            <Typography variant="h6">{text}</Typography>
+            {text && <Typography variant="h6">{text}</Typography>}
         </Box>
     )
 }

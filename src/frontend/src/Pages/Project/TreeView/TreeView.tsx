@@ -1,30 +1,23 @@
 import * as React from "react"
-import Paper from "@mui/material/Paper"
-import Typography from "@mui/material/Typography"
-import {Container} from "@mui/material"
+import {Box} from "@mui/material"
+import {useTreeView} from "./useTreeView"
+import {TreeViewInfoCard} from "../../../Components/Project/TreeView/TreeViewInfoCard"
+import {TreeViewSearchCard} from "../../../Components/Project/TreeView/TreeViewSearchCard"
+import {TreeViewSettingsCard} from "../../../Components/Project/TreeView/TreeViewSettingsCard"
+
 
 /**
  * TreeView page.
  */
 export default function TreeView() {
-    // const { } = useTreeView()
+    const {treeView, canvasRef} = useTreeView()
 
     return (
-        <Container>
-            <Paper sx={{
-                p: 4,
-                display: "flex",
-                flexDirection: "column",
-                mt: 4,
-                alignItems: "center"
-            }}>
-                <Typography component="h1" variant="h4">
-                    Tree View
-                </Typography>
-                {
-                    // TODO: Add tree view information
-                }
-            </Paper>
-        </Container>
+        <Box sx={{position: "relative", width: "90%"}}>
+            <TreeViewInfoCard treeView={treeView}/>
+            <canvas ref={canvasRef}/>
+            <TreeViewSettingsCard/>
+            <TreeViewSearchCard/>
+        </Box>
     )
 }

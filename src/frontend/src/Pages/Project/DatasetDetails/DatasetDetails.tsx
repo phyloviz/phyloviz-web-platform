@@ -1,14 +1,14 @@
 import * as React from "react"
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import {Container} from "@mui/material";
-import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
-import Alert from "@mui/material/Alert";
-import Box from "@mui/material/Box";
-import {useDatasetDetails} from "./useDatasetDetails";
-import {ComputeDistancesCard} from "../../../Components/Project/DatasetDetails/ComputeDistancesCard";
-import {ComputeTreesCard} from "../../../Components/Project/DatasetDetails/ComputeTreesCard";
-import {GenerateReportCard} from "../../../Components/Project/DatasetDetails/GenerateReportCard";
+import Paper from "@mui/material/Paper"
+import Typography from "@mui/material/Typography"
+import {Container} from "@mui/material"
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner"
+import Box from "@mui/material/Box"
+import {useDatasetDetails} from "./useDatasetDetails"
+import {ComputeDistancesCard} from "../../../Components/Project/DatasetDetails/ComputeDistancesCard"
+import {ComputeTreesCard} from "../../../Components/Project/DatasetDetails/ComputeTreesCard"
+import {GenerateReportCard} from "../../../Components/Project/DatasetDetails/GenerateReportCard"
+import {ErrorAlert} from "../../../Components/Shared/ErrorAlert"
 
 /**
  * DatasetDetails page.
@@ -17,7 +17,8 @@ export default function DatasetDetails() {
     const {
         dataset,
         loading,
-        error
+        error,
+        clearError
     } = useDatasetDetails()
 
     return (
@@ -36,12 +37,8 @@ export default function DatasetDetails() {
                 <Typography component="h1" variant="body1" textAlign={"justify"}>
                     {dataset?.description ?? "Loading..."}
                 </Typography>
-                {
-                    loading && <LoadingSpinner text={"Loading dataset..."}/>
-                }
-                {
-                    error && <Alert severity="error">{error}</Alert>
-                }
+                {loading && <LoadingSpinner text={"Loading dataset..."}/>}
+                <ErrorAlert error={error} clearError={clearError}/>
                 <Box sx={{
                     width: "100%",
                     display: "flex",
