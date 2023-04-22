@@ -38,6 +38,12 @@ public interface TreeViewMetadataMongoRepository extends MongoRepository<TreeVie
     @Query("{ 'treeViewId' : ?0, 'adapterId' : ?1 }")
     Optional<TreeViewMetadata> findByTreeViewIdAndAdapterId(String treeViewId, String adapterId);
 
+    @Query("{ 'projectId' : ?0, 'datasetId' : ?1, 'treeViewId' : ?2, 'adapterId' : ?3 }")
+    Optional<TreeViewMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(String projectId, String datasetId,
+                                                                                    String treeViewId, String adapterId);
+
+    List<TreeViewMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);
+
     /**
      * Find all tree view metadata from a dataset id.
      *
@@ -45,4 +51,9 @@ public interface TreeViewMetadataMongoRepository extends MongoRepository<TreeVie
      * @return a list of tree view metadata
      */
     List<TreeViewMetadata> findAllByDatasetId(String datasetId);
+
+    @Query("{ 'datasetId' : ?0, 'source' : { 'treeId' : ?1 } }")
+    Boolean existsByDatasetIdAndTreeIdSource(String datasetId, String treeId);
+
+    Boolean existsByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId);
 }

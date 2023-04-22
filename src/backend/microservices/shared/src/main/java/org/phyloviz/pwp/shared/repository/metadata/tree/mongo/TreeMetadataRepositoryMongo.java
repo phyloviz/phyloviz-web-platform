@@ -55,4 +55,26 @@ public class TreeMetadataRepositoryMongo implements TreeMetadataRepository {
     public void delete(TreeMetadata treeMetadata) {
         treeMetadataMongoRepository.delete(treeMetadata);
     }
+
+    @Override
+    public Optional<TreeMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(String projectId, String datasetId, String treeViewId, TreeAdapterId adapterId) {
+        return treeMetadataMongoRepository.findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(
+                projectId, datasetId, treeViewId, adapterId.name().toLowerCase()
+        );
+    }
+
+    @Override
+    public List<TreeMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId) {
+        return treeMetadataMongoRepository.findAllByProjectIdAndDatasetId(projectId, datasetId);
+    }
+
+    @Override
+    public Boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId) {
+        return treeMetadataMongoRepository.existsByDatasetIdAndDistanceMatrixIdSource(datasetId, distanceMatrixId);
+    }
+
+    @Override
+    public Boolean existsByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId) {
+        return treeMetadataMongoRepository.existsByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId);
+    }
 }

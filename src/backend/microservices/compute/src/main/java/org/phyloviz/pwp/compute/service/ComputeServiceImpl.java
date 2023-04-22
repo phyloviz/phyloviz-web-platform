@@ -26,14 +26,12 @@ import org.phyloviz.pwp.compute.service.flowviz.models.get_workflow.WorkflowStat
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.Tool;
 import org.phyloviz.pwp.compute.service.flowviz.models.workflow.Workflow;
 import org.phyloviz.pwp.compute.utils.UUIDUtils;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
-import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;
-import org.phyloviz.pwp.shared.service.project.ProjectMetadataService;
-import org.phyloviz.pwp.shared.service.project.dataset.DatasetMetadataService;
-import org.phyloviz.pwp.shared.service.project.dataset.distance_matrix.DistanceMatrixMetadataService;
-import org.phyloviz.pwp.shared.service.project.dataset.tree.TreeMetadataService;
+import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.DistanceMatrixMetadataRepository;
+import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.shared.repository.metadata.tree.TreeMetadataRepository;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -59,10 +57,13 @@ public class ComputeServiceImpl implements ComputeService {
             "studierkepler", "unj"
     );
     private static final List<String> COMPUTE_TREE_VIEW_LAYOUTS = List.of("radial");
-    private final ProjectMetadataService projectMetadataService;
-    private final DatasetMetadataService datasetMetadataService;
-    private final DistanceMatrixMetadataService distanceMatrixMetadataService;
-    private final TreeMetadataService treeMetadataService;
+
+    private final ProjectRepository projectRepository;
+    private final DatasetRepository datasetRepository;
+
+    private final DistanceMatrixMetadataRepository distanceMatrixMetadataRepository;
+    private final TreeMetadataRepository treeMetadataRepository;
+
     private final WorkflowTemplateRepository workflowTemplateRepository;
     private final WorkflowInstanceRepository workflowInstanceRepository;
     private final ToolTemplateRepository toolTemplateRepository;
@@ -75,7 +76,8 @@ public class ComputeServiceImpl implements ComputeService {
             Map<String, String> workflowProperties,
             String userId
     ) {
-        projectMetadataService.assertExists(projectId, userId);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
 
         return switch (workflowType) {
             case COMPUTE_DISTANCE_MATRIX -> createComputeDistanceMatrixWorkflow(projectId, workflowProperties, userId);
@@ -90,7 +92,8 @@ public class ComputeServiceImpl implements ComputeService {
 
     @Override
     public GetWorkflowStatusOutput getWorkflowStatus(String projectId, String workflowId, String userId) {
-        projectMetadataService.assertExists(projectId, userId);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
 
         WorkflowInstance workflowInstance = workflowInstanceRepository
                 .findById(workflowId)
@@ -133,19 +136,18 @@ public class ComputeServiceImpl implements ComputeService {
         if (!COMPUTE_DISTANCE_MATRIX_FUNCTIONS.contains(properties.get("function")))
             throw new IllegalArgumentException("Invalid algorithm");
 
-        try {
-            Dataset dataset = datasetMetadataService.getDataset(projectId, datasetId, userId);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
+        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
+                .orElseThrow(DatasetDoesNotExistException::new);
 
-            String typingDataId = dataset.getTypingDataId();
+        String typingDataId = dataset.getTypingDataId();
 
-            Map<String, String> workflowProperties = new HashMap<>(properties);
-            workflowProperties.put("projectId", projectId);
-            workflowProperties.put("typingDataId", typingDataId);
+        Map<String, String> workflowProperties = new HashMap<>(properties);
+        workflowProperties.put("projectId", projectId);
+        workflowProperties.put("typingDataId", typingDataId);
 
-            return createWorkflow(projectId, COMPUTE_DISTANCE_MATRIX, workflowProperties);
-        } catch (DatasetNotFoundException e) {
-            throw new DatasetDoesNotExistException();
-        }
+        return createWorkflow(projectId, COMPUTE_DISTANCE_MATRIX, workflowProperties);
     }
 
     private CreateWorkflowOutput createComputeTreeWorkflow(String projectId, Map<String, String> properties, String userId) {
@@ -165,11 +167,12 @@ public class ComputeServiceImpl implements ComputeService {
         if (!COMPUTE_TREE_ALGORITHMS.contains(properties.get("algorithm")))
             throw new IllegalArgumentException("Invalid algorithm");
 
-        try {
-            distanceMatrixMetadataService.assertExists(projectId, datasetId, distanceMatrixId, userId);
-        } catch (DatasetNotFoundException e) {
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId)) {
             throw new DatasetDoesNotExistException();
-        } catch (DistanceMatrixNotFoundException e) {
+        }
+        if (!distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)) {
             throw new DistanceMatrixDoesNotExistException();
         }
 
@@ -196,11 +199,12 @@ public class ComputeServiceImpl implements ComputeService {
         if (!COMPUTE_TREE_VIEW_LAYOUTS.contains(properties.get("layout")))
             throw new IllegalArgumentException("Invalid layout");
 
-        try {
-            treeMetadataService.assertExists(projectId, datasetId, treeId, userId);
-        } catch (DatasetNotFoundException e) {
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId)) {
             throw new DatasetDoesNotExistException();
-        } catch (TreeNotFoundException e) {
+        }
+        if (!treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId)) {
             throw new TreeDoesNotExistException();
         }
 
@@ -219,20 +223,19 @@ public class ComputeServiceImpl implements ComputeService {
         if (!ObjectId.isValid(datasetId))
             throw new IllegalArgumentException("Invalid datasetId");
 
-        try {
-            Dataset dataset = datasetMetadataService.getDataset(projectId, datasetId, userId);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
+        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
+                .orElseThrow(DatasetDoesNotExistException::new);
 
-            String typingDataId = dataset.getTypingDataId();
+        String typingDataId = dataset.getTypingDataId();
 
-            Map<String, String> workflowProperties = new HashMap<>();
-            workflowProperties.put("projectId", projectId);
-            workflowProperties.put("datasetId", datasetId);
-            workflowProperties.put("typingDataId", typingDataId);
+        Map<String, String> workflowProperties = new HashMap<>();
+        workflowProperties.put("projectId", projectId);
+        workflowProperties.put("datasetId", datasetId);
+        workflowProperties.put("typingDataId", typingDataId);
 
-            return createWorkflow(projectId, INDEX_TYPING_DATA, workflowProperties);
-        } catch (DatasetNotFoundException e) {
-            throw new DatasetDoesNotExistException();
-        }
+        return createWorkflow(projectId, INDEX_TYPING_DATA, workflowProperties);
     }
 
     private CreateWorkflowOutput createIndexIsolateDataWorkflow(String projectId, Map<String, String> properties, String userId) {
@@ -244,19 +247,18 @@ public class ComputeServiceImpl implements ComputeService {
         if (!ObjectId.isValid(datasetId))
             throw new IllegalArgumentException("Invalid datasetId");
 
-        try {
-            Dataset dataset = datasetMetadataService.getDataset(projectId, datasetId, userId);
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
+        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
+                .orElseThrow(DatasetDoesNotExistException::new);
 
-            String isolateDataId = dataset.getIsolateDataId();
+        String isolateDataId = dataset.getIsolateDataId();
 
-            Map<String, String> workflowProperties = new HashMap<>();
-            workflowProperties.put("projectId", projectId);
-            workflowProperties.put("isolateDataId", isolateDataId);
+        Map<String, String> workflowProperties = new HashMap<>();
+        workflowProperties.put("projectId", projectId);
+        workflowProperties.put("isolateDataId", isolateDataId);
 
-            return createWorkflow(projectId, INDEX_ISOLATE_DATA, workflowProperties);
-        } catch (DatasetNotFoundException e) {
-            throw new DatasetDoesNotExistException();
-        }
+        return createWorkflow(projectId, INDEX_ISOLATE_DATA, workflowProperties);
     }
 
     private CreateWorkflowOutput createIndexTreeWorkflow(String projectId, Map<String, String> properties, String userId) {
@@ -272,11 +274,12 @@ public class ComputeServiceImpl implements ComputeService {
         if (!UUIDUtils.isValidUUID(treeId))
             throw new IllegalArgumentException("Invalid treeId");
 
-        try {
-            treeMetadataService.assertExists(projectId, datasetId, treeId, userId);
-        } catch (DatasetNotFoundException e) {
+        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId)) {
             throw new DatasetDoesNotExistException();
-        } catch (TreeNotFoundException e) {
+        }
+        if (!treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId)) {
             throw new TreeDoesNotExistException();
         }
 
@@ -285,7 +288,6 @@ public class ComputeServiceImpl implements ComputeService {
 
         return createWorkflow(projectId, INDEX_TREE, workflowProperties);
     }
-
 
     private CreateWorkflowOutput createWorkflow(String projectId, String workflowType, Map<String, String> properties) {
         //TODO: Fix transactions

@@ -45,4 +45,6 @@ public interface TypingDataMetadataMongoRepository extends MongoRepository<Typin
      * @return a list of typing data metadata
      */
     List<TypingDataMetadata> findAllByProjectId(String projectId);
+
+    Boolean existsByProjectIdAndTypingDataId(String projectId, String typingDataId);
 }

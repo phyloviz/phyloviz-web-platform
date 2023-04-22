@@ -33,6 +33,11 @@ public interface TreeViewMetadataRepository {
      */
     Optional<TreeViewMetadata> findByTreeViewIdAndAdapterId(String treeViewId, TreeViewAdapterId adapterId);
 
+    Optional<TreeViewMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(String projectId, String datasetId,
+                                                                                    String treeViewId, TreeViewAdapterId adapterId);
+
+    List<TreeViewMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);
+
     /**
      * Find all tree view metadata from a dataset id. Only one tree view metadata per tree view resource.
      *
@@ -47,4 +52,8 @@ public interface TreeViewMetadataRepository {
      * @param treeViewMetadata the tree view metadata to delete
      */
     void delete(TreeViewMetadata treeViewMetadata);
+
+    Boolean existsByDatasetIdAndTreeIdSource(String datasetId, String treeId);
+
+    Boolean existsByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId);
 }

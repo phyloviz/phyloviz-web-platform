@@ -6,7 +6,7 @@ import org.phyloviz.pwp.administration.http.models.projects.create_project.Creat
 import org.phyloviz.pwp.administration.http.models.projects.delete_project.DeleteProjectOutputModel;
 import org.phyloviz.pwp.administration.http.models.projects.get_project.GetProjectOutputModel;
 import org.phyloviz.pwp.administration.http.models.projects.get_projects.GetProjectsOutputModel;
-import org.phyloviz.pwp.administration.http.service.project.ProjectService;
+import org.phyloviz.pwp.administration.service.project.ProjectService;
 import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
 import org.phyloviz.pwp.shared.service.dtos.project.CreateProjectOutput;

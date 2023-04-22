@@ -38,6 +38,13 @@ public interface TreeMetadataMongoRepository extends MongoRepository<TreeMetadat
     @Query("{ 'treeId' : ?0, 'adapterId' : ?1 }")
     Optional<TreeMetadata> findByTreeIdAndAdapterId(String treeId, String adapterId);
 
+    @Query("{ 'projectId' : ?0, 'datasetId' : ?1, 'treeViewId' : ?2, 'adapterId' : ?3 }")
+    Optional<TreeMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(
+            String projectId, String datasetId, String treeViewId, String adapterId
+    );
+
+    List<TreeMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);
+
     /**
      * Find all tree metadata from a dataset id.
      *
@@ -45,4 +52,9 @@ public interface TreeMetadataMongoRepository extends MongoRepository<TreeMetadat
      * @return a list of tree metadata
      */
     List<TreeMetadata> findAllByDatasetId(String datasetId);
+
+    @Query("{ 'datasetId' : ?0, 'source' : { 'distanceMatrixId' : ?1 } }")
+    Boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
+
+    Boolean existsByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
 }

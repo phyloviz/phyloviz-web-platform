@@ -47,4 +47,13 @@ public interface TreeMetadataRepository {
      * @param treeMetadata the tree metadata to delete
      */
     void delete(TreeMetadata treeMetadata);
+
+    Optional<TreeMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(String projectId, String datasetId,
+                                                                                String treeViewId, TreeAdapterId adapterId);
+
+    List<TreeMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);
+
+    Boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
+
+    Boolean existsByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
 }

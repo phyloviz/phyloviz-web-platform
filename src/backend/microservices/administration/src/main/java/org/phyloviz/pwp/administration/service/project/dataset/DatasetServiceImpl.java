@@ -1,32 +1,33 @@
-package org.phyloviz.pwp.administration.http.service.project.dataset;
+package org.phyloviz.pwp.administration.service.project.dataset;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.administration.service.project.dataset.distance_matrix.DistanceMatrixService;
+import org.phyloviz.pwp.administration.service.project.dataset.tree.TreeService;
+import org.phyloviz.pwp.administration.service.project.dataset.tree_view.TreeViewService;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
+import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetadataRepository;
+import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadataRepository;
 import org.phyloviz.pwp.shared.service.dtos.dataset.CreateDatasetOutput;
 import org.phyloviz.pwp.shared.service.dtos.dataset.FullDatasetInfo;
+import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.IsolateDataDoesNotExistException;
-import org.phyloviz.pwp.shared.service.exceptions.IsolateDataNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TypingDataDoesNotExistException;
-import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
-import org.phyloviz.pwp.shared.service.project.ProjectMetadataService;
-import org.phyloviz.pwp.shared.service.project.dataset.DatasetMetadataService;
-import org.phyloviz.pwp.shared.service.project.file.isolate_data.IsolateDataMetadataService;
-import org.phyloviz.pwp.shared.service.project.file.typing_data.TypingDataMetadataService;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class DatasetServiceImpl implements DatasetService {
 
-    private final ProjectMetadataService projectMetadataService;
-    private final DatasetMetadataService datasetMetadataService;
-    private final TypingDataMetadataService typingDataMetadataService;
-    private final IsolateDataMetadataService isolateDataMetadataService;
+    private final ProjectRepository projectRepository;
+    private final DatasetRepository datasetRepository;
+    private final TypingDataMetadataRepository typingDataMetadataRepository;
+    private final IsolateDataMetadataRepository isolateDataMetadataRepository;
 
     private final DistanceMatrixService distanceMatrixService;
     private final TreeService treeService;
@@ -37,73 +38,63 @@ public class DatasetServiceImpl implements DatasetService {
                                              String projectId, String userId) {
         validateCreateDatasetParameters(name, typingDataId, isolateDataId, projectId, userId);
 
-        Project project = projectMetadataService.getProject(projectId, userId);
-
         Dataset dataset = new Dataset(
                 projectId,
                 name,
                 description,
                 typingDataId,
-                isolateDataId,
-                Collections.emptyList(),
-                Collections.emptyList(),
-                Collections.emptyList()
+                isolateDataId
         );
 
-        Dataset storedDataset = datasetMetadataService.saveDataset(dataset);
-        String datasetId = storedDataset.getId();
-
-        project.getDatasetIds().add(datasetId);
-        projectMetadataService.saveProject(project);
-
-        return new CreateDatasetOutput(projectId, datasetId);
+        Dataset storedDataset = datasetRepository.save(dataset);
+        return new CreateDatasetOutput(projectId, storedDataset.getId());
     }
 
     @Override
     public FullDatasetInfo getFullDatasetInfo(String projectId, String datasetId, String userId) {
-        return getFullDatasetInfo(datasetMetadataService.getDataset(projectId, datasetId, userId));
+        return getFullDatasetInfo(datasetRepository.findByProjectIdAndId(projectId, datasetId)
+                .orElseThrow(DatasetNotFoundException::new));
     }
 
     @Override
     public List<FullDatasetInfo> getFullDatasetInfos(String projectId, String userId) {
-        projectMetadataService.assertExists(projectId, userId);
+        projectRepository.findByIdAndOwnerId(projectId, userId)
+                .orElseThrow(ProjectNotFoundException::new);
 
         return getFullDatasetInfos(projectId);
     }
 
     @Override
     public List<FullDatasetInfo> getFullDatasetInfos(String projectId) {
-        return datasetMetadataService.getAllDatasetsByProjectId(projectId)
+        return datasetRepository.findAllByProjectId(projectId)
                 .stream().map(this::getFullDatasetInfo).toList();
     }
 
     @Override
     public void deleteDataset(String projectId, String datasetId, String userId) {
-        datasetMetadataService.assertExists(projectId, datasetId, userId);
+        projectRepository.findByIdAndOwnerId(projectId, userId)
+                .orElseThrow(ProjectNotFoundException::new);
 
-        Project project = projectMetadataService.getProject(projectId, userId);
+        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
+                .orElseThrow(DatasetNotFoundException::new);
 
-        deleteDataset(datasetId);
+        deleteAllChildrenByProjectIdAndDatasetId(projectId, datasetId);
 
-        project.getDatasetIds().remove(datasetId);
-        projectMetadataService.saveProject(project);
+        datasetRepository.delete(dataset);
     }
 
     @Override
-    public void deleteDataset(String datasetId) {
-        Dataset dataset = datasetMetadataService.getDataset(datasetId);
+    public void deleteAllByProjectId(String projectId) {
+        datasetRepository.findAllByProjectId(projectId).forEach(dataset -> {
+            deleteAllChildrenByProjectIdAndDatasetId(projectId, dataset.getId());
+            datasetRepository.delete(dataset);
+        });
+    }
 
-        dataset.getTreeViewIds().forEach(treeViewService::deleteTreeView);
-        dataset.getTreeIds().forEach(treeService::deleteTree);
-        dataset.getDistanceMatrixIds().forEach(distanceMatrixService::deleteDistanceMatrix);
-
-        /*
-        treeViewService.deleteAllByDatasetId(datasetId); TODO potentially implement this, removing ids from the dataset, do the same for project
-        treeService.deleteAllByDatasetId(datasetId);
-        distanceMatrixService.deleteAllByDatasetId(datasetId);
-         */
-
-        datasetMetadataService.deleteDataset(datasetId);
+    private void deleteAllChildrenByProjectIdAndDatasetId(String projectId, String datasetId) {
+        treeViewService.deleteAllByProjectIdAndDatasetId(projectId, datasetId);
+        treeService.deleteAllByProjectIdAndDatasetId(projectId, datasetId);
+        distanceMatrixService.deleteAllByProjectIdAndDatasetId(projectId, datasetId);
     }
 
     /**
@@ -133,20 +124,13 @@ public class DatasetServiceImpl implements DatasetService {
         if (isolateDataId != null && isolateDataId.isBlank())
             throw new InvalidArgumentException("Isolate data id cannot be empty (but can be null).");
 
-        projectMetadataService.assertExists(projectId, userId);
+        projectRepository.findByIdAndOwnerId(projectId, userId)
+                .orElseThrow(ProjectNotFoundException::new);
 
-        try {
-            typingDataMetadataService.assertExists(projectId, typingDataId, userId);
-        } catch (TypingDataNotFoundException e) {
+        if (!typingDataMetadataRepository.existsByProjectIdAndTypingDataId(projectId, typingDataId))
             throw new TypingDataDoesNotExistException();
-        }
 
-        if (isolateDataId != null) {
-            try {
-                isolateDataMetadataService.assertExists(projectId, isolateDataId, userId);
-            } catch (IsolateDataNotFoundException e) {
-                throw new IsolateDataDoesNotExistException();
-            }
-        }
+        if (isolateDataId != null && !isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId))
+            throw new IsolateDataDoesNotExistException();
     }
 }

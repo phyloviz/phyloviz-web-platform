@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.administration.http.service.project.file;
+package org.phyloviz.pwp.administration.service.project.file;
 
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.TypingDataInfo;
 
@@ -10,5 +10,7 @@ public interface TypingDataService {
 
     void deleteTypingData(String projectId, String typingDataId, String userId);
 
-    void deleteTypingData(String projectId);
+    void deleteAllByProjectId(String projectId);
+
+    void deleteTypingData(String typingDataId);
 }

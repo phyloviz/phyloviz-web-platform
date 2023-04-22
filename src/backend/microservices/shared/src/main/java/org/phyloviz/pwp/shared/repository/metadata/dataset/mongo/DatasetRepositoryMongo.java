@@ -33,4 +33,24 @@ public class DatasetRepositoryMongo implements DatasetRepository {
     public List<Dataset> findAllByProjectId(String projectId) {
         return datasetMongoRepository.findAllByProjectId(projectId);
     }
+
+    @Override
+    public Optional<Dataset> findByProjectIdAndId(String projectId, String datasetId) {
+        return datasetMongoRepository.findByProjectIdAndId(projectId, datasetId);
+    }
+
+    @Override
+    public Boolean existsByProjectIdAndId(String projectId, String datasetId) {
+        return datasetMongoRepository.existsByProjectIdAndId(projectId, datasetId);
+    }
+
+    @Override
+    public Boolean existsByProjectIdAndTypingDataId(String projectId, String typingDataId) {
+        return datasetMongoRepository.existsByProjectIdAndTypingDataId(projectId, typingDataId);
+    }
+
+    @Override
+    public Boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId) {
+        return datasetMongoRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId);
+    }
 }

@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.administration.http.service.project.dataset;
+package org.phyloviz.pwp.administration.service.project.dataset;
 
 import org.phyloviz.pwp.shared.service.dtos.dataset.CreateDatasetOutput;
 import org.phyloviz.pwp.shared.service.dtos.dataset.FullDatasetInfo;
@@ -18,5 +18,5 @@ public interface DatasetService {
 
     void deleteDataset(String projectId, String datasetId, String userId);
 
-    void deleteDataset(String datasetId);
+    void deleteAllByProjectId(String projectId);
 }

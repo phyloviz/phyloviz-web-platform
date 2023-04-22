@@ -7,14 +7,14 @@ import org.phyloviz.pwp.shared.adapters.isolate_data.adapter.specific_data.Isola
 import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterFactory;
 import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterId;
 import org.phyloviz.pwp.shared.adapters.typing_data.adapter.specific_data.TypingDataAdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
+import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.UploadIsolateDataOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.UploadTypingDataOutput;
-import org.phyloviz.pwp.shared.service.project.ProjectMetadataService;
-import org.phyloviz.pwp.shared.service.project.file.isolate_data.IsolateDataMetadataService;
-import org.phyloviz.pwp.shared.service.project.file.typing_data.TypingDataMetadataService;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,10 +25,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileTransferServiceImpl implements FileTransferService {
 
-    private final ProjectMetadataService projectMetadataService;
+    private final ProjectRepository projectRepository;
 
-    private final TypingDataMetadataService typingDataMetadataService;
-    private final IsolateDataMetadataService isolateDataMetadataService;
+    private final TypingDataMetadataRepository typingDataMetadataRepository;
+    private final IsolateDataMetadataRepository isolateDataMetadataRepository;
 
     private final IsolateDataAdapterFactory isolateDataAdapterFactory;
     private final TypingDataAdapterFactory typingDataAdapterFactory;
@@ -41,7 +41,8 @@ public class FileTransferServiceImpl implements FileTransferService {
 
     @Override
     public UploadTypingDataOutput uploadTypingData(String projectId, MultipartFile file, String userId) {
-        Project project = projectMetadataService.getProject(projectId, userId);
+        projectRepository.findByIdAndOwnerId(projectId, userId)
+                .orElseThrow(ProjectNotFoundException::new);
 
         String typingDataId = UUID.randomUUID().toString();
 
@@ -57,17 +58,15 @@ public class FileTransferServiceImpl implements FileTransferService {
                 typingDataAdapterSpecificData
         );
 
-        typingDataMetadataService.saveTypingDataMetadata(typingDataMetadata);
-
-        project.getFileIds().getTypingDataIds().add(typingDataId);
-        projectMetadataService.saveProject(project);
+        typingDataMetadataRepository.save(typingDataMetadata);
 
         return new UploadTypingDataOutput(projectId, typingDataId);
     }
 
     @Override
     public UploadIsolateDataOutput uploadIsolateData(String projectId, MultipartFile file, String userId) {
-        Project project = projectMetadataService.getProject(projectId, userId);
+        projectRepository.findByIdAndOwnerId(projectId, userId)
+                .orElseThrow(ProjectNotFoundException::new);
 
         String isolateDataId = UUID.randomUUID().toString();
 
@@ -83,10 +82,7 @@ public class FileTransferServiceImpl implements FileTransferService {
                 isolateDataAdapterSpecificData
         );
 
-        isolateDataMetadataService.saveIsolateDataMetadata(isolateDataMetadata);
-
-        project.getFileIds().getIsolateDataIds().add(isolateDataId);
-        projectMetadataService.saveProject(project);
+        isolateDataMetadataRepository.save(isolateDataMetadata);
 
         return new UploadIsolateDataOutput(projectId, isolateDataId);
     }

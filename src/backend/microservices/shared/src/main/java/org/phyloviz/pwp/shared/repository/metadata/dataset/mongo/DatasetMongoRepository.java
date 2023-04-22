@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DatasetMongoRepository extends MongoRepository<Dataset, String> {
@@ -16,4 +17,12 @@ public interface DatasetMongoRepository extends MongoRepository<Dataset, String>
      * @return a list of datasets
      */
     List<Dataset> findAllByProjectId(String projectId);
+
+    Optional<Dataset> findByProjectIdAndId(String projectId, String datasetId);
+
+    Boolean existsByProjectIdAndId(String projectId, String datasetId);
+
+    Boolean existsByProjectIdAndTypingDataId(String projectId, String typingDataId);
+
+    Boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
 }

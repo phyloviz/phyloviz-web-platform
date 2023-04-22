@@ -60,4 +60,9 @@ public class IsolateDataMetadataRepositoryMongo implements IsolateDataMetadataRe
     public void delete(IsolateDataMetadata isolateDataMetadata) {
         isolateDataMetadataMongoRepository.delete(isolateDataMetadata);
     }
+
+    @Override
+    public Boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId) {
+        return isolateDataMetadataMongoRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId);
+    }
 }
