@@ -34,9 +34,9 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     public void deleteTree(String projectId, String datasetId, String treeId, String userId) {
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
-        if(!datasetRepository.existsByProjectIdAndId(projectId, datasetId))
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId))
             throw new DatasetNotFoundException();
 
         if (!treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId))

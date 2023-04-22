@@ -1,5 +1,4 @@
 import argparse
-import csv
 import json
 import os
 import requests
@@ -7,6 +6,7 @@ import uuid
 from bson.objectid import ObjectId
 from concurrent.futures import ThreadPoolExecutor
 from pymongo import MongoClient
+import csv
 
 base_url = os.environ.get("PHYLODB_URL")
 
@@ -197,19 +197,24 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
 
     allele_ids = {}
 
-    with open(typing_data_file_path, newline='') as tsvfile:
-        reader = csv.DictReader(tsvfile, delimiter='\t')
+    with open(typing_data_file_path, 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        headers = next(reader)
+
         for row in reader:
-            for gene in row.keys():
+            for i, allele_id in enumerate(row[1:], start=1):
+                gene = headers[i]
                 if gene not in allele_ids:
                     allele_ids[gene] = set()
-                allele_ids[gene].add(row[gene])
+
+                allele_ids[gene].add(allele_id)
+
 
     for gene in allele_ids.keys():
         fasta_file = f"./fasta_{gene}.fasta"
         with open(fasta_file, 'w') as outfile:
             for allele_id in allele_ids[gene]:
-                outfile.write(f">{allele_id}\n\n")
+                outfile.write(f">{gene}_{allele_id}\nA\n")
 
     for gene in allele_ids.keys():
         loci_id = gene.split('.')[0]
@@ -239,15 +244,15 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
 
     typing_data_id = dataset_collection.find_one({'_id': ObjectId(dataset_id)})['typingDataId']
 
-    typing_data_metadata = typing_data_collection.find_one({'typingDataId': typing_data_id, 'adapterId': 'phyloDB'})
+    typing_data_metadata = typing_data_collection.find_one({'typingDataId': typing_data_id, 'adapterId': 'phylodb'})
 
     if typing_data_metadata is None:
         typing_data_metadata = {
             'projectId': project_id,
             'typingDataId': typing_data_id,
             'name': 'Typing Data ' + typing_data_id,
-            'url': base_url,
-            'adapterId': 'phyloDB',
+
+            'adapterId': 'phylodb',
             'adapterSpecificData': {
                 'datasetIds': [dataset_id]
             }
@@ -255,12 +260,13 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
 
         typing_data_collection.insert_one(typing_data_metadata)
     else:
-        prev_ids = typing_data_metadata['adapterSpecificData']['datasetIds']
+        ids = typing_data_metadata['adapterSpecificData']['datasetIds']
+        ids.append(dataset_id)
 
         typing_data_collection.update_one(
             {'_id': typing_data_metadata['_id']},
             {'$set': {
-                'adapterSpecificData.datasetIds': prev_ids.append(dataset_id)
+                'adapterSpecificData.datasetIds':  ids
             }}
         )
 

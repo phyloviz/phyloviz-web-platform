@@ -22,6 +22,7 @@ mongo_uri = os.environ['MONGO_URI']
 client = MongoClient(mongo_uri)
 db = client['phyloviz-web-platform']
 workflows_collection = db['workflow-instances']
+datasets_collection = db['datasets']
 
 
 def tree_handler(s3_output_path, project_id, dataset_id, tree_id, workflow_id):
@@ -36,18 +37,33 @@ def tree_handler(s3_output_path, project_id, dataset_id, tree_id, workflow_id):
         }})
 
     tree_metadata = {
-        'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
         'treeId': tree_id,
         'projectId': project_id,
         'datasetId': dataset_id,
         'adapterId': 's3',
         'name': f'Tree {tree_id}',
-        'sourceType': 'algorithmDistanceMatrix',
+        'sourceType': 'algorithm_distance_matrix',
         'source': {
             'algorithm': 'goeburst',
             # TODO: Add distance matrix id and parameters
+        },
+        'adapterSpecificData': {
+            'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
         }
     }
+
+    dataset = datasets_collection.find_one({'_id': ObjectId(dataset_id)})
+
+    ids = dataset['distanceMatrixIds']
+
+    ids.append(tree_id)
+
+    datasets_collection.update_one(
+        {'_id': dataset['_id']},
+        {'$set': {
+            'treeIds': ids
+        }}
+    )
 
     tree_collection.insert_one(tree_metadata)
 
@@ -68,7 +84,6 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, distance_mat
     distance_matrix_metadata = {
         'projectId': project_id,
         'datasetId': dataset_id,
-        'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
         'distanceMatrixId': distance_matrix_id,
         'adapterId': 's3',
         'name': f'Distance Matrix {distance_matrix_id}',
@@ -76,7 +91,22 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, distance_mat
         'source': {
             'function': 'hamming'
         },
+        'adapterSpecificData': {
+            'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
+        }
     }
+
+    dataset = datasets_collection.find_one({'_id': ObjectId(dataset_id)})
+
+    ids = dataset['distanceMatrixIds']
+
+    ids.append(distance_matrix_id)
+    datasets_collection.update_one(
+        {'_id': dataset['_id']},
+        {'$set': {
+            'distanceMatrixIds': ids
+        }}
+    )
 
     distance_matrix_collection.insert_one(distance_matrix_metadata)
 
@@ -127,5 +157,5 @@ if __name__ == '__main__':
     parser.add_argument('--resource-type', help='The resource type', required=True)
     args = parser.parse_args()
 
-    upload_file_to_s3(args.file_path, args.project_id, args.dataset_id, args.resource_id, args.resource_type,
+    upload_file_to_s3(args.file_path, args.project_id, args.dataset_id, iargs.resource_id, args.resource_type,
                       args.workflow_id)

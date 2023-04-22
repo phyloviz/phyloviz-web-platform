@@ -11,7 +11,7 @@ public class TreeViewInfo {
     private final TreeViewSourceInfo source;
 
     public TreeViewInfo(TreeViewMetadata treeViewMetadata) {
-        this.treeViewId = treeViewMetadata.getId();
+        this.treeViewId = treeViewMetadata.getTreeViewId();
         this.name = treeViewMetadata.getName();
         this.layout = treeViewMetadata.getLayout();
         this.source = new TreeViewSourceInfo(treeViewMetadata.getSource());

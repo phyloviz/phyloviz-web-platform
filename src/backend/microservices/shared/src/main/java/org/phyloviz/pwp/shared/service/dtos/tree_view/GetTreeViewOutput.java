@@ -10,5 +10,5 @@ import java.util.List;
 @Data
 public class GetTreeViewOutput {
     private final List<Node> nodes;
-    private final int totalCount;
+    private final List<Edge> edges;
 }

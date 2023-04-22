@@ -31,9 +31,9 @@ public class TreeViewServiceImpl implements TreeViewService {
 
     @Override
     public void deleteTreeView(String projectId, String datasetId, String treeViewId, String userId) {
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
-        if(!datasetRepository.existsByProjectIdAndId(datasetId, projectId))
+        if (!datasetRepository.existsByProjectIdAndId(datasetId, projectId))
             throw new DatasetNotFoundException();
 
         if (!treeViewMetadataRepository.existsByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId)) {

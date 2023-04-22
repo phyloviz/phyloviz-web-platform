@@ -29,7 +29,7 @@ public class DistanceMatrixMetadataDeserializer implements Converter<Document, D
                     document.getString("sourceType").toUpperCase()
             );
             DistanceMatrixAdapterId adapterId = DistanceMatrixAdapterId.valueOf(
-                    document.getString("adapterId")
+                    document.getString("adapterId").toUpperCase()
             );
 
             Class<? extends DistanceMatrixSource> sourceClass = sourceType.getSourceClass();

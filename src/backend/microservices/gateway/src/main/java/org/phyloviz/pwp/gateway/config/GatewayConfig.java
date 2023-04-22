@@ -12,6 +12,7 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.PathContainer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.client.oidc.web.server.logout.OidcClientInitiatedServerLogoutSuccessHandler;
@@ -27,6 +28,8 @@ import org.springframework.security.web.server.authentication.logout.ServerLogou
 import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
 import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
 import org.springframework.security.web.server.util.matcher.PathPatternParserServerWebExchangeMatcher;
+import org.springframework.web.util.pattern.PathPattern;
+import org.springframework.web.util.pattern.PathPatternParser;
 
 import java.net.URI;
 import java.util.List;
@@ -138,10 +141,16 @@ public class GatewayConfig {
             routesBuilder = createApiRoutes(routesBuilder, properties.getUri(), properties.getRoutes());
         }
 
+        PathPatternParser patternParser = new PathPatternParser();
+        PathPattern apiPathPattern = patternParser.parse("/api/**");
+
+        // Home requests receive all but api requests
         routesBuilder.route("home",
                 routeSpec -> routeSpec
                         .order(Integer.MAX_VALUE)
                         .path("/**")
+                        .and()
+                        .predicate(request -> !apiPathPattern.matches(PathContainer.parsePath(request.getRequest().getPath().pathWithinApplication().value())))
                         .filters(GatewayFilterSpec::tokenRelay)
                         .uri(reactClientUrl)
         );
@@ -154,7 +163,7 @@ public class GatewayConfig {
         for (ApiRoute route : routes) {
             routeBuilder = routeBuilder.route(
                     routeSpec -> routeSpec
-                            .path("/api/" + route.getPath())
+                            .path("/api" + route.getPath())
                             .and()
                             .method(route.getMethod())
                             .filters(filterSpec -> filterSpec.stripPrefix(1).tokenRelay())

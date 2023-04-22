@@ -17,5 +17,5 @@ public class WorkflowInstance {
 
     private Workflow workflow;
 
-    private Map<String, Object> results;
+    private Map<String, Object> data;
 }

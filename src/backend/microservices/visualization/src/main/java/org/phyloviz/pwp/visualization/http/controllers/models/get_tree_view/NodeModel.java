@@ -10,15 +10,13 @@ import java.util.List;
  */
 @Data
 public class NodeModel {
-    private int st;
+    private String st;
     private double[] coordinates;
     private List<String> profile;
-    private Object auxiliaryData;
 
     public NodeModel(Node node) {
         this.st = node.getSt();
         this.coordinates = node.getCoordinates();
         this.profile = node.getProfile();
-        this.auxiliaryData = node.getAuxiliaryData();
     }
 }

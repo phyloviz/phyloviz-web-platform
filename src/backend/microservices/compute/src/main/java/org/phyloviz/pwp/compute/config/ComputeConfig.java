@@ -4,7 +4,19 @@ import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.conv
 import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.converters.AccessTemplateSerializer;
 import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.converters.CaseInsensitiveEnumDeserializerFactory;
 import org.phyloviz.pwp.compute.service.flowviz.FLOWViZClient;
+import org.phyloviz.pwp.shared.adapters.distance_matrix.DistanceMatrixAdapterRegistry;
+import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterRegistry;
+import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterRegistry;
+import org.phyloviz.pwp.shared.adapters.tree_view.TreeViewAdapterRegistry;
+import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterRegistry;
 import org.phyloviz.pwp.shared.config.ResourceServerSharedConfig;
+import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.converters.DistanceMatrixMetadataDeserializer;
+import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataDeserializer;
+import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataSerializer;
+import org.phyloviz.pwp.shared.repository.metadata.tree.documents.converters.TreeMetadataDeserializer;
+import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.converters.TreeViewMetadataDeserializer;
+import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.converters.TypingDataMetadataDeserializer;
+import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.converters.TypingDataMetadataSerializer;
 import org.phyloviz.pwp.shared_phylodb.config.ResourceServerSharedPhylodbConfig;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,14 +49,31 @@ public class ComputeConfig {
     private final String flowVizUsername;
     private final String flowVizPassword;
     private final String flowVizUrl;
+    private final TypingDataAdapterRegistry typingDataAdapterRegistry;
+    private final IsolateDataAdapterRegistry isolateDataAdapterRegistry;
+    private final DistanceMatrixAdapterRegistry distanceMatrixAdapterRegistry;
+    private final TreeAdapterRegistry treeAdapterRegistry;
+    private final TreeViewAdapterRegistry treeViewAdapterRegistry;
 
     public ComputeConfig(
             @Value("${flowviz.username}") String flowVizUsername,
             @Value("${flowviz.password}") String flowVizPassword,
-            @Value("${flowviz.url}") String flowVizUrl) {
+            @Value("${flowviz.url}") String flowVizUrl,
+            TypingDataAdapterRegistry typingDataAdapterRegistry,
+            IsolateDataAdapterRegistry isolateDataAdapterRegistry,
+            DistanceMatrixAdapterRegistry distanceMatrixAdapterRegistry,
+            TreeAdapterRegistry treeAdapterRegistry,
+            TreeViewAdapterRegistry treeViewAdapterRegistry
+    ) {
+
         this.flowVizUsername = flowVizUsername;
         this.flowVizPassword = flowVizPassword;
         this.flowVizUrl = flowVizUrl;
+        this.typingDataAdapterRegistry = typingDataAdapterRegistry;
+        this.isolateDataAdapterRegistry = isolateDataAdapterRegistry;
+        this.distanceMatrixAdapterRegistry = distanceMatrixAdapterRegistry;
+        this.treeAdapterRegistry = treeAdapterRegistry;
+        this.treeViewAdapterRegistry = treeViewAdapterRegistry;
     }
 
     @Bean
@@ -82,6 +111,13 @@ public class ComputeConfig {
 
     public MongoCustomConversions mongoCustomConversions(MongoConverter mongoConverter) {
         List<Converter<?, ?>> converters = List.of(
+                new TypingDataMetadataDeserializer(mongoConverter, typingDataAdapterRegistry),
+                new TypingDataMetadataSerializer(mongoConverter),
+                new IsolateDataMetadataDeserializer(mongoConverter, isolateDataAdapterRegistry),
+                new IsolateDataMetadataSerializer(mongoConverter),
+                new DistanceMatrixMetadataDeserializer(mongoConverter, distanceMatrixAdapterRegistry),
+                new TreeMetadataDeserializer(mongoConverter, treeAdapterRegistry),
+                new TreeViewMetadataDeserializer(mongoConverter, treeViewAdapterRegistry),
                 new AccessTemplateSerializer(),
                 new AccessTemplateDeserializer(mongoConverter),
                 //https://stackoverflow.com/questions/12385920/spring-mongodb-storing-retrieving-enums-as-int-not-string/30024621#30024621

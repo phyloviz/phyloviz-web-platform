@@ -11,10 +11,10 @@ import java.util.List;
 @Data
 public class GetTreeViewOutputModel {
     private List<NodeModel> nodes;
-    private int totalCount;
+    private List<EdgeModel> edges;
 
-    public GetTreeViewOutputModel(GetTreeViewOutput getTreeViewOutputDTO) {
-        this.nodes = getTreeViewOutputDTO.getNodes().stream().map(NodeModel::new).toList();
-        this.totalCount = getTreeViewOutputDTO.getTotalCount();
+    public GetTreeViewOutputModel(GetTreeViewOutput getTreeViewOutput) {
+        this.nodes = getTreeViewOutput.getNodes().stream().map(NodeModel::new).toList();
+        this.edges = getTreeViewOutput.getEdges().stream().map(EdgeModel::new).toList();
     }
 }

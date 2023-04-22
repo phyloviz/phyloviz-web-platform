@@ -15,7 +15,6 @@ import org.phyloviz.pwp.visualization.http.controllers.models.typing_data.get_ty
 import org.phyloviz.pwp.visualization.service.VisualizationService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller for the Visualization Microservice.
  */
 @RestController
-@RequestMapping("/visualization")
 @RequiredArgsConstructor
 public class VisualizationController {
 

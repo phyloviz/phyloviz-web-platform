@@ -34,7 +34,7 @@ public class DistanceMatrixServiceImpl implements DistanceMatrixService {
 
     @Override
     public void deleteDistanceMatrix(String projectId, String datasetId, String distanceMatrixId, String userId) {
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
         if (!datasetRepository.existsByProjectIdAndId(datasetId, projectId))
             throw new DatasetNotFoundException();

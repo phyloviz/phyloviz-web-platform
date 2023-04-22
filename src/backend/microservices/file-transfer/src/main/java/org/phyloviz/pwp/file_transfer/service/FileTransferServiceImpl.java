@@ -41,7 +41,7 @@ public class FileTransferServiceImpl implements FileTransferService {
 
     @Override
     public UploadTypingDataOutput uploadTypingData(String projectId, MultipartFile file, String userId) {
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
         String typingDataId = UUID.randomUUID().toString();
@@ -65,7 +65,7 @@ public class FileTransferServiceImpl implements FileTransferService {
 
     @Override
     public UploadIsolateDataOutput uploadIsolateData(String projectId, MultipartFile file, String userId) {
-        if(!projectRepository.existsByIdAndOwnerId(projectId, userId))
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
         String isolateDataId = UUID.randomUUID().toString();

@@ -9,8 +9,7 @@ import java.util.List;
  */
 @Data
 public class Node {
-    private final int st;
+    private final String st;
     private final double[] coordinates;
     private final List<String> profile;
-    private final Object auxiliaryData; // TODO: See how this will be
 }
