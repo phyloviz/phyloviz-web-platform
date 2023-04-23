@@ -45,18 +45,12 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ComputeServiceImpl implements ComputeService {
 
-    private static final String COMPUTE_DISTANCE_MATRIX = "compute-distance-matrix";
-    private static final String COMPUTE_TREE = "compute-tree";
-    private static final String COMPUTE_TREE_VIEW = "compute-tree-view";
-    private static final String INDEX_TYPING_DATA = "index-typing-data";
-    private static final String INDEX_ISOLATE_DATA = "index-isolate-data";
-    private static final String INDEX_TREE = "index-tree";
     private static final List<String> COMPUTE_DISTANCE_MATRIX_FUNCTIONS = List.of("hamming"); // TODO: Maybe create an enum for this?
     private static final List<String> COMPUTE_TREE_ALGORITHMS = List.of(
             "goeburst", "edmonds", "sl", "cl", "upgma", "upgmc", "wpgma", "wpgmc", "saitounei",
             "studierkepler", "unj"
     );
-    private static final List<String> COMPUTE_TREE_VIEW_LAYOUTS = List.of("radial");
+    private static final List<String> COMPUTE_TREE_VIEW_LAYOUTS = List.of("radial", "force-direct");
 
     private final ProjectRepository projectRepository;
     private final DatasetRepository datasetRepository;
@@ -79,15 +73,7 @@ public class ComputeServiceImpl implements ComputeService {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
-        return switch (workflowType) {
-            case COMPUTE_DISTANCE_MATRIX -> createComputeDistanceMatrixWorkflow(projectId, workflowProperties, userId);
-            case COMPUTE_TREE -> createComputeTreeWorkflow(projectId, workflowProperties, userId);
-            case COMPUTE_TREE_VIEW -> createComputeTreeViewWorkflow(projectId, workflowProperties, userId);
-            case INDEX_TYPING_DATA -> createIndexTypingDataWorkflow(projectId, workflowProperties, userId);
-            case INDEX_ISOLATE_DATA -> createIndexIsolateDataWorkflow(projectId, workflowProperties, userId);
-            case INDEX_TREE -> createIndexTreeWorkflow(projectId, workflowProperties, userId);
-            default -> throw new TemplateNotFound("Workflow Type not found");
-        };
+        return createWorkflow(projectId, workflowType, workflowProperties);
     }
 
     @Override
@@ -141,171 +127,6 @@ public class ComputeServiceImpl implements ComputeService {
         return List.of(); // TODO Implement
     }
 
-    private CreateWorkflowOutput createComputeDistanceMatrixWorkflow(String projectId, Map<String, String> properties, String userId) {
-        if (!properties.containsKey("datasetId") || !properties.containsKey("function") || properties.size() != 2)
-            throw new IllegalArgumentException("Invalid properties for compute distance matrix workflow");
-
-        String datasetId = properties.get("datasetId");
-
-        if (!ObjectId.isValid(datasetId))
-            throw new IllegalArgumentException("Invalid datasetId");
-
-        if (!COMPUTE_DISTANCE_MATRIX_FUNCTIONS.contains(properties.get("function")))
-            throw new IllegalArgumentException("Invalid algorithm");
-
-        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
-            throw new ProjectNotFoundException();
-        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
-                .orElseThrow(DatasetDoesNotExistException::new);
-
-        String typingDataId = dataset.getTypingDataId();
-
-        Map<String, String> workflowProperties = new HashMap<>(properties);
-        workflowProperties.put("projectId", projectId);
-        workflowProperties.put("typingDataId", typingDataId);
-
-        return createWorkflow(projectId, COMPUTE_DISTANCE_MATRIX, workflowProperties);
-    }
-
-    private CreateWorkflowOutput createComputeTreeWorkflow(String projectId, Map<String, String> properties, String userId) {
-        if (!properties.containsKey("datasetId") || !properties.containsKey("distanceMatrixId") ||
-                !properties.containsKey("algorithm") || properties.size() != 3)
-            throw new IllegalArgumentException("Invalid properties for compute tree workflow");
-
-        String datasetId = properties.get("datasetId");
-        String distanceMatrixId = properties.get("distanceMatrixId");
-
-        if (!ObjectId.isValid(datasetId))
-            throw new IllegalArgumentException("Invalid datasetId");
-
-        if (!UUIDUtils.isValidUUID(distanceMatrixId))
-            throw new IllegalArgumentException("Invalid distanceMatrixId");
-
-        if (!COMPUTE_TREE_ALGORITHMS.contains(properties.get("algorithm")))
-            throw new IllegalArgumentException("Invalid algorithm");
-
-        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
-            throw new ProjectNotFoundException();
-        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId)) {
-            throw new DatasetDoesNotExistException();
-        }
-        if (!distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)) {
-            throw new DistanceMatrixDoesNotExistException();
-        }
-
-        Map<String, String> workflowProperties = new HashMap<>(properties);
-        workflowProperties.put("projectId", projectId);
-
-        return createWorkflow(projectId, COMPUTE_TREE, workflowProperties);
-    }
-
-    private CreateWorkflowOutput createComputeTreeViewWorkflow(String projectId, Map<String, String> properties, String userId) {
-        if (!properties.containsKey("datasetId") || !properties.containsKey("treeId") ||
-                !properties.containsKey("layout") || properties.size() != 3)
-            throw new IllegalArgumentException("Invalid properties for compute tree view workflow");
-
-        String datasetId = properties.get("datasetId");
-        String treeId = properties.get("treeId");
-
-        if (!ObjectId.isValid(datasetId))
-            throw new IllegalArgumentException("Invalid datasetId");
-
-        if (!UUIDUtils.isValidUUID(treeId))
-            throw new IllegalArgumentException("Invalid treeId");
-
-        if (!COMPUTE_TREE_VIEW_LAYOUTS.contains(properties.get("layout")))
-            throw new IllegalArgumentException("Invalid layout");
-
-        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
-            throw new ProjectNotFoundException();
-        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId)) {
-            throw new DatasetDoesNotExistException();
-        }
-        if (!treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId)) {
-            throw new TreeDoesNotExistException();
-        }
-
-        Map<String, String> workflowProperties = new HashMap<>(properties);
-        workflowProperties.put("projectId", projectId);
-
-        return createWorkflow(projectId, COMPUTE_TREE_VIEW, workflowProperties);
-    }
-
-    private CreateWorkflowOutput createIndexTypingDataWorkflow(String projectId, Map<String, String> properties, String userId) {
-        if (!properties.containsKey("datasetId") || properties.size() != 1)
-            throw new IllegalArgumentException("Invalid properties for index typing data workflow");
-
-        String datasetId = properties.get("datasetId");
-
-        if (!ObjectId.isValid(datasetId))
-            throw new IllegalArgumentException("Invalid datasetId");
-
-        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
-            throw new ProjectNotFoundException();
-        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
-                .orElseThrow(DatasetDoesNotExistException::new);
-
-        String typingDataId = dataset.getTypingDataId();
-
-        Map<String, String> workflowProperties = new HashMap<>();
-        workflowProperties.put("projectId", projectId);
-        workflowProperties.put("datasetId", datasetId);
-        workflowProperties.put("typingDataId", typingDataId);
-
-        return createWorkflow(projectId, INDEX_TYPING_DATA, workflowProperties);
-    }
-
-    private CreateWorkflowOutput createIndexIsolateDataWorkflow(String projectId, Map<String, String> properties, String userId) {
-        if (!properties.containsKey("datasetId") || properties.size() != 1)
-            throw new IllegalArgumentException("Invalid properties for index isolate data workflow");
-
-        String datasetId = properties.get("datasetId");
-
-        if (!ObjectId.isValid(datasetId))
-            throw new IllegalArgumentException("Invalid datasetId");
-
-        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
-            throw new ProjectNotFoundException();
-        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
-                .orElseThrow(DatasetDoesNotExistException::new);
-
-        String isolateDataId = dataset.getIsolateDataId();
-
-        Map<String, String> workflowProperties = new HashMap<>();
-        workflowProperties.put("projectId", projectId);
-        workflowProperties.put("isolateDataId", isolateDataId);
-
-        return createWorkflow(projectId, INDEX_ISOLATE_DATA, workflowProperties);
-    }
-
-    private CreateWorkflowOutput createIndexTreeWorkflow(String projectId, Map<String, String> properties, String userId) {
-        if (!properties.containsKey("datasetId") || !properties.containsKey("treeId") || properties.size() != 2)
-            throw new IllegalArgumentException("Invalid properties for index tree workflow");
-
-        String datasetId = properties.get("datasetId");
-        String treeId = properties.get("treeId");
-
-        if (!ObjectId.isValid(datasetId))
-            throw new IllegalArgumentException("Invalid datasetId");
-
-        if (!UUIDUtils.isValidUUID(treeId))
-            throw new IllegalArgumentException("Invalid treeId");
-
-        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
-            throw new ProjectNotFoundException();
-        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId)) {
-            throw new DatasetDoesNotExistException();
-        }
-        if (!treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId)) {
-            throw new TreeDoesNotExistException();
-        }
-
-        Map<String, String> workflowProperties = new HashMap<>(properties);
-        workflowProperties.put("projectId", projectId);
-
-        return createWorkflow(projectId, INDEX_TREE, workflowProperties);
-    }
-
     private CreateWorkflowOutput createWorkflow(String projectId, String workflowType, Map<String, String> properties) {
         //TODO: Fix transactions
 
@@ -314,6 +135,8 @@ public class ComputeServiceImpl implements ComputeService {
                 .findByName(workflowType)
                 .orElseThrow(() -> new TemplateNotFound("Workflow Template not found"));
         // TODO: Add more specific exception to send Workflow Type not found.
+
+        validateCreateWorkflowArguments(workflowTemplate.getArguments(), properties, projectId);
 
         // TODO: Maybe use uuids instead of mongo ids?
         WorkflowInstance workflowInstance = new WorkflowInstance();
@@ -368,5 +191,122 @@ public class ComputeServiceImpl implements ComputeService {
         flowVizClient.workflowService().postWorkflow(workflow);
 
         return new CreateWorkflowOutput(workflowId);
+    }
+
+    private void validateCreateWorkflowArguments(Map<String, Map<String, Object>> createWorkflowArguments,
+                                                 Map<String, String> properties, String projectId) {
+        if (properties.size() != createWorkflowArguments.size() - (createWorkflowArguments.containsKey("extra") ? 1 : 0))
+            throw new IllegalArgumentException("Invalid properties");
+
+        if (createWorkflowArguments.containsKey("extra")) {
+            Map<String, Object> extraArguments = createWorkflowArguments.get("extra");
+            extraArguments.forEach((argumentName, argumentProperties) -> {
+                Map<String, Object> argumentPropertiesMap = (Map<String, Object>) argumentProperties;
+                if (argumentPropertiesMap.containsKey("special")) {
+                    if (argumentPropertiesMap.get("special").equals("project")) {
+                        properties.put(argumentName, projectId);
+                    }
+                }
+            });
+        }
+
+        Map<String, String> specialArguments = new HashMap<>();
+
+        for (Map.Entry<String, Map<String, Object>> entry : createWorkflowArguments.entrySet()) {
+            String argumentName = entry.getKey();
+            Map<String, Object> argumentProperties = entry.getValue();
+
+            if (argumentName.equals("extra"))
+                continue;
+
+            if (!properties.containsKey(argumentName))
+                throw new IllegalArgumentException("Missing " + argumentName);
+
+            switch ((String) argumentProperties.get("type")) {
+                case "objectId" -> {
+                    if (!ObjectId.isValid(properties.get(argumentName)))
+                        throw new IllegalArgumentException("Invalid " + argumentName);
+                }
+                case "uuid" -> {
+                    if (!UUIDUtils.isValidUUID(properties.get(argumentName)))
+                        throw new IllegalArgumentException("Invalid " + argumentName);
+                }
+                case "string" -> {
+                    if (properties.get(argumentName).isEmpty())
+                        throw new IllegalArgumentException("Invalid " + argumentName);
+                }
+            }
+
+            if (argumentProperties.containsKey("special")) {
+                Object special = argumentProperties.get("special");
+                if (special instanceof Map) {
+                    Map<String, Map<String, Object>> specialMap = (Map<String, Map<String, Object>>) special;
+
+                    if (specialMap.containsKey("dataset")) {
+                        String datasetId = properties.get(argumentName);
+                        specialArguments.put("datasetId", datasetId);
+
+                        if (specialMap.get("dataset").containsKey("obtain-extra")) {
+                            List<String> obtainExtra = (List<String>) specialMap.get("dataset").get("obtain-extra");
+
+                            if (obtainExtra.isEmpty() && !datasetRepository.existsByProjectIdAndId(projectId, datasetId)) {
+                                throw new DatasetDoesNotExistException();
+                            }
+
+                            obtainExtra.forEach(obtainType -> {
+                                if (obtainType.equals("typingDataId")) {
+                                    Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
+                                            .orElseThrow(DatasetDoesNotExistException::new);
+                                    properties.put("typingDataId", dataset.getTypingDataId());
+                                }
+                                if (obtainType.equals("isolateDataId")) {
+                                    Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
+                                            .orElseThrow(DatasetDoesNotExistException::new);
+                                    properties.put("isolateDataId", dataset.getIsolateDataId());
+                                }
+                            });
+                        }
+                    }
+                } else if (special instanceof String) {
+                    switch ((String) special) {
+                        case "dataset" -> {
+                            String datasetId = properties.get(argumentName);
+                            specialArguments.put("datasetId", datasetId);
+                            if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId)) {
+                                throw new DatasetDoesNotExistException();
+                            }
+                        }
+                        case "distanceMatrix" -> {
+                            if (!specialArguments.containsKey("datasetId"))
+                                throw new IllegalArgumentException("Missing datasetId argument before distanceMatrixId argument)");
+
+                            String datasetId = specialArguments.get("datasetId");
+
+                            if (!distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(
+                                    projectId, datasetId, argumentName
+                            )) {
+                                throw new DistanceMatrixDoesNotExistException();
+                            }
+
+                            specialArguments.put("distanceMatrixId", properties.get(argumentName));
+                        }
+                        case "tree" -> {
+                            if (!specialArguments.containsKey("datasetId"))
+                                throw new IllegalArgumentException("Missing datasetId argument before treeId argument)");
+
+                            String datasetId = specialArguments.get("datasetId");
+
+                            if (!treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(
+                                    projectId, datasetId, argumentName
+                            )) {
+                                throw new TreeDoesNotExistException();
+                            }
+
+                            specialArguments.put("treeId", properties.get(argumentName));
+                        }
+                    }
+                }
+            }
+        }
     }
 }
