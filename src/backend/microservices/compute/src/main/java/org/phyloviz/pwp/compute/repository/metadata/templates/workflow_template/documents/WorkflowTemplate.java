@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Map;
 
 
 @Data
@@ -18,6 +19,7 @@ public class WorkflowTemplate {
 
     private final String name;
     private final String description;
+    private final Map<String, Map<String, Object>> arguments;
     private final List<TaskTemplate> tasks;
     @Id
     private String id;
@@ -32,5 +34,4 @@ public class WorkflowTemplate {
                 .tasks(tasks.stream().map(task -> task.buildTask(workflowTemplateData)).toList())
                 .build();
     }
-
 }
