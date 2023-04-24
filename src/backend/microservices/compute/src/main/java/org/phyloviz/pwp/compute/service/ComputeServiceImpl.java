@@ -13,6 +13,8 @@ import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.TaskTemplate;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.WorkflowTemplate;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.WorkflowTemplateData;
+import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.arguments.WorkflowTemplateArgumentProperties;
+import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.arguments.WorkflowTemplateArguments;
 import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
 import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
 import org.phyloviz.pwp.compute.service.exceptions.DatasetDoesNotExistException;
@@ -61,25 +63,6 @@ public class ComputeServiceImpl implements ComputeService {
     private final ToolTemplateRepository toolTemplateRepository;
     private final FLOWViZClient flowVizClient;
 
-    private static void validateObjectIdArgument(Map<String, String> properties, String argumentName) {
-        if (!ObjectId.isValid(properties.get(argumentName)))
-            throw new InvalidWorkflowException("Invalid '" + argumentName + "' argument. Must be a valid ObjectId.");
-    }
-
-    private static void validateUUIDArgument(Map<String, String> properties, String argumentName) {
-        if (!UUIDUtils.isValidUUID(properties.get(argumentName)))
-            throw new InvalidWorkflowException("Invalid '" + argumentName + "' argument. Must be a valid UUID.");
-    }
-
-    private static void validateStringArgument(Map<String, String> properties, String argumentName, Map<String, Object> argumentProperties) {
-        if (argumentProperties.containsKey("allowedValues")) {
-            List<String> allowedValues = (List<String>) argumentProperties.get("allowedValues");
-            if (!allowedValues.contains(properties.get(argumentName)))
-                throw new InvalidWorkflowException("Invalid '" + argumentName + "' argument." +
-                        "Must be one of the allowed values: " + allowedValues);
-        }
-    }
-
     @Override
     public CreateWorkflowOutput createWorkflow(
             String projectId,
@@ -87,6 +70,8 @@ public class ComputeServiceImpl implements ComputeService {
             Map<String, String> workflowProperties,
             String userId
     ) {
+        validateUUIDArgument(projectId, "projectId");
+
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
@@ -168,7 +153,7 @@ public class ComputeServiceImpl implements ComputeService {
 
         return switch (airflowStatus) {
             case "running" -> WorkflowStatus.RUNNING;
-            case "success" -> WorkflowStatus.FINISHED;
+            case "success" -> WorkflowStatus.SUCCESS;
             case "failed" -> WorkflowStatus.FAILED;
             default -> throw new IllegalStateException("Unexpected value: " + airflowStatus);
         };
@@ -239,104 +224,118 @@ public class ComputeServiceImpl implements ComputeService {
         return new CreateWorkflowOutput(workflowId);
     }
 
-    private void validateCreateWorkflowArguments(Map<String, Map<String, Object>> createWorkflowArguments,
+    private void validateCreateWorkflowArguments(WorkflowTemplateArguments createWorkflowArguments,
                                                  Map<String, String> properties, String projectId) {
         Map<String, String> specialArguments = new HashMap<>();
 
-        for (Map.Entry<String, String> propertyEntry : properties.entrySet()) {
-            if (!createWorkflowArguments.containsKey(propertyEntry.getKey()))
-                throw new InvalidWorkflowException("Unknown '" + propertyEntry.getKey() + "' argument.");
-        }
+        properties.keySet().stream().filter(key -> !createWorkflowArguments.containsArgument(key)).findAny()
+                .ifPresent(key -> {
+                    throw new InvalidWorkflowException("Unknown '" + key + "' argument.");
+                });
 
-        for (Map.Entry<String, Map<String, Object>> argumentEntry : createWorkflowArguments.entrySet()) {
-            String argumentName = argumentEntry.getKey();
-            Map<String, Object> argumentProperties = argumentEntry.getValue();
-
+        createWorkflowArguments.forEach((argumentName, argumentProperties) -> {
             if (!properties.containsKey(argumentName))
-                throw new InvalidWorkflowException("Missing '" + argumentName + "' argument.");
+                throw new InvalidWorkflowException(String.format("Missing '%s' argument.", argumentName));
 
-            switch ((String) argumentProperties.get("type")) {
-                case "objectid" -> validateObjectIdArgument(properties, argumentName);
-                case "uuid" -> validateUUIDArgument(properties, argumentName);
-                case "string" -> validateStringArgument(properties, argumentName, argumentProperties);
-                case "datasetId" -> validateDatasetIdArgument(properties, projectId, specialArguments, argumentName,
+            switch (argumentProperties.getType()) {
+                case OBJECTID -> validateObjectIdArgument(properties.get(argumentName), argumentName);
+                case UUID -> validateUUIDArgument(properties.get(argumentName), argumentName);
+                case STRING -> validateStringArgument(properties.get(argumentName), argumentName,
+                        argumentProperties.getAllowedValues());
+                case DATASETID -> validateDatasetIdArgument(properties, projectId, specialArguments, argumentName,
                         argumentProperties);
-                case "distanceMatrixId" -> validateDistanceMatrixIdArgument(properties, projectId, specialArguments,
+                case DISTANCEMATRIXID -> validateDistanceMatrixIdArgument(properties, projectId, specialArguments,
                         argumentName);
-                case "treeId" -> validateTreeIdArgument(properties, projectId, specialArguments, argumentName);
-                case "treeViewId" -> validateTreeViewIdArgument(properties, projectId, specialArguments, argumentName);
-                default -> throw new IllegalStateException("Invalid argument type.");
+                case TREEID -> validateTreeIdArgument(properties, projectId, specialArguments, argumentName);
+                case TREEVIEWID -> validateTreeViewIdArgument(properties, projectId, specialArguments, argumentName);
             }
-        }
+        });
+    }
+
+    private void validateObjectIdArgument(String argument, String argumentName) {
+        if (!ObjectId.isValid(argument))
+            throw new InvalidWorkflowException(String.format("Invalid '%s' argument. Must be a valid ObjectId.", argumentName));
+    }
+
+    private void validateUUIDArgument(String argument, String argumentName) {
+        if (!UUIDUtils.isValidUUID(argument))
+            throw new InvalidWorkflowException(String.format("Invalid '%s' argument. Must be a valid UUID.", argumentName));
+    }
+
+    private void validateStringArgument(String argument, String argumentName, List<String> allowedValues) {
+        if (!allowedValues.contains(argument))
+            throw new InvalidWorkflowException(String.format(
+                    "Invalid '%s' argument. Must be one of the allowed values: %s", argumentName, allowedValues)
+            );
     }
 
     private void validateDatasetIdArgument(Map<String, String> properties, String projectId,
                                            Map<String, String> specialArguments, String argumentName,
-                                           Map<String, Object> argumentProperties) {
+                                           WorkflowTemplateArgumentProperties argumentProperties) {
         String datasetId = properties.get(argumentName);
+        validateObjectIdArgument(datasetId, argumentName);
+
         specialArguments.put("datasetId", datasetId);
-        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId)) {
-            throw new DatasetDoesNotExistException();
-        }
 
-        if (argumentProperties.containsKey("obtain-extra")) {
-            Map<String, Map<String, String>> obtainExtra = (Map<String, Map<String, String>>) argumentProperties.get("obtain-extra");
+        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
+                .orElseThrow(DatasetDoesNotExistException::new);
 
-            for (Map.Entry<String, Map<String, String>> extraEntry : obtainExtra.entrySet()) {
-                switch (extraEntry.getValue().get("type")) {
-                    case "typingDataId" -> {
-                        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
-                                .orElseThrow(DatasetDoesNotExistException::new);
-                        properties.put(extraEntry.getKey(), dataset.getTypingDataId());
-                    }
-                    case "isolateDataId" -> {
-                        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
-                                .orElseThrow(DatasetDoesNotExistException::new);
-                        properties.put(extraEntry.getKey(), dataset.getIsolateDataId());
-                    }
-                    default -> throw new IllegalStateException("Unexpected type for extra value from dataset: " +
-                            extraEntry.getValue().get("type"));
-                }
+        if (argumentProperties.getObtainExtra() == null)
+            return;
+
+        argumentProperties.getObtainExtra().forEach((extraArgumentName, extraArgumentProperties) -> {
+            switch (extraArgumentProperties.getType()) {
+                case TYPINGDATAID -> properties.put(extraArgumentName, dataset.getTypingDataId());
+                case ISOLATEDATAID -> properties.put(extraArgumentName, dataset.getIsolateDataId());
             }
-        }
+        });
     }
 
     private void validateDistanceMatrixIdArgument(Map<String, String> properties, String projectId,
                                                   Map<String, String> specialArguments, String argumentName) {
+        String distanceMatrixId = properties.get(argumentName);
+        validateUUIDArgument(distanceMatrixId, argumentName);
+
         if (!specialArguments.containsKey("datasetId"))
             throw new IllegalStateException("Missing datasetId argument before distanceMatrixId argument.");
 
         String datasetId = specialArguments.get("datasetId");
 
-        if (!distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, argumentName))
+        if (!distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
             throw new DistanceMatrixDoesNotExistException();
 
-        specialArguments.put("distanceMatrixId", properties.get(argumentName));
+        specialArguments.put("distanceMatrixId", distanceMatrixId);
     }
 
     private void validateTreeIdArgument(Map<String, String> properties, String projectId,
                                         Map<String, String> specialArguments, String argumentName) {
+        String treeId = properties.get(argumentName);
+        validateUUIDArgument(treeId, argumentName);
+
         if (!specialArguments.containsKey("datasetId"))
             throw new IllegalStateException("Missing datasetId argument before treeId argument)");
 
         String datasetId = specialArguments.get("datasetId");
 
-        if (!treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, argumentName))
+        if (!treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId))
             throw new TreeDoesNotExistException();
 
-        specialArguments.put("treeId", properties.get(argumentName));
+        specialArguments.put("treeId", treeId);
     }
 
     private void validateTreeViewIdArgument(Map<String, String> properties, String projectId,
                                             Map<String, String> specialArguments, String argumentName) {
+        String treeViewId = properties.get(argumentName);
+        validateUUIDArgument(treeViewId, argumentName);
+
         if (!specialArguments.containsKey("datasetId"))
             throw new IllegalStateException("Missing datasetId argument before treeViewId argument)");
 
         String datasetId = specialArguments.get("datasetId");
 
-        if (!treeViewMetadataRepository.existsByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, argumentName))
+        if (!treeViewMetadataRepository.existsByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId))
             throw new TreeViewDoesNotExistException();
 
-        specialArguments.put("treeViewId", properties.get(argumentName));
+        specialArguments.put("treeViewId", treeViewId);
     }
 }

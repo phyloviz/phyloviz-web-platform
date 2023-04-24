@@ -2,6 +2,6 @@ package org.phyloviz.pwp.compute.repository.metadata.templates.workflow_instance
 
 public enum WorkflowStatus {
     RUNNING,
-    FINISHED,
+    SUCCESS,
     FAILED
 }
