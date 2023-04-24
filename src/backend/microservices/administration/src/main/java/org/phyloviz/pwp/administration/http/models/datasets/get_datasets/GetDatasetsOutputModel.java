@@ -10,7 +10,7 @@ import java.util.List;
 public class GetDatasetsOutputModel {
     private List<DatasetModel> datasets;
 
-    public GetDatasetsOutputModel(List<FullDatasetInfo> datasetsDTO) {
-        this.datasets = datasetsDTO.stream().map(DatasetModel::new).toList();
+    public GetDatasetsOutputModel(List<FullDatasetInfo> fullDatasetInfos) {
+        this.datasets = fullDatasetInfos.stream().map(DatasetModel::new).toList();
     }
 }

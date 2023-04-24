@@ -3,7 +3,7 @@ package org.phyloviz.pwp.shared.service.dtos.files.isolate_data;
 import lombok.Data;
 
 /**
- * Output DTO for the getTypingDataDetails service.
+ * Output of the schema of the isolate data.
  */
 @Data
 public class GetIsolateDataSchemaOutput {

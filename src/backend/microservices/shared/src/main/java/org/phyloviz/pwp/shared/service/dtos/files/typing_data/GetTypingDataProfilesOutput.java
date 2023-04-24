@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * Output DTO for the getTypingDataProfiles service.
+ * Output for the profiles of the typing data.
  */
 @Data
 public class GetTypingDataProfilesOutput {

@@ -1,6 +1,7 @@
 package org.phyloviz.pwp.compute.service.dtos.get_workflow;
 
 import lombok.Data;
+import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_instances.documents.WorkflowStatus;
 
 import java.util.Map;
 
@@ -8,6 +9,6 @@ import java.util.Map;
 public class GetWorkflowStatusOutput {
     private final String workflowId;
     private final String type;
-    private final String status;
+    private final WorkflowStatus status;
     private final Map<String, Object> data;
 }

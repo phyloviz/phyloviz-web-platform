@@ -7,7 +7,7 @@ import org.phyloviz.pwp.shared.service.dtos.distance_matrix.DistanceMatrixSource
 public class DistanceMatrixSourceFunctionOutputModel implements DistanceMatrixSourceOutputModel {
     private String function;
 
-    public DistanceMatrixSourceFunctionOutputModel(DistanceMatrixSourceFunctionInfo distanceMatrixSourceFunctionDTO) {
-        this.function = distanceMatrixSourceFunctionDTO.getFunction();
+    public DistanceMatrixSourceFunctionOutputModel(DistanceMatrixSourceFunctionInfo distanceMatrixSourceFunctionInfo) {
+        this.function = distanceMatrixSourceFunctionInfo.getFunction();
     }
 }

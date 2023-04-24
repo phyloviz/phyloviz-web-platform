@@ -9,9 +9,9 @@ public class TreeSourceAlgorithmTypingDataOutputModel implements TreeSourceOutpu
     private String typingDataId;
     private String parameters;
 
-    public TreeSourceAlgorithmTypingDataOutputModel(TreeSourceAlgorithmTypingDataInfo treeSourceAlgorithmTypingDataDTO) {
-        this.algorithm = treeSourceAlgorithmTypingDataDTO.getAlgorithm();
-        this.typingDataId = treeSourceAlgorithmTypingDataDTO.getTypingDataId();
-        this.parameters = treeSourceAlgorithmTypingDataDTO.getParameters();
+    public TreeSourceAlgorithmTypingDataOutputModel(TreeSourceAlgorithmTypingDataInfo treeSourceAlgorithmTypingDataInfo) {
+        this.algorithm = treeSourceAlgorithmTypingDataInfo.getAlgorithm();
+        this.typingDataId = treeSourceAlgorithmTypingDataInfo.getTypingDataId();
+        this.parameters = treeSourceAlgorithmTypingDataInfo.getParameters();
     }
 }
