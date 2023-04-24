@@ -43,6 +43,8 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=root
     volumes:
       - ./src/backend/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./src/backend/mongo/workflow-templates.json:/docker-entrypoint-initdb.d/workflow-templates.json:ro
+      - ./src/backend/mongo/tool-templates.json:/docker-entrypoint-initdb.d/tool-templates.json:ro
       - mongodb-data:/data/db
 
   cache:

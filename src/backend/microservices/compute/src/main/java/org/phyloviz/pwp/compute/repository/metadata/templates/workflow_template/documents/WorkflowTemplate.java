@@ -2,6 +2,7 @@ package org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template
 
 import lombok.Builder;
 import lombok.Data;
+import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.arguments.WorkflowTemplateArgumentProperties;
 import org.phyloviz.pwp.compute.service.flowviz.models.workflow.Workflow;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Map;
 
 
 @Data
@@ -18,6 +20,7 @@ public class WorkflowTemplate {
 
     private final String name;
     private final String description;
+    private final Map<String, WorkflowTemplateArgumentProperties> arguments;
     private final List<TaskTemplate> tasks;
     @Id
     private String id;
@@ -32,5 +35,4 @@ public class WorkflowTemplate {
                 .tasks(tasks.stream().map(task -> task.buildTask(workflowTemplateData)).toList())
                 .build();
     }
-
 }

@@ -4,7 +4,7 @@ import lombok.Data;
 
 
 @Data
-public class WorkflowStatus {
+public class AirflowWorkflowStatus {
 
     private final String state;
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -72,17 +73,31 @@ public class ComputeController {
      * Gets the workflows of a project.
      *
      * @param projectId the project id of the project to which the workflow belongs
+     * @param running   whether to get only running workflows or not running workflows
      * @param user      the user who is requesting the workflows
      * @return information about the workflows
      */
     @GetMapping("/projects/{projectId}/workflows")
     public GetWorkflowsOutputModel getWorkflows(
             @PathVariable String projectId,
+            @RequestParam(required = false) Boolean running,
             User user
     ) {
-        List<GetWorkflowStatusOutput> getWorkflowStatusOutputList = computeService.getWorkflows(
-                projectId, user.getId()
-        );
+        List<GetWorkflowStatusOutput> getWorkflowStatusOutputList;
+
+        if (running == null)
+            getWorkflowStatusOutputList = computeService.getAllWorkflows(
+                    projectId, user.getId()
+            );
+        else if (running) {
+            getWorkflowStatusOutputList = computeService.getAllRunningWorkflows(
+                    projectId, user.getId()
+            );
+        } else {
+            getWorkflowStatusOutputList = computeService.getAllNotRunningWorkflows(
+                    projectId, user.getId()
+            );
+        }
 
         return new GetWorkflowsOutputModel(getWorkflowStatusOutputList);
     }

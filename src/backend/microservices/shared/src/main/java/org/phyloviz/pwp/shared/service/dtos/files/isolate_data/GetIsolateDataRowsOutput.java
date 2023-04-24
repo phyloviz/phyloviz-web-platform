@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * Output DTO for the getTypingDataProfiles service.
+ * Output for the rows of the isolate data.
  */
 @Data
 public class GetIsolateDataRowsOutput {

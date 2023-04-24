@@ -8,8 +8,8 @@ public class TreeSourceFileOutputModel implements TreeSourceOutputModel {
     private String fileType;
     private String fileName;
 
-    public TreeSourceFileOutputModel(TreeSourceFileInfo treeSourceFileDTO) {
-        this.fileType = treeSourceFileDTO.getFileType();
-        this.fileName = treeSourceFileDTO.getFileName();
+    public TreeSourceFileOutputModel(TreeSourceFileInfo treeSourceFileInfo) {
+        this.fileType = treeSourceFileInfo.getFileType();
+        this.fileName = treeSourceFileInfo.getFileName();
     }
 }

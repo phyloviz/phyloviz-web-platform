@@ -10,7 +10,7 @@ import java.util.List;
 public class GetWorkflowsOutputModel {
     private List<GetWorkflowStatusOutputModel> workflows;
 
-    public GetWorkflowsOutputModel(List<GetWorkflowStatusOutput> getWorkflowStatusOutputDTO) {
-        this.workflows = getWorkflowStatusOutputDTO.stream().map(GetWorkflowStatusOutputModel::new).toList();
+    public GetWorkflowsOutputModel(List<GetWorkflowStatusOutput> getWorkflowStatusOutput) {
+        this.workflows = getWorkflowStatusOutput.stream().map(GetWorkflowStatusOutputModel::new).toList();
     }
 }

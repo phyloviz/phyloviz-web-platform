@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class AirflowData {
 
-    private final List<WorkflowStatus> runs;
+    private final List<AirflowWorkflowStatus> runs;
 }

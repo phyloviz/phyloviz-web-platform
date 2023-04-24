@@ -1,0 +1,289 @@
+[
+  {
+    "general": {
+      "name": "uploader",
+      "description": "The uploader script"
+    },
+    "access": {
+      "_type": "library",
+      "details": {
+        "address": "localhost",
+        "dockerUrl": "unix://var/run/docker.sock",
+        "dockerImage": "localhost:5000/uploader",
+        "dockerAutoRemove": "never",
+        "dockerNetworkMode": "bridge",
+        "dockerApiVersion": "auto",
+        "dockerVolumes": [
+          {
+            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+            "target": "/phyloviz-web-platform",
+            "_type": "bind"
+          }
+        ]
+      }
+    },
+    "library": []
+  },
+  {
+    "general": {
+      "name": "downloader",
+      "description": "The downloader script"
+    },
+    "access": {
+      "_type": "library",
+      "details": {
+        "address": "localhost",
+        "dockerUrl": "unix://var/run/docker.sock",
+        "dockerImage": "localhost:5000/downloader",
+        "dockerAutoRemove": "never",
+        "dockerNetworkMode": "bridge",
+        "dockerApiVersion": "auto",
+        "dockerVolumes": [
+          {
+            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+            "target": "/phyloviz-web-platform",
+            "_type": "bind"
+          }
+        ]
+      }
+    },
+    "library": []
+  },
+  {
+    "general": {
+      "name": "phylolib",
+      "description": "The phylolib library"
+    },
+    "access": {
+      "_type": "library",
+      "details": {
+        "address": "localhost",
+        "dockerUrl": "unix://var/run/docker.sock",
+        "dockerImage": "luanab/phylolib",
+        "dockerAutoRemove": "never",
+        "dockerNetworkMode": "bridge",
+        "dockerApiVersion": "auto",
+        "dockerVolumes": [
+          {
+            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+            "target": "/phyloviz-web-platform",
+            "_type": "bind"
+          }
+        ]
+      }
+    },
+    "library": [
+      {
+        "name": "Arguments",
+        "order": 0,
+        "invocation": "-args",
+        "allowCommandRep": false,
+        "commands": [
+          {
+            "name": "help",
+            "invocation": [
+              "help"
+            ]
+          },
+          {
+            "name": "distance",
+            "invocation": [
+              "distance"
+            ],
+            "allowedValues": [
+              "hamming",
+              "grapetree",
+              "kimura"
+            ],
+            "allowedCommandSets": [
+              "Options"
+            ]
+          },
+          {
+            "name": "correction",
+            "invocation": [
+              "correction"
+            ],
+            "allowedValues": [
+              "jukescantor"
+            ],
+            "allowedCommandSets": [
+              "Options"
+            ]
+          },
+          {
+            "name": "algorithm",
+            "invocation": [
+              "algorithm"
+            ],
+            "allowedValues": [
+              "goeburst",
+              "edmonds",
+              "sl",
+              "cl",
+              "upgma",
+              "upgmc",
+              "wpgma",
+              "wpgmc",
+              "saitounei",
+              "studierkepler",
+              "unj"
+            ],
+            "allowedCommandSets": [
+              "Options"
+            ]
+          },
+          {
+            "name": "optimization",
+            "invocation": [
+              "optimization"
+            ],
+            "allowedValues": [
+              "lbr"
+            ],
+            "allowedCommandSets": [
+              "Options"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Options",
+        "order": 1,
+        "allowCommandRep": true,
+        "commands": [
+          {
+            "name": "File Output",
+            "description": "Output file as <format>:<location> with format being (asymmetric|symmetric|newick|nexus)",
+            "invocation": [
+              "-o",
+              "--out"
+            ],
+            "allowedValues": [
+              "file"
+            ]
+          },
+          {
+            "name": "Dataset Input",
+            "description": "Input dataset file as <format>:<location> with format being (fasta|ml|snp)",
+            "invocation": [
+              "-d",
+              "--dataset"
+            ],
+            "allowedValues": [
+              "file"
+            ]
+          },
+          {
+            "name": "Distance Matrix Input",
+            "description": "Input distance matrix file as <format>:<location> with format being (asymmetric|symmetric)",
+            "invocation": [
+              "-m",
+              "--matrix"
+            ],
+            "allowedValues": [
+              "file"
+            ]
+          },
+          {
+            "name": "Phylogenetic Tree Input",
+            "description": "Input phylogenetic tree file as <format>:<location> with format being (newick|nexus)",
+            "invocation": [
+              "-m",
+              "--matrix"
+            ],
+            "allowedValues": [
+              "file"
+            ]
+          },
+          {
+            "name": "Limit of focus variants",
+            "description": "Limit of locus variants to consider using goeBURST algorithm [default: 3]",
+            "invocation": [
+              "-l",
+              "--lvs"
+            ],
+            "allowedValues": [
+              "file"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "general": {
+      "name": "tree_indexer",
+      "description": "The Tree Indexer script"
+    },
+    "access": {
+      "_type": "library",
+      "details": {
+        "address": "localhost",
+        "dockerUrl": "unix://var/run/docker.sock",
+        "dockerImage": "localhost:5000/tree-indexer",
+        "dockerAutoRemove": "never",
+        "dockerNetworkMode": "bridge",
+        "dockerApiVersion": "auto",
+        "dockerVolumes": [
+          {
+            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+            "target": "/phyloviz-web-platform",
+            "_type": "bind"
+          }
+        ]
+      }
+    },
+    "library": []
+  },
+  {
+    "general": {
+      "name": "typing_data_indexer",
+      "description": "The Typing Data Indexer script"
+    },
+    "access": {
+      "_type": "library",
+      "details": {
+        "address": "localhost",
+        "dockerUrl": "unix://var/run/docker.sock",
+        "dockerImage": "localhost:5000/typing-data-indexer",
+        "dockerAutoRemove": "never",
+        "dockerNetworkMode": "bridge",
+        "dockerApiVersion": "auto",
+        "dockerVolumes": [
+          {
+            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+            "target": "/phyloviz-web-platform",
+            "_type": "bind"
+          }
+        ]
+      }
+    },
+    "library": []
+  },
+  {
+    "general": {
+      "name": "compute_tree_view",
+      "description": "The Compute Tree View script"
+    },
+    "access": {
+      "_type": "library",
+      "details": {
+        "address": "localhost",
+        "dockerUrl": "unix://var/run/docker.sock",
+        "dockerImage": "localhost:5000/compute-tree-view",
+        "dockerAutoRemove": "never",
+        "dockerNetworkMode": "bridge",
+        "dockerApiVersion": "auto",
+        "dockerVolumes": [
+          {
+            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+            "target": "/phyloviz-web-platform",
+            "_type": "bind"
+          }
+        ]
+      }
+    },
+    "library": []
+  }
+]
