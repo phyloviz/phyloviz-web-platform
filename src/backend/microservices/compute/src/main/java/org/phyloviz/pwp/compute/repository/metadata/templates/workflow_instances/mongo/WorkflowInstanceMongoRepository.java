@@ -12,7 +12,7 @@ public interface WorkflowInstanceMongoRepository extends MongoRepository<Workflo
 
     List<WorkflowInstance> findAllByProjectId(String projectId);
 
-    @Query("{ 'projectId' : ?0, 'status' : { $in: ['FINISHED', 'FAILED'] } }")
+    @Query("{ 'projectId' : ?0, 'status' : { $in: ['SUCCESS', 'FAILED'] } }")
     List<WorkflowInstance> findAllByProjectIdAndNotRunning(String projectId);
 
     @Query("{ 'projectId' : ?0, 'status' : 'RUNNING' }")

@@ -74,6 +74,5 @@ public class ToolTemplateData {
 
             return new ToolTemplateData(projectId, workflowId, values);
         }
-
     }
 }

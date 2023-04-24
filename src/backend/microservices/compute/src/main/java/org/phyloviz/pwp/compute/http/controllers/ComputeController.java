@@ -80,7 +80,7 @@ public class ComputeController {
     @GetMapping("/projects/{projectId}/workflows")
     public GetWorkflowsOutputModel getWorkflows(
             @PathVariable String projectId,
-            @RequestParam Boolean running,
+            @RequestParam(required = false) Boolean running,
             User user
     ) {
         List<GetWorkflowStatusOutput> getWorkflowStatusOutputList;

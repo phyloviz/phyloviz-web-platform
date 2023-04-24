@@ -14,7 +14,6 @@ import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.WorkflowTemplate;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.WorkflowTemplateData;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.arguments.WorkflowTemplateArgumentProperties;
-import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.arguments.WorkflowTemplateArguments;
 import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
 import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
 import org.phyloviz.pwp.compute.service.exceptions.DatasetDoesNotExistException;
@@ -24,6 +23,7 @@ import org.phyloviz.pwp.compute.service.exceptions.TemplateNotFound;
 import org.phyloviz.pwp.compute.service.exceptions.TreeDoesNotExistException;
 import org.phyloviz.pwp.compute.service.exceptions.TreeViewDoesNotExistException;
 import org.phyloviz.pwp.compute.service.exceptions.WorkflowInstanceNotFoundException;
+import org.phyloviz.pwp.compute.service.exceptions.WorkflowTemplateConfigurationException;
 import org.phyloviz.pwp.compute.service.flowviz.FLOWViZClient;
 import org.phyloviz.pwp.compute.service.flowviz.exceptions.UnexpectedResponseException;
 import org.phyloviz.pwp.compute.service.flowviz.models.get_workflow.AirflowWorkflowStatus;
@@ -70,7 +70,7 @@ public class ComputeServiceImpl implements ComputeService {
             Map<String, String> workflowProperties,
             String userId
     ) {
-        validateUUIDArgument(projectId, "projectId");
+        validateObjectIdArgument(projectId, "projectId");
 
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
@@ -172,6 +172,7 @@ public class ComputeServiceImpl implements ComputeService {
         WorkflowInstance workflowInstance = new WorkflowInstance();
         workflowInstance.setProjectId(projectId);
         workflowInstance.setType(workflowType);
+        workflowInstance.setStatus(WorkflowStatus.RUNNING);
         workflowInstance = workflowInstanceRepository.save(workflowInstance);
 
         String workflowId = workflowInstance.getId();
@@ -206,6 +207,7 @@ public class ComputeServiceImpl implements ComputeService {
         }
 
         WorkflowTemplateData workflowTemplateData = WorkflowTemplateData.builder()
+                .projectId(projectId)
                 .workflowId(workflowId)
                 .putAll(properties)
                 .build();
@@ -224,18 +226,18 @@ public class ComputeServiceImpl implements ComputeService {
         return new CreateWorkflowOutput(workflowId);
     }
 
-    private void validateCreateWorkflowArguments(WorkflowTemplateArguments createWorkflowArguments,
+    private void validateCreateWorkflowArguments(Map<String, WorkflowTemplateArgumentProperties> createWorkflowArguments,
                                                  Map<String, String> properties, String projectId) {
         Map<String, String> specialArguments = new HashMap<>();
 
-        properties.keySet().stream().filter(key -> !createWorkflowArguments.containsArgument(key)).findAny()
+        properties.keySet().stream().filter(key -> !createWorkflowArguments.containsKey(key)).findAny()
                 .ifPresent(key -> {
-                    throw new InvalidWorkflowException("Unknown '" + key + "' argument.");
+                    throw new InvalidWorkflowException(String.format("Unknown argument: '%s'", key));
                 });
 
         createWorkflowArguments.forEach((argumentName, argumentProperties) -> {
             if (!properties.containsKey(argumentName))
-                throw new InvalidWorkflowException(String.format("Missing '%s' argument.", argumentName));
+                throw new InvalidWorkflowException(String.format("Missing argument: '%s'", argumentName));
 
             switch (argumentProperties.getType()) {
                 case OBJECTID -> validateObjectIdArgument(properties.get(argumentName), argumentName);
@@ -254,18 +256,18 @@ public class ComputeServiceImpl implements ComputeService {
 
     private void validateObjectIdArgument(String argument, String argumentName) {
         if (!ObjectId.isValid(argument))
-            throw new InvalidWorkflowException(String.format("Invalid '%s' argument. Must be a valid ObjectId.", argumentName));
+            throw new InvalidWorkflowException(String.format("Invalid argument: '%s'. Must be a valid ObjectId.", argumentName));
     }
 
     private void validateUUIDArgument(String argument, String argumentName) {
         if (!UUIDUtils.isValidUUID(argument))
-            throw new InvalidWorkflowException(String.format("Invalid '%s' argument. Must be a valid UUID.", argumentName));
+            throw new InvalidWorkflowException(String.format("Invalid argument: '%s'. Must be a valid UUID.", argumentName));
     }
 
     private void validateStringArgument(String argument, String argumentName, List<String> allowedValues) {
         if (!allowedValues.contains(argument))
             throw new InvalidWorkflowException(String.format(
-                    "Invalid '%s' argument. Must be one of the allowed values: %s", argumentName, allowedValues)
+                    "Invalid argument: '%s'. Must be one of the allowed values: %s", argumentName, allowedValues)
             );
     }
 
@@ -297,7 +299,7 @@ public class ComputeServiceImpl implements ComputeService {
         validateUUIDArgument(distanceMatrixId, argumentName);
 
         if (!specialArguments.containsKey("datasetId"))
-            throw new IllegalStateException("Missing datasetId argument before distanceMatrixId argument.");
+            throw new WorkflowTemplateConfigurationException("Missing datasetId argument before distanceMatrixId argument.");
 
         String datasetId = specialArguments.get("datasetId");
 
@@ -313,7 +315,7 @@ public class ComputeServiceImpl implements ComputeService {
         validateUUIDArgument(treeId, argumentName);
 
         if (!specialArguments.containsKey("datasetId"))
-            throw new IllegalStateException("Missing datasetId argument before treeId argument)");
+            throw new WorkflowTemplateConfigurationException("Missing datasetId argument before treeId argument.");
 
         String datasetId = specialArguments.get("datasetId");
 
@@ -329,7 +331,7 @@ public class ComputeServiceImpl implements ComputeService {
         validateUUIDArgument(treeViewId, argumentName);
 
         if (!specialArguments.containsKey("datasetId"))
-            throw new IllegalStateException("Missing datasetId argument before treeViewId argument)");
+            throw new WorkflowTemplateConfigurationException("Missing datasetId argument before treeViewId argument.");
 
         String datasetId = specialArguments.get("datasetId");
 

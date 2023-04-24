@@ -2,7 +2,7 @@ package org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template
 
 import lombok.Builder;
 import lombok.Data;
-import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.arguments.WorkflowTemplateArguments;
+import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.arguments.WorkflowTemplateArgumentProperties;
 import org.phyloviz.pwp.compute.service.flowviz.models.workflow.Workflow;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,7 +20,7 @@ public class WorkflowTemplate {
 
     private final String name;
     private final String description;
-    private final WorkflowTemplateArguments arguments;
+    private final Map<String, WorkflowTemplateArgumentProperties> arguments;
     private final List<TaskTemplate> tasks;
     @Id
     private String id;
