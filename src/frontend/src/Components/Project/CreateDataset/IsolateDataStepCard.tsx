@@ -46,14 +46,13 @@ export function IsolateDataStepCard(
                 Select the isolate data file from the project files or upload a new one.
             </Typography>
             <FormControl sx={{width: "100%", mb: 1}}>
-                <InputLabel id="isolate-key">Isolate Data</InputLabel>
+                <InputLabel id="isolate-data">Isolate Data</InputLabel>
                 <Select
-                    labelId="isolate-key"
+                    labelId="isolate-data"
                     label="Isolate Data"
                     value={selectedIsolateData ?? ""}
                     onChange={onFileSelecterChange}
-                    // TODO: Limit height of the menu (the code below doesn't work)
-                    MenuProps={{PaperProps: {style: {maxHeight: 100}}}}
+                    MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
                     {isolateData.map((isolateDataFile) => (
                         <MenuItem key={isolateDataFile.isolateDataId}
@@ -70,7 +69,7 @@ export function IsolateDataStepCard(
                 required
             />
 
-            <Typography variant="caption" align={"justify"} sx={{mt: 4, width: "100%"}}>
+            <Typography variant="caption" align={"justify"} sx={{mb: 1, mt: 4, width: "100%"}}>
                 Select the isolate data key.
             </Typography>
             <FormControl sx={{width: "100%", mb: 2}}>
@@ -80,6 +79,7 @@ export function IsolateDataStepCard(
                     label="Key"
                     value={selectedIsolateDataKey ?? ""}
                     onChange={onIsolateDataKeyChange}
+                    MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
                     {isolateDataKeys.map((isolateDataKey) => (
                         <MenuItem key={isolateDataKey} value={isolateDataKey}>{isolateDataKey}</MenuItem>

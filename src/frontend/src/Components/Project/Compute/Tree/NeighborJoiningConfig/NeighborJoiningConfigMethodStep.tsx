@@ -38,6 +38,7 @@ export function NeighborJoiningConfigMethodStep(
                     label="Criteria"
                     value={selectedCriteria ?? ""}
                     onChange={onCriteriaChange}
+                    MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
                     {
                         Object.values(NeighborJoiningCriteria).map((criteria) => (

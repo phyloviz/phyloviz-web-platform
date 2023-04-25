@@ -39,6 +39,7 @@ export function NeighborJoiningConfigDistanceStep(
                     label="Distance"
                     value={selectedDistance ?? ""}
                     onChange={onDistanceChange}
+                    MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
                     {distances.map((distance) => (
                         <MenuItem key={distance.distanceMatrixId}

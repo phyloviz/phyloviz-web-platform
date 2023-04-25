@@ -61,6 +61,7 @@ export function DatasetInfoStepCard(
                 value={datasetType.valueOf()}
                 label="Dataset Type"
                 onChange={onDatasetTypeChange}
+                MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
             >
                 <MenuItem value={DatasetType.MLST}>{DatasetType.MLST.valueOf()}</MenuItem>
                 <MenuItem value={DatasetType.MLVA}>{DatasetType.MLVA.valueOf()}</MenuItem>

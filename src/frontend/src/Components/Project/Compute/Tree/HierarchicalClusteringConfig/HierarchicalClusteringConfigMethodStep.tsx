@@ -38,6 +38,7 @@ export function HierarchicalClusteringConfigMethodStep(
                     label="Method"
                     value={selectedMethod ?? ""}
                     onChange={onMethodChange}
+                    MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
                     {
                         Object.values(HierarchicalClusteringMethod).map((method) => (

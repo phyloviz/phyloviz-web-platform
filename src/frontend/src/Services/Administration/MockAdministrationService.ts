@@ -116,7 +116,8 @@ export namespace MockAdministrationService {
                         {
                             isolateDataId: "isolateData1",
                             name: "Isolate Data 1",
-                            keys: ["continent", "country"]
+                            keys: ["id", "isolate", "aliases", "country", "continent", "region", "town_or_city",
+                                "year", "month", "isolation_date", "received_date", "age_yr", "age_mth", "sex"]
                         }
                     ]
                 }
