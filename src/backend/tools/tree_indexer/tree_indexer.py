@@ -44,9 +44,7 @@ def index_tree(tree_file_path, project_id, dataset_id, tree_id, workflow_id):
     workflows_collection.update_one(
         {'_id': ObjectId(workflow_id)},
         {'$set': {
-            'data': {
-                'inferenceId': inference_id,
-            }
+            'data.inferenceId': inference_id
         }})
 
     # Create the metadata in the resourceType collection

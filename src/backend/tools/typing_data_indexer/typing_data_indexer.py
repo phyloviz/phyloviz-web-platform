@@ -237,9 +237,7 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
     workflows_collection.update_one(
         {'_id': ObjectId(workflow_id)},
         {'$set': {
-            'data': {
-                'datasetId': dataset_id,
-            }
+            'data.datasetId': dataset_id
         }})
 
     typing_data_id = dataset_collection.find_one({'_id': ObjectId(dataset_id)})['typingDataId']

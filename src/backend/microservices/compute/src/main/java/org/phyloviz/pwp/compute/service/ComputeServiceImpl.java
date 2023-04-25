@@ -169,10 +169,14 @@ public class ComputeServiceImpl implements ComputeService {
 
         validateCreateWorkflowArguments(workflowTemplate.getArguments(), properties, projectId);
 
+        Map<String, Object> workflowInstanceData = new HashMap<>(properties);
+        workflowInstanceData.put("projectId", projectId);
+
         WorkflowInstance workflowInstance = new WorkflowInstance();
         workflowInstance.setProjectId(projectId);
         workflowInstance.setType(workflowType);
         workflowInstance.setStatus(WorkflowStatus.RUNNING);
+        workflowInstance.setData(workflowInstanceData);
         workflowInstance = workflowInstanceRepository.save(workflowInstance);
 
         String workflowId = workflowInstance.getId();

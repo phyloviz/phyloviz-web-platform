@@ -3,6 +3,7 @@ package org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template
 import lombok.Builder;
 import lombok.Data;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.arguments.WorkflowTemplateArgumentProperties;
+import org.phyloviz.pwp.compute.service.exceptions.WorkflowTemplateConfigurationException;
 import org.phyloviz.pwp.compute.service.flowviz.models.workflow.Workflow;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -24,6 +25,21 @@ public class WorkflowTemplate {
     private final List<TaskTemplate> tasks;
     @Id
     private String id;
+
+    public WorkflowTemplate(String name, String description, Map<String, WorkflowTemplateArgumentProperties> arguments, List<TaskTemplate> tasks) {
+        this.name = name;
+        this.description = description;
+        arguments.forEach((key, value) -> {
+            if (key.equals("projectId")) {
+                throw new WorkflowTemplateConfigurationException("projectId is a reserved argument name");
+            }
+            if (key.equals("workflowId")) {
+                throw new WorkflowTemplateConfigurationException("workflowId is a reserved argument name");
+            }
+        });
+        this.arguments = arguments;
+        this.tasks = tasks;
+    }
 
     public Workflow buildWorkflow(WorkflowTemplateData workflowTemplateData) {
 
