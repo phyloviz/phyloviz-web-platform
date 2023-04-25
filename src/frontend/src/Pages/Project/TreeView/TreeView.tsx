@@ -6,8 +6,9 @@ import { useRef } from "react"
 import { useProjectContext } from "../useProject"
 import { Node, Edge, GetTreeViewOutputModel } from "../../../Services/visualization/models/getTreeView/GetTreeViewOutputModel"
 import { useParams } from "react-router-dom"
-import { GraphConfigInterface, TreeViewGraph } from "./cosmos/TreeViewGraph"
+import { TreeViewGraph } from "./cosmos/TreeViewGraph"
 import VisualizationService from "../../../Services/visualization/VisualizationService";
+import { GraphConfigInterface } from "./cosmos/config"
 
 export type VizNode = {
     id: string;
@@ -36,14 +37,15 @@ export default function TreeView() {
         async function init() {
             const data: GetTreeViewOutputModel = await VisualizationService.getTreeView(projectId!, datasetId!, treeViewId!)
 
-
             function findBiggestGroup(nodes: Node[], edges: Edge[]): Node[] {
                 const visited = new Set<string>();
                 let maxGroup: Node[] = [];
+                const groups = []
 
                 for (const node of nodes) {
                     if (!visited.has(node.st)) {
                         const group = dfs(node, nodes, edges, visited);
+                        groups.push(group);
                         if (group.length > maxGroup.length) {
                             maxGroup = group;
                         }
@@ -94,6 +96,7 @@ export default function TreeView() {
                 nodeSize: 4,
                 nodeColor: "#4B5BBF",
                 nodeGreyoutOpacity: 0.1,
+                spaceSize: 8192,
                 linkWidth: 0.1,
                 linkColor: "#5F74C2",
                 linkArrows: false,

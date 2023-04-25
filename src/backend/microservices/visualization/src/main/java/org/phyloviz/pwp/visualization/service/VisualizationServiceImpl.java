@@ -54,7 +54,7 @@ public class VisualizationServiceImpl implements VisualizationService {
 
     @Override
     public String getDistanceMatrix(String projectId, String datasetId, String distanceMatrixId, String userId) {
-        treeMetadataService.assertExists(projectId, datasetId, distanceMatrixId, userId);
+        distanceMatrixMetadataService.assertExists(projectId, datasetId, distanceMatrixId, userId);
 
         DistanceMatrixMetadata distanceMatrix =
                 distanceMatrixMetadataService.getDistanceMatrixMetadataByAdapterIdOrNull(distanceMatrixId, getDistanceMatrixAdapter);

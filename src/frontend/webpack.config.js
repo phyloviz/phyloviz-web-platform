@@ -2,6 +2,7 @@ const Dotenv = require('dotenv-webpack');
 const env = process.env.NODE_ENV || 'development'
 
 module.exports = {
+    
     mode: env,
     resolve: {
         extensions: [".js", ".ts", ".tsx", ".css", ".ico"]
@@ -26,10 +27,17 @@ module.exports = {
                 test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
                 exclude: /node_modules/,
                 use: ['file-loader?name=[name].[ext]']
-            }
-        ]
+            },
+            {
+                test: /\.(glsl|frag|vert)$/,
+                use: [
+                    require.resolve('raw-loader'),
+                    require.resolve('glslify-loader'),
+                ]
+            },
+        ],
     },
     plugins: [
-        new Dotenv()
+        new Dotenv(),
     ]
 }

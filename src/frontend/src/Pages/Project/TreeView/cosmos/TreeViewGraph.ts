@@ -2,28 +2,26 @@ import { select, Selection } from 'd3-selection'
 import 'd3-transition'
 import { drag } from 'd3-drag'
 import { easeQuadIn, easeQuadOut, easeQuadInOut } from 'd3-ease'
-import { D3ZoomEvent } from 'd3-zoom'
+import { D3ZoomEvent, zoomTransform } from 'd3-zoom'
 import regl from 'regl'
-import { GraphConfig, GraphConfigInterface } from '@cosmograph/cosmos/dist/config'
-import { getRgbaColor, readPixels } from '@cosmograph/cosmos/dist/helper'
-import { ForceCenter } from '@cosmograph/cosmos/dist/modules/ForceCenter'
-import { ForceGravity } from '@cosmograph/cosmos/dist/modules/ForceGravity'
-import { ForceLink, LinkDirection } from '@cosmograph/cosmos/dist/modules/ForceLink'
-import { ForceManyBody } from '@cosmograph/cosmos/dist/modules/ForceManyBody'
-import { ForceManyBodyQuadtree } from '@cosmograph/cosmos/dist/modules/ForceManyBodyQuadtree'
-import { ForceMouse } from '@cosmograph/cosmos/dist/modules/ForceMouse'
-import { FPSMonitor } from '@cosmograph/cosmos/dist/modules/FPSMonitor'
-import { GraphData } from '@cosmograph/cosmos/dist/modules/GraphData'
-import { Lines } from '@cosmograph/cosmos/dist/modules/Lines'
-import { Points } from '@cosmograph/cosmos/dist/modules/Points'
-import { Zoom } from '@cosmograph/cosmos/dist/modules/Zoom'
-import { CosmosInputNode, CosmosInputLink } from '@cosmograph/cosmos/dist/types'
-import { defaultScaleToZoom, defaultConfigValues } from '@cosmograph/cosmos/dist/variables';
-import { CustomStore } from './modules/Store'
-import { ALPHA_MIN, MAX_POINT_SIZE } from '@cosmograph/cosmos/dist/modules/Store'
 import { drawerWidth } from '../../../../Layouts/Dashboard/components/AppBar';
-import { createQuadBuffer } from '@cosmograph/cosmos/dist/modules/Shared/buffer';
-import { NodeDrag } from './NodeDrag'
+import { NodeDrag } from './modules/NodeDrag'
+import { GraphConfig, GraphConfigInterface } from './config'
+import { getRgbaColor, readPixels } from './helper'
+import { FPSMonitor } from './modules/FPSMonitor'
+import { ForceCenter } from './modules/ForceCenter'
+import { ForceGravity } from './modules/ForceGravity'
+import { ForceLink, LinkDirection } from './modules/ForceLink'
+import { ForceManyBody } from './modules/ForceManyBody'
+import { ForceManyBodyQuadtree } from './modules/ForceManyBodyQuadtree'
+import { ForceMouse } from './modules/ForceMouse'
+import { GraphData } from './modules/GraphData'
+import { Lines } from './modules/Lines'
+import { Points } from './modules/Points'
+import { MAX_POINT_SIZE, ALPHA_MIN, Store } from './modules/Store'
+import { defaultScaleToZoom, defaultConfigValues } from './variables'
+import { Zoom } from './modules/Zoom'
+import { CosmosInputNode, CosmosInputLink } from './types'
 
 export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink> {
 	public config = new GraphConfig<N, L>()
@@ -34,7 +32,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 	private isRightClickMouse = false
 
 	private graph = new GraphData<N, L>()
-	private store = new CustomStore<N>()
+	private store = new Store<N>()
 	private points: Points<N, L>
 	private lines: Lines<N, L>
 	private forceGravity: ForceGravity<N, L>
@@ -48,6 +46,8 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 	private fpsMonitor: FPSMonitor | undefined
 	private hasBeenRecentlyDestroyed = false
 	private currentEvent: D3ZoomEvent<HTMLCanvasElement, undefined> | MouseEvent | undefined
+
+
 
 	public constructor(canvas: HTMLCanvasElement, config?: GraphConfigInterface<N, L>) {
 		if (config) this.config.init(config)
@@ -77,10 +77,13 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 				this.currentEvent = e
 			})
 			.on('end.detect', (e: D3ZoomEvent<HTMLCanvasElement, undefined>) => { this.currentEvent = e })
+
 		this.canvasD3Selection
+			.on('mousemove', this.onMouseMove.bind(this))
 			.call(drag()
-				.on('start', (e: MouseEvent) => {
-					console.log('drag start')
+				.subject(this.dragsubject.bind(this))
+				.on('start', (e: any) => {
+					this.onMouseMove(e.sourceEvent)
 					const selectedNode = this.store.hoveredNode
 					if (selectedNode) {
 						this.store.draggedNode = selectedNode
@@ -88,22 +91,21 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 						this.store.draggedY = e.y
 					}
 				})
-
-				.on('drag', (e: MouseEvent) => {
+				.on('drag', (e: any) => {
 					console.log('drag')
+					this.onMouseMove(e.sourceEvent)
 
 					this.store.draggedX = e.x
 					this.store.draggedY = e.y
 				})
-				.on('end', (e: MouseEvent) => {
-					console.log('drag end')
+				.on('end', (e: any) => {
+					this.onMouseMove(e.sourceEvent)
 					this.store.draggedNode = undefined
 					this.store.draggedX = undefined
 					this.store.draggedY = undefined
 				}).bind(this))
 			.call(this.zoomInstance.behavior)
 			.on('click', this.onClick.bind(this))
-			.on('mousemove', this.onMouseMove.bind(this))
 			.on('contextmenu', this.onRightClickMouse.bind(this))
 
 		this.reglInstance = regl({
@@ -137,6 +139,18 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 		if (this.config.showFPSMonitor) this.fpsMonitor = new FPSMonitor(this.canvas)
 
 		if (this.config.randomSeed !== undefined) this.store.addRandomSeed(this.config.randomSeed)
+	}
+
+	dragsubject(e: any) {
+		const selectedNode = this.store.hoveredNode
+
+		return selectedNode
+			? {
+				selectedNode,
+				x: e.x,
+				y: e.y
+			}
+			: null;
 	}
 
 	public get progress(): number {
@@ -625,6 +639,11 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 				this.points.updatePosition()
 			}
 
+			if (this.store.draggedNode) {
+				this.nodeDrag.run()
+				this.points.swapFbo()
+			}
+
 			if ((isSimulationRunning && !this.zoomInstance.isRunning)) {
 				if (simulation.gravity) {
 					this.forceGravity.run()
@@ -648,28 +667,6 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 				if (this.isRightClickMouse) this.store.alpha = Math.max(this.store.alpha, 0.1)
 				this.store.simulationProgress = Math.sqrt(Math.min(1, ALPHA_MIN / this.store.alpha))
 				this.config.simulation.onTick?.(this.store.alpha)
-			}
-
-			if (this.store.draggedNode) {
-				const index = this.graph.getSortedIndexById(this.store.draggedNode.node.id!)!
-
-				console.log("_X: ", index * 4, "_Y: ", index * 4 + 1)
-				console.log("-------------------")
-				this.points.currentPositionFbo?.use(() => {
-					console.log("BEFORE")
-					const buffer = this.reglInstance.read()
-					
-					console.log("X: ", buffer[index * 4], "Y: ", buffer[index * 4 + 1])
-				})
-				this.nodeDrag.run()
-				this.points.currentPositionFbo?.use(() => {
-					console.log("AFTER")
-					const buffer = this.reglInstance.read()
-					console.log("X: ", buffer[index * 4], "Y: ", buffer[index * 4 + 1])
-
-				})
-				console.log("-------------------")
-
 			}
 
 			this.points.trackPoints()
@@ -832,5 +829,3 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 	}
 }
 
-export type { CosmosInputNode, CosmosInputLink, InputNode, InputLink } from '@cosmograph/cosmos/dist/types'
-export type { GraphConfigInterface, GraphEvents, GraphSimulationSettings } from '@cosmograph/cosmos/dist/config'
