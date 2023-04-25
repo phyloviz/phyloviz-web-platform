@@ -25,8 +25,13 @@ public class TypingDataMetadataRepositoryMongo implements TypingDataMetadataRepo
     }
 
     @Override
-    public Optional<TypingDataMetadata> findByTypingDataId(String typingDataId) {
-        return typingDataMetadataMongoRepository.findAllByTypingDataId(typingDataId).stream().findAny();
+    public Optional<TypingDataMetadata> findAnyByProjectIdAndTypingDataId(String projectId, String typingDataId) {
+        return typingDataMetadataMongoRepository.findFirstByProjectIdAndTypingDataId(projectId, typingDataId);
+    }
+
+    @Override
+    public List<TypingDataMetadata> findAllByProjectIdAndTypingDataId(String projectId, String typingDataId) {
+        return typingDataMetadataMongoRepository.findAllByProjectIdAndTypingDataId(projectId, typingDataId);
     }
 
     @Override

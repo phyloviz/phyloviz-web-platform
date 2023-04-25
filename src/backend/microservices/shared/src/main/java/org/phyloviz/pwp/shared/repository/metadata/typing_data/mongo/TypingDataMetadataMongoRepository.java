@@ -12,12 +12,22 @@ import java.util.Optional;
 public interface TypingDataMetadataMongoRepository extends MongoRepository<TypingDataMetadata, String> {
 
     /**
-     * Find one metadata representation of a typing data resource.
+     * Find the first typing data metadata with the given id. Analogous to findAny().
      *
+     * @param projectId    the id of the project
      * @param typingDataId the id of the typing data resource
      * @return a typing data metadata
      */
-    Optional<TypingDataMetadata> findByTypingDataId(String typingDataId);
+    Optional<TypingDataMetadata> findFirstByProjectIdAndTypingDataId(String projectId, String typingDataId);
+
+    /**
+     * Find all typing data metadata from a project id and typing data id.
+     *
+     * @param projectId    the id of the project
+     * @param typingDataId the id of the typing data
+     * @return a list of typing data metadata
+     */
+    List<TypingDataMetadata> findAllByProjectIdAndTypingDataId(String projectId, String typingDataId);
 
     /**
      * Find all metadata representations of a typing data resource.

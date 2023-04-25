@@ -6,13 +6,17 @@ import org.phyloviz.pwp.administration.http.models.projects.create_project.Creat
 import org.phyloviz.pwp.administration.http.models.projects.delete_project.DeleteProjectOutputModel;
 import org.phyloviz.pwp.administration.http.models.projects.get_project.GetProjectOutputModel;
 import org.phyloviz.pwp.administration.http.models.projects.get_projects.GetProjectsOutputModel;
+import org.phyloviz.pwp.administration.http.models.projects.update_project.UpdateProjectInputModel;
+import org.phyloviz.pwp.administration.http.models.projects.update_project.UpdateProjectOutputModel;
+import org.phyloviz.pwp.administration.service.dtos.project.UpdateProjectOutput;
 import org.phyloviz.pwp.administration.service.project.ProjectService;
 import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
-import org.phyloviz.pwp.shared.service.dtos.project.CreateProjectOutput;
-import org.phyloviz.pwp.shared.service.dtos.project.FullProjectInfo;
+import org.phyloviz.pwp.administration.service.dtos.project.CreateProjectOutput;
+import org.phyloviz.pwp.administration.service.dtos.project.FullProjectInfo;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -82,6 +86,28 @@ public class ProjectsController {
         projectService.deleteProject(projectId, user.getId());
 
         return new DeleteProjectOutputModel(projectId);
+    }
+
+    /**
+     * Updates a project.
+     *
+     * @param projectId the id of the project to be updated
+     * @param user      the user that is updating the project
+     * @return information about the update
+     */
+    @PatchMapping("/projects/{projectId}")
+    public UpdateProjectOutputModel updateProject(
+            @PathVariable String projectId,
+            @RequestBody UpdateProjectInputModel updateProjectInputModel,
+            User user
+    ) {
+        UpdateProjectOutput updateProjectOutput = projectService.updateProject(
+                updateProjectInputModel.getName(),
+                updateProjectInputModel.getDescription(),
+                projectId, user.getId()
+        );
+
+        return new UpdateProjectOutputModel(updateProjectOutput);
     }
 
     /**

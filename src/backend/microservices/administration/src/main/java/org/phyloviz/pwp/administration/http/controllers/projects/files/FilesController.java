@@ -2,12 +2,20 @@ package org.phyloviz.pwp.administration.http.controllers.projects.files;
 
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.http.models.files.isolate_data.delete_isolate_data.DeleteIsolateDataOutputModel;
+import org.phyloviz.pwp.administration.http.models.files.isolate_data.update_isolate_data.UpdateIsolateDataInputModel;
+import org.phyloviz.pwp.administration.http.models.files.isolate_data.update_isolate_data.UpdateIsolateDataOutputModel;
 import org.phyloviz.pwp.administration.http.models.files.typing_data.delete_typing_data.DeleteTypingDataOutputModel;
+import org.phyloviz.pwp.administration.http.models.files.typing_data.update_typing_data.UpdateTypingDataInputModel;
+import org.phyloviz.pwp.administration.http.models.files.typing_data.update_typing_data.UpdateTypingDataOutputModel;
+import org.phyloviz.pwp.administration.service.dtos.files.isolate_data.UpdateIsolateDataOutput;
+import org.phyloviz.pwp.administration.service.dtos.files.typing_data.UpdateTypingDataOutput;
 import org.phyloviz.pwp.administration.service.project.file.IsolateDataService;
 import org.phyloviz.pwp.administration.service.project.file.TypingDataService;
 import org.phyloviz.pwp.shared.domain.User;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -56,5 +64,49 @@ public class FilesController {
         isolateDataService.deleteIsolateData(projectId, isolateDataId, user.getId());
 
         return new DeleteIsolateDataOutputModel(projectId, isolateDataId);
+    }
+
+    /**
+     * Updates a typing data file.
+     *
+     * @param projectId    the id of the project to which the typing data file belongs
+     * @param typingDataId the id of the typing data file to be updated
+     * @param user         the user that is updating the typing data file
+     * @return information about the updated typing data file
+     */
+    @PatchMapping("/projects/{projectId}/files/typing-data/{typingDataId}")
+    public UpdateTypingDataOutputModel updateTypingData(
+            @PathVariable String projectId,
+            @PathVariable String typingDataId,
+            @RequestBody UpdateTypingDataInputModel updateTypingDataInputModel,
+            User user
+    ) {
+        UpdateTypingDataOutput updateTypingDataOutput = typingDataService.updateTypingData(
+                updateTypingDataInputModel.getName(), projectId, typingDataId, user.getId()
+        );
+
+        return new UpdateTypingDataOutputModel(updateTypingDataOutput);
+    }
+
+    /**
+     * Updates a isolate data file.
+     *
+     * @param projectId    the id of the project to which the isolate data file belongs
+     * @param isolateDataId the id of the isolate data file to be updated
+     * @param user         the user that is updating the isolate data file
+     * @return information about the updated isolate data file
+     */
+    @PatchMapping("/projects/{projectId}/files/isolate-data/{isolateDataId}")
+    public UpdateIsolateDataOutputModel updateIsolateData(
+            @PathVariable String projectId,
+            @PathVariable String isolateDataId,
+            @RequestBody UpdateIsolateDataInputModel updateIsolateDataInputModel,
+            User user
+    ) {
+        UpdateIsolateDataOutput updateIsolateDataOutput = isolateDataService.updateIsolateData(
+                updateIsolateDataInputModel.getName(), projectId, isolateDataId, user.getId()
+        );
+
+        return new UpdateIsolateDataOutputModel(updateIsolateDataOutput);
     }
 }

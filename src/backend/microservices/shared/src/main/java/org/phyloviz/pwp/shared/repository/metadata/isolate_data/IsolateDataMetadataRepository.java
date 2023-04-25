@@ -17,12 +17,22 @@ public interface IsolateDataMetadataRepository {
     IsolateDataMetadata save(IsolateDataMetadata isolateDataMetadata);
 
     /**
-     * Find any isolate data metadata from its id.
+     * Find any isolate data metadata from a project id and isolate data id.
      *
+     * @param projectId        the id of the project
      * @param isolateDataId the id of the isolate data resource
-     * @return an isolate data metadata
+     * @return a distance matrix metadata
      */
-    Optional<IsolateDataMetadata> findByIsolateDataId(String isolateDataId);
+    Optional<IsolateDataMetadata> findAnyByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
+
+    /**
+     * Find all isolate data metadata from a project id and isolate data id.
+     *
+     * @param projectId        the id of the project
+     * @param isolateDataId the id of the isolate data resource
+     * @return a list of distance matrix metadata
+     */
+    List<IsolateDataMetadata> findAllByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
 
     /**
      * Find all metadata representations of an isolate data resource.
@@ -55,8 +65,6 @@ public interface IsolateDataMetadataRepository {
      * @param isolateDataMetadata the isolate data metadata to delete
      */
     void delete(IsolateDataMetadata isolateDataMetadata);
-
-    Optional<IsolateDataMetadata> findByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
 
     boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
 }

@@ -9,12 +9,24 @@ import java.util.Optional;
 public interface TreeViewMetadataRepository {
 
     /**
-     * Find any tree view metadata from its id.
+     * Find any tree view metadata from a project id, dataset id and tree view id.
      *
+     * @param projectId  the id of the project
+     * @param datasetId  the id of the dataset
      * @param treeViewId the id of the tree view resource
      * @return a tree view metadata
      */
-    Optional<TreeViewMetadata> findByTreeViewId(String treeViewId);
+    Optional<TreeViewMetadata> findAnyByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId);
+
+    /**
+     * Find all tree view metadata from a project id, dataset id and tree view id.
+     *
+     * @param projectId  the id of the project
+     * @param datasetId  the id of the dataset
+     * @param treeViewId the id of the tree view
+     * @return a list of tree view metadata
+     */
+    List<TreeViewMetadata> findAllByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId);
 
     /**
      * Find all metadata representations of a tree view resource.
@@ -52,6 +64,14 @@ public interface TreeViewMetadataRepository {
      * @param treeViewMetadata the tree view metadata to delete
      */
     void delete(TreeViewMetadata treeViewMetadata);
+
+    /**
+     * Save a tree view metadata.
+     *
+     * @param treeViewMetadata the tree view metadata to save
+     * @return the saved tree view metadata
+     */
+    TreeViewMetadata save(TreeViewMetadata treeViewMetadata);
 
     boolean existsByDatasetIdAndTreeIdSource(String datasetId, String treeId);
 

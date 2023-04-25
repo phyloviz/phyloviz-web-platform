@@ -9,12 +9,24 @@ import java.util.Optional;
 public interface TreeMetadataRepository {
 
     /**
-     * Find any tree metadata from its id.
+     * Find any tree metadata from a project id, dataset id and tree id.
      *
+     * @param projectId        the id of the project
+     * @param datasetId        the id of the dataset
      * @param treeId the id of the tree resource
      * @return a tree metadata
      */
-    Optional<TreeMetadata> findByTreeId(String treeId);
+    Optional<TreeMetadata> findAnyByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
+
+    /**
+     * Find all tree metadata from a project id, dataset id and tree id.
+     *
+     * @param projectId the id of the project
+     * @param datasetId the id of the dataset
+     * @param treeId    the id of the tree
+     * @return a list of tree metadata
+     */
+    List<TreeMetadata> findAllByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
 
     /**
      * Find all metadata representations of a tree resource.
@@ -48,6 +60,14 @@ public interface TreeMetadataRepository {
      */
     void delete(TreeMetadata treeMetadata);
 
+    /**
+     * Save a tree metadata.
+     *
+     * @param treeMetadata the tree metadata to save
+     * @return the saved tree metadata
+     */
+    TreeMetadata save(TreeMetadata treeMetadata);
+
     Optional<TreeMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(String projectId, String datasetId,
                                                                                 String treeViewId, TreeAdapterId adapterId);
 
@@ -56,4 +76,5 @@ public interface TreeMetadataRepository {
     boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
 
     boolean existsByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
+
 }

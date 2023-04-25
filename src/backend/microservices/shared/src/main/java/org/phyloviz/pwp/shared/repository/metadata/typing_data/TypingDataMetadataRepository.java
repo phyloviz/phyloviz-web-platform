@@ -17,12 +17,22 @@ public interface TypingDataMetadataRepository {
     TypingDataMetadata save(TypingDataMetadata typingDataMetadata);
 
     /**
-     * Find any typing data metadata from its id.
+     * Find any typing data metadata from a project id and typing data id.
      *
+     * @param projectId    the id of the project
      * @param typingDataId the id of the typing data resource
-     * @return a typing data metadata
+     * @return a distance matrix metadata
      */
-    Optional<TypingDataMetadata> findByTypingDataId(String typingDataId);
+    Optional<TypingDataMetadata> findAnyByProjectIdAndTypingDataId(String projectId, String typingDataId);
+
+    /**
+     * Find all typing data metadata from a project id and typing data id.
+     *
+     * @param projectId    the id of the project
+     * @param typingDataId the id of the typing data resource
+     * @return a list of distance matrix metadata
+     */
+    List<TypingDataMetadata> findAllByProjectIdAndTypingDataId(String projectId, String typingDataId);
 
     /**
      * Find all metadata representations of a typing data resource.

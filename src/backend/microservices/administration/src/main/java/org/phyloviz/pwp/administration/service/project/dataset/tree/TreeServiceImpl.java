@@ -1,14 +1,18 @@
 package org.phyloviz.pwp.administration.service.project.dataset.tree;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.administration.service.dtos.distance_matrix.UpdateDistanceMatrixOutput;
+import org.phyloviz.pwp.administration.service.dtos.tree.UpdateTreeOutput;
 import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterFactory;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree.TreeMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.TreeViewMetadataRepository;
-import org.phyloviz.pwp.shared.service.dtos.tree.TreeInfo;
+import org.phyloviz.pwp.administration.service.dtos.tree.TreeInfo;
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.DeniedResourceDeletionException;
+import org.phyloviz.pwp.administration.service.exceptions.DeniedResourceDeletionException;
+import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;
 import org.springframework.stereotype.Service;
@@ -70,5 +74,34 @@ public class TreeServiceImpl implements TreeService {
 
                     treeMetadataRepository.delete(treeMetadata);
                 });
+    }
+
+    @Override
+    public UpdateTreeOutput updateTree(String name, String projectId, String datasetId, String treeId, String userId) {
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
+
+        if (!treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId))
+            throw new TreeNotFoundException();
+
+        String previousName = treeMetadataRepository.findAnyByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId)
+                .orElseThrow(TreeNotFoundException::new)
+                .getName();
+
+        if (name == null)
+            throw new InvalidArgumentException("You have to provide at least one field to update");
+
+        if (name.equals(previousName))
+            throw new InvalidArgumentException("The provided name is the same as the previous one");
+
+        treeMetadataRepository.findAllByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId)
+                .forEach(treeMetadata -> {
+                    if (!name.isBlank())
+                        treeMetadata.setName(name);
+
+                    treeMetadataRepository.save(treeMetadata);
+                });
+
+        return new UpdateTreeOutput(previousName, name);
     }
 }

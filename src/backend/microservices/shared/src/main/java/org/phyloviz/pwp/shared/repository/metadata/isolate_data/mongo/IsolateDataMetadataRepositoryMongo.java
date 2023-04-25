@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterId;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
@@ -25,8 +26,13 @@ public class IsolateDataMetadataRepositoryMongo implements IsolateDataMetadataRe
     }
 
     @Override
-    public Optional<IsolateDataMetadata> findByIsolateDataId(String isolateDataId) {
-        return isolateDataMetadataMongoRepository.findAllByIsolateDataId(isolateDataId).stream().findAny();
+    public Optional<IsolateDataMetadata> findAnyByProjectIdAndIsolateDataId(String projectId, String isolateDataId) {
+        return isolateDataMetadataMongoRepository.findFirstByProjectIdAndIsolateDataId(projectId, isolateDataId);
+    }
+
+    @Override
+    public List<IsolateDataMetadata> findAllByProjectIdAndIsolateDataId(String projectId, String isolateDataId) {
+        return isolateDataMetadataMongoRepository.findAllByProjectIdAndIsolateDataId(projectId, isolateDataId);
     }
 
     @Override
@@ -59,11 +65,6 @@ public class IsolateDataMetadataRepositoryMongo implements IsolateDataMetadataRe
     @Override
     public void delete(IsolateDataMetadata isolateDataMetadata) {
         isolateDataMetadataMongoRepository.delete(isolateDataMetadata);
-    }
-
-    @Override
-    public Optional<IsolateDataMetadata> findByProjectIdAndIsolateDataId(String projectId, String isolateDataId) {
-        return isolateDataMetadataMongoRepository.findByProjectIdAndIsolateDataId(projectId, isolateDataId);
     }
 
     @Override

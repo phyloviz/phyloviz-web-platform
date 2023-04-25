@@ -6,12 +6,16 @@ import org.phyloviz.pwp.administration.http.models.datasets.create_dataset.Creat
 import org.phyloviz.pwp.administration.http.models.datasets.delete_dataset.DeleteDatasetOutputModel;
 import org.phyloviz.pwp.administration.http.models.datasets.get_dataset.GetDatasetOutputModel;
 import org.phyloviz.pwp.administration.http.models.datasets.get_datasets.GetDatasetsOutputModel;
+import org.phyloviz.pwp.administration.http.models.datasets.update_dataset.UpdateDatasetInputModel;
+import org.phyloviz.pwp.administration.http.models.datasets.update_dataset.UpdateDatasetOutputModel;
+import org.phyloviz.pwp.administration.service.dtos.dataset.CreateDatasetOutput;
+import org.phyloviz.pwp.administration.service.dtos.dataset.FullDatasetInfo;
+import org.phyloviz.pwp.administration.service.dtos.dataset.UpdateDatasetOutput;
 import org.phyloviz.pwp.administration.service.project.dataset.DatasetService;
 import org.phyloviz.pwp.shared.domain.User;
-import org.phyloviz.pwp.shared.service.dtos.dataset.CreateDatasetOutput;
-import org.phyloviz.pwp.shared.service.dtos.dataset.FullDatasetInfo;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -91,6 +95,29 @@ public class DatasetsController {
         datasetService.deleteDataset(projectId, datasetId, user.getId());
 
         return new DeleteDatasetOutputModel(projectId, datasetId);
+    }
+
+    /**
+     * Updates a dataset.
+     *
+     * @param projectId the id of the project to which the dataset belongs
+     * @param datasetId the id of the dataset to be updated
+     * @param user      the user that is updating the dataset
+     * @return information about the update
+     */
+    @PatchMapping("/projects/{projectId}/datasets/{datasetId}")
+    public UpdateDatasetOutputModel getDataset(
+            @PathVariable String projectId,
+            @PathVariable String datasetId,
+            @RequestBody UpdateDatasetInputModel updateDatasetInputModel,
+            User user
+    ) {
+        UpdateDatasetOutput updateDatasetOutput = datasetService.updateDataset(
+                updateDatasetInputModel.getName(), updateDatasetInputModel.getDescription(),
+                projectId, datasetId, user.getId()
+        );
+
+        return new UpdateDatasetOutputModel(updateDatasetOutput);
     }
 
     /**

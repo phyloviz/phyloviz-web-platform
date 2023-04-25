@@ -20,8 +20,13 @@ public class TreeViewMetadataRepositoryMongo implements TreeViewMetadataReposito
     private final TreeViewMetadataMongoRepository treeViewMetadataMongoRepository;
 
     @Override
-    public Optional<TreeViewMetadata> findByTreeViewId(String treeViewId) {
-        return treeViewMetadataMongoRepository.findAllByTreeViewId(treeViewId).stream().findAny();
+    public Optional<TreeViewMetadata> findAnyByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId) {
+        return treeViewMetadataMongoRepository.findFirstByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId);
+    }
+
+    @Override
+    public List<TreeViewMetadata> findAllByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId) {
+        return treeViewMetadataMongoRepository.findAllByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId);
     }
 
     @Override
@@ -66,6 +71,11 @@ public class TreeViewMetadataRepositoryMongo implements TreeViewMetadataReposito
     @Override
     public void delete(TreeViewMetadata treeViewMetadata) {
         treeViewMetadataMongoRepository.delete(treeViewMetadata);
+    }
+
+    @Override
+    public TreeViewMetadata save(TreeViewMetadata treeViewMetadata) {
+        return treeViewMetadataMongoRepository.save(treeViewMetadata);
     }
 
     @Override
