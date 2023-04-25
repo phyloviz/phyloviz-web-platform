@@ -26,8 +26,8 @@ export type VizLink = {
  * Hook for the TreeView page.
  */
 export function useTreeView() {
-    const { projectId, datasetId, treeViewId } = useParams<{ projectId: string, datasetId: string, treeViewId: string }>()
-    const { project } = useProjectContext()
+    const {projectId, datasetId, treeViewId} = useParams<{ projectId: string, datasetId: string, treeViewId: string }>()
+    const {project} = useProjectContext()
     const [linkSpring, setLinkSpring] = useState(1)
     const [linkDistance, setLinkDistance] = useState(10)
     const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -128,12 +128,12 @@ export function useTreeView() {
         linkSpring,
         updateLinkSpring: (value: number) => {
             setLinkSpring(value)
-            graphRef.current?.setConfig({ simulation: { linkSpring: value } })
+            graphRef.current?.setConfig({simulation: {linkSpring: value}})
         },
         linkDistance,
         updateLinkDistance: (value: number) => {
             setLinkDistance(value)
-            graphRef.current?.setConfig({ simulation: { linkDistance: value } })
+            graphRef.current?.setConfig({simulation: {linkDistance: value}})
         },
         canvasRef
     }

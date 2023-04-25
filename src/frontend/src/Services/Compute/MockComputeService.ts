@@ -9,7 +9,13 @@ export namespace MockComputeService {
     const WORKFLOW_DURATION = 5000
 
     const mockWorkflowData = new Map<string, any>([
-        ["compute-distance-matrix", {distanceMatrixId: "8039f350-e12f-4877-8887-67caa258a143"}],
+        ["compute-distance-matrix", {
+            typingDataId: "e0d6f7e2-e9b5-4feb-a3c6-aea64c23ffc0",
+            datasetId: "6446babf22cde24152e769b9",
+            projectId: "6446ba6022cde24152e769b8",
+            function: "hamming",
+            distanceMatrixId: "6446ba6022cde24da4hh19b8"
+        }],
         ["compute-tree", {treeId: "8039f350-e12f-4877-8887-67caa258a143"}],
         ["compute-tree-view", {treeViewId: "8039f350-e12f-4877-8887-67caa258a143"}],
         // Add more mock data here if needed
@@ -34,14 +40,15 @@ export namespace MockComputeService {
         workflows!.set(workflowId, {
             workflowId,
             type: createWorkflowInputModel.type,
-            status: "RUNNING"
+            status: "RUNNING",
+            data: createWorkflowInputModel.properties as Map<string, string>
         })
 
         setTimeout(() => {
             workflows!.set(workflowId, {
                 workflowId,
                 type: createWorkflowInputModel.type,
-                status: "COMPLETED",
+                status: "SUCCESS",
                 data: mockWorkflowData.get(createWorkflowInputModel.type)
             })
         }, WORKFLOW_DURATION)

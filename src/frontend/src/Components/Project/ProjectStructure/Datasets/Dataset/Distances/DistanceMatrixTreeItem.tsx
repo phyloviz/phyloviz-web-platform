@@ -2,10 +2,10 @@ import {
     DistanceMatrix
 } from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
-import {TableView} from "@mui/icons-material"
 import * as React from "react"
 import {useDistanceMatrixTreeItem} from "./useDistanceMatrixTreeItem"
 import {DeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBackdrop"
+import {DistanceMatrixIcon} from "../../../../../Shared/Icons";
 
 /**
  * Props for the DistanceMatrixTreeItem component.
@@ -37,7 +37,7 @@ export function DistanceMatrixTreeItem({nodeId, datasetId, distanceMatrix}: Dist
         <StyledTreeItem
             nodeId={nodeId}
             labelText={distanceMatrix.name}
-            labelIcon={TableView}
+            labelIcon={DistanceMatrixIcon}
             contextMenuItems={contextMenuItems}
         />
         <DeleteResourceBackdrop

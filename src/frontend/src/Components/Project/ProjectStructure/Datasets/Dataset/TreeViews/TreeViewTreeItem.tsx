@@ -1,9 +1,9 @@
 import {TreeView} from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
-import {ScatterPlot} from "@mui/icons-material"
 import * as React from "react"
 import {useTreeViewTreeItem} from "./useTreeViewTreeItem"
 import {DeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBackdrop"
+import {TreeViewIcon} from "../../../../../Shared/Icons";
 
 /**
  * Props for the TreeViewTreeItem component.
@@ -35,7 +35,7 @@ export function TreeViewTreeItem({nodeId, datasetId, treeView}: TreeViewTreeItem
         <StyledTreeItem
             nodeId={nodeId}
             labelText={treeView.name}
-            labelIcon={ScatterPlot}
+            labelIcon={TreeViewIcon}
             contextMenuItems={contextMenuItems}
         />
         <DeleteResourceBackdrop

@@ -1,10 +1,11 @@
 import {Dataset} from "../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../../../Pages/WebUiUris"
-import {Delete, Info, ScatterPlot, Summarize, TableView} from "@mui/icons-material"
+import {Delete, Info, Summarize} from "@mui/icons-material"
 import {useDeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdrop"
 import AdministrationService from "../../../../../Services/Administration/AdministrationService"
 import {useState} from "react"
+import {DistanceMatricesIcon, DistanceMatrixIcon, TreeIcon} from "../../../../Shared/Icons";
 
 /**
  * Hook for the DatasetTreeItem component.
@@ -49,22 +50,22 @@ export function useDatasetTreeItem(dataset: Dataset) {
         contextMenuItems: [
             {
                 label: "Compute Distances",
-                icon: TableView,
+                icon: DistanceMatricesIcon,
                 nestedItems: computeDistanceMatrixOptions.map((option) => {
                     return {
                         label: option.label,
-                        icon: TableView,
+                        icon: DistanceMatrixIcon,
                         onClick: () => navigate(option.url)
                     }
                 })
             },
             {
                 label: "Compute Tree",
-                icon: ScatterPlot,
+                icon: TreeIcon,
                 nestedItems: computeTreeOptions.map((option) => {
                     return {
                         label: option.label,
-                        icon: ScatterPlot,
+                        icon: TreeIcon,
                         onClick: () => navigate(option.url)
                     }
                 })

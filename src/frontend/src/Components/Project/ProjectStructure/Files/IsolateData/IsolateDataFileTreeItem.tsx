@@ -1,9 +1,9 @@
 import {IsolateDataFile} from "../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../../Utils/StyledTreeItem"
-import {FilePresent} from "@mui/icons-material"
 import * as React from "react"
 import {useIsolateDataFileTreeItem} from "./useIsolateDataFileTreeItem"
 import {DeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdrop"
+import {IsolateDataIcon} from "../../../../Shared/Icons";
 
 /**
  * Props for the IsolateDataFileTreeItem component.
@@ -33,7 +33,7 @@ export function IsolateDataFileTreeItem({nodeId, file}: IsolateDataFileTreeItemP
         <StyledTreeItem
             nodeId={nodeId}
             labelText={file.name}
-            labelIcon={FilePresent}
+            labelIcon={IsolateDataIcon}
             contextMenuItems={contextMenuItems}
         />
         <DeleteResourceBackdrop

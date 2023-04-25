@@ -1,5 +1,5 @@
-export function forceFrag (maxLinks: number): string {
-  return `
+export function forceFrag(maxLinks: number): string {
+    return `
 #ifdef GL_ES
 precision highp float;
 #endif

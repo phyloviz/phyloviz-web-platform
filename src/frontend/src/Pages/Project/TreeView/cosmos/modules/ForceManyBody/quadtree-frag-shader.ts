@@ -1,7 +1,7 @@
-export function forceFrag (startLevel: number, maxLevels: number): string {
-  startLevel = Math.min(startLevel, maxLevels)
-  const delta = maxLevels - startLevel
-  const calcAdd = `
+export function forceFrag(startLevel: number, maxLevels: number): string {
+    startLevel = Math.min(startLevel, maxLevels)
+    const delta = maxLevels - startLevel
+    const calcAdd = `
     float dist = sqrt(l);
     if (dist > 0.0) {
       float c = alpha * repulsion * centermass.b;
@@ -9,16 +9,17 @@ export function forceFrag (startLevel: number, maxLevels: number): string {
       addVelocity += addVelocity * random.rg;
     }
   `
-  function quad (level: number): string {
-    if (level >= maxLevels) {
-      return calcAdd
-    } else {
-      const groupSize = Math.pow(2, level + 1)
 
-      const iEnding = new Array(level + 1 - delta).fill(0).map((_, l) => `pow(2.0, ${level - (l + delta)}.0) * i${l + delta}`).join('+')
-      const jEnding = new Array(level + 1 - delta).fill(0).map((_, l) => `pow(2.0, ${level - (l + delta)}.0) * j${l + delta}`).join('+')
+    function quad(level: number): string {
+        if (level >= maxLevels) {
+            return calcAdd
+        } else {
+            const groupSize = Math.pow(2, level + 1)
 
-      return `
+            const iEnding = new Array(level + 1 - delta).fill(0).map((_, l) => `pow(2.0, ${level - (l + delta)}.0) * i${l + delta}`).join('+')
+            const jEnding = new Array(level + 1 - delta).fill(0).map((_, l) => `pow(2.0, ${level - (l + delta)}.0) * j${l + delta}`).join('+')
+
+            return `
       for (float ij${level} = 0.0; ij${level} < 4.0; ij${level} += 1.0) {
         float i${level} = 0.0;
         float j${level} = 0.0;
@@ -42,9 +43,10 @@ export function forceFrag (startLevel: number, maxLevels: number): string {
         }
       }
       `
+        }
     }
-  }
-  return `
+
+    return `
 #ifdef GL_ES
 precision highp float;
 #endif

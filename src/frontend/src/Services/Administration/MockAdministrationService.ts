@@ -95,7 +95,7 @@ export namespace MockAdministrationService {
                             {
                                 treeViewId: "treeView1",
                                 name: "Tree View 1",
-                                layout: "force-direct-layout",
+                                layout: "force-direct",
                                 source: {
                                     treeId: "tree1",
                                     typingDataId: "typingData1",

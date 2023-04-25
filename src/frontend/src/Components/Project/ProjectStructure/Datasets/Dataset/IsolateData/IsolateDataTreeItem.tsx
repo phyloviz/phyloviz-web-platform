@@ -1,7 +1,7 @@
 import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
-import {FilePresent} from "@mui/icons-material"
 import * as React from "react"
 import {useIsolateDataTreeItem} from "./useIsolateDataTreeItem"
+import {IsolateDataIcon} from "../../../../../Shared/Icons";
 
 /**
  * Props for the IsolateDataTreeItem component.
@@ -24,7 +24,7 @@ export function IsolateDataTreeItem({nodeId, isolateDataId}: IsolateDataTreeItem
         <StyledTreeItem
             nodeId={nodeId}
             labelText="Isolate Data"
-            labelIcon={FilePresent}
+            labelIcon={IsolateDataIcon}
             contextMenuItems={contextMenuItems}
         />
     )

@@ -1,9 +1,9 @@
 import {TypingDataFile} from "../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../../Utils/StyledTreeItem"
-import {Description} from "@mui/icons-material"
 import * as React from "react"
 import {useTypingDataFileTreeItem} from "./useTypingDataFileTreeItem"
 import {DeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdrop"
+import {TypingDataIcon} from "../../../../Shared/Icons";
 
 /**
  * Props for the TypingDataFileTreeItem component.
@@ -33,7 +33,7 @@ export function TypingDataFileTreeItem({nodeId, file}: TypingDataFileTreeItemPro
         <StyledTreeItem
             nodeId={nodeId}
             labelText={file.name}
-            labelIcon={Description}
+            labelIcon={TypingDataIcon}
             contextMenuItems={contextMenuItems}
         />
         <DeleteResourceBackdrop
