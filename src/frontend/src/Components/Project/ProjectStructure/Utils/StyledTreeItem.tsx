@@ -124,7 +124,7 @@ export function StyledTreeItem(
                             : undefined
                     }
                 >
-                    <ContextMenuItems items={contextMenuItems!} handleClose={handleClose}/>
+                    <ContextMenuItems items={contextMenuItems} handleClose={handleClose}/>
                 </Menu>
             }
         </>
@@ -141,19 +141,19 @@ function ContextMenuItems({items, handleClose}: { items: ContextMenuItem[], hand
     return (
         <>
             {
-                items.map((item, index) => (
+                items.map((item) => (
                     item.nestedItems
                         ? <NestedMenuItem
                             leftIcon={<item.icon color={"primary"}/>}
                             rightIcon={<ArrowRightIcon/>}
                             label={item.label}
-                            key={index}
+                            key={item.label}
                             parentMenuOpen={true}
                             sx={{pl: 2}}
                         >
                             <ContextMenuItems items={item.nestedItems} handleClose={handleClose}/>
                         </NestedMenuItem>
-                        : <MenuItem key={index} onClick={(event) => {
+                        : <MenuItem key={item.label} onClick={(event) => {
                             handleClose()
                             if (item.onClick)
                                 item.onClick(event)

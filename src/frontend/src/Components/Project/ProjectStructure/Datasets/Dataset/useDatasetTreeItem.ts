@@ -1,7 +1,7 @@
 import {Dataset} from "../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../../../Pages/WebUiUris"
-import {Delete, Info, Summarize} from "@mui/icons-material"
+import {Delete, Edit, Info, Summarize} from "@mui/icons-material"
 import {useDeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdrop"
 import AdministrationService from "../../../../../Services/Administration/AdministrationService"
 import {useState} from "react"
@@ -76,9 +76,14 @@ export function useDatasetTreeItem(dataset: Dataset) {
                 onClick: () => navigate(WebUiUris.report(projectId!, dataset.datasetId))
             },
             {
-                label: "Dataset Details",
+                label: "Details",
                 icon: Info,
                 onClick: () => navigate(WebUiUris.dataset(projectId!, dataset.datasetId))
+            },
+            {
+                label: "Edit",
+                icon: Edit,
+                onClick: () => navigate(WebUiUris.editDataset(projectId!, dataset.datasetId))
             },
             {
                 label: "Delete",

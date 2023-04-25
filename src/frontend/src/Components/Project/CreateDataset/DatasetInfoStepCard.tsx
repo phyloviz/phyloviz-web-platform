@@ -12,10 +12,10 @@ import {DatasetType} from "../../../Pages/Project/CreateDataset/useCreateDataset
  * @property onDatasetDescriptionChange the function to be called when the dataset description is changed
  * @property onDatasetTypeChange the function to be called when the dataset type is changed
  */
-interface DatasetInfoStepCard {
-    datasetType: DatasetType,
-    onDatasetNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    onDatasetDescriptionChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+interface DatasetInfoStepCardProps {
+    datasetType: DatasetType
+    onDatasetNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onDatasetDescriptionChange: (event: React.ChangeEvent<HTMLInputElement>) => void
     onDatasetTypeChange: (event: SelectChangeEvent, child: ReactNode) => void
 }
 
@@ -28,7 +28,7 @@ export function DatasetInfoStepCard(
         onDatasetNameChange,
         onDatasetDescriptionChange,
         onDatasetTypeChange
-    }: DatasetInfoStepCard
+    }: DatasetInfoStepCardProps
 ) {
     return <>
         <TextField

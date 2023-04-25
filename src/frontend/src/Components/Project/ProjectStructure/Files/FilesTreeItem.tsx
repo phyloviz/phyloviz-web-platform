@@ -51,4 +51,3 @@ export function FilesTreeItem({nodeId, files}: FilesTreeItemProps) {
         </StyledTreeItem>
     )
 }
-

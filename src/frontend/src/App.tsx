@@ -30,6 +30,8 @@ import DatasetDetails from "./Pages/Project/DatasetDetails/DatasetDetails"
 import Report from "./Pages/Project/Report/Report"
 import ComputeHammingDistance
     from "./Pages/Project/Compute/DistanceMatrix/ComputeHammingDistance/ComputeHammingDistance"
+import EditProject from "./Pages/Project/EditProject/EditProject";
+import EditDataset from "./Pages/Project/EditDataset/EditDataset";
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;
@@ -53,6 +55,8 @@ import TREE = WebUiUris.TREE;
 import DATASET = WebUiUris.DATASET;
 import REPORT = WebUiUris.REPORT;
 import COMPUTE_HAMMING_DISTANCE = WebUiUris.COMPUTE_HAMMING_DISTANCE;
+import EDIT_PROJECT = WebUiUris.EDIT_PROJECT;
+import EDIT_DATASET = WebUiUris.EDIT_DATASET;
 
 /**
  * App component.
@@ -91,6 +95,7 @@ export default function App() {
                         <Route path={PROJECT} element={<ProtectedRoute><Project/></ProtectedRoute>}>
                             <Route path={CREATE_DATASET} element={<ProtectedRoute><CreateDataset/></ProtectedRoute>}/>
                             <Route path={UPLOAD_FILES} element={<ProtectedRoute><UploadFiles/></ProtectedRoute>}/>
+                            <Route path={EDIT_PROJECT} element={<ProtectedRoute><EditProject/></ProtectedRoute>}/>
                             <Route
                                 path={TYPING_DATA}
                                 element={<ProtectedRoute><TypingData/></ProtectedRoute>}
@@ -102,6 +107,10 @@ export default function App() {
                             <Route
                                 path={DATASET}
                                 element={<ProtectedRoute><DatasetDetails/></ProtectedRoute>}
+                            />
+                            <Route
+                                path={EDIT_DATASET}
+                                element={<ProtectedRoute><EditDataset/></ProtectedRoute>}
                             />
                             <Route
                                 path={DISTANCE_MATRIX}

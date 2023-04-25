@@ -13,7 +13,6 @@ export function GenerateReportCard() {
     const navigate = useNavigate()
     const {projectId, datasetId} = useParams<{ projectId: string, datasetId: string }>()
 
-
     return <Paper sx={{
         p: 4,
         display: "flex",

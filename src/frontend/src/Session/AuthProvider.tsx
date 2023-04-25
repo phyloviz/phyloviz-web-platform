@@ -1,6 +1,6 @@
 import {Session, SessionManager} from "./Session"
 import * as React from "react"
-import {createContext, useState} from "react"
+import {createContext, useMemo, useState} from "react"
 
 export const SessionManagerContext = createContext<SessionManager>({
     session: null,
@@ -35,18 +35,20 @@ export function AuthProvider({children}: AuthProviderProps) {
         return JSON.parse(sessionJson)
     })
 
+    const sessionManager = useMemo<SessionManager>(() => ({
+        session,
+        setSession: (session: Session) => {
+            setSession(session)
+            localStorage.setItem(sessionStorageKey, JSON.stringify(session))
+        },
+        clearSession: () => {
+            localStorage.removeItem(sessionStorageKey)
+            setSession(null)
+        }
+    }), [session])
+
     return (
-        <SessionManagerContext.Provider value={{
-            session,
-            setSession: (session: Session) => {
-                setSession(session)
-                localStorage.setItem(sessionStorageKey, JSON.stringify(session))
-            },
-            clearSession: () => {
-                localStorage.removeItem(sessionStorageKey)
-                setSession(null)
-            }
-        }}>
+        <SessionManagerContext.Provider value={sessionManager}>
             {children}
         </SessionManagerContext.Provider>
     )

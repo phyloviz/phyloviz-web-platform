@@ -56,10 +56,10 @@ export default function OpenProject() {
                         )
                     }
                     {
-                        projects?.map((project, index) => {
+                        projects?.map((project) => {
                             return (
                                 <ProjectCard
-                                    key={index}
+                                    key={project.projectId}
                                     project={project}
                                     handleOpenProject={() => handleOpenProject(project.projectId)}
                                     handleDeleteProject={() => handleDeleteProject(project.projectId)}

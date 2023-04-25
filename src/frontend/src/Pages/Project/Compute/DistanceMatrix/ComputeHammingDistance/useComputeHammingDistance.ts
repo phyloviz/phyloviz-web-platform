@@ -6,7 +6,7 @@ import {useCompute} from "../../useCompute"
  */
 export function useComputeHammingDistance() {
     const navigate = useNavigate()
-    const {projectId, datasetId} = useParams<{ projectId: string, datasetId: string }>()
+    const {datasetId} = useParams<{ datasetId: string }>()
     const {createWorkflow, error, clearError} = useCompute()
 
     return {

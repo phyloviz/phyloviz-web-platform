@@ -12,10 +12,7 @@ import {
  * Hook for typing data page.
  */
 export function useTypingData() {
-    const {projectId, typingDataId} = useParams<{
-        projectId: string,
-        typingDataId: string
-    }>()
+    const {projectId, typingDataId} = useParams<{ projectId: string, typingDataId: string }>()
 
     const [typingDataSchema, setTypingDataSchema] = useState<GetTypingDataSchemaOutputModel>()
     const [typingDataProfiles, setTypingDataProfiles] = useState<GetTypingDataProfilesOutputModel>()

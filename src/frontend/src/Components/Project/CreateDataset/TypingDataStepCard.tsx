@@ -19,7 +19,7 @@ interface TypingDataStepCardProps {
     datasetType: DatasetType
     typingData: TypingDataFile[]
     selectedTypingData: string | null
-    onFileSelecterChange: (event: SelectChangeEvent<string>, child: ReactNode) => void
+    onFileSelecterChange: (event: SelectChangeEvent, child: ReactNode) => void
     onFileUploaderChange: (file: React.SetStateAction<File | null>) => void
 }
 

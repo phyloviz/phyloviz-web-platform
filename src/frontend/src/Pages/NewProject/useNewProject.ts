@@ -19,12 +19,8 @@ export function useNewProject() {
     const [error, setError] = useState<string | null>(null)
 
     return {
-        handleProjectNameChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-            setProjectName(event.target.value)
-        },
-        handleProjectDescriptionChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-            setProjectDescription(event.target.value)
-        },
+        handleProjectNameChange: (event: React.ChangeEvent<HTMLInputElement>) => setProjectName(event.target.value),
+        handleProjectDescriptionChange: (event: React.ChangeEvent<HTMLInputElement>) => setProjectDescription(event.target.value),
         handleSubmit: () => {
             if (projectName == null || projectName === "" || projectDescription == null || projectDescription === "") {
                 setError("Please fill out all fields")
@@ -36,14 +32,10 @@ export function useNewProject() {
                     description: projectDescription
                 } as CreateProjectInputModel
             )
-                .then(res => {
-                    navigate(WebUiUris.project(res.projectId))
-                })
-                .catch(err => {
-                    setError(err.message)
-                })
+                .then(res => navigate(WebUiUris.project(res.projectId)))
+                .catch(err => setError(err.message))
         },
-        handleCancel: () => navigate(WebUiUris.HOME),
+        handleCancel: () => navigate(-1),
         error,
         clearError: () => setError(null)
     }
