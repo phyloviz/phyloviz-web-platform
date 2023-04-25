@@ -18,7 +18,7 @@
   <a href="../../issues">
      <img src="https://img.shields.io/github/issues/bodybuilders-team/phyloviz-web-platform" alt="Issues"/>
   </a>
-  <a href="../../LICENSE">
+  <a href="../../pulls">
      <img src="https://img.shields.io/github/issues-pr/bodybuilders-team/phyloviz-web-platform" alt="Pull requests"/>
   </a>
   <a href="../../commits/master">

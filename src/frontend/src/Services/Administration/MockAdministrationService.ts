@@ -1,18 +1,38 @@
-import {CreateProjectInputModel} from "./models/createProject/CreateProjectInputModel"
-import {CreateProjectOutputModel} from "./models/createProject/CreateProjectOutputModel"
-import {GetProjectsOutputModel} from "./models/getProjects/GetProjectsOutputModel"
-import {DeleteProjectOutputModel} from "./models/deleteProject/DeleteProjectOutputModel"
-import {DeleteTypingDataOutputModel} from "./models/deleteTypingData/DeleteTypingDataOutputModel"
-import {GetProjectOutputModel, Project} from "./models/getProject/GetProjectOutputModel"
-import {DeleteTreeViewOutputModel} from "./models/deleteTreeView/DeleteTreeViewOutputModel"
-import {DeleteIsolateDataOutputModel} from "./models/deleteIsolateData/DeleteIsolateDataOutputModel"
-import {DeleteTreeOutputModel} from "./models/deleteTree/DeleteTreeOutputModel"
-import {DeleteDistanceMatrixOutputModel} from "./models/deleteDistanceMatrix/DeleteDistanceMatrixOutputModel"
-import {CreateDatasetInputModel} from "./models/createDataset/CreateDatasetInputModel"
-import {CreateDatasetOutputModel} from "./models/createDataset/CreateDatasetOutputModel"
-import {GetDatasetOutputModel} from "./models/getDataset/GetDatasetOutputModel"
-import {GetDatasetsOutputModel} from "./models/getDatasets/GetDatasetsOutputModel"
-import {DeleteDatasetOutputModel} from "./models/deleteDataset/DeleteDatasetOutputModel"
+import {CreateProjectInputModel} from "./models/projects/createProject/CreateProjectInputModel"
+import {CreateProjectOutputModel} from "./models/projects/createProject/CreateProjectOutputModel"
+import {GetProjectsOutputModel} from "./models/projects/getProjects/GetProjectsOutputModel"
+import {DeleteProjectOutputModel} from "./models/projects/deleteProject/DeleteProjectOutputModel"
+import {DeleteTypingDataOutputModel} from "./models/files/deleteTypingData/DeleteTypingDataOutputModel"
+import {GetProjectOutputModel, Project} from "./models/projects/getProject/GetProjectOutputModel"
+import {DeleteTreeViewOutputModel} from "./models/treeViews/deleteTreeView/DeleteTreeViewOutputModel"
+import {DeleteIsolateDataOutputModel} from "./models/files/deleteIsolateData/DeleteIsolateDataOutputModel"
+import {DeleteTreeOutputModel} from "./models/trees/deleteTree/DeleteTreeOutputModel"
+import {
+    DeleteDistanceMatrixOutputModel
+} from "./models/distanceMatrices/deleteDistanceMatrix/DeleteDistanceMatrixOutputModel"
+import {CreateDatasetInputModel} from "./models/datasets/createDataset/CreateDatasetInputModel"
+import {CreateDatasetOutputModel} from "./models/datasets/createDataset/CreateDatasetOutputModel"
+import {GetDatasetOutputModel} from "./models/datasets/getDataset/GetDatasetOutputModel"
+import {GetDatasetsOutputModel} from "./models/datasets/getDatasets/GetDatasetsOutputModel"
+import {DeleteDatasetOutputModel} from "./models/datasets/deleteDataset/DeleteDatasetOutputModel"
+import {UpdateProjectOutputModel} from "./models/projects/updateProject/UpdateProjectOutputModel";
+import {UpdateProjectInputModel} from "./models/projects/updateProject/UpdateProjectInputModel";
+import {UpdateTypingDataInputModel} from "./models/files/updateTypingData/UpdateTypingDataInputModel";
+import {UpdateTypingDataOutputModel} from "./models/files/updateTypingData/UpdateTypingDataOutputModel";
+import {UpdateIsolateDataInputModel} from "./models/files/updateIsolateData/UpdateIsolateDataInputModel";
+import {UpdateIsolateDataOutputModel} from "./models/files/updateIsolateData/UpdateIsolateDataOutputModel";
+import {
+    UpdateDistanceMatrixOutputModel
+} from "./models/distanceMatrices/updateDistanceMatrix/UpdateDistanceMatrixOutputModel";
+import {
+    UpdateDistanceMatrixInputModel
+} from "./models/distanceMatrices/updateDistanceMatrix/UpdateDistanceMatrixInputModel";
+import {UpdateTreeOutputModel} from "./models/trees/updateTree/UpdateTreeOutputModel";
+import {UpdateTreeInputModel} from "./models/trees/updateTree/UpdateTreeInputModel";
+import {UpdateTreeViewOutputModel} from "./models/treeViews/updateTreeView/UpdateTreeViewOutputModel";
+import {UpdateTreeViewInputModel} from "./models/treeViews/updateTreeView/UpdateTreeViewInputModel";
+import {UpdateDatasetInputModel} from "./models/datasets/updateDataset/UpdateDatasetInputModel";
+import {UpdateDatasetOutputModel} from "./models/datasets/updateDataset/UpdateDatasetOutputModel";
 
 export namespace MockAdministrationService {
 
@@ -30,6 +50,7 @@ export namespace MockAdministrationService {
                         description: "Dataset 1 description",
                         typingDataId: "typingData1",
                         isolateDataId: "isolateData1",
+                        isolateDataKey: "continent",
                         distanceMatrices: [
                             {
                                 distanceMatrixId: "distanceMatrix1",
@@ -95,6 +116,7 @@ export namespace MockAdministrationService {
                         {
                             isolateDataId: "isolateData1",
                             name: "Isolate Data 1",
+                            keys: ["continent", "country"]
                         }
                     ]
                 }
@@ -177,6 +199,28 @@ export namespace MockAdministrationService {
     }
 
     /**
+     * Updates a project.
+     *
+     * @param projectId the id of the project to be updated
+     * @param updateProjectInputModel the project to be updated following the UpdateProjectModel format
+     * @return a promise that resolves to the updated project information
+     */
+    export async function updateProject(
+        projectId: string,
+        updateProjectInputModel: UpdateProjectInputModel
+    ): Promise<UpdateProjectOutputModel> {
+        const project = mockProjects.get(projectId)!
+
+        project.name = updateProjectInputModel.name
+        project.description = updateProjectInputModel.description
+
+        return {
+            name: project.name,
+            description: project.description
+        }
+    }
+
+    /**
      * Deletes a typing data file.
      *
      * @param projectId the name of the project to which the typing data will be deleted
@@ -193,6 +237,30 @@ export namespace MockAdministrationService {
         return {
             projectId,
             typingDataId
+        }
+    }
+
+    /**
+     * Updates a typing data file.
+     *
+     * @param projectId    the id of the project to which the typing data file belongs
+     * @param typingDataId the id of the typing data file to be updated
+     * @param updateTypingDataInputModel the typing data file to be updated following the UpdateTypingDataModel format
+     * @return information about the updated typing data file
+     */
+    export async function updateTypingData(
+        projectId: string,
+        typingDataId: string,
+        updateTypingDataInputModel: UpdateTypingDataInputModel
+    ): Promise<UpdateTypingDataOutputModel> {
+        const typingData = mockProjects.get(projectId)!.files.typingData.find(
+            typingData => typingData.typingDataId === typingDataId
+        )!
+
+        typingData.name = updateTypingDataInputModel.name
+
+        return {
+            name: typingData.name
         }
     }
 
@@ -214,6 +282,30 @@ export namespace MockAdministrationService {
         return {
             projectId,
             isolateDataId
+        }
+    }
+
+    /**
+     * Updates an isolate data file.
+     *
+     * @param projectId    the id of the project to which the isolate data file belongs
+     * @param isolateDataId the id of the isolate data file to be updated
+     * @param updateIsolateDataInputModel the isolate data file to be updated following the UpdateIsolateDataModel format
+     * @return information about the updated isolate data file
+     */
+    export async function updateIsolateData(
+        projectId: string,
+        isolateDataId: string,
+        updateIsolateDataInputModel: UpdateIsolateDataInputModel
+    ): Promise<UpdateIsolateDataOutputModel> {
+        const isolateData = mockProjects.get(projectId)!.files.isolateData.find(
+            isolateData => isolateData.isolateDataId === isolateDataId
+        )!
+
+        isolateData.name = updateIsolateDataInputModel.name
+
+        return {
+            name: isolateData.name
         }
     }
 
@@ -247,6 +339,32 @@ export namespace MockAdministrationService {
     }
 
     /**
+     * Updates a distance matrix.
+     *
+     * @param projectId        the id of the project that contains the distance matrix
+     * @param datasetId        the id of the dataset that contains the distance matrix
+     * @param distanceMatrixId the id of the distance matrix to be updated
+     * @param updateDistanceMatrixInputModel the distance matrix to be updated following the UpdateDistanceMatrixModel format
+     * @return information about the updated distance matrix
+     */
+    export async function updateDistanceMatrix(
+        projectId: string,
+        datasetId: string,
+        distanceMatrixId: string,
+        updateDistanceMatrixInputModel: UpdateDistanceMatrixInputModel
+    ): Promise<UpdateDistanceMatrixOutputModel> {
+        const distanceMatrix = mockProjects.get(projectId)!.datasets
+            .find(dataset => dataset.datasetId === datasetId)!
+            .distanceMatrices.find(distanceMatrix => distanceMatrix.distanceMatrixId === distanceMatrixId)!
+
+        distanceMatrix.name = updateDistanceMatrixInputModel.name
+
+        return {
+            name: distanceMatrix.name
+        }
+    }
+
+    /**
      * Deletes a tree.
      *
      * @param projectId the name of the project to which the tree will be deleted
@@ -270,6 +388,32 @@ export namespace MockAdministrationService {
             projectId,
             datasetId,
             treeId
+        }
+    }
+
+    /**
+     * Updates a tree.
+     *
+     * @param projectId the id of the project that contains the tree
+     * @param datasetId the id of the dataset that contains the tree
+     * @param treeId    the id of the tree to be updated
+     * @param updateTreeInputModel the tree to be updated following the UpdateTreeModel format
+     * @return information about the updated tree
+     */
+    export async function updateTree(
+        projectId: string,
+        datasetId: string,
+        treeId: string,
+        updateTreeInputModel: UpdateTreeInputModel
+    ): Promise<UpdateTreeOutputModel> {
+        const tree = mockProjects.get(projectId)!.datasets
+            .find(dataset => dataset.datasetId === datasetId)!
+            .trees.find(tree => tree.treeId === treeId)!
+
+        tree.name = updateTreeInputModel.name
+
+        return {
+            name: tree.name
         }
     }
 
@@ -301,6 +445,32 @@ export namespace MockAdministrationService {
     }
 
     /**
+     * Updates a tree view.
+     *
+     * @param projectId    the id of the project that contains the tree view
+     * @param datasetId    the id of the dataset that contains the tree view
+     * @param treeViewId the id of the tree view to be updated
+     * @param updateTreeViewInputModel the tree view to be updated following the UpdateTreeViewModel format
+     * @return information about the updated tree view
+     */
+    export async function updateTreeView(
+        projectId: string,
+        datasetId: string,
+        treeViewId: string,
+        updateTreeViewInputModel: UpdateTreeViewInputModel
+    ): Promise<UpdateTreeViewOutputModel> {
+        const treeView = mockProjects.get(projectId)!.datasets
+            .find(dataset => dataset.datasetId === datasetId)!
+            .treeViews.find(treeView => treeView.treeViewId === treeViewId)!
+
+        treeView.name = updateTreeViewInputModel.name
+
+        return {
+            name: treeView.name
+        }
+    }
+
+    /**
      * Create a dataset.
      *
      * @param projectId the name of the project to which the dataset will be created
@@ -318,6 +488,7 @@ export namespace MockAdministrationService {
             description: createDatasetInputModel.description,
             typingDataId: createDatasetInputModel.typingDataId,
             isolateDataId: createDatasetInputModel.isolateDataId,
+            isolateDataKey: createDatasetInputModel.isolateDataKey,
             distanceMatrices: [],
             trees: [],
             treeViews: []
@@ -375,6 +546,30 @@ export namespace MockAdministrationService {
         return {
             projectId,
             datasetId
+        }
+    }
+
+    /**
+     * Updates a dataset.
+     *
+     * @param projectId the id of the project to which the dataset belongs
+     * @param datasetId the id of the dataset to be updated
+     * @param updateDatasetInputModel the input model for updating a dataset
+     * @return information about the update
+     */
+    export async function updateDataset(
+        projectId: string,
+        datasetId: string,
+        updateDatasetInputModel: UpdateDatasetInputModel
+    ): Promise<UpdateDatasetOutputModel> {
+        const dataset = mockProjects.get(projectId)!.datasets.find(dataset => dataset.datasetId === datasetId)!
+
+        dataset.name = updateDatasetInputModel.name
+        dataset.description = updateDatasetInputModel.description
+
+        return {
+            name: dataset.name,
+            description: dataset.description
         }
     }
 }

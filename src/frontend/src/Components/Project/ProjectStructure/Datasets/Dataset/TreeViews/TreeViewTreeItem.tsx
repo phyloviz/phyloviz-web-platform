@@ -1,4 +1,4 @@
-import {TreeView} from "../../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {TreeView} from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
 import {ScatterPlot} from "@mui/icons-material"
 import * as React from "react"

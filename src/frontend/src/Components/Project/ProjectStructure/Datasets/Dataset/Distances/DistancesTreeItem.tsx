@@ -2,7 +2,9 @@ import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
 import {TableView} from "@mui/icons-material"
 import {DistanceMatrixTreeItem} from "./DistanceMatrixTreeItem"
 import * as React from "react"
-import {DistanceMatrix} from "../../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {
+    DistanceMatrix
+} from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 
 
 /**
@@ -28,7 +30,7 @@ export function DistancesTreeItem({nodeId, datasetId, distanceMatrices}: Distanc
                 distanceMatrices.map((distance, index) => {
                     return (
                         <DistanceMatrixTreeItem
-                            key={index}
+                            key={distance.distanceMatrixId}
                             nodeId={nodeId + index.toString()}
                             datasetId={datasetId}
                             distanceMatrix={distance}

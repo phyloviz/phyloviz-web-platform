@@ -1,4 +1,4 @@
-import {ProjectModel} from "../ProjectModel"
+import {ProjectModel} from "../../ProjectModel"
 
 export interface GetProjectsOutputModel {
     projects: ProjectModel[]

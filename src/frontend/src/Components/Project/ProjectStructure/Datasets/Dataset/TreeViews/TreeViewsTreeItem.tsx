@@ -1,4 +1,4 @@
-import {TreeView} from "../../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {TreeView} from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
 import {ScatterPlot} from "@mui/icons-material"
 import {TreeViewTreeItem} from "./TreeViewTreeItem"
@@ -27,7 +27,7 @@ export function TreeViewsTreeItem({nodeId, datasetId, treeViews}: TreeViewsTreeI
                 treeViews.map((treeView, index) => {
                     return (
                         <TreeViewTreeItem
-                            key={index}
+                            key={treeView.treeViewId}
                             nodeId={nodeId + index.toString()}
                             datasetId={datasetId}
                             treeView={treeView}

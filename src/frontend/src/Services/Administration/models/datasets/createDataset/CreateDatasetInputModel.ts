@@ -3,4 +3,5 @@ export interface CreateDatasetInputModel {
     description: string
     typingDataId: string
     isolateDataId: string | null
+    isolateDataKey: string | null
 }

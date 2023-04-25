@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom"
 import {useEffect, useState} from "react"
-import {Dataset} from "../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {Dataset} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import AdministrationService from "../../../Services/Administration/AdministrationService"
 
 /**

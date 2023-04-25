@@ -3,7 +3,9 @@ import * as React from "react"
 import {useState} from "react"
 import {WebUiUris} from "../WebUiUris"
 import AdministrationService from "../../Services/Administration/AdministrationService"
-import {CreateProjectInputModel} from "../../Services/Administration/models/createProject/CreateProjectInputModel"
+import {
+    CreateProjectInputModel
+} from "../../Services/Administration/models/projects/createProject/CreateProjectInputModel"
 
 /**
  * Hook for the NewProject page.

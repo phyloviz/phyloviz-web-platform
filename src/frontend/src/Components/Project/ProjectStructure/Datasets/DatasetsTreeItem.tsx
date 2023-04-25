@@ -1,4 +1,4 @@
-import {Dataset} from "../../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {Dataset} from "../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
 import {Inventory2} from "@mui/icons-material"
 import {DatasetTreeItem} from "./Dataset/DatasetTreeItem"

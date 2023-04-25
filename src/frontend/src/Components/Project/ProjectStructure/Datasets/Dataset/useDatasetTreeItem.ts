@@ -1,4 +1,4 @@
-import {Dataset} from "../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {Dataset} from "../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../../../Pages/WebUiUris"
 import {Delete, Info, ScatterPlot, Summarize, TableView} from "@mui/icons-material"

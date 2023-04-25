@@ -53,8 +53,8 @@ export function useCreateDataset() {
     return {
         datasetType,
         project,
-        handleDatasetNameChange: (event: SelectChangeEvent) => setName(event.target.value as string),
-        handleDatasetDescriptionChange: (event: SelectChangeEvent) => setDescription(event.target.value as string),
+        handleDatasetNameChange: (event: SelectChangeEvent) => setName(event.target.value),
+        handleDatasetDescriptionChange: (event: SelectChangeEvent) => setDescription(event.target.value),
         handleDatasetTypeChange: (event: SelectChangeEvent) => setDatasetType(event.target.value as DatasetType),
         selectedTypingData,
         handleTypingDataFileSelectorChange: (event: SelectChangeEvent) => {
@@ -70,10 +70,9 @@ export function useCreateDataset() {
         selectedIsolateData,
         handleIsolateDataFileSelectorChange: (event: SelectChangeEvent) => {
             setSelectedIsolateData(event.target.value)
+            setIsolateDataKeys(project?.files.isolateData.find(data => data.isolateDataId === event.target.value)?.keys ?? [])
             if (isolateDataFile)
                 setIsolateDataFile(null)
-
-            // TODO: Get the keys from the server
         },
         handleIsolateDataFileUploaderChange: (file: React.SetStateAction<File | null>) => {
             setIsolateDataFile(file)
@@ -130,7 +129,8 @@ export function useCreateDataset() {
                         name,
                         description,
                         typingDataId: typingDataId!,
-                        isolateDataId: isolateDataId, // TODO: And the key? Maybe we should send the key here
+                        isolateDataId: isolateDataId,
+                        isolateDataKey: selectedIsolateDataKey
                     }
                 )
                     .then(() => {

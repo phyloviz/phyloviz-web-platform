@@ -106,7 +106,7 @@ public class DatasetsController {
      * @return information about the update
      */
     @PatchMapping("/projects/{projectId}/datasets/{datasetId}")
-    public UpdateDatasetOutputModel getDataset(
+    public UpdateDatasetOutputModel updateDataset(
             @PathVariable String projectId,
             @PathVariable String datasetId,
             @RequestBody UpdateDatasetInputModel updateDatasetInputModel,

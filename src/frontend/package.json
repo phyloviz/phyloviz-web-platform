@@ -1,7 +1,7 @@
 {
-  "name": "js",
+  "name": "pwp-frontend",
   "version": "0.1.0",
-  "description": "Frontend client for the PHYLOViZ Web Platform",
+  "description": "Frontend client for the PHYLOViZ Web Platform: A Modular and Web-Based Tool for Phylogenetic Analysis",
   "main": "index.tsx",
   "dependencies": {
     "@emotion/react": "^11.10.5",

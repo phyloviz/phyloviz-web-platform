@@ -1,15 +1,15 @@
-import { useParams } from "react-router-dom"
-import { useEffect, useRef, useState } from 'react';
-import { TreeViewGraph } from "./cosmos/TreeViewGraph"
+import {useParams} from "react-router-dom"
+import {useEffect, useRef, useState} from 'react';
+import {TreeViewGraph} from "./cosmos/TreeViewGraph"
 import {
     Edge,
     GetTreeViewOutputModel,
     Node
 } from "../../../Services/Visualization/models/getTreeView/GetTreeViewOutputModel"
 import VisualizationService from "../../../Services/Visualization/VisualizationService"
-import { TreeView } from "../../../Services/Administration/models/getProject/GetProjectOutputModel"
-import { useProjectContext } from "../useProject"
-import { GraphConfigInterface } from "./cosmos/config"
+import {TreeView} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
+import {useProjectContext} from "../useProject"
+import {GraphConfigInterface} from "./cosmos/config"
 
 export type VizNode = {
     id: string

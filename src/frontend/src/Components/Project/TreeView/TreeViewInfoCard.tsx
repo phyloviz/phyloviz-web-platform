@@ -11,7 +11,7 @@ import ListItemText from "@mui/material/ListItemText"
 import {WebUiUris} from "../../../Pages/WebUiUris"
 import {styled} from "@mui/material/styles"
 import IconButton from "@mui/material/IconButton"
-import {TreeView} from "../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {TreeView} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 
 /**
  * Props for the TreeViewInfoCard component.
