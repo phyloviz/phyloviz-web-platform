@@ -5,7 +5,7 @@ import {Container} from "@mui/material"
 import Box from "@mui/material/Box"
 import {CreateDatasetCard} from "../../Components/Project/EmptyProject/CreateDatasetCard"
 import {UploadFilesCard} from "../../Components/Project/EmptyProject/UploadFilesCard"
-import {Project} from "../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {Project} from "../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import LoadingSpinner from "../../Components/Shared/LoadingSpinner"
 import {ErrorAlert} from "../../Components/Shared/ErrorAlert"
 

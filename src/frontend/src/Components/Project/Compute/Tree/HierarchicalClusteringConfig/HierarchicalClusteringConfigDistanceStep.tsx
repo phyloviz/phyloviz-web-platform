@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography"
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 import * as React from "react"
 import {ReactNode} from "react"
-import {DistanceMatrix} from "../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {DistanceMatrix} from "../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 
 /**
  * Props for the HierarchicalClusteringConfigDistanceStepStep component.
@@ -40,6 +40,7 @@ export function HierarchicalClusteringConfigDistanceStep(
                     label="Distance"
                     value={selectedDistance ?? ""}
                     onChange={onDistanceChange}
+                    MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
                     {distances.map((distance) => (
                         <MenuItem key={distance.distanceMatrixId}

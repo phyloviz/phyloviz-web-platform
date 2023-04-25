@@ -25,7 +25,7 @@ export default function Profile() {
                     Account
                 </Typography>
                 <Avatar
-                    src={loggedIn && session?.picture ? session!.picture : ""}
+                    src={loggedIn && session?.picture ? session.picture : ""}
                     sx={{height: 64, mb: 2, mt: 4, width: 64}}
                 />
                 <Typography color="textPrimary" gutterBottom variant="h5">
@@ -34,9 +34,7 @@ export default function Profile() {
                 <Typography color="textSecondary" variant="body1">
                     {session?.email}
                 </Typography>
-                {
-                    // TODO: Add profile information (Feature not so important)
-                }
+                {/* Add other profile information if needed */}
             </Paper>
         </Container>
     )

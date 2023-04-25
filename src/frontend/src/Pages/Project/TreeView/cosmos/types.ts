@@ -1,12 +1,12 @@
 export type CosmosInputNode = {
-  id: string;
-  x?: number;
-  y?: number;
+    id: string;
+    x?: number;
+    y?: number;
 }
 
 export type CosmosInputLink = {
-  source: string;
-  target: string;
+    source: string;
+    target: string;
 }
 
 /**
@@ -14,10 +14,10 @@ export type CosmosInputLink = {
  * @todo Remove deprecated type `InputNode` in version 2.0.
  */
 export type InputNode = {
-  [key: string]: unknown;
-  id: string;
-  x?: number;
-  y?: number;
+    [key: string]: unknown;
+    id: string;
+    x?: number;
+    y?: number;
 }
 
 /**
@@ -25,7 +25,7 @@ export type InputNode = {
  * @todo Remove deprecated type `InputLink` in version 2.0.
  */
 export type InputLink = {
-  [key: string]: unknown;
-  source: string;
-  target: string;
+    [key: string]: unknown;
+    source: string;
+    target: string;
 }

@@ -1,8 +1,8 @@
 import * as React from "react"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
-import {Work} from "@mui/icons-material"
 import {WorkflowTreeItem} from "./WorkflowTreeItem"
 import {Workflow} from "../../../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+import {WorkflowsIcon} from "../../../Shared/Icons";
 
 /**
  * Props of the WorkflowsTreeItem.
@@ -19,7 +19,11 @@ interface WorkflowsTreeItemProps {
  */
 export function WorkflowsTreeItem({workflows}: WorkflowsTreeItemProps) {
     return (
-        <StyledTreeItem nodeId="workflows" labelText={"Workflows"} labelIcon={Work}>
+        <StyledTreeItem
+            nodeId="workflows"
+            labelText={"Workflows"}
+            labelIcon={WorkflowsIcon}
+        >
             {
                 workflows.map((workflow, index) => {
                     return <WorkflowTreeItem

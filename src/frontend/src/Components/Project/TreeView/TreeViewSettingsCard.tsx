@@ -1,9 +1,8 @@
 import * as React from "react"
-import { useState } from "react"
-import { Box, Button, Collapse, Grid, Input, MenuItem, Slider, Typography } from "@mui/material"
-import Menu from "@mui/material/Menu"
+import {useState} from "react"
+import {Box, Button, Collapse, Grid, Input, Slider, Typography} from "@mui/material"
 import IconButton from "@mui/material/IconButton"
-import { Pause, PhotoCamera, PlayArrow, ZoomIn, ZoomOut } from "@mui/icons-material"
+import {Pause, PhotoCamera, PlayArrow, ZoomIn, ZoomOut} from "@mui/icons-material"
 
 
 interface TreeViewSettingsCardProps {
@@ -22,9 +21,10 @@ const LINK_SPRING_MAX = 2
 /**
  * Card with settings for the tree view.
  */
-export function TreeViewSettingsCard({ onPauseAnimation, onRestartAnimation,
-    linkSpring, linkDistance, onChangeLinkSpring, onChangeLinkDistance
-}: TreeViewSettingsCardProps) {
+export function TreeViewSettingsCard({
+                                         onPauseAnimation, onRestartAnimation,
+                                         linkSpring, linkDistance, onChangeLinkSpring, onChangeLinkDistance
+                                     }: TreeViewSettingsCardProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
     const [animationRunning, setAnimationRunning] = useState(true)
@@ -101,19 +101,19 @@ export function TreeViewSettingsCard({ onPauseAnimation, onRestartAnimation,
                 // TODO: zoom out
             }}
             >
-                <ZoomOut />
+                <ZoomOut/>
             </IconButton>
             <IconButton size="small" onClick={() => {
                 // TODO: zoom in
             }}
             >
-                <ZoomIn />
+                <ZoomIn/>
             </IconButton>
             <IconButton size="small" onClick={() => {
                 // TODO: take screenshot
             }}
             >
-                <PhotoCamera />
+                <PhotoCamera/>
             </IconButton>
             <IconButton size="small" onClick={() => {
                 if (animationRunning)
@@ -126,8 +126,8 @@ export function TreeViewSettingsCard({ onPauseAnimation, onRestartAnimation,
             >
                 {
                     animationRunning
-                        ? <Pause />
-                        : <PlayArrow />
+                        ? <Pause/>
+                        : <PlayArrow/>
                 }
             </IconButton>
         </Box>

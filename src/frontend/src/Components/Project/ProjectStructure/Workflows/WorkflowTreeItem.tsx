@@ -30,47 +30,45 @@ export function WorkflowTreeItem({nodeId, workflow}: WorkflowTreeItemProps) {
     const {anchorEl, handlePopoverOpen, handlePopoverClose, open} = useWorkflowTreeItem()
 
     return (<>
-        <StyledTreeItem
-            nodeId={nodeId}
-            labelText={workflowTypeToWorkflowName(workflow.type)}
-            rightContent={
-                workflow.status === "RUNNING"
-                    ? <CircularProgress size={12} sx={{ml: 1}}/>
-                    : workflow.status === "COMPLETED"
-                        ? <FinishIcon sx={{ml: 1, color: "success.main", width: 12, height: 12}}/>
-                        : <Cancel sx={{ml: 1, color: "error.main", width: 12, height: 12}}/>
-            }
-            onMouseEnter={handlePopoverOpen}
-            onMouseLeave={handlePopoverClose}
-        />
-        <Popover
-            sx={{
-                pointerEvents: 'none',
-            }}
-            open={open}
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'center',
-                horizontal: 'right',
-            }}
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-            }}
-            onClose={handlePopoverClose}
-            disableRestoreFocus
-        >
-            <Box sx={{p: 2}}>
-                <Typography variant={"body2"}>
-                    <strong>{workflowTypeToWorkflowName(workflow.type)}</strong>
-                </Typography>
-                <Typography variant={"body2"}>
-                    <strong>Status: </strong>{workflowStatusToWorkflowStatusString(workflow.status)}
-                </Typography>
-                {
-                    // TODO: Maybe add results or link to the results
+            <StyledTreeItem
+                nodeId={nodeId}
+                labelText={workflowTypeToWorkflowName(workflow.type)}
+                rightContent={
+                    workflow.status === "RUNNING"
+                        ? <CircularProgress size={12} sx={{ml: 1}}/>
+                        : workflow.status === "SUCCESS"
+                            ? <FinishIcon sx={{ml: 1, color: "success.main", width: 12, height: 12}}/>
+                            : <Cancel sx={{ml: 1, color: "error.main", width: 12, height: 12}}/>
                 }
-            </Box>
-        </Popover>
-    </>)
+                onMouseEnter={handlePopoverOpen}
+                onMouseLeave={handlePopoverClose}
+            />
+            <Popover
+                sx={{
+                    pointerEvents: 'none',
+                }}
+                open={open}
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: 'center',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                onClose={handlePopoverClose}
+                disableRestoreFocus
+            >
+                <Box sx={{p: 2}}>
+                    <Typography variant={"body2"}>
+                        <strong>{workflowTypeToWorkflowName(workflow.type)}</strong>
+                    </Typography>
+                    <Typography variant={"body2"}>
+                        <strong>Status: </strong>{workflowStatusToWorkflowStatusString(workflow.status)}
+                    </Typography>
+                </Box>
+            </Popover>
+        </>
+    )
 }

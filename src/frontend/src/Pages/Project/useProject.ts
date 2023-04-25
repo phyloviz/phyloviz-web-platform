@@ -1,6 +1,6 @@
 import {useOutletContext, useParams} from "react-router-dom"
 import {useEffect, useState} from "react"
-import {Project} from "../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {Project} from "../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import AdministrationService from "../../Services/Administration/AdministrationService"
 import {Workflow} from "../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
 import ComputeService from "../../Services/Compute/ComputeService"

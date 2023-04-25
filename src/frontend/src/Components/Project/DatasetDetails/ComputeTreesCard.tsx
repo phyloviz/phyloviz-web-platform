@@ -4,7 +4,7 @@ import {Button, Menu, MenuItem} from "@mui/material"
 import * as React from "react"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../Pages/WebUiUris"
-import {ScatterPlot} from "@mui/icons-material"
+import {TreesIcon} from "../../Shared/Icons";
 
 /**
  * Card for the compute trees feature.
@@ -58,7 +58,7 @@ export function ComputeTreesCard() {
         </Typography>
         <Button
             variant="contained"
-            startIcon={<ScatterPlot/>}
+            startIcon={<TreesIcon/>}
             onClick={(event) => setAnchorEl(event.currentTarget)}
             sx={{mt: 4, width: "100%"}}
         >

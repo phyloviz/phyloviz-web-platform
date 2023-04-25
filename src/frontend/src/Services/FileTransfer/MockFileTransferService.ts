@@ -41,9 +41,15 @@ export namespace MockFileTransferService {
         file: File
     ): Promise<UploadIsolateDataOutputModel> {
         const isolateDataId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+        const keys = await file.text().then(text => {
+            const lines = text.split("\n")
+            return lines[0].split(/\s+/)
+        })
+
         mockProjects.get(projectId)!.files.isolateData.push({
             isolateDataId,
-            name: file.name
+            name: file.name,
+            keys: keys
         })
 
         return {

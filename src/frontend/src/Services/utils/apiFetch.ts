@@ -101,3 +101,13 @@ export async function post<T>(input: RequestInfo | URL, body: BodyInit, headers?
 export async function del<T>(input: RequestInfo | URL, body?: BodyInit): Promise<T> {
     return await apiFetch<T>(input, 'DELETE', body)
 }
+
+/**
+ * Sends a PATCH request to the web API.
+ *
+ * @param input the URL to fetch
+ * @param body the body of the request
+ */
+export async function patch<T>(input: RequestInfo | URL, body: BodyInit): Promise<T> {
+    return await apiFetch<T>(input, 'PATCH', body)
+}

@@ -1,5 +1,10 @@
 /**
  * A news item.
+ *
+ * @property title The title of the news.
+ * @property date The date of the news.
+ * @property description The description of the news.
+ * @property link The link to the news.
  */
 export interface News {
     title: string

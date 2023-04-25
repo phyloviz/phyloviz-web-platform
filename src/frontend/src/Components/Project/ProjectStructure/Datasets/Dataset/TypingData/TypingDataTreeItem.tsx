@@ -1,7 +1,7 @@
 import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
-import {Description} from "@mui/icons-material"
 import * as React from "react"
 import {useTypingDataTreeItem} from "./useTypingDataTreeItem"
+import {TypingDataIcon} from "../../../../../Shared/Icons";
 
 /**
  * Props for the TypingDataTreeItem component.
@@ -24,7 +24,7 @@ export function TypingDataTreeItem({nodeId, typingDataId}: TypingDataTreeItemPro
         <StyledTreeItem
             nodeId={nodeId}
             labelText="Typing Data"
-            labelIcon={Description}
+            labelIcon={TypingDataIcon}
             contextMenuItems={contextMenuItems}
         />
     )

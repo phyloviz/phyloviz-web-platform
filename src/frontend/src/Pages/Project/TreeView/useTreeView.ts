@@ -1,15 +1,15 @@
-import { useParams } from "react-router-dom"
-import { useEffect, useRef, useState } from 'react';
-import { TreeViewGraph } from "./cosmos/TreeViewGraph"
+import {useParams} from "react-router-dom"
+import {useEffect, useRef, useState} from 'react';
+import {TreeViewGraph} from "./cosmos/TreeViewGraph"
 import {
     Edge,
     GetTreeViewOutputModel,
     Node
 } from "../../../Services/Visualization/models/getTreeView/GetTreeViewOutputModel"
 import VisualizationService from "../../../Services/Visualization/VisualizationService"
-import { TreeView } from "../../../Services/Administration/models/getProject/GetProjectOutputModel"
-import { useProjectContext } from "../useProject"
-import { GraphConfigInterface } from "./cosmos/config"
+import {TreeView} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
+import {useProjectContext} from "../useProject"
+import {GraphConfigInterface} from "./cosmos/config"
 
 export type VizNode = {
     id: string
@@ -26,8 +26,8 @@ export type VizLink = {
  * Hook for the TreeView page.
  */
 export function useTreeView() {
-    const { projectId, datasetId, treeViewId } = useParams<{ projectId: string, datasetId: string, treeViewId: string }>()
-    const { project } = useProjectContext()
+    const {projectId, datasetId, treeViewId} = useParams<{ projectId: string, datasetId: string, treeViewId: string }>()
+    const {project} = useProjectContext()
     const [linkSpring, setLinkSpring] = useState(1)
     const [linkDistance, setLinkDistance] = useState(10)
     const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -128,12 +128,12 @@ export function useTreeView() {
         linkSpring,
         updateLinkSpring: (value: number) => {
             setLinkSpring(value)
-            graphRef.current?.setConfig({ simulation: { linkSpring: value } })
+            graphRef.current?.setConfig({simulation: {linkSpring: value}})
         },
         linkDistance,
         updateLinkDistance: (value: number) => {
             setLinkDistance(value)
-            graphRef.current?.setConfig({ simulation: { linkDistance: value } })
+            graphRef.current?.setConfig({simulation: {linkDistance: value}})
         },
         canvasRef
     }

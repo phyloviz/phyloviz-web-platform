@@ -1,8 +1,8 @@
-import {TreeView} from "../../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {TreeView} from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
-import {ScatterPlot} from "@mui/icons-material"
 import {TreeViewTreeItem} from "./TreeViewTreeItem"
 import * as React from "react"
+import {TreeViewsIcon} from "../../../../../Shared/Icons";
 
 /**
  * Props for the TreeViewsTreeItem component.
@@ -22,12 +22,16 @@ interface TreeViewsTreeItemProps {
  */
 export function TreeViewsTreeItem({nodeId, datasetId, treeViews}: TreeViewsTreeItemProps) {
     return (
-        <StyledTreeItem nodeId={nodeId} labelText="Tree Views" labelIcon={ScatterPlot}>
+        <StyledTreeItem
+            nodeId={nodeId}
+            labelText="Tree Views"
+            labelIcon={TreeViewsIcon}
+        >
             {
                 treeViews.map((treeView, index) => {
                     return (
                         <TreeViewTreeItem
-                            key={index}
+                            key={treeView.treeViewId}
                             nodeId={nodeId + index.toString()}
                             datasetId={datasetId}
                             treeView={treeView}

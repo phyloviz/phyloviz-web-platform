@@ -1,9 +1,9 @@
-import {Dataset} from "../../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {Dataset} from "../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
-import {Inventory2} from "@mui/icons-material"
 import {DatasetTreeItem} from "./Dataset/DatasetTreeItem"
 import * as React from "react"
 import {useDatasetsTreeItem} from "./useDatasetsTreeItem"
+import {DatasetsIcon} from "../../../Shared/Icons";
 
 /**
  * Props for the DatasetsTreeItem component.
@@ -26,7 +26,7 @@ export function DatasetsTreeItem({nodeId, datasets}: DatasetsTreeItemProps) {
         <StyledTreeItem
             nodeId={nodeId}
             labelText="Datasets"
-            labelIcon={Inventory2}
+            labelIcon={DatasetsIcon}
             contextMenuItems={contextMenuItems}
         >
             {

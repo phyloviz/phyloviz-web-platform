@@ -3,15 +3,16 @@ import {TreeView} from "@mui/lab"
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import {WorkflowsTreeItem} from "./Workflows/WorkflowsTreeItem"
-import {Project} from "../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {Project} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {Workflow} from "../../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
-import {AccountTree, Info} from "@mui/icons-material"
+import {Edit, Info} from "@mui/icons-material"
 import {WebUiUris} from "../../../Pages/WebUiUris"
 import {DatasetsTreeItem} from "./Datasets/DatasetsTreeItem"
 import {StyledTreeItem} from "./Utils/StyledTreeItem"
 import {useNavigate} from "react-router-dom"
 import LoadingSpinner from "../../Shared/LoadingSpinner"
 import {FilesTreeItem} from "./Files/FilesTreeItem"
+import {ProjectIcon} from "../../Shared/Icons";
 
 /**
  * Properties of the project structure.
@@ -52,12 +53,17 @@ export function ProjectStructure({project, workflows, loading}: ProjectStructure
             <StyledTreeItem
                 nodeId="fileManager"
                 labelText={project?.name ?? "Project"}
-                labelIcon={AccountTree}
+                labelIcon={ProjectIcon}
                 contextMenuItems={[
                     {
-                        label: "Project Details",
+                        label: "Details",
                         icon: Info,
                         onClick: () => navigate(WebUiUris.project(project?.projectId!))
+                    },
+                    {
+                        label: "Edit",
+                        icon: Edit,
+                        onClick: () => navigate(WebUiUris.editProject(project?.projectId!))
                     }
                 ]}
             >

@@ -1,10 +1,10 @@
 import * as React from "react"
-import {Folder} from "@mui/icons-material"
-import {ProjectFiles} from "../../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {ProjectFiles} from "../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
 import {useFilesTreeItem} from "./useFilesTreeItem"
 import {TypingDataFileTreeItem} from "./TypingData/TypingDataFileTreeItem"
 import {IsolateDataFileTreeItem} from "./IsolateData/IsolateDataFileTreeItem"
+import {FilesIcon} from "../../../Shared/Icons";
 
 /**
  * Props for the FilesTreeItem component.
@@ -27,7 +27,7 @@ export function FilesTreeItem({nodeId, files}: FilesTreeItemProps) {
         <StyledTreeItem
             nodeId={nodeId}
             labelText="Files"
-            labelIcon={Folder}
+            labelIcon={FilesIcon}
             contextMenuItems={contextMenuItems}
         >
             {
@@ -51,4 +51,3 @@ export function FilesTreeItem({nodeId, files}: FilesTreeItemProps) {
         </StyledTreeItem>
     )
 }
-

@@ -4,7 +4,7 @@ import {Button, Menu, MenuItem} from "@mui/material"
 import * as React from "react"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../Pages/WebUiUris"
-import {TableView} from "@mui/icons-material"
+import {DistanceMatricesIcon} from "../../Shared/Icons";
 
 /**
  * Card for the compute distances feature.
@@ -42,7 +42,7 @@ export function ComputeDistancesCard() {
         </Typography>
         <Button
             variant="contained"
-            startIcon={<TableView/>}
+            startIcon={<DistanceMatricesIcon/>}
             onClick={(event) => setAnchorEl(event.currentTarget)}
             sx={{mt: 4, width: "100%"}}
         >

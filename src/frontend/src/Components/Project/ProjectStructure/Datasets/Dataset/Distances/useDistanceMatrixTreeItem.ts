@@ -1,4 +1,6 @@
-import {DistanceMatrix} from "../../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {
+    DistanceMatrix
+} from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {Delete, Download, Visibility} from "@mui/icons-material"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../../../../Pages/WebUiUris"

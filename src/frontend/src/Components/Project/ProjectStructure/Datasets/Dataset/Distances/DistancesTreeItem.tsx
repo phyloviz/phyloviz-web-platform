@@ -1,8 +1,10 @@
 import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
-import {TableView} from "@mui/icons-material"
 import {DistanceMatrixTreeItem} from "./DistanceMatrixTreeItem"
 import * as React from "react"
-import {DistanceMatrix} from "../../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {
+    DistanceMatrix
+} from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
+import {DistanceMatricesIcon} from "../../../../../Shared/Icons";
 
 
 /**
@@ -23,12 +25,16 @@ interface DistancesTreeItemProps {
  */
 export function DistancesTreeItem({nodeId, datasetId, distanceMatrices}: DistancesTreeItemProps) {
     return (
-        <StyledTreeItem nodeId={nodeId} labelText="Distances" labelIcon={TableView}>
+        <StyledTreeItem
+            nodeId={nodeId}
+            labelText="Distances"
+            labelIcon={DistanceMatricesIcon}
+        >
             {
                 distanceMatrices.map((distance, index) => {
                     return (
                         <DistanceMatrixTreeItem
-                            key={index}
+                            key={distance.distanceMatrixId}
                             nodeId={nodeId + index.toString()}
                             datasetId={datasetId}
                             distanceMatrix={distance}

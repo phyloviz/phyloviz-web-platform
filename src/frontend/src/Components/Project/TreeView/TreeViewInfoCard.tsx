@@ -6,12 +6,12 @@ import Typography from "@mui/material/Typography"
 import List from "@mui/material/List"
 import ListItemButton from "@mui/material/ListItemButton"
 import ListItemIcon from "@mui/material/ListItemIcon"
-import {Description, FilePresent, Forest} from "@mui/icons-material"
 import ListItemText from "@mui/material/ListItemText"
 import {WebUiUris} from "../../../Pages/WebUiUris"
 import {styled} from "@mui/material/styles"
 import IconButton from "@mui/material/IconButton"
-import {TreeView} from "../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {TreeView} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
+import {IsolateDataIcon, TreeIcon, TypingDataIcon} from "../../Shared/Icons";
 
 /**
  * Props for the TreeViewInfoCard component.
@@ -68,7 +68,7 @@ export function TreeViewInfoCard({treeView}: TreeViewInfoCardProps) {
                 <List dense>
                     <ListItem disablePadding>
                         <ListItemButton>
-                            <ListItemIcon><Forest/></ListItemIcon>
+                            <ListItemIcon><TreeIcon/></ListItemIcon>
                             <ListItemText primary="Tree"/>
                         </ListItemButton>
                     </ListItem>
@@ -78,7 +78,7 @@ export function TreeViewInfoCard({treeView}: TreeViewInfoCardProps) {
                             <ListItemButton
                                 onClick={() => navigate(WebUiUris.typingData(projectId!, treeView.source.typingDataId!))}
                             >
-                                <ListItemIcon><Description/></ListItemIcon>
+                                <ListItemIcon><TypingDataIcon/></ListItemIcon>
                                 <ListItemText primary="Typing Data"/>
                             </ListItemButton>
                         </ListItem>
@@ -89,7 +89,7 @@ export function TreeViewInfoCard({treeView}: TreeViewInfoCardProps) {
                             <ListItemButton
                                 onClick={() => navigate(WebUiUris.isolateData(projectId!, treeView.source.isolateDataId!))}
                             >
-                                <ListItemIcon><FilePresent/></ListItemIcon>
+                                <ListItemIcon><IsolateDataIcon/></ListItemIcon>
                                 <ListItemText primary="Isolate Data"/>
                             </ListItemButton>
                         </ListItem>

@@ -9,13 +9,13 @@ import {useNavigate} from "react-router-dom"
  */
 export function useCompute() {
     const navigate = useNavigate()
-    const {project, onFileStructureUpdate, onWorkflowsUpdate} = useProjectContext()
+    const {project, onWorkflowsUpdate} = useProjectContext()
     const [error, setError] = useState<string | null>(null)
 
     /**
      * Creates a new workflow.
      *
-     * @param workflow
+     * @param workflow The workflow to create
      */
     function createWorkflow(workflow: CreateWorkflowInputModel) {
         ComputeService.createWorkflow(project?.projectId!, workflow)

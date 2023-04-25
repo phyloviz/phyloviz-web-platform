@@ -4,7 +4,7 @@ import {ReactNode} from "react"
 import {DatasetType} from "../../../Pages/Project/CreateDataset/useCreateDataset"
 import Typography from "@mui/material/Typography"
 import {FileUploader} from "react-drag-drop-files"
-import {TypingDataFile} from "../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {TypingDataFile} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 
 /**
  * Props for the TypingDataStepCard component.
@@ -19,7 +19,7 @@ interface TypingDataStepCardProps {
     datasetType: DatasetType
     typingData: TypingDataFile[]
     selectedTypingData: string | null
-    onFileSelecterChange: (event: SelectChangeEvent<string>, child: ReactNode) => void
+    onFileSelecterChange: (event: SelectChangeEvent, child: ReactNode) => void
     onFileUploaderChange: (file: React.SetStateAction<File | null>) => void
 }
 
@@ -47,6 +47,7 @@ export function TypingDataStepCard(
                     label="Typing Data"
                     value={selectedTypingData ?? ""}
                     onChange={onFileSelecterChange}
+                    MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
                     {typingData.map((typingDataFile) => (
                         <MenuItem key={typingDataFile.typingDataId}

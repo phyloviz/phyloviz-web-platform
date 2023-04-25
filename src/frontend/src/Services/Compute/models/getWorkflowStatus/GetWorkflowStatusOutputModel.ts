@@ -2,7 +2,7 @@ export interface GetWorkflowStatusOutputModel {
     workflowId: string
     type: WorkflowType
     status: WorkflowStatus
-    data?: Map<string, object>
+    data?: Map<string, any>
 }
 
 export type Workflow = GetWorkflowStatusOutputModel
@@ -10,7 +10,7 @@ export type Workflow = GetWorkflowStatusOutputModel
 export type WorkflowType = "compute-distance-matrix" | "compute-tree" | "compute-tree-view" |
     "index-typing-data" | "index-isolate-data" | "index-tree"
 
-export type WorkflowStatus = "RUNNING" | "COMPLETED" | "FAILED"
+export type WorkflowStatus = "RUNNING" | "SUCCESS" | "FAILED"
 
 /**
  * Convert a workflow type to a more readable workflow name.
@@ -45,8 +45,8 @@ export function workflowStatusToWorkflowStatusString(status: WorkflowStatus): st
     switch (status) {
         case "RUNNING":
             return "Running"
-        case "COMPLETED":
-            return "Completed"
+        case "SUCCESS":
+            return "Success"
         case "FAILED":
             return "Failed"
     }

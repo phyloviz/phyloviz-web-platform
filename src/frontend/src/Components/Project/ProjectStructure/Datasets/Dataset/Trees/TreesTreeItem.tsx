@@ -1,8 +1,8 @@
-import {Tree} from "../../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
+import {Tree} from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
-import {Forest} from "@mui/icons-material"
 import {TreeTreeItem} from "./TreeTreeItem"
 import * as React from "react"
+import {TreesIcon} from "../../../../../Shared/Icons";
 
 /**
  * Props for the TreeViewsTreeItem component.
@@ -22,12 +22,16 @@ interface TreesTreeItemProps {
  */
 export function TreesTreeItem({nodeId, datasetId, trees}: TreesTreeItemProps) {
     return (
-        <StyledTreeItem nodeId={nodeId} labelText="Trees" labelIcon={Forest}>
+        <StyledTreeItem
+            nodeId={nodeId}
+            labelText="Trees"
+            labelIcon={TreesIcon}
+        >
             {
                 trees.map((tree, index) => {
                     return (
                         <TreeTreeItem
-                            key={index}
+                            key={tree.treeId}
                             nodeId={nodeId + index.toString()}
                             datasetId={datasetId}
                             tree={tree}

@@ -12,10 +12,7 @@ import {
  * Hook for IsolateData page.
  */
 export function useIsolateData() {
-    const {projectId, typingDataId} = useParams<{
-        projectId: string,
-        typingDataId: string
-    }>()
+    const {projectId, isolateDataId} = useParams<{ projectId: string, isolateDataId: string }>()
 
     const [isolateDataSchema, setIsolateDataSchema] = useState<GetIsolateDataSchemaOutputModel>()
     const [isolateDataRows, setIsolateDataRows] = useState<GetIsolateDataRowsOutputModel>()
@@ -24,15 +21,15 @@ export function useIsolateData() {
 
     useEffect(() => {
         setLoading(true)
-        VisualizationService.getIsolateDataSchema(projectId!, typingDataId!)
+        VisualizationService.getIsolateDataSchema(projectId!, isolateDataId!)
             .then((res) => setIsolateDataSchema(res))
             .catch((err) => setError(err))
 
-        VisualizationService.getIsolateDataRows(projectId!, typingDataId!)
+        VisualizationService.getIsolateDataRows(projectId!, isolateDataId!)
             .then((res) => setIsolateDataRows(res))
             .catch((err) => setError(err))
             .finally(() => setLoading(false))
-    }, [projectId, typingDataId])
+    }, [projectId, isolateDataId])
 
     return {
         data: {
