@@ -24,9 +24,7 @@ export default function LoadingSpinner({text}: LoadingSpinnerProps) {
             alignItems: 'center',
         }}>
             <CircularProgress/>
-            {
-                text && <Typography variant="h6">{text}</Typography>
-            }
+            {text && <Typography variant="h6">{text}</Typography>}
         </Box>
     )
 }

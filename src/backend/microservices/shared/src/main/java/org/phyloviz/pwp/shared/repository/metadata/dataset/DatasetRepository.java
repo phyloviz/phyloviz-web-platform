@@ -37,4 +37,12 @@ public interface DatasetRepository {
      * @return a list of datasets
      */
     List<Dataset> findAllByProjectId(String projectId);
+
+    Optional<Dataset> findByProjectIdAndId(String projectId, String datasetId);
+
+    boolean existsByProjectIdAndId(String projectId, String datasetId);
+
+    boolean existsByProjectIdAndTypingDataId(String projectId, String typingDataId);
+
+    boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
 }

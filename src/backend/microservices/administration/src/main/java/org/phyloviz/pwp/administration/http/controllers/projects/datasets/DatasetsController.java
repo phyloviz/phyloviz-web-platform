@@ -6,7 +6,7 @@ import org.phyloviz.pwp.administration.http.models.datasets.create_dataset.Creat
 import org.phyloviz.pwp.administration.http.models.datasets.delete_dataset.DeleteDatasetOutputModel;
 import org.phyloviz.pwp.administration.http.models.datasets.get_dataset.GetDatasetOutputModel;
 import org.phyloviz.pwp.administration.http.models.datasets.get_datasets.GetDatasetsOutputModel;
-import org.phyloviz.pwp.administration.http.service.project.dataset.DatasetService;
+import org.phyloviz.pwp.administration.service.project.dataset.DatasetService;
 import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.shared.service.dtos.dataset.CreateDatasetOutput;
 import org.phyloviz.pwp.shared.service.dtos.dataset.FullDatasetInfo;
@@ -47,6 +47,7 @@ public class DatasetsController {
                 createDatasetInputModel.getDescription(),
                 createDatasetInputModel.getTypingDataId(),
                 createDatasetInputModel.getIsolateDataId(),
+                createDatasetInputModel.getIsolateDataKey(),
                 projectId,
                 user.getId()
         );

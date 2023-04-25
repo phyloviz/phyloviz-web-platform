@@ -1,12 +1,12 @@
 import {useParams} from "react-router-dom"
-import VisualizationService from "../../../Services/visualization/VisualizationService"
+import VisualizationService from "../../../Services/Visualization/VisualizationService"
 import {useEffect, useState} from "react"
 import {
     GetTypingDataProfilesOutputModel
-} from "../../../Services/visualization/models/getTypingDataProfiles/GetTypingDataProfilesOutputModel"
+} from "../../../Services/Visualization/models/getTypingDataProfiles/GetTypingDataProfilesOutputModel"
 import {
     GetTypingDataSchemaOutputModel
-} from "../../../Services/visualization/models/getTypingDataSchema/GetTypingDataSchemaOutputModel"
+} from "../../../Services/Visualization/models/getTypingDataSchema/GetTypingDataSchemaOutputModel"
 
 /**
  * Hook for typing data page.

@@ -97,14 +97,12 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
     end_time = time.time()
     print("Time taken: ", end_time - start_time, " seconds +- 5 seconds")
 
-    # TODO: Maybe it's not necessary to add this to worflow extra data?
+    # TODO: Maybe it's not necessary to add this to workflow extra data?
     # Update the workflow with the resource_id
     workflows_collection.update_one(
         {'_id': ObjectId(workflow_id)},
         {'$set': {
-            'data': {
-                'visualizationId': visualization_id,
-            }
+            'data.visualizationId': visualization_id
         }})
 
     # Create the metadata in the resourceType collection
@@ -126,25 +124,13 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
         }
     }
 
-    dataset = datasets_collection.find_one({'_id': ObjectId(dataset_id)})
-
-    ids = dataset['distanceMatrixIds']
-    ids.append(visualization_id)
-
-    datasets_collection.update_one(
-        {'_id': dataset['_id']},
-        {'$set': {
-            'treeViewIds': ids
-        }}
-    )
-
     tree_views_collection.insert_one(tree_view_metadata)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Index typing data into PHYLODB')
     parser.add_argument('--project-id', help='The project Id', required=True)
-    parser.add_argument('--dataset-id', help='The dat   aset Id', required=True)
+    parser.add_argument('--dataset-id', help='The dataset Id', required=True)
     parser.add_argument('--tree-id', help='The tree Id', required=True)
     parser.add_argument('--workflow-id', help='The workflow Id', required=True)
 

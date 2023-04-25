@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * Output DTO for the getTreeView service.
+ * Output for the getTreeView service.
  */
 @Data
 public class GetTreeViewOutput {

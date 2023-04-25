@@ -8,6 +8,8 @@ import org.phyloviz.pwp.shared.adapters.isolate_data.adapter.specific_data.Isola
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 /**
  * Metadata for a representation of an isolate data.
  */
@@ -21,14 +23,16 @@ public class IsolateDataMetadata {
 
     private String projectId;
     private String isolateDataId;
+    private List<String> keys;
     private String name;
     private IsolateDataAdapterId adapterId;
     private IsolateDataAdapterSpecificData adapterSpecificData;
 
-    public IsolateDataMetadata(String projectId, String isolateDataId, String name, IsolateDataAdapterId adapterId,
-                               IsolateDataAdapterSpecificData adapterSpecificData) {
+    public IsolateDataMetadata(String projectId, String isolateDataId, List<String> keys, String name,
+                               IsolateDataAdapterId adapterId, IsolateDataAdapterSpecificData adapterSpecificData) {
         this.projectId = projectId;
         this.isolateDataId = isolateDataId;
+        this.keys = keys;
         this.name = name;
         this.adapterId = adapterId;
         this.adapterSpecificData = adapterSpecificData;

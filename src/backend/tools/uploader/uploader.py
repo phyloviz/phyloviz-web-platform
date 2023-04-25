@@ -31,10 +31,10 @@ def tree_handler(s3_output_path, project_id, dataset_id, tree_id, workflow_id):
     workflows_collection.update_one(
         {'_id': ObjectId(workflow_id)},
         {'$set': {
-            'data': {
-                'treeId': tree_id
-            }
+            'data.treeId': tree_id
         }})
+
+    # TODO: fetch the tree parameters (sourceType, source) from the workflow instance data
 
     tree_metadata = {
         'treeId': tree_id,
@@ -52,19 +52,6 @@ def tree_handler(s3_output_path, project_id, dataset_id, tree_id, workflow_id):
         }
     }
 
-    dataset = datasets_collection.find_one({'_id': ObjectId(dataset_id)})
-
-    ids = dataset['distanceMatrixIds']
-
-    ids.append(tree_id)
-
-    datasets_collection.update_one(
-        {'_id': dataset['_id']},
-        {'$set': {
-            'treeIds': ids
-        }}
-    )
-
     tree_collection.insert_one(tree_metadata)
 
     print(f'File uploaded to S3 and metadata created in the tree collection with treeId: {tree_id}')
@@ -76,10 +63,10 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, distance_mat
     workflows_collection.update_one(
         {'_id': ObjectId(workflow_id)},
         {'$set': {
-            'data': {
-                'distanceMatrixId': distance_matrix_id
-            }
+            'data.distanceMatrixId': distance_matrix_id
         }})
+
+    # TODO: fetch the distance matrix parameters (sourceType, source) from the workflow instance data
 
     distance_matrix_metadata = {
         'projectId': project_id,
@@ -95,18 +82,6 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, distance_mat
             'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
         }
     }
-
-    dataset = datasets_collection.find_one({'_id': ObjectId(dataset_id)})
-
-    ids = dataset['distanceMatrixIds']
-
-    ids.append(distance_matrix_id)
-    datasets_collection.update_one(
-        {'_id': dataset['_id']},
-        {'$set': {
-            'distanceMatrixIds': ids
-        }}
-    )
 
     distance_matrix_collection.insert_one(distance_matrix_metadata)
 
@@ -157,5 +132,5 @@ if __name__ == '__main__':
     parser.add_argument('--resource-type', help='The resource type', required=True)
     args = parser.parse_args()
 
-    upload_file_to_s3(args.file_path, args.project_id, args.dataset_id, iargs.resource_id, args.resource_type,
+    upload_file_to_s3(args.file_path, args.project_id, args.dataset_id, args.resource_id, args.resource_type,
                       args.workflow_id)

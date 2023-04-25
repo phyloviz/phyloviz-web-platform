@@ -1,6 +1,6 @@
 import {useState} from "react"
-import ComputeService from "../../../Services/compute/ComputeService"
-import {CreateWorkflowInputModel} from "../../../Services/compute/models/createWorkflow/CreateWorkflowInputModel"
+import ComputeService from "../../../Services/Compute/ComputeService"
+import {CreateWorkflowInputModel} from "../../../Services/Compute/models/createWorkflow/CreateWorkflowInputModel"
 import {useProjectContext} from "../useProject"
 import {useNavigate} from "react-router-dom"
 

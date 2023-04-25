@@ -25,8 +25,9 @@ export default function Project() {
         <Box sx={{
             display: "flex",
             flexDirection: "row",
-            height: '90%', //TODO: There is still a bit of margin in the bottom, fix it.
+            height: '92%',
             width: '100%',
+            position: "relative"
         }}>
             <ProjectStructure project={project} workflows={workflows} loading={loadingFiles || loadingWorkflows}/>
             {

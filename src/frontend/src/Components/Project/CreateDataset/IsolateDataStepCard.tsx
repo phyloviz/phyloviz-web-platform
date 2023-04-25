@@ -3,7 +3,7 @@ import {ReactNode} from "react"
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 import Typography from "@mui/material/Typography"
 import {FileUploader} from "react-drag-drop-files"
-import {IsolateDataFile} from "../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {IsolateDataFile} from "../../../Services/Administration/models/getProject/GetProjectOutputModel"
 
 /**
  * Props for the IsolateDataStepCard component.
@@ -52,6 +52,8 @@ export function IsolateDataStepCard(
                     label="Isolate Data"
                     value={selectedIsolateData ?? ""}
                     onChange={onFileSelecterChange}
+                    // TODO: Limit height of the menu (the code below doesn't work)
+                    MenuProps={{PaperProps: {style: {maxHeight: 100}}}}
                 >
                     {isolateData.map((isolateDataFile) => (
                         <MenuItem key={isolateDataFile.isolateDataId}

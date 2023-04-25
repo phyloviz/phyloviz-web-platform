@@ -2,7 +2,7 @@ import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
 import {TableView} from "@mui/icons-material"
 import {DistanceMatrixTreeItem} from "./DistanceMatrixTreeItem"
 import * as React from "react"
-import {DistanceMatrix} from "../../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {DistanceMatrix} from "../../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
 
 
 /**

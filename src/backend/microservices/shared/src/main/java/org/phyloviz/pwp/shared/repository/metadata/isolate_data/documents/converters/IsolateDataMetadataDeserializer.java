@@ -37,6 +37,7 @@ public class IsolateDataMetadataDeserializer implements Converter<Document, Isol
                     document.getObjectId("_id").toString(),
                     document.getString("projectId"),
                     document.getString("isolateDataId"),
+                    document.getList("keys", String.class),
                     document.getString("name"),
                     adapterId,
                     adapterSpecificData

@@ -36,4 +36,22 @@ public interface ProjectRepository {
      * @return a list of projects
      */
     List<Project> findAllByOwnerId(String ownerId);
+
+    /**
+     * Find a project given its id and the id of its owner.
+     *
+     * @param id      the id of the project
+     * @param ownerId the id of the owner of the project
+     * @return the project
+     */
+    Optional<Project> findByIdAndOwnerId(String id, String ownerId);
+
+    /**
+     * Checks if a project exists given its id and the id of its owner.
+     *
+     * @param id      the id of the project
+     * @param ownerId the id of the owner of the project
+     * @return true if the project exists, false otherwise
+     */
+    boolean existsByIdAndOwnerId(String id, String ownerId);
 }

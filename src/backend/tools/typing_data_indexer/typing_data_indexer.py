@@ -232,14 +232,12 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
     upload_allele_profiles(project_id, dataset_id, typing_data_file_path)
     print("Done uploading allele profiles")
 
-    # TODO: Maybe it's not necessary to add this to worflow extra data?
+    # TODO: Maybe it's not necessary to add this to workflow extra data?
     # Update the workflow with the resource_id
     workflows_collection.update_one(
         {'_id': ObjectId(workflow_id)},
         {'$set': {
-            'data': {
-                'datasetId': dataset_id,
-            }
+            'data.datasetId': dataset_id
         }})
 
     typing_data_id = dataset_collection.find_one({'_id': ObjectId(dataset_id)})['typingDataId']
@@ -251,7 +249,6 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
             'projectId': project_id,
             'typingDataId': typing_data_id,
             'name': 'Typing Data ' + typing_data_id,
-
             'adapterId': 'phylodb',
             'adapterSpecificData': {
                 'datasetIds': [dataset_id]
@@ -260,13 +257,10 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
 
         typing_data_collection.insert_one(typing_data_metadata)
     else:
-        ids = typing_data_metadata['adapterSpecificData']['datasetIds']
-        ids.append(dataset_id)
-
         typing_data_collection.update_one(
             {'_id': typing_data_metadata['_id']},
-            {'$set': {
-                'adapterSpecificData.datasetIds':  ids
+            {'$push': {
+                'adapterSpecificData.datasetIds': dataset_id
             }}
         )
 

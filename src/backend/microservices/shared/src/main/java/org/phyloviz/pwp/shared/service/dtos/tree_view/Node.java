@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * DTO for a tree node.
+ * Node on a tree view.
  */
 @Data
 public class Node {

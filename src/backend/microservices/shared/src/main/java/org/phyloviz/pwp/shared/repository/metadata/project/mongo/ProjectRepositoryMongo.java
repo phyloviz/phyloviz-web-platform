@@ -33,4 +33,14 @@ public class ProjectRepositoryMongo implements ProjectRepository {
     public List<Project> findAllByOwnerId(String ownerId) {
         return projectMongoRepository.findAllByOwnerId(ownerId);
     }
+
+    @Override
+    public Optional<Project> findByIdAndOwnerId(String id, String ownerId) {
+        return projectMongoRepository.findByIdAndOwnerId(id, ownerId);
+    }
+
+    @Override
+    public boolean existsByIdAndOwnerId(String id, String ownerId) {
+        return projectMongoRepository.existsByIdAndOwnerId(id, ownerId);
+    }
 }

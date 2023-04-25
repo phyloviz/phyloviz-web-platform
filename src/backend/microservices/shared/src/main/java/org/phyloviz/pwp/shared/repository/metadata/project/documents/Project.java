@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 /**
  * A project is a collection of resources.
  */
@@ -22,14 +20,10 @@ public class Project {
     private String name;
     private String description;
     private String ownerId;
-    private List<String> datasetIds;
-    private FileIds fileIds;
 
-    public Project(String name, String description, String ownerId, List<String> datasetIds, FileIds fileIds) {
+    public Project(String name, String description, String ownerId) {
         this.name = name;
         this.description = description;
         this.ownerId = ownerId;
-        this.datasetIds = datasetIds;
-        this.fileIds = fileIds;
     }
 }

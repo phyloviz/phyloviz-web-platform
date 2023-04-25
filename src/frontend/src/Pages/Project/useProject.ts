@@ -1,9 +1,9 @@
 import {useOutletContext, useParams} from "react-router-dom"
 import {useEffect, useState} from "react"
-import {Project} from "../../Services/administration/models/getProject/GetProjectOutputModel"
-import AdministrationService from "../../Services/administration/AdministrationService"
-import {Workflow} from "../../Services/compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
-import ComputeService from "../../Services/compute/ComputeService"
+import {Project} from "../../Services/Administration/models/getProject/GetProjectOutputModel"
+import AdministrationService from "../../Services/Administration/AdministrationService"
+import {Workflow} from "../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+import ComputeService from "../../Services/Compute/ComputeService"
 import {useInterval} from "../../Components/Shared/Hooks/useInterval"
 
 /**

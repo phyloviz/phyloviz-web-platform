@@ -1,9 +1,9 @@
-import {Dataset} from "../../../../../Services/administration/models/getProject/GetProjectOutputModel"
+import {Dataset} from "../../../../../Services/Administration/models/getProject/GetProjectOutputModel"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../../../Pages/WebUiUris"
 import {Delete, Info, ScatterPlot, Summarize, TableView} from "@mui/icons-material"
 import {useDeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdrop"
-import AdministrationService from "../../../../../Services/administration/AdministrationService"
+import AdministrationService from "../../../../../Services/Administration/AdministrationService"
 import {useState} from "react"
 
 /**

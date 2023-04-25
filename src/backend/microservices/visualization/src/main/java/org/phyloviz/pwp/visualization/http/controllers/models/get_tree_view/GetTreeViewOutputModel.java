@@ -2,7 +2,6 @@ package org.phyloviz.pwp.visualization.http.controllers.models.get_tree_view;
 
 import lombok.Data;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
-import org.phyloviz.pwp.visualization.http.controllers.models.getTreeView.EdgeModel;
 
 import java.util.List;
 

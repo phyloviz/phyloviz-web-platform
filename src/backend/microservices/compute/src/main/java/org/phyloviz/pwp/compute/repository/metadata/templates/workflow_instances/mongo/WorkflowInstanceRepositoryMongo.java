@@ -5,6 +5,7 @@ import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_instances
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_instances.documents.WorkflowInstance;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,6 +17,21 @@ public class WorkflowInstanceRepositoryMongo implements WorkflowInstanceReposito
     @Override
     public Optional<WorkflowInstance> findById(String id) {
         return workflowInstanceMongoRepository.findById(id);
+    }
+
+    @Override
+    public List<WorkflowInstance> findAllByProjectId(String projectId) {
+        return workflowInstanceMongoRepository.findAllByProjectId(projectId);
+    }
+
+    @Override
+    public List<WorkflowInstance> findAllByProjectIdAndNotRunning(String projectId) {
+        return workflowInstanceMongoRepository.findAllByProjectIdAndNotRunning(projectId);
+    }
+
+    @Override
+    public List<WorkflowInstance> findAllByProjectIdAndRunning(String projectId) {
+        return workflowInstanceMongoRepository.findAllByProjectIdAndRunning(projectId);
     }
 
     @Override

@@ -13,9 +13,13 @@ public class WorkflowInstance {
     @Id
     private String id;
 
+    private String projectId;
+
     private String type;
 
     private Workflow workflow;
+
+    private WorkflowStatus status;
 
     private Map<String, Object> data;
 }

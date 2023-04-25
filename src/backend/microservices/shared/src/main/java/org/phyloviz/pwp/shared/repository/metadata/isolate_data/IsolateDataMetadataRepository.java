@@ -55,4 +55,8 @@ public interface IsolateDataMetadataRepository {
      * @param isolateDataMetadata the isolate data metadata to delete
      */
     void delete(IsolateDataMetadata isolateDataMetadata);
+
+    Optional<IsolateDataMetadata> findByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
+
+    boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
 }

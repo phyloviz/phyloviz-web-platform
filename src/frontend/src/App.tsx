@@ -1,5 +1,4 @@
 import * as React from 'react'
-import {useEffect} from 'react'
 import './App.css'
 import {Route, Routes} from 'react-router-dom'
 import About from "./Pages/About/About"
@@ -14,7 +13,7 @@ import OpenProject from "./Pages/OpenProject/OpenProject"
 import Project from "./Pages/Project/Project"
 import {NotFoundPage} from "./Pages/NotFoundPage"
 import UploadFiles from "./Pages/Project/UploadFiles/UploadFiles"
-import {useLoggedIn, useSessionManager} from "./Session/Session"
+import {useLoggedIn} from "./Session/Session"
 import GoeBURSTConfig from "./Pages/Project/Compute/Tree/GoeBURSTConfig/GoeBURSTConfig"
 import GoeBURSTFullMSTConfig from "./Pages/Project/Compute/Tree/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfig"
 import HierarchicalClusteringConfig

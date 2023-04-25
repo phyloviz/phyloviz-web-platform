@@ -45,4 +45,40 @@ public interface DistanceMatrixMetadataMongoRepository extends MongoRepository<D
      * @return a list of distance matrix metadata
      */
     List<DistanceMatrixMetadata> findAllByDatasetId(String datasetId);
+
+    /**
+     * Find all distance matrix metadata from a project id, dataset id and distance matrix id.
+     *
+     * @param projectId        the id of the project
+     * @param datasetId        the id of the dataset
+     * @param distanceMatrixId the id of the distance matrix
+     * @return a list of distance matrix metadata
+     */
+    List<DistanceMatrixMetadata> findAllByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId);
+
+    /**
+     * Find a distance matrix metadata from a project id, dataset id, distance matrix id and adapter id.
+     *
+     * @param projectId        the id of the project
+     * @param datasetId        the id of the dataset
+     * @param distanceMatrixId the id of the distance matrix
+     * @param adapterId        the id of the adapter
+     * @return a distance matrix metadata
+     */
+    @Query("{ 'projectId' : ?0, 'datasetId' : ?1, 'distanceMatrixId' : ?2, 'adapterId' : ?3 }")
+    Optional<DistanceMatrixMetadata> findByProjectIdAndDatasetIdAndDistanceMatrixIdAndAdapterId(
+            String projectId, String datasetId, String distanceMatrixId, String adapterId
+    );
+
+    List<DistanceMatrixMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);
+
+    /**
+     * Check if a distance matrix metadata exists from a project id, dataset id and distance matrix id.
+     *
+     * @param projectId        the id of the project
+     * @param datasetId        the id of the dataset
+     * @param distanceMatrixId the id of the distance matrix
+     * @return true if exists, false otherwise
+     */
+    boolean existsByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId);
 }

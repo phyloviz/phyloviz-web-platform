@@ -1,5 +1,6 @@
 package org.phyloviz.pwp.shared.repository.data;
 
+import org.phyloviz.pwp.shared.service.exceptions.MultipartFileReadException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
@@ -86,7 +87,7 @@ public class S3FileRepositoryImpl implements S3FileRepository {
                 .key(url.substring(getLocation().length()))
                 .build();
 
-        s3Client.deleteObject(deleteObjectRequest);
+        s3Client.deleteObject(deleteObjectRequest); // TODO throw exception if not successful
 
         return true;
     }

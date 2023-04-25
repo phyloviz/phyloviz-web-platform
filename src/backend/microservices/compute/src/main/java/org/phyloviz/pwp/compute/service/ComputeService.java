@@ -40,11 +40,29 @@ public interface ComputeService {
     GetWorkflowStatusOutput getWorkflowStatus(String projectId, String workflowId, String userId);
 
     /**
-     * Gets the workflows of a project.
+     * Gets all the workflows of a project.
      *
      * @param projectId the project id where the workflows are located
      * @param userId    the id of the user who is requesting the workflows
      * @return the output information of the workflows
      */
-    List<GetWorkflowStatusOutput> getWorkflows(String projectId, String userId);
+    List<GetWorkflowStatusOutput> getAllWorkflows(String projectId, String userId);
+
+    /**
+     * Gets all the running workflows of a project.
+     *
+     * @param projectId the project id where the workflows are located
+     * @param userId    the id of the user who is requesting the workflows
+     * @return the output information of the workflows
+     */
+    List<GetWorkflowStatusOutput> getAllRunningWorkflows(String projectId, String userId);
+
+    /**
+     * Gets all the not running workflows of a project.
+     *
+     * @param projectId the project id where the workflows are located
+     * @param userId    the id of the user who is requesting the workflows
+     * @return the output information of the workflows
+     */
+    List<GetWorkflowStatusOutput> getAllNotRunningWorkflows(String projectId, String userId);
 }

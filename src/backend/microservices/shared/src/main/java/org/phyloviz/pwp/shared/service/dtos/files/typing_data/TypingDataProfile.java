@@ -3,7 +3,7 @@ package org.phyloviz.pwp.shared.service.dtos.files.typing_data;
 import lombok.Data;
 
 /**
- * DTO for a profile.
+ * Profile of a typing data.
  */
 @Data
 public class TypingDataProfile {

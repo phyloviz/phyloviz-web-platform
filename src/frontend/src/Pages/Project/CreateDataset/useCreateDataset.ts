@@ -3,7 +3,8 @@ import {useState} from "react"
 import {useNavigate} from "react-router-dom"
 import {SelectChangeEvent} from "@mui/material"
 import {useProjectContext} from "../useProject"
-import AdministrationService from "../../../Services/administration/AdministrationService"
+import AdministrationService from "../../../Services/Administration/AdministrationService"
+import FileTransferService from "../../../Services/FileTransfer/FileTransferService";
 
 export enum CreateDatasetStep {
     INFO = "Dataset Info",
@@ -23,8 +24,6 @@ export enum DatasetType {
     SNP_WITHOUT_EXPLICIT_ID = "Single Nucleotide Polymorphism (SNP) (without explicit ID)",
 }
 
-// TODO: This hook and the CreateDataset page are very extensive.
-//  I think we should split it into smaller hooks, one for each step maybe?
 
 /**
  * Hook for the CreateDataset page.
@@ -49,6 +48,8 @@ export function useCreateDataset() {
     const [selectedIsolateDataKey, setSelectedIsolateDataKey] = useState<string | null>(null)
     const [isolateDataFile, setIsolateDataFile] = useState<File | null>(null)
 
+    const [error, setError] = useState<string | null>(null)
+
     return {
         datasetType,
         project,
@@ -56,18 +57,37 @@ export function useCreateDataset() {
         handleDatasetDescriptionChange: (event: SelectChangeEvent) => setDescription(event.target.value as string),
         handleDatasetTypeChange: (event: SelectChangeEvent) => setDatasetType(event.target.value as DatasetType),
         selectedTypingData,
-        handleTypingDataFileSelectorChange: (event: SelectChangeEvent) => setSelectedTypingData(event.target.value),
-        handleTypingDataFileUploaderChange: (file: React.SetStateAction<File | null>) => setTypingDataFile(file),
+        handleTypingDataFileSelectorChange: (event: SelectChangeEvent) => {
+            setSelectedTypingData(event.target.value)
+            if (typingDataFile)
+                setTypingDataFile(null)
+        },
+        handleTypingDataFileUploaderChange: (file: React.SetStateAction<File | null>) => {
+            setTypingDataFile(file)
+            if (selectedTypingData)
+                setSelectedTypingData(null)
+        },
         selectedIsolateData,
         handleIsolateDataFileSelectorChange: (event: SelectChangeEvent) => {
             setSelectedIsolateData(event.target.value)
-            // TODO: get keys
-            setIsolateDataKeys(["key1", "key2"])
+            if (isolateDataFile)
+                setIsolateDataFile(null)
+
+            // TODO: Get the keys from the server
         },
         handleIsolateDataFileUploaderChange: (file: React.SetStateAction<File | null>) => {
             setIsolateDataFile(file)
-            // TODO: get keys
-            setIsolateDataKeys(["key1", "key2"])
+            if (selectedIsolateData)
+                setSelectedIsolateData(null)
+
+            // Read and set the keys
+            const fileToRead = file instanceof File ? file : file!(isolateDataFile)
+            fileToRead!.text()
+                .then(text => {
+                    const lines = text.split("\n")
+                    const keys = lines[0].split(/\s+/)
+                    setIsolateDataKeys(keys)
+                })
         },
         isolateDataKeys,
         selectedIsolateDataKey,
@@ -90,24 +110,39 @@ export function useCreateDataset() {
                 setCreateDatasetStep(CreateDatasetStep.ISOLATE_DATA)
                 setCurrStep(2)
             } else {
-                // TODO: Validate data
+                let typingDataId = selectedTypingData
+                let isolateDataId = selectedIsolateData
+
+                if (typingDataFile) {
+                    FileTransferService.uploadTypingData(project?.projectId!, typingDataFile)
+                        .then(res => typingDataId = res.typingDataId)
+                        .catch(err => setError(err.message))
+                }
+                if (isolateDataFile) {
+                    FileTransferService.uploadIsolateData(project?.projectId!, isolateDataFile)
+                        .then(res => isolateDataId = res.isolateDataId)
+                        .catch(err => setError(err.message))
+                }
+
                 AdministrationService.createDataset(
                     project?.projectId!,
                     {
                         name,
                         description,
-                        typingDataId: selectedTypingData!,
-                        isolateDataId: selectedIsolateData, // TODO: And the key? Maybe we should send the key here
+                        typingDataId: typingDataId!,
+                        isolateDataId: isolateDataId, // TODO: And the key? Maybe we should send the key here
                     }
                 )
                     .then(() => {
                         onFileStructureUpdate()
                         navigate(-1)
                     })
-                    .catch(console.error)
+                    .catch(err => setError(err.message))
             }
         },
         createDatasetStep,
-        currStep
+        currStep,
+        error,
+        clearError: () => setError(null),
     }
 }

@@ -7,28 +7,33 @@ import org.phyloviz.pwp.shared.adapters.isolate_data.adapter.specific_data.Isola
 import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterFactory;
 import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterId;
 import org.phyloviz.pwp.shared.adapters.typing_data.adapter.specific_data.TypingDataAdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
+import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.UploadIsolateDataOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.UploadTypingDataOutput;
-import org.phyloviz.pwp.shared.service.project.ProjectMetadataService;
-import org.phyloviz.pwp.shared.service.project.file.isolate_data.IsolateDataMetadataService;
-import org.phyloviz.pwp.shared.service.project.file.typing_data.TypingDataMetadataService;
+import org.phyloviz.pwp.shared.service.exceptions.MultipartFileReadException;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class FileTransferServiceImpl implements FileTransferService {
 
-    private final ProjectMetadataService projectMetadataService;
+    private final ProjectRepository projectRepository;
 
-    private final TypingDataMetadataService typingDataMetadataService;
-    private final IsolateDataMetadataService isolateDataMetadataService;
+    private final TypingDataMetadataRepository typingDataMetadataRepository;
+    private final IsolateDataMetadataRepository isolateDataMetadataRepository;
 
     private final IsolateDataAdapterFactory isolateDataAdapterFactory;
     private final TypingDataAdapterFactory typingDataAdapterFactory;
@@ -41,7 +46,8 @@ public class FileTransferServiceImpl implements FileTransferService {
 
     @Override
     public UploadTypingDataOutput uploadTypingData(String projectId, MultipartFile file, String userId) {
-        Project project = projectMetadataService.getProject(projectId, userId);
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
 
         String typingDataId = UUID.randomUUID().toString();
 
@@ -57,17 +63,15 @@ public class FileTransferServiceImpl implements FileTransferService {
                 typingDataAdapterSpecificData
         );
 
-        typingDataMetadataService.saveTypingDataMetadata(typingDataMetadata);
-
-        project.getFileIds().getTypingDataIds().add(typingDataId);
-        projectMetadataService.saveProject(project);
+        typingDataMetadataRepository.save(typingDataMetadata);
 
         return new UploadTypingDataOutput(projectId, typingDataId);
     }
 
     @Override
     public UploadIsolateDataOutput uploadIsolateData(String projectId, MultipartFile file, String userId) {
-        Project project = projectMetadataService.getProject(projectId, userId);
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
 
         String isolateDataId = UUID.randomUUID().toString();
 
@@ -78,16 +82,25 @@ public class FileTransferServiceImpl implements FileTransferService {
         IsolateDataMetadata isolateDataMetadata = new IsolateDataMetadata(
                 projectId,
                 isolateDataId,
+                getIsolateDataKeys(file),
                 file.getOriginalFilename(),
                 uploadIsolateDataAdapter,
                 isolateDataAdapterSpecificData
         );
 
-        isolateDataMetadataService.saveIsolateDataMetadata(isolateDataMetadata);
-
-        project.getFileIds().getIsolateDataIds().add(isolateDataId);
-        projectMetadataService.saveProject(project);
+        isolateDataMetadataRepository.save(isolateDataMetadata);
 
         return new UploadIsolateDataOutput(projectId, isolateDataId);
+    }
+
+    private List<String> getIsolateDataKeys(MultipartFile file) {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+            String firstLine = reader.readLine();
+
+            return List.of(firstLine.split("/\s+/")); // TODO: Check regex (maybe / +/)
+        } catch (IOException e) {
+            throw new MultipartFileReadException("Could not read first line of file", e);
+        }
     }
 }

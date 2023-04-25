@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 @Document(collection = "#{@mongoMetadataCollectionNames.datasetsCollection}")
 @Data
 @AllArgsConstructor
@@ -21,19 +19,15 @@ public class Dataset {
     private String description;
     private String typingDataId;
     private String isolateDataId;
-    private List<String> distanceMatrixIds;
-    private List<String> treeIds;
-    private List<String> treeViewIds;
+    private String isolateDataKey;
 
     public Dataset(String projectId, String name, String description, String typingDataId, String isolateDataId,
-                   List<String> distanceMatrixIds, List<String> treeIds, List<String> treeViewIds) {
+                   String isolateDataKey) {
         this.projectId = projectId;
         this.name = name;
         this.description = description;
         this.typingDataId = typingDataId;
         this.isolateDataId = isolateDataId;
-        this.distanceMatrixIds = distanceMatrixIds;
-        this.treeIds = treeIds;
-        this.treeViewIds = treeViewIds;
+        this.isolateDataKey = isolateDataKey;
     }
 }
