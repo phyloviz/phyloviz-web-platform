@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.http.pipeline;
 
-import org.phyloviz.pwp.shared.service.exceptions.DeniedFileDeletionException;
-import org.phyloviz.pwp.shared.service.exceptions.DeniedResourceDeletionException;
+import org.phyloviz.pwp.administration.service.exceptions.DeniedFileDeletionException;
+import org.phyloviz.pwp.administration.service.exceptions.DeniedResourceDeletionException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.IsolateDataDoesNotExistException;
 import org.phyloviz.pwp.shared.service.exceptions.TypingDataDoesNotExistException;

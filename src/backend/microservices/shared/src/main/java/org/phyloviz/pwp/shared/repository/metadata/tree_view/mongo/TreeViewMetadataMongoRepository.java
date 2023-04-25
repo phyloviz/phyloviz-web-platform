@@ -12,12 +12,22 @@ import java.util.Optional;
 public interface TreeViewMetadataMongoRepository extends MongoRepository<TreeViewMetadata, String> {
 
     /**
-     * Find a tree view metadata from its id.
+     * Find the first tree view metadata with the given id. Analogous to findAny().
      *
      * @param treeViewId the id of the tree view resource
      * @return a tree view metadata
      */
-    Optional<TreeViewMetadata> findByTreeViewId(String treeViewId);
+    Optional<TreeViewMetadata> findFirstByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId);
+
+    /**
+     * Find all tree view metadata from a project id, dataset id and tree view id.
+     *
+     * @param projectId  the id of the project
+     * @param datasetId  the id of the dataset
+     * @param treeViewId the id of the tree view
+     * @return a list of tree view metadata
+     */
+    List<TreeViewMetadata> findAllByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId);
 
     /**
      * Find all metadata representations of a tree view resource.

@@ -1,6 +1,7 @@
 package org.phyloviz.pwp.administration.service.project.dataset;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.administration.service.dtos.dataset.UpdateDatasetOutput;
 import org.phyloviz.pwp.administration.service.project.dataset.distance_matrix.DistanceMatrixService;
 import org.phyloviz.pwp.administration.service.project.dataset.tree.TreeService;
 import org.phyloviz.pwp.administration.service.project.dataset.tree_view.TreeViewService;
@@ -10,8 +11,8 @@ import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetad
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadataRepository;
-import org.phyloviz.pwp.shared.service.dtos.dataset.CreateDatasetOutput;
-import org.phyloviz.pwp.shared.service.dtos.dataset.FullDatasetInfo;
+import org.phyloviz.pwp.administration.service.dtos.dataset.CreateDatasetOutput;
+import org.phyloviz.pwp.administration.service.dtos.dataset.FullDatasetInfo;
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.IsolateDataDoesNotExistException;
@@ -94,6 +95,37 @@ public class DatasetServiceImpl implements DatasetService {
         });
     }
 
+    @Override
+    public UpdateDatasetOutput updateDataset(String name, String description, String projectId, String datasetId, String userId) {
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
+
+        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
+                .orElseThrow(DatasetNotFoundException::new);
+
+        String previousName = dataset.getName();
+        String previousDescription = dataset.getDescription();
+
+        if (name == null && description == null)
+            throw new InvalidArgumentException("You have to provide at least one field to update");
+
+        if (name != null && name.equals(previousName)) {
+            throw new InvalidArgumentException("The provided name is the same as the previous one");
+        }
+        if(description != null && description.equals(previousDescription)) {
+            throw new InvalidArgumentException("The provided description is the same as the previous ones");
+        }
+
+        if (name != null && !name.isBlank())
+            dataset.setName(name);
+        if (description != null && !description.isBlank())
+            dataset.setDescription(description);
+
+        datasetRepository.save(dataset);
+
+        return new UpdateDatasetOutput(previousName, name, previousDescription, description);
+    }
+
     private void deleteAllChildrenByProjectIdAndDatasetId(String projectId, String datasetId) {
         treeViewService.deleteAllByProjectIdAndDatasetId(projectId, datasetId);
         treeService.deleteAllByProjectIdAndDatasetId(projectId, datasetId);
@@ -147,7 +179,7 @@ public class DatasetServiceImpl implements DatasetService {
 
         if (isolateDataId != null) {
             IsolateDataMetadata isolateDataMetadata =
-                    isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(projectId, isolateDataId)
+                    isolateDataMetadataRepository.findAnyByProjectIdAndIsolateDataId(projectId, isolateDataId)
                             .orElseThrow(IsolateDataDoesNotExistException::new);
 
             if (isolateDataKey == null)

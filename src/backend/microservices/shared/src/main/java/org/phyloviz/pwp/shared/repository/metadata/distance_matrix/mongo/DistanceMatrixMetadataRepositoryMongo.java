@@ -20,20 +20,15 @@ public class DistanceMatrixMetadataRepositoryMongo implements DistanceMatrixMeta
     private final DistanceMatrixMetadataMongoRepository distanceMatrixMetadataMongoRepository;
 
     @Override
-    public Optional<DistanceMatrixMetadata> findByDistanceMatrixId(String distanceMatrixId) {
-        return distanceMatrixMetadataMongoRepository.findAllByDistanceMatrixId(distanceMatrixId).stream().findAny();
+    public Optional<DistanceMatrixMetadata> findAnyByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId) {
+        return distanceMatrixMetadataMongoRepository.findFirstByProjectIdAndDatasetIdAndDistanceMatrixId(
+                projectId, datasetId, distanceMatrixId
+        );
     }
 
     @Override
     public List<DistanceMatrixMetadata> findAllByDistanceMatrixId(String distanceMatrixId) {
         return distanceMatrixMetadataMongoRepository.findAllByDistanceMatrixId(distanceMatrixId);
-    }
-
-    @Override
-    public Optional<DistanceMatrixMetadata> findByDistanceMatrixIdAndAdapterId(String distanceMatrixId, DistanceMatrixAdapterId adapterId) {
-        return distanceMatrixMetadataMongoRepository.findByDistanceMatrixIdAndAdapterId(
-                distanceMatrixId, adapterId.name().toLowerCase()
-        );
     }
 
     @Override
@@ -78,5 +73,10 @@ public class DistanceMatrixMetadataRepositoryMongo implements DistanceMatrixMeta
     @Override
     public void delete(DistanceMatrixMetadata distanceMatrixMetadata) {
         distanceMatrixMetadataMongoRepository.delete(distanceMatrixMetadata);
+    }
+
+    @Override
+    public DistanceMatrixMetadata save(DistanceMatrixMetadata distanceMatrixMetadata) {
+        return distanceMatrixMetadataMongoRepository.save(distanceMatrixMetadata);
     }
 }

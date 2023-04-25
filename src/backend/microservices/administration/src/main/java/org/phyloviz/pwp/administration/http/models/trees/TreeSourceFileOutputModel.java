@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.administration.http.models.trees;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.service.dtos.tree.TreeSourceFileInfo;
+import org.phyloviz.pwp.administration.service.dtos.tree.TreeSourceFileInfo;
 
 @Data
 public class TreeSourceFileOutputModel implements TreeSourceOutputModel {

@@ -12,12 +12,22 @@ import java.util.Optional;
 public interface TreeMetadataMongoRepository extends MongoRepository<TreeMetadata, String> {
 
     /**
-     * Find a tree metadata from its id.
+     * Find the first tree metadata with the given id. Analogous to findAny().
      *
-     * @param resourceId the id of the tree resource
-     * @return an inference tree metadata
+     * @param treeId the id of the tree resource
+     * @return a tree metadata
      */
-    Optional<TreeMetadata> findByTreeId(String resourceId);
+    Optional<TreeMetadata> findFirstByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
+
+    /**
+     * Find all tree metadata from a project id, dataset id and tree id.
+     *
+     * @param projectId the id of the project
+     * @param datasetId the id of the dataset
+     * @param treeId    the id of the tree
+     * @return a list of tree metadata
+     */
+    List<TreeMetadata> findAllByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
 
     /**
      * Find all metadata representations of a tree resource.

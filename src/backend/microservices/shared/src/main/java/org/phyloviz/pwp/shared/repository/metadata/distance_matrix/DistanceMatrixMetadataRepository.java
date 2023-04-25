@@ -9,37 +9,14 @@ import java.util.Optional;
 public interface DistanceMatrixMetadataRepository {
 
     /**
-     * Find any distance matrix metadata from its id.
+     * Find any distance matrix metadata from a project id, dataset id and distance matrix id.
      *
+     * @param projectId        the id of the project
+     * @param datasetId        the id of the dataset
      * @param distanceMatrixId the id of the distance matrix resource
      * @return a distance matrix metadata
      */
-    Optional<DistanceMatrixMetadata> findByDistanceMatrixId(String distanceMatrixId);
-
-    /**
-     * Find all metadata representations of a distance matrix resource.
-     *
-     * @param distanceMatrixId the id of the distance matrix resource
-     * @return a list of distance matrix metadata
-     */
-    List<DistanceMatrixMetadata> findAllByDistanceMatrixId(String distanceMatrixId);
-
-    /**
-     * Find a distance matrix metadata from its id and adapter id.
-     *
-     * @param distanceMatrixId the id of the distance matrix resource
-     * @param adapterId        the id of the adapter
-     * @return a distance matrix metadata
-     */
-    Optional<DistanceMatrixMetadata> findByDistanceMatrixIdAndAdapterId(String distanceMatrixId, DistanceMatrixAdapterId adapterId);
-
-    /**
-     * Find all distance matrix metadata from a dataset id. Only one distance matrix metadata per distance matrix resource.
-     *
-     * @param datasetId the id of the dataset
-     * @return a list of distance matrix metadata
-     */
-    List<DistanceMatrixMetadata> findAllByDatasetId(String datasetId);
+    Optional<DistanceMatrixMetadata> findAnyByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId);
 
     /**
      * Find all distance matrix metadata from a project id, dataset id and distance matrix id.
@@ -50,6 +27,22 @@ public interface DistanceMatrixMetadataRepository {
      * @return a list of distance matrix metadata
      */
     List<DistanceMatrixMetadata> findAllByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId);
+
+    /**
+     * Find all metadata representations of a distance matrix resource.
+     *
+     * @param distanceMatrixId the id of the distance matrix resource
+     * @return a list of distance matrix metadata
+     */
+    List<DistanceMatrixMetadata> findAllByDistanceMatrixId(String distanceMatrixId);
+
+    /**
+     * Find all distance matrix metadata from a dataset id. Only one distance matrix metadata per distance matrix resource.
+     *
+     * @param datasetId the id of the dataset
+     * @return a list of distance matrix metadata
+     */
+    List<DistanceMatrixMetadata> findAllByDatasetId(String datasetId);
 
     /**
      * Find a distance matrix metadata from a project id, dataset id, distance matrix id and adapter id.
@@ -82,4 +75,11 @@ public interface DistanceMatrixMetadataRepository {
      * @param distanceMatrixMetadata the distance matrix metadata to delete
      */
     void delete(DistanceMatrixMetadata distanceMatrixMetadata);
+
+    /**
+     * Save a distance matrix metadata.
+     * @param distanceMatrixMetadata the distance matrix metadata to save
+     * @return the saved distance matrix metadata
+     */
+    DistanceMatrixMetadata save(DistanceMatrixMetadata distanceMatrixMetadata);
 }

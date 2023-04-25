@@ -12,12 +12,22 @@ import java.util.Optional;
 public interface IsolateDataMetadataMongoRepository extends MongoRepository<IsolateDataMetadata, String> {
 
     /**
-     * Find one metadata representation of an isolate data resource.
+     * Find the first isolate data metadata with the given id. Analogous to findAny().
      *
+     * @param projectId     the id of the project
      * @param isolateDataId the id of the isolate data resource
-     * @return an isolate data metadata
+     * @return a isolate data metadata
      */
-    Optional<IsolateDataMetadata> findByIsolateDataId(String isolateDataId);
+    Optional<IsolateDataMetadata> findFirstByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
+
+    /**
+     * Find all isolate data metadata from a project id and isolate data id.
+     *
+     * @param projectId     the id of the project
+     * @param isolateDataId the id of the isolate data
+     * @return a list of isolate data metadata
+     */
+    List<IsolateDataMetadata> findAllByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
 
     /**
      * Find all metadata representations of an isolate data resource.

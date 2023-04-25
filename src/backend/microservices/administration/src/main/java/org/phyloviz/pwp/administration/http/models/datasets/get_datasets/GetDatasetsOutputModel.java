@@ -2,7 +2,7 @@ package org.phyloviz.pwp.administration.http.models.datasets.get_datasets;
 
 import lombok.Data;
 import org.phyloviz.pwp.administration.http.models.datasets.DatasetModel;
-import org.phyloviz.pwp.shared.service.dtos.dataset.FullDatasetInfo;
+import org.phyloviz.pwp.administration.service.dtos.dataset.FullDatasetInfo;
 
 import java.util.List;
 

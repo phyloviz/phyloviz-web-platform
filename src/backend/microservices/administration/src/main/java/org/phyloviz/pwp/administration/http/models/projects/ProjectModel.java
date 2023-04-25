@@ -3,7 +3,7 @@ package org.phyloviz.pwp.administration.http.models.projects;
 import lombok.Data;
 import org.phyloviz.pwp.administration.http.models.datasets.DatasetModel;
 import org.phyloviz.pwp.administration.http.models.files.FilesModel;
-import org.phyloviz.pwp.shared.service.dtos.project.FullProjectInfo;
+import org.phyloviz.pwp.administration.service.dtos.project.FullProjectInfo;
 
 import java.util.List;
 
