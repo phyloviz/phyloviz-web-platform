@@ -47,6 +47,7 @@ public class DatasetsController {
                 createDatasetInputModel.getDescription(),
                 createDatasetInputModel.getTypingDataId(),
                 createDatasetInputModel.getIsolateDataId(),
+                createDatasetInputModel.getIsolateDataKey(),
                 projectId,
                 user.getId()
         );

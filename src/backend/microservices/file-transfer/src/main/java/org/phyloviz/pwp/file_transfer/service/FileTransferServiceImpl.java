@@ -14,11 +14,16 @@ import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadat
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.UploadIsolateDataOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.UploadTypingDataOutput;
+import org.phyloviz.pwp.shared.service.exceptions.MultipartFileReadException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -77,6 +82,7 @@ public class FileTransferServiceImpl implements FileTransferService {
         IsolateDataMetadata isolateDataMetadata = new IsolateDataMetadata(
                 projectId,
                 isolateDataId,
+                getIsolateDataKeys(file),
                 file.getOriginalFilename(),
                 uploadIsolateDataAdapter,
                 isolateDataAdapterSpecificData
@@ -85,5 +91,16 @@ public class FileTransferServiceImpl implements FileTransferService {
         isolateDataMetadataRepository.save(isolateDataMetadata);
 
         return new UploadIsolateDataOutput(projectId, isolateDataId);
+    }
+
+    private List<String> getIsolateDataKeys(MultipartFile file) {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+            String firstLine = reader.readLine();
+
+            return List.of(firstLine.split("/\s+/")); // TODO: Check regex (maybe / +/)
+        } catch (IOException e) {
+            throw new MultipartFileReadException("Could not read first line of file", e);
+        }
     }
 }

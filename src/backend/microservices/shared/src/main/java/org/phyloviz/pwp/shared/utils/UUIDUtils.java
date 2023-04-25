@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.compute.utils;
+package org.phyloviz.pwp.shared.utils;
 
 /**
  * Utility class for UUIDs.

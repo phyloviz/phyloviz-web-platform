@@ -7,6 +7,7 @@ import org.phyloviz.pwp.administration.service.project.dataset.tree_view.TreeVie
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetadataRepository;
+import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadataRepository;
 import org.phyloviz.pwp.shared.service.dtos.dataset.CreateDatasetOutput;
@@ -16,6 +17,7 @@ import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.IsolateDataDoesNotExistException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TypingDataDoesNotExistException;
+import org.phyloviz.pwp.shared.utils.UUIDUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,15 +37,16 @@ public class DatasetServiceImpl implements DatasetService {
 
     @Override
     public CreateDatasetOutput createDataset(String name, String description, String typingDataId, String isolateDataId,
-                                             String projectId, String userId) {
-        validateCreateDatasetParameters(name, typingDataId, isolateDataId, projectId, userId);
+                                             String isolateDataKey, String projectId, String userId) {
+        validateCreateDatasetParameters(projectId, name, typingDataId, isolateDataId, isolateDataKey, userId);
 
         Dataset dataset = new Dataset(
                 projectId,
                 name,
                 description,
                 typingDataId,
-                isolateDataId
+                isolateDataId,
+                isolateDataKey
         );
 
         Dataset storedDataset = datasetRepository.save(dataset);
@@ -114,23 +117,47 @@ public class DatasetServiceImpl implements DatasetService {
         );
     }
 
-    private void validateCreateDatasetParameters(String name, String typingDataId, String isolateDataId, String projectId, String userId) {
-        if (name == null || name.isBlank())
-            throw new InvalidArgumentException("Dataset name cannot be empty");
-
-        if (typingDataId == null || typingDataId.isBlank())
-            throw new InvalidArgumentException("Typing data id cannot be empty");
-
-        if (isolateDataId != null && isolateDataId.isBlank())
-            throw new InvalidArgumentException("Isolate data id cannot be empty (but can be null).");
-
+    private void validateCreateDatasetParameters(String projectId, String name, String typingDataId, String isolateDataId,
+                                                 String isolateDataKey, String userId) {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
+
+        if (name == null || name.isBlank()) {
+            throw new InvalidArgumentException("Dataset name cannot be empty");
+        }
+
+        if (typingDataId == null || typingDataId.isBlank()) {
+            throw new InvalidArgumentException("Typing data id cannot be empty");
+        }
+
+        if (!UUIDUtils.isValidUUID(typingDataId)) {
+            throw new InvalidArgumentException("Typing data id is not a valid UUID.");
+        }
+
+        if (isolateDataId != null) {
+            if (isolateDataId.isBlank()) {
+                throw new InvalidArgumentException("Isolate data id cannot be empty (but can be null).");
+            } else if (!UUIDUtils.isValidUUID(isolateDataId)) {
+                throw new InvalidArgumentException("Isolate data id is not a valid UUID.");
+            }
+        }
 
         if (!typingDataMetadataRepository.existsByProjectIdAndTypingDataId(projectId, typingDataId))
             throw new TypingDataDoesNotExistException();
 
-        if (isolateDataId != null && !isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId))
-            throw new IsolateDataDoesNotExistException();
+        if (isolateDataId != null) {
+            IsolateDataMetadata isolateDataMetadata =
+                    isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(projectId, isolateDataId)
+                            .orElseThrow(IsolateDataDoesNotExistException::new);
+
+            if (isolateDataKey == null)
+                throw new InvalidArgumentException("Isolate data key must not be null. " +
+                        "If an isolate data id is specified, an associated key should too."
+                );
+            if (!isolateDataMetadata.getKeys().contains(isolateDataKey))
+                throw new InvalidArgumentException(String.format("Isolate data key %s does not exist in isolate data %s",
+                        isolateDataKey, isolateDataId
+                ));
+        }
     }
 }

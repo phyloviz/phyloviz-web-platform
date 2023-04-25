@@ -8,7 +8,7 @@ import java.util.List;
 public interface DatasetService {
 
     CreateDatasetOutput createDataset(String name, String description, String typingDataId, String isolateDataId,
-                                      String projectId, String userId);
+                                      String isolateDataKey, String projectId, String userId);
 
     FullDatasetInfo getFullDatasetInfo(String projectId, String datasetId, String userId);
 

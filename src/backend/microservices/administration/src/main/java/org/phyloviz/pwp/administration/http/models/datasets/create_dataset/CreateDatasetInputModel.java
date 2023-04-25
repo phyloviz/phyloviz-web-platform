@@ -8,4 +8,5 @@ public class CreateDatasetInputModel {
     private String description;
     private String typingDataId;
     private String isolateDataId;
+    private String isolateDataKey;
 }

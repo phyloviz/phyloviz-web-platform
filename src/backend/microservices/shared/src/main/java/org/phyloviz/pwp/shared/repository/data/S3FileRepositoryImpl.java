@@ -1,5 +1,6 @@
 package org.phyloviz.pwp.shared.repository.data;
 
+import org.phyloviz.pwp.shared.service.exceptions.MultipartFileReadException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;

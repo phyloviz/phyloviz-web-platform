@@ -62,6 +62,11 @@ public class IsolateDataMetadataRepositoryMongo implements IsolateDataMetadataRe
     }
 
     @Override
+    public Optional<IsolateDataMetadata> findByProjectIdAndIsolateDataId(String projectId, String isolateDataId) {
+        return isolateDataMetadataMongoRepository.findByProjectIdAndIsolateDataId(projectId, isolateDataId);
+    }
+
+    @Override
     public boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId) {
         return isolateDataMetadataMongoRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId);
     }
