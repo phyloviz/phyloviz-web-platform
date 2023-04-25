@@ -1,6 +1,5 @@
 package org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents;
 
-import lombok.Builder;
 import lombok.Data;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.arguments.WorkflowTemplateArgumentProperties;
 import org.phyloviz.pwp.compute.service.exceptions.WorkflowTemplateConfigurationException;
@@ -15,7 +14,6 @@ import java.util.Map;
 
 
 @Data
-@Builder
 @Document(collection = "workflow-templates")
 public class WorkflowTemplate {
 
