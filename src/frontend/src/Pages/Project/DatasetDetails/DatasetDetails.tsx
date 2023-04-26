@@ -9,6 +9,8 @@ import {ComputeDistancesCard} from "../../../Components/Project/DatasetDetails/C
 import {ComputeTreesCard} from "../../../Components/Project/DatasetDetails/ComputeTreesCard"
 import {GenerateReportCard} from "../../../Components/Project/DatasetDetails/GenerateReportCard"
 import {ErrorAlert} from "../../../Components/Shared/ErrorAlert"
+import IconButton from "@mui/material/IconButton";
+import {Edit} from "@mui/icons-material";
 
 /**
  * DatasetDetails page.
@@ -17,6 +19,7 @@ export default function DatasetDetails() {
     const {
         dataset,
         loading,
+        handleEditDataset,
         error,
         clearError
     } = useDatasetDetails()
@@ -29,7 +32,8 @@ export default function DatasetDetails() {
                 flexDirection: "column",
                 mt: 4,
                 alignItems: "center",
-                width: "100%"
+                width: "100%",
+                position: "relative"
             }}>
                 <Typography component="h1" variant="h4">
                     {dataset?.name ?? "Loading..."}
@@ -39,6 +43,16 @@ export default function DatasetDetails() {
                 </Typography>
                 {loading && <LoadingSpinner text={"Loading dataset..."}/>}
                 <ErrorAlert error={error} clearError={clearError}/>
+                <IconButton
+                    disabled={loading}
+                    onClick={handleEditDataset}
+                    sx={{
+                        position: "absolute",
+                        top: 2,
+                        right: 2
+                    }}>
+                    <Edit/>
+                </IconButton>
                 <Box sx={{
                     width: "100%",
                     display: "flex",

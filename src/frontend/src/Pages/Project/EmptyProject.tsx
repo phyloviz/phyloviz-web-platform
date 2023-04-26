@@ -8,18 +8,22 @@ import {UploadFilesCard} from "../../Components/Project/EmptyProject/UploadFiles
 import {Project} from "../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import LoadingSpinner from "../../Components/Shared/LoadingSpinner"
 import {ErrorAlert} from "../../Components/Shared/ErrorAlert"
+import IconButton from "@mui/material/IconButton";
+import {Edit} from "@mui/icons-material";
 
 /**
  * Props for the EmptyProject page.
  *
  * @property project The project.
  * @property loading Whether the project is loading.
+ * @property handleEditProject Handles the edit project button.
  * @property error The error message.
  * @property clearError Clears the error message.
  */
 interface EmptyProjectProps {
     project: Project | null
     loading: boolean
+    handleEditProject: () => void
     error: string | null,
     clearError: () => void
 }
@@ -31,6 +35,7 @@ export default function EmptyProject(
     {
         project,
         loading,
+        handleEditProject,
         error,
         clearError
     }: EmptyProjectProps
@@ -43,7 +48,8 @@ export default function EmptyProject(
                 flexDirection: "column",
                 mt: 4,
                 alignItems: "center",
-                width: "100%"
+                width: "100%",
+                position: "relative"
             }}>
                 <Typography component="h1" variant="h4">
                     {project?.name ?? "Loading..."}
@@ -53,6 +59,17 @@ export default function EmptyProject(
                 </Typography>
                 {loading && <LoadingSpinner text={"Loading dataset..."}/>}
                 <ErrorAlert error={error} clearError={clearError}/>
+                <IconButton
+                    disabled={loading}
+                    onClick={handleEditProject}
+                    sx={{
+                        position: "absolute",
+                        top: 2,
+                        right: 2
+                    }}>
+                    <Edit/>
+                </IconButton>
+
                 <Box sx={{
                     width: "100%",
                     display: "flex",

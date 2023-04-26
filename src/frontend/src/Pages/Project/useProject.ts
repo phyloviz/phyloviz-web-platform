@@ -1,10 +1,11 @@
-import {useOutletContext, useParams} from "react-router-dom"
+import {useNavigate, useOutletContext, useParams} from "react-router-dom"
 import {useEffect, useState} from "react"
 import {Project} from "../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import AdministrationService from "../../Services/Administration/AdministrationService"
 import {Workflow} from "../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
 import ComputeService from "../../Services/Compute/ComputeService"
 import {useInterval} from "../../Components/Shared/Hooks/useInterval"
+import {WebUiUris} from "../WebUiUris";
 
 /**
  * Context for the Project page.
@@ -36,6 +37,7 @@ export function useProject() {
     const [loadingWorkflows, setLoadingWorkflows] = useState<boolean>(true)
 
     const [error, setError] = useState<string | null>(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (projectId === undefined)
@@ -83,6 +85,7 @@ export function useProject() {
 
         loadingFiles,
         onFileStructureUpdate: () => setFilesUpdated(filesUpdated => !filesUpdated),
+        handleEditProject: () => navigate(WebUiUris.editProject(projectId!)),
 
         workflows,
         loadingWorkflows,

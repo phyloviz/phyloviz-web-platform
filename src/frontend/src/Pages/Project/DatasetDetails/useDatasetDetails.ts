@@ -1,7 +1,8 @@
-import {useParams} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import {useEffect, useState} from "react"
 import {Dataset} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import AdministrationService from "../../../Services/Administration/AdministrationService"
+import {WebUiUris} from "../../WebUiUris";
 
 /**
  * Hook for the DatasetDetails page.
@@ -11,6 +12,7 @@ export function useDatasetDetails() {
     const [dataset, setDataset] = useState<Dataset>()
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (projectId === undefined)
@@ -33,6 +35,7 @@ export function useDatasetDetails() {
     return {
         dataset,
         loading,
+        handleEditDataset: () => navigate(WebUiUris.editDataset(projectId!, datasetId!)),
         error,
         clearError: () => setError(null)
     }
