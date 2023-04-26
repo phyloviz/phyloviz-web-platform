@@ -1,18 +1,12 @@
 import * as React from "react"
 import {Box, IconButtonProps} from "@mui/material"
 import Typography from "@mui/material/Typography"
-import List from "@mui/material/List"
-import ListItemButton from "@mui/material/ListItemButton"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import ListItemText from "@mui/material/ListItemText"
 import {styled} from "@mui/material/styles"
 import IconButton from "@mui/material/IconButton"
 import {
-    CascadingInfoAlgorithmDistanceMatrixTreeSource,
-    CascadingInfoAlgorithmTypingDataTreeSource, CascadingInfoFileTreeSource,
-    CascadingInfoTree, DistanceMatrix, FunctionDistanceMatrixSource
+    DistanceMatrix,
+    FunctionDistanceMatrixSource
 } from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
-import {DistanceMatrixIcon, TypingDataIcon} from "../../Shared/Icons";
 
 /**
  * Props for the TreeInfo component.

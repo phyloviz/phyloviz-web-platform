@@ -19,6 +19,7 @@ import {defaultConfigValues} from '../../variables'
 import {readPixels} from '../../helper'
 import {CosmosInputLink, CosmosInputNode} from '../../types'
 
+
 export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extends CoreModule<N, L> {
     public currentPositionFbo: regl.Framebuffer2D | undefined
     public previousPositionFbo: regl.Framebuffer2D | undefined
@@ -30,6 +31,7 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
     public sizeFbo: regl.Framebuffer2D | undefined
     public trackedIndicesFbo: regl.Framebuffer2D | undefined
     public trackedPositionsFbo: regl.Framebuffer2D | undefined
+    drawTextCommands: Map<string, regl.DrawCommand> = new Map()
     private drawCommand: regl.DrawCommand | undefined
     private drawHighlightedCommand: regl.DrawCommand | undefined
     private updatePositionCommand: regl.DrawCommand | undefined
@@ -273,7 +275,58 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
                 pointsTextureSize: () => store.pointsTextureSize,
             },
         })
+
+
+        // for (let i = 0; i < data.nodes.length; i++) {
+        //   const node = data.nodes[i]
+        //   const textMesh = this.data.getTextMeshById(node.id)!
+
+        //   const drawText = this.reglInstance({
+        //     frag: `
+        //     precision mediump float;
+        //     uniform float t;
+        //     void main () {
+        //       gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+        //     }`,
+
+        //     vert: `
+        //     attribute vec2 position;
+        //     uniform float x;
+        //     uniform float y;
+        //     uniform mat3 transform;
+        //     uniform float spaceSize;
+        //     uniform vec2 screenSize;
+
+        //     void main () {
+        //       vec2 point = vec2(x,y);
+        //       vec2 p = 2.0 * point / spaceSize - 1.0;
+        //       p *= spaceSize / screenSize;
+        //       vec3 final = transform * vec3(p, 1);
+        //       final *= -1.0;
+        //       gl_Position = vec4(final.rg+position/10.0, 0, 1);
+        //     }`,
+        //     attributes: {
+        //       position: textMesh.positions,
+        //     },
+
+        //     uniforms: {
+        //       x: reglInstance.prop<{ x: number }, 'x'>('x'),
+        //       y: reglInstance.prop<{ y: number }, 'y'>('y'),
+        //       spaceSize: () => config.spaceSize,
+        //       screenSize: () => store.screenSize,
+        //       transform: () => store.transform,
+        //     },
+
+        //     elements: textMesh.edges,
+
+        //     depth: { enable: false }
+        //   })
+
+        //   this.drawTextCommands.set(node.id, drawText)
+        // }
+
     }
+
 
     public updateColor(): void {
         const {reglInstance, config, store, data} = this
@@ -378,4 +431,5 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
         this.previousPositionFbo = this.currentPositionFbo
         this.currentPositionFbo = temp
     }
+
 }

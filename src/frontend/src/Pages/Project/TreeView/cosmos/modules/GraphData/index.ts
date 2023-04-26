@@ -1,4 +1,10 @@
+import REGL from 'regl';
 import {CosmosInputLink, CosmosInputNode} from '../../types'
+
+export interface TextMesh {
+    edges: REGL.Vec2;
+    positions: REGL.Vec2;
+}
 
 export class GraphData<N extends CosmosInputNode, L extends CosmosInputLink> {
     /** Links that have existing source and target nodes  */
@@ -28,6 +34,7 @@ export class GraphData<N extends CosmosInputNode, L extends CosmosInputLink> {
     private idToIndegreeMap: Map<string, number> = new Map()
     /** Mapping the original id to the outdegree value of the node */
     private idToOutdegreeMap: Map<string, number> = new Map()
+    private idToTextMeshesMap: Map<string, TextMesh> = new Map()
 
     private _nodes: N[] = []
 
@@ -58,6 +65,19 @@ export class GraphData<N extends CosmosInputNode, L extends CosmosInputLink> {
             this.idToIndegreeMap.set(n.id, 0)
             this.idToOutdegreeMap.set(n.id, 0)
         })
+
+
+        // // Calculate node text meshes
+        // inputNodes.forEach((n, i) => {
+        //   const text = n.id
+        //   const textMesh = vectorizeText(text, {
+        //     font: "Arial",
+        //     textAlign: 'center',
+        //     textBaseline: 'middle',
+        //   })
+
+        //   this.idToTextMeshesMap.set(n.id, textMesh)
+        // })
 
         // Calculate node outdegree/indegree values
         // And filter links if source/target node does not exist
@@ -140,5 +160,9 @@ export class GraphData<N extends CosmosInputNode, L extends CosmosInputLink> {
         const incomingSet = this.groupedTargetToSourceLinks.get(index) ?? []
         return [...new Set([...outgoingSet, ...incomingSet])]
             .map(index => this.getNodeByIndex(this.getInputIndexBySortedIndex(index) as number) as N)
+    }
+
+    public getTextMeshById(id: string): TextMesh | undefined {
+        return this.idToTextMeshesMap.get(id)
     }
 }
