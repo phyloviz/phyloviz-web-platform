@@ -10,8 +10,9 @@ import ListItemText from "@mui/material/ListItemText"
 import {WebUiUris} from "../../../Pages/WebUiUris"
 import {styled} from "@mui/material/styles"
 import IconButton from "@mui/material/IconButton"
-import {TreeView} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
+import {CascadingInfoTreeView} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {IsolateDataIcon, TreeIcon, TypingDataIcon} from "../../Shared/Icons";
+import {TreeInfo} from "../Tree/TreeInfo";
 
 /**
  * Props for the TreeViewInfoCard component.
@@ -19,7 +20,7 @@ import {IsolateDataIcon, TreeIcon, TypingDataIcon} from "../../Shared/Icons";
  * @property treeView the information about the tree view
  */
 interface TreeViewInfoCardProps {
-    treeView: TreeView
+    treeView: CascadingInfoTreeView
 }
 
 /**
@@ -28,8 +29,12 @@ interface TreeViewInfoCardProps {
 export function TreeViewInfoCard({treeView}: TreeViewInfoCardProps) {
     const {projectId} = useParams<{ projectId: string }>()
     const navigate = useNavigate()
-    const [expanded, setExpanded] = React.useState(false)
-    const handleExpandClick = () => setExpanded(!expanded)
+    const [treeViewInfoExpanded, setTreeViewInfoExpanded] = React.useState(false)
+    const handleTreeViewInfoExpandClick = () => setTreeViewInfoExpanded(!treeViewInfoExpanded)
+    const [treeInfoExpanded, setTreeInfoExpanded] = React.useState(false)
+    const handleTreeInfoExpandClick = () => setTreeInfoExpanded(!treeInfoExpanded)
+    const [distanceMatrixInfoExpanded, setDistanceMatrixInfoExpanded] = React.useState(false)
+    const handleDistanceMatrixInfoExpandClick = () => setDistanceMatrixInfoExpanded(!distanceMatrixInfoExpanded)
 
     return (
         <Box sx={{
@@ -45,19 +50,20 @@ export function TreeViewInfoCard({treeView}: TreeViewInfoCardProps) {
             borderColor: 'divider',
         }}>
             <Button
-                onClick={handleExpandClick}
+                onClick={handleTreeViewInfoExpandClick}
                 size={"small"}
                 startIcon={
-                    <ExpandMore color={"inherit"} expand={expanded} onClick={handleExpandClick} size={"small"}>
+                    <ExpandMore color={"inherit"} expand={treeViewInfoExpanded} onClick={handleTreeViewInfoExpandClick}
+                                size={"small"}>
                         <ExpandMoreIcon color={"inherit"}/>
                     </ExpandMore>
                 }>
                 Tree View Info
             </Button>
 
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <Collapse in={treeViewInfoExpanded} timeout="auto" unmountOnExit>
                 <Typography variant="body2" textAlign={"left"} gutterBottom>
-                    <strong>Tree View:</strong> {treeView.name}
+                    <strong>Name:</strong> {treeView.name}
                 </Typography>
                 <Typography variant="body2" textAlign={"left"} gutterBottom>
                     <strong>Layout:</strong> {treeView.layout}
@@ -66,11 +72,22 @@ export function TreeViewInfoCard({treeView}: TreeViewInfoCardProps) {
                     <strong>Source:</strong>
                 </Typography>
                 <List dense>
-                    <ListItem disablePadding>
-                        <ListItemButton>
+                    <ListItem disablePadding sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%"
+                    }}>
+                        <ListItemButton onClick={() => handleTreeInfoExpandClick()} sx={{
+                            width: "100%"
+                        }}>
                             <ListItemIcon><TreeIcon/></ListItemIcon>
                             <ListItemText primary="Tree"/>
                         </ListItemButton>
+                        <Collapse in={treeInfoExpanded} timeout="auto" sx={{pl: 2}} unmountOnExit>
+                            <TreeInfo tree={treeView.source.tree}
+                                      distanceMatrixInfoExpanded={distanceMatrixInfoExpanded}
+                                      handleDistanceMatrixInfoExpandClick={handleDistanceMatrixInfoExpandClick}/>
+                        </Collapse>
                     </ListItem>
                     {
                         treeView.source.typingDataId &&

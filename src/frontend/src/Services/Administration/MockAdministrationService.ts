@@ -69,7 +69,7 @@ export namespace MockAdministrationService {
                                 source: {
                                     algorithm: "goeBURST",
                                     distanceMatrixId: "distanceMatrix1",
-                                    parameters: ""
+                                    parameters: "{ level: 'SLV' }"
                                 }
                             },
                             {
@@ -78,7 +78,7 @@ export namespace MockAdministrationService {
                                 sourceType: "algorithmTypingData",
                                 source: {
                                     algorithm: "goeBURST",
-                                    parameters: ""
+                                    parameters: "{ level: 'SLV' }"
                                 }
                             },
                             {
@@ -87,7 +87,7 @@ export namespace MockAdministrationService {
                                 sourceType: "file",
                                 source: {
                                     fileType: "newick",
-                                    fileName: "tree.nwk"
+                                    fileName: "tree2023.tree"
                                 }
                             }
                         ],

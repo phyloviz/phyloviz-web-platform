@@ -8,7 +8,16 @@ import {
     Node
 } from "../../../Services/Visualization/models/getTreeView/GetTreeViewOutputModel"
 import VisualizationService from "../../../Services/Visualization/VisualizationService"
-import {TreeView} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
+import {
+    AlgorithmDistanceMatrixTreeSource,
+    CascadingInfoAlgorithmDistanceMatrixTreeSource,
+    CascadingInfoAlgorithmTypingDataTreeSource,
+    CascadingInfoFileTreeSource,
+    CascadingInfoTree,
+    CascadingInfoTreeView, DistanceMatrix,
+    Tree,
+    TreeView
+} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {useProjectContext} from "../useProject"
 import {GraphConfigInterface} from "./cosmos/config"
 import {useReactToPrint} from "react-to-print";
@@ -130,10 +139,49 @@ export function useTreeView() {
         init()
     }, [])
 
+    const treeView: TreeView = project?.datasets
+        .find(dataset => dataset.datasetId === datasetId)?.treeViews
+        .find(treeView => treeView.treeViewId === treeViewId) as TreeView
+
+    const tree: Tree = project?.datasets
+        .find(dataset => dataset.datasetId === datasetId)?.trees
+        .find(tree => tree.treeId === treeView.source.treeId) as Tree
+
+    const distanceMatrix = tree.sourceType === "algorithmDistanceMatrix" ? project?.datasets
+            .find(dataset => dataset.datasetId === datasetId)?.distanceMatrices
+            .find(distanceMatrix =>
+                distanceMatrix.distanceMatrixId === (tree.source as AlgorithmDistanceMatrixTreeSource).distanceMatrixId) as DistanceMatrix
+        : undefined
+
+    const cascadingInfoTree: CascadingInfoTree = {
+        treeId: tree.treeId,
+        name: tree.name,
+        sourceType: tree.sourceType,
+        source:
+            tree.sourceType === "algorithmTypingData"
+                ? tree.source as CascadingInfoAlgorithmTypingDataTreeSource
+                : tree.sourceType === "algorithmDistanceMatrix"
+                    ? {
+                        algorithm: (tree.source as AlgorithmDistanceMatrixTreeSource).algorithm,
+                        distanceMatrix: distanceMatrix,
+                        parameters: (tree.source as AlgorithmDistanceMatrixTreeSource).parameters
+                    } as CascadingInfoAlgorithmDistanceMatrixTreeSource
+                    : tree.source as CascadingInfoFileTreeSource
+    }
+
+    const cascadingInfoTreeView: CascadingInfoTreeView = {
+        treeViewId: treeView.treeViewId,
+        name: treeView.name,
+        layout: treeView.layout,
+        source: {
+            tree: cascadingInfoTree,
+            typingDataId: treeView.source.typingDataId,
+            isolateDataId: treeView.source.isolateDataId
+        }
+    } as CascadingInfoTreeView
+
     return {
-        treeView: project?.datasets
-            .find(dataset => dataset.datasetId === datasetId)?.treeViews
-            .find(treeView => treeView.treeViewId === treeViewId) as TreeView,
+        treeView: cascadingInfoTreeView,
         pauseAnimation: () => graphRef.current?.pause(),
         restartAnimation: () => graphRef.current?.restart(),
         linkSpring,
