@@ -12,6 +12,8 @@ import {TreeViewSettingsCard} from "../../../Components/Project/TreeView/TreeVie
 export default function TreeView() {
     const {
         treeView,
+        toPrintRef,
+        handlePrint,
         canvasRef,
         restartAnimation,
         pauseAnimation,
@@ -24,10 +26,15 @@ export default function TreeView() {
     return (
         <Box sx={{position: "relative", width: "90%"}}>
             <TreeViewInfoCard treeView={treeView}/>
-            <canvas ref={canvasRef}/>
-            <TreeViewSettingsCard onPauseAnimation={pauseAnimation} onRestartAnimation={restartAnimation}
-                                  linkSpring={linkSpring} linkDistance={linkDistance}
-                                  onChangeLinkSpring={updateLinkSpring} onChangeLinkDistance={updateLinkDistance}/>
+            <div ref={toPrintRef}>
+                <canvas ref={canvasRef}/>
+            </div>
+            <TreeViewSettingsCard
+                onPauseAnimation={pauseAnimation} onRestartAnimation={restartAnimation}
+                linkSpring={linkSpring} linkDistance={linkDistance}
+                onChangeLinkSpring={updateLinkSpring} onChangeLinkDistance={updateLinkDistance}
+                onPrint={handlePrint}
+            />
             <TreeViewSearchCard/>
         </Box>
     )

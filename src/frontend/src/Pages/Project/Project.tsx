@@ -14,6 +14,7 @@ export default function Project() {
         project,
         loadingFiles,
         onFileStructureUpdate,
+        handleEditProject,
         workflows,
         loadingWorkflows,
         onWorkflowsUpdate,
@@ -33,7 +34,13 @@ export default function Project() {
             {
                 outlet && !loadingFiles && !error
                     ? <Outlet context={{project, onFileStructureUpdate, onWorkflowsUpdate}}/>
-                    : <EmptyProject project={project} loading={loadingFiles} error={error} clearError={clearError}/>
+                    : <EmptyProject
+                        project={project}
+                        loading={loadingFiles}
+                        handleEditProject={handleEditProject}
+                        error={error}
+                        clearError={clearError}
+                    />
             }
         </Box>
     )

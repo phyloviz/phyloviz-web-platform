@@ -1,4 +1,5 @@
 import {useParams} from "react-router-dom"
+import * as React from 'react';
 import {useEffect, useRef, useState} from 'react';
 import {TreeViewGraph} from "./cosmos/TreeViewGraph"
 import {
@@ -10,6 +11,7 @@ import VisualizationService from "../../../Services/Visualization/VisualizationS
 import {TreeView} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {useProjectContext} from "../useProject"
 import {GraphConfigInterface} from "./cosmos/config"
+import {useReactToPrint} from "react-to-print";
 
 export type VizNode = {
     id: string
@@ -32,6 +34,15 @@ export function useTreeView() {
     const [linkDistance, setLinkDistance] = useState(10)
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const graphRef = useRef<TreeViewGraph<VizNode, VizLink>>()
+
+    const toPrintRef = useRef(null);
+    const reactToPrintContent = React.useCallback(() => {
+        return toPrintRef.current;
+    }, [toPrintRef.current]);
+    const handlePrint = useReactToPrint({
+        content: reactToPrintContent,
+        documentTitle: "Tree Visualization"
+    });
 
     useEffect(() => {
         async function init() {
@@ -135,6 +146,8 @@ export function useTreeView() {
             setLinkDistance(value)
             graphRef.current?.setConfig({simulation: {linkDistance: value}})
         },
-        canvasRef
+        canvasRef,
+        toPrintRef,
+        handlePrint
     }
 }

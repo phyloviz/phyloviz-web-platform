@@ -30,6 +30,7 @@
     "react-draggable": "^4.4.5",
     "react-heatmap-grid": "^0.9.0",
     "react-router-dom": "^6.4.3",
+    "react-to-print": "^2.14.12",
     "regl": "^2.1.0"
   },
   "devDependencies": {
