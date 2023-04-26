@@ -12,6 +12,7 @@ interface TreeViewSettingsCardProps {
     linkDistance: number
     onChangeLinkSpring: (linkSpring: number) => void
     onChangeLinkDistance: (linkDistance: number) => void
+    onPrint: () => void
 }
 
 const LINK_SPRING_STEP = 0.1
@@ -21,10 +22,17 @@ const LINK_SPRING_MAX = 2
 /**
  * Card with settings for the tree view.
  */
-export function TreeViewSettingsCard({
-                                         onPauseAnimation, onRestartAnimation,
-                                         linkSpring, linkDistance, onChangeLinkSpring, onChangeLinkDistance
-                                     }: TreeViewSettingsCardProps) {
+export function TreeViewSettingsCard(
+    {
+        onPauseAnimation,
+        onRestartAnimation,
+        linkSpring,
+        linkDistance,
+        onChangeLinkSpring,
+        onChangeLinkDistance,
+        onPrint
+    }: TreeViewSettingsCardProps
+) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
     const [animationRunning, setAnimationRunning] = useState(true)
@@ -109,10 +117,7 @@ export function TreeViewSettingsCard({
             >
                 <ZoomIn/>
             </IconButton>
-            <IconButton size="small" onClick={() => {
-                // TODO: take screenshot
-            }}
-            >
+            <IconButton size="small" onClick={onPrint}>
                 <PhotoCamera/>
             </IconButton>
             <IconButton size="small" onClick={() => {
