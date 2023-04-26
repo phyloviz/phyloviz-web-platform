@@ -1,30 +1,39 @@
-export interface Source {
 
-}
-
-export interface FileSource extends Source {
-    fileType: string
-    fileName: string
-}
-
-export interface TreeViewSource extends Source {
+export interface TreeViewSource {
     treeId: string
     typingDataId: string | null
     isolateDataId: string | null
 }
 
-export interface AlgorithmTypingDataSource extends Source {
+export type TreeSourceType = "algorithmTypingData" | "algorithmDistanceMatrix" | "file"
+
+export interface TreeSource {
+
+}
+
+export type DistanceMatrixSourceType = "function"
+
+export interface DistanceMatrixSource {
+
+}
+
+export interface AlgorithmTypingDataTreeSource extends TreeSource {
     algorithm: string
     parameters: string
 }
 
-export interface AlgorithmDistanceMatrixSource extends Source {
+export interface AlgorithmDistanceMatrixTreeSource extends TreeSource {
     algorithm: string
     distanceMatrixId: string
     parameters: string
 }
 
-export interface FunctionDistanceMatrixSource extends Source {
+export interface FileTreeSource extends TreeSource {
+    fileType: string
+    fileName: string
+}
+
+export interface FunctionDistanceMatrixSource extends DistanceMatrixSource {
     function: string
 }
 
@@ -38,15 +47,15 @@ export interface TreeView {
 export interface Tree {
     treeId: string
     name: string
-    sourceType: string
-    source: Source
+    sourceType: TreeSourceType
+    source: TreeSource
 }
 
 export interface DistanceMatrix {
     distanceMatrixId: string
     name: string
-    sourceType: string
-    source: Source
+    sourceType: DistanceMatrixSourceType
+    source: DistanceMatrixSource
 }
 
 export interface Dataset {
@@ -75,6 +84,50 @@ export interface IsolateDataFile {
 export interface ProjectFiles {
     typingData: TypingDataFile[]
     isolateData: IsolateDataFile[]
+}
+
+export interface CascadingInfoSource {
+
+}
+
+export interface CascadingInfoTreeSource {
+
+}
+
+export interface CascadingInfoTreeView {
+    treeViewId: string
+    name: string
+    layout: string
+    source: CascadingInfoTreeViewSource
+}
+
+export interface CascadingInfoTreeViewSource extends CascadingInfoSource {
+    tree: CascadingInfoTree
+    typingDataId: string | null
+    isolateDataId: string | null
+}
+
+export interface CascadingInfoTree {
+    treeId: string
+    name: string
+    sourceType: TreeSourceType
+    source: CascadingInfoTreeSource
+}
+
+export interface CascadingInfoAlgorithmTypingDataTreeSource extends CascadingInfoTreeSource {
+    algorithm: string
+    parameters: string
+}
+
+export interface CascadingInfoAlgorithmDistanceMatrixTreeSource extends CascadingInfoTreeSource {
+    algorithm: string
+    distanceMatrix: DistanceMatrix
+    parameters: string
+}
+
+export interface CascadingInfoFileTreeSource extends CascadingInfoTreeSource {
+    fileType: string
+    fileName: string
 }
 
 export interface GetProjectOutputModel {

@@ -1,10 +1,24 @@
+import {DistanceMatrix} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel";
+import {useParams} from "react-router-dom";
+import {useProjectContext} from "../useProject";
+
 /**
  * Hook for DistanceMatrix page.
  */
 export function useDistanceMatrix() {
-    // TODO: Implement useDistanceMatrix
+    const {projectId, datasetId, distanceMatrixId} = useParams<{
+        projectId: string,
+        datasetId: string,
+        distanceMatrixId: string
+    }>()
+    const {project} = useProjectContext()
+
+    const distanceMatrix = project?.datasets
+        .find(dataset => dataset.datasetId === datasetId)?.distanceMatrices
+        .find(distanceMatrix => distanceMatrix.distanceMatrixId === distanceMatrixId) as DistanceMatrix
 
     return {
+        distanceMatrix: distanceMatrix,
         data: [
             [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
             [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
