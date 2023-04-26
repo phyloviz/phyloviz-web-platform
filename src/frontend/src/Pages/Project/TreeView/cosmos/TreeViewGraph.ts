@@ -46,7 +46,6 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
     private hasBeenRecentlyDestroyed = false
     private currentEvent: D3ZoomEvent<HTMLCanvasElement, undefined> | MouseEvent | undefined
 
-
     public constructor(canvas: HTMLCanvasElement, config?: GraphConfigInterface<N, L>) {
         if (config) this.config.init(config)
 
@@ -94,7 +93,6 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
                     }
                 })
                 .on('drag', (e: any) => {
-                    console.log('drag')
                     this.onMouseMove(e.sourceEvent)
 
                     this.store.draggedX = e.x
@@ -685,9 +683,56 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
             }
 
             this.points.draw()
+            // const textMesh: TextMesh = vectorizeText('hello regl!', {
+            // 	textAlign: 'center',
+            // 	textBaseline: 'middle'
+            // })
+            // const drawText = this.reglInstance({
+            // 	frag: `
+            // 	precision mediump float;
+            // 	void main () {
+            // 	  gl_FragColor = vec4(
+            // 		1);
+            // 	}`,
+
+            // 	vert: `
+            // 	attribute vec2 position;
+
+            // 	void main () {
+            // 	  gl_Position = vec4(position, 0, 1);
+            // 	}`,
+
+            // 	attributes: {
+            // 		position: textMesh.positions
+            // 	},
+
+            // 	elements: textMesh.edges,
+
+            // 	depth: { enable: false }
+            // })
+            // drawText()
+            // const nodePositions = this.getNodePositions()
+            // const nodes = Object.keys(nodePositions).map((key) => {
+            // 	return {
+            // 		id: key,
+            // 		x: nodePositions[key].x,
+            // 		y: nodePositions[key].y,
+            // 	}
+            // })
+
+
+            // for (let i = 0; i < nodes.length; i++) {
+            // 	const node = nodes[i]
+            // 	const drawCommand = this.points.drawTextCommands.get(node.id)!
+
+            // 	drawCommand({ x: node.x, y: node.y })
+            // }
+
+
             this.fpsMonitor?.end(now)
 
             this.currentEvent = undefined
+
             this.frame()
         })
     }

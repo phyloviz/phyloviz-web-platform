@@ -14,7 +14,8 @@ import {
     CascadingInfoAlgorithmTypingDataTreeSource,
     CascadingInfoFileTreeSource,
     CascadingInfoTree,
-    CascadingInfoTreeView, DistanceMatrix,
+    CascadingInfoTreeView,
+    DistanceMatrix,
     Tree,
     TreeView
 } from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
@@ -33,16 +34,41 @@ export type VizLink = {
     target: string
 }
 
+const defaultConfig: GraphConfigInterface<VizNode, VizLink> = {
+    backgroundColor: "#FFFFFF",
+    nodeSize: 4,
+    nodeColor: "#4B5BBF",
+    nodeGreyoutOpacity: 0.1,
+    linkWidth: 0.1,
+    linkColor: "#5F74C2",
+    linkArrows: false,
+    linkGreyoutOpacity: 0,
+    simulation: {
+        decay: 100000,
+        gravity: 0.01,
+        repulsionTheta: 0.5,
+        linkDistance: 10,
+        linkSpring: 1,
+        friction: 0.85,
+        repulsion: 0.2,
+    }
+}
+
 /**
  * Hook for the TreeView page.
  */
 export function useTreeView() {
     const {projectId, datasetId, treeViewId} = useParams<{ projectId: string, datasetId: string, treeViewId: string }>()
     const {project} = useProjectContext()
-    const [linkSpring, setLinkSpring] = useState(1)
-    const [linkDistance, setLinkDistance] = useState(10)
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const graphRef = useRef<TreeViewGraph<VizNode, VizLink>>()
+    const [linkSpring, setLinkSpring] = useState(defaultConfig!.simulation!.linkSpring!)
+    const [linkDistance, setLinkDistance] = useState(defaultConfig!.simulation!.linkDistance!)
+    const [gravity, setGravity] = useState(defaultConfig!.simulation!.gravity!)
+    const [repulsion, setRepulsion] = useState(defaultConfig!.simulation!.repulsion!)
+    const [friction, setFriction] = useState(defaultConfig!.simulation!.friction!)
+    const [repulsionTheta, setRepulsionTheta] = useState(defaultConfig!.simulation!.repulsionTheta!)
+    const [decay, setDecay] = useState(defaultConfig!.simulation!.decay!)
 
     const toPrintRef = useRef(null);
     const reactToPrintContent = React.useCallback(() => {
@@ -108,28 +134,7 @@ export function useTreeView() {
                 }
             })
 
-            const config: GraphConfigInterface<VizNode, VizLink> = {
-                backgroundColor: "#FFFFFF",
-                nodeSize: 4,
-                nodeColor: "#4B5BBF",
-                nodeGreyoutOpacity: 0.1,
-                linkWidth: 0.1,
-                linkColor: "#5F74C2",
-                linkArrows: false,
-                linkGreyoutOpacity: 0,
-                simulation: {
-                    decay: Infinity,
-                    gravity: 0.01,
-                    repulsionQuadtreeLevels: 0.3,
-                    repulsionTheta: 0.5,
-                    linkDistance: 10,
-                    linkSpring: 1,
-                    friction: 0.85,
-                    repulsion: 0.2,
-                }
-            }
-
-            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, config)
+            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, defaultConfig)
 
             graph.setData(nodes, links)
 
@@ -181,20 +186,58 @@ export function useTreeView() {
     } as CascadingInfoTreeView
 
     return {
+        canvasRef,
         treeView: cascadingInfoTreeView,
         pauseAnimation: () => graphRef.current?.pause(),
         restartAnimation: () => graphRef.current?.restart(),
+        resetSimulationConfig: () => {
+            setLinkSpring(defaultConfig!.simulation!.linkSpring!)
+            setLinkDistance(defaultConfig!.simulation!.linkDistance!)
+            setGravity(defaultConfig!.simulation!.gravity!)
+            setRepulsion(defaultConfig!.simulation!.repulsion!)
+            setFriction(defaultConfig!.simulation!.friction!)
+            setRepulsionTheta(defaultConfig!.simulation!.repulsionTheta!)
+            setDecay(defaultConfig!.simulation!.decay!)
+
+            graphRef.current?.setConfig(defaultConfig)
+        },
+
         linkSpring,
+        linkDistance,
+        gravity,
+        friction,
+        repulsion,
+        repulsionTheta,
+        decay,
+
         updateLinkSpring: (value: number) => {
             setLinkSpring(value)
             graphRef.current?.setConfig({simulation: {linkSpring: value}})
         },
-        linkDistance,
         updateLinkDistance: (value: number) => {
             setLinkDistance(value)
             graphRef.current?.setConfig({simulation: {linkDistance: value}})
         },
-        canvasRef,
+        updateGravity: (value: number) => {
+            setGravity(value)
+            graphRef.current?.setConfig({simulation: {gravity: value}})
+        },
+        updateFriction: (value: number) => {
+            setFriction(value)
+            graphRef.current?.setConfig({simulation: {friction: value}})
+        },
+        updateRepulsion: (value: number) => {
+            setRepulsion(value)
+            graphRef.current?.setConfig({simulation: {repulsion: value}})
+        },
+        updateRepulsionTheta: (value: number) => {
+            setRepulsionTheta(value)
+            graphRef.current?.setConfig({simulation: {repulsionTheta: value}})
+        },
+        updateDecay: (value: number) => {
+            setDecay(value)
+            graphRef.current?.setConfig({simulation: {decay: value}})
+        },
         toPrintRef,
         handlePrint
     }

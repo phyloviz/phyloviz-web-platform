@@ -6,10 +6,12 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@interacta/css-labels": "^0.0.2",
     "@mui/icons-material": "^5.10.14",
     "@mui/lab": "^5.0.0-alpha.124",
     "@mui/material": "^5.10.14",
     "@mui/x-data-grid": "^6.1.0",
+    "buffer": "^6.0.3",
     "d3-array": "^3.2.0",
     "d3-color": "^3.1.0",
     "d3-drag": "^3.0.0",
@@ -19,7 +21,9 @@
     "d3-transition": "^3.0.1",
     "d3-zoom": "^3.0.0",
     "dotenv": "^16.0.3",
+    "font-atlas-sdf": "^2.0.0",
     "gl-bench": "^1.0.42",
+    "gl-mat4": "^1.2.0",
     "gl-matrix": "^3.4.3",
     "glslify-loader": "^2.0.0",
     "mui-nested-menu": "^3.2.0",
@@ -31,7 +35,8 @@
     "react-heatmap-grid": "^0.9.0",
     "react-router-dom": "^6.4.3",
     "react-to-print": "^2.14.12",
-    "regl": "^2.1.0"
+    "regl": "^2.1.0",
+    "vectorize-text": "^3.2.2"
   },
   "devDependencies": {
     "@types/d3-array": "^3.0.3",

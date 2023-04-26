@@ -2,7 +2,7 @@ const Dotenv = require('dotenv-webpack');
 const env = process.env.NODE_ENV || 'development'
 
 module.exports = {
-    
+
     mode: env,
     resolve: {
         extensions: [".js", ".ts", ".tsx", ".css", ".ico"]

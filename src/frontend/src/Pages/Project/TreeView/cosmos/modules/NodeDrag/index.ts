@@ -39,13 +39,13 @@ export class NodeDrag<N extends CosmosInputNode, L extends CosmosInputLink> {
 			precision highp float;
 			#endif
 
-			uniform sampler2D position;
+			uniform sampler2D positions;
 			uniform vec2 draggedIndex;
 			uniform vec2 mousePos;
 			varying vec2 index;
 
 			void main() {
-		  		vec4 pointPosition = texture2D(position, index);
+		  		vec4 pointPosition = texture2D(positions, index);
 				
 				if(gl_FragCoord.x - 0.5 == draggedIndex.x && gl_FragCoord.y -0.5 == draggedIndex.y) {
 					pointPosition = vec4(mousePos, 0.0, 1.0);
@@ -60,7 +60,7 @@ export class NodeDrag<N extends CosmosInputNode, L extends CosmosInputLink> {
             count: 4,
             attributes: {quad: createQuadBuffer(reglInstance)},
             uniforms: {
-                position: () => {
+                positions: () => {
                     return points?.previousPositionFbo
                 },
                 draggedIndex: () => {
@@ -69,7 +69,6 @@ export class NodeDrag<N extends CosmosInputNode, L extends CosmosInputLink> {
                     return [sortedIndex % pointsTextureSize, Math.floor(sortedIndex / pointsTextureSize)]
                 },
                 mousePos: () => store!.mousePosition
-
             },
         })
     }
