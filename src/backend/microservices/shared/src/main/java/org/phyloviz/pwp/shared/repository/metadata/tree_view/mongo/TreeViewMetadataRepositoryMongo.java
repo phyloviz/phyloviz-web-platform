@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.shared.repository.metadata.tree_view.mongo;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.adapters.tree_view.TreeViewAdapterId;
+import org.phyloviz.pwp.shared.repository.data.tree_view.TreeViewDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.TreeViewMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.TreeViewMetadata;
 import org.springframework.context.annotation.Primary;
@@ -35,16 +35,16 @@ public class TreeViewMetadataRepositoryMongo implements TreeViewMetadataReposito
     }
 
     @Override
-    public Optional<TreeViewMetadata> findByTreeViewIdAndAdapterId(String treeViewId, TreeViewAdapterId adapterId) {
-        return treeViewMetadataMongoRepository.findByTreeViewIdAndAdapterId(
-                treeViewId, adapterId.name().toLowerCase()
+    public Optional<TreeViewMetadata> findByTreeViewIdAndRepositoryId(String treeViewId, TreeViewDataRepositoryId repositoryId) {
+        return treeViewMetadataMongoRepository.findByTreeViewIdAndRepositoryId(
+                treeViewId, repositoryId.name().toLowerCase()
         );
     }
 
     @Override
-    public Optional<TreeViewMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(String projectId, String datasetId, String treeViewId, TreeViewAdapterId adapterId) {
-        return treeViewMetadataMongoRepository.findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(
-                projectId, datasetId, treeViewId, adapterId.name().toLowerCase()
+    public Optional<TreeViewMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndRepositoryId(String projectId, String datasetId, String treeViewId, TreeViewDataRepositoryId repositoryId) {
+        return treeViewMetadataMongoRepository.findByProjectIdAndDatasetIdAndTreeViewIdAndRepositoryId(
+                projectId, datasetId, treeViewId, repositoryId.name().toLowerCase()
         );
     }
 

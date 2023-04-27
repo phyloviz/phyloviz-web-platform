@@ -1,11 +1,11 @@
 package org.phyloviz.pwp.shared.config;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.adapters.distance_matrix.DistanceMatrixAdapterRegistry;
-import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterRegistry;
-import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterRegistry;
-import org.phyloviz.pwp.shared.adapters.tree_view.TreeViewAdapterRegistry;
-import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterRegistry;
+import org.phyloviz.pwp.shared.repository.data.registry.distance_matrix.DistanceMatrixDataRepositoryRegistry;
+import org.phyloviz.pwp.shared.repository.data.registry.isolate_data.IsolateDataDataRepositoryRegistry;
+import org.phyloviz.pwp.shared.repository.data.registry.tree.TreeDataRepositoryRegistry;
+import org.phyloviz.pwp.shared.repository.data.registry.tree_view.TreeViewDataRepositoryRegistry;
+import org.phyloviz.pwp.shared.repository.data.registry.typing_data.TypingDataDataRepositoryRegistry;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.converters.DistanceMatrixMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataSerializer;
@@ -34,11 +34,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MongoConfig {
 
-    private final TypingDataAdapterRegistry typingDataAdapterRegistry;
-    private final IsolateDataAdapterRegistry isolateDataAdapterRegistry;
-    private final DistanceMatrixAdapterRegistry distanceMatrixAdapterRegistry;
-    private final TreeAdapterRegistry treeAdapterRegistry;
-    private final TreeViewAdapterRegistry treeViewAdapterRegistry;
+    private final TypingDataDataRepositoryRegistry typingDataDataRepositoryRegistry;
+    private final IsolateDataDataRepositoryRegistry isolateDataDataRepositoryRegistry;
+    private final DistanceMatrixDataRepositoryRegistry distanceMatrixDataRepositoryRegistry;
+    private final TreeDataRepositoryRegistry treeDataRepositoryRegistry;
+    private final TreeViewDataRepositoryRegistry treeViewDataRepositoryRegistry;
 
     @Bean
     public MappingMongoConverter customMappingMongoConverter(
@@ -56,13 +56,13 @@ public class MongoConfig {
 
     public MongoCustomConversions mongoCustomConversions(MongoConverter mongoConverter) {
         List<Converter<?, ?>> converters = List.of(
-                new TypingDataMetadataDeserializer(mongoConverter, typingDataAdapterRegistry),
+                new TypingDataMetadataDeserializer(mongoConverter, typingDataDataRepositoryRegistry),
                 new TypingDataMetadataSerializer(mongoConverter),
-                new IsolateDataMetadataDeserializer(mongoConverter, isolateDataAdapterRegistry),
+                new IsolateDataMetadataDeserializer(mongoConverter, isolateDataDataRepositoryRegistry),
                 new IsolateDataMetadataSerializer(mongoConverter),
-                new DistanceMatrixMetadataDeserializer(mongoConverter, distanceMatrixAdapterRegistry),
-                new TreeMetadataDeserializer(mongoConverter, treeAdapterRegistry),
-                new TreeViewMetadataDeserializer(mongoConverter, treeViewAdapterRegistry)
+                new DistanceMatrixMetadataDeserializer(mongoConverter, distanceMatrixDataRepositoryRegistry),
+                new TreeMetadataDeserializer(mongoConverter, treeDataRepositoryRegistry),
+                new TreeViewMetadataDeserializer(mongoConverter, treeViewDataRepositoryRegistry)
         );
 
         return new MongoCustomConversions(converters);

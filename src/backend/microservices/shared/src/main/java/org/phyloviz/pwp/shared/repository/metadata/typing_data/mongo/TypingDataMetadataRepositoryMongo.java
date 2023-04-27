@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.shared.repository.metadata.typing_data.mongo;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterId;
+import org.phyloviz.pwp.shared.repository.data.typing_data.TypingDataDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 import org.springframework.context.annotation.Primary;
@@ -40,9 +40,9 @@ public class TypingDataMetadataRepositoryMongo implements TypingDataMetadataRepo
     }
 
     @Override
-    public Optional<TypingDataMetadata> findByTypingDataIdAndAdapterId(String typingDataId, TypingDataAdapterId adapterId) {
-        return typingDataMetadataMongoRepository.findByTypingDataIdAndAdapterId(
-                typingDataId, adapterId.name().toLowerCase()
+    public Optional<TypingDataMetadata> findByTypingDataIdAndRepositoryId(String typingDataId, TypingDataDataRepositoryId repositoryId) {
+        return typingDataMetadataMongoRepository.findByTypingDataIdAndRepositoryId(
+                typingDataId, repositoryId.name().toLowerCase()
         );
     }
 

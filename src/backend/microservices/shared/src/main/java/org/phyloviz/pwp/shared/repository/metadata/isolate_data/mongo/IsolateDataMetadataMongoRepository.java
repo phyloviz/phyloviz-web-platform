@@ -38,15 +38,15 @@ public interface IsolateDataMetadataMongoRepository extends MongoRepository<Isol
     List<IsolateDataMetadata> findAllByIsolateDataId(String isolateDataId);
 
     /**
-     * Find an isolate data metadata from its id and adapter id.
-     * The adapterId is stored as string in the document, so a custom @Query is needed.
+     * Find an isolate data metadata from its id and repository id.
+     * The repositoryId is stored as string in the document, so a custom @Query is needed.
      *
      * @param isolateDataId the id of the isolate data resource
-     * @param adapterId     the id of the adapter, as string, like it's stored in the document
+     * @param repositoryId  the id of the repository, as string, like it's stored in the document
      * @return an isolate data metadata
      */
-    @Query("{ 'isolateDataId' : ?0, 'adapterId' : ?1 }")
-    Optional<IsolateDataMetadata> findByIsolateDataIdAndAdapterId(String isolateDataId, String adapterId);
+    @Query("{ 'isolateDataId' : ?0, 'repositoryId' : ?1 }")
+    Optional<IsolateDataMetadata> findByIsolateDataIdAndRepositoryId(String isolateDataId, String repositoryId);
 
     /**
      * Find all isolate data metadata from a project id.

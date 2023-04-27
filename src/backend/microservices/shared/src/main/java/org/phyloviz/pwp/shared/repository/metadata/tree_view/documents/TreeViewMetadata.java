@@ -3,8 +3,8 @@ package org.phyloviz.pwp.shared.repository.metadata.tree_view.documents;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.phyloviz.pwp.shared.adapters.tree_view.TreeViewAdapterId;
-import org.phyloviz.pwp.shared.adapters.tree_view.adapter.specific_data.TreeViewAdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.data.tree_view.TreeViewDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.tree_view.repository.specific_data.TreeViewDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.source.TreeViewSource;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,18 +23,18 @@ public class TreeViewMetadata {
     private String name;
     private String layout;
     private TreeViewSource source;
-    private TreeViewAdapterId adapterId;
-    private TreeViewAdapterSpecificData adapterSpecificData;
+    private TreeViewDataRepositoryId repositoryId;
+    private TreeViewDataRepositorySpecificData repositorySpecificData;
 
     public TreeViewMetadata(String projectId, String datasetId, String treeViewId, String name, String layout, TreeViewSource source,
-                            TreeViewAdapterId adapterId, TreeViewAdapterSpecificData adapterSpecificData) {
+                            TreeViewDataRepositoryId repositoryId, TreeViewDataRepositorySpecificData repositorySpecificData) {
         this.projectId = projectId;
         this.datasetId = datasetId;
         this.treeViewId = treeViewId;
         this.name = name;
         this.layout = layout;
         this.source = source;
-        this.adapterId = adapterId;
-        this.adapterSpecificData = adapterSpecificData;
+        this.repositoryId = repositoryId;
+        this.repositorySpecificData = repositorySpecificData;
     }
 }

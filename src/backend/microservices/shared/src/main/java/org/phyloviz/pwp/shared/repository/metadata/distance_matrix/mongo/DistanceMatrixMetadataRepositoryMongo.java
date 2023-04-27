@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.shared.repository.metadata.distance_matrix.mongo;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.adapters.distance_matrix.DistanceMatrixAdapterId;
+import org.phyloviz.pwp.shared.repository.data.distance_matrix.DistanceMatrixDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.DistanceMatrixMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.DistanceMatrixMetadata;
 import org.springframework.context.annotation.Primary;
@@ -52,11 +52,11 @@ public class DistanceMatrixMetadataRepositoryMongo implements DistanceMatrixMeta
     }
 
     @Override
-    public Optional<DistanceMatrixMetadata> findByProjectIdAndDatasetIdAndDistanceMatrixIdAndAdapterId(
-            String projectId, String datasetId, String distanceMatrixId, DistanceMatrixAdapterId adapterId
+    public Optional<DistanceMatrixMetadata> findByProjectIdAndDatasetIdAndDistanceMatrixIdAndRepositoryId(
+            String projectId, String datasetId, String distanceMatrixId, DistanceMatrixDataRepositoryId repositoryId
     ) {
-        return distanceMatrixMetadataMongoRepository.findByProjectIdAndDatasetIdAndDistanceMatrixIdAndAdapterId(
-                projectId, datasetId, distanceMatrixId, adapterId.name().toLowerCase()
+        return distanceMatrixMetadataMongoRepository.findByProjectIdAndDatasetIdAndDistanceMatrixIdAndRepositoryId(
+                projectId, datasetId, distanceMatrixId, repositoryId.name().toLowerCase()
         );
     }
 

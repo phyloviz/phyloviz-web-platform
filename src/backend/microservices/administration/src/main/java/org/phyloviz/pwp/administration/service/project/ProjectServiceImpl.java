@@ -1,15 +1,15 @@
 package org.phyloviz.pwp.administration.service.project;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.administration.service.dtos.files.FilesInfo;
+import org.phyloviz.pwp.administration.service.dtos.project.CreateProjectOutput;
+import org.phyloviz.pwp.administration.service.dtos.project.FullProjectInfo;
 import org.phyloviz.pwp.administration.service.dtos.project.UpdateProjectOutput;
 import org.phyloviz.pwp.administration.service.project.dataset.DatasetService;
 import org.phyloviz.pwp.administration.service.project.file.IsolateDataService;
 import org.phyloviz.pwp.administration.service.project.file.TypingDataService;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
-import org.phyloviz.pwp.administration.service.dtos.files.FilesInfo;
-import org.phyloviz.pwp.administration.service.dtos.project.CreateProjectOutput;
-import org.phyloviz.pwp.administration.service.dtos.project.FullProjectInfo;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.springframework.stereotype.Service;
@@ -90,7 +90,7 @@ public class ProjectServiceImpl implements ProjectService {
         if (name != null && name.equals(previousName)) {
             throw new InvalidArgumentException("The provided name is the same as the previous one");
         }
-        if(description != null && description.equals(previousDescription)) {
+        if (description != null && description.equals(previousDescription)) {
             throw new InvalidArgumentException("The provided description is the same as the previous ones");
         }
 

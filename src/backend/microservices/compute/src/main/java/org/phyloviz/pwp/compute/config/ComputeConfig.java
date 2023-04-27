@@ -4,12 +4,12 @@ import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.conv
 import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.converters.AccessTemplateSerializer;
 import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.converters.CaseInsensitiveEnumDeserializerFactory;
 import org.phyloviz.pwp.compute.service.flowviz.FLOWViZClient;
-import org.phyloviz.pwp.shared.adapters.distance_matrix.DistanceMatrixAdapterRegistry;
-import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterRegistry;
-import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterRegistry;
-import org.phyloviz.pwp.shared.adapters.tree_view.TreeViewAdapterRegistry;
-import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterRegistry;
 import org.phyloviz.pwp.shared.config.ResourceServerSharedConfig;
+import org.phyloviz.pwp.shared.repository.data.registry.distance_matrix.DistanceMatrixDataRepositoryRegistry;
+import org.phyloviz.pwp.shared.repository.data.registry.isolate_data.IsolateDataDataRepositoryRegistry;
+import org.phyloviz.pwp.shared.repository.data.registry.tree.TreeDataRepositoryRegistry;
+import org.phyloviz.pwp.shared.repository.data.registry.tree_view.TreeViewDataRepositoryRegistry;
+import org.phyloviz.pwp.shared.repository.data.registry.typing_data.TypingDataDataRepositoryRegistry;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.converters.DistanceMatrixMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataSerializer;
@@ -49,31 +49,31 @@ public class ComputeConfig {
     private final String flowVizUsername;
     private final String flowVizPassword;
     private final String flowVizUrl;
-    private final TypingDataAdapterRegistry typingDataAdapterRegistry;
-    private final IsolateDataAdapterRegistry isolateDataAdapterRegistry;
-    private final DistanceMatrixAdapterRegistry distanceMatrixAdapterRegistry;
-    private final TreeAdapterRegistry treeAdapterRegistry;
-    private final TreeViewAdapterRegistry treeViewAdapterRegistry;
+    private final TypingDataDataRepositoryRegistry typingDataDataRepositoryRegistry;
+    private final IsolateDataDataRepositoryRegistry isolateDataDataRepositoryRegistry;
+    private final DistanceMatrixDataRepositoryRegistry distanceMatrixDataRepositoryRegistry;
+    private final TreeDataRepositoryRegistry treeDataRepositoryRegistry;
+    private final TreeViewDataRepositoryRegistry treeViewDataRepositoryRegistry;
 
     public ComputeConfig(
             @Value("${flowviz.username}") String flowVizUsername,
             @Value("${flowviz.password}") String flowVizPassword,
             @Value("${flowviz.url}") String flowVizUrl,
-            TypingDataAdapterRegistry typingDataAdapterRegistry,
-            IsolateDataAdapterRegistry isolateDataAdapterRegistry,
-            DistanceMatrixAdapterRegistry distanceMatrixAdapterRegistry,
-            TreeAdapterRegistry treeAdapterRegistry,
-            TreeViewAdapterRegistry treeViewAdapterRegistry
+            TypingDataDataRepositoryRegistry typingDataDataRepositoryRegistry,
+            IsolateDataDataRepositoryRegistry isolateDataDataRepositoryRegistry,
+            DistanceMatrixDataRepositoryRegistry distanceMatrixDataRepositoryRegistry,
+            TreeDataRepositoryRegistry treeDataRepositoryRegistry,
+            TreeViewDataRepositoryRegistry treeViewDataRepositoryRegistry
     ) {
 
         this.flowVizUsername = flowVizUsername;
         this.flowVizPassword = flowVizPassword;
         this.flowVizUrl = flowVizUrl;
-        this.typingDataAdapterRegistry = typingDataAdapterRegistry;
-        this.isolateDataAdapterRegistry = isolateDataAdapterRegistry;
-        this.distanceMatrixAdapterRegistry = distanceMatrixAdapterRegistry;
-        this.treeAdapterRegistry = treeAdapterRegistry;
-        this.treeViewAdapterRegistry = treeViewAdapterRegistry;
+        this.typingDataDataRepositoryRegistry = typingDataDataRepositoryRegistry;
+        this.isolateDataDataRepositoryRegistry = isolateDataDataRepositoryRegistry;
+        this.distanceMatrixDataRepositoryRegistry = distanceMatrixDataRepositoryRegistry;
+        this.treeDataRepositoryRegistry = treeDataRepositoryRegistry;
+        this.treeViewDataRepositoryRegistry = treeViewDataRepositoryRegistry;
     }
 
     @Bean
@@ -111,13 +111,13 @@ public class ComputeConfig {
 
     public MongoCustomConversions mongoCustomConversions(MongoConverter mongoConverter) {
         List<Converter<?, ?>> converters = List.of(
-                new TypingDataMetadataDeserializer(mongoConverter, typingDataAdapterRegistry),
+                new TypingDataMetadataDeserializer(mongoConverter, typingDataDataRepositoryRegistry),
                 new TypingDataMetadataSerializer(mongoConverter),
-                new IsolateDataMetadataDeserializer(mongoConverter, isolateDataAdapterRegistry),
+                new IsolateDataMetadataDeserializer(mongoConverter, isolateDataDataRepositoryRegistry),
                 new IsolateDataMetadataSerializer(mongoConverter),
-                new DistanceMatrixMetadataDeserializer(mongoConverter, distanceMatrixAdapterRegistry),
-                new TreeMetadataDeserializer(mongoConverter, treeAdapterRegistry),
-                new TreeViewMetadataDeserializer(mongoConverter, treeViewAdapterRegistry),
+                new DistanceMatrixMetadataDeserializer(mongoConverter, distanceMatrixDataRepositoryRegistry),
+                new TreeMetadataDeserializer(mongoConverter, treeDataRepositoryRegistry),
+                new TreeViewMetadataDeserializer(mongoConverter, treeViewDataRepositoryRegistry),
                 new AccessTemplateSerializer(),
                 new AccessTemplateDeserializer(mongoConverter),
                 //https://stackoverflow.com/questions/12385920/spring-mongodb-storing-retrieving-enums-as-int-not-string/30024621#30024621

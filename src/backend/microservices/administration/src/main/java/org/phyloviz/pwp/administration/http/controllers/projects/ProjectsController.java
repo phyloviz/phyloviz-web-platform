@@ -8,12 +8,12 @@ import org.phyloviz.pwp.administration.http.models.projects.get_project.GetProje
 import org.phyloviz.pwp.administration.http.models.projects.get_projects.GetProjectsOutputModel;
 import org.phyloviz.pwp.administration.http.models.projects.update_project.UpdateProjectInputModel;
 import org.phyloviz.pwp.administration.http.models.projects.update_project.UpdateProjectOutputModel;
+import org.phyloviz.pwp.administration.service.dtos.project.CreateProjectOutput;
+import org.phyloviz.pwp.administration.service.dtos.project.FullProjectInfo;
 import org.phyloviz.pwp.administration.service.dtos.project.UpdateProjectOutput;
 import org.phyloviz.pwp.administration.service.project.ProjectService;
 import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
-import org.phyloviz.pwp.administration.service.dtos.project.CreateProjectOutput;
-import org.phyloviz.pwp.administration.service.dtos.project.FullProjectInfo;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;

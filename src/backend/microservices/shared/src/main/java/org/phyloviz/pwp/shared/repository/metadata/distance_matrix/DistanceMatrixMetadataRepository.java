@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.distance_matrix;
 
-import org.phyloviz.pwp.shared.adapters.distance_matrix.DistanceMatrixAdapterId;
+import org.phyloviz.pwp.shared.repository.data.distance_matrix.DistanceMatrixDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.DistanceMatrixMetadata;
 
 import java.util.List;
@@ -45,16 +45,16 @@ public interface DistanceMatrixMetadataRepository {
     List<DistanceMatrixMetadata> findAllByDatasetId(String datasetId);
 
     /**
-     * Find a distance matrix metadata from a project id, dataset id, distance matrix id and adapter id.
+     * Find a distance matrix metadata from a project id, dataset id, distance matrix id and repository id.
      *
      * @param projectId        the id of the project
      * @param datasetId        the id of the dataset
      * @param distanceMatrixId the id of the distance matrix
-     * @param adapterId        the id of the adapter
+     * @param repositoryId     the id of the repository
      * @return a distance matrix metadata
      */
-    Optional<DistanceMatrixMetadata> findByProjectIdAndDatasetIdAndDistanceMatrixIdAndAdapterId(
-            String projectId, String datasetId, String distanceMatrixId, DistanceMatrixAdapterId adapterId
+    Optional<DistanceMatrixMetadata> findByProjectIdAndDatasetIdAndDistanceMatrixIdAndRepositoryId(
+            String projectId, String datasetId, String distanceMatrixId, DistanceMatrixDataRepositoryId repositoryId
     );
 
     List<DistanceMatrixMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);
@@ -78,6 +78,7 @@ public interface DistanceMatrixMetadataRepository {
 
     /**
      * Save a distance matrix metadata.
+     *
      * @param distanceMatrixMetadata the distance matrix metadata to save
      * @return the saved distance matrix metadata
      */

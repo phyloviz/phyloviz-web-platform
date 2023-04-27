@@ -40,15 +40,15 @@ public interface DistanceMatrixMetadataMongoRepository extends MongoRepository<D
     List<DistanceMatrixMetadata> findAllByDistanceMatrixId(String distanceMatrixId);
 
     /**
-     * Find a distance matrix metadata from its id and adapter id.
-     * The adapterId is stored as string in the document, so a custom @Query is needed.
+     * Find a distance matrix metadata from its id and repository id.
+     * The repositoryId is stored as string in the document, so a custom @Query is needed.
      *
      * @param distanceMatrixId the id of the distance matrix resource
-     * @param adapterId        the id of the adapter, as string, like it's stored in the document
+     * @param repositoryId     the id of the repository, as string, like it's stored in the document
      * @return a distance matrix metadata
      */
-    @Query("{ 'distanceMatrixId' : ?0, 'adapterId' : ?1 }")
-    Optional<DistanceMatrixMetadata> findByDistanceMatrixIdAndAdapterId(String distanceMatrixId, String adapterId);
+    @Query("{ 'distanceMatrixId' : ?0, 'repositoryId' : ?1 }")
+    Optional<DistanceMatrixMetadata> findByDistanceMatrixIdAndRepositoryId(String distanceMatrixId, String repositoryId);
 
     /**
      * Find all distance matrix metadata from a dataset id.
@@ -59,17 +59,17 @@ public interface DistanceMatrixMetadataMongoRepository extends MongoRepository<D
     List<DistanceMatrixMetadata> findAllByDatasetId(String datasetId);
 
     /**
-     * Find a distance matrix metadata from a project id, dataset id, distance matrix id and adapter id.
+     * Find a distance matrix metadata from a project id, dataset id, distance matrix id and repository id.
      *
      * @param projectId        the id of the project
      * @param datasetId        the id of the dataset
      * @param distanceMatrixId the id of the distance matrix
-     * @param adapterId        the id of the adapter
+     * @param repositoryId     the id of the repository
      * @return a distance matrix metadata
      */
-    @Query("{ 'projectId' : ?0, 'datasetId' : ?1, 'distanceMatrixId' : ?2, 'adapterId' : ?3 }")
-    Optional<DistanceMatrixMetadata> findByProjectIdAndDatasetIdAndDistanceMatrixIdAndAdapterId(
-            String projectId, String datasetId, String distanceMatrixId, String adapterId
+    @Query("{ 'projectId' : ?0, 'datasetId' : ?1, 'distanceMatrixId' : ?2, 'repositoryId' : ?3 }")
+    Optional<DistanceMatrixMetadata> findByProjectIdAndDatasetIdAndDistanceMatrixIdAndRepositoryId(
+            String projectId, String datasetId, String distanceMatrixId, String repositoryId
     );
 
     List<DistanceMatrixMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);

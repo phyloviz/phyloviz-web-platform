@@ -1,14 +1,14 @@
 package org.phyloviz.pwp.administration.service.project.file;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.administration.service.dtos.files.typing_data.TypingDataInfo;
 import org.phyloviz.pwp.administration.service.dtos.files.typing_data.UpdateTypingDataOutput;
-import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterFactory;
+import org.phyloviz.pwp.administration.service.exceptions.DeniedFileDeletionException;
+import org.phyloviz.pwp.shared.repository.data.registry.typing_data.TypingDataDataRepositoryFactory;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
-import org.phyloviz.pwp.administration.service.dtos.files.typing_data.TypingDataInfo;
-import org.phyloviz.pwp.administration.service.exceptions.DeniedFileDeletionException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
@@ -25,7 +25,7 @@ public class TypingDataServiceImpl implements TypingDataService {
 
     private final TypingDataMetadataRepository typingDataMetadataRepository;
 
-    private final TypingDataAdapterFactory typingDataAdapterFactory;
+    private final TypingDataDataRepositoryFactory typingDataDataRepositoryFactory;
 
     @Override
     public List<TypingDataInfo> getTypingDataInfos(String projectId) {
@@ -92,8 +92,8 @@ public class TypingDataServiceImpl implements TypingDataService {
     }
 
     private void deleteTypingData(TypingDataMetadata typingDataMetadata) {
-        typingDataAdapterFactory.getTypingDataAdapter(typingDataMetadata.getAdapterId())
-                .deleteTypingData(typingDataMetadata.getAdapterSpecificData());
+        typingDataDataRepositoryFactory.getRepository(typingDataMetadata.getRepositoryId())
+                .deleteTypingData(typingDataMetadata.getRepositorySpecificData());
 
         typingDataMetadataRepository.delete(typingDataMetadata);
     }

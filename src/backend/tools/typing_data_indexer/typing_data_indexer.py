@@ -242,15 +242,15 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
 
     typing_data_id = dataset_collection.find_one({'_id': ObjectId(dataset_id)})['typingDataId']
 
-    typing_data_metadata = typing_data_collection.find_one({'typingDataId': typing_data_id, 'adapterId': 'phylodb'})
+    typing_data_metadata = typing_data_collection.find_one({'typingDataId': typing_data_id, 'repositoryId': 'phylodb'})
 
     if typing_data_metadata is None:
         typing_data_metadata = {
             'projectId': project_id,
             'typingDataId': typing_data_id,
             'name': 'Typing Data ' + typing_data_id,
-            'adapterId': 'phylodb',
-            'adapterSpecificData': {
+            'repositoryId': 'phylodb',
+            'repositorySpecificData': {
                 'datasetIds': [dataset_id]
             }
         }
@@ -260,7 +260,7 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
         typing_data_collection.update_one(
             {'_id': typing_data_metadata['_id']},
             {'$push': {
-                'adapterSpecificData.datasetIds': dataset_id
+                'repositorySpecificData.datasetIds': dataset_id
             }}
         )
 

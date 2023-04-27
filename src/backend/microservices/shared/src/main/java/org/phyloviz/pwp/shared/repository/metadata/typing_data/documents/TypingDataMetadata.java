@@ -3,8 +3,8 @@ package org.phyloviz.pwp.shared.repository.metadata.typing_data.documents;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterId;
-import org.phyloviz.pwp.shared.adapters.typing_data.adapter.specific_data.TypingDataAdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.data.typing_data.TypingDataDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.typing_data.repository.specific_data.TypingDataDataRepositorySpecificData;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,15 +22,15 @@ public class TypingDataMetadata {
     private String projectId;
     private String typingDataId;
     private String name;
-    private TypingDataAdapterId adapterId;
-    private TypingDataAdapterSpecificData adapterSpecificData;
+    private TypingDataDataRepositoryId repositoryId;
+    private TypingDataDataRepositorySpecificData repositorySpecificData;
 
-    public TypingDataMetadata(String projectId, String typingDataId, String name, TypingDataAdapterId adapterId,
-                              TypingDataAdapterSpecificData adapterSpecificData) {
+    public TypingDataMetadata(String projectId, String typingDataId, String name, TypingDataDataRepositoryId repositoryId,
+                              TypingDataDataRepositorySpecificData repositorySpecificData) {
         this.projectId = projectId;
         this.typingDataId = typingDataId;
         this.name = name;
-        this.adapterId = adapterId;
-        this.adapterSpecificData = adapterSpecificData;
+        this.repositoryId = repositoryId;
+        this.repositorySpecificData = repositorySpecificData;
     }
 }

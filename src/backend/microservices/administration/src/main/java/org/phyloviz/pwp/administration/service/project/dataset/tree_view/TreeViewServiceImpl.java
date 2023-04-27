@@ -1,15 +1,13 @@
 package org.phyloviz.pwp.administration.service.project.dataset.tree_view;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.administration.service.dtos.distance_matrix.UpdateDistanceMatrixOutput;
+import org.phyloviz.pwp.administration.service.dtos.tree_view.TreeViewInfo;
 import org.phyloviz.pwp.administration.service.dtos.tree_view.UpdateTreeViewOutput;
-import org.phyloviz.pwp.shared.adapters.tree_view.TreeViewAdapterFactory;
+import org.phyloviz.pwp.shared.repository.data.registry.tree_view.TreeViewDataRepositoryFactory;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.TreeViewMetadataRepository;
-import org.phyloviz.pwp.administration.service.dtos.tree_view.TreeViewInfo;
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeViewNotFoundException;
@@ -25,7 +23,7 @@ public class TreeViewServiceImpl implements TreeViewService {
     private final DatasetRepository datasetRepository;
     private final TreeViewMetadataRepository treeViewMetadataRepository;
 
-    private final TreeViewAdapterFactory treeViewAdapterFactory;
+    private final TreeViewDataRepositoryFactory treeViewDataRepositoryFactory;
 
     @Override
     public List<TreeViewInfo> getTreeViewInfos(String datasetId) {
@@ -51,8 +49,8 @@ public class TreeViewServiceImpl implements TreeViewService {
     public void deleteAllByProjectIdAndDatasetId(String projectId, String datasetId) {
         treeViewMetadataRepository.findAllByProjectIdAndDatasetId(projectId, datasetId)
                 .forEach(treeViewMetadata -> {
-                    treeViewAdapterFactory.getTreeViewAdapter(treeViewMetadata.getAdapterId())
-                            .deleteTreeView(treeViewMetadata.getAdapterSpecificData());
+                    treeViewDataRepositoryFactory.getRepository(treeViewMetadata.getRepositoryId())
+                            .deleteTreeView(treeViewMetadata.getRepositorySpecificData());
 
                     treeViewMetadataRepository.delete(treeViewMetadata);
                 });
@@ -62,8 +60,8 @@ public class TreeViewServiceImpl implements TreeViewService {
     public void deleteTreeView(String treeViewId) {
         treeViewMetadataRepository.findAllByTreeViewId(treeViewId)
                 .forEach(treeViewMetadata -> {
-                    treeViewAdapterFactory.getTreeViewAdapter(treeViewMetadata.getAdapterId())
-                            .deleteTreeView(treeViewMetadata.getAdapterSpecificData());
+                    treeViewDataRepositoryFactory.getRepository(treeViewMetadata.getRepositoryId())
+                            .deleteTreeView(treeViewMetadata.getRepositorySpecificData());
 
                     treeViewMetadataRepository.delete(treeViewMetadata);
                 });

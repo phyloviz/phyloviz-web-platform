@@ -40,14 +40,14 @@ def tree_handler(s3_output_path, project_id, dataset_id, tree_id, workflow_id):
         'treeId': tree_id,
         'projectId': project_id,
         'datasetId': dataset_id,
-        'adapterId': 's3',
+        'repositoryId': 's3',
         'name': f'Tree {tree_id}',
         'sourceType': 'algorithm_distance_matrix',
         'source': {
             'algorithm': 'goeburst',
             # TODO: Add distance matrix id and parameters
         },
-        'adapterSpecificData': {
+        'repositorySpecificData': {
             'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
         }
     }
@@ -72,13 +72,13 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, distance_mat
         'projectId': project_id,
         'datasetId': dataset_id,
         'distanceMatrixId': distance_matrix_id,
-        'adapterId': 's3',
+        'repositoryId': 's3',
         'name': f'Distance Matrix {distance_matrix_id}',
         'sourceType': 'function',
         'source': {
             'function': 'hamming'
         },
-        'adapterSpecificData': {
+        'repositorySpecificData': {
             'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
         }
     }

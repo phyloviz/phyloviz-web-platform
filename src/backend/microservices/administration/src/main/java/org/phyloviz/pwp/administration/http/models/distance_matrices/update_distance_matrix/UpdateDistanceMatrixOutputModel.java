@@ -2,14 +2,13 @@ package org.phyloviz.pwp.administration.http.models.distance_matrices.update_dis
 
 import lombok.Data;
 import org.phyloviz.pwp.administration.service.dtos.distance_matrix.UpdateDistanceMatrixOutput;
-import org.phyloviz.pwp.administration.service.dtos.files.typing_data.UpdateTypingDataOutput;
 
 @Data
 public class UpdateDistanceMatrixOutputModel {
     private String name;
 
     public UpdateDistanceMatrixOutputModel(UpdateDistanceMatrixOutput updateDistanceMatrixOutput) {
-        if(updateDistanceMatrixOutput.getNewName() != null) {
+        if (updateDistanceMatrixOutput.getNewName() != null) {
             this.name = String.format("Changed from '%s' to '%s'", updateDistanceMatrixOutput.getPreviousName(), updateDistanceMatrixOutput.getNewName());
         }
     }

@@ -38,19 +38,19 @@ public interface TreeViewMetadataMongoRepository extends MongoRepository<TreeVie
     List<TreeViewMetadata> findAllByTreeViewId(String treeViewId);
 
     /**
-     * Find a tree view metadata from its id and adapter id.
-     * The adapterId is stored as string in the document, so a custom @Query is needed.
+     * Find a tree view metadata from its id and repository id.
+     * The repositoryId is stored as string in the document, so a custom @Query is needed.
      *
-     * @param treeViewId the id of the tree view resource
-     * @param adapterId  the id of the adapter, as string, like it's stored in the document
+     * @param treeViewId   the id of the tree view resource
+     * @param repositoryId the id of the repository, as string, like it's stored in the document
      * @return a tree view metadata
      */
-    @Query("{ 'treeViewId' : ?0, 'adapterId' : ?1 }")
-    Optional<TreeViewMetadata> findByTreeViewIdAndAdapterId(String treeViewId, String adapterId);
+    @Query("{ 'treeViewId' : ?0, 'repositoryId' : ?1 }")
+    Optional<TreeViewMetadata> findByTreeViewIdAndRepositoryId(String treeViewId, String repositoryId);
 
-    @Query("{ 'projectId' : ?0, 'datasetId' : ?1, 'treeViewId' : ?2, 'adapterId' : ?3 }")
-    Optional<TreeViewMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(String projectId, String datasetId,
-                                                                                    String treeViewId, String adapterId);
+    @Query("{ 'projectId' : ?0, 'datasetId' : ?1, 'treeViewId' : ?2, 'repositoryId' : ?3 }")
+    Optional<TreeViewMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndRepositoryId(String projectId, String datasetId,
+                                                                                       String treeViewId, String repositoryId);
 
     List<TreeViewMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);
 

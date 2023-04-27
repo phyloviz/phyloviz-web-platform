@@ -37,9 +37,9 @@ def download_s3_object(resource_id, resource_type, out):
     resource_type_collection = db[get_collection_from_resource_type(resource_type)]
 
     resource = resource_type_collection.find_one(
-        {get_resource_id_attr_from_resource_type(resource_type): resource_id, 'adapterId': 's3'})
+        {get_resource_id_attr_from_resource_type(resource_type): resource_id, 'repositoryId': 's3'})
 
-    s3_url = resource['adapterSpecificData']['url']
+    s3_url = resource['repositorySpecificData']['url']
 
     # Get the S3 URL from the resourceType collection
     # Parse the S3 URL

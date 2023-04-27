@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.tree;
 
-import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterId;
+import org.phyloviz.pwp.shared.repository.data.tree.TreeDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
 
 import java.util.List;
@@ -11,9 +11,9 @@ public interface TreeMetadataRepository {
     /**
      * Find any tree metadata from a project id, dataset id and tree id.
      *
-     * @param projectId        the id of the project
-     * @param datasetId        the id of the dataset
-     * @param treeId the id of the tree resource
+     * @param projectId the id of the project
+     * @param datasetId the id of the dataset
+     * @param treeId    the id of the tree resource
      * @return a tree metadata
      */
     Optional<TreeMetadata> findAnyByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
@@ -37,13 +37,13 @@ public interface TreeMetadataRepository {
     List<TreeMetadata> findAllByTreeId(String treeId);
 
     /**
-     * Find a tree metadata from its id and adapter id.
+     * Find a tree metadata from its id and repository id.
      *
-     * @param treeId    the id of the tree resource
-     * @param adapterId the id of the adapter
+     * @param treeId       the id of the tree resource
+     * @param repositoryId the id of the repository
      * @return a tree metadata
      */
-    Optional<TreeMetadata> findByTreeIdAndAdapterId(String treeId, TreeAdapterId adapterId);
+    Optional<TreeMetadata> findByTreeIdAndRepositoryId(String treeId, TreeDataRepositoryId repositoryId);
 
     /**
      * Find all tree metadata from a dataset id. Only one tree metadata per tree resource.
@@ -68,8 +68,8 @@ public interface TreeMetadataRepository {
      */
     TreeMetadata save(TreeMetadata treeMetadata);
 
-    Optional<TreeMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(String projectId, String datasetId,
-                                                                                String treeViewId, TreeAdapterId adapterId);
+    Optional<TreeMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndRepositoryId(String projectId, String datasetId,
+                                                                                   String treeViewId, TreeDataRepositoryId repositoryId);
 
     List<TreeMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);
 
