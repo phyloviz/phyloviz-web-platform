@@ -77,16 +77,16 @@ public class IsolateDataServiceImpl implements IsolateDataService {
         if (name == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
 
-        if (name.equals(previousName))
-            throw new InvalidArgumentException("The provided name is the same as the previous one");
+        if (name.isBlank())
+            throw new InvalidArgumentException("Name can't be blank");
 
-        isolateDataMetadataRepository.findAllByProjectIdAndIsolateDataId(projectId, isolateDataId)
-                .forEach(isolateDataMetadata -> {
-                    if (!name.isBlank())
+        if (!name.equals(previousName))
+            isolateDataMetadataRepository.findAllByProjectIdAndIsolateDataId(projectId, isolateDataId)
+                    .forEach(isolateDataMetadata -> {
                         isolateDataMetadata.setName(name);
 
-                    isolateDataMetadataRepository.save(isolateDataMetadata);
-                });
+                        isolateDataMetadataRepository.save(isolateDataMetadata);
+                    });
 
         return new UpdateIsolateDataOutput(previousName, name);
     }

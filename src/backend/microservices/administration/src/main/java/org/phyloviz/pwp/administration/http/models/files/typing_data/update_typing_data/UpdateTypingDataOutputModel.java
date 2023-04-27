@@ -10,6 +10,8 @@ public class UpdateTypingDataOutputModel {
     public UpdateTypingDataOutputModel(UpdateTypingDataOutput updateTypingDataOutput) {
         if (updateTypingDataOutput.getNewName() != null) {
             this.name = String.format("Changed from '%s' to '%s'", updateTypingDataOutput.getPreviousName(), updateTypingDataOutput.getNewName());
+        } else {
+            this.name = "No changes";
         }
     }
 }

@@ -10,6 +10,8 @@ public class UpdateIsolateDataOutputModel {
     public UpdateIsolateDataOutputModel(UpdateIsolateDataOutput updateIsolateDataOutput) {
         if (updateIsolateDataOutput.getNewName() != null) {
             this.name = String.format("Changed from '%s' to '%s'", updateIsolateDataOutput.getPreviousName(), updateIsolateDataOutput.getNewName());
+        } else {
+            this.name = "No changes";
         }
     }
 }

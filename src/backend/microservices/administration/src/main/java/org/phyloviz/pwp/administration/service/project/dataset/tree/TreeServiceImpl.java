@@ -89,16 +89,16 @@ public class TreeServiceImpl implements TreeService {
         if (name == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
 
-        if (name.equals(previousName))
-            throw new InvalidArgumentException("The provided name is the same as the previous one");
+        if (name.isBlank())
+            throw new InvalidArgumentException("Name can't be blank");
 
-        treeMetadataRepository.findAllByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId)
-                .forEach(treeMetadata -> {
-                    if (!name.isBlank())
+        if (!name.equals(previousName))
+            treeMetadataRepository.findAllByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId)
+                    .forEach(treeMetadata -> {
                         treeMetadata.setName(name);
 
-                    treeMetadataRepository.save(treeMetadata);
-                });
+                        treeMetadataRepository.save(treeMetadata);
+                    });
 
         return new UpdateTreeOutput(previousName, name);
     }

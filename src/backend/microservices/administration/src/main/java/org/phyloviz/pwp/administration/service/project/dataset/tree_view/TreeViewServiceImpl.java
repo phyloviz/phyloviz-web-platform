@@ -82,16 +82,16 @@ public class TreeViewServiceImpl implements TreeViewService {
         if (name == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
 
-        if (name.equals(previousName))
-            throw new InvalidArgumentException("The provided name is the same as the previous one");
+        if (name.isBlank())
+            throw new InvalidArgumentException("Name can't be blank");
 
-        treeViewMetadataRepository.findAllByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId)
-                .forEach(treeViewMetadata -> {
-                    if (!name.isBlank())
+        if (!name.equals(previousName))
+            treeViewMetadataRepository.findAllByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId)
+                    .forEach(treeViewMetadata -> {
                         treeViewMetadata.setName(name);
 
-                    treeViewMetadataRepository.save(treeViewMetadata);
-                });
+                        treeViewMetadataRepository.save(treeViewMetadata);
+                    });
 
         return new UpdateTreeViewOutput(previousName, name);
     }

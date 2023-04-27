@@ -89,16 +89,16 @@ public class DistanceMatrixServiceImpl implements DistanceMatrixService {
         if (name == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
 
-        if (name.equals(previousName))
-            throw new InvalidArgumentException("The provided name is the same as the previous one");
+        if (name.isBlank())
+            throw new InvalidArgumentException("Name can't be blank");
 
-        distanceMatrixMetadataRepository.findAllByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)
-                .forEach(distanceMatrixMetadata -> {
-                    if (!name.isBlank())
+        if (!name.equals(previousName))
+            distanceMatrixMetadataRepository.findAllByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)
+                    .forEach(distanceMatrixMetadata -> {
                         distanceMatrixMetadata.setName(name);
 
-                    distanceMatrixMetadataRepository.save(distanceMatrixMetadata);
-                });
+                        distanceMatrixMetadataRepository.save(distanceMatrixMetadata);
+                    });
 
         return new UpdateDistanceMatrixOutput(previousName, name);
     }

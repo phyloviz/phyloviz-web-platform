@@ -10,6 +10,8 @@ public class UpdateDistanceMatrixOutputModel {
     public UpdateDistanceMatrixOutputModel(UpdateDistanceMatrixOutput updateDistanceMatrixOutput) {
         if (updateDistanceMatrixOutput.getNewName() != null) {
             this.name = String.format("Changed from '%s' to '%s'", updateDistanceMatrixOutput.getPreviousName(), updateDistanceMatrixOutput.getNewName());
+        } else {
+            this.name = "No changes";
         }
     }
 }

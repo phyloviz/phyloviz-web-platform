@@ -10,6 +10,8 @@ public class UpdateTreeViewOutputModel {
     public UpdateTreeViewOutputModel(UpdateTreeViewOutput updateTreeViewOutput) {
         if (updateTreeViewOutput.getNewName() != null) {
             this.name = String.format("Changed from '%s' to '%s'", updateTreeViewOutput.getPreviousName(), updateTreeViewOutput.getNewName());
+        } else {
+            this.name = "No changes";
         }
     }
 }

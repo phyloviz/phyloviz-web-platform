@@ -87,19 +87,17 @@ public class ProjectServiceImpl implements ProjectService {
         if (name == null && description == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
 
-        if (name != null && name.equals(previousName)) {
-            throw new InvalidArgumentException("The provided name is the same as the previous one");
-        }
-        if (description != null && description.equals(previousDescription)) {
-            throw new InvalidArgumentException("The provided description is the same as the previous ones");
-        }
+        if (name != null && name.isBlank())
+            throw new InvalidArgumentException("Name can't be blank");
 
-        if (name != null && !name.isBlank())
-            project.setName(name);
-        if (description != null && !description.isBlank())
-            project.setDescription(description);
+        if (description != null && description.isBlank())
+            throw new InvalidArgumentException("Description can't be blank");
 
-        projectRepository.save(project);
+        project.setName(name);
+        project.setDescription(description);
+
+        if (!project.getName().equals(previousName) || !project.getDescription().equals(previousDescription))
+            projectRepository.save(project);
 
         return new UpdateProjectOutput(previousName, name, previousDescription, description);
     }

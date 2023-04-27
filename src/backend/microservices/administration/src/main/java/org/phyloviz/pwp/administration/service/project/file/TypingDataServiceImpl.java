@@ -77,16 +77,16 @@ public class TypingDataServiceImpl implements TypingDataService {
         if (name == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
 
-        if (name.equals(previousName))
-            throw new InvalidArgumentException("The provided name is the same as the previous one");
+        if (name.isBlank())
+            throw new InvalidArgumentException("Name can't be blank");
 
-        typingDataMetadataRepository.findAllByProjectIdAndTypingDataId(projectId, typingDataId)
-                .forEach(typingDataMetadata -> {
-                    if (!name.isBlank())
+        if (!name.equals(previousName))
+            typingDataMetadataRepository.findAllByProjectIdAndTypingDataId(projectId, typingDataId)
+                    .forEach(typingDataMetadata -> {
                         typingDataMetadata.setName(name);
 
-                    typingDataMetadataRepository.save(typingDataMetadata);
-                });
+                        typingDataMetadataRepository.save(typingDataMetadata);
+                    });
 
         return new UpdateTypingDataOutput(previousName, name);
     }
