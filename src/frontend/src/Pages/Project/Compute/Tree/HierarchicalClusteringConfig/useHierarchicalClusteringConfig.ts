@@ -24,7 +24,7 @@ export function useHierarchicalClusteringConfig() {
     const [currStep, setCurrStep] = useState(0)
 
     const navigate = useNavigate()
-    const {projectId, datasetId} = useParams<{ projectId: string, datasetId: string }>()
+    const {datasetId} = useParams<{ datasetId: string }>()
     const {project} = useProjectContext()
 
     const [selectedDistance, setSelectedDistance] = useState<string | null>(null)
