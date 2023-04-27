@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.visualization.http.controllers.models.typing_data;
+package org.phyloviz.pwp.visualization.http.models.typing_data;
 
 import lombok.Data;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.TypingDataProfile;

@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.visualization.http.controllers.models.isolate_data.get_isolate_data_schema;
+package org.phyloviz.pwp.visualization.http.models.isolate_data.get_isolate_data_schema;
 
 import lombok.Data;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataSchemaOutput;

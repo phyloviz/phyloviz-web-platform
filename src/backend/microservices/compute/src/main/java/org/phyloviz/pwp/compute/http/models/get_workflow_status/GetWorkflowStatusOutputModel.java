@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.compute.http.controllers.models.get_workflow_status;
+package org.phyloviz.pwp.compute.http.models.get_workflow_status;
 
 import lombok.Data;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_instances.documents.WorkflowStatus;

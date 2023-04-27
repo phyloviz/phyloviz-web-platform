@@ -1,14 +1,15 @@
 package org.phyloviz.pwp.compute.http.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.compute.http.controllers.models.create_workflow.CreateWorkflowInputModel;
-import org.phyloviz.pwp.compute.http.controllers.models.create_workflow.CreateWorkflowOutputModel;
-import org.phyloviz.pwp.compute.http.controllers.models.get_workflow_status.GetWorkflowStatusOutputModel;
-import org.phyloviz.pwp.compute.http.controllers.models.get_workflows.GetWorkflowsOutputModel;
+import org.phyloviz.pwp.compute.http.models.create_workflow.CreateWorkflowInputModel;
+import org.phyloviz.pwp.compute.http.models.create_workflow.CreateWorkflowOutputModel;
+import org.phyloviz.pwp.compute.http.models.get_workflow_status.GetWorkflowStatusOutputModel;
+import org.phyloviz.pwp.compute.http.models.get_workflows.GetWorkflowsOutputModel;
 import org.phyloviz.pwp.compute.service.ComputeService;
 import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
 import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
 import org.phyloviz.pwp.shared.domain.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +37,7 @@ public class ComputeController {
      * @return information about the created workflow
      */
     @PostMapping("/projects/{projectId}/workflows")
-    public CreateWorkflowOutputModel createWorkflow(
+    public ResponseEntity<CreateWorkflowOutputModel> createWorkflow(
             @PathVariable String projectId,
             @RequestBody CreateWorkflowInputModel inputModel,
             User user
@@ -45,7 +46,9 @@ public class ComputeController {
                 projectId, inputModel.getType(), inputModel.getProperties(), user.getId()
         );
 
-        return new CreateWorkflowOutputModel(createWorkflowOutput);
+        return ResponseEntity
+                .accepted()
+                .body(new CreateWorkflowOutputModel(createWorkflowOutput));
     }
 
     /**

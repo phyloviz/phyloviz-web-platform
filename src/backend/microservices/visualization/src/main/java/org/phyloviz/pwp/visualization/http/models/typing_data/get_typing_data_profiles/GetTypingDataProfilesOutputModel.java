@@ -1,8 +1,8 @@
-package org.phyloviz.pwp.visualization.http.controllers.models.typing_data.get_typing_data_profiles;
+package org.phyloviz.pwp.visualization.http.models.typing_data.get_typing_data_profiles;
 
 import lombok.Data;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
-import org.phyloviz.pwp.visualization.http.controllers.models.typing_data.TypingDataProfileModel;
+import org.phyloviz.pwp.visualization.http.models.typing_data.TypingDataProfileModel;
 
 import java.util.List;
 

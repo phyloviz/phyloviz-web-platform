@@ -13,6 +13,7 @@ import org.phyloviz.pwp.administration.service.dtos.dataset.FullDatasetInfo;
 import org.phyloviz.pwp.administration.service.dtos.dataset.UpdateDatasetOutput;
 import org.phyloviz.pwp.administration.service.project.dataset.DatasetService;
 import org.phyloviz.pwp.shared.domain.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -41,7 +44,7 @@ public class DatasetsController {
      * @return the created dataset
      */
     @PostMapping("/projects/{projectId}/datasets")
-    public CreateDatasetOutputModel createDataset(
+    public ResponseEntity<CreateDatasetOutputModel> createDataset(
             @PathVariable String projectId,
             @RequestBody CreateDatasetInputModel createDatasetInputModel,
             User user
@@ -56,7 +59,14 @@ public class DatasetsController {
                 user.getId()
         );
 
-        return new CreateDatasetOutputModel(createDatasetOutput);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{datasetId}")
+                .buildAndExpand(createDatasetOutput.getDatasetId())
+                .toUri();
+
+        return ResponseEntity
+                .created(location)
+                .body(new CreateDatasetOutputModel(createDatasetOutput));
     }
 
     /**

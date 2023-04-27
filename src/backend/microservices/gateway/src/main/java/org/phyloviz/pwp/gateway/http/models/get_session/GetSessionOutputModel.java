@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.gateway.http.controllers.models.get_session;
+package org.phyloviz.pwp.gateway.http.models.get_session;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.visualization.http.controllers.models.isolate_data;
+package org.phyloviz.pwp.visualization.http.models.isolate_data;
 
 import lombok.Data;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.IsolateDataRow;

@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.compute.http.controllers.models.create_workflow;
+package org.phyloviz.pwp.compute.http.models.create_workflow;
 
 import lombok.Data;
 

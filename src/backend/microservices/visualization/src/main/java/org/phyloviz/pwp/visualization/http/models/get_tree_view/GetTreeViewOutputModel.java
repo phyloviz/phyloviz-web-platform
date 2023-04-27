@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.visualization.http.controllers.models.get_tree_view;
+package org.phyloviz.pwp.visualization.http.models.get_tree_view;
 
 import lombok.Data;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
