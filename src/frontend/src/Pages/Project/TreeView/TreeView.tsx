@@ -12,12 +12,12 @@ import {TreeViewSettingsCard} from "../../../Components/Project/TreeView/TreeVie
 export default function TreeView() {
     const {
         treeView,
-        toPrintRef,
-        handlePrint,
         canvasRef,
         restartAnimation,
         pauseAnimation,
+
         resetSimulationConfig,
+        resetSimulationFilters,
 
         linkSpring,
         linkDistance,
@@ -33,7 +33,15 @@ export default function TreeView() {
         updateFriction,
         updateRepulsion,
         updateRepulsionTheta,
-        updateDecay
+        updateDecay,
+
+        handleExportOptions,
+        handleExportFilters,
+
+        handleZoomIn,
+        handleZoomOut,
+        toPrintRef,
+        handlePrint,
     } = useTreeView()
 
     return (
@@ -46,6 +54,7 @@ export default function TreeView() {
                 onPauseAnimation={pauseAnimation}
                 onRestartAnimation={restartAnimation}
                 resetSimulationConfig={resetSimulationConfig}
+                resetSimulationFilters={resetSimulationFilters}
 
                 linkSpring={linkSpring}
                 linkDistance={linkDistance}
@@ -62,6 +71,12 @@ export default function TreeView() {
                 onChangeRepulsion={updateRepulsion}
                 onChangeRepulsionTheta={updateRepulsionTheta}
                 onChangeDecay={updateDecay}
+
+                onExportOptions={handleExportOptions}
+                onExportFilters={handleExportFilters}
+
+                onZoomIn={handleZoomIn}
+                onZoomOut={handleZoomOut}
                 onPrint={handlePrint}
             />
             <TreeViewSearchCard/>
