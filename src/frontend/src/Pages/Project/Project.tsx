@@ -22,6 +22,8 @@ export default function Project() {
         clearError
     } = useProject()
 
+    // TODO: Fix bug where the outlet is not updated when the project is changed
+
     return (
         <Box sx={{
             display: "flex",
