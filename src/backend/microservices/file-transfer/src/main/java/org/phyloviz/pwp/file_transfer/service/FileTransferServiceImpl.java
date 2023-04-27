@@ -1,12 +1,12 @@
 package org.phyloviz.pwp.file_transfer.service;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterFactory;
-import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterId;
-import org.phyloviz.pwp.shared.adapters.isolate_data.adapter.specific_data.IsolateDataAdapterSpecificData;
-import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterFactory;
-import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterId;
-import org.phyloviz.pwp.shared.adapters.typing_data.adapter.specific_data.TypingDataAdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.data.isolate_data.IsolateDataDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.specific_data.IsolateDataDataRepositorySpecificData;
+import org.phyloviz.pwp.shared.repository.data.registry.isolate_data.IsolateDataDataRepositoryFactory;
+import org.phyloviz.pwp.shared.repository.data.registry.typing_data.TypingDataDataRepositoryFactory;
+import org.phyloviz.pwp.shared.repository.data.typing_data.TypingDataDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.typing_data.repository.specific_data.TypingDataDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
@@ -35,14 +35,14 @@ public class FileTransferServiceImpl implements FileTransferService {
     private final TypingDataMetadataRepository typingDataMetadataRepository;
     private final IsolateDataMetadataRepository isolateDataMetadataRepository;
 
-    private final IsolateDataAdapterFactory isolateDataAdapterFactory;
-    private final TypingDataAdapterFactory typingDataAdapterFactory;
+    private final IsolateDataDataRepositoryFactory isolateDataDataRepositoryFactory;
+    private final TypingDataDataRepositoryFactory typingDataDataRepositoryFactory;
 
-    @Value("${adapters.upload-typing-data-adapter}")
-    private TypingDataAdapterId uploadTypingDataAdapter;
+    @Value("${data-repositories.upload-typing-data-repository}")
+    private TypingDataDataRepositoryId uploadTypingDataRepositoryId;
 
-    @Value("${adapters.upload-isolate-data-adapter}")
-    private IsolateDataAdapterId uploadIsolateDataAdapter;
+    @Value("${data-repositories.upload-isolate-data-repository}")
+    private IsolateDataDataRepositoryId uploadIsolateDataRepositoryId;
 
     @Override
     public UploadTypingDataOutput uploadTypingData(String projectId, MultipartFile file, String userId) {
@@ -51,16 +51,16 @@ public class FileTransferServiceImpl implements FileTransferService {
 
         String typingDataId = UUID.randomUUID().toString();
 
-        TypingDataAdapterSpecificData typingDataAdapterSpecificData = typingDataAdapterFactory
-                .getTypingDataAdapter(uploadTypingDataAdapter)
+        TypingDataDataRepositorySpecificData typingDataDataRepositorySpecificData = typingDataDataRepositoryFactory
+                .getRepository(uploadTypingDataRepositoryId)
                 .uploadTypingData(projectId, typingDataId, file);
 
         TypingDataMetadata typingDataMetadata = new TypingDataMetadata(
                 projectId,
                 typingDataId,
                 file.getOriginalFilename(),
-                uploadTypingDataAdapter,
-                typingDataAdapterSpecificData
+                uploadTypingDataRepositoryId,
+                typingDataDataRepositorySpecificData
         );
 
         typingDataMetadataRepository.save(typingDataMetadata);
@@ -75,8 +75,8 @@ public class FileTransferServiceImpl implements FileTransferService {
 
         String isolateDataId = UUID.randomUUID().toString();
 
-        IsolateDataAdapterSpecificData isolateDataAdapterSpecificData = isolateDataAdapterFactory
-                .getIsolateDataAdapter(uploadIsolateDataAdapter)
+        IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData = isolateDataDataRepositoryFactory
+                .getRepository(uploadIsolateDataRepositoryId)
                 .uploadIsolateData(projectId, isolateDataId, file);
 
         IsolateDataMetadata isolateDataMetadata = new IsolateDataMetadata(
@@ -84,8 +84,8 @@ public class FileTransferServiceImpl implements FileTransferService {
                 isolateDataId,
                 getIsolateDataKeys(file),
                 file.getOriginalFilename(),
-                uploadIsolateDataAdapter,
-                isolateDataAdapterSpecificData
+                uploadIsolateDataRepositoryId,
+                isolateDataDataRepositorySpecificData
         );
 
         isolateDataMetadataRepository.save(isolateDataMetadata);

@@ -1,6 +1,8 @@
 package org.phyloviz.pwp.administration.service.project.dataset;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.administration.service.dtos.dataset.CreateDatasetOutput;
+import org.phyloviz.pwp.administration.service.dtos.dataset.FullDatasetInfo;
 import org.phyloviz.pwp.administration.service.dtos.dataset.UpdateDatasetOutput;
 import org.phyloviz.pwp.administration.service.project.dataset.distance_matrix.DistanceMatrixService;
 import org.phyloviz.pwp.administration.service.project.dataset.tree.TreeService;
@@ -11,8 +13,6 @@ import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetad
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadataRepository;
-import org.phyloviz.pwp.administration.service.dtos.dataset.CreateDatasetOutput;
-import org.phyloviz.pwp.administration.service.dtos.dataset.FullDatasetInfo;
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.IsolateDataDoesNotExistException;
@@ -109,19 +109,17 @@ public class DatasetServiceImpl implements DatasetService {
         if (name == null && description == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
 
-        if (name != null && name.equals(previousName)) {
-            throw new InvalidArgumentException("The provided name is the same as the previous one");
-        }
-        if(description != null && description.equals(previousDescription)) {
-            throw new InvalidArgumentException("The provided description is the same as the previous ones");
-        }
+        if (name != null && name.isBlank())
+            throw new InvalidArgumentException("Name can't be blank");
 
-        if (name != null && !name.isBlank())
-            dataset.setName(name);
-        if (description != null && !description.isBlank())
-            dataset.setDescription(description);
+        if (description != null && description.isBlank())
+            throw new InvalidArgumentException("Description can't be blank");
 
-        datasetRepository.save(dataset);
+        dataset.setName(name);
+        dataset.setDescription(description);
+
+        if (!dataset.getName().equals(previousName) || !dataset.getDescription().equals(previousDescription))
+            datasetRepository.save(dataset);
 
         return new UpdateDatasetOutput(previousName, name, previousDescription, description);
     }

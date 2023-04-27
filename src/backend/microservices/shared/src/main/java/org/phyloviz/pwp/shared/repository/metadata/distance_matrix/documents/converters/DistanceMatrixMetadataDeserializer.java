@@ -2,9 +2,9 @@ package org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.co
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
-import org.phyloviz.pwp.shared.adapters.distance_matrix.DistanceMatrixAdapterId;
-import org.phyloviz.pwp.shared.adapters.distance_matrix.DistanceMatrixAdapterRegistry;
-import org.phyloviz.pwp.shared.adapters.distance_matrix.adapter.specific_data.DistanceMatrixAdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.data.distance_matrix.DistanceMatrixDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.specific_data.DistanceMatrixDataRepositorySpecificData;
+import org.phyloviz.pwp.shared.repository.data.registry.distance_matrix.DistanceMatrixDataRepositoryRegistry;
 import org.phyloviz.pwp.shared.repository.metadata.DocumentConversionException;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.DistanceMatrixMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.source.DistanceMatrixSource;
@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 public class DistanceMatrixMetadataDeserializer implements Converter<Document, DistanceMatrixMetadata> {
     private final MongoConverter mongoConverter;
 
-    private final DistanceMatrixAdapterRegistry distanceMatrixAdapterRegistry;
+    private final DistanceMatrixDataRepositoryRegistry distanceMatrixDataRepositoryRegistry;
 
     @Override
     public DistanceMatrixMetadata convert(@NotNull Document document) {
@@ -28,19 +28,19 @@ public class DistanceMatrixMetadataDeserializer implements Converter<Document, D
             DistanceMatrixSourceType sourceType = DistanceMatrixSourceType.valueOf(
                     document.getString("sourceType").toUpperCase()
             );
-            DistanceMatrixAdapterId adapterId = DistanceMatrixAdapterId.valueOf(
-                    document.getString("adapterId").toUpperCase()
+            DistanceMatrixDataRepositoryId repositoryId = DistanceMatrixDataRepositoryId.valueOf(
+                    document.getString("repositoryId").toUpperCase()
             );
 
             Class<? extends DistanceMatrixSource> sourceClass = sourceType.getSourceClass();
-            Class<? extends DistanceMatrixAdapterSpecificData> adapterSpecificDataClass =
-                    distanceMatrixAdapterRegistry.getDistanceMatrixAdapterSpecificDataClass(adapterId);
+            Class<? extends DistanceMatrixDataRepositorySpecificData> repositorySpecificDataClass =
+                    distanceMatrixDataRepositoryRegistry.getRepositorySpecificDataClass(repositoryId);
 
             Document sourceDocument = (Document) document.get("source");
             DistanceMatrixSource source = mongoConverter.read(sourceClass, sourceDocument);
 
-            Document adapterSpecificDataDocument = (Document) document.get("adapterSpecificData");
-            DistanceMatrixAdapterSpecificData adapterSpecificData = mongoConverter.read(adapterSpecificDataClass, adapterSpecificDataDocument);
+            Document repositorySpecificDataDocument = (Document) document.get("repositorySpecificData");
+            DistanceMatrixDataRepositorySpecificData repositorySpecificData = mongoConverter.read(repositorySpecificDataClass, repositorySpecificDataDocument);
 
             return new DistanceMatrixMetadata(
                     document.getObjectId("_id").toString(),
@@ -50,8 +50,8 @@ public class DistanceMatrixMetadataDeserializer implements Converter<Document, D
                     document.getString("name"),
                     sourceType,
                     source,
-                    adapterId,
-                    adapterSpecificData
+                    repositoryId,
+                    repositorySpecificData
             );
         } catch (Exception e) {
             throw new DocumentConversionException("Error converting Document to DistanceMatrixMetadata:" + e);

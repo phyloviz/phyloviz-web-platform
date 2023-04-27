@@ -1,15 +1,15 @@
 package org.phyloviz.pwp.administration.service.project;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.administration.service.dtos.files.FilesInfo;
+import org.phyloviz.pwp.administration.service.dtos.project.CreateProjectOutput;
+import org.phyloviz.pwp.administration.service.dtos.project.FullProjectInfo;
 import org.phyloviz.pwp.administration.service.dtos.project.UpdateProjectOutput;
 import org.phyloviz.pwp.administration.service.project.dataset.DatasetService;
 import org.phyloviz.pwp.administration.service.project.file.IsolateDataService;
 import org.phyloviz.pwp.administration.service.project.file.TypingDataService;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
-import org.phyloviz.pwp.administration.service.dtos.files.FilesInfo;
-import org.phyloviz.pwp.administration.service.dtos.project.CreateProjectOutput;
-import org.phyloviz.pwp.administration.service.dtos.project.FullProjectInfo;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.springframework.stereotype.Service;
@@ -87,19 +87,17 @@ public class ProjectServiceImpl implements ProjectService {
         if (name == null && description == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
 
-        if (name != null && name.equals(previousName)) {
-            throw new InvalidArgumentException("The provided name is the same as the previous one");
-        }
-        if(description != null && description.equals(previousDescription)) {
-            throw new InvalidArgumentException("The provided description is the same as the previous ones");
-        }
+        if (name != null && name.isBlank())
+            throw new InvalidArgumentException("Name can't be blank");
 
-        if (name != null && !name.isBlank())
-            project.setName(name);
-        if (description != null && !description.isBlank())
-            project.setDescription(description);
+        if (description != null && description.isBlank())
+            throw new InvalidArgumentException("Description can't be blank");
 
-        projectRepository.save(project);
+        project.setName(name);
+        project.setDescription(description);
+
+        if (!project.getName().equals(previousName) || !project.getDescription().equals(previousDescription))
+            projectRepository.save(project);
 
         return new UpdateProjectOutput(previousName, name, previousDescription, description);
     }

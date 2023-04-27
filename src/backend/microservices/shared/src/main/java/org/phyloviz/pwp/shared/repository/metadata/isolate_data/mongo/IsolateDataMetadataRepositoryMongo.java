@@ -1,10 +1,9 @@
 package org.phyloviz.pwp.shared.repository.metadata.isolate_data.mongo;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterId;
+import org.phyloviz.pwp.shared.repository.data.isolate_data.IsolateDataDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
-import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
@@ -41,9 +40,9 @@ public class IsolateDataMetadataRepositoryMongo implements IsolateDataMetadataRe
     }
 
     @Override
-    public Optional<IsolateDataMetadata> findByIsolateDataIdAndAdapterId(String isolateDataId, IsolateDataAdapterId adapterId) {
-        return isolateDataMetadataMongoRepository.findByIsolateDataIdAndAdapterId(
-                isolateDataId, adapterId.name().toLowerCase()
+    public Optional<IsolateDataMetadata> findByIsolateDataIdAndRepositoryId(String isolateDataId, IsolateDataDataRepositoryId repositoryId) {
+        return isolateDataMetadataMongoRepository.findByIsolateDataIdAndRepositoryId(
+                isolateDataId, repositoryId.name().toLowerCase()
         );
     }
 

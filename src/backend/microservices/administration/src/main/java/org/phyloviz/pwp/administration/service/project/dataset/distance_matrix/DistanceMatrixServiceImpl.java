@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.service.dtos.distance_matrix.DistanceMatrixInfo;
 import org.phyloviz.pwp.administration.service.dtos.distance_matrix.UpdateDistanceMatrixOutput;
 import org.phyloviz.pwp.administration.service.exceptions.DeniedResourceDeletionException;
-import org.phyloviz.pwp.shared.adapters.distance_matrix.DistanceMatrixAdapterFactory;
+import org.phyloviz.pwp.shared.repository.data.registry.distance_matrix.DistanceMatrixDataRepositoryFactory;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.DistanceMatrixMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
@@ -26,7 +26,7 @@ public class DistanceMatrixServiceImpl implements DistanceMatrixService {
     private final DistanceMatrixMetadataRepository distanceMatrixMetadataRepository;
     private final TreeMetadataRepository treeMetadataRepository;
 
-    private final DistanceMatrixAdapterFactory distanceMatrixAdapterFactory;
+    private final DistanceMatrixDataRepositoryFactory distanceMatrixDataRepositoryFactory;
 
     @Override
     public List<DistanceMatrixInfo> getDistanceMatrixInfos(String datasetId) {
@@ -56,8 +56,8 @@ public class DistanceMatrixServiceImpl implements DistanceMatrixService {
     public void deleteAllByProjectIdAndDatasetId(String projectId, String datasetId) {
         distanceMatrixMetadataRepository.findAllByProjectIdAndDatasetId(projectId, datasetId)
                 .forEach(distanceMatrixMetadata -> {
-                    distanceMatrixAdapterFactory.getDistanceMatrixAdapter(distanceMatrixMetadata.getAdapterId())
-                            .deleteDistanceMatrix(distanceMatrixMetadata.getAdapterSpecificData());
+                    distanceMatrixDataRepositoryFactory.getRepository(distanceMatrixMetadata.getRepositoryId())
+                            .deleteDistanceMatrix(distanceMatrixMetadata.getRepositorySpecificData());
 
                     distanceMatrixMetadataRepository.delete(distanceMatrixMetadata);
                 });
@@ -67,8 +67,8 @@ public class DistanceMatrixServiceImpl implements DistanceMatrixService {
     public void deleteDistanceMatrix(String distanceMatrixId) {
         distanceMatrixMetadataRepository.findAllByDistanceMatrixId(distanceMatrixId)
                 .forEach(distanceMatrixMetadata -> {
-                    distanceMatrixAdapterFactory.getDistanceMatrixAdapter(distanceMatrixMetadata.getAdapterId())
-                            .deleteDistanceMatrix(distanceMatrixMetadata.getAdapterSpecificData());
+                    distanceMatrixDataRepositoryFactory.getRepository(distanceMatrixMetadata.getRepositoryId())
+                            .deleteDistanceMatrix(distanceMatrixMetadata.getRepositorySpecificData());
 
                     distanceMatrixMetadataRepository.delete(distanceMatrixMetadata);
                 });
@@ -89,16 +89,16 @@ public class DistanceMatrixServiceImpl implements DistanceMatrixService {
         if (name == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
 
-        if (name.equals(previousName))
-            throw new InvalidArgumentException("The provided name is the same as the previous one");
+        if (name.isBlank())
+            throw new InvalidArgumentException("Name can't be blank");
 
-        distanceMatrixMetadataRepository.findAllByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)
-                .forEach(distanceMatrixMetadata -> {
-                    if (!name.isBlank())
+        if (!name.equals(previousName))
+            distanceMatrixMetadataRepository.findAllByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)
+                    .forEach(distanceMatrixMetadata -> {
                         distanceMatrixMetadata.setName(name);
 
-                    distanceMatrixMetadataRepository.save(distanceMatrixMetadata);
-                });
+                        distanceMatrixMetadataRepository.save(distanceMatrixMetadata);
+                    });
 
         return new UpdateDistanceMatrixOutput(previousName, name);
     }

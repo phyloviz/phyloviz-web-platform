@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.tree_view;
 
-import org.phyloviz.pwp.shared.adapters.tree_view.TreeViewAdapterId;
+import org.phyloviz.pwp.shared.repository.data.tree_view.TreeViewDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.TreeViewMetadata;
 
 import java.util.List;
@@ -37,16 +37,16 @@ public interface TreeViewMetadataRepository {
     List<TreeViewMetadata> findAllByTreeViewId(String treeViewId);
 
     /**
-     * Find a tree view metadata from its id and adapter id.
+     * Find a tree view metadata from its id and repository id.
      *
-     * @param treeViewId the id of the tree view resource
-     * @param adapterId  the id of the adapter
+     * @param treeViewId   the id of the tree view resource
+     * @param repositoryId the id of the repository
      * @return a tree view metadata
      */
-    Optional<TreeViewMetadata> findByTreeViewIdAndAdapterId(String treeViewId, TreeViewAdapterId adapterId);
+    Optional<TreeViewMetadata> findByTreeViewIdAndRepositoryId(String treeViewId, TreeViewDataRepositoryId repositoryId);
 
-    Optional<TreeViewMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndAdapterId(String projectId, String datasetId,
-                                                                                    String treeViewId, TreeViewAdapterId adapterId);
+    Optional<TreeViewMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndRepositoryId(String projectId, String datasetId,
+                                                                                       String treeViewId, TreeViewDataRepositoryId repositoryId);
 
     List<TreeViewMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);
 

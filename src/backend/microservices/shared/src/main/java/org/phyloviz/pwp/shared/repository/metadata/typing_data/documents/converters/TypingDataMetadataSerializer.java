@@ -25,9 +25,9 @@ public class TypingDataMetadataSerializer implements Converter<TypingDataMetadat
                             "projectId", typingDataMetadata.getProjectId(),
                             "typingDataId", typingDataMetadata.getTypingDataId(),
                             "name", typingDataMetadata.getName(),
-                            "adapterId", typingDataMetadata.getAdapterId().name().toLowerCase(),
-                            "adapterSpecificData", Objects.requireNonNull(
-                                    mongoConverter.convertToMongoType(typingDataMetadata.getAdapterSpecificData())
+                            "repositoryId", typingDataMetadata.getRepositoryId().name().toLowerCase(),
+                            "repositorySpecificData", Objects.requireNonNull(
+                                    mongoConverter.convertToMongoType(typingDataMetadata.getRepositorySpecificData())
                             )
                     )
             );

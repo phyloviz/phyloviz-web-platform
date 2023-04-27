@@ -1,17 +1,15 @@
 package org.phyloviz.pwp.administration.service.project.dataset.tree;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.administration.service.dtos.distance_matrix.UpdateDistanceMatrixOutput;
+import org.phyloviz.pwp.administration.service.dtos.tree.TreeInfo;
 import org.phyloviz.pwp.administration.service.dtos.tree.UpdateTreeOutput;
-import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterFactory;
+import org.phyloviz.pwp.administration.service.exceptions.DeniedResourceDeletionException;
+import org.phyloviz.pwp.shared.repository.data.registry.tree.TreeDataRepositoryFactory;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree.TreeMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.TreeViewMetadataRepository;
-import org.phyloviz.pwp.administration.service.dtos.tree.TreeInfo;
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
-import org.phyloviz.pwp.administration.service.exceptions.DeniedResourceDeletionException;
-import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;
@@ -28,7 +26,7 @@ public class TreeServiceImpl implements TreeService {
     private final TreeMetadataRepository treeMetadataRepository;
     private final TreeViewMetadataRepository treeViewMetadataService;
 
-    private final TreeAdapterFactory treeAdapterFactory;
+    private final TreeDataRepositoryFactory treeDataRepositoryFactory;
 
     @Override
     public List<TreeInfo> getTreeInfos(String datasetId) {
@@ -58,8 +56,8 @@ public class TreeServiceImpl implements TreeService {
     public void deleteAllByProjectIdAndDatasetId(String projectId, String datasetId) {
         treeMetadataRepository.findAllByProjectIdAndDatasetId(projectId, datasetId)
                 .forEach(treeMetadata -> {
-                    treeAdapterFactory.getTreeAdapter(treeMetadata.getAdapterId())
-                            .deleteTree(treeMetadata.getAdapterSpecificData());
+                    treeDataRepositoryFactory.getRepository(treeMetadata.getRepositoryId())
+                            .deleteTree(treeMetadata.getRepositorySpecificData());
 
                     treeMetadataRepository.delete(treeMetadata);
                 });
@@ -69,8 +67,8 @@ public class TreeServiceImpl implements TreeService {
     public void deleteTree(String treeId) {
         treeMetadataRepository.findAllByTreeId(treeId)
                 .forEach(treeMetadata -> {
-                    treeAdapterFactory.getTreeAdapter(treeMetadata.getAdapterId())
-                            .deleteTree(treeMetadata.getAdapterSpecificData());
+                    treeDataRepositoryFactory.getRepository(treeMetadata.getRepositoryId())
+                            .deleteTree(treeMetadata.getRepositorySpecificData());
 
                     treeMetadataRepository.delete(treeMetadata);
                 });
@@ -91,16 +89,16 @@ public class TreeServiceImpl implements TreeService {
         if (name == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
 
-        if (name.equals(previousName))
-            throw new InvalidArgumentException("The provided name is the same as the previous one");
+        if (name.isBlank())
+            throw new InvalidArgumentException("Name can't be blank");
 
-        treeMetadataRepository.findAllByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId)
-                .forEach(treeMetadata -> {
-                    if (!name.isBlank())
+        if (!name.equals(previousName))
+            treeMetadataRepository.findAllByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId)
+                    .forEach(treeMetadata -> {
                         treeMetadata.setName(name);
 
-                    treeMetadataRepository.save(treeMetadata);
-                });
+                        treeMetadataRepository.save(treeMetadata);
+                    });
 
         return new UpdateTreeOutput(previousName, name);
     }

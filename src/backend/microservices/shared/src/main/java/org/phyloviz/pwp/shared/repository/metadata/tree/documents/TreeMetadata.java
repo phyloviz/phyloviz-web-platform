@@ -3,8 +3,8 @@ package org.phyloviz.pwp.shared.repository.metadata.tree.documents;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterId;
-import org.phyloviz.pwp.shared.adapters.tree.adapter.specific_data.TreeAdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.data.tree.TreeDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.tree.repository.specific_data.TreeDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSource;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceType;
 import org.springframework.data.annotation.Id;
@@ -24,18 +24,18 @@ public class TreeMetadata {
     private String name;
     private TreeSourceType sourceType;
     private TreeSource source;
-    private TreeAdapterId adapterId;
-    private TreeAdapterSpecificData adapterSpecificData;
+    private TreeDataRepositoryId repositoryId;
+    private TreeDataRepositorySpecificData repositorySpecificData;
 
     public TreeMetadata(String projectId, String datasetId, String treeId, String name, TreeSourceType sourceType, TreeSource source,
-                        TreeAdapterId adapterId, TreeAdapterSpecificData adapterSpecificData) {
+                        TreeDataRepositoryId repositoryId, TreeDataRepositorySpecificData repositorySpecificData) {
         this.projectId = projectId;
         this.datasetId = datasetId;
         this.treeId = treeId;
         this.name = name;
         this.sourceType = sourceType;
         this.source = source;
-        this.adapterId = adapterId;
-        this.adapterSpecificData = adapterSpecificData;
+        this.repositoryId = repositoryId;
+        this.repositorySpecificData = repositorySpecificData;
     }
 }

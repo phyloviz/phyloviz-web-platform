@@ -8,11 +8,15 @@ import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.UploadIsolateDataOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.UploadTypingDataOutput;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,14 +33,21 @@ public class FileTransferController {
      * @return information about the uploaded typing data
      */
     @PostMapping(path = "/projects/{projectId}/files/typing-data", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public UploadTypingDataOutputModel uploadTypingData(
+    public ResponseEntity<UploadTypingDataOutputModel> uploadTypingData(
             @PathVariable String projectId,
             @RequestPart MultipartFile file,
             User user
     ) {
         UploadTypingDataOutput uploadTypingDataOutput = fileTransferService.uploadTypingData(projectId, file, user.getId());
 
-        return new UploadTypingDataOutputModel(uploadTypingDataOutput);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{typingDataId}")
+                .buildAndExpand(uploadTypingDataOutput.getTypingDataId())
+                .toUri();
+
+        return ResponseEntity
+                .created(location)
+                .body(new UploadTypingDataOutputModel(uploadTypingDataOutput));
     }
 
     /**
@@ -48,13 +59,20 @@ public class FileTransferController {
      * @return information about the uploaded isolate data
      */
     @PostMapping(path = "/projects/{projectId}/files/isolate-data", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public UploadIsolateDataOutputModel uploadIsolateData(
+    public ResponseEntity<UploadIsolateDataOutputModel> uploadIsolateData(
             @PathVariable String projectId,
             @RequestPart MultipartFile file,
             User user
     ) {
         UploadIsolateDataOutput uploadIsolateDataOutput = fileTransferService.uploadIsolateData(projectId, file, user.getId());
 
-        return new UploadIsolateDataOutputModel(uploadIsolateDataOutput);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{isolateDataId}")
+                .buildAndExpand(uploadIsolateDataOutput.getIsolateDataId())
+                .toUri();
+
+        return ResponseEntity
+                .created(location)
+                .body(new UploadIsolateDataOutputModel(uploadIsolateDataOutput));
     }
 }

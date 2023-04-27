@@ -2,9 +2,9 @@ package org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.conve
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
-import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterId;
-import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterRegistry;
-import org.phyloviz.pwp.shared.adapters.isolate_data.adapter.specific_data.IsolateDataAdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.data.isolate_data.IsolateDataDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.specific_data.IsolateDataDataRepositorySpecificData;
+import org.phyloviz.pwp.shared.repository.data.registry.isolate_data.IsolateDataDataRepositoryRegistry;
 import org.phyloviz.pwp.shared.repository.metadata.DocumentConversionException;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
 import org.springframework.core.convert.converter.Converter;
@@ -18,20 +18,20 @@ import javax.validation.constraints.NotNull;
 public class IsolateDataMetadataDeserializer implements Converter<Document, IsolateDataMetadata> {
     private final MongoConverter mongoConverter;
 
-    private final IsolateDataAdapterRegistry isolateDataAdapterRegistry;
+    private final IsolateDataDataRepositoryRegistry isolateDataDataRepositoryRegistry;
 
     @Override
     public IsolateDataMetadata convert(@NotNull Document document) {
         try {
-            IsolateDataAdapterId adapterId = IsolateDataAdapterId.valueOf(
-                    document.getString("adapterId").toUpperCase()
+            IsolateDataDataRepositoryId repositoryId = IsolateDataDataRepositoryId.valueOf(
+                    document.getString("repositoryId").toUpperCase()
             );
 
-            Class<? extends IsolateDataAdapterSpecificData> adapterSpecificDataClass =
-                    isolateDataAdapterRegistry.getIsolateDataAdapterSpecificDataClass(adapterId);
+            Class<? extends IsolateDataDataRepositorySpecificData> repositorySpecificDataClass =
+                    isolateDataDataRepositoryRegistry.getRepositorySpecificDataClass(repositoryId);
 
-            Document adapterSpecificDataDocument = (Document) document.get("adapterSpecificData");
-            IsolateDataAdapterSpecificData adapterSpecificData = mongoConverter.read(adapterSpecificDataClass, adapterSpecificDataDocument);
+            Document repositorySpecificDataDocument = (Document) document.get("repositorySpecificData");
+            IsolateDataDataRepositorySpecificData repositorySpecificData = mongoConverter.read(repositorySpecificDataClass, repositorySpecificDataDocument);
 
             return new IsolateDataMetadata(
                     document.getObjectId("_id").toString(),
@@ -39,8 +39,8 @@ public class IsolateDataMetadataDeserializer implements Converter<Document, Isol
                     document.getString("isolateDataId"),
                     document.getList("keys", String.class),
                     document.getString("name"),
-                    adapterId,
-                    adapterSpecificData
+                    repositoryId,
+                    repositorySpecificData
             );
         } catch (Exception e) {
             throw new DocumentConversionException("Error converting Document to IsolateDataMetadata:" + e);

@@ -1,14 +1,14 @@
 package org.phyloviz.pwp.administration.service.project.file;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.administration.service.dtos.files.isolate_data.IsolateDataInfo;
 import org.phyloviz.pwp.administration.service.dtos.files.isolate_data.UpdateIsolateDataOutput;
-import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterFactory;
+import org.phyloviz.pwp.administration.service.exceptions.DeniedFileDeletionException;
+import org.phyloviz.pwp.shared.repository.data.registry.isolate_data.IsolateDataDataRepositoryFactory;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
-import org.phyloviz.pwp.administration.service.dtos.files.isolate_data.IsolateDataInfo;
-import org.phyloviz.pwp.administration.service.exceptions.DeniedFileDeletionException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.IsolateDataNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
@@ -25,7 +25,7 @@ public class IsolateDataServiceImpl implements IsolateDataService {
 
     private final IsolateDataMetadataRepository isolateDataMetadataRepository;
 
-    private final IsolateDataAdapterFactory isolateDataAdapterFactory;
+    private final IsolateDataDataRepositoryFactory isolateDataDataRepositoryFactory;
 
     @Override
     public List<IsolateDataInfo> getIsolateDataInfos(String projectId) {
@@ -77,23 +77,23 @@ public class IsolateDataServiceImpl implements IsolateDataService {
         if (name == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
 
-        if (name.equals(previousName))
-            throw new InvalidArgumentException("The provided name is the same as the previous one");
+        if (name.isBlank())
+            throw new InvalidArgumentException("Name can't be blank");
 
-        isolateDataMetadataRepository.findAllByProjectIdAndIsolateDataId(projectId, isolateDataId)
-                .forEach(isolateDataMetadata -> {
-                    if (!name.isBlank())
+        if (!name.equals(previousName))
+            isolateDataMetadataRepository.findAllByProjectIdAndIsolateDataId(projectId, isolateDataId)
+                    .forEach(isolateDataMetadata -> {
                         isolateDataMetadata.setName(name);
 
-                    isolateDataMetadataRepository.save(isolateDataMetadata);
-                });
+                        isolateDataMetadataRepository.save(isolateDataMetadata);
+                    });
 
         return new UpdateIsolateDataOutput(previousName, name);
     }
 
     private void deleteIsolateData(IsolateDataMetadata isolateDataMetadata) {
-        isolateDataAdapterFactory.getIsolateDataAdapter(isolateDataMetadata.getAdapterId())
-                .deleteIsolateData(isolateDataMetadata.getAdapterSpecificData());
+        isolateDataDataRepositoryFactory.getRepository(isolateDataMetadata.getRepositoryId())
+                .deleteIsolateData(isolateDataMetadata.getRepositorySpecificData());
 
         isolateDataMetadataRepository.delete(isolateDataMetadata);
     }

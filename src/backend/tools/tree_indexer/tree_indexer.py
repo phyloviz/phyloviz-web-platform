@@ -57,8 +57,8 @@ def index_tree(tree_file_path, project_id, dataset_id, tree_id, workflow_id):
         'name': tree_metadata['name'],
         'sourceType': tree_metadata['sourceType'],
         'source': tree_metadata['source'],
-        'adapterId': 'phylodb',
-        'adapterSpecificData': {
+        'repositoryId': 'phylodb',
+        'repositorySpecificData': {
             'projectId': project_id,
             'datasetId': dataset_id,
             'inferenceId': inference_id,

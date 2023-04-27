@@ -2,9 +2,9 @@ package org.phyloviz.pwp.shared.repository.metadata.tree.documents.converters;
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
-import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterId;
-import org.phyloviz.pwp.shared.adapters.tree.TreeAdapterRegistry;
-import org.phyloviz.pwp.shared.adapters.tree.adapter.specific_data.TreeAdapterSpecificData;
+import org.phyloviz.pwp.shared.repository.data.registry.tree.TreeDataRepositoryRegistry;
+import org.phyloviz.pwp.shared.repository.data.tree.TreeDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.tree.repository.specific_data.TreeDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.DocumentConversionException;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSource;
@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 public class TreeMetadataDeserializer implements Converter<Document, TreeMetadata> {
     private final MongoConverter mongoConverter;
 
-    private final TreeAdapterRegistry treeAdapterRegistry;
+    private final TreeDataRepositoryRegistry treeDataRepositoryRegistry;
 
     @Override
     public TreeMetadata convert(@NotNull Document document) {
@@ -29,19 +29,19 @@ public class TreeMetadataDeserializer implements Converter<Document, TreeMetadat
                     document.getString("sourceType").toUpperCase()
             );
 
-            TreeAdapterId adapterId = TreeAdapterId.valueOf(
-                    document.getString("adapterId").toUpperCase()
+            TreeDataRepositoryId repositoryId = TreeDataRepositoryId.valueOf(
+                    document.getString("repositoryId").toUpperCase()
             );
 
             Class<? extends TreeSource> sourceClass = sourceType.getSourceClass();
-            Class<? extends TreeAdapterSpecificData> adapterSpecificDataClass =
-                    treeAdapterRegistry.getTreeAdapterSpecificDataClass(adapterId);
+            Class<? extends TreeDataRepositorySpecificData> repositorySpecificDataClass =
+                    treeDataRepositoryRegistry.getRepositorySpecificDataClass(repositoryId);
 
             Document sourceDocument = (Document) document.get("source");
             TreeSource source = mongoConverter.read(sourceClass, sourceDocument);
 
-            Document adapterSpecificDataDocument = (Document) document.get("adapterSpecificData");
-            TreeAdapterSpecificData adapterSpecificData = mongoConverter.read(adapterSpecificDataClass, adapterSpecificDataDocument);
+            Document repositorySpecificDataDocument = (Document) document.get("repositorySpecificData");
+            TreeDataRepositorySpecificData repositorySpecificData = mongoConverter.read(repositorySpecificDataClass, repositorySpecificDataDocument);
 
             return new TreeMetadata(
                     document.getObjectId("_id").toString(),
@@ -51,11 +51,11 @@ public class TreeMetadataDeserializer implements Converter<Document, TreeMetadat
                     document.getString("name"),
                     sourceType,
                     source,
-                    adapterId,
-                    adapterSpecificData
+                    repositoryId,
+                    repositorySpecificData
             );
         } catch (Exception e) {
-            throw new DocumentConversionException("Error converting Document to TreeAdapterMetadata:" + e);
+            throw new DocumentConversionException("Error converting Document to TreeMetadata:" + e);
         }
     }
 }

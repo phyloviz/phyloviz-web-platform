@@ -62,8 +62,8 @@ def get_job(project_id, job_id):
 
 def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
     # Retrieve inference id from the tree
-    tree = tree_collection.find_one({'treeId': tree_id, 'adapterId': 'phylodb'})
-    inference_id = tree['adapterSpecificData']['inferenceId']
+    tree = tree_collection.find_one({'treeId': tree_id, 'repositoryId': 'phylodb'})
+    inference_id = tree['repositorySpecificData']['inferenceId']
 
     (vis_job_id, visualization_id) = create_visualization_job(project_id, dataset_id, inference_id)
 
@@ -115,8 +115,8 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
             'treeId': tree_id
         },
         'layout': 'radial',
-        'adapterId': 'phylodb',
-        'adapterSpecificData': {
+        'repositoryId': 'phylodb',
+        'repositorySpecificData': {
             'projectId': project_id,
             'datasetId': dataset_id,
             'inferenceId': inference_id,

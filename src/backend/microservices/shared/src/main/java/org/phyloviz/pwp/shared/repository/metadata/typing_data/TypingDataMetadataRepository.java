@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.typing_data;
 
-import org.phyloviz.pwp.shared.adapters.typing_data.TypingDataAdapterId;
+import org.phyloviz.pwp.shared.repository.data.typing_data.TypingDataDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 
 import java.util.List;
@@ -43,13 +43,13 @@ public interface TypingDataMetadataRepository {
     List<TypingDataMetadata> findAllByTypingDataId(String typingDataId);
 
     /**
-     * Find a typing data metadata from its id and adapter id.
+     * Find a typing data metadata from its id and repository id.
      *
      * @param typingDataId the id of the typing data resource
-     * @param adapterId    the id of the adapter
+     * @param repositoryId the id of the repository
      * @return a typing data metadata
      */
-    Optional<TypingDataMetadata> findByTypingDataIdAndAdapterId(String typingDataId, TypingDataAdapterId adapterId);
+    Optional<TypingDataMetadata> findByTypingDataIdAndRepositoryId(String typingDataId, TypingDataDataRepositoryId repositoryId);
 
     /**
      * Find all typing data metadata from a project id. Only one typing data metadata per typing data resource.

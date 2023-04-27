@@ -7,11 +7,11 @@ import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataSch
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
-import org.phyloviz.pwp.visualization.http.controllers.models.get_tree_view.GetTreeViewOutputModel;
-import org.phyloviz.pwp.visualization.http.controllers.models.isolate_data.get_isolate_data_rows.GetIsolateDataRowsOutputModel;
-import org.phyloviz.pwp.visualization.http.controllers.models.isolate_data.get_isolate_data_schema.GetIsolateDataSchemaOutputModel;
-import org.phyloviz.pwp.visualization.http.controllers.models.typing_data.get_typing_data_profiles.GetTypingDataProfilesOutputModel;
-import org.phyloviz.pwp.visualization.http.controllers.models.typing_data.get_typing_data_schema.GetTypingDataSchemaOutputModel;
+import org.phyloviz.pwp.visualization.http.models.get_tree_view.GetTreeViewOutputModel;
+import org.phyloviz.pwp.visualization.http.models.isolate_data.get_isolate_data_rows.GetIsolateDataRowsOutputModel;
+import org.phyloviz.pwp.visualization.http.models.isolate_data.get_isolate_data_schema.GetIsolateDataSchemaOutputModel;
+import org.phyloviz.pwp.visualization.http.models.typing_data.get_typing_data_profiles.GetTypingDataProfilesOutputModel;
+import org.phyloviz.pwp.visualization.http.models.typing_data.get_typing_data_schema.GetTypingDataSchemaOutputModel;
 import org.phyloviz.pwp.visualization.service.VisualizationService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

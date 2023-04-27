@@ -5,9 +5,9 @@ spring:
   config:
     import: application-shared.yml
 
-adapters:
-  upload-isolate-data-adapter: S3
-  upload-typing-data-adapter: S3
+data-repositories:
+  upload-isolate-data-repository: S3
+  upload-typing-data-repository: S3
 
 logging:
   level:

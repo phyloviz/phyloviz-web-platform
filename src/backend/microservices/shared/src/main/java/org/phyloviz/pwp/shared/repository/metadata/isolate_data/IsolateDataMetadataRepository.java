@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.isolate_data;
 
-import org.phyloviz.pwp.shared.adapters.isolate_data.IsolateDataAdapterId;
+import org.phyloviz.pwp.shared.repository.data.isolate_data.IsolateDataDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface IsolateDataMetadataRepository {
     /**
      * Find any isolate data metadata from a project id and isolate data id.
      *
-     * @param projectId        the id of the project
+     * @param projectId     the id of the project
      * @param isolateDataId the id of the isolate data resource
      * @return a distance matrix metadata
      */
@@ -28,7 +28,7 @@ public interface IsolateDataMetadataRepository {
     /**
      * Find all isolate data metadata from a project id and isolate data id.
      *
-     * @param projectId        the id of the project
+     * @param projectId     the id of the project
      * @param isolateDataId the id of the isolate data resource
      * @return a list of distance matrix metadata
      */
@@ -43,13 +43,13 @@ public interface IsolateDataMetadataRepository {
     List<IsolateDataMetadata> findAllByIsolateDataId(String isolateDataId);
 
     /**
-     * Find an isolate data metadata from its id and adapter id.
+     * Find an isolate data metadata from its id and repository id.
      *
      * @param isolateDataId the id of the isolate data resource
-     * @param adapterId     the id of the adapter
+     * @param repositoryId  the id of the repository
      * @return an isolate data metadata
      */
-    Optional<IsolateDataMetadata> findByIsolateDataIdAndAdapterId(String isolateDataId, IsolateDataAdapterId adapterId);
+    Optional<IsolateDataMetadata> findByIsolateDataIdAndRepositoryId(String isolateDataId, IsolateDataDataRepositoryId repositoryId);
 
     /**
      * Find all isolate data metadata from a project id. Only one isolate data metadata per isolate data resource.

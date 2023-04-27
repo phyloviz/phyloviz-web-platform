@@ -38,15 +38,15 @@ public interface TypingDataMetadataMongoRepository extends MongoRepository<Typin
     List<TypingDataMetadata> findAllByTypingDataId(String typingDataId);
 
     /**
-     * Find a typing data metadata from its id and adapter id.
-     * The adapterId is stored as string in the document, so a custom @Query is needed.
+     * Find a typing data metadata from its id and repository id.
+     * The repositoryId is stored as string in the document, so a custom @Query is needed.
      *
      * @param typingDataId the id of the typing data resource
-     * @param adapterId    the id of the adapter, as string, like it's stored in the document
+     * @param repositoryId the id of the repository, as string, like it's stored in the document
      * @return a typing data metadata
      */
-    @Query("{ 'typingDataId' : ?0, 'adapterId' : ?1 }")
-    Optional<TypingDataMetadata> findByTypingDataIdAndAdapterId(String typingDataId, String adapterId);
+    @Query("{ 'typingDataId' : ?0, 'repositoryId' : ?1 }")
+    Optional<TypingDataMetadata> findByTypingDataIdAndRepositoryId(String typingDataId, String repositoryId);
 
     /**
      * Find all typing data metadata from a project id.

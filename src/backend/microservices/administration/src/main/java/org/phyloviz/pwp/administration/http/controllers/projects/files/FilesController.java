@@ -91,9 +91,9 @@ public class FilesController {
     /**
      * Updates a isolate data file.
      *
-     * @param projectId    the id of the project to which the isolate data file belongs
+     * @param projectId     the id of the project to which the isolate data file belongs
      * @param isolateDataId the id of the isolate data file to be updated
-     * @param user         the user that is updating the isolate data file
+     * @param user          the user that is updating the isolate data file
      * @return information about the updated isolate data file
      */
     @PatchMapping("/projects/{projectId}/files/isolate-data/{isolateDataId}")
