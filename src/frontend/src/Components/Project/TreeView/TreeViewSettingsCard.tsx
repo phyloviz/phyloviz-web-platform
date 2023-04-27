@@ -1,15 +1,17 @@
 import * as React from "react"
-import {useState} from "react"
-import {Box, Button, Collapse, Typography} from "@mui/material"
+import {ReactNode, useState} from "react"
+import {Box, Button, Collapse, SelectChangeEvent} from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import {Pause, PhotoCamera, PlayArrow, ZoomIn, ZoomOut} from "@mui/icons-material"
-import {InputSlider} from './InputSlider';
+import {TreeViewOptions} from "./TreeViewOptions";
+import {TreeViewFilters} from "./TreeViewFilters";
 
 
 interface TreeViewSettingsCardProps {
     onPauseAnimation: () => void
     onRestartAnimation: () => void
     resetSimulationConfig: () => void
+    resetSimulationFilters: () => void
 
     linkSpring: number
     linkDistance: number
@@ -26,66 +28,84 @@ interface TreeViewSettingsCardProps {
     onChangeRepulsion: (repulsion: number) => void
     onChangeRepulsionTheta: (repulsionTheta: number) => void
     onChangeDecay: (decay: number) => void
+
+    nodeSize: number
+    nodeLabel: boolean
+    nodeLabelSize: number
+    linkLength: number
+    linkLabel: boolean
+    linkLabelSize: number
+    linkLabelType: string
+
+    onChangeNodeSize: (nodeSize: number) => void
+    onChangeNodeLabel: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onChangeNodeLabelSize: (nodeLabelSize: number) => void
+    onChangeLinkLength: (linkLength: number) => void
+    onChangeLinkLabel: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onChangeLinkLabelSize: (linkLabelSize: number) => void
+    onChangeLinkLabelType: (event: SelectChangeEvent, child: ReactNode) => void
+
+    onExportOptions: () => void
+    onExportFilters: () => void
+
+    onZoomIn: () => void
+    onZoomOut: () => void
     onPrint: () => void
-
 }
-
-const LINK_SPRING_STEP = 0.1
-const LINK_SPRING_MIN = 0
-const LINK_SPRING_MAX = 2
-
-const LINK_DISTANCE_STEP = 1
-const LINK_DISTANCE_MIN = 0
-const LINK_DISTANCE_MAX = 100
-
-const GRAVITY_STEP = 0.01
-const GRAVITY_MIN = 0
-const GRAVITY_MAX = 1
-
-const FRICTION_STEP = 0.01
-const FRICTION_MIN = 0
-const FRICTION_MAX = 1
-
-const REPULSION_STEP = 0.01
-const REPULSION_MIN = 0
-const REPULSION_MAX = 2
-
-const REPULSION_THETA_STEP = 0.01
-const REPULSION_THETA_MIN = 0
-const REPULSION_THETA_MAX = 2
-
-const DECAY_STEP = 1000
-const DECAY_MIN = 1000
-const DECAY_MAX = 1000000
 
 /**
  * Card with settings for the tree view.
  */
-export function TreeViewSettingsCard({
-                                         onPauseAnimation, onRestartAnimation,
-                                         resetSimulationConfig,
+export function TreeViewSettingsCard(
+    {
+        onPauseAnimation,
+        onRestartAnimation,
+        resetSimulationConfig,
+        resetSimulationFilters,
 
-                                         linkSpring,
-                                         linkDistance,
-                                         gravity,
-                                         friction,
-                                         repulsion,
-                                         repulsionTheta,
-                                         decay,
+        linkSpring,
+        linkDistance,
+        gravity,
+        friction,
+        repulsion,
+        repulsionTheta,
+        decay,
 
-                                         onChangeLinkSpring,
-                                         onChangeLinkDistance,
-                                         onChangeGravity,
-                                         onChangeFriction,
-                                         onChangeRepulsion,
-                                         onChangeRepulsionTheta,
-                                         onChangeDecay,
-                                         onPrint
-                                     }: TreeViewSettingsCardProps) {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-    const open = Boolean(anchorEl)
+        onChangeLinkSpring,
+        onChangeLinkDistance,
+        onChangeGravity,
+        onChangeFriction,
+        onChangeRepulsion,
+        onChangeRepulsionTheta,
+        onChangeDecay,
+
+        nodeSize,
+        nodeLabel,
+        nodeLabelSize,
+        linkLength,
+        linkLabel,
+        linkLabelSize,
+        linkLabelType,
+
+        onChangeNodeSize,
+        onChangeNodeLabel,
+        onChangeNodeLabelSize,
+        onChangeLinkLength,
+        onChangeLinkLabel,
+        onChangeLinkLabelSize,
+        onChangeLinkLabelType,
+
+        onExportOptions,
+        onExportFilters,
+
+        onZoomIn,
+        onZoomOut,
+        onPrint
+    }: TreeViewSettingsCardProps
+) {
     const [animationRunning, setAnimationRunning] = useState(true)
     const [settingsOpen, setSettingsOpen] = useState(false)
+    const [filtersOpen, setFiltersOpen] = useState(false)
 
     return <Box sx={{
         position: "absolute",
@@ -100,91 +120,59 @@ export function TreeViewSettingsCard({
         borderColor: 'divider',
     }}>
         <Collapse in={settingsOpen}>
-            <Box>
-
-                <Typography gutterBottom>
-                    Link Spring
-                </Typography>
-                <InputSlider value={linkSpring} onChange={onChangeLinkSpring} min={LINK_SPRING_MIN}
-                             max={LINK_SPRING_MAX} step={LINK_SPRING_STEP}></InputSlider>
-
-                <Typography gutterBottom>
-                    Link Distance
-                </Typography>
-                <InputSlider value={linkDistance} onChange={onChangeLinkDistance} min={LINK_DISTANCE_MIN}
-                             max={LINK_DISTANCE_MAX} step={LINK_DISTANCE_STEP}></InputSlider>
-
-                <Typography gutterBottom>
-                    Gravity
-                </Typography>
-                <InputSlider value={gravity} onChange={onChangeGravity} min={GRAVITY_MIN} max={GRAVITY_MAX}
-                             step={GRAVITY_STEP}></InputSlider>
-
-                <Typography gutterBottom>
-                    Friction
-                </Typography>
-                <InputSlider value={friction} onChange={onChangeFriction} min={FRICTION_MIN} max={FRICTION_MAX}
-                             step={FRICTION_STEP}></InputSlider>
-
-                <Typography gutterBottom>
-                    Repulsion
-                </Typography>
-                <InputSlider value={repulsion} onChange={onChangeRepulsion} min={REPULSION_MIN} max={REPULSION_MAX}
-                             step={REPULSION_STEP}></InputSlider>
-
-                <Typography gutterBottom>
-                    Repulsion Theta
-                </Typography>
-                <InputSlider value={repulsionTheta} onChange={onChangeRepulsionTheta} min={REPULSION_THETA_MIN}
-                             max={REPULSION_THETA_MAX} step={REPULSION_THETA_STEP}></InputSlider>
-
-                {/* Decay Doesn't seem to work */}
-                {/* <Typography gutterBottom>
-                    Decay
-                </Typography>
-                <InputSlider value={decay} onChange={onChangeDecay} min={DECAY_MIN} max={DECAY_MAX} step={DECAY_STEP}></InputSlider> */}
-                <Box sx={{display: 'flex'}}>
-                    <Button
-                        //small
-                        size="small"
-                        sx={{
-                            flex: 1,
-                        }}
-                        onClick={() => {
-                        }
-                        }>
-                        Export
-                    </Button>
-                    <Button
-                        sx={{
-                            flex: 1,
-                        }}
-                        onClick={resetSimulationConfig}
-                        size="small"
-                    >
-                        Reset
-                    </Button>
-                </Box>
-            </Box>
+            <TreeViewOptions
+                linkSpring={linkSpring} onChangeLinkSpring={onChangeLinkSpring}
+                linkDistance={linkDistance} onChangeLinkDistance={onChangeLinkDistance}
+                gravity={gravity} onChangeGravity={onChangeGravity}
+                friction={friction} onChangeFriction={onChangeFriction}
+                repulsion={repulsion} onChangeRepulsion={onChangeRepulsion}
+                repulsionTheta={repulsionTheta} onChangeRepulsionTheta={onChangeRepulsionTheta}
+                nodeSize={nodeSize} onChangeNodeSize={onChangeNodeSize}
+                nodeLabel={nodeLabel} onChangeNodeLabel={onChangeNodeLabel}
+                nodeLabelSize={nodeLabelSize} onChangeNodeLabelSize={onChangeNodeLabelSize}
+                linkLength={linkLength} onChangeLinkLength={onChangeLinkLength}
+                linkLabel={linkLabel} onChangeLinkLabel={onChangeLinkLabel}
+                linkLabelSize={linkLabelSize} onChangeLinkLabelSize={onChangeLinkLabelSize}
+                linkLabelType={linkLabelType} onChangeLinkLabelType={onChangeLinkLabelType}
+                onExport={onExportOptions}
+                resetSimulationConfig={resetSimulationConfig}/>
+        </Collapse>
+        <Collapse in={filtersOpen}>
+            <TreeViewFilters
+                onExport={onExportFilters}
+                resetSimulationFilters={resetSimulationFilters}
+            />
         </Collapse>
         <Box sx={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
         }}>
-            <Button onClick={() => setSettingsOpen((settingsOpen) => !settingsOpen)} size="small">
+            <Button
+                onClick={() => {
+                    setFiltersOpen(false)
+                    setSettingsOpen((settingsOpen) => !settingsOpen)
+                }}
+                size="small"
+                variant={settingsOpen ? "contained" : "text"}
+                sx={{mr: 1}}
+            >
                 Options
             </Button>
-            <IconButton size="small" onClick={() => {
-                // TODO: zoom out
-            }}
+            <Button
+                onClick={() => {
+                    setSettingsOpen(false)
+                    setFiltersOpen((filtersOpen) => !filtersOpen)
+                }}
+                size="small"
+                variant={filtersOpen ? "contained" : "text"}
             >
+                Filters
+            </Button>
+            <IconButton size="small" onClick={onZoomOut}>
                 <ZoomOut/>
             </IconButton>
-            <IconButton size="small" onClick={() => {
-                // TODO: zoom in
-            }}
-            >
+            <IconButton size="small" onClick={onZoomIn}>
                 <ZoomIn/>
             </IconButton>
             <IconButton size="small" onClick={onPrint}>
@@ -197,8 +185,7 @@ export function TreeViewSettingsCard({
                     onRestartAnimation()
 
                 setAnimationRunning((animationRunning) => !animationRunning)
-            }}
-            >
+            }}>
                 {
                     animationRunning
                         ? <Pause/>

@@ -5,7 +5,7 @@ import {Delete, Edit, Info, Summarize} from "@mui/icons-material"
 import {useDeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdrop"
 import AdministrationService from "../../../../../Services/Administration/AdministrationService"
 import {useState} from "react"
-import {DistanceMatricesIcon, DistanceMatrixIcon, TreeIcon} from "../../../../Shared/Icons";
+import {DistanceMatricesIcon, DistanceMatrixIcon, TreeIcon, TreesIcon, TreeViewsIcon} from "../../../../Shared/Icons";
 
 /**
  * Hook for the DatasetTreeItem component.
@@ -61,7 +61,7 @@ export function useDatasetTreeItem(dataset: Dataset) {
             },
             {
                 label: "Compute Tree",
-                icon: TreeIcon,
+                icon: TreesIcon,
                 nestedItems: computeTreeOptions.map((option) => {
                     return {
                         label: option.label,
@@ -69,6 +69,11 @@ export function useDatasetTreeItem(dataset: Dataset) {
                         onClick: () => navigate(option.url)
                     }
                 })
+            },
+            {
+                label: "Compute Tree View",
+                icon: TreeViewsIcon,
+                onClick: () => navigate(WebUiUris.computeTreeView(projectId!, dataset.datasetId))
             },
             {
                 label: "Generate Report",

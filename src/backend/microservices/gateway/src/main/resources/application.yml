@@ -18,21 +18,37 @@ pwp:
           path: /projects/{projectId}
         - method: DELETE
           path: /projects/{projectId}
+        - method: PATCH
+          path: /projects/{projectId}
         - method: POST
+          path: /projects/{projectId}/datasets
+        - method: GET
           path: /projects/{projectId}/datasets
         - method: GET
           path: /projects/{projectId}/datasets/{datasetId}
         - method: DELETE
           path: /projects/{projectId}/datasets/{datasetId}
+        - method: PATCH
+          path: /projects/{projectId}/datasets/{datasetId}
         - method: DELETE
+          path: /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}
+        - method: PATCH
           path: /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}
         - method: DELETE
           path: /projects/{projectId}/datasets/{datasetId}/trees/{treeId}
+        - method: PATCH
+          path: /projects/{projectId}/datasets/{datasetId}/trees/{treeId}
         - method: DELETE
+          path: /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}
+        - method: PATCH
           path: /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}
         - method: DELETE
           path: /projects/{projectId}/files/typing-data/{typingDataId}
+        - method: PATCH
+          path: /projects/{projectId}/files/typing-data/{typingDataId}
         - method: DELETE
+          path: /projects/{projectId}/files/isolate-data/{isolateDataId}
+        - method: PATCH
           path: /projects/{projectId}/files/isolate-data/{isolateDataId}
 
     compute:

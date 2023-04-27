@@ -5,6 +5,7 @@ import {WebUiUris} from "../../../../../../Pages/WebUiUris"
 import {useDeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBackdrop"
 import {useState} from "react"
 import AdministrationService from "../../../../../../Services/Administration/AdministrationService"
+import {TreeViewIcon} from "../../../../../Shared/Icons";
 
 /**
  * Hook for the TreeTreeItem component.
@@ -15,12 +16,40 @@ export function useTreeTreeItem(datasetId: string, tree: Tree) {
     const {deleteBackdropOpen, handleDeleteBackdropOpen, handleDeleteBackdropClose} = useDeleteResourceBackdrop()
     const [error, setError] = useState<string | null>(null)
 
+    const layoutOptions = [
+        {
+            id: "force-directed",
+            label: "Force Directed"
+        },
+        {
+            id: "radial",
+            label: "Radial"
+        },
+        {
+            id: "dendrogram",
+            label: "Dendrogram"
+        }
+    ]
+
     return {
         contextMenuItems: [
             {
                 label: "View",
                 icon: Visibility,
                 onClick: () => navigate(WebUiUris.tree(projectId!, datasetId, tree.treeId))
+            },
+            {
+                label: "Compute View",
+                icon: TreeViewIcon,
+                nestedItems: layoutOptions.map((option) => {
+                    return {
+                        label: option.label,
+                        icon: TreeViewIcon,
+                        onClick: () => {
+                            // TODO: To be implemented
+                        }
+                    }
+                })
             },
             {
                 label: "Export",

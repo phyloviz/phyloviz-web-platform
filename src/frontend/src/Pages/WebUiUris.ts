@@ -63,4 +63,6 @@ export namespace WebUiUris {
     export const computeHierarchicalClustering = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree/hierarchical-clustering`
     export const computeNeighborJoining = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree/neighbor-joining`
     export const computeNlvGraph = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree/nlv-graph`
+
+    export const computeTreeView = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree-view`
 }

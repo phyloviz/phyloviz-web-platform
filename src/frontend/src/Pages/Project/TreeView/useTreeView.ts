@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom"
 import * as React from 'react';
-import {useEffect, useRef, useState} from 'react';
+import {ReactNode, useEffect, useRef, useState} from 'react';
 import {TreeViewGraph} from "./cosmos/TreeViewGraph"
 import {
     Edge,
@@ -22,6 +22,7 @@ import {
 import {useProjectContext} from "../useProject"
 import {GraphConfigInterface} from "./cosmos/config"
 import {useReactToPrint} from "react-to-print";
+import {SelectChangeEvent} from "@mui/material";
 
 export type VizNode = {
     id: string
@@ -54,6 +55,10 @@ const defaultConfig: GraphConfigInterface<VizNode, VizLink> = {
     }
 }
 
+const ZOOM_IN_SCALE = 1.1
+const ZOOM_OUT_SCALE = 0.9
+const ZOOM_DURATION = 100
+
 /**
  * Hook for the TreeView page.
  */
@@ -62,13 +67,23 @@ export function useTreeView() {
     const {project} = useProjectContext()
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const graphRef = useRef<TreeViewGraph<VizNode, VizLink>>()
-    const [linkSpring, setLinkSpring] = useState(defaultConfig!.simulation!.linkSpring!)
-    const [linkDistance, setLinkDistance] = useState(defaultConfig!.simulation!.linkDistance!)
-    const [gravity, setGravity] = useState(defaultConfig!.simulation!.gravity!)
-    const [repulsion, setRepulsion] = useState(defaultConfig!.simulation!.repulsion!)
-    const [friction, setFriction] = useState(defaultConfig!.simulation!.friction!)
-    const [repulsionTheta, setRepulsionTheta] = useState(defaultConfig!.simulation!.repulsionTheta!)
-    const [decay, setDecay] = useState(defaultConfig!.simulation!.decay!)
+
+    const [linkSpring, setLinkSpring] = useState(defaultConfig.simulation!.linkSpring!)
+    const [linkDistance, setLinkDistance] = useState(defaultConfig.simulation!.linkDistance!)
+    const [gravity, setGravity] = useState(defaultConfig.simulation!.gravity!)
+    const [repulsion, setRepulsion] = useState(defaultConfig.simulation!.repulsion!)
+    const [friction, setFriction] = useState(defaultConfig.simulation!.friction!)
+    const [repulsionTheta, setRepulsionTheta] = useState(defaultConfig.simulation!.repulsionTheta!)
+    const [decay, setDecay] = useState(defaultConfig.simulation!.decay!)
+
+    const [nodeSize, setNodeSize] = useState<number>(defaultConfig.nodeSize! as number)
+    const [nodeLabel, setNodeLabel] = useState(false)
+    const [nodeLabelSize, setNodeLabelSize] = useState(0)
+    const [linkLength, setLinkLength] = useState<number>(defaultConfig.linkWidth! as number)
+    const [linkLabel, setLinkLabel] = useState(false)
+    const [linkLabelSize, setLinkLabelSize] = useState(0)
+    const [linkLabelType, setLinkLabelType] = useState("")
+
 
     const toPrintRef = useRef(null);
     const reactToPrintContent = React.useCallback(() => {
@@ -135,9 +150,7 @@ export function useTreeView() {
             })
 
             const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, defaultConfig)
-
             graph.setData(nodes, links)
-
             graphRef.current = graph
         }
 
@@ -152,7 +165,8 @@ export function useTreeView() {
         .find(dataset => dataset.datasetId === datasetId)?.trees
         .find(tree => tree.treeId === treeView.source.treeId) as Tree
 
-    const distanceMatrix = tree.sourceType === "algorithmDistanceMatrix" ? project?.datasets
+    const distanceMatrix = tree.sourceType === "algorithmDistanceMatrix"
+        ? project?.datasets
             .find(dataset => dataset.datasetId === datasetId)?.distanceMatrices
             .find(distanceMatrix =>
                 distanceMatrix.distanceMatrixId === (tree.source as AlgorithmDistanceMatrixTreeSource).distanceMatrixId) as DistanceMatrix
@@ -191,15 +205,19 @@ export function useTreeView() {
         pauseAnimation: () => graphRef.current?.pause(),
         restartAnimation: () => graphRef.current?.restart(),
         resetSimulationConfig: () => {
-            setLinkSpring(defaultConfig!.simulation!.linkSpring!)
-            setLinkDistance(defaultConfig!.simulation!.linkDistance!)
-            setGravity(defaultConfig!.simulation!.gravity!)
-            setRepulsion(defaultConfig!.simulation!.repulsion!)
-            setFriction(defaultConfig!.simulation!.friction!)
-            setRepulsionTheta(defaultConfig!.simulation!.repulsionTheta!)
-            setDecay(defaultConfig!.simulation!.decay!)
+            setLinkSpring(defaultConfig.simulation!.linkSpring!)
+            setLinkDistance(defaultConfig.simulation!.linkDistance!)
+            setGravity(defaultConfig.simulation!.gravity!)
+            setRepulsion(defaultConfig.simulation!.repulsion!)
+            setFriction(defaultConfig.simulation!.friction!)
+            setRepulsionTheta(defaultConfig.simulation!.repulsionTheta!)
+            setDecay(defaultConfig.simulation!.decay!)
 
             graphRef.current?.setConfig(defaultConfig)
+        },
+
+        resetSimulationFilters: () => {
+            // TODO: reset filters
         },
 
         linkSpring,
@@ -238,6 +256,47 @@ export function useTreeView() {
             setDecay(value)
             graphRef.current?.setConfig({simulation: {decay: value}})
         },
+
+        nodeSize,
+        nodeLabel,
+        nodeLabelSize,
+        linkLength,
+        linkLabel,
+        linkLabelSize,
+        linkLabelType,
+
+        updateNodeSize: (value: number) => {
+            // TODO: implement node size
+        },
+        updateNodeLabel: (event: React.ChangeEvent<HTMLInputElement>) => {
+            setNodeLabel(event.target.checked)
+        },
+        updateNodeLabelSize: (value: number) => {
+            // TODO: implement node label size
+        },
+        updateLinkLength: (value: number) => {
+            // TODO: implement link length
+        },
+        updateLinkLabel: (event: React.ChangeEvent<HTMLInputElement>) => {
+            setLinkLabel(event.target.checked)
+        },
+        updateLinkLabelSize: (value: number) => {
+            // TODO: implement link label size
+        },
+        updateLinkLabelType: (event: SelectChangeEvent, child: ReactNode) => {
+            // TODO: implement link label type
+        },
+
+        handleExportOptions: () => {
+            // TODO: implement export options
+        },
+        handleExportFilters: () => {
+            // TODO: implement export filters
+        },
+
+        handleZoomIn: () => graphRef.current?.zoom(graphRef.current.getZoomLevel() * ZOOM_IN_SCALE, ZOOM_DURATION),
+        handleZoomOut: () => graphRef.current?.zoom(graphRef.current.getZoomLevel() * ZOOM_OUT_SCALE, ZOOM_DURATION),
+
         toPrintRef,
         handlePrint
     }

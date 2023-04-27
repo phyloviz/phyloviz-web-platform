@@ -49,7 +49,7 @@ export function HierarchicalClusteringConfigMethodStep(
             </FormControl>
 
             <Typography display="inline" variant="caption" align={"left"} sx={{width: "100%", whiteSpace: "pre-wrap"}}>
-                {methodDescriptions[HierarchicalClusteringMethod.COMPLETE_LINKAGE]}
+                {methodDescriptions[selectedMethod as HierarchicalClusteringMethod]}
             </Typography>
         </>
     )

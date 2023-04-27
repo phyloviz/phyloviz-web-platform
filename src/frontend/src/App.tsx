@@ -32,6 +32,7 @@ import ComputeHammingDistance
     from "./Pages/Project/Compute/DistanceMatrix/ComputeHammingDistance/ComputeHammingDistance"
 import EditProject from "./Pages/Project/EditProject/EditProject";
 import EditDataset from "./Pages/Project/EditDataset/EditDataset";
+import {ComputeTreeView} from "./Pages/Project/Compute/TreeView/ComputeTreeView";
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;
@@ -57,6 +58,7 @@ import REPORT = WebUiUris.REPORT;
 import COMPUTE_HAMMING_DISTANCE = WebUiUris.COMPUTE_HAMMING_DISTANCE;
 import EDIT_PROJECT = WebUiUris.EDIT_PROJECT;
 import EDIT_DATASET = WebUiUris.EDIT_DATASET;
+import COMPUTE_TREE_VIEW = WebUiUris.COMPUTE_TREE_VIEW;
 
 /**
  * App component.
@@ -150,7 +152,12 @@ export default function App() {
                             />
                             <Route
                                 path={COMPUTE_NLV_GRAPH}
-                                element={<ProtectedRoute><NLVGraphConfig/></ProtectedRoute>}/>
+                                element={<ProtectedRoute><NLVGraphConfig/></ProtectedRoute>}
+                            />
+                            <Route
+                                path={COMPUTE_TREE_VIEW}
+                                element={<ProtectedRoute><ComputeTreeView/></ProtectedRoute>}
+                            />
                         </Route>
 
                         <Route path="*" element={<NotFoundPage/>}/>
