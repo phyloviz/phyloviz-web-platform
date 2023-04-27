@@ -1,4 +1,3 @@
-
 export interface TreeViewSource {
     treeId: string
     typingDataId: string | null

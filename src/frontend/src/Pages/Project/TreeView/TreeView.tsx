@@ -17,10 +17,23 @@ export default function TreeView() {
         canvasRef,
         restartAnimation,
         pauseAnimation,
+        resetSimulationConfig,
+
         linkSpring,
-        updateLinkSpring,
         linkDistance,
-        updateLinkDistance
+        gravity,
+        friction,
+        repulsion,
+        repulsionTheta,
+        decay,
+
+        updateLinkSpring,
+        updateLinkDistance,
+        updateGravity,
+        updateFriction,
+        updateRepulsion,
+        updateRepulsionTheta,
+        updateDecay
     } = useTreeView()
 
     return (
@@ -30,9 +43,25 @@ export default function TreeView() {
                 <canvas ref={canvasRef}/>
             </div>
             <TreeViewSettingsCard
-                onPauseAnimation={pauseAnimation} onRestartAnimation={restartAnimation}
-                linkSpring={linkSpring} linkDistance={linkDistance}
-                onChangeLinkSpring={updateLinkSpring} onChangeLinkDistance={updateLinkDistance}
+                onPauseAnimation={pauseAnimation}
+                onRestartAnimation={restartAnimation}
+                resetSimulationConfig={resetSimulationConfig}
+
+                linkSpring={linkSpring}
+                linkDistance={linkDistance}
+                gravity={gravity}
+                friction={friction}
+                repulsion={repulsion}
+                repulsionTheta={repulsionTheta}
+                decay={decay}
+
+                onChangeLinkSpring={updateLinkSpring}
+                onChangeLinkDistance={updateLinkDistance}
+                onChangeGravity={updateGravity}
+                onChangeFriction={updateFriction}
+                onChangeRepulsion={updateRepulsion}
+                onChangeRepulsionTheta={updateRepulsionTheta}
+                onChangeDecay={updateDecay}
                 onPrint={handlePrint}
             />
             <TreeViewSearchCard/>

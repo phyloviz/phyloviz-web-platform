@@ -9,7 +9,8 @@ import {styled} from "@mui/material/styles"
 import IconButton from "@mui/material/IconButton"
 import {
     CascadingInfoAlgorithmDistanceMatrixTreeSource,
-    CascadingInfoAlgorithmTypingDataTreeSource, CascadingInfoFileTreeSource,
+    CascadingInfoAlgorithmTypingDataTreeSource,
+    CascadingInfoFileTreeSource,
     CascadingInfoTree
 } from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {DistanceMatrixIcon, TypingDataIcon} from "../../Shared/Icons";
@@ -53,7 +54,8 @@ export function TreeInfo({tree, distanceMatrixInfoExpanded, handleDistanceMatrix
                             <ListItemText primary="Distance Matrix"/>
                         </ListItemButton>
                         <Collapse in={distanceMatrixInfoExpanded} timeout="auto" sx={{pl: 2}} unmountOnExit>
-                            <DistanceMatrixInfo distanceMatrix={(tree.source as CascadingInfoAlgorithmDistanceMatrixTreeSource).distanceMatrix}/>
+                            <DistanceMatrixInfo
+                                distanceMatrix={(tree.source as CascadingInfoAlgorithmDistanceMatrixTreeSource).distanceMatrix}/>
                         </Collapse>
                     </List>
                 </div>

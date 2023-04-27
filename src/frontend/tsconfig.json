@@ -10,6 +10,7 @@
       "node_modules/@types",
       "src/Utils/types"
     ],
+    "allowJs": true,
     "allowSyntheticDefaultImports": true
   }
 }

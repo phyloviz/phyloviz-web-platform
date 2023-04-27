@@ -5,7 +5,8 @@ import {
     CascadingInfoAlgorithmDistanceMatrixTreeSource,
     CascadingInfoAlgorithmTypingDataTreeSource,
     CascadingInfoFileTreeSource,
-    CascadingInfoTree, DistanceMatrix,
+    CascadingInfoTree,
+    DistanceMatrix,
     Tree
 } from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel";
 
@@ -23,7 +24,7 @@ export function useTree() {
     const distanceMatrix = tree.sourceType === "algorithmDistanceMatrix" ? project?.datasets
             .find(dataset => dataset.datasetId === datasetId)?.distanceMatrices
             .find(distanceMatrix =>
-                distanceMatrix.distanceMatrixId === (tree.source as AlgorithmDistanceMatrixTreeSource).distanceMatrixId)  as DistanceMatrix
+                distanceMatrix.distanceMatrixId === (tree.source as AlgorithmDistanceMatrixTreeSource).distanceMatrixId) as DistanceMatrix
         : undefined
 
     const cascadingInfoTree: CascadingInfoTree = {
