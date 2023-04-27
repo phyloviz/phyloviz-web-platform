@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom"
 import * as React from 'react';
-import {useEffect, useRef, useState} from 'react';
+import {ReactNode, useEffect, useRef, useState} from 'react';
 import {TreeViewGraph} from "./cosmos/TreeViewGraph"
 import {
     Edge,
@@ -22,6 +22,7 @@ import {
 import {useProjectContext} from "../useProject"
 import {GraphConfigInterface} from "./cosmos/config"
 import {useReactToPrint} from "react-to-print";
+import {SelectChangeEvent} from "@mui/material";
 
 export type VizNode = {
     id: string
@@ -66,6 +67,7 @@ export function useTreeView() {
     const {project} = useProjectContext()
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const graphRef = useRef<TreeViewGraph<VizNode, VizLink>>()
+
     const [linkSpring, setLinkSpring] = useState(defaultConfig.simulation!.linkSpring!)
     const [linkDistance, setLinkDistance] = useState(defaultConfig.simulation!.linkDistance!)
     const [gravity, setGravity] = useState(defaultConfig.simulation!.gravity!)
@@ -73,6 +75,15 @@ export function useTreeView() {
     const [friction, setFriction] = useState(defaultConfig.simulation!.friction!)
     const [repulsionTheta, setRepulsionTheta] = useState(defaultConfig.simulation!.repulsionTheta!)
     const [decay, setDecay] = useState(defaultConfig.simulation!.decay!)
+
+    const [nodeSize, setNodeSize] = useState<number>(defaultConfig.nodeSize! as number)
+    const [nodeLabel, setNodeLabel] = useState(false)
+    const [nodeLabelSize, setNodeLabelSize] = useState(0)
+    const [linkLength, setLinkLength] = useState<number>(defaultConfig.linkWidth! as number)
+    const [linkLabel, setLinkLabel] = useState(false)
+    const [linkLabelSize, setLinkLabelSize] = useState(0)
+    const [linkLabelType, setLinkLabelType] = useState("")
+
 
     const toPrintRef = useRef(null);
     const reactToPrintContent = React.useCallback(() => {
@@ -244,6 +255,36 @@ export function useTreeView() {
         updateDecay: (value: number) => {
             setDecay(value)
             graphRef.current?.setConfig({simulation: {decay: value}})
+        },
+
+        nodeSize,
+        nodeLabel,
+        nodeLabelSize,
+        linkLength,
+        linkLabel,
+        linkLabelSize,
+        linkLabelType,
+
+        updateNodeSize: (value: number) => {
+            // TODO: implement node size
+        },
+        updateNodeLabel: (event: React.ChangeEvent<HTMLInputElement>) => {
+            setNodeLabel(event.target.checked)
+        },
+        updateNodeLabelSize: (value: number) => {
+            // TODO: implement node label size
+        },
+        updateLinkLength: (value: number) => {
+            // TODO: implement link length
+        },
+        updateLinkLabel: (event: React.ChangeEvent<HTMLInputElement>) => {
+            setLinkLabel(event.target.checked)
+        },
+        updateLinkLabelSize: (value: number) => {
+            // TODO: implement link label size
+        },
+        updateLinkLabelType: (event: SelectChangeEvent, child: ReactNode) => {
+            // TODO: implement link label type
         },
 
         handleExportOptions: () => {

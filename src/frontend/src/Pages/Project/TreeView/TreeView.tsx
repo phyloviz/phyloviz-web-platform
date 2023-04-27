@@ -35,6 +35,22 @@ export default function TreeView() {
         updateRepulsionTheta,
         updateDecay,
 
+        nodeSize,
+        nodeLabel,
+        nodeLabelSize,
+        linkLength,
+        linkLabel,
+        linkLabelSize,
+        linkLabelType,
+
+        updateNodeSize,
+        updateNodeLabel,
+        updateNodeLabelSize,
+        updateLinkLength,
+        updateLinkLabel,
+        updateLinkLabelSize,
+        updateLinkLabelType,
+
         handleExportOptions,
         handleExportFilters,
 
@@ -71,6 +87,22 @@ export default function TreeView() {
                 onChangeRepulsion={updateRepulsion}
                 onChangeRepulsionTheta={updateRepulsionTheta}
                 onChangeDecay={updateDecay}
+
+                nodeSize={nodeSize}
+                nodeLabel={nodeLabel}
+                nodeLabelSize={nodeLabelSize}
+                linkLength={linkLength}
+                linkLabel={linkLabel}
+                linkLabelSize={linkLabelSize}
+                linkLabelType={linkLabelType}
+
+                onChangeNodeSize={updateNodeSize}
+                onChangeNodeLabel={updateNodeLabel}
+                onChangeNodeLabelSize={updateNodeLabelSize}
+                onChangeLinkLength={updateLinkLength}
+                onChangeLinkLabel={updateLinkLabel}
+                onChangeLinkLabelSize={updateLinkLabelSize}
+                onChangeLinkLabelType={updateLinkLabelType}
 
                 onExportOptions={handleExportOptions}
                 onExportFilters={handleExportFilters}

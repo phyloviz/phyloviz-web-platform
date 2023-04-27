@@ -10,42 +10,43 @@ interface InputSliderProps {
 }
 
 export function InputSlider({value, onChange, min, max, step}: InputSliderProps) {
-
-    return <Box sx={{display: 'flex', m: '5px'}}>
-
-        <Box sx={{display: 'flex', flex: '7', pr: '10px'}}>
-            <Slider
-                value={value}
-                onChange={(event, newValue) => {
-                    newValue = newValue as number
+    return <Box sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    }}>
+        <Slider
+            value={value}
+            size="small"
+            onChange={(event, newValue) => {
+                newValue = newValue as number
+                if (newValue >= min && newValue <= max)
+                    onChange(newValue)
+            }}
+            aria-labelledby="input-slider"
+            min={min}
+            max={max}
+            step={step}
+            sx={{mr: 2}}
+        />
+        <Input
+            value={value}
+            size="small"
+            onChange={(event) => {
+                if (event.target.value !== '') {
+                    const newValue = Number(event.target.value)
                     if (newValue >= min && newValue <= max)
                         onChange(newValue)
-                }}
-                aria-labelledby="input-slider"
-                min={min}
-                max={max}
-                step={step}
-            ></Slider>
-        </Box>
-        <Box sx={{display: 'flex', flex: '3'}}>
-            <Input
-                value={value}
-                size="small"
-                onChange={(event) => {
-                    if (event.target.value !== '') {
-                        const newValue = Number(event.target.value)
-                        if (newValue >= min && newValue <= max)
-                            onChange(newValue)
-                    }
-                }}
-                inputProps={{
-                    step: step,
-                    min: min,
-                    max: max,
-                    type: 'number',
-                    'aria-labelledby': 'input-slider',
-                }}
-            />
-        </Box>
+                }
+            }}
+            inputProps={{
+                step: step,
+                min: min,
+                max: max,
+                type: 'number',
+                'aria-labelledby': 'input-slider',
+            }}
+        />
     </Box>
 }

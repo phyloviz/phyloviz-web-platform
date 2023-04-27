@@ -1,6 +1,6 @@
 import * as React from "react"
-import {useState} from "react"
-import {Box, Button, Collapse} from "@mui/material"
+import {ReactNode, useState} from "react"
+import {Box, Button, Collapse, SelectChangeEvent} from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import {Pause, PhotoCamera, PlayArrow, ZoomIn, ZoomOut} from "@mui/icons-material"
 import {TreeViewOptions} from "./TreeViewOptions";
@@ -28,6 +28,22 @@ interface TreeViewSettingsCardProps {
     onChangeRepulsion: (repulsion: number) => void
     onChangeRepulsionTheta: (repulsionTheta: number) => void
     onChangeDecay: (decay: number) => void
+
+    nodeSize: number
+    nodeLabel: boolean
+    nodeLabelSize: number
+    linkLength: number
+    linkLabel: boolean
+    linkLabelSize: number
+    linkLabelType: string
+
+    onChangeNodeSize: (nodeSize: number) => void
+    onChangeNodeLabel: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onChangeNodeLabelSize: (nodeLabelSize: number) => void
+    onChangeLinkLength: (linkLength: number) => void
+    onChangeLinkLabel: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onChangeLinkLabelSize: (linkLabelSize: number) => void
+    onChangeLinkLabelType: (event: SelectChangeEvent, child: ReactNode) => void
 
     onExportOptions: () => void
     onExportFilters: () => void
@@ -63,6 +79,22 @@ export function TreeViewSettingsCard(
         onChangeRepulsionTheta,
         onChangeDecay,
 
+        nodeSize,
+        nodeLabel,
+        nodeLabelSize,
+        linkLength,
+        linkLabel,
+        linkLabelSize,
+        linkLabelType,
+
+        onChangeNodeSize,
+        onChangeNodeLabel,
+        onChangeNodeLabelSize,
+        onChangeLinkLength,
+        onChangeLinkLabel,
+        onChangeLinkLabelSize,
+        onChangeLinkLabelType,
+
         onExportOptions,
         onExportFilters,
 
@@ -95,6 +127,13 @@ export function TreeViewSettingsCard(
                 friction={friction} onChangeFriction={onChangeFriction}
                 repulsion={repulsion} onChangeRepulsion={onChangeRepulsion}
                 repulsionTheta={repulsionTheta} onChangeRepulsionTheta={onChangeRepulsionTheta}
+                nodeSize={nodeSize} onChangeNodeSize={onChangeNodeSize}
+                nodeLabel={nodeLabel} onChangeNodeLabel={onChangeNodeLabel}
+                nodeLabelSize={nodeLabelSize} onChangeNodeLabelSize={onChangeNodeLabelSize}
+                linkLength={linkLength} onChangeLinkLength={onChangeLinkLength}
+                linkLabel={linkLabel} onChangeLinkLabel={onChangeLinkLabel}
+                linkLabelSize={linkLabelSize} onChangeLinkLabelSize={onChangeLinkLabelSize}
+                linkLabelType={linkLabelType} onChangeLinkLabelType={onChangeLinkLabelType}
                 onExport={onExportOptions}
                 resetSimulationConfig={resetSimulationConfig}/>
         </Collapse>

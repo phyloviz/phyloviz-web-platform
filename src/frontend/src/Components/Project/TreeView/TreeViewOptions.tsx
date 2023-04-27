@@ -1,6 +1,21 @@
-import {Box, Button, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    Checkbox,
+    Collapse,
+    FormControl,
+    FormControlLabel,
+    FormGroup,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+    Typography
+} from "@mui/material";
 import {InputSlider} from "./InputSlider";
 import * as React from "react";
+import {ReactNode} from "react";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const LINK_SPRING_STEP = 0.1
 const LINK_SPRING_MIN = 0
@@ -30,6 +45,27 @@ const DECAY_STEP = 1000
 const DECAY_MIN = 1000
 const DECAY_MAX = 1000000
 
+const NODE_SIZE_MIN = 1
+const NODE_SIZE_MAX = 100
+const NODE_SIZE_STEP = 1
+
+const NODE_LABEL_SIZE_MIN = 1
+const NODE_LABEL_SIZE_MAX = 100
+const NODE_LABEL_SIZE_STEP = 1
+
+const LINK_LENGTH_MIN = 1
+const LINK_LENGTH_MAX = 100
+const LINK_LENGTH_STEP = 1
+
+const LINK_LABEL_SIZE_MIN = 1
+const LINK_LABEL_SIZE_MAX = 100
+const LINK_LABEL_SIZE_STEP = 1
+
+enum LinkLabelType {
+    ABSOLUTE_DISTANCE = "Absolute Distance",
+    RELATIVE_DISTANCE = "Relative Distance",
+}
+
 interface TreeViewOptionsProps {
     linkSpring: number,
     onChangeLinkSpring: (linkSpring: number) => void
@@ -43,6 +79,23 @@ interface TreeViewOptionsProps {
     onChangeRepulsion: (repulsion: number) => void,
     repulsionTheta: number,
     onChangeRepulsionTheta: (repulsionTheta: number) => void,
+
+    nodeSize: number
+    nodeLabel: boolean
+    nodeLabelSize: number
+    linkLength: number
+    linkLabel: boolean
+    linkLabelSize: number
+    linkLabelType: string
+
+    onChangeNodeSize: (nodeSize: number) => void
+    onChangeNodeLabel: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onChangeNodeLabelSize: (nodeLabelSize: number) => void
+    onChangeLinkLength: (linkLength: number) => void
+    onChangeLinkLabel: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onChangeLinkLabelSize: (linkLabelSize: number) => void
+    onChangeLinkLabelType: (event: SelectChangeEvent, child: ReactNode) => void
+
     onExport: () => void,
     resetSimulationConfig: () => void
 }
@@ -56,51 +109,188 @@ export function TreeViewOptions(
         repulsion, onChangeRepulsion,
         repulsionTheta, onChangeRepulsionTheta,
         onExport,
-        resetSimulationConfig
+        resetSimulationConfig,
+
+        nodeSize,
+        nodeLabel,
+        nodeLabelSize,
+        linkLength,
+        linkLabel,
+        linkLabelSize,
+        linkLabelType,
+
+        onChangeNodeSize,
+        onChangeNodeLabel,
+        onChangeNodeLabelSize,
+        onChangeLinkLength,
+        onChangeLinkLabel,
+        onChangeLinkLabelSize,
+        onChangeLinkLabelType,
     }: TreeViewOptionsProps
 ) {
-    return <Box>
-        <Typography gutterBottom>
-            Link Spring
-        </Typography>
-        <InputSlider value={linkSpring} onChange={onChangeLinkSpring} min={LINK_SPRING_MIN}
-                     max={LINK_SPRING_MAX} step={LINK_SPRING_STEP}></InputSlider>
+    const [layoutPropertiesExpanded, setLayoutPropertiesExpanded] = React.useState(false)
+    const [nodePropertiesExpanded, setNodePropertiesExpanded] = React.useState(false)
+    const [linkPropertiesExpanded, setLinkPropertiesExpanded] = React.useState(false)
 
-        <Typography gutterBottom>
-            Link Distance
-        </Typography>
-        <InputSlider value={linkDistance} onChange={onChangeLinkDistance} min={LINK_DISTANCE_MIN}
-                     max={LINK_DISTANCE_MAX} step={LINK_DISTANCE_STEP}></InputSlider>
+    return <Box sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+    }}>
+        <Button
+            onClick={() => {
+                setLayoutPropertiesExpanded((prev) => !prev)
+                setNodePropertiesExpanded(false)
+                setLinkPropertiesExpanded(false)
+            }}
+            size={"small"}
+            startIcon={<ExpandMoreIcon color={"inherit"}/>
+            }>
+            Layout Properties
+        </Button>
+        <Collapse in={layoutPropertiesExpanded} timeout={"auto"} unmountOnExit>
+            <Typography variant={"body2"}>Link Spring</Typography>
+            <InputSlider
+                value={linkSpring}
+                onChange={onChangeLinkSpring}
+                min={LINK_SPRING_MIN} max={LINK_SPRING_MAX} step={LINK_SPRING_STEP}
+            />
 
-        <Typography gutterBottom>
-            Gravity
-        </Typography>
-        <InputSlider value={gravity} onChange={onChangeGravity} min={GRAVITY_MIN} max={GRAVITY_MAX}
-                     step={GRAVITY_STEP}></InputSlider>
+            <Typography variant={"body2"}>Link Distance</Typography>
+            <InputSlider
+                value={linkDistance}
+                onChange={onChangeLinkDistance}
+                min={LINK_DISTANCE_MIN} max={LINK_DISTANCE_MAX} step={LINK_DISTANCE_STEP}
+            />
 
-        <Typography gutterBottom>
-            Friction
-        </Typography>
-        <InputSlider value={friction} onChange={onChangeFriction} min={FRICTION_MIN} max={FRICTION_MAX}
-                     step={FRICTION_STEP}></InputSlider>
+            <Typography variant={"body2"}>Gravity</Typography>
+            <InputSlider
+                value={gravity}
+                onChange={onChangeGravity}
+                min={GRAVITY_MIN} max={GRAVITY_MAX} step={GRAVITY_STEP}
+            />
 
-        <Typography gutterBottom>
-            Repulsion
-        </Typography>
-        <InputSlider value={repulsion} onChange={onChangeRepulsion} min={REPULSION_MIN} max={REPULSION_MAX}
-                     step={REPULSION_STEP}></InputSlider>
+            <Typography variant={"body2"}>Friction</Typography>
+            < InputSlider
+                value={friction}
+                onChange={onChangeFriction}
+                min={FRICTION_MIN} max={FRICTION_MAX} step={FRICTION_STEP}
+            />
 
-        <Typography gutterBottom>
-            Repulsion Theta
-        </Typography>
-        <InputSlider value={repulsionTheta} onChange={onChangeRepulsionTheta} min={REPULSION_THETA_MIN}
-                     max={REPULSION_THETA_MAX} step={REPULSION_THETA_STEP}></InputSlider>
+            <Typography variant={"body2"}>Repulsion</Typography>
+            <InputSlider
+                value={repulsion}
+                onChange={onChangeRepulsion}
+                min={REPULSION_MIN} max={REPULSION_MAX} step={REPULSION_STEP}
+            />
 
-        {/* Decay Doesn't seem to work */}
-        {/* <Typography gutterBottom>
-                    Decay
-                </Typography>
-                <InputSlider value={decay} onChange={onChangeDecay} min={DECAY_MIN} max={DECAY_MAX} step={DECAY_STEP}></InputSlider> */}
+            <Typography variant={"body2"}>Repulsion Theta</Typography>
+            <InputSlider
+                value={repulsionTheta}
+                onChange={onChangeRepulsionTheta}
+                min={REPULSION_THETA_MIN} max={REPULSION_THETA_MAX} step={REPULSION_THETA_STEP}
+            />
+
+            {/* Decay Doesn't seem to work */}
+            {/* <Typography variant={"body2"}>Decay</Typography>
+            <InputSlider value={decay} onChange={onChangeDecay} min={DECAY_MIN} max={DECAY_MAX} step={DECAY_STEP}></InputSlider> */}
+        </Collapse>
+
+        <Button
+            onClick={() => {
+                setNodePropertiesExpanded((prev) => !prev)
+                setLayoutPropertiesExpanded(false)
+                setLinkPropertiesExpanded(false)
+            }}
+            size={"small"}
+            startIcon={<ExpandMoreIcon color={"inherit"}/>
+            }>
+            Node Properties
+        </Button>
+        <Collapse in={nodePropertiesExpanded} timeout={"auto"} unmountOnExit>
+            <Typography variant={"body2"}>Node Size</Typography>
+            <InputSlider
+                value={nodeSize}
+                onChange={onChangeNodeSize}
+                min={NODE_SIZE_MIN} max={NODE_SIZE_MAX} step={NODE_SIZE_STEP}
+            />
+
+            <FormGroup>
+                <FormControlLabel label="Node Label" control={
+                    <Checkbox
+                        size="small"
+                        checked={nodeLabel}
+                        onChange={onChangeNodeLabel}
+                    />
+                }/>
+            </FormGroup>
+
+            <Collapse in={nodeLabel}>
+                <Typography variant={"body2"}>Node Label Size</Typography>
+                <InputSlider
+                    value={nodeLabelSize}
+                    onChange={onChangeNodeLabelSize}
+                    min={NODE_LABEL_SIZE_MIN} max={NODE_LABEL_SIZE_MAX} step={NODE_LABEL_SIZE_STEP}
+                />
+            </Collapse>
+        </Collapse>
+
+        <Button
+            onClick={() => {
+                setLinkPropertiesExpanded((prev) => !prev)
+                setLayoutPropertiesExpanded(false)
+                setNodePropertiesExpanded(false)
+            }}
+            size={"small"}
+            startIcon={<ExpandMoreIcon color={"inherit"}/>
+            }>
+            Link Properties
+        </Button>
+        <Collapse in={linkPropertiesExpanded} timeout={"auto"} unmountOnExit>
+            <Typography variant={"body2"}>Link Length</Typography>
+            <InputSlider
+                value={linkLength}
+                onChange={onChangeLinkLength}
+                min={LINK_LENGTH_MIN} max={LINK_LENGTH_MAX} step={LINK_LENGTH_STEP}
+            />
+
+            <FormGroup>
+                <FormControlLabel label="Link Label" control={
+                    <Checkbox
+                        size="small"
+                        checked={linkLabel}
+                        onChange={onChangeLinkLabel}
+                    />
+                }/>
+            </FormGroup>
+
+            <Collapse in={linkLabel}>
+                <Typography variant={"body2"}>Link Label Size</Typography>
+                <InputSlider
+                    value={linkLabelSize}
+                    onChange={onChangeLinkLabelSize}
+                    min={LINK_LABEL_SIZE_MIN} max={LINK_LABEL_SIZE_MAX} step={LINK_LABEL_SIZE_STEP}
+                />
+
+                <FormControl sx={{width: "100%", mb: 1, mt: 2}} size="small">
+                    <InputLabel id="link-label-type">Link Label Type</InputLabel>
+                    <Select
+                        labelId="link-label-type"
+                        label="Link Label Type"
+                        value={linkLabelType}
+                        onChange={onChangeLinkLabelType}
+                        MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
+                    >
+                        {Object.values(LinkLabelType).map((value) => (
+                            <MenuItem key={value} value={value}>
+                                {value}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </Collapse>
+        </Collapse>
+
         <Box sx={{display: "flex"}}>
             <Button size="small" sx={{flex: 1,}} onClick={onExport}>
                 Export
