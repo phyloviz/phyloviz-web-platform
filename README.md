@@ -84,6 +84,7 @@ This software uses the following open source packages:
 * [OpenStack](https://www.openstack.org/)
 * [React](https://reactjs.org/)
 * [Material-UI](https://material-ui.com/)
+* [Cosmos](https://github.com/cosmograph-org/cosmos)
 
 ---
 
