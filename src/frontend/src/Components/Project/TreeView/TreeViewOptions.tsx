@@ -100,6 +100,8 @@ interface TreeViewOptionsProps {
     resetSimulationConfig: () => void
 }
 
+// TODO: Organize this Tree View code, separate each section into its own component
+// Maybe create multiple hooks or even a context to manage the state of the tree view
 export function TreeViewOptions(
     {
         linkSpring, onChangeLinkSpring,
@@ -131,6 +133,7 @@ export function TreeViewOptions(
     const [layoutPropertiesExpanded, setLayoutPropertiesExpanded] = React.useState(false)
     const [nodePropertiesExpanded, setNodePropertiesExpanded] = React.useState(false)
     const [linkPropertiesExpanded, setLinkPropertiesExpanded] = React.useState(false)
+    const [assignColorsExpanded, setAssignColorsExpanded] = React.useState(false)
 
     return <Box sx={{
         display: "flex",
@@ -141,14 +144,17 @@ export function TreeViewOptions(
             onClick={() => {
                 setLayoutPropertiesExpanded((prev) => !prev)
                 setNodePropertiesExpanded(false)
+                setAssignColorsExpanded(false)
                 setLinkPropertiesExpanded(false)
             }}
             size={"small"}
-            startIcon={<ExpandMoreIcon color={"inherit"}/>
-            }>
+            startIcon={<ExpandMoreIcon color={"inherit"}/>}
+        >
             Layout Properties
         </Button>
-        <Collapse in={layoutPropertiesExpanded} timeout={"auto"} unmountOnExit>
+        <Collapse in={layoutPropertiesExpanded} timeout={"auto"}
+                  sx={{border: 1, borderColor: 'divider', borderRadius: 1, p: 3}}
+                  unmountOnExit>
             <Typography variant={"body2"}>Link Spring</Typography>
             <InputSlider
                 value={linkSpring}
@@ -200,6 +206,7 @@ export function TreeViewOptions(
             onClick={() => {
                 setNodePropertiesExpanded((prev) => !prev)
                 setLayoutPropertiesExpanded(false)
+                setAssignColorsExpanded(false)
                 setLinkPropertiesExpanded(false)
             }}
             size={"small"}
@@ -207,7 +214,9 @@ export function TreeViewOptions(
             }>
             Node Properties
         </Button>
-        <Collapse in={nodePropertiesExpanded} timeout={"auto"} unmountOnExit>
+        <Collapse in={nodePropertiesExpanded} timeout={"auto"}
+                  sx={{border: 1, borderColor: 'divider', borderRadius: 1, p: 3}}
+                  unmountOnExit>
             <Typography variant={"body2"}>Node Size</Typography>
             <InputSlider
                 value={nodeSize}
@@ -239,6 +248,7 @@ export function TreeViewOptions(
             onClick={() => {
                 setLinkPropertiesExpanded((prev) => !prev)
                 setLayoutPropertiesExpanded(false)
+                setAssignColorsExpanded(false)
                 setNodePropertiesExpanded(false)
             }}
             size={"small"}
@@ -246,7 +256,9 @@ export function TreeViewOptions(
             }>
             Link Properties
         </Button>
-        <Collapse in={linkPropertiesExpanded} timeout={"auto"} unmountOnExit>
+        <Collapse in={linkPropertiesExpanded} timeout={"auto"}
+                  sx={{border: 1, borderColor: 'divider', borderRadius: 1, p: 3}}
+                  unmountOnExit>
             <Typography variant={"body2"}>Link Length</Typography>
             <InputSlider
                 value={linkLength}
@@ -289,6 +301,55 @@ export function TreeViewOptions(
                     </Select>
                 </FormControl>
             </Collapse>
+        </Collapse>
+
+        <Button
+            onClick={() => {
+                setAssignColorsExpanded((prev) => !prev)
+                setLinkPropertiesExpanded(false)
+                setLayoutPropertiesExpanded(false)
+                setNodePropertiesExpanded(false)
+            }}
+            size={"small"}
+            startIcon={<ExpandMoreIcon color={"inherit"}/>
+            }>
+            Assign Colors
+        </Button>
+        <Collapse in={assignColorsExpanded} timeout={"auto"}
+                  sx={{border: 1, borderColor: 'divider', borderRadius: 1, p: 3}}
+                  unmountOnExit>
+            <FormControl sx={{width: "100%", mb: 1, mt: 2}} size="small">
+                <InputLabel id="color-by-profile">Color by Profile</InputLabel>
+                <Select
+                    labelId="color-by-profile"
+                    label="Color by Profile"
+                    //value={colorByProfile}
+                    //onChange={onChangeColorByProfile}
+                    MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
+                >
+                    {/*{profiles.map((value) => (
+                        <MenuItem key={value} value={value}>
+                            {value}
+                        </MenuItem>
+                    ))}*/}
+                </Select>
+            </FormControl>
+            <FormControl sx={{width: "100%", mb: 1, mt: 2}} size="small">
+                <InputLabel id="color-by-isolate-data">Color by Isolate Data</InputLabel>
+                <Select
+                    labelId="color-by-isolate-datae"
+                    label="Color by Isolate Data"
+                    //value={colorByIsolateData}
+                    //onChange={onChangeColorByIsolateData}
+                    MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
+                >
+                    {/*{isolateDataRows.map((value) => (
+                        <MenuItem key={value} value={value}>
+                            {value}
+                        </MenuItem>
+                    ))}*/}
+                </Select>
+            </FormControl>
         </Collapse>
 
         <Box sx={{display: "flex"}}>
