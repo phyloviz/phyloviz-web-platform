@@ -266,7 +266,8 @@ export function useTreeView() {
         linkLabelType,
 
         updateNodeSize: (value: number) => {
-            // TODO: implement node size
+            setNodeSize(value)
+            graphRef.current?.setConfig({nodeSize: value})
         },
         updateNodeLabel: (event: React.ChangeEvent<HTMLInputElement>) => {
             setNodeLabel(event.target.checked)
@@ -275,7 +276,8 @@ export function useTreeView() {
             // TODO: implement node label size
         },
         updateLinkLength: (value: number) => {
-            // TODO: implement link length
+            setLinkLength(value)
+            graphRef.current?.setConfig({linkWidth: value})
         },
         updateLinkLabel: (event: React.ChangeEvent<HTMLInputElement>) => {
             setLinkLabel(event.target.checked)
