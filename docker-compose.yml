@@ -2,6 +2,7 @@ version: '3.7'
 services:
   keycloak_db:
     image: postgres:10
+    restart: always
     volumes:
       - keycloak_db_data:/var/lib/postgresql/data
     environment:
@@ -10,6 +11,7 @@ services:
       - POSTGRES_DB=keycloak_db
   keycloak:
     image: quay.io/keycloak/keycloak:21.0.1
+    restart: always
     ports:
       - '8443:8443'
       - '8082:8080'
@@ -36,6 +38,7 @@ services:
 
   mongodb:
     image: mongo:4.4.4
+    restart: always
     ports:
       - '28017:27017'
     environment:
@@ -60,6 +63,7 @@ services:
 
   registry:
     image: registry:2.8.1
+    restart: always
     ports:
       - '5000:5000'
     environment:
@@ -70,7 +74,6 @@ services:
     volumes:
       - ./src/backend/registry/data:/var/lib/registry
       - ./src/backend/registry/config/config.yml:/etc/docker/registry/config.yml
-    restart: always
   registry_ui:
     image: joxit/docker-registry-ui:2.4.1
     ports:

@@ -21,6 +21,7 @@ import {ALPHA_MIN, MAX_POINT_SIZE, Store} from './modules/Store'
 import {defaultConfigValues, defaultScaleToZoom} from './variables'
 import {Zoom} from './modules/Zoom'
 import {CosmosInputLink, CosmosInputNode} from './types'
+import {mat4} from "gl-matrix";
 
 export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink> {
     public config = new GraphConfig<N, L>()
@@ -45,6 +46,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
     private fpsMonitor: FPSMonitor | undefined
     private hasBeenRecentlyDestroyed = false
     private currentEvent: D3ZoomEvent<HTMLCanvasElement, undefined> | MouseEvent | undefined
+    idToText = new Map<string, any>()
 
     public constructor(canvas: HTMLCanvasElement, config?: GraphConfigInterface<N, L>) {
         if (config) this.config.init(config)
@@ -139,6 +141,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
         if (this.config.showFPSMonitor) this.fpsMonitor = new FPSMonitor(this.canvas)
 
         if (this.config.randomSeed !== undefined) this.store.addRandomSeed(this.config.randomSeed)
+
     }
 
     public get progress(): number {
@@ -176,7 +179,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
      * Set or update Cosmos configuration. The changes will be applied in real time.
      * @param config Cosmos configuration object.
      */
-    public setConfig(config: Partial<GraphConfigInterface<N, L>>): void {
+    public async setConfig(config: Partial<GraphConfigInterface<N, L>>) {
         const prevConfig = {...this.config}
         this.config.init(config)
         if (prevConfig.linkColor !== this.config.linkColor) this.lines.updateColor()
@@ -188,7 +191,8 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
             this.store.setHighlightedNodeRingColor(this.config.highlightedNodeRingColor)
         }
         if (prevConfig.spaceSize !== this.config.spaceSize ||
-            prevConfig.simulation.repulsionQuadtreeLevels !== this.config.simulation.repulsionQuadtreeLevels) this.update(this.store.isSimulationRunning)
+            prevConfig.simulation.repulsionQuadtreeLevels !== this.config.simulation.repulsionQuadtreeLevels)
+            await this.update(this.store.isSimulationRunning)
         if (prevConfig.showFPSMonitor !== this.config.showFPSMonitor) {
             if (this.config.showFPSMonitor) {
                 this.fpsMonitor = new FPSMonitor(this.canvas)
@@ -208,7 +212,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
      * @param links Array of links.
      * @param runSimulation When set to `false`, the simulation won't be started automatically (`true` by default).
      */
-    public setData(nodes: N[], links: L[], runSimulation = true): void {
+    public async setData(nodes: N[], links: L[], runSimulation = true) {
         if (!nodes.length && !links.length) {
             this.destroy()
             this.reglInstance.clear({
@@ -219,7 +223,9 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
             return
         }
         this.graph.setData(nodes, links)
-        this.update(runSimulation)
+
+
+        await this.update(runSimulation)
     }
 
     /**
@@ -598,13 +604,15 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
         this.hasBeenRecentlyDestroyed = false
     }
 
-    private update(runSimulation: boolean): void {
+    private async update(runSimulation: boolean) {
         const {graph} = this
         this.store.pointsTextureSize = Math.ceil(Math.sqrt(graph.nodes.length))
         this.store.linksTextureSize = Math.ceil(Math.sqrt(graph.linksNumber * 2))
         this.destroy()
         this.create()
-        this.initPrograms()
+        await this.initPrograms()
+
+
         if (runSimulation) {
             this.start()
         } else {
@@ -612,8 +620,8 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
         }
     }
 
-    private initPrograms(): void {
-        this.points.initPrograms()
+    private async initPrograms() {
+        await this.points.initPrograms()
         this.lines.initPrograms()
         this.forceGravity.initPrograms()
         this.forceLinkIncoming.initPrograms()
@@ -671,6 +679,9 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 
             this.points.trackPoints()
 
+            this.updateLabelPositions(now)
+            this.points.labelPositionsTex?.subimage(this.points.labelPositionsData!)
+
             // Clear canvas
             this.reglInstance.clear({
                 color: this.store.backgroundColor,
@@ -713,19 +724,44 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
             // drawText()
             // const nodePositions = this.getNodePositions()
             // const nodes = Object.keys(nodePositions).map((key) => {
-            // 	return {
-            // 		id: key,
-            // 		x: nodePositions[key].x,
-            // 		y: nodePositions[key].y,
-            // 	}
+            //     return {
+            //         id: key,
+            //         x: nodePositions[key].x,
+            //         y: nodePositions[key].y,
+            //     }
             // })
-
-
-            // for (let i = 0; i < nodes.length; i++) {
-            // 	const node = nodes[i]
-            // 	const drawCommand = this.points.drawTextCommands.get(node.id)!
-
-            // 	drawCommand({ x: node.x, y: node.y })
+            //
+            //
+            // for (const element of nodes) {
+            //     const node = element
+            //     // const drawCommand = this.points.drawTextCommands.get(node.id)!
+            //
+            //     let text = this.idToText.get(node.id)
+            //
+            //     if (text == null) {
+            //         text = new Text({
+            //             regl: this.reglInstance,
+            //             canvas: this.canvas
+            //         })
+            //         this.idToText.set(node.id, text)
+            //     }
+            //
+            //     console.log(this.idToText.values())
+            //     const screenPosition = this.spaceToScreenPosition([node.x, node.y])
+            //     const radius = this.spaceToScreenRadius(
+            //         this.getNodeRadiusById(node.id) as number
+            //     );
+            //
+            //     console.log(this.store.transform[0])
+            //     text.update({
+            //         position: [screenPosition[0] * 2, this.canvas.height - screenPosition[1] * 2.0],
+            //         text: node.id,
+            //         font: `${2 * this.store.transform[0]}px Helvetica, sans-serif`,
+            //     })
+            //
+            //
+            //     text.render()
+            //     // drawCommand({ x: node.x, y: node.y })
             // }
 
 
@@ -735,6 +771,34 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 
             this.frame()
         })
+    }
+
+
+    updateLabelPositions(time: number) {
+
+        const nodePositions = this.getNodePositions()
+        const nodes = Object.keys(nodePositions).map((key) => {
+            return {
+                id: key,
+                x: nodePositions[key].x,
+                y: nodePositions[key].y,
+            }
+        })
+
+
+        this.points.labelPositionsDataMatrices.forEach((mat, i) => {
+            const node = nodes[i]
+
+            const screenPosition = this.spaceToScreenPosition([node.x, node.y])
+            const radius = this.getNodeRadiusById(node.id)!
+
+
+            const x = screenPosition[0] * 2
+            const y = this.canvas.height - screenPosition[1] * 2.0
+
+            mat4.fromTranslation(mat, [x, y, 0]);
+            mat4.scale(mat, mat, [this.store.transform[0]*radius*0.9, this.store.transform[0]*radius*0.9, 1]);
+        });
     }
 
     private stopFrames(): void {

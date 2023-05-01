@@ -6,7 +6,7 @@ import {GetIsolateDataRowsOutputModel} from "./models/getIsolateDataProfiles/Get
 import {GetIsolateDataFileOutputModel} from "./models/getIsolateDataFile/GetIsolateDataFileOutputModel"
 import {GetDistanceMatrixOutputModel} from "./models/getDistanceMatrix/GetDistanceMatrixOutputModel"
 import {GetTreeOutputModel} from "./models/getTree/GetTreeOutputModel"
-import {GetTreeViewOutputModel} from './models/getTreeView/GetTreeViewOutputModel';
+import {Edge, GetTreeViewOutputModel, Node} from './models/getTreeView/GetTreeViewOutputModel';
 
 export namespace MockVisualizationService {
 
@@ -196,7 +196,7 @@ export namespace MockVisualizationService {
         // // TODO: Don't forget to remove
         // const edges: Edge[] = [];
         // const nodes: Node[] = [];
-        // const n = 10;
+        // const n = 100;
         // const m = 10;
         // for (let node = 0; node < n * m; node += 1) {
         //     nodes.push({ st: node.toString(), coordinates: [0, 0], profile: Array.from({ length: 8 }, () => Math.floor(Math.random() * 100).toString()), auxiliaryData: {} });
@@ -205,7 +205,7 @@ export namespace MockVisualizationService {
         //     const nodeLine = Math.floor(node / n);
         //     const nextNodeLine = Math.floor(nextNode / n);
         //     const bottomNodeLine = Math.floor(bottomNode / n);
-
+        //
         //     if (nodeLine === nextNodeLine)
         //         edges.push({ from: `${node}`, to: `${nextNode}` });
         //     if (bottomNodeLine < m)

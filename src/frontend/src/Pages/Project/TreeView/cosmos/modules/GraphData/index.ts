@@ -1,5 +1,7 @@
 import REGL from 'regl';
 import {CosmosInputLink, CosmosInputNode} from '../../types'
+import vectorizeText from 'vectorize-text'
+import Text from "gl-text";
 
 export interface TextMesh {
     edges: REGL.Vec2;
@@ -35,7 +37,6 @@ export class GraphData<N extends CosmosInputNode, L extends CosmosInputLink> {
     /** Mapping the original id to the outdegree value of the node */
     private idToOutdegreeMap: Map<string, number> = new Map()
     private idToTextMeshesMap: Map<string, TextMesh> = new Map()
-
     private _nodes: N[] = []
 
     public get nodes(): N[] {
@@ -67,17 +68,19 @@ export class GraphData<N extends CosmosInputNode, L extends CosmosInputLink> {
         })
 
 
-        // // Calculate node text meshes
-        // inputNodes.forEach((n, i) => {
-        //   const text = n.id
-        //   const textMesh = vectorizeText(text, {
-        //     font: "Arial",
-        //     textAlign: 'center',
-        //     textBaseline: 'middle',
-        //   })
+        // Calculate node text meshes
+        inputNodes.forEach((n, i) => {
+          const text = n.id
+          // const textMesh = vectorizeText(text, {
+          //   font: "Roboto",
+          //   textAlign: 'center',
+          //   textBaseline: 'middle',
+          //
+          // })
 
-        //   this.idToTextMeshesMap.set(n.id, textMesh)
-        // })
+
+          // this.idToTextMeshesMap.set(n.id, textMesh)
+        })
 
         // Calculate node outdegree/indegree values
         // And filter links if source/target node does not exist

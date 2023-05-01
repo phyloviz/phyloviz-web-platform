@@ -44,6 +44,7 @@ const defaultConfig: GraphConfigInterface<VizNode, VizLink> = {
     linkColor: "#5F74C2",
     linkArrows: false,
     linkGreyoutOpacity: 0,
+    spaceSize: 8192,
     simulation: {
         decay: 100000,
         gravity: 0.01,
@@ -150,7 +151,7 @@ export function useTreeView() {
             })
 
             const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, defaultConfig)
-            graph.setData(nodes, links)
+            await graph.setData(nodes, links)
             graphRef.current = graph
         }
 

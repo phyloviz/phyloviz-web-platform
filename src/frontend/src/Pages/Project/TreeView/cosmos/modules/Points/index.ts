@@ -18,7 +18,7 @@ import clearFrag from '../../modules/Shared/clear.frag'
 import {defaultConfigValues} from '../../variables'
 import {readPixels} from '../../helper'
 import {CosmosInputLink, CosmosInputNode} from '../../types'
-
+import {mat4} from 'gl-matrix'
 
 export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extends CoreModule<N, L> {
     public currentPositionFbo: regl.Framebuffer2D | undefined
@@ -31,7 +31,7 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
     public sizeFbo: regl.Framebuffer2D | undefined
     public trackedIndicesFbo: regl.Framebuffer2D | undefined
     public trackedPositionsFbo: regl.Framebuffer2D | undefined
-    drawTextCommands: Map<string, regl.DrawCommand> = new Map()
+    // drawTextCommands: Map<string, regl.DrawCommand> = new Map()
     private drawCommand: regl.DrawCommand | undefined
     private drawHighlightedCommand: regl.DrawCommand | undefined
     private updatePositionCommand: regl.DrawCommand | undefined
@@ -39,8 +39,13 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
     private findHoveredPointCommand: regl.DrawCommand | undefined
     private clearHoveredFboCommand: regl.DrawCommand | undefined
     private trackPointsCommand: regl.DrawCommand | undefined
+    public drawLabelsCommand: regl.DrawCommand | undefined
     private trackedIds: string[] | undefined
     private trackedPositionsById: Map<string, [number, number]> = new Map()
+     public labelPositionsTex: regl.Texture2D | undefined
+    public labelPositionsData: Float32Array | undefined
+    public labelPositionsDataMatrices: Float32Array[] = []
+    glyphWidth: number | undefined;
 
     public create(): void {
         const {reglInstance, config, store, data} = this
@@ -68,6 +73,7 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
             depth: false,
             stencil: false,
         })
+
 
         this.previousPositionFbo = reglInstance.framebuffer({
             color: reglInstance.texture({
@@ -113,7 +119,7 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
         this.updateGreyoutStatus()
     }
 
-    public initPrograms(): void {
+    public async initPrograms() {
         const {reglInstance, config, store, data} = this
         this.updatePositionCommand = reglInstance({
             frag: updatePositionFrag,
@@ -275,55 +281,191 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
                 pointsTextureSize: () => store.pointsTextureSize,
             },
         })
+        const glyphImg = await loadImage(
+            'https://webglfundamentals.org/webgl/resources/8x8-font.png'
+        )
+        const messages: string[] = []
+
+        for (const node of this.data.nodes) {
+            messages.push(node.id)
+        }
 
 
-        // for (let i = 0; i < data.nodes.length; i++) {
-        //   const node = data.nodes[i]
-        //   const textMesh = this.data.getTextMeshById(node.id)!
+        const glyphTex = reglInstance.texture({
+            data: glyphImg,
+            mag: 'nearest',
+            min: 'nearest',
+        });
 
-        //   const drawText = this.reglInstance({
-        //     frag: `
+        const glyphsAcross = 8;
+        const glyphsDown = 5;
+        this.glyphWidth = glyphImg.width / glyphsAcross;
+        const glyphHeight = glyphImg.height / glyphsDown;
+        const glyphUWidth = this.glyphWidth / glyphImg.width;
+        const glyphVHeight = glyphHeight / glyphImg.height;
+
+        const positions: number[] = [];
+        const texcoords: number[] = [];
+        const messageIds: number[] = [];
+        this.labelPositionsData = new Float32Array(messages.length * 16);
+        this.labelPositionsDataMatrices = [];
+        const quadPositions = [-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1];
+        const quadTexcoords = [0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0];
+        messages.forEach((message, id) => {
+            this.labelPositionsDataMatrices.push(this.labelPositionsData!.subarray(id * 16, (id + 1) * 16));
+            for (let i = 0; i < message.length; ++i) {
+                const c = convertToGlyphIndex(message[i]);
+                const u = (c % glyphsAcross) * glyphUWidth;
+                const v = ((c / glyphsAcross) | 0) * glyphVHeight;
+                for (let j = 0; j < 6; ++j) {
+                    const offset = j * 2;
+                    positions.push(
+                        quadPositions[offset] * 0.5 + i - message.length / 2,
+                        quadPositions[offset + 1] * 0.5
+                    );
+                    texcoords.push(
+                        u + quadTexcoords[offset] * glyphUWidth,
+                        v + quadTexcoords[offset + 1] * glyphVHeight
+                    );
+                    messageIds.push(id);
+                }
+            }
+        });
+
+        this.labelPositionsTex = reglInstance.texture({
+            data: this.labelPositionsData,
+            type: 'float',
+            width: 4,
+            height: messages.length,
+            mag: 'nearest',
+            min: 'nearest',
+            wrap: 'clamp',
+        });
+
+        this.drawLabelsCommand = reglInstance({
+            vert: `
+      attribute vec4 position;
+      attribute vec2 texcoord;
+      attribute float messageId;
+      uniform sampler2D matrixTex;
+      uniform vec2 matrixTexSize;
+      uniform mat4 viewProjection;
+      
+      varying vec2 v_texcoord;
+    
+      void main() {
+        vec2 uv = (vec2(0, messageId) + 0.5) / matrixTexSize;
+        mat4 model = mat4(
+          texture2D(matrixTex, uv),
+          texture2D(matrixTex, uv + vec2(1.0 / matrixTexSize.x, 0)),
+          texture2D(matrixTex, uv + vec2(2.0 / matrixTexSize.x, 0)),
+          texture2D(matrixTex, uv + vec2(3.0 / matrixTexSize.x, 0)));
+        gl_Position = viewProjection * model * position;
+        v_texcoord = texcoord;
+      }
+    `,
+            frag: `
+      precision highp float;
+    
+      varying vec2 v_texcoord;
+      uniform sampler2D glyphTex;
+    
+      void main() {
+        vec4 glyphColor = texture2D(glyphTex, v_texcoord);
+    
+        if (glyphColor.a < 0.1) discard;
+    
+        gl_FragColor = glyphColor;
+      }
+    `,
+
+            attributes: {
+                position: {
+                    buffer: positions,
+                    size: 2,
+                },
+                texcoord: {
+                    buffer: texcoords,
+                    size: 2,
+                },
+                messageId: {
+                    buffer: messageIds,
+                    size: 1,
+                },
+            },
+            uniforms: {
+                viewProjection: ({ viewportWidth, viewportHeight }) =>
+                    mat4.ortho(mat4.create(), 0, viewportWidth, 0, viewportHeight, -1, 1),
+                matrixTex: this.labelPositionsTex,
+                matrixTexSize: [4, messages.length],
+                glyphTex,
+            },
+            count: positions.length / 2,
+        });
+
+
+        // for (const element of data.nodes) {
+        //     const node = element
+        //     const textMesh = this.data.getTextMeshById(node.id)!
+        //
+        //     const drawText = this.reglInstance({
+        //         frag: `
         //     precision mediump float;
         //     uniform float t;
         //     void main () {
         //       gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
         //     }`,
-
-        //     vert: `
+        //
+        //         vert: `
         //     attribute vec2 position;
         //     uniform float x;
         //     uniform float y;
         //     uniform mat3 transform;
         //     uniform float spaceSize;
         //     uniform vec2 screenSize;
-
+        //
         //     void main () {
         //       vec2 point = vec2(x,y);
         //       vec2 p = 2.0 * point / spaceSize - 1.0;
         //       p *= spaceSize / screenSize;
         //       vec3 final = transform * vec3(p, 1);
-        //       final *= -1.0;
-        //       gl_Position = vec4(final.rg+position/10.0, 0, 1);
+        //
+        //       vec2 scale = vec2(transform[0][0])/200.0;
+        //       scale.y = -scale.y;
+        //       gl_Position = vec4(final.rg+scale*position, 0, 1);
         //     }`,
-        //     attributes: {
-        //       position: textMesh.positions,
-        //     },
-
-        //     uniforms: {
-        //       x: reglInstance.prop<{ x: number }, 'x'>('x'),
-        //       y: reglInstance.prop<{ y: number }, 'y'>('y'),
-        //       spaceSize: () => config.spaceSize,
-        //       screenSize: () => store.screenSize,
-        //       transform: () => store.transform,
-        //     },
-
-        //     elements: textMesh.edges,
-
-        //     depth: { enable: false }
-        //   })
-
-        //   this.drawTextCommands.set(node.id, drawText)
+        //         attributes: {
+        //             position: textMesh.positions,
+        //         },
+        //
+        //         uniforms: {
+        //             x: reglInstance.prop<{ x: number }, 'x'>('x'),
+        //             y: reglInstance.prop<{ y: number }, 'y'>('y'),
+        //             spaceSize: () => config.spaceSize,
+        //             screenSize: () => store.screenSize,
+        //             transform: () => store.transform,
+        //         },
+        //         elements: textMesh.edges,
+        //         blend: {
+        //             enable: true,
+        //             func: {
+        //                 dstRGB: 'one minus src alpha',
+        //                 srcRGB: 'src alpha',
+        //                 dstAlpha: 'one minus src alpha',
+        //                 srcAlpha: 'one',
+        //             },
+        //             equation: {
+        //                 rgb: 'add',
+        //                 alpha: 'add',
+        //             },
+        //         },
+        //         depth: {enable: false},
+        //
+        //     })
+        //
+        //     this.drawTextCommands.set(node.id, drawText)
         // }
+
 
     }
 
@@ -350,6 +492,8 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
 
     public draw(): void {
         this.drawCommand?.()
+
+        this.drawLabelsCommand?.()
         if (this.config.renderHighlightedNodeRing) {
             if (this.store.hoveredNode) {
                 this.drawHighlightedCommand?.({
@@ -367,6 +511,9 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
             }
         }
     }
+
+
+
 
     public updatePosition(): void {
         this.updatePositionCommand?.()
@@ -432,4 +579,25 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
         this.currentPositionFbo = temp
     }
 
+}
+
+function loadImage(url: string): Promise<HTMLImageElement> {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onerror = reject;
+        img.onload = () => resolve(img);
+        img.src = url;
+    });
+}
+
+function convertToGlyphIndex(c: string) {
+    c = c.toUpperCase();
+    if (c >= 'A' && c <= 'Z') {
+        return c.charCodeAt(0) - 0x41;
+    } else if (c >= '0' && c <= '9') {
+        return c.charCodeAt(0) - 0x30 + 26;
+    } else {
+        return 255;
+    }
 }

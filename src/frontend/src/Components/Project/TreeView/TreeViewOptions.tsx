@@ -46,7 +46,7 @@ const DECAY_MIN = 1000
 const DECAY_MAX = 1000000
 
 const NODE_SIZE_MIN = 1
-const NODE_SIZE_MAX = 10
+const NODE_SIZE_MAX = 20
 const NODE_SIZE_STEP = 0.5
 
 const NODE_LABEL_SIZE_MIN = 1
