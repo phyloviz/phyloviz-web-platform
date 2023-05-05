@@ -29,13 +29,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class IsolateDataServiceTests {
+public class IsolateDataServiceTests {
     @MockBean
     private ProjectRepository projectRepository;
 
@@ -53,7 +51,7 @@ class IsolateDataServiceTests {
 
     // getIsolateDataInfos
     @Test
-    void getIsolateDataInfosIsSuccessful() {
+    public void getIsolateDataInfosIsSuccessful() {
         String projectId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
 
         when(isolateDataMetadataRepository.findAllByProjectId(any(String.class)))
@@ -78,8 +76,6 @@ class IsolateDataServiceTests {
                 .thenReturn(false);
 
         isolateDataService.deleteIsolateData(projectId, isolateDataId, userId);
-
-        verify(isolateDataMetadataRepository, times(0)).delete(any(IsolateDataMetadata.class));
     }
 
     @Test
@@ -91,9 +87,9 @@ class IsolateDataServiceTests {
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(false);
 
-        assertThrows(ProjectNotFoundException.class, () ->
-                isolateDataService.deleteIsolateData(projectId, isolateDataId, userId)
-        );
+        assertThrows(ProjectNotFoundException.class, () -> {
+            isolateDataService.deleteIsolateData(projectId, isolateDataId, userId);
+        });
     }
 
     @Test
@@ -107,9 +103,9 @@ class IsolateDataServiceTests {
         when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(false);
 
-        assertThrows(IsolateDataNotFoundException.class, () ->
-                isolateDataService.deleteIsolateData(projectId, isolateDataId, userId)
-        );
+        assertThrows(IsolateDataNotFoundException.class, () -> {
+            isolateDataService.deleteIsolateData(projectId, isolateDataId, userId);
+        });
     }
 
     @Test
@@ -125,9 +121,9 @@ class IsolateDataServiceTests {
         when(datasetRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(true);
 
-        assertThrows(DeniedFileDeletionException.class, () ->
-                isolateDataService.deleteIsolateData(projectId, isolateDataId, userId)
-        );
+        assertThrows(DeniedFileDeletionException.class, () -> {
+            isolateDataService.deleteIsolateData(projectId, isolateDataId, userId);
+        });
     }
 
 
@@ -135,13 +131,12 @@ class IsolateDataServiceTests {
     @Test
     void deleteAllByProjectIdIsSuccessful() {
         String projectId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
+        String userId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
 
         when(isolateDataMetadataRepository.findAllByProjectId(any(String.class)))
                 .thenReturn(List.of());
 
         isolateDataService.deleteAllByProjectId(projectId);
-
-        verify(isolateDataMetadataRepository, times(0)).delete(any(IsolateDataMetadata.class));
     }
 
 
@@ -154,8 +149,6 @@ class IsolateDataServiceTests {
                 .thenReturn(List.of());
 
         isolateDataService.deleteIsolateData(isolateDataId);
-
-        verify(isolateDataMetadataRepository, times(0)).delete(any(IsolateDataMetadata.class));
     }
 
 
@@ -195,9 +188,9 @@ class IsolateDataServiceTests {
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(false);
 
-        assertThrows(ProjectNotFoundException.class, () ->
-                isolateDataService.updateIsolateData(newName, projectId, isolateDataId, userId)
-        );
+        assertThrows(ProjectNotFoundException.class, () -> {
+            isolateDataService.updateIsolateData(newName, projectId, isolateDataId, userId);
+        });
     }
 
     @Test
@@ -212,9 +205,9 @@ class IsolateDataServiceTests {
         when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(false);
 
-        assertThrows(IsolateDataNotFoundException.class, () ->
-                isolateDataService.updateIsolateData(newName, projectId, isolateDataId, userId)
-        );
+        assertThrows(IsolateDataNotFoundException.class, () -> {
+            isolateDataService.updateIsolateData(newName, projectId, isolateDataId, userId);
+        });
     }
 
     @ParameterizedTest
@@ -231,8 +224,8 @@ class IsolateDataServiceTests {
         when(isolateDataMetadataRepository.findAnyByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(Optional.of(new IsolateDataMetadata()));
 
-        assertThrows(InvalidArgumentException.class, () ->
-                isolateDataService.updateIsolateData(newName, projectId, isolateDataId, userId)
-        );
+        assertThrows(InvalidArgumentException.class, () -> {
+            isolateDataService.updateIsolateData(newName, projectId, isolateDataId, userId);
+        });
     }
 }

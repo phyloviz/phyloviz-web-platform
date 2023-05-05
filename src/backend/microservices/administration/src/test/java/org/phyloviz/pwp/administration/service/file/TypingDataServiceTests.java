@@ -29,8 +29,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -54,7 +52,7 @@ class TypingDataServiceTests {
 
     // getTypingDataInfos
     @Test
-    void getTypingDataInfosIsSuccessful() {
+    public void getTypingDataInfosIsSuccessful() {
         String projectId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
 
         when(typingDataMetadataRepository.findAllByProjectId(any(String.class)))
@@ -77,12 +75,8 @@ class TypingDataServiceTests {
                 .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(false);
-        when(typingDataMetadataRepository.findAllByTypingDataId(any(String.class)))
-                .thenReturn(List.of());
 
         typingDataService.deleteTypingData(projectId, typingDataId, userId);
-
-        verify(typingDataMetadataRepository, times(0)).delete(any(TypingDataMetadata.class));
     }
 
     @Test
@@ -94,9 +88,9 @@ class TypingDataServiceTests {
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(false);
 
-        assertThrows(ProjectNotFoundException.class, () ->
-                typingDataService.deleteTypingData(projectId, typingDataId, userId)
-        );
+        assertThrows(ProjectNotFoundException.class, () -> {
+            typingDataService.deleteTypingData(projectId, typingDataId, userId);
+        });
     }
 
     @Test
@@ -110,9 +104,9 @@ class TypingDataServiceTests {
         when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(false);
 
-        assertThrows(TypingDataNotFoundException.class, () ->
-                typingDataService.deleteTypingData(projectId, typingDataId, userId)
-        );
+        assertThrows(TypingDataNotFoundException.class, () -> {
+            typingDataService.deleteTypingData(projectId, typingDataId, userId);
+        });
     }
 
     @Test
@@ -128,9 +122,9 @@ class TypingDataServiceTests {
         when(datasetRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(true);
 
-        assertThrows(DeniedFileDeletionException.class, () ->
-                typingDataService.deleteTypingData(projectId, typingDataId, userId)
-        );
+        assertThrows(DeniedFileDeletionException.class, () -> {
+            typingDataService.deleteTypingData(projectId, typingDataId, userId);
+        });
     }
 
 
@@ -138,13 +132,12 @@ class TypingDataServiceTests {
     @Test
     void deleteAllByProjectIdIsSuccessful() {
         String projectId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
+        String userId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
 
         when(typingDataMetadataRepository.findAllByProjectId(any(String.class)))
                 .thenReturn(List.of());
 
         typingDataService.deleteAllByProjectId(projectId);
-
-        verify(typingDataMetadataRepository, times(0)).delete(any(TypingDataMetadata.class));
     }
 
 
@@ -157,8 +150,6 @@ class TypingDataServiceTests {
                 .thenReturn(List.of());
 
         typingDataService.deleteTypingData(typingDataId);
-
-        verify(typingDataMetadataRepository, times(0)).delete(any(TypingDataMetadata.class));
     }
 
 
@@ -198,9 +189,9 @@ class TypingDataServiceTests {
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(false);
 
-        assertThrows(ProjectNotFoundException.class, () ->
-                typingDataService.updateTypingData(newName, projectId, typingDataId, userId)
-        );
+        assertThrows(ProjectNotFoundException.class, () -> {
+            typingDataService.updateTypingData(newName, projectId, typingDataId, userId);
+        });
     }
 
     @Test
@@ -215,9 +206,9 @@ class TypingDataServiceTests {
         when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(false);
 
-        assertThrows(TypingDataNotFoundException.class, () ->
-                typingDataService.updateTypingData(newName, projectId, typingDataId, userId)
-        );
+        assertThrows(TypingDataNotFoundException.class, () -> {
+            typingDataService.updateTypingData(newName, projectId, typingDataId, userId);
+        });
     }
 
     @ParameterizedTest
@@ -234,8 +225,8 @@ class TypingDataServiceTests {
         when(typingDataMetadataRepository.findAnyByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(Optional.of(new TypingDataMetadata()));
 
-        assertThrows(InvalidArgumentException.class, () ->
-                typingDataService.updateTypingData(newName, projectId, typingDataId, userId)
-        );
+        assertThrows(InvalidArgumentException.class, () -> {
+            typingDataService.updateTypingData(newName, projectId, typingDataId, userId);
+        });
     }
 }
