@@ -360,7 +360,6 @@ class DatasetServiceTests {
     }
 
     // getFullDatasetInfos
-    // public List<FullDatasetInfo> getFullDatasetInfos(String projectId, String userId)
     @Test
     void getFullDatasetInfosIsSuccessful() {
         String datasetName = "datasetName";
@@ -419,7 +418,6 @@ class DatasetServiceTests {
     }
 
     // getFullDatasetInfos
-    // List<FullDatasetInfo> getFullDatasetInfos(String projectId)
     @Test
     void getFullDatasetInfosWithProjectIdIsSuccessful() {
         String datasetName = "datasetName";
@@ -483,7 +481,6 @@ class DatasetServiceTests {
     }
 
     // deleteAllByProjectId
-    // void deleteAllByProjectId(String projectId)
     @Test
     void deleteAllByProjectIdIsSuccessful() {
         String projectId = "projectId";
@@ -497,7 +494,6 @@ class DatasetServiceTests {
     }
 
     // updateDataset
-    // public UpdateDatasetOutput updateDataset(String name, String description, String projectId, String datasetId, String userId)
     @Test
     void updateDatasetIsSuccessful() {
         String datasetName = "datasetName";
