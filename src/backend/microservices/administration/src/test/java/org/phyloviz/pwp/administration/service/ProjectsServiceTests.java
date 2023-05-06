@@ -28,6 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -82,13 +84,12 @@ class ProjectsServiceTests {
         String projectDescription = "project1 description";
         String userId = "2da00a2f-21bd-43fd-8c07-0e74725c851a";
 
-        assertThrows(InvalidArgumentException.class, () -> {
-            projectService.createProject(
-                    projectName,
-                    projectDescription,
-                    userId
-            );
-        });
+        assertThrows(InvalidArgumentException.class, () ->
+                projectService.createProject(
+                        projectName,
+                        projectDescription,
+                        userId
+                ));
     }
 
 
@@ -133,9 +134,9 @@ class ProjectsServiceTests {
         when(projectRepository.findByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(Optional.empty());
 
-        assertThrows(ProjectNotFoundException.class, () -> {
-            projectService.getFullProjectInfo(projectId, userId);
-        });
+        assertThrows(ProjectNotFoundException.class, () ->
+                projectService.getFullProjectInfo(projectId, userId)
+        );
     }
 
     @Test
@@ -146,9 +147,9 @@ class ProjectsServiceTests {
         when(projectRepository.findByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(Optional.empty());
 
-        assertThrows(ProjectNotFoundException.class, () -> {
-            projectService.getFullProjectInfo(projectId, userId);
-        });
+        assertThrows(ProjectNotFoundException.class, () ->
+                projectService.getFullProjectInfo(projectId, userId)
+        );
     }
 
 
@@ -197,6 +198,8 @@ class ProjectsServiceTests {
                 );
 
         projectService.deleteProject(projectId, userId);
+
+        verify(projectRepository, times(1)).delete(any(Project.class));
     }
 
     @Test
@@ -207,9 +210,9 @@ class ProjectsServiceTests {
         when(projectRepository.findByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(Optional.empty());
 
-        assertThrows(ProjectNotFoundException.class, () -> {
-            projectService.deleteProject(projectId, userId);
-        });
+        assertThrows(ProjectNotFoundException.class, () ->
+                projectService.deleteProject(projectId, userId)
+        );
     }
 
     @Test
@@ -220,9 +223,9 @@ class ProjectsServiceTests {
         when(projectRepository.findByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(Optional.empty());
 
-        assertThrows(ProjectNotFoundException.class, () -> {
-            projectService.deleteProject(projectId, userId);
-        });
+        assertThrows(ProjectNotFoundException.class, () ->
+                projectService.deleteProject(projectId, userId)
+        );
     }
 
 
@@ -277,14 +280,13 @@ class ProjectsServiceTests {
         when(projectRepository.findByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(Optional.empty());
 
-        assertThrows(ProjectNotFoundException.class, () -> {
-            projectService.updateProject(
-                    newProjectName,
-                    newProjectDescription,
-                    projectId,
-                    userId
-            );
-        });
+        assertThrows(ProjectNotFoundException.class, () ->
+                projectService.updateProject(
+                        newProjectName,
+                        newProjectDescription,
+                        projectId,
+                        userId
+                ));
     }
 
     @ParameterizedTest
@@ -309,13 +311,12 @@ class ProjectsServiceTests {
                         ))
                 );
 
-        assertThrows(InvalidArgumentException.class, () -> {
-            projectService.updateProject(
-                    newProjectName,
-                    newProjectDescription,
-                    projectId,
-                    userId
-            );
-        });
+        assertThrows(InvalidArgumentException.class, () ->
+                projectService.updateProject(
+                        newProjectName,
+                        newProjectDescription,
+                        projectId,
+                        userId
+                ));
     }
 }
