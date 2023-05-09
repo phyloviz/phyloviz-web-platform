@@ -21,6 +21,7 @@ public class TypingDataMetadata {
 
     private String projectId;
     private String typingDataId;
+    private String type;
     private String name;
     private TypingDataDataRepositoryId repositoryId;
     private TypingDataDataRepositorySpecificData repositorySpecificData;

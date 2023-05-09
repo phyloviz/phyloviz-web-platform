@@ -25,7 +25,7 @@ workflows_collection = db['workflow-instances']
 datasets_collection = db['datasets']
 
 
-def tree_handler(s3_output_path, project_id, dataset_id, tree_id, workflow_id):
+def tree_handler(s3_output_path, project_id, dataset_id, tree_id, workflow_id, source_type):
     tree_collection = db['trees']
 
     workflows_collection.update_one(
@@ -34,19 +34,26 @@ def tree_handler(s3_output_path, project_id, dataset_id, tree_id, workflow_id):
             'data.treeId': tree_id
         }})
 
-    # TODO: fetch the tree parameters (sourceType, source) from the workflow instance data
+    workflow = workflows_collection.find_one({'_id': ObjectId(workflow_id)})
+
+    source = {
+        'algorithm': workflow['data']['algorithm'],
+        'distanceMatrixId': workflow['data']['distanceMatrixId'],
+        'parameters': workflow['data']['parameters']
+    } if source_type == 'algorithm_distance_matrix' else {
+        'algorithm': workflow['data']['algorithm'],
+        'typingDataId': workflow['data']['typingDataId'],
+        'parameters': workflow['data']['parameters']
+    } if source_type == 'algorithm_typing_data'
 
     tree_metadata = {
         'treeId': tree_id,
         'projectId': project_id,
         'datasetId': dataset_id,
-        'repositoryId': 's3',
         'name': f'Tree {tree_id}',
-        'sourceType': 'algorithm_distance_matrix',
-        'source': {
-            'algorithm': 'goeburst',
-            # TODO: Add distance matrix id and parameters
-        },
+        'sourceType': source_type,
+        'source': source,
+        'repositoryId': 's3',
         'repositorySpecificData': {
             'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
         }
@@ -66,7 +73,7 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, distance_mat
             'data.distanceMatrixId': distance_matrix_id
         }})
 
-    # TODO: fetch the distance matrix parameters (sourceType, source) from the workflow instance data
+    workflow = workflows_collection.find_one({'_id': ObjectId(workflow_id)})
 
     distance_matrix_metadata = {
         'projectId': project_id,
@@ -76,7 +83,7 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, distance_mat
         'name': f'Distance Matrix {distance_matrix_id}',
         'sourceType': 'function',
         'source': {
-            'function': 'hamming'
+            'function': workflow['data']['function']
         },
         'repositorySpecificData': {
             'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
@@ -104,7 +111,7 @@ def get_collection_from_resource_type(resource_type):
     return resource_type_collection_map[resource_type]
 
 
-def upload_file_to_s3(file_path, project_id, dataset_id, resource_id, resource_type, workflow_id):
+def upload_file_to_s3(file_path, project_id, dataset_id, resource_id, resource_type, workflow_id, source_type):
     # Generate a unique resource_id if not provided
     if not resource_id:
         resource_id = str(uuid.uuid4())
@@ -116,7 +123,7 @@ def upload_file_to_s3(file_path, project_id, dataset_id, resource_id, resource_t
     with open(file_path, 'rb') as file:
         s3.upload_fileobj(file, bucket_name, s3_output_path)
 
-    handler_map[resource_type](s3_output_path, project_id, dataset_id, resource_id, workflow_id)
+    handler_map[resource_type](s3_output_path, project_id, dataset_id, resource_id, workflow_id, source_type)
 
 
 if __name__ == '__main__':
@@ -130,7 +137,8 @@ if __name__ == '__main__':
     parser.add_argument(
         '--resource-id', help='The optional ID of the resource', default=None)
     parser.add_argument('--resource-type', help='The resource type', required=True)
+    parser.add_argument('--source-type', help='The source type', required=False)
     args = parser.parse_args()
 
     upload_file_to_s3(args.file_path, args.project_id, args.dataset_id, args.resource_id, args.resource_type,
-                      args.workflow_id)
+                      args.workflow_id, args.source_type)

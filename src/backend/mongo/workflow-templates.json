@@ -4,18 +4,14 @@
     "description": "Compute Distance Matrix Workflow",
     "arguments": {
       "datasetId": {
-        "type": "datasetId",
-        "obtain-extra": {
-          "typingDataId": {
-            "type": "typingDataId"
-          }
-        }
+        "type": "datasetId"
       },
       "function": {
         "type": "string",
         "allowed-values": [
           "hamming",
-          "levenshtein"
+          "grapetree",
+          "kimura"
         ]
       }
     },
@@ -24,7 +20,7 @@
         "taskId": "download",
         "tool": "downloader",
         "action": {
-          "command": "--resource-id=${typingDataId} --resource-type=typing-data --out=/phyloviz-web-platform/typing_dataset.txt"
+          "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
         },
         "children": [
           "distanceCalculation"
@@ -81,7 +77,7 @@
         "taskId": "download",
         "tool": "downloader",
         "action": {
-          "command": "--resource-id=${distanceMatrixId} --resource-type=distance-matrix --out=/phyloviz-web-platform/distance_matrix.txt"
+          "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-id=${distanceMatrixId} --resource-type=distance-matrix  --workflow-id=${workflowId} --out=/phyloviz-web-platform/distance_matrix.txt"
         },
         "children": [
           "treeCalculation"
@@ -101,7 +97,7 @@
         "taskId": "upload",
         "tool": "uploader",
         "action": {
-          "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree"
+          "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree --source-type=algorithm-distance-matrix"
         }
       }
     ]
@@ -111,12 +107,7 @@
     "description": "Index Typing Data Workflow",
     "arguments": {
       "datasetId": {
-        "type": "datasetId",
-        "obtain-extra": {
-          "typingDataId": {
-            "type": "typingDataId"
-          }
-        }
+        "type": "datasetId"
       }
     },
     "tasks": [
@@ -124,7 +115,7 @@
         "taskId": "download",
         "tool": "downloader",
         "action": {
-          "command": "--resource-id=${typingDataId} --resource-type=typing-data --out=/phyloviz-web-platform/typing_dataset.txt"
+          "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data  --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
         },
         "children": [
           "typingDataIndexing"
@@ -155,7 +146,7 @@
         "taskId": "download",
         "tool": "downloader",
         "action": {
-          "command": "--resource-id=${treeId} --resource-type=tree --out=/phyloviz-web-platform/tree.txt"
+          "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-id=${treeId} --resource-type=tree --workflow-id=${workflowId} --out=/phyloviz-web-platform/tree.txt"
         },
         "children": [
           "treeIndexing"
