@@ -60,7 +60,7 @@ def get_job(project_id, job_id):
     return None
 
 
-def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
+def compute_tree_view(project_id, dataset_id, tree_id, workflow_id, layout):
     # Retrieve inference id from the tree
     tree = tree_collection.find_one({'treeId': tree_id, 'repositoryId': 'phylodb'})
     inference_id = tree['repositorySpecificData']['inferenceId']
@@ -97,14 +97,6 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
     end_time = time.time()
     print("Time taken: ", end_time - start_time, " seconds +- 5 seconds")
 
-    # TODO: Maybe it's not necessary to add this to workflow extra data?
-    # Update the workflow with the resource_id
-    workflows_collection.update_one(
-        {'_id': ObjectId(workflow_id)},
-        {'$set': {
-            'data.visualizationId': visualization_id
-        }})
-
     # Create the metadata in the resourceType collection
     tree_view_metadata = {
         'projectId': project_id,
@@ -114,7 +106,7 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
         'source': {
             'treeId': tree_id
         },
-        'layout': 'radial',
+        'layout': layout,
         'repositoryId': 'phylodb',
         'repositorySpecificData': {
             'projectId': project_id,
@@ -126,6 +118,12 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
 
     tree_views_collection.insert_one(tree_view_metadata)
 
+    workflows_collection.update_one(
+        {'_id': ObjectId(workflow_id)},
+        {'$set': {
+            'data.treeViewId': visualization_id
+        }})
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Index typing data into PHYLODB')
@@ -133,6 +131,7 @@ if __name__ == '__main__':
     parser.add_argument('--dataset-id', help='The dataset Id', required=True)
     parser.add_argument('--tree-id', help='The tree Id', required=True)
     parser.add_argument('--workflow-id', help='The workflow Id', required=True)
+    parser.add_argument('--layout', help='The layout', required=True)
 
     args = parser.parse_args()
-    compute_tree_view(args.project_id, args.dataset_id, args.tree_id, args.workflow_id)
+    compute_tree_view(args.project_id, args.dataset_id, args.tree_id, args.workflow_id, args.layout)

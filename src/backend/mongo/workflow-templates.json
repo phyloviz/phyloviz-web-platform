@@ -40,7 +40,7 @@
         "taskId": "upload",
         "tool": "uploader",
         "action": {
-          "command": " --file-path=/phyloviz-web-platform/distance_matrix.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=distance-matrix"
+          "command": " --file-path=/phyloviz-web-platform/distance_matrix.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=distance-matrix --source-type=function --function=${function}"
         }
       }
     ]
@@ -97,7 +97,7 @@
         "taskId": "upload",
         "tool": "uploader",
         "action": {
-          "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree --source-type=algorithm-distance-matrix"
+          "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree --source-type=algorithm-distance-matrix --algorithm=${algorithm} --distance-matrix-id=${distanceMatrixId} --parameters={}"
         }
       }
     ]
@@ -170,6 +170,13 @@
       },
       "treeId": {
         "type": "treeId"
+      },
+      "layout": {
+        "type": "string",
+        "allowed-values": [
+          "force-directed",
+          "radial"
+        ]
       }
     },
     "tasks": [
@@ -177,7 +184,7 @@
         "taskId": "treeViewCompute",
         "tool": "compute_tree_view",
         "action": {
-          "command": "--project-id=${projectId} --dataset-id=${datasetId} --tree-id=${treeId} --workflow-id=${workflowId}"
+          "command": "--project-id=${projectId} --dataset-id=${datasetId} --tree-id=${treeId} --workflow-id=${workflowId} --layout=${layout}"
         }
       }
     ]
