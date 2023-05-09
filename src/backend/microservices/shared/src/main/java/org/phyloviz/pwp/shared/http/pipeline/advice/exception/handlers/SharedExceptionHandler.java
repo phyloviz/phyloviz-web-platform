@@ -15,6 +15,7 @@ import org.phyloviz.pwp.shared.service.exceptions.UnauthorizedException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
@@ -83,6 +84,22 @@ public class SharedExceptionHandler {
 
         return Problem.builder()
                 .withTitle(title)
+                .withStatus(Status.BAD_REQUEST)
+                .build();
+    }
+
+    /**
+     * Handles MissingServletRequestPartException.
+     *
+     * @param ex the exception
+     * @return a Problem with the status BAD_REQUEST
+     */
+    @ExceptionHandler(value = {MissingServletRequestPartException.class})
+    public Problem handleMissingServletRequestPartExceptions(
+            MissingServletRequestPartException ex
+    ) {
+        return Problem.builder()
+                .withTitle(String.format("Missing request part '%s'", ex.getRequestPartName()))
                 .withStatus(Status.BAD_REQUEST)
                 .build();
     }

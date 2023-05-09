@@ -26,10 +26,11 @@ public class TypingDataMetadata {
     private TypingDataDataRepositoryId repositoryId;
     private TypingDataDataRepositorySpecificData repositorySpecificData;
 
-    public TypingDataMetadata(String projectId, String typingDataId, String name, TypingDataDataRepositoryId repositoryId,
+    public TypingDataMetadata(String projectId, String typingDataId, String type, String name, TypingDataDataRepositoryId repositoryId,
                               TypingDataDataRepositorySpecificData repositorySpecificData) {
         this.projectId = projectId;
         this.typingDataId = typingDataId;
+        this.type = type;
         this.name = name;
         this.repositoryId = repositoryId;
         this.repositorySpecificData = repositorySpecificData;

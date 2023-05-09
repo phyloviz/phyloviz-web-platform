@@ -11,10 +11,11 @@ public interface FileTransferService {
      *
      * @param projectId the name of the project to which the typing data will be uploaded
      * @param file      the file to be uploaded
+     * @param type      the type of the typing data
      * @param userId    the if of the user that is uploading the typing data
      * @return information about the uploaded typing data
      */
-    UploadTypingDataOutput uploadTypingData(String projectId, MultipartFile file, String userId);
+    UploadTypingDataOutput uploadTypingData(String projectId, MultipartFile file, String type, String userId);
 
     /**
      * Uploads an isolate data.

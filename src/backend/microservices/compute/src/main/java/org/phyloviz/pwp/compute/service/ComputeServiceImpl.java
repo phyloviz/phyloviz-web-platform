@@ -25,11 +25,7 @@ import org.phyloviz.pwp.compute.service.flowviz.models.get_workflow.AirflowWorkf
 import org.phyloviz.pwp.compute.service.flowviz.models.get_workflow.GetWorkflowResponse;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.Tool;
 import org.phyloviz.pwp.compute.service.flowviz.models.workflow.Workflow;
-import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
-import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.DistanceMatrixMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
-import org.phyloviz.pwp.shared.repository.metadata.tree.TreeMetadataRepository;
-import org.phyloviz.pwp.shared.repository.metadata.tree_view.TreeViewMetadataRepository;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.utils.UUIDUtils;
 import org.springframework.stereotype.Service;
@@ -46,11 +42,6 @@ import java.util.Map;
 public class ComputeServiceImpl implements ComputeService {
 
     private final ProjectRepository projectRepository;
-    private final DatasetRepository datasetRepository;
-
-    private final DistanceMatrixMetadataRepository distanceMatrixMetadataRepository;
-    private final TreeMetadataRepository treeMetadataRepository;
-    private final TreeViewMetadataRepository treeViewMetadataRepository;
 
     private final WorkflowTemplateRepository workflowTemplateRepository;
     private final WorkflowInstanceRepository workflowInstanceRepository;
@@ -224,6 +215,13 @@ public class ComputeServiceImpl implements ComputeService {
         return new CreateWorkflowOutput(workflowId);
     }
 
+    /**
+     * Validates that the arguments received in the request are valid for the workflow template. Verifies that all
+     * required arguments are present and that the types are correct.
+     *
+     * @param createWorkflowArguments the arguments defined in the workflow template
+     * @param properties              the arguments received in the request
+     */
     private void validateCreateWorkflowArguments(Map<String, WorkflowTemplateArgumentProperties> createWorkflowArguments,
                                                  Map<String, String> properties) {
         properties.keySet().stream().filter(key -> !createWorkflowArguments.containsKey(key)).findAny()
@@ -241,6 +239,7 @@ public class ComputeServiceImpl implements ComputeService {
                         validateUUIDArgument(properties.get(argumentName), argumentName);
                 case STRING -> validateStringArgument(properties.get(argumentName), argumentName,
                         argumentProperties.getAllowedValues());
+                case NUMBER -> validateNumberArgument(properties.get(argumentName), argumentName);
             }
         });
     }
@@ -260,5 +259,13 @@ public class ComputeServiceImpl implements ComputeService {
             throw new InvalidWorkflowException(String.format(
                     "Invalid argument: '%s'. Must be one of the allowed values: %s", argumentName, allowedValues)
             );
+    }
+
+    private void validateNumberArgument(String argument, String argumentName) {
+        try {
+            Double.parseDouble(argument);
+        } catch (NumberFormatException e) {
+            throw new InvalidWorkflowException(String.format("Invalid argument: '%s'. Must be a number.", argumentName));
+        }
     }
 }
