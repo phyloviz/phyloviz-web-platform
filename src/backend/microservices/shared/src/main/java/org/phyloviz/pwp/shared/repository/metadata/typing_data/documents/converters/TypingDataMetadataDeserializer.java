@@ -37,6 +37,7 @@ public class TypingDataMetadataDeserializer implements Converter<Document, Typin
                     document.getObjectId("_id").toString(),
                     document.getString("projectId"),
                     document.getString("typingDataId"),
+                    document.getString("type"),
                     document.getString("name"),
                     repositoryId,
                     repositorySpecificData

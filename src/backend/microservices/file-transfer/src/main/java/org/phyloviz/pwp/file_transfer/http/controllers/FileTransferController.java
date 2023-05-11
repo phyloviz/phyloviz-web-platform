@@ -36,9 +36,12 @@ public class FileTransferController {
     public ResponseEntity<UploadTypingDataOutputModel> uploadTypingData(
             @PathVariable String projectId,
             @RequestPart MultipartFile file,
+            @RequestPart String type,
             User user
     ) {
-        UploadTypingDataOutput uploadTypingDataOutput = fileTransferService.uploadTypingData(projectId, file, user.getId());
+        UploadTypingDataOutput uploadTypingDataOutput = fileTransferService.uploadTypingData(
+                projectId, file, type, user.getId()
+        );
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{typingDataId}")

@@ -22,6 +22,11 @@ public class TreeViewMetadata {
     private String treeViewId;
     private String name;
     private String layout;
+    /*private Filters filters = { "nodeSizeByIsolateNumber": true,
+            "showNodeLabels": true,
+            "showLinkWeightLabels": true,
+            "typingDataColumns": [],
+            "isolateDataColumns": ["country"];*/
     private TreeViewSource source;
     private TreeViewDataRepositoryId repositoryId;
     private TreeViewDataRepositorySpecificData repositorySpecificData;

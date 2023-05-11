@@ -24,6 +24,7 @@ public class TypingDataMetadataSerializer implements Converter<TypingDataMetadat
                     Map.of(
                             "projectId", typingDataMetadata.getProjectId(),
                             "typingDataId", typingDataMetadata.getTypingDataId(),
+                            "type", typingDataMetadata.getType(),
                             "name", typingDataMetadata.getName(),
                             "repositoryId", typingDataMetadata.getRepositoryId().name().toLowerCase(),
                             "repositorySpecificData", Objects.requireNonNull(

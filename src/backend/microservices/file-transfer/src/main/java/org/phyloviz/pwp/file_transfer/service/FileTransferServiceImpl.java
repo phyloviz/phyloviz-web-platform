@@ -45,7 +45,7 @@ public class FileTransferServiceImpl implements FileTransferService {
     private IsolateDataDataRepositoryId uploadIsolateDataRepositoryId;
 
     @Override
-    public UploadTypingDataOutput uploadTypingData(String projectId, MultipartFile file, String userId) {
+    public UploadTypingDataOutput uploadTypingData(String projectId, MultipartFile file, String type, String userId) {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
@@ -58,6 +58,7 @@ public class FileTransferServiceImpl implements FileTransferService {
         TypingDataMetadata typingDataMetadata = new TypingDataMetadata(
                 projectId,
                 typingDataId,
+                type,
                 file.getOriginalFilename(),
                 uploadTypingDataRepositoryId,
                 typingDataDataRepositorySpecificData
