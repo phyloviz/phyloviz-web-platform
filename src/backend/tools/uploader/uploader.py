@@ -135,6 +135,13 @@ def get_collection_from_resource_type(resource_type):
 
 def upload_file_to_s3(file_path, project_id, dataset_id, workflow_id, resource_id, resource_type, source_type,
                         algorithm, distance_matrix_id, parameters, function):
+    print(f"Project ID: {project_id}")
+    print(f"Dataset ID: {dataset_id}")
+    print(f"Resource ID: {resource_id}")
+    print(f"Resource Type: {resource_type}")
+    print(f"File path: {file_path}")
+    print(f"Workflow ID: {workflow_id}")
+
     # Generate a unique resource_id if not provided
     if not resource_id:
         resource_id = str(uuid.uuid4())

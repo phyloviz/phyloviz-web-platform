@@ -40,23 +40,38 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
     print(f'Downloading {resource_id} from {resource_type} to {out}...')
     resource_type_collection = db[get_collection_from_resource_type(resource_type)]
 
+    print(f"Project ID: {project_id}")
+    print(f"Dataset ID: {dataset_id}")
+    print(f"Resource ID: {resource_id}")
+    print(f"Resource Type: {resource_type}")
+    print(f"Out: {out}")
+    print(f"Workflow ID: {workflow_id}")
+
     if resource_type == 'tree' or resource_type == 'distance-matrix':
-        # Obtain the resource metadata with a repositoryId 's3'
-            resource = resource_type_collection.find_one(
-                {
-                'project_Id': project_id,
-                'datasetId': dataset_id,
-                get_resource_id_attr_from_resource_type(resource_type): resource_id,
-                'repositoryId': 's3'
-                }
-            )
+        resource = resource_type_collection.find_one(
+            {
+            'projectId': project_id,
+            'datasetId': dataset_id,
+            get_resource_id_attr_from_resource_type(resource_type): resource_id,
+            'repositoryId': 's3'
+            }
+        )
+
+        if(resource == None):
+            print(f'Error: Resource {resource_id} of type {resource_type} not found')
+            return
+
     elif resource_type == 'typing-data' or resource_type == 'isolate-data':
         dataset = datasets_collection.find_one(
             {
-            'project_Id': project_id,
-            'datasetId': dataset_id
+            '_id': ObjectId(dataset_id),
+            'projectId': project_id,
             }
         )
+
+        if(dataset == None):
+            print(f'Error: Dataset {dataset_id} of project {project_id} not found')
+            return
 
         # Obtain the typing data or isolate data id from the dataset
         if resource_type == 'typing-data':
@@ -64,19 +79,24 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
         elif resource_type == 'isolate-data':
             resource_id = dataset['isolateDataId']
 
-        # Obtain the resource metadata with a repositoryId 's3'
         resource = resource_type_collection.find_one(
             {
-            'project_Id': project_id,
+            'projectId': project_id,
             get_resource_id_attr_from_resource_type(resource_type): resource_id,
             'repositoryId': 's3'
             }
         )
 
+        if(resource == None):
+            print(f'Error: Resource {resource_id} of type {resource_type} not found')
+            return
+
+        print(f"Resource Type: {resource_type}, Resource ID: {resource_id}")
+
         if resource_type == 'typing-data':
             workflows_collection.update_one(
                 {
-                    '_id': workflow_id
+                    '_id': ObjectId(workflow_id)
                 },
                 {
                     '$set': {
@@ -88,7 +108,7 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
         else:
             workflows_collection.update_one(
                 {
-                    'workflowInstanceId': workflow_id
+                    '_id': ObjectId(workflow_id)
                 },
                 {
                     '$set': {
