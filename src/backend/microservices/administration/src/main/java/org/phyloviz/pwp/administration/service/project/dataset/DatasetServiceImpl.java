@@ -177,7 +177,7 @@ public class DatasetServiceImpl implements DatasetService {
 
         if (isolateDataId != null) {
             IsolateDataMetadata isolateDataMetadata =
-                    isolateDataMetadataRepository.findAnyByProjectIdAndIsolateDataId(projectId, isolateDataId)
+                    isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(projectId, isolateDataId)
                             .orElseThrow(IsolateDataDoesNotExistException::new);
 
             if (isolateDataKey == null)

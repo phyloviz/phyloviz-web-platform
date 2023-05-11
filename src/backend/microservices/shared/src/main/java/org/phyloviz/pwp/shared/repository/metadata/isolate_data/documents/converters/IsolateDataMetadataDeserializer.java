@@ -2,6 +2,8 @@ package org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.conve
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
+import org.phyloviz.pwp.shared.repository.data.distance_matrix.DistanceMatrixDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.specific_data.DistanceMatrixDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.data.isolate_data.IsolateDataDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.specific_data.IsolateDataDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.data.registry.isolate_data.IsolateDataDataRepositoryRegistry;
@@ -12,6 +14,8 @@ import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 
 @ReadingConverter
 @RequiredArgsConstructor
@@ -23,15 +27,25 @@ public class IsolateDataMetadataDeserializer implements Converter<Document, Isol
     @Override
     public IsolateDataMetadata convert(@NotNull Document document) {
         try {
-            IsolateDataDataRepositoryId repositoryId = IsolateDataDataRepositoryId.valueOf(
-                    document.getString("repositoryId").toUpperCase()
-            );
+            Map<String, Document> repositorySpecificDataMap1 =
+                    document.get("repositorySpecificData", Map.class);
 
-            Class<? extends IsolateDataDataRepositorySpecificData> repositorySpecificDataClass =
-                    isolateDataDataRepositoryRegistry.getRepositorySpecificDataClass(repositoryId);
+            Map<IsolateDataDataRepositoryId, IsolateDataDataRepositorySpecificData> repositorySpecificDataMap =
+                    new HashMap<>();
 
-            Document repositorySpecificDataDocument = (Document) document.get("repositorySpecificData");
-            IsolateDataDataRepositorySpecificData repositorySpecificData = mongoConverter.read(repositorySpecificDataClass, repositorySpecificDataDocument);
+            repositorySpecificDataMap1.forEach((repositoryIdString, repositorySpecificDataDocument) -> {
+                IsolateDataDataRepositoryId repositoryId = IsolateDataDataRepositoryId.valueOf(
+                        repositoryIdString.toUpperCase()
+                );
+
+                Class<? extends IsolateDataDataRepositorySpecificData> repositorySpecificDataClass =
+                        isolateDataDataRepositoryRegistry.getRepositorySpecificDataClass(repositoryId);
+
+                repositorySpecificDataMap.put(
+                        repositoryId,
+                        mongoConverter.read(repositorySpecificDataClass, repositorySpecificDataDocument)
+                );
+            });
 
             return new IsolateDataMetadata(
                     document.getObjectId("_id").toString(),
@@ -39,8 +53,7 @@ public class IsolateDataMetadataDeserializer implements Converter<Document, Isol
                     document.getString("isolateDataId"),
                     document.getList("keys", String.class),
                     document.getString("name"),
-                    repositoryId,
-                    repositorySpecificData
+                    repositorySpecificDataMap
             );
         } catch (Exception e) {
             throw new DocumentConversionException("Error converting Document to IsolateDataMetadata:" + e);

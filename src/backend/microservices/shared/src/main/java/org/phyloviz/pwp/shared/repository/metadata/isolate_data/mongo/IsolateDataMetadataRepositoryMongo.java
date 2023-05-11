@@ -25,25 +25,8 @@ public class IsolateDataMetadataRepositoryMongo implements IsolateDataMetadataRe
     }
 
     @Override
-    public Optional<IsolateDataMetadata> findAnyByProjectIdAndIsolateDataId(String projectId, String isolateDataId) {
-        return isolateDataMetadataMongoRepository.findFirstByProjectIdAndIsolateDataId(projectId, isolateDataId);
-    }
-
-    @Override
-    public List<IsolateDataMetadata> findAllByProjectIdAndIsolateDataId(String projectId, String isolateDataId) {
-        return isolateDataMetadataMongoRepository.findAllByProjectIdAndIsolateDataId(projectId, isolateDataId);
-    }
-
-    @Override
-    public List<IsolateDataMetadata> findAllByIsolateDataId(String isolateDataId) {
-        return isolateDataMetadataMongoRepository.findAllByIsolateDataId(isolateDataId);
-    }
-
-    @Override
-    public Optional<IsolateDataMetadata> findByIsolateDataIdAndRepositoryId(String isolateDataId, IsolateDataDataRepositoryId repositoryId) {
-        return isolateDataMetadataMongoRepository.findByIsolateDataIdAndRepositoryId(
-                isolateDataId, repositoryId.name().toLowerCase()
-        );
+    public Optional<IsolateDataMetadata> findByProjectIdAndIsolateDataId(String projectId, String isolateDataId) {
+        return isolateDataMetadataMongoRepository.findByProjectIdAndIsolateDataId(projectId, isolateDataId);
     }
 
     @Override

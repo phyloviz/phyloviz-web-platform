@@ -14,6 +14,8 @@ import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 
 @ReadingConverter
 @RequiredArgsConstructor
@@ -28,19 +30,29 @@ public class DistanceMatrixMetadataDeserializer implements Converter<Document, D
             DistanceMatrixSourceType sourceType = DistanceMatrixSourceType.valueOf(
                     document.getString("sourceType").toUpperCase()
             );
-            DistanceMatrixDataRepositoryId repositoryId = DistanceMatrixDataRepositoryId.valueOf(
-                    document.getString("repositoryId").toUpperCase()
-            );
-
             Class<? extends DistanceMatrixSource> sourceClass = sourceType.getSourceClass();
-            Class<? extends DistanceMatrixDataRepositorySpecificData> repositorySpecificDataClass =
-                    distanceMatrixDataRepositoryRegistry.getRepositorySpecificDataClass(repositoryId);
-
             Document sourceDocument = (Document) document.get("source");
             DistanceMatrixSource source = mongoConverter.read(sourceClass, sourceDocument);
 
-            Document repositorySpecificDataDocument = (Document) document.get("repositorySpecificData");
-            DistanceMatrixDataRepositorySpecificData repositorySpecificData = mongoConverter.read(repositorySpecificDataClass, repositorySpecificDataDocument);
+            Map<String, Document> repositorySpecificDataMap1 =
+                    document.get("repositorySpecificData", Map.class);
+
+            Map<DistanceMatrixDataRepositoryId, DistanceMatrixDataRepositorySpecificData> repositorySpecificDataMap =
+                    new HashMap<>();
+
+            repositorySpecificDataMap1.forEach((repositoryIdString, repositorySpecificDataDocument) -> {
+                DistanceMatrixDataRepositoryId repositoryId = DistanceMatrixDataRepositoryId.valueOf(
+                        repositoryIdString.toUpperCase()
+                );
+
+                Class<? extends DistanceMatrixDataRepositorySpecificData> repositorySpecificDataClass =
+                        distanceMatrixDataRepositoryRegistry.getRepositorySpecificDataClass(repositoryId);
+
+                repositorySpecificDataMap.put(
+                        repositoryId,
+                        mongoConverter.read(repositorySpecificDataClass, repositorySpecificDataDocument)
+                );
+            });
 
             return new DistanceMatrixMetadata(
                     document.getObjectId("_id").toString(),
@@ -50,8 +62,7 @@ public class DistanceMatrixMetadataDeserializer implements Converter<Document, D
                     document.getString("name"),
                     sourceType,
                     source,
-                    repositoryId,
-                    repositorySpecificData
+                    repositorySpecificDataMap
             );
         } catch (Exception e) {
             throw new DocumentConversionException("Error converting Document to DistanceMatrixMetadata:" + e);

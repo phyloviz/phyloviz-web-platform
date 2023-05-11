@@ -9,49 +9,33 @@ import java.util.Optional;
 public interface TreeMetadataRepository {
 
     /**
-     * Find any tree metadata from a project id, dataset id and tree id.
+     * Find a tree metadata from a project id, dataset id and tree id.
      *
      * @param projectId the id of the project
      * @param datasetId the id of the dataset
      * @param treeId    the id of the tree resource
      * @return a tree metadata
      */
-    Optional<TreeMetadata> findAnyByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
+    Optional<TreeMetadata> findByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
 
     /**
-     * Find all tree metadata from a project id, dataset id and tree id.
-     *
-     * @param projectId the id of the project
-     * @param datasetId the id of the dataset
-     * @param treeId    the id of the tree
-     * @return a list of tree metadata
-     */
-    List<TreeMetadata> findAllByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
-
-    /**
-     * Find all metadata representations of a tree resource.
-     *
-     * @param treeId the id of the tree resource
-     * @return a list of tree metadata
-     */
-    List<TreeMetadata> findAllByTreeId(String treeId);
-
-    /**
-     * Find a tree metadata from its id and repository id.
-     *
-     * @param treeId       the id of the tree resource
-     * @param repositoryId the id of the repository
-     * @return a tree metadata
-     */
-    Optional<TreeMetadata> findByTreeIdAndRepositoryId(String treeId, TreeDataRepositoryId repositoryId);
-
-    /**
-     * Find all tree metadata from a dataset id. Only one tree metadata per tree resource.
+     * Find all tree metadata from a dataset id.
      *
      * @param datasetId the id of the dataset
      * @return a list of tree metadata
      */
     List<TreeMetadata> findAllByDatasetId(String datasetId);
+
+    /**
+     * Find all tree metadata from a project id and dataset id.
+     *
+     * @param projectId the id of the project
+     * @param datasetId the id of the dataset
+     * @return a list of tree metadata
+     */
+    List<TreeMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);
+
+    boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
 
     /**
      * Deletes a tree metadata.
@@ -67,14 +51,4 @@ public interface TreeMetadataRepository {
      * @return the saved tree metadata
      */
     TreeMetadata save(TreeMetadata treeMetadata);
-
-    Optional<TreeMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndRepositoryId(String projectId, String datasetId,
-                                                                                   String treeViewId, TreeDataRepositoryId repositoryId);
-
-    List<TreeMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId);
-
-    boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
-
-    boolean existsByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId);
-
 }

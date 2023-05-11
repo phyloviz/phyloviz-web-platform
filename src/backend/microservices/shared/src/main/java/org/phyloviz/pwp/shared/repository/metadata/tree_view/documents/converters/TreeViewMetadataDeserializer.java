@@ -13,6 +13,8 @@ import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 
 @ReadingConverter
 @RequiredArgsConstructor
@@ -24,15 +26,25 @@ public class TreeViewMetadataDeserializer implements Converter<Document, TreeVie
     @Override
     public TreeViewMetadata convert(@NotNull Document document) {
         try {
-            TreeViewDataRepositoryId repositoryId = TreeViewDataRepositoryId.valueOf(
-                    document.getString("repositoryId").toUpperCase()
-            );
+            Map<String, Document> repositorySpecificDataMap1 =
+                    document.get("repositorySpecificData", Map.class);
 
-            Class<? extends TreeViewDataRepositorySpecificData> repositorySpecificDataClass =
-                    treeViewDataRepositoryRegistry.getRepositorySpecificDataClass(repositoryId);
+            Map<TreeViewDataRepositoryId, TreeViewDataRepositorySpecificData> repositorySpecificDataMap =
+                    new HashMap<>();
 
-            Document repositorySpecificDataDocument = (Document) document.get("repositorySpecificData");
-            TreeViewDataRepositorySpecificData repositorySpecificData = mongoConverter.read(repositorySpecificDataClass, repositorySpecificDataDocument);
+            repositorySpecificDataMap1.forEach((repositoryIdString, repositorySpecificDataDocument) -> {
+                TreeViewDataRepositoryId repositoryId = TreeViewDataRepositoryId.valueOf(
+                        repositoryIdString.toUpperCase()
+                );
+
+                Class<? extends TreeViewDataRepositorySpecificData> repositorySpecificDataClass =
+                        treeViewDataRepositoryRegistry.getRepositorySpecificDataClass(repositoryId);
+
+                repositorySpecificDataMap.put(
+                        repositoryId,
+                        mongoConverter.read(repositorySpecificDataClass, repositorySpecificDataDocument)
+                );
+            });
 
             return new TreeViewMetadata(
                     document.getObjectId("_id").toString(),
@@ -42,8 +54,7 @@ public class TreeViewMetadataDeserializer implements Converter<Document, TreeVie
                     document.getString("name"),
                     document.getString("layout"),
                     mongoConverter.read(TreeViewSource.class, (Document) document.get("source")),
-                    repositoryId,
-                    repositorySpecificData
+                    repositorySpecificDataMap
             );
         } catch (Exception e) {
             throw new DocumentConversionException("Error converting Document to TreeViewMetadata:" + e);

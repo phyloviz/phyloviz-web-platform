@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.convert.MongoConverter;
 import javax.validation.constraints.NotNull;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @WritingConverter
 @RequiredArgsConstructor
@@ -25,9 +26,14 @@ public class IsolateDataMetadataSerializer implements Converter<IsolateDataMetad
                             "projectId", isolateDataMetadata.getProjectId(),
                             "isolateDataId", isolateDataMetadata.getIsolateDataId(),
                             "name", isolateDataMetadata.getName(),
-                            "repositoryId", isolateDataMetadata.getRepositoryId().name().toLowerCase(),
                             "repositorySpecificData", Objects.requireNonNull(
-                                    mongoConverter.convertToMongoType(isolateDataMetadata.getRepositorySpecificData())
+                                    mongoConverter.convertToMongoType(
+                                            isolateDataMetadata.getRepositorySpecificData().entrySet().stream()
+                                                    .collect(Collectors.toMap(
+                                                            entry -> entry.getKey().name().toLowerCase(),
+                                                            Map.Entry::getValue
+                                                    ))
+                                    )
                             )
                     )
             );

@@ -1,6 +1,7 @@
 package org.phyloviz.pwp.shared.repository.metadata.isolate_data.mongo;
 
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
+import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,39 +15,11 @@ public interface IsolateDataMetadataMongoRepository extends MongoRepository<Isol
     /**
      * Find the first isolate data metadata with the given id. Analogous to findAny().
      *
-     * @param projectId     the id of the project
+     * @param projectId    the id of the project
      * @param isolateDataId the id of the isolate data resource
      * @return a isolate data metadata
      */
-    Optional<IsolateDataMetadata> findFirstByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
-
-    /**
-     * Find all isolate data metadata from a project id and isolate data id.
-     *
-     * @param projectId     the id of the project
-     * @param isolateDataId the id of the isolate data
-     * @return a list of isolate data metadata
-     */
-    List<IsolateDataMetadata> findAllByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
-
-    /**
-     * Find all metadata representations of an isolate data resource.
-     *
-     * @param isolateDataId the id of the isolate data resource
-     * @return a list of isolate data metadata
-     */
-    List<IsolateDataMetadata> findAllByIsolateDataId(String isolateDataId);
-
-    /**
-     * Find an isolate data metadata from its id and repository id.
-     * The repositoryId is stored as string in the document, so a custom @Query is needed.
-     *
-     * @param isolateDataId the id of the isolate data resource
-     * @param repositoryId  the id of the repository, as string, like it's stored in the document
-     * @return an isolate data metadata
-     */
-    @Query("{ 'isolateDataId' : ?0, 'repositoryId' : ?1 }")
-    Optional<IsolateDataMetadata> findByIsolateDataIdAndRepositoryId(String isolateDataId, String repositoryId);
+    Optional<IsolateDataMetadata> findByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
 
     /**
      * Find all isolate data metadata from a project id.
@@ -56,7 +29,11 @@ public interface IsolateDataMetadataMongoRepository extends MongoRepository<Isol
      */
     List<IsolateDataMetadata> findAllByProjectId(String projectId);
 
-    Optional<IsolateDataMetadata> findByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
-
+    /**
+     * Checks if a isolate data metadata exists from a project id and isolate data id.
+     * @param projectId the id of the project
+     * @param isolateDataId the id of the isolate data resource
+     * @return true if the isolate data metadata exists, false otherwise
+     */
     boolean existsByProjectIdAndIsolateDataId(String projectId, String isolateDataId);
 }

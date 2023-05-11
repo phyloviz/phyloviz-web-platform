@@ -38,8 +38,9 @@ public class TypingDataServiceImpl implements TypingDataService {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
-        if (!typingDataMetadataRepository.existsByProjectIdAndTypingDataId(projectId, typingDataId))
-            throw new TypingDataNotFoundException();
+        TypingDataMetadata typingDataMetadata = typingDataMetadataRepository
+                .findByProjectIdAndTypingDataId(projectId, typingDataId)
+                .orElseThrow(TypingDataNotFoundException::new);
 
         if (datasetRepository.existsByProjectIdAndTypingDataId(projectId, typingDataId)) {
             throw new DeniedFileDeletionException(
@@ -47,7 +48,7 @@ public class TypingDataServiceImpl implements TypingDataService {
             );
         }
 
-        deleteTypingData(typingDataId);
+        deleteTypingData(typingDataMetadata);
     }
 
     @Override
@@ -57,22 +58,15 @@ public class TypingDataServiceImpl implements TypingDataService {
     }
 
     @Override
-    public void deleteTypingData(String typingDataId) {
-        typingDataMetadataRepository.findAllByTypingDataId(typingDataId)
-                .forEach(this::deleteTypingData);
-    }
-
-    @Override
     public UpdateTypingDataOutput updateTypingData(String name, String projectId, String typingDataId, String userId) {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
-        if (!typingDataMetadataRepository.existsByProjectIdAndTypingDataId(projectId, typingDataId))
-            throw new TypingDataNotFoundException();
+        TypingDataMetadata typingDataMetadata = typingDataMetadataRepository
+                .findByProjectIdAndTypingDataId(projectId, typingDataId)
+                .orElseThrow(TypingDataNotFoundException::new);
 
-        String previousName = typingDataMetadataRepository.findAnyByProjectIdAndTypingDataId(projectId, typingDataId)
-                .orElseThrow(TypingDataNotFoundException::new)
-                .getName();
+        String previousName = typingDataMetadata.getName();
 
         if (name == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
@@ -80,20 +74,19 @@ public class TypingDataServiceImpl implements TypingDataService {
         if (name.isBlank())
             throw new InvalidArgumentException("Name can't be blank");
 
-        if (!name.equals(previousName))
-            typingDataMetadataRepository.findAllByProjectIdAndTypingDataId(projectId, typingDataId)
-                    .forEach(typingDataMetadata -> {
-                        typingDataMetadata.setName(name);
-
-                        typingDataMetadataRepository.save(typingDataMetadata);
-                    });
+        if (!name.equals(previousName)) {
+            typingDataMetadata.setName(name);
+            typingDataMetadataRepository.save(typingDataMetadata);
+        }
 
         return new UpdateTypingDataOutput(previousName, name);
     }
 
     private void deleteTypingData(TypingDataMetadata typingDataMetadata) {
-        typingDataDataRepositoryFactory.getRepository(typingDataMetadata.getRepositoryId())
-                .deleteTypingData(typingDataMetadata.getRepositorySpecificData());
+        typingDataMetadata.getRepositorySpecificData().forEach((repositoryId, repositorySpecificData) ->
+                typingDataDataRepositoryFactory.getRepository(repositoryId)
+                        .deleteTypingData(repositorySpecificData)
+        );
 
         typingDataMetadataRepository.delete(typingDataMetadata);
     }
