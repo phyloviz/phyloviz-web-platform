@@ -1,12 +1,3 @@
-mongo-collections:
-  projects-collection: projects
-  datasets-collection: datasets
-  typing-data-metadata-collection: typing-data
-  isolate-data-metadata-collection: isolate-data
-  distance-matrix-metadata-collection: distance-matrices
-  tree-metadata-collection: trees
-  tree-view-metadata-collection: tree-views
-
 s3:
   access-key-id: AKIAIOSFODNN7EXAMPLE
   secret-access-key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY

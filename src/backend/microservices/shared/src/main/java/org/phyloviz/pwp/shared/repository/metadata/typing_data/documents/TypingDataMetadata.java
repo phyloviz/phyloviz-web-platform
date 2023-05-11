@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * Metadata for a representation of a typing data.
  */
-@Document(collection = "#{@mongoMetadataCollectionNames.typingDataMetadataCollection}")
+@Document(collection = "typing-data")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

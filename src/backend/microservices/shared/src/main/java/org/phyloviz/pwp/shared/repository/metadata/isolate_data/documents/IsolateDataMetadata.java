@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Metadata for a representation of an isolate data.
  */
-@Document(collection = "#{@mongoMetadataCollectionNames.isolateDataMetadataCollection}")
+@Document(collection = "isolate-data")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
