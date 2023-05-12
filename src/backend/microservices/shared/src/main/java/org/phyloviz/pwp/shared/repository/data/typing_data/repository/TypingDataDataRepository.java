@@ -9,7 +9,5 @@ public interface TypingDataDataRepository {
 
     String getTypingData(TypingDataDataRepositorySpecificData typingDataDataRepositorySpecificData);
 
-    boolean isFileRepository();
-
     void deleteTypingData(TypingDataDataRepositorySpecificData typingDataDataRepositorySpecificData);
 }

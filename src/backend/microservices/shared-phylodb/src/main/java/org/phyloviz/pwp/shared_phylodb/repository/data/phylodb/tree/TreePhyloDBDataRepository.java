@@ -14,11 +14,6 @@ public class TreePhyloDBDataRepository implements TreeDataRepository {
     }
 
     @Override
-    public boolean isFileRepository() {
-        return false;
-    }
-
-    @Override
     public void deleteTree(TreeDataRepositorySpecificData treeDataRepositorySpecificData) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }

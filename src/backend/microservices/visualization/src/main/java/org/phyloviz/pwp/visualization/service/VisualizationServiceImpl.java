@@ -3,13 +3,16 @@ package org.phyloviz.pwp.visualization.service;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.DistanceMatrixDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.DistanceMatrixDataRepository;
+import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.specific_data.DistanceMatrixDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.data.registry.distance_matrix.DistanceMatrixDataRepositoryFactory;
 import org.phyloviz.pwp.shared.repository.data.registry.tree.TreeDataRepositoryFactory;
 import org.phyloviz.pwp.shared.repository.data.registry.tree_view.TreeViewDataRepositoryFactory;
 import org.phyloviz.pwp.shared.repository.data.tree.TreeDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.data.tree.repository.TreeDataRepository;
+import org.phyloviz.pwp.shared.repository.data.tree.repository.specific_data.TreeDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.data.tree_view.TreeViewDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.data.tree_view.repository.TreeViewDataRepository;
+import org.phyloviz.pwp.shared.repository.data.tree_view.repository.specific_data.TreeViewDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.DistanceMatrixMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.DistanceMatrixMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
@@ -57,15 +60,21 @@ public class VisualizationServiceImpl implements VisualizationService {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
-        DistanceMatrixMetadata distanceMatrix =
-                distanceMatrixMetadataRepository.findByProjectIdAndDatasetIdAndDistanceMatrixIdAndRepositoryId(
-                        projectId, datasetId, distanceMatrixId, getDistanceMatrixRepositoryId
-                ).orElseThrow(DistanceMatrixNotFoundException::new);
+        DistanceMatrixMetadata distanceMatrix = distanceMatrixMetadataRepository
+                .findByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)
+                .orElseThrow(DistanceMatrixNotFoundException::new);
+
+        if(!distanceMatrix.getRepositorySpecificData().containsKey(getDistanceMatrixRepositoryId))
+            throw new DistanceMatrixNotFoundException();
+
+        DistanceMatrixDataRepositorySpecificData repositorySpecificData = distanceMatrix
+                .getRepositorySpecificData()
+                .get(getDistanceMatrixRepositoryId);
 
         DistanceMatrixDataRepository distanceMatrixDataRepository = distanceMatrixDataRepositoryFactory
-                .getRepository(distanceMatrix.getRepositoryId());
+                .getRepository(getDistanceMatrixRepositoryId);
 
-        return distanceMatrixDataRepository.getDistanceMatrix(distanceMatrix.getRepositorySpecificData());
+        return distanceMatrixDataRepository.getDistanceMatrix(repositorySpecificData);
     }
 
     @Override
@@ -73,14 +82,21 @@ public class VisualizationServiceImpl implements VisualizationService {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
-        TreeMetadata treeMetadata =
-                treeMetadataRepository.findByProjectIdAndDatasetIdAndTreeViewIdAndRepositoryId(
-                        projectId, datasetId, treeId, getTreeRepositoryId
-                ).orElseThrow(TreeNotFoundException::new);
+        TreeMetadata treeMetadata = treeMetadataRepository
+                .findByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId)
+                .orElseThrow(TreeNotFoundException::new);
 
-        TreeDataRepository treeDataRepository = treeDataRepositoryFactory.getRepository(treeMetadata.getRepositoryId());
+        if(!treeMetadata.getRepositorySpecificData().containsKey(getTreeRepositoryId))
+            throw new TreeNotFoundException();
 
-        return treeDataRepository.getTree(treeMetadata.getRepositorySpecificData());
+        TreeDataRepositorySpecificData repositorySpecificData = treeMetadata
+                .getRepositorySpecificData()
+                .get(getTreeRepositoryId);
+
+        TreeDataRepository treeDataRepository = treeDataRepositoryFactory
+                .getRepository(getTreeRepositoryId);
+
+        return treeDataRepository.getTree(repositorySpecificData);
 
         //throw new TreeIndexingNeededException("Tree isn't indexed in the database. Needs indexing to get it."); TODO check this "indexing concept"
     }
@@ -90,14 +106,20 @@ public class VisualizationServiceImpl implements VisualizationService {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
-        TreeViewMetadata treeViewMetadata =
-                treeViewMetadataRepository.findByProjectIdAndDatasetIdAndTreeViewIdAndRepositoryId(
-                        projectId, datasetId, treeViewId, getTreeViewRepositoryId
-                ).orElseThrow(TreeViewNotFoundException::new);
+        TreeViewMetadata treeViewMetadata = treeViewMetadataRepository
+                .findByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId)
+                .orElseThrow(TreeViewNotFoundException::new);
 
-        TreeViewDataRepository treeViewDataRepository = treeViewDataRepositoryFactory.getRepository(treeViewMetadata.getRepositoryId());
+        if(!treeViewMetadata.getRepositorySpecificData().containsKey(getTreeViewRepositoryId))
+            throw new TreeViewNotFoundException();
 
-        return treeViewDataRepository.getTreeView(treeViewMetadata.getRepositorySpecificData());
+        TreeViewDataRepositorySpecificData repositorySpecificData = treeViewMetadata
+                .getRepositorySpecificData()
+                .get(getTreeViewRepositoryId);
+
+        TreeViewDataRepository treeViewDataRepository = treeViewDataRepositoryFactory.getRepository(getTreeViewRepositoryId);
+
+        return treeViewDataRepository.getTreeView(repositorySpecificData);
     }
 
     @Override

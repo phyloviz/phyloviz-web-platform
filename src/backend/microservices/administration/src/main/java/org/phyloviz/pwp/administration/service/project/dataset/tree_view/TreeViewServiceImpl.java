@@ -7,6 +7,7 @@ import org.phyloviz.pwp.shared.repository.data.registry.tree_view.TreeViewDataRe
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.TreeViewMetadataRepository;
+import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.TreeViewMetadata;
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
@@ -38,46 +39,31 @@ public class TreeViewServiceImpl implements TreeViewService {
         if (!datasetRepository.existsByProjectIdAndId(datasetId, projectId))
             throw new DatasetNotFoundException();
 
-        if (!treeViewMetadataRepository.existsByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId)) {
-            throw new TreeViewNotFoundException();
-        }
+        TreeViewMetadata treeViewMetadata = treeViewMetadataRepository
+                .findByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId)
+                .orElseThrow(TreeViewNotFoundException::new);
 
-        deleteTreeView(treeViewId);
+        deleteTreeView(treeViewMetadata);
     }
 
     @Override
     public void deleteAllByProjectIdAndDatasetId(String projectId, String datasetId) {
         treeViewMetadataRepository.findAllByProjectIdAndDatasetId(projectId, datasetId)
-                .forEach(treeViewMetadata -> {
-                    treeViewDataRepositoryFactory.getRepository(treeViewMetadata.getRepositoryId())
-                            .deleteTreeView(treeViewMetadata.getRepositorySpecificData());
-
-                    treeViewMetadataRepository.delete(treeViewMetadata);
-                });
-    }
-
-    @Override
-    public void deleteTreeView(String treeViewId) {
-        treeViewMetadataRepository.findAllByTreeViewId(treeViewId)
-                .forEach(treeViewMetadata -> {
-                    treeViewDataRepositoryFactory.getRepository(treeViewMetadata.getRepositoryId())
-                            .deleteTreeView(treeViewMetadata.getRepositorySpecificData());
-
-                    treeViewMetadataRepository.delete(treeViewMetadata);
-                });
+                .forEach(this::deleteTreeView);
     }
 
     @Override
     public UpdateTreeViewOutput updateTreeView(String name, String projectId, String datasetId, String treeViewId, String userId) {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
+        if (!datasetRepository.existsByProjectIdAndId(datasetId, projectId))
+            throw new DatasetNotFoundException();
 
-        if (!treeViewMetadataRepository.existsByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId))
-            throw new TreeViewNotFoundException();
+        TreeViewMetadata treeViewMetadata = treeViewMetadataRepository
+                .findByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId)
+                .orElseThrow(TreeViewNotFoundException::new);
 
-        String previousName = treeViewMetadataRepository.findAnyByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId)
-                .orElseThrow(TreeViewNotFoundException::new)
-                .getName();
+        String previousName = treeViewMetadata.getName();
 
         if (name == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
@@ -85,14 +71,20 @@ public class TreeViewServiceImpl implements TreeViewService {
         if (name.isBlank())
             throw new InvalidArgumentException("Name can't be blank");
 
-        if (!name.equals(previousName))
-            treeViewMetadataRepository.findAllByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId)
-                    .forEach(treeViewMetadata -> {
-                        treeViewMetadata.setName(name);
-
-                        treeViewMetadataRepository.save(treeViewMetadata);
-                    });
+        if (!name.equals(previousName)) {
+            treeViewMetadata.setName(name);
+            treeViewMetadataRepository.save(treeViewMetadata);
+        }
 
         return new UpdateTreeViewOutput(previousName, name);
+    }
+
+    private void deleteTreeView(TreeViewMetadata treeViewMetadata) {
+        treeViewMetadata.getRepositorySpecificData().forEach((repositoryId, repositorySpecificData) ->
+                treeViewDataRepositoryFactory.getRepository(repositoryId)
+                        .deleteTreeView(repositorySpecificData)
+        );
+
+        treeViewMetadataRepository.delete(treeViewMetadata);
     }
 }

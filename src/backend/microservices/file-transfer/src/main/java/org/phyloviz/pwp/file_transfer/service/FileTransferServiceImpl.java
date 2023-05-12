@@ -24,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -60,8 +61,7 @@ public class FileTransferServiceImpl implements FileTransferService {
                 typingDataId,
                 type,
                 file.getOriginalFilename(),
-                uploadTypingDataRepositoryId,
-                typingDataDataRepositorySpecificData
+                Map.of(uploadTypingDataRepositoryId, typingDataDataRepositorySpecificData)
         );
 
         typingDataMetadataRepository.save(typingDataMetadata);
@@ -85,8 +85,7 @@ public class FileTransferServiceImpl implements FileTransferService {
                 isolateDataId,
                 getIsolateDataKeys(file),
                 file.getOriginalFilename(),
-                uploadIsolateDataRepositoryId,
-                isolateDataDataRepositorySpecificData
+                Map.of(uploadIsolateDataRepositoryId, isolateDataDataRepositorySpecificData)
         );
 
         isolateDataMetadataRepository.save(isolateDataMetadata);

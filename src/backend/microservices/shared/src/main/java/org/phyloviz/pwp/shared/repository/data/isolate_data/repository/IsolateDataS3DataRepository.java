@@ -28,11 +28,6 @@ public class IsolateDataS3DataRepository implements IsolateDataDataRepository {
     }
 
     @Override
-    public boolean isFileRepository() {
-        return true;
-    }
-
-    @Override
     public void deleteIsolateData(IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData) {
         IsolateDataS3DataRepositorySpecificData isolateDataS3DataRepositorySpecificData =
                 (IsolateDataS3DataRepositorySpecificData) isolateDataDataRepositorySpecificData;

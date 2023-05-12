@@ -28,11 +28,6 @@ public class TypingDataS3DataRepository implements TypingDataDataRepository {
     }
 
     @Override
-    public boolean isFileRepository() {
-        return true;
-    }
-
-    @Override
     public void deleteTypingData(TypingDataDataRepositorySpecificData typingDataDataRepositorySpecificData) {
         TypingDataS3DataRepositorySpecificData repositorySpecificData =
                 (TypingDataS3DataRepositorySpecificData) typingDataDataRepositorySpecificData;

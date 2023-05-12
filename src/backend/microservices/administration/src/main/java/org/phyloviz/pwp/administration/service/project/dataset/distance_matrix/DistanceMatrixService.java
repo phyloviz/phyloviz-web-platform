@@ -13,7 +13,5 @@ public interface DistanceMatrixService {
 
     void deleteAllByProjectIdAndDatasetId(String projectId, String datasetId);
 
-    void deleteDistanceMatrix(String distanceMatrixId);
-
     UpdateDistanceMatrixOutput updateDistanceMatrix(String name, String projectId, String datasetId, String distanceMatrixId, String userId);
 }

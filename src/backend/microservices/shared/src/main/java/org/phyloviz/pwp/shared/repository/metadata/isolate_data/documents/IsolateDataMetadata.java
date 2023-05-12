@@ -9,11 +9,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Metadata for a representation of an isolate data.
  */
-@Document(collection = "#{@mongoMetadataCollectionNames.isolateDataMetadataCollection}")
+@Document(collection = "isolate-data")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,16 +26,14 @@ public class IsolateDataMetadata {
     private String isolateDataId;
     private List<String> keys;
     private String name;
-    private IsolateDataDataRepositoryId repositoryId;
-    private IsolateDataDataRepositorySpecificData repositorySpecificData;
+    private Map<IsolateDataDataRepositoryId, IsolateDataDataRepositorySpecificData> repositorySpecificData;
 
     public IsolateDataMetadata(String projectId, String isolateDataId, List<String> keys, String name,
-                               IsolateDataDataRepositoryId repositoryId, IsolateDataDataRepositorySpecificData repositorySpecificData) {
+                               Map<IsolateDataDataRepositoryId, IsolateDataDataRepositorySpecificData> repositorySpecificData) {
         this.projectId = projectId;
         this.isolateDataId = isolateDataId;
         this.keys = keys;
         this.name = name;
-        this.repositoryId = repositoryId;
         this.repositorySpecificData = repositorySpecificData;
     }
 }

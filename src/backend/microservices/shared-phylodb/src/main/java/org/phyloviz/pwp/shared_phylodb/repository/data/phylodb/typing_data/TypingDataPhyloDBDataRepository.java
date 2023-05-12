@@ -11,17 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class TypingDataPhyloDBDataRepository implements TypingDataDataRepository {
     @Override
     public TypingDataDataRepositorySpecificData uploadTypingData(String projectId, String typingDataId, MultipartFile multipartFile) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported.");
     }
 
     @Override
     public String getTypingData(TypingDataDataRepositorySpecificData typingDataDataRepositorySpecificData) {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public boolean isFileRepository() {
-        return false;
     }
 
     @Override

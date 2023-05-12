@@ -10,7 +10,9 @@ import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.sou
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "#{@mongoMetadataCollectionNames.distanceMatrixMetadataCollection}")
+import java.util.Map;
+
+@Document(collection = "distance-matrices")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,20 +26,17 @@ public class DistanceMatrixMetadata {
     private String name;
     private DistanceMatrixSourceType sourceType;
     private DistanceMatrixSource source;
-    private DistanceMatrixDataRepositoryId repositoryId;
-    private DistanceMatrixDataRepositorySpecificData repositorySpecificData;
+    private Map<DistanceMatrixDataRepositoryId, DistanceMatrixDataRepositorySpecificData> repositorySpecificData;
 
     public DistanceMatrixMetadata(String projectId, String datasetId, String distanceMatrixId, String name,
                                   DistanceMatrixSourceType sourceType, DistanceMatrixSource source,
-                                  DistanceMatrixDataRepositoryId repositoryId,
-                                  DistanceMatrixDataRepositorySpecificData repositorySpecificData) {
+                                  Map<DistanceMatrixDataRepositoryId, DistanceMatrixDataRepositorySpecificData> repositorySpecificData) {
         this.projectId = projectId;
         this.datasetId = datasetId;
         this.distanceMatrixId = distanceMatrixId;
         this.name = name;
         this.sourceType = sourceType;
         this.source = source;
-        this.repositoryId = repositoryId;
         this.repositorySpecificData = repositorySpecificData;
     }
 }

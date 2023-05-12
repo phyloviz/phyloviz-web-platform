@@ -3,15 +3,21 @@ package org.phyloviz.pwp.administration.service.project.file;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.service.dtos.files.isolate_data.IsolateDataInfo;
 import org.phyloviz.pwp.administration.service.dtos.files.isolate_data.UpdateIsolateDataOutput;
+import org.phyloviz.pwp.administration.service.dtos.files.typing_data.TypingDataInfo;
+import org.phyloviz.pwp.administration.service.dtos.files.typing_data.UpdateTypingDataOutput;
 import org.phyloviz.pwp.administration.service.exceptions.DeniedFileDeletionException;
 import org.phyloviz.pwp.shared.repository.data.registry.isolate_data.IsolateDataDataRepositoryFactory;
+import org.phyloviz.pwp.shared.repository.data.registry.typing_data.TypingDataDataRepositoryFactory;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadataRepository;
+import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.IsolateDataNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,8 +44,9 @@ public class IsolateDataServiceImpl implements IsolateDataService {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
-        if (!isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId))
-            throw new IsolateDataNotFoundException();
+        IsolateDataMetadata isolateDataMetadata = isolateDataMetadataRepository
+                .findByProjectIdAndIsolateDataId(projectId, isolateDataId)
+                .orElseThrow(IsolateDataNotFoundException::new);
 
         if (datasetRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId)) {
             throw new DeniedFileDeletionException(
@@ -47,7 +54,7 @@ public class IsolateDataServiceImpl implements IsolateDataService {
             );
         }
 
-        deleteIsolateData(isolateDataId);
+        deleteIsolateData(isolateDataMetadata);
     }
 
     @Override
@@ -57,22 +64,15 @@ public class IsolateDataServiceImpl implements IsolateDataService {
     }
 
     @Override
-    public void deleteIsolateData(String isolateDataId) {
-        isolateDataMetadataRepository.findAllByIsolateDataId(isolateDataId)
-                .forEach(this::deleteIsolateData);
-    }
-
-    @Override
     public UpdateIsolateDataOutput updateIsolateData(String name, String projectId, String isolateDataId, String userId) {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
-        if (!isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId))
-            throw new IsolateDataNotFoundException();
+        IsolateDataMetadata isolateDataMetadata = isolateDataMetadataRepository
+                .findByProjectIdAndIsolateDataId(projectId, isolateDataId)
+                .orElseThrow(IsolateDataNotFoundException::new);
 
-        String previousName = isolateDataMetadataRepository.findAnyByProjectIdAndIsolateDataId(projectId, isolateDataId)
-                .orElseThrow(IsolateDataNotFoundException::new)
-                .getName();
+        String previousName = isolateDataMetadata.getName();
 
         if (name == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
@@ -80,20 +80,19 @@ public class IsolateDataServiceImpl implements IsolateDataService {
         if (name.isBlank())
             throw new InvalidArgumentException("Name can't be blank");
 
-        if (!name.equals(previousName))
-            isolateDataMetadataRepository.findAllByProjectIdAndIsolateDataId(projectId, isolateDataId)
-                    .forEach(isolateDataMetadata -> {
-                        isolateDataMetadata.setName(name);
-
-                        isolateDataMetadataRepository.save(isolateDataMetadata);
-                    });
+        if (!name.equals(previousName)) {
+            isolateDataMetadata.setName(name);
+            isolateDataMetadataRepository.save(isolateDataMetadata);
+        }
 
         return new UpdateIsolateDataOutput(previousName, name);
     }
 
     private void deleteIsolateData(IsolateDataMetadata isolateDataMetadata) {
-        isolateDataDataRepositoryFactory.getRepository(isolateDataMetadata.getRepositoryId())
-                .deleteIsolateData(isolateDataMetadata.getRepositorySpecificData());
+        isolateDataMetadata.getRepositorySpecificData().forEach((repositoryId, repositorySpecificData) ->
+                isolateDataDataRepositoryFactory.getRepository(repositoryId)
+                        .deleteIsolateData(repositorySpecificData)
+        );
 
         isolateDataMetadataRepository.delete(isolateDataMetadata);
     }

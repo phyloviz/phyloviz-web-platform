@@ -13,7 +13,5 @@ public interface TreeViewService {
 
     void deleteAllByProjectIdAndDatasetId(String projectId, String datasetId);
 
-    void deleteTreeView(String treeViewId);
-
     UpdateTreeViewOutput updateTreeView(String name, String projectId, String datasetId, String treeViewId, String userId);
 }

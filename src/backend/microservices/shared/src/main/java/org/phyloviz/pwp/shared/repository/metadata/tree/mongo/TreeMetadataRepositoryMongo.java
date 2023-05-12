@@ -20,25 +20,8 @@ public class TreeMetadataRepositoryMongo implements TreeMetadataRepository {
     private final TreeMetadataMongoRepository treeMetadataMongoRepository;
 
     @Override
-    public Optional<TreeMetadata> findAnyByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId) {
-        return treeMetadataMongoRepository.findFirstByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId);
-    }
-
-    @Override
-    public List<TreeMetadata> findAllByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId) {
-        return treeMetadataMongoRepository.findAllByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId);
-    }
-
-    @Override
-    public List<TreeMetadata> findAllByTreeId(String treeId) {
-        return treeMetadataMongoRepository.findAllByTreeId(treeId);
-    }
-
-    @Override
-    public Optional<TreeMetadata> findByTreeIdAndRepositoryId(String treeId, TreeDataRepositoryId repositoryId) {
-        return treeMetadataMongoRepository.findByTreeIdAndRepositoryId(
-                treeId, repositoryId.name().toLowerCase()
-        );
+    public Optional<TreeMetadata> findByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId) {
+        return treeMetadataMongoRepository.findByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId);
     }
 
     @Override
@@ -67,13 +50,6 @@ public class TreeMetadataRepositoryMongo implements TreeMetadataRepository {
     }
 
     @Override
-    public Optional<TreeMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndRepositoryId(String projectId, String datasetId, String treeViewId, TreeDataRepositoryId repositoryId) {
-        return treeMetadataMongoRepository.findByProjectIdAndDatasetIdAndTreeViewIdAndRepositoryId(
-                projectId, datasetId, treeViewId, repositoryId.name().toLowerCase()
-        );
-    }
-
-    @Override
     public List<TreeMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId) {
         return treeMetadataMongoRepository.findAllByProjectIdAndDatasetId(projectId, datasetId);
     }
@@ -81,10 +57,5 @@ public class TreeMetadataRepositoryMongo implements TreeMetadataRepository {
     @Override
     public boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId) {
         return treeMetadataMongoRepository.existsByDatasetIdAndDistanceMatrixIdSource(datasetId, distanceMatrixId);
-    }
-
-    @Override
-    public boolean existsByProjectIdAndDatasetIdAndTreeId(String projectId, String datasetId, String treeId) {
-        return treeMetadataMongoRepository.existsByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId);
     }
 }

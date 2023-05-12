@@ -12,6 +12,8 @@ import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 
 @ReadingConverter
 @RequiredArgsConstructor
@@ -23,15 +25,25 @@ public class TypingDataMetadataDeserializer implements Converter<Document, Typin
     @Override
     public TypingDataMetadata convert(@NotNull Document document) {
         try {
-            TypingDataDataRepositoryId repositoryId = TypingDataDataRepositoryId.valueOf(
-                    document.getString("repositoryId").toUpperCase()
-            );
+            Map<String, Document> repositorySpecificDataMap1 =
+                    document.get("repositorySpecificData", Map.class);
 
-            Class<? extends TypingDataDataRepositorySpecificData> repositorySpecificDataClass =
-                    typingDataDataRepositoryRegistry.getRepositorySpecificDataClass(repositoryId);
+            Map<TypingDataDataRepositoryId, TypingDataDataRepositorySpecificData> repositorySpecificDataMap =
+                    new HashMap<>();
 
-            Document repositorySpecificDataDocument = (Document) document.get("repositorySpecificData");
-            TypingDataDataRepositorySpecificData repositorySpecificData = mongoConverter.read(repositorySpecificDataClass, repositorySpecificDataDocument);
+            repositorySpecificDataMap1.forEach((repositoryIdString, repositorySpecificDataDocument) -> {
+                TypingDataDataRepositoryId repositoryId = TypingDataDataRepositoryId.valueOf(
+                        repositoryIdString.toUpperCase()
+                );
+
+                Class<? extends TypingDataDataRepositorySpecificData> repositorySpecificDataClass =
+                        typingDataDataRepositoryRegistry.getRepositorySpecificDataClass(repositoryId);
+
+                repositorySpecificDataMap.put(
+                        repositoryId,
+                        mongoConverter.read(repositorySpecificDataClass, repositorySpecificDataDocument)
+                );
+            });
 
             return new TypingDataMetadata(
                     document.getObjectId("_id").toString(),
@@ -39,8 +51,7 @@ public class TypingDataMetadataDeserializer implements Converter<Document, Typin
                     document.getString("typingDataId"),
                     document.getString("type"),
                     document.getString("name"),
-                    repositoryId,
-                    repositorySpecificData
+                    repositorySpecificDataMap
             );
         } catch (Exception e) {
             throw new DocumentConversionException("Error converting Document to TypingDataMetadata: " + e);
