@@ -47,26 +47,17 @@ def index_tree(tree_file_path, project_id, dataset_id, tree_id, workflow_id):
             'data.inferenceId': inference_id
         }})
 
-    # Create the metadata in the resourceType collection
-    tree_metadata = trees_collection.find_one({'treeId': tree_id})
-
-    new_tree_metadata = {
-        'projectId': project_id,
-        'datasetId': dataset_id,
-        'treeId': tree_id,
-        'name': tree_metadata['name'],
-        'sourceType': tree_metadata['sourceType'],
-        'source': tree_metadata['source'],
-        'repositoryId': 'phylodb',
-        'repositorySpecificData': {
-            'projectId': project_id,
-            'datasetId': dataset_id,
-            'inferenceId': inference_id,
-        }
-    }
-
-    trees_collection.insert_one(new_tree_metadata)
-
+    # Add repositorySpecificData to the metadata of the tree
+    trees_collection.update_one(
+        {'treeId': tree_id},
+        {'$set': {
+            'repositorySpecificData.phylodb': {
+                'projectId': project_id,
+                'datasetId': dataset_id,
+                'inferenceId': inference_id,
+            }
+        }}
+    )
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Index tree into PHYLODB')

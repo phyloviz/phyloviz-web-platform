@@ -97,7 +97,7 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id, layout):
     end_time = time.time()
     print("Time taken: ", end_time - start_time, " seconds +- 5 seconds")
 
-    # Create the metadata in the resourceType collection
+    # Create the metadata in the tree collection
     tree_view_metadata = {
         'projectId': project_id,
         'datasetId': dataset_id,
@@ -107,12 +107,13 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id, layout):
             'treeId': tree_id
         },
         'layout': layout,
-        'repositoryId': 'phylodb',
         'repositorySpecificData': {
-            'projectId': project_id,
-            'datasetId': dataset_id,
-            'inferenceId': inference_id,
-            'visualizationId': visualization_id,
+            'phylodb': {
+                'projectId': project_id,
+                'datasetId': dataset_id,
+                'inferenceId': inference_id,
+                'visualizationId': visualization_id
+            }
         }
     }
 

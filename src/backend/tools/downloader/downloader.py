@@ -53,7 +53,7 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
             'projectId': project_id,
             'datasetId': dataset_id,
             get_resource_id_attr_from_resource_type(resource_type): resource_id,
-            'repositoryId': 's3'
+            "repositorySpecificData.s3": { "$exists": True }
             }
         )
 
@@ -83,7 +83,7 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
             {
             'projectId': project_id,
             get_resource_id_attr_from_resource_type(resource_type): resource_id,
-            'repositoryId': 's3'
+            "repositorySpecificData.s3": { "$exists": True }
             }
         )
 
@@ -121,7 +121,7 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
         return
 
     # Obtain the S3 URL from the repositorySpecificData
-    s3_url = resource['repositorySpecificData']['url']
+    s3_url = resource['repositorySpecificData']['s3']['url']
 
     # Parse the S3 URL
     parsed_url = urlparse(s3_url)

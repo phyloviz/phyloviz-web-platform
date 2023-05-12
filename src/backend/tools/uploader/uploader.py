@@ -43,20 +43,13 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
             }
         )
 
-        typing_data_id = dataset['typingDataId']
-
-        # Obtain the resource metadata with a repositoryId 's3'
-        resource = resource_type_collection.find_one(
-            {
-            'project_Id': project_id,
-            get_resource_id_attr_from_resource_type(resource_type): resource_id,
-            'repositoryId': 's3'
-            }
-        )
+        if dataset is None:
+            print(f'Dataset with project ID {project_id} and dataset ID {dataset_id} not found')
+            return
 
         source = {
             'algorithm': algorithm,
-            'typingDataId': typing_data_id,
+            'typingDataId': dataset['typingDataId'],
             'parameters': parameters
         }
     else:
@@ -70,9 +63,10 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
         'name': f'Tree {tree_id}',
         'sourceType': source_type,
         'source': source,
-        'repositoryId': 's3',
         'repositorySpecificData': {
-            'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
+            's3': {
+                'url': f'http://localhost:9444/{bucket_name}{s3_output_path}'
+            }
         }
     }
 
@@ -103,12 +97,13 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id,
         'projectId': project_id,
         'datasetId': dataset_id,
         'distanceMatrixId': distance_matrix_id,
-        'repositoryId': 's3',
         'name': f'Distance Matrix {distance_matrix_id}',
         'sourceType': source_type,
         'source': source,
         'repositorySpecificData': {
-            'url': f'http://localhost:9444/{bucket_name}{s3_output_path}',
+            's3': {
+                'url': f'http://localhost:9444/{bucket_name}{s3_output_path}'
+            }
         }
     }
 
