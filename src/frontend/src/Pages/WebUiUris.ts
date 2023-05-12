@@ -25,6 +25,8 @@ export namespace WebUiUris {
     export const DISTANCE_MATRIX = `${DATASET}/distance-matrices/:distanceMatrixId`
     export const TREE = `${DATASET}/trees/:treeId`
     export const TREE_VIEW = `${DATASET}/tree-views/:treeViewId`
+    export const TREE_VIEW_TYPING_DATA = `${TREE_VIEW}/typing-data`
+    export const TREE_VIEW_ISOLATE_DATA = `${TREE_VIEW}/isolate-data`
     export const REPORT = `${DATASET}/report`
 
     export const COMPUTE = `${DATASET}/compute`
@@ -54,6 +56,8 @@ export namespace WebUiUris {
     export const distanceMatrix = (projectId: string, datasetId: string, distanceMatrixId: string) => `/projects/${projectId}/datasets/${datasetId}/distance-matrices/${distanceMatrixId}`
     export const tree = (projectId: string, datasetId: string, treeId: string) => `/projects/${projectId}/datasets/${datasetId}/trees/${treeId}`
     export const treeView = (projectId: string, datasetId: string, treeViewId: string) => `/projects/${projectId}/datasets/${datasetId}/tree-views/${treeViewId}`
+    export const treeViewTypingData = (projectId: string, datasetId: string, treeViewId: string) => `/projects/${projectId}/datasets/${datasetId}/tree-views/${treeViewId}/typing-data`
+    export const treeViewIsolateData = (projectId: string, datasetId: string, treeViewId: string) => `/projects/${projectId}/datasets/${datasetId}/tree-views/${treeViewId}/isolate-data`
     export const report = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/report`
 
     export const computeHammingDistance = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/distance-matrix/hamming-distance`

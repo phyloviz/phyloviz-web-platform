@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom"
+import {useNavigate, useOutletContext, useParams} from "react-router-dom"
 import * as React from 'react';
 import {ReactNode, useEffect, useRef, useState} from 'react';
 import {TreeViewGraph} from "./cosmos/TreeViewGraph"
@@ -23,6 +23,7 @@ import {useProjectContext} from "../useProject"
 import {GraphConfigInterface} from "./cosmos/config"
 import {useReactToPrint} from "react-to-print";
 import {SelectChangeEvent} from "@mui/material";
+import {WebUiUris} from "../../WebUiUris";
 
 export type VizNode = {
     id: string
@@ -65,8 +66,12 @@ const ZOOM_DURATION = 100
 export function useTreeView() {
     const {projectId, datasetId, treeViewId} = useParams<{ projectId: string, datasetId: string, treeViewId: string }>()
     const {project} = useProjectContext()
+    const typingDataId = project?.datasets.find(dataset => dataset.datasetId === datasetId)?.typingDataId
+    const isolateDataId = project?.datasets.find(dataset => dataset.datasetId === datasetId)?.isolateDataId
+
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const graphRef = useRef<TreeViewGraph<VizNode, VizLink>>()
+    const navigate = useNavigate()
 
     const [linkSpring, setLinkSpring] = useState(defaultConfig.simulation!.linkSpring!)
     const [linkDistance, setLinkDistance] = useState(defaultConfig.simulation!.linkDistance!)
@@ -97,6 +102,8 @@ export function useTreeView() {
     useEffect(() => {
         async function init() {
             const data: GetTreeViewOutputModel = await VisualizationService.getTreeView(projectId!, datasetId!, treeViewId!)
+            if (!canvasRef.current)
+                return
 
             function findBiggestGroup(nodes: Node[], edges: Edge[]): Node[] {
                 const visited = new Set<string>()
@@ -149,13 +156,13 @@ export function useTreeView() {
                 }
             })
 
-            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, defaultConfig)
+            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current, defaultConfig)
             graph.setData(nodes, links)
             graphRef.current = graph
         }
 
         init()
-    }, [])
+    }, [canvasRef.current])
 
     const treeView: TreeView = project?.datasets
         .find(dataset => dataset.datasetId === datasetId)?.treeViews
@@ -289,6 +296,11 @@ export function useTreeView() {
             // TODO: implement link label type
         },
 
+        handleTypingDataFilter: () => navigate(WebUiUris.treeViewTypingData(projectId!!, datasetId!!, treeViewId!!)),
+        typingDataId,
+        handleIsolateDataFilter: () => navigate(WebUiUris.treeViewIsolateData(projectId!!, datasetId!!, treeViewId!!)),
+        isolateDataId,
+
         handleExportOptions: () => {
             // TODO: implement export options
         },
@@ -302,4 +314,24 @@ export function useTreeView() {
         toPrintRef,
         handlePrint
     }
+}
+
+/**
+ * Context for the TreeView page.
+ *
+ * @property treeView - the tree view to display
+ * @property typingDataId - the typing data id to filter by
+ * @property isolateDataId - the isolate data id to filter by
+ */
+interface TreeViewContext {
+    treeView: TreeView
+    typingDataId: string
+    isolateDataId?: string
+}
+
+/**
+ * Hook to use the TreeView context.
+ */
+export function useTreeViewContext() {
+    return useOutletContext<TreeViewContext>()
 }
