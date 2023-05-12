@@ -9,5 +9,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class TypingDataPhyloDBDataRepositorySpecificData implements TypingDataDataRepositorySpecificData {
+    private String projectId;
     private List<String> datasetIds;
 }
