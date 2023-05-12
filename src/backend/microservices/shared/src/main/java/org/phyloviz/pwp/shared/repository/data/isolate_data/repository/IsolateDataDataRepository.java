@@ -9,7 +9,5 @@ public interface IsolateDataDataRepository {
 
     String getIsolateData(IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData);
 
-    boolean isFileRepository();
-
     void deleteIsolateData(IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData);
 }

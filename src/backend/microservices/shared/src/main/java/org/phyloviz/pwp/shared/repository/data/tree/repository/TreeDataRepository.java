@@ -6,7 +6,5 @@ public interface TreeDataRepository {
 
     String getTree(TreeDataRepositorySpecificData treeDataRepositorySpecificData);
 
-    boolean isFileRepository();
-
     void deleteTree(TreeDataRepositorySpecificData treeDataRepositorySpecificData);
 }

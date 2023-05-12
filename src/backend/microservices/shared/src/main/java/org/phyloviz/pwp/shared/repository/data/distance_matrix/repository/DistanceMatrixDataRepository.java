@@ -6,7 +6,5 @@ public interface DistanceMatrixDataRepository {
 
     String getDistanceMatrix(DistanceMatrixDataRepositorySpecificData distanceMatrixDataRepositorySpecificData);
 
-    boolean isFileRepository();
-
     void deleteDistanceMatrix(DistanceMatrixDataRepositorySpecificData distanceMatrixDataRepositorySpecificData);
 }

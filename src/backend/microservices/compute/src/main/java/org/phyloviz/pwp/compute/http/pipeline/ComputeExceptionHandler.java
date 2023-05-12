@@ -5,6 +5,7 @@ import org.phyloviz.pwp.compute.service.exceptions.DistanceMatrixDoesNotExistExc
 import org.phyloviz.pwp.compute.service.exceptions.InvalidWorkflowException;
 import org.phyloviz.pwp.compute.service.exceptions.TreeDoesNotExistException;
 import org.phyloviz.pwp.compute.service.exceptions.TreeViewDoesNotExistException;
+import org.phyloviz.pwp.compute.service.exceptions.WorkflowInstanceNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.zalando.problem.Problem;
@@ -24,7 +25,8 @@ public class ComputeExceptionHandler {
             DatasetDoesNotExistException.class,
             DistanceMatrixDoesNotExistException.class,
             TreeDoesNotExistException.class,
-            TreeViewDoesNotExistException.class
+            TreeViewDoesNotExistException.class,
+            WorkflowInstanceNotFoundException.class
     })
     public Problem handleBadRequestException(Exception e) {
         return Problem.builder()

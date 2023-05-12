@@ -18,11 +18,6 @@ public class DistanceMatrixS3DataRepository implements DistanceMatrixDataReposit
     }
 
     @Override
-    public boolean isFileRepository() {
-        return true;
-    }
-
-    @Override
     public void deleteDistanceMatrix(DistanceMatrixDataRepositorySpecificData distanceMatrixDataRepositorySpecificData) {
         DistanceMatrixS3DataRepositorySpecificData distanceMatrixS3DataRepositorySpecificData =
                 (DistanceMatrixS3DataRepositorySpecificData) distanceMatrixDataRepositorySpecificData;
