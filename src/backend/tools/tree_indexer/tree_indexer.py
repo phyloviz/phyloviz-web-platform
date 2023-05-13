@@ -36,16 +36,7 @@ def index_tree(tree_file_path, project_id, dataset_id, tree_id, workflow_id):
     mongo_uri = os.environ['MONGO_URI']
     client = MongoClient(mongo_uri)
     db = client['phyloviz-web-platform']
-    workflows_collection = db['workflow-instances']
     trees_collection = db['trees']
-
-    # TODO: Maybe it's not necessary to add this to workflow extra data?
-    # Update the workflow with the resource_id
-    workflows_collection.update_one(
-        {'_id': ObjectId(workflow_id)},
-        {'$set': {
-            'data.inferenceId': inference_id
-        }})
 
     # Add repositorySpecificData to the metadata of the tree
     trees_collection.update_one(
@@ -58,6 +49,7 @@ def index_tree(tree_file_path, project_id, dataset_id, tree_id, workflow_id):
             }
         }}
     )
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Index tree into PHYLODB')

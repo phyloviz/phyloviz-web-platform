@@ -1,4 +1,5 @@
 import argparse
+import csv
 import json
 import os
 import requests
@@ -6,7 +7,6 @@ import uuid
 from bson.objectid import ObjectId
 from concurrent.futures import ThreadPoolExecutor
 from pymongo import MongoClient
-import csv
 
 base_url = os.environ.get("PHYLODB_URL")
 
@@ -21,6 +21,7 @@ db = client['phyloviz-web-platform']
 workflows_collection = db['workflow-instances']
 typing_data_collection = db['typing-data']
 dataset_collection = db['datasets']
+projects_collection = db['projects']
 
 
 def create_project(project_id):
@@ -32,12 +33,10 @@ def create_project(project_id):
         "users": []
     })
 
-    response = requests.request(
-        "PUT", f"{base_url}/projects/{project_id}", headers=json_headers, data=payload)
+    response = requests.request("PUT", f"{base_url}/projects/{project_id}", headers=json_headers, data=payload)
 
     if response.status_code not in range(200, 299):
-        raise Exception(
-            f"Project creation failed with status_code {response.status_code} \n{response.text}")
+        raise Exception(f"Project creation failed with status_code {response.status_code} \n{response.text}")
 
 
 def create_taxon(taxon_id):
@@ -46,12 +45,10 @@ def create_taxon(taxon_id):
         "description": taxon_id
     })
 
-    response = requests.request(
-        "PUT", f"{base_url}/taxa/{taxon_id}", headers=json_headers, data=payload)
+    response = requests.request("PUT", f"{base_url}/taxa/{taxon_id}", headers=json_headers, data=payload)
 
     if response.status_code not in range(200, 299):
-        raise Exception(
-            f"Taxon creation failed with status_code {response.status_code} \n{response.text}")
+        raise Exception(f"Taxon creation failed with status_code {response.status_code} \n{response.text}")
 
 
 def create_locus(taxon_id, locus_id):
@@ -64,8 +61,7 @@ def create_locus(taxon_id, locus_id):
     response = requests.request("PUT", url, headers=json_headers, data=payload)
 
     if response.status_code not in range(200, 299):
-        raise Exception(
-            f"Locus creation failed with status_code {response.status_code} \n{response.text}")
+        raise Exception(f"Locus creation failed with status_code {response.status_code} \n{response.text}")
 
 
 def create_mlst_schema(taxon_id, schema_id, loci_list):
@@ -78,13 +74,51 @@ def create_mlst_schema(taxon_id, schema_id, loci_list):
     })
 
     response = requests.request(
-        "PUT", f"{base_url}/taxa/{taxon_id}/schemas/{schema_id}", headers=json_headers, data=payload)
+        "PUT",
+        f"{base_url}/taxa/{taxon_id}/schemas/{schema_id}", headers=json_headers, data=payload
+    )
 
     if response.status_code not in range(200, 299):
-        raise Exception("")
+        raise Exception(f"Schema creation failed with status_code {response.status_code} \n{response.text}")
 
 
-def create_dataset(dataset_id, taxon_id, project_id, schema_id):
+def create_dataset(project_id, dataset_id):
+    taxon_id = str(uuid.uuid4())
+    create_taxon(taxon_id)
+    print("Done creating taxon")
+
+    loci_list = upload_loci(taxon_id, typing_data_file_path)
+    print("Done uploading loci")
+
+    allele_ids = {}
+
+    with open(typing_data_file_path, 'r') as file:
+        reader = csv.reader(file, delimiter='\t')
+        headers = next(reader)
+
+        for row in reader:
+            for i, allele_id in enumerate(row[1:], start=1):
+                gene = headers[i]
+                if gene not in allele_ids:
+                    allele_ids[gene] = set()
+
+                allele_ids[gene].add(allele_id)
+
+    for gene in allele_ids.keys():
+        fasta_file = f"./fasta_{gene}.fasta"
+        with open(fasta_file, 'w') as outfile:
+            for allele_id in allele_ids[gene]:
+                outfile.write(f">{gene}_{allele_id}\nA\n")
+
+    for gene in allele_ids.keys():
+        loci_id = gene.split('.')[0]
+        print(f"Uploading {loci_id} sequences")
+        upload_allelic_sequences(taxon_id, loci_id, f'./fasta_{gene}.fasta')
+
+    schema_id = str(uuid.uuid4())
+    create_mlst_schema(taxon_id, schema_id, loci_list)
+    print("Done creating schema")
+
     payload = json.dumps({
         "id": dataset_id,
         "taxon_id": taxon_id,
@@ -97,8 +131,7 @@ def create_dataset(dataset_id, taxon_id, project_id, schema_id):
         data=payload)
 
     if response.status_code not in range(200, 299):
-        raise Exception(
-            f"Dataset creation failed with status_code {response.status_code} \n{response.text}")
+        raise Exception(f"Dataset creation failed with status_code {response.status_code} \n{response.text}")
 
 
 def project_exists(project_id):
@@ -109,8 +142,7 @@ def project_exists(project_id):
         return False
 
     if response.status_code not in range(200, 299):
-        raise Exception(
-            f"Project get failed with status_code {response.status_code} \n{response.text}")
+        raise Exception(f"Project get failed with status_code {response.status_code} \n{response.text}")
 
     return True
 
@@ -185,54 +217,43 @@ def dataset_exists(project_id, dataset_id):
 
 
 def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id):
+    print(f"Project ID: {project_id}")
+    print(f"Dataset ID: {dataset_id}")
+    print(f"Typing data file path: {typing_data_file_path}")
+    print(f"Workflow ID: {workflow_id}")
+
+    if projects_collection.find_one({'_id': ObjectId(project_id)}) is None:
+        raise Exception(f"Project with ID {project_id} does not exist in PHYLOViZ Web Platform")
+
+    dataset_metadata = datasets_collection.find_one({'_id': ObjectId(dataset_id), 'projectId': project_id})
+    if dataset_metadata is None:
+        raise Exception(
+            f"Dataset with ID {dataset_id} and Project ID {project_id} does not exist in PHYLOViZ Web Platform")
+
+    if typing_data_collection.find_one(
+            {
+                'typingDataId': dataset_metadata['typingDataId'],
+                'repositorySpecificData.phylodb.datasetIds': {'in': [dataset_id]}
+            }
+    ) is not None:
+        raise Exception(f"Dataset with ID {dataset_id} already has Typing Data indexed in PhyloDB")
+
     if not project_exists(project_id):
         create_project(project_id)
-
-    taxon_id = str(uuid.uuid4())
-    create_taxon(taxon_id)
-    print("Done creating taxon")
-
-    loci_list = upload_loci(taxon_id, typing_data_file_path)
-    print("Done uploading loci")
-
-    allele_ids = {}
-
-    with open(typing_data_file_path, 'r') as file:
-        reader = csv.reader(file, delimiter='\t')
-        headers = next(reader)
-
-        for row in reader:
-            for i, allele_id in enumerate(row[1:], start=1):
-                gene = headers[i]
-                if gene not in allele_ids:
-                    allele_ids[gene] = set()
-
-                allele_ids[gene].add(allele_id)
-
-
-    for gene in allele_ids.keys():
-        fasta_file = f"./fasta_{gene}.fasta"
-        with open(fasta_file, 'w') as outfile:
-            for allele_id in allele_ids[gene]:
-                outfile.write(f">{gene}_{allele_id}\nA\n")
-
-    for gene in allele_ids.keys():
-        loci_id = gene.split('.')[0]
-        print(f"Uploading {loci_id} sequences")
-        upload_allelic_sequences(taxon_id, loci_id, f'./fasta_{gene}.fasta')
-
-    schema_id = str(uuid.uuid4())
-    create_mlst_schema(taxon_id, schema_id, loci_list)
-    print("Done creating schema")
+        print("Done creating project in PhyloDB")
+    else:
+        print("Project already exists in PhyloDB")
 
     if not dataset_exists(project_id, dataset_id):
-        create_dataset(dataset_id, taxon_id, project_id, schema_id)
-    print("Done creating dataset")
+        create_dataset(project_id, dataset_id)
+        print("Done creating dataset in PhyloDB")
+    else:
+        raise Exception("Dataset already exists in PhyloDB (typing data already indexed), no need to index again")
 
     upload_allele_profiles(project_id, dataset_id, typing_data_file_path)
-    print("Done uploading allele profiles")
+    print("Done uploading allele profiles to dataset in PhyloDB")
 
-    typing_data_id = dataset_collection.find_one({'_id': ObjectId(dataset_id)})['typingDataId']
+    typing_data_id = dataset_metadata['typingDataId']
 
     typing_data_metadata = typing_data_collection.find_one(
         {
@@ -246,6 +267,7 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
             {'typingDataId': typing_data_id},
             {'$set': {
                 'repositorySpecificData.phylodb': {
+                    'projectId': project_id,
                     'datasetIds': [dataset_id]
                 }
             }}
