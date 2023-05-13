@@ -6,12 +6,8 @@ import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.source.Tr
 @Data
 public class TreeViewSourceInfo {
     private final String treeId;
-    private final String typingDataId;
-    private final String isolateDataId;
 
     public TreeViewSourceInfo(TreeViewSource treeViewSource) {
         this.treeId = treeViewSource.getTreeId();
-        this.typingDataId = treeViewSource.getTypingDataId();
-        this.isolateDataId = treeViewSource.getIsolateDataId();
     }
 }

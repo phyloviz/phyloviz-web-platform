@@ -17,7 +17,7 @@ client = MongoClient(mongo_uri)
 db = client['phyloviz-web-platform']
 workflows_collection = db['workflow-instances']
 tree_views_collection = db['tree-views']
-tree_collection = db['trees']
+trees_collection = db['trees']
 datasets_collection = db['datasets']
 projects_collection = db['projects']
 
@@ -77,7 +77,7 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id, layout):
         raise Exception(
             f"Dataset with ID {dataset_id} and Project ID {project_id} does not exist in PHYLOViZ Web Platform")
 
-    tree_metadata = tree_collection.find_one(
+    tree_metadata = trees_collection.find_one(
         {
             'projectId': project_id,
             'datasetId': dataset_id,
@@ -88,8 +88,8 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id, layout):
     if tree_metadata is None:
         raise Exception(f"Tree with ID {tree_id} does not exist in PHYLOViZ Web Platform")
 
-    if tree_metadata["repositorySpecificData"]["phylodb"] is None:
-        raise Exception(f"Tree with ID {tree_id} is not indexed in PhyloDB")
+    if tree_metadata["repositorySpecificData"].get("phylodb") is None:
+        raise Exception(f"Tree with ID {tree_id} is not indexed in PhyloDB. Index it first.")
 
     inference_id = tree_metadata["repositorySpecificData"]["phylodb"]["inferenceId"]
 

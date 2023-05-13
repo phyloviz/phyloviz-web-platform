@@ -20,7 +20,7 @@ client = MongoClient(mongo_uri)
 db = client['phyloviz-web-platform']
 workflows_collection = db['workflow-instances']
 typing_data_collection = db['typing-data']
-dataset_collection = db['datasets']
+datasets_collection = db['datasets']
 projects_collection = db['projects']
 
 
@@ -82,7 +82,7 @@ def create_mlst_schema(taxon_id, schema_id, loci_list):
         raise Exception(f"Schema creation failed with status_code {response.status_code} \n{response.text}")
 
 
-def create_dataset(project_id, dataset_id):
+def create_dataset(project_id, dataset_id, typing_data_file_path):
     taxon_id = str(uuid.uuid4())
     create_taxon(taxon_id)
     print("Done creating taxon")
@@ -233,7 +233,7 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
     if typing_data_collection.find_one(
             {
                 'typingDataId': dataset_metadata['typingDataId'],
-                'repositorySpecificData.phylodb.datasetIds': {'in': [dataset_id]}
+                'repositorySpecificData.phylodb.datasetIds': {'$in': [dataset_id]}
             }
     ) is not None:
         raise Exception(f"Dataset with ID {dataset_id} already has Typing Data indexed in PhyloDB")
@@ -245,7 +245,7 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
         print("Project already exists in PhyloDB")
 
     if not dataset_exists(project_id, dataset_id):
-        create_dataset(project_id, dataset_id)
+        create_dataset(project_id, dataset_id, typing_data_file_path)
         print("Done creating dataset in PhyloDB")
     else:
         raise Exception("Dataset already exists in PhyloDB (typing data already indexed), no need to index again")

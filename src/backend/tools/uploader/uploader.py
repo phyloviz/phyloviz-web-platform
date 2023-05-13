@@ -27,15 +27,17 @@ datasets_collection = db['datasets']
 
 def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, source_type, algorithm,
                  distance_matrix_id, parameters):
-    tree_collection = db['trees']
+    trees_collection = db['trees']
 
-    if source_type == 'algorithm_distance_matrix':
+    if source_type == 'algorithm-distance-matrix':
+        source_type = 'algorithm_distance_matrix'
         source = {
             'algorithm': algorithm,
             'distanceMatrixId': distance_matrix_id,
             'parameters': parameters
         }
-    elif source_type == 'algorithm_typing_data':
+    elif source_type == 'algorithm-typing-data':
+        source_type = 'algorithm_typing_data'
         dataset = datasets_collection.find_one(
             {
                 'project_Id': project_id,
@@ -68,7 +70,7 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
         }
     }
 
-    tree_collection.insert_one(tree_metadata)
+    trees_collection.insert_one(tree_metadata)
 
     workflows_collection.update_one(
         {'_id': ObjectId(workflow_id)},
