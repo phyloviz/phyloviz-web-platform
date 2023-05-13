@@ -32,17 +32,9 @@ public class TypingDataPhyloDBDataRepository implements TypingDataDataRepository
         TypingDataPhyloDBDataRepositorySpecificData repositorySpecificData =
                 (TypingDataPhyloDBDataRepositorySpecificData) typingDataDataRepositorySpecificData;
 
-        Profile profile = profileRepository.findAll(
-                        0,
-                        1,
-                        repositorySpecificData.getProjectId(),
-                        repositorySpecificData.getDatasetIds().get(0)
-                )
-                .orElseThrow(() -> new RuntimeException("Profiles not found in PhyloDB"))
-                .get(0);
-
-        Schema schema = schemaRepository.find(new Dataset.PrimaryKey(profile.getPrimaryKey().getProjectId(),
-                profile.getPrimaryKey().getDatasetId())
+        Schema schema = schemaRepository.find(new Dataset.PrimaryKey(
+                repositorySpecificData.getProjectId(),
+                repositorySpecificData.getDatasetIds().get(0))
         ).orElseThrow(() -> new RuntimeException("Schema not found in PhyloDB"));
 
         return new GetTypingDataSchemaOutput(

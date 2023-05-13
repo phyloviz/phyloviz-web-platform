@@ -17,6 +17,7 @@ import pt.ist.meic.phylodb.typing.schema.SchemaRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,23 +33,16 @@ public class IsolateDataPhyloDBDataRepository implements IsolateDataDataReposito
 
     @Override
     public GetIsolateDataSchemaOutput getIsolateDataSchema(IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData) {
-        /*IsolateDataPhyloDBDataRepositorySpecificData repositorySpecificData =
-                (IsolateDataPhyloDBDataRepositorySpecificData) isolateDataDataRepositorySpecificData;
+        /*isolateDataPhyloDBDataRepositorySpecificData repositorySpecificData =
+                (isolateDataPhyloDBDataRepositorySpecificData) isolateDataDataRepositorySpecificData;
 
-        Profile profile = profileRepository.findAll(
-                        0,
-                        1,
-                        repositorySpecificData.getProjectId(),
-                        repositorySpecificData.getDatasetIds().get(0)
-                )
-                .orElseThrow(() -> new RuntimeException("Profiles not found in PhyloDB"))
-                .get(0);
-
-        Schema schema = schemaRepository.find(new Dataset.PrimaryKey(profile.getPrimaryKey().getProjectId(),
-                profile.getPrimaryKey().getDatasetId())
+        Schema schema = schemaRepository.find(new Dataset.PrimaryKey(
+                repositorySpecificData.getProjectId(),
+                repositorySpecificData.getDatasetIds().get(0))
         ).orElseThrow(() -> new RuntimeException("Schema not found in PhyloDB"));
 
-        return new GetIsolateDataSchemaOutput(
+        return new GetisolateDataSchemaOutput(
+                schema.getType().getName(),
                 schema.getLociIds()
         );*/
         throw new UnsupportedOperationException("Not implemented yet.");
@@ -76,9 +70,12 @@ public class IsolateDataPhyloDBDataRepository implements IsolateDataDataReposito
         return new GetIsolateDataRowsOutput(
                 isolates.stream().map(isolate -> new IsolateDataRow(
                                 isolate.getPrimaryKey().getId(), // TODO Missing profile id?
-                                Arrays.stream(isolate.getAncillaries())
-                                        .map(Ancillary::getValue)
-                                        .toList()
+                                Arrays.stream(isolate.getAncillaries()).collect(
+                                        Collectors.toMap(
+                                                Ancillary::getKey,
+                                                Ancillary::getValue
+                                        )
+                                )
                         )
                 ).toList(),
                 profiles.size()

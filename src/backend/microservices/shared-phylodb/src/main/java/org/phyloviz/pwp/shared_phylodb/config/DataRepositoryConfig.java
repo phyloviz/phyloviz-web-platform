@@ -25,6 +25,8 @@ import org.phyloviz.pwp.shared.repository.data.tree_view.repository.specific_dat
 import org.phyloviz.pwp.shared.repository.data.typing_data.TypingDataDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.data.typing_data.repository.TypingDataS3DataRepository;
 import org.phyloviz.pwp.shared.repository.data.typing_data.repository.specific_data.TypingDataS3DataRepositorySpecificData;
+import org.phyloviz.pwp.shared_phylodb.repository.data.phylodb.isolate_data.IsolateDataPhyloDBDataRepository;
+import org.phyloviz.pwp.shared_phylodb.repository.data.phylodb.isolate_data.IsolateDataPhyloDBDataRepositorySpecificData;
 import org.phyloviz.pwp.shared_phylodb.repository.data.phylodb.tree.TreePhyloDBDataRepository;
 import org.phyloviz.pwp.shared_phylodb.repository.data.phylodb.tree.TreePhyloDBDataRepositorySpecificData;
 import org.phyloviz.pwp.shared_phylodb.repository.data.phylodb.tree_view.TreeViewPhyloDBDataRepository;
@@ -52,9 +54,12 @@ public class DataRepositoryConfig {
     @Bean
     public IsolateDataDataRepositoryRegistry isolateDataDataRepositoryRegistry(ApplicationContext context) {
         return new IsolateDataDataRepositoryRegistryImpl(context, Map.of(
-                IsolateDataDataRepositoryId.S3, IsolateDataS3DataRepository.class
+                IsolateDataDataRepositoryId.S3, IsolateDataS3DataRepository.class,
+                IsolateDataDataRepositoryId.PHYLODB, IsolateDataPhyloDBDataRepository.class
+
         ), Map.of(
-                IsolateDataDataRepositoryId.S3, IsolateDataS3DataRepositorySpecificData.class
+                IsolateDataDataRepositoryId.S3, IsolateDataS3DataRepositorySpecificData.class,
+                IsolateDataDataRepositoryId.PHYLODB, IsolateDataPhyloDBDataRepositorySpecificData.class
         ));
     }
 
