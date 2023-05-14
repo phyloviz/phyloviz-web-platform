@@ -3,9 +3,11 @@ package org.phyloviz.pwp.shared_phylodb.repository.data.phylodb.typing_data;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.repository.data.typing_data.repository.TypingDataDataRepository;
 import org.phyloviz.pwp.shared.repository.data.typing_data.repository.specific_data.TypingDataDataRepositorySpecificData;
+import org.phyloviz.pwp.shared.repository.data.typing_data.repository.specific_data.TypingDataPhyloDBDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.TypingDataProfile;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 import pt.ist.meic.phylodb.typing.dataset.model.Dataset;
 import pt.ist.meic.phylodb.typing.profile.ProfileRepository;
@@ -23,6 +25,11 @@ public class TypingDataPhyloDBDataRepository implements TypingDataDataRepository
 
     @Override
     public TypingDataDataRepositorySpecificData uploadTypingData(String projectId, String typingDataId, MultipartFile multipartFile) {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    @Override
+    public String downloadTypingData(TypingDataDataRepositorySpecificData typingDataDataRepositorySpecificData) {
         throw new UnsupportedOperationException("Not supported.");
     }
 

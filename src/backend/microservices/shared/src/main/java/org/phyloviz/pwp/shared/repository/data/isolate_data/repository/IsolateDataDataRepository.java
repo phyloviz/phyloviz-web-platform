@@ -7,7 +7,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface IsolateDataDataRepository {
 
-    IsolateDataDataRepositorySpecificData uploadIsolateData(String projectId, String typingDataId, MultipartFile multipartFile);
+    IsolateDataDataRepositorySpecificData uploadIsolateData(String projectId, String isolateDataId, MultipartFile multipartFile);
+
+    String downloadIsolateData(IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData);
 
     GetIsolateDataSchemaOutput getIsolateDataSchema(IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData);
 

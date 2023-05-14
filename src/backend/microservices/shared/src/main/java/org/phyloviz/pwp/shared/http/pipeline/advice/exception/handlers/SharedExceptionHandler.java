@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.exc.IgnoredPropertyException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.FileCorruptedException;
+import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.IsolateDataNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;
@@ -70,20 +72,20 @@ public class SharedExceptionHandler {
     public Problem handleHttpMessageNotReadableExceptions(
             HttpMessageNotReadableException ex
     ) {
-        //TODO: Improve this
-        String title = "Invalid request body:";
+        String detail = "Invalid request body:";
 
         if (ex.getRootCause() instanceof UnrecognizedPropertyException unrecognizedPropertyException) {
-            title += "Unknown property " + unrecognizedPropertyException.getPropertyName();
+            detail += "Unknown property " + unrecognizedPropertyException.getPropertyName();
         } else if (ex.getRootCause() instanceof JsonParseException jsonParseException) {
-            title += jsonParseException.getOriginalMessage();
+            detail += jsonParseException.getOriginalMessage();
         } else if (ex.getRootCause() instanceof IgnoredPropertyException) {
             JsonMappingException jsonMappingException = (JsonMappingException) ex.getRootCause();
-            title += "Missing property " + jsonMappingException.getOriginalMessage();
+            detail += "Missing property " + jsonMappingException.getOriginalMessage();
         }
 
         return Problem.builder()
-                .withTitle(title)
+                .withTitle("Bad Request")
+                .withDetail(detail)
                 .withStatus(Status.BAD_REQUEST)
                 .build();
     }
@@ -99,7 +101,26 @@ public class SharedExceptionHandler {
             MissingServletRequestPartException ex
     ) {
         return Problem.builder()
-                .withTitle(String.format("Missing request part '%s'", ex.getRequestPartName()))
+                .withTitle("Bad Request")
+                .withDetail(String.format("Missing request part '%s'", ex.getRequestPartName()))
+                .withStatus(Status.BAD_REQUEST)
+                .build();
+    }
+
+    /**
+     * Handles Bad Request.
+     *
+     * @param e the exception
+     * @return a Problem with the status BAD_REQUEST
+     */
+    @ExceptionHandler(value = {
+            FileCorruptedException.class,
+            InvalidArgumentException.class
+    })
+    public Problem handleBadRequestExceptions(Exception e) {
+        return Problem.builder()
+                .withTitle("Bad Request")
+                .withDetail(e.getMessage())
                 .withStatus(Status.BAD_REQUEST)
                 .build();
     }

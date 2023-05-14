@@ -9,6 +9,7 @@ import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.UploadIsolateData
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.UploadTypingDataOutput;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -54,6 +55,23 @@ public class FileTransferController {
     }
 
     /**
+     * Downloads the contents of a typing data file.
+     *
+     * @param projectId    the name of the project the typing data belongs to
+     * @param typingDataId the id of the typing data to be downloaded
+     * @param user         the user that is downloading the typing data
+     * @return the contents of the typing data file
+     */
+    @GetMapping(path = "/projects/{projectId}/files/typing-data/{typingDataId}/file")
+    public String downloadTypingData(
+            @PathVariable String projectId,
+            @PathVariable String typingDataId,
+            User user
+    ) {
+        return fileTransferService.downloadTypingData(projectId, typingDataId, user.getId());
+    }
+
+    /**
      * Uploads an isolate data.
      *
      * @param projectId the name of the project to which the isolate data will be uploaded
@@ -77,5 +95,22 @@ public class FileTransferController {
         return ResponseEntity
                 .created(location)
                 .body(new UploadIsolateDataOutputModel(uploadIsolateDataOutput));
+    }
+
+    /**
+     * Downloads the contents of an isolate data file.
+     *
+     * @param projectId     the name of the project the isolate data belongs to
+     * @param isolateDataId the id of the isolate data to be downloaded
+     * @param user          the user that is downloading the isolate data
+     * @return the contents of the isolate data file
+     */
+    @GetMapping(path = "/projects/{projectId}/files/isolate-data/{isolateDataId}/file")
+    public String downloadIsolateData(
+            @PathVariable String projectId,
+            @PathVariable String isolateDataId,
+            User user
+    ) {
+        return fileTransferService.downloadIsolateData(projectId, isolateDataId, user.getId());
     }
 }

@@ -50,6 +50,10 @@ public abstract class AbstractDataRepositoryRegistry<I extends Enum<I>, R, D> im
 
     @Override
     public Class<? extends D> getRepositorySpecificDataClass(I repositoryId) {
-        return repositorySpecificDataClasses.get(repositoryId);
+        Class<? extends D> repositorySpecificDataClass = repositorySpecificDataClasses.get(repositoryId);
+        if (repositorySpecificDataClass == null) {
+            throw new IllegalStateException("No Repository Specific Data Class found for id: " + repositoryId);
+        }
+        return repositorySpecificDataClass;
     }
 }

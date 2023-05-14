@@ -9,6 +9,8 @@ public interface TypingDataDataRepository {
 
     TypingDataDataRepositorySpecificData uploadTypingData(String projectId, String typingDataId, MultipartFile multipartFile);
 
+    String downloadTypingData(TypingDataDataRepositorySpecificData typingDataDataRepositorySpecificData);
+
     GetTypingDataSchemaOutput getTypingDataSchema(TypingDataDataRepositorySpecificData typingDataDataRepositorySpecificData);
 
     GetTypingDataProfilesOutput getTypingDataProfiles(TypingDataDataRepositorySpecificData typingDataDataRepositorySpecificData,

@@ -1,8 +1,7 @@
-package org.phyloviz.pwp.shared_phylodb.repository.data.phylodb.typing_data;
+package org.phyloviz.pwp.shared.repository.data.typing_data.repository.specific_data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.phyloviz.pwp.shared.repository.data.typing_data.repository.specific_data.TypingDataDataRepositorySpecificData;
 
 import java.util.List;
 

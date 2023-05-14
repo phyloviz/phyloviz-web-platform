@@ -3,6 +3,7 @@ package org.phyloviz.pwp.shared_phylodb.repository.data.phylodb.isolate_data;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.IsolateDataDataRepository;
 import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.specific_data.IsolateDataDataRepositorySpecificData;
+import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.specific_data.IsolateDataPhyloDBDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.IsolateDataRow;
@@ -27,6 +28,11 @@ public class IsolateDataPhyloDBDataRepository implements IsolateDataDataReposito
 
     @Override
     public IsolateDataDataRepositorySpecificData uploadIsolateData(String projectId, String isolateDataId, MultipartFile multipartFile) {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    @Override
+    public String downloadIsolateData(IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData) {
         throw new UnsupportedOperationException("Not supported.");
     }
 

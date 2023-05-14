@@ -19,9 +19,17 @@ public class IsolateDataS3DataRepository implements IsolateDataDataRepository {
     public IsolateDataDataRepositorySpecificData uploadIsolateData(String projectId, String isolateDataId, MultipartFile multipartFile) {
         String url = projectId + "/isolate-data/" + isolateDataId;
 
-        s3FileRepository.store(url, multipartFile);
+        s3FileRepository.upload(url, multipartFile);
 
         return new IsolateDataS3DataRepositorySpecificData(s3FileRepository.getLocation() + "/" + url, multipartFile.getOriginalFilename());
+    }
+
+    @Override
+    public String downloadIsolateData(IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData) {
+        IsolateDataS3DataRepositorySpecificData repositorySpecificData =
+                (IsolateDataS3DataRepositorySpecificData) isolateDataDataRepositorySpecificData;
+
+        return s3FileRepository.download(repositorySpecificData.getUrl());
     }
 
     @Override

@@ -40,6 +40,7 @@ import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchem
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.IsolateDataNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeViewNotFoundException;
@@ -205,7 +206,7 @@ public class VisualizationServiceImpl implements VisualizationService {
 
         IsolateDataMetadata isolateDataMetadata = isolateDataMetadataRepository
                 .findByProjectIdAndIsolateDataId(projectId, isolateDataId)
-                .orElseThrow(TreeViewNotFoundException::new);
+                .orElseThrow(IsolateDataNotFoundException::new);
 
         if (!isolateDataMetadata.getRepositorySpecificData().containsKey(getIsolateDataRepositoryId))
             throw new IndexingNeededException("Isolate Data isn't indexed in the database. Indexing of Isolate Data required.");
@@ -226,7 +227,7 @@ public class VisualizationServiceImpl implements VisualizationService {
 
         IsolateDataMetadata isolateDataMetadata = isolateDataMetadataRepository
                 .findByProjectIdAndIsolateDataId(projectId, isolateDataId)
-                .orElseThrow(TreeViewNotFoundException::new);
+                .orElseThrow(IsolateDataNotFoundException::new);
 
         if (!isolateDataMetadata.getRepositorySpecificData().containsKey(getIsolateDataRepositoryId))
             throw new IndexingNeededException("Isolate Data isn't indexed in the database. Indexing of Isolate Data required.");

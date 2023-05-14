@@ -26,7 +26,7 @@ public class AdministrationExceptionHandler {
     })
     public Problem handleBadRequestException(Exception e) {
         return Problem.builder()
-                .withTitle(Status.BAD_REQUEST.getReasonPhrase())
+                .withTitle("Bad Request")
                 .withDetail(e.getMessage())
                 .withStatus(Status.BAD_REQUEST)
                 .build();

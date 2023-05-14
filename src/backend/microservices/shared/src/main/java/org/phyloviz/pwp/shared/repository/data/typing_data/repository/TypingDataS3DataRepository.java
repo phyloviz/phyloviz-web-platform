@@ -19,9 +19,17 @@ public class TypingDataS3DataRepository implements TypingDataDataRepository {
     public TypingDataDataRepositorySpecificData uploadTypingData(String projectId, String typingDataId, MultipartFile multipartFile) {
         String url = projectId + "/typing-data/" + typingDataId;
 
-        s3FileRepository.store(url, multipartFile);
+        s3FileRepository.upload(url, multipartFile);
 
         return new TypingDataS3DataRepositorySpecificData(s3FileRepository.getLocation() + "/" + url, multipartFile.getOriginalFilename());
+    }
+
+    @Override
+    public String downloadTypingData(TypingDataDataRepositorySpecificData typingDataDataRepositorySpecificData) {
+        TypingDataS3DataRepositorySpecificData repositorySpecificData =
+                (TypingDataS3DataRepositorySpecificData) typingDataDataRepositorySpecificData;
+
+        return s3FileRepository.download(repositorySpecificData.getUrl());
     }
 
     @Override
