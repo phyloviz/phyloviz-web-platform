@@ -98,7 +98,7 @@ public class FileTransferServiceImpl implements FileTransferService {
             BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
             String firstLine = reader.readLine();
 
-            return List.of(firstLine.split("/\s+/")); // TODO: Check regex (maybe / +/)
+            return List.of(firstLine.split("\t+"));
         } catch (IOException e) {
             throw new MultipartFileReadException("Could not read first line of file", e);
         }

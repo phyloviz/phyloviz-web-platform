@@ -14,6 +14,7 @@ public class FullDatasetInfo {
     private final String description;
     private final String typingDataId;
     private final String isolateDataId;
+    private final String isolateDataKey;
     private final List<DistanceMatrixInfo> distanceMatrices;
     private final List<TreeInfo> trees;
     private final List<TreeViewInfo> treeViews;
