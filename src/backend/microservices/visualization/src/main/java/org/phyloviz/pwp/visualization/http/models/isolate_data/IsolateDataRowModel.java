@@ -11,10 +11,12 @@ import java.util.Map;
 @Data
 public class IsolateDataRowModel {
     private String id;
+    private String profileId;
     private Map<String, String> row;
 
     public IsolateDataRowModel(IsolateDataRow isolateDataRow) {
         this.id = isolateDataRow.getId();
+        this.profileId = isolateDataRow.getProfileId();
         this.row = isolateDataRow.getRow();
     }
 }

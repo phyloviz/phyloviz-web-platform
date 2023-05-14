@@ -10,5 +10,6 @@ import java.util.Map;
 @Data
 public class IsolateDataRow {
     private final String id;
+    private final String profileId;
     private final Map<String, String> row;
 }

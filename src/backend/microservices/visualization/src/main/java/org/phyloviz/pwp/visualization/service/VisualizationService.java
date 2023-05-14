@@ -1,10 +1,11 @@
 package org.phyloviz.pwp.visualization.service;
 
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
-import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
+
+import java.util.List;
 
 public interface VisualizationService {
 
@@ -65,17 +66,17 @@ public interface VisualizationService {
                                                       String userId);
 
     /**
-     * Gets an isolate data's schema.
+     * Gets the keys of an isolate data.
      *
      * @param projectId     the id of the project
      * @param isolateDataId the id of the isolate data
      * @param userId        the id of the user
-     * @return the isolate data schema
+     * @return the isolate data keys
      */
-    GetIsolateDataSchemaOutput getIsolateDataSchema(String projectId, String isolateDataId, String userId);
+    List<String> getIsolateDataKeys(String projectId, String isolateDataId, String userId);
 
     /**
-     * Gets an isolate data's rows, with pagination.
+     * Gets the rows of an isolate data, with pagination.
      *
      * @param projectId     the id of the project
      * @param isolateDataId the id of the isolate data

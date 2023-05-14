@@ -5,7 +5,6 @@ import org.phyloviz.pwp.shared.repository.data.S3FileRepository;
 import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.specific_data.IsolateDataDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.specific_data.IsolateDataS3DataRepositorySpecificData;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
-import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataSchemaOutput;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,11 +29,6 @@ public class IsolateDataS3DataRepository implements IsolateDataDataRepository {
                 (IsolateDataS3DataRepositorySpecificData) isolateDataDataRepositorySpecificData;
 
         return s3FileRepository.download(repositorySpecificData.getUrl());
-    }
-
-    @Override
-    public GetIsolateDataSchemaOutput getIsolateDataSchema(IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData) {
-        throw new UnsupportedOperationException("Not supported.");
     }
 
     @Override

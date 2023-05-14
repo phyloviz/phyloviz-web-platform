@@ -34,7 +34,6 @@ import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.TreeViewM
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
-import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
@@ -48,6 +47,8 @@ import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
 import org.phyloviz.pwp.visualization.service.exceptions.IndexingNeededException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -200,7 +201,7 @@ public class VisualizationServiceImpl implements VisualizationService {
     }
 
     @Override
-    public GetIsolateDataSchemaOutput getIsolateDataSchema(String projectId, String isolateDataId, String userId) {
+    public List<String> getIsolateDataKeys(String projectId, String isolateDataId, String userId) {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
@@ -208,16 +209,7 @@ public class VisualizationServiceImpl implements VisualizationService {
                 .findByProjectIdAndIsolateDataId(projectId, isolateDataId)
                 .orElseThrow(IsolateDataNotFoundException::new);
 
-        if (!isolateDataMetadata.getRepositorySpecificData().containsKey(getIsolateDataRepositoryId))
-            throw new IndexingNeededException("Isolate Data isn't indexed in the database. Indexing of Isolate Data required.");
-
-        IsolateDataDataRepositorySpecificData repositorySpecificData = isolateDataMetadata
-                .getRepositorySpecificData()
-                .get(getIsolateDataRepositoryId);
-
-        IsolateDataDataRepository isolateDataDataRepository = isolateDataDataRepositoryFactory.getRepository(getIsolateDataRepositoryId);
-
-        return isolateDataDataRepository.getIsolateDataSchema(repositorySpecificData);
+        return isolateDataMetadata.getKeys();
     }
 
     @Override

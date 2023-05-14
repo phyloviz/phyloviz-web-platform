@@ -236,7 +236,8 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
                 'repositorySpecificData.phylodb.datasetIds': {'$in': [dataset_id]}
             }
     ) is not None:
-        raise Exception(f"Dataset with ID {dataset_id} already has Typing Data indexed in PhyloDB")
+        raise Exception(
+            f"Dataset with ID {dataset_id} already has Typing Data indexed in PhyloDB. No need to index again")
 
     if not project_exists(project_id):
         create_project(project_id)
@@ -248,7 +249,8 @@ def index_typing_data(typing_data_file_path, project_id, dataset_id, workflow_id
         create_dataset(project_id, dataset_id, typing_data_file_path)
         print("Done creating dataset in PhyloDB")
     else:
-        raise Exception("Dataset already exists in PhyloDB (typing data already indexed), no need to index again")
+        raise Exception(
+            f"Dataset with ID {dataset_id} already exists in PhyloDB (typing data already indexed). No need to index again")
 
     upload_allele_profiles(project_id, dataset_id, typing_data_file_path)
     print("Done uploading allele profiles to dataset in PhyloDB")
