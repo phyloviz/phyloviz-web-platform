@@ -2,7 +2,6 @@ package org.phyloviz.pwp.shared.repository.metadata.distance_matrix.mongo;
 
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.DistanceMatrixMetadata;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -6,7 +6,6 @@ import org.phyloviz.pwp.shared.repository.data.typing_data.repository.specific_d
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.TypingDataProfile;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pt.ist.meic.phylodb.typing.dataset.model.Dataset;
 import pt.ist.meic.phylodb.typing.profile.ProfileRepository;
@@ -16,7 +15,7 @@ import pt.ist.meic.phylodb.typing.schema.model.Schema;
 
 import java.util.List;
 
-@Service
+@Repository
 @RequiredArgsConstructor
 public class TypingDataPhyloDBDataRepository implements TypingDataDataRepository {
     private final ProfileRepository profileRepository;

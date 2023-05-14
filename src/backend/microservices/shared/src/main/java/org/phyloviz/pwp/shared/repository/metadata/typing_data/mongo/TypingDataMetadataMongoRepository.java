@@ -2,7 +2,6 @@ package org.phyloviz.pwp.shared.repository.metadata.typing_data.mongo;
 
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,7 +29,8 @@ public interface TypingDataMetadataMongoRepository extends MongoRepository<Typin
 
     /**
      * Checks if a typing data metadata exists from a project id and typing data id.
-     * @param projectId the id of the project
+     *
+     * @param projectId    the id of the project
      * @param typingDataId the id of the typing data resource
      * @return true if the typing data metadata exists, false otherwise
      */

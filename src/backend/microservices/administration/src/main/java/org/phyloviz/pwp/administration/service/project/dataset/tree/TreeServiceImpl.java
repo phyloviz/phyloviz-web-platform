@@ -1,20 +1,16 @@
 package org.phyloviz.pwp.administration.service.project.dataset.tree;
 
-import com.sun.source.tree.Tree;
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.administration.service.dtos.distance_matrix.UpdateDistanceMatrixOutput;
 import org.phyloviz.pwp.administration.service.dtos.tree.TreeInfo;
 import org.phyloviz.pwp.administration.service.dtos.tree.UpdateTreeOutput;
 import org.phyloviz.pwp.administration.service.exceptions.DeniedResourceDeletionException;
 import org.phyloviz.pwp.shared.repository.data.registry.tree.TreeDataRepositoryFactory;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
-import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.DistanceMatrixMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree.TreeMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.TreeViewMetadataRepository;
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;

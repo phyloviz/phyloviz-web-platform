@@ -1,7 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.isolate_data.mongo;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.repository.data.isolate_data.IsolateDataDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
 import org.springframework.context.annotation.Primary;

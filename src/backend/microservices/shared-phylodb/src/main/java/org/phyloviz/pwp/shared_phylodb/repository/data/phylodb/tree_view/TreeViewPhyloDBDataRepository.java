@@ -6,7 +6,6 @@ import org.phyloviz.pwp.shared.repository.data.tree_view.repository.specific_dat
 import org.phyloviz.pwp.shared.service.dtos.tree_view.Edge;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.Node;
-import org.springframework.stereotype.Service;
 import pt.ist.meic.phylodb.analysis.inference.InferenceService;
 import pt.ist.meic.phylodb.analysis.inference.model.Inference;
 import pt.ist.meic.phylodb.analysis.visualization.VisualizationService;
@@ -17,7 +16,7 @@ import pt.ist.meic.phylodb.typing.profile.model.Profile;
 import java.util.HashMap;
 import java.util.List;
 
-@Service
+@Repository
 @RequiredArgsConstructor
 public class TreeViewPhyloDBDataRepository implements TreeViewDataRepository {
 

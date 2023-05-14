@@ -2,7 +2,6 @@ package org.phyloviz.pwp.administration.http.models.datasets.set_isolate_data_of
 
 import lombok.Data;
 import org.phyloviz.pwp.administration.service.dtos.dataset.SetIsolateDataOfDatasetOutput;
-import org.phyloviz.pwp.administration.service.dtos.dataset.UpdateDatasetOutput;
 
 @Data
 public class SetIsolateDataOfDatasetOutputModel {

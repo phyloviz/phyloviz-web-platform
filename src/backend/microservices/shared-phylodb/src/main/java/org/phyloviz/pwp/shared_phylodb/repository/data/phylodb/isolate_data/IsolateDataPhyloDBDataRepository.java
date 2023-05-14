@@ -6,7 +6,7 @@ import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.specific_
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.IsolateDataRow;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 import pt.ist.meic.phylodb.typing.isolate.IsolateRepository;
 import pt.ist.meic.phylodb.typing.isolate.model.Ancillary;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Repository
 @RequiredArgsConstructor
 public class IsolateDataPhyloDBDataRepository implements IsolateDataDataRepository {
     private final ProfileRepository profileRepository;

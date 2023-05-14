@@ -1,7 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.distance_matrix.mongo;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.repository.data.distance_matrix.DistanceMatrixDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.DistanceMatrixMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.DistanceMatrixMetadata;
 import org.springframework.context.annotation.Primary;

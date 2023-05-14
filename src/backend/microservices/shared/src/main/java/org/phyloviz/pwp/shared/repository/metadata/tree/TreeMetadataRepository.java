@@ -1,6 +1,5 @@
 package org.phyloviz.pwp.shared.repository.metadata.tree;
 
-import org.phyloviz.pwp.shared.repository.data.tree.TreeDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
 
 import java.util.List;

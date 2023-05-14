@@ -21,6 +21,7 @@ import org.phyloviz.pwp.shared.repository.data.tree_view.repository.specific_dat
 import org.phyloviz.pwp.shared.repository.data.typing_data.TypingDataDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.data.typing_data.repository.TypingDataDataRepository;
 import org.phyloviz.pwp.shared.repository.data.typing_data.repository.specific_data.TypingDataDataRepositorySpecificData;
+import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.DistanceMatrixMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.DistanceMatrixMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetadataRepository;
@@ -37,10 +38,13 @@ import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataSch
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
+import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeViewNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
+import org.phyloviz.pwp.visualization.service.exceptions.IndexingNeededException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +53,7 @@ import org.springframework.stereotype.Service;
 public class VisualizationServiceImpl implements VisualizationService {
 
     private final ProjectRepository projectRepository;
+    private final DatasetRepository datasetRepository;
 
     private final DistanceMatrixMetadataRepository distanceMatrixMetadataRepository;
     private final TreeMetadataRepository treeMetadataRepository;
@@ -82,12 +87,15 @@ public class VisualizationServiceImpl implements VisualizationService {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId))
+            throw new DatasetNotFoundException();
+
         DistanceMatrixMetadata distanceMatrix = distanceMatrixMetadataRepository
                 .findByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)
                 .orElseThrow(DistanceMatrixNotFoundException::new);
 
         if (!distanceMatrix.getRepositorySpecificData().containsKey(getDistanceMatrixRepositoryId))
-            throw new DistanceMatrixNotFoundException();
+            throw new IndexingNeededException("Distance Matrix isn't indexed in the database. Indexing of Distance Matrix required.");
 
         DistanceMatrixDataRepositorySpecificData repositorySpecificData = distanceMatrix
                 .getRepositorySpecificData()
@@ -104,12 +112,15 @@ public class VisualizationServiceImpl implements VisualizationService {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId))
+            throw new DatasetNotFoundException();
+
         TreeMetadata treeMetadata = treeMetadataRepository
                 .findByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId)
                 .orElseThrow(TreeNotFoundException::new);
 
         if (!treeMetadata.getRepositorySpecificData().containsKey(getTreeRepositoryId))
-            throw new TreeNotFoundException();
+            throw new IndexingNeededException("Tree isn't indexed in the database. Indexing of Tree required.");
 
         TreeDataRepositorySpecificData repositorySpecificData = treeMetadata
                 .getRepositorySpecificData()
@@ -119,8 +130,6 @@ public class VisualizationServiceImpl implements VisualizationService {
                 .getRepository(getTreeRepositoryId);
 
         return treeDataRepository.getTree(repositorySpecificData);
-
-        //throw new TreeIndexingNeededException("Tree isn't indexed in the database. Needs indexing to get it."); TODO check this "indexing concept"
     }
 
     @Override
@@ -128,12 +137,15 @@ public class VisualizationServiceImpl implements VisualizationService {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId))
+            throw new DatasetNotFoundException();
+
         TreeViewMetadata treeViewMetadata = treeViewMetadataRepository
                 .findByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId)
                 .orElseThrow(TreeViewNotFoundException::new);
 
         if (!treeViewMetadata.getRepositorySpecificData().containsKey(getTreeViewRepositoryId))
-            throw new TreeViewNotFoundException();
+            throw new IndexingNeededException("Tree View isn't indexed in the database. Indexing of Tree View required.");
 
         TreeViewDataRepositorySpecificData repositorySpecificData = treeViewMetadata
                 .getRepositorySpecificData()
@@ -151,10 +163,10 @@ public class VisualizationServiceImpl implements VisualizationService {
 
         TypingDataMetadata typingDataMetadata = typingDataMetadataRepository
                 .findByProjectIdAndTypingDataId(projectId, typingDataId)
-                .orElseThrow(TreeViewNotFoundException::new);
+                .orElseThrow(TypingDataNotFoundException::new);
 
         if (!typingDataMetadata.getRepositorySpecificData().containsKey(getTypingDataRepositoryId))
-            throw new TreeViewNotFoundException();
+            throw new IndexingNeededException("Typing Data isn't indexed in the database. Indexing of Typing Data required.");
 
         TypingDataDataRepositorySpecificData repositorySpecificData = typingDataMetadata
                 .getRepositorySpecificData()
@@ -172,10 +184,10 @@ public class VisualizationServiceImpl implements VisualizationService {
 
         TypingDataMetadata typingDataMetadata = typingDataMetadataRepository
                 .findByProjectIdAndTypingDataId(projectId, typingDataId)
-                .orElseThrow(TreeViewNotFoundException::new);
+                .orElseThrow(TypingDataNotFoundException::new);
 
         if (!typingDataMetadata.getRepositorySpecificData().containsKey(getTypingDataRepositoryId))
-            throw new TreeViewNotFoundException();
+            throw new IndexingNeededException("Typing Data isn't indexed in the database. Indexing of Typing Data required.");
 
         TypingDataDataRepositorySpecificData repositorySpecificData = typingDataMetadata
                 .getRepositorySpecificData()
@@ -196,7 +208,7 @@ public class VisualizationServiceImpl implements VisualizationService {
                 .orElseThrow(TreeViewNotFoundException::new);
 
         if (!isolateDataMetadata.getRepositorySpecificData().containsKey(getIsolateDataRepositoryId))
-            throw new TreeViewNotFoundException();
+            throw new IndexingNeededException("Isolate Data isn't indexed in the database. Indexing of Isolate Data required.");
 
         IsolateDataDataRepositorySpecificData repositorySpecificData = isolateDataMetadata
                 .getRepositorySpecificData()
@@ -217,7 +229,7 @@ public class VisualizationServiceImpl implements VisualizationService {
                 .orElseThrow(TreeViewNotFoundException::new);
 
         if (!isolateDataMetadata.getRepositorySpecificData().containsKey(getIsolateDataRepositoryId))
-            throw new TreeViewNotFoundException();
+            throw new IndexingNeededException("Isolate Data isn't indexed in the database. Indexing of Isolate Data required.");
 
         IsolateDataDataRepositorySpecificData repositorySpecificData = isolateDataMetadata
                 .getRepositorySpecificData()
