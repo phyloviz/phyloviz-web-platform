@@ -3,7 +3,7 @@ package org.phyloviz.pwp.visualization.http.models.isolate_data;
 import lombok.Data;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.IsolateDataRow;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * Model for the isolate data.
@@ -11,10 +11,10 @@ import java.util.List;
 @Data
 public class IsolateDataRowModel {
     private String id;
-    private List<String> row;
+    private Map<String, String> row;
 
     public IsolateDataRowModel(IsolateDataRow isolateDataRow) {
         this.id = isolateDataRow.getId();
-        this.row = isolateDataRow.getRow().stream().toList();
+        this.row = isolateDataRow.getRow();
     }
 }

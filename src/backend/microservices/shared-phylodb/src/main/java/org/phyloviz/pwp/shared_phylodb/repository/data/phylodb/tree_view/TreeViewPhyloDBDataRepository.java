@@ -75,7 +75,9 @@ public class TreeViewPhyloDBDataRepository implements TreeViewDataRepository {
 
         return new GetTreeViewOutput(
                 nodes,
-                edges
+                nodes.size(),
+                edges,
+                edges.size()
         );
     }
 

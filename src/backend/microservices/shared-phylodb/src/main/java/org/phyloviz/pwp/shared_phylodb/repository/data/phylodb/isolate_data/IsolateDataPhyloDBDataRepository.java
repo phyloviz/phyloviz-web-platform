@@ -12,7 +12,6 @@ import pt.ist.meic.phylodb.typing.isolate.IsolateRepository;
 import pt.ist.meic.phylodb.typing.isolate.model.Ancillary;
 import pt.ist.meic.phylodb.typing.isolate.model.Isolate;
 import pt.ist.meic.phylodb.typing.profile.ProfileRepository;
-import pt.ist.meic.phylodb.typing.profile.model.Profile;
 import pt.ist.meic.phylodb.typing.schema.SchemaRepository;
 
 import java.util.Arrays;
@@ -53,13 +52,6 @@ public class IsolateDataPhyloDBDataRepository implements IsolateDataDataReposito
         IsolateDataPhyloDBDataRepositorySpecificData repositorySpecificData =
                 (IsolateDataPhyloDBDataRepositorySpecificData) isolateDataDataRepositorySpecificData;
 
-        List<Profile> profiles = profileRepository.findAll(
-                offset,
-                limit,
-                repositorySpecificData.getProjectId(),
-                repositorySpecificData.getDatasetIds().get(0)
-        ).orElseThrow(() -> new RuntimeException("Profiles not found in PhyloDB"));
-
         List<Isolate> isolates = isolateRepository.findAll(
                 offset,
                 limit,
@@ -71,14 +63,11 @@ public class IsolateDataPhyloDBDataRepository implements IsolateDataDataReposito
                 isolates.stream().map(isolate -> new IsolateDataRow(
                                 isolate.getPrimaryKey().getId(), // TODO Missing profile id?
                                 Arrays.stream(isolate.getAncillaries()).collect(
-                                        Collectors.toMap(
-                                                Ancillary::getKey,
-                                                Ancillary::getValue
-                                        )
+                                        Collectors.toMap(Ancillary::getKey, Ancillary::getValue)
                                 )
                         )
                 ).toList(),
-                profiles.size()
+                isolates.size()
         );
     }
 
