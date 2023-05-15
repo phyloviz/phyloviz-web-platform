@@ -25,6 +25,7 @@ public class IsolateDataMetadataSerializer implements Converter<IsolateDataMetad
                     Map.of(
                             "projectId", isolateDataMetadata.getProjectId(),
                             "isolateDataId", isolateDataMetadata.getIsolateDataId(),
+                            "keys", isolateDataMetadata.getKeys(),
                             "name", isolateDataMetadata.getName(),
                             "repositorySpecificData", Objects.requireNonNull(
                                     mongoConverter.convertToMongoType(

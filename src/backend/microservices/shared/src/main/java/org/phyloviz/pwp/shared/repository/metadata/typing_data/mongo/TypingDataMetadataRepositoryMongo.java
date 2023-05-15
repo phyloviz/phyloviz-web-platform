@@ -1,7 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.typing_data.mongo;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.repository.data.typing_data.TypingDataDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 import org.springframework.context.annotation.Primary;

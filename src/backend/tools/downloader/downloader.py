@@ -3,9 +3,9 @@ import boto3
 import configparser
 import os
 from botocore.exceptions import NoCredentialsError, ClientError
+from bson.objectid import ObjectId
 from pymongo import MongoClient
 from urllib.parse import urlparse
-from bson.objectid import ObjectId
 
 resource_type_collection_map = {
     "tree": "trees",
@@ -27,6 +27,7 @@ client = MongoClient(mongo_uri)
 db = client['phyloviz-web-platform']
 workflows_collection = db['workflow-instances']
 datasets_collection = db['datasets']
+
 
 def get_collection_from_resource_type(resource_type):
     return resource_type_collection_map[resource_type]
@@ -50,28 +51,26 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
     if resource_type == 'tree' or resource_type == 'distance-matrix':
         resource = resource_type_collection.find_one(
             {
-            'projectId': project_id,
-            'datasetId': dataset_id,
-            get_resource_id_attr_from_resource_type(resource_type): resource_id,
-            "repositorySpecificData.s3": { "$exists": True }
+                'projectId': project_id,
+                'datasetId': dataset_id,
+                get_resource_id_attr_from_resource_type(resource_type): resource_id,
+                "repositorySpecificData.s3": {"$exists": True}
             }
         )
 
-        if(resource == None):
-            print(f'Error: Resource {resource_id} of type {resource_type} not found')
-            return
+        if resource is None:
+            raise Exception(f'Error: Resource {resource_id} of type {resource_type} not found')
 
     elif resource_type == 'typing-data' or resource_type == 'isolate-data':
         dataset = datasets_collection.find_one(
             {
-            '_id': ObjectId(dataset_id),
-            'projectId': project_id,
+                '_id': ObjectId(dataset_id),
+                'projectId': project_id,
             }
         )
 
-        if(dataset == None):
-            print(f'Error: Dataset {dataset_id} of project {project_id} not found')
-            return
+        if dataset is None:
+            raise Exception(f'Error: Dataset {dataset_id} of project {project_id} not found')
 
         # Obtain the typing data or isolate data id from the dataset
         if resource_type == 'typing-data':
@@ -81,15 +80,14 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
 
         resource = resource_type_collection.find_one(
             {
-            'projectId': project_id,
-            get_resource_id_attr_from_resource_type(resource_type): resource_id,
-            "repositorySpecificData.s3": { "$exists": True }
+                'projectId': project_id,
+                get_resource_id_attr_from_resource_type(resource_type): resource_id,
+                "repositorySpecificData.s3": {"$exists": True}
             }
         )
 
-        if(resource == None):
-            print(f'Error: Resource {resource_id} of type {resource_type} not found')
-            return
+        if resource is None:
+            raise Exception(f'Error: Resource {resource_id} of type {resource_type} not found')
 
         print(f"Resource Type: {resource_type}, Resource ID: {resource_id}")
 
@@ -117,8 +115,7 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
                 }
             )
     else:
-        print(f'Error: Invalid resource type: {resource_type}')
-        return
+        raise Exception(f'Error: Invalid resource type: {resource_type}')
 
     # Obtain the S3 URL from the repositorySpecificData
     s3_url = resource['repositorySpecificData']['s3']['url']
@@ -145,9 +142,9 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
         s3.download_file(bucket_name, object_key, out)
         print(f'Successfully downloaded {s3_url} to {out}')
     except NoCredentialsError:
-        print('Error: AWS credentials not found')
+        raise Exception('Error: AWS credentials not found')
     except ClientError as e:
-        print(f'Error downloading the file: {e}')
+        raise Exception(f'Error downloading the file: {e}')
 
 
 if __name__ == '__main__':
@@ -162,4 +159,4 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     download_s3_object(args.project_id, args.dataset_id, args.resource_id, args.resource_type, args.out,
-                        args.workflow_id)
+                       args.workflow_id)

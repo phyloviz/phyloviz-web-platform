@@ -13,7 +13,7 @@ public class DistanceMatrixInfo {
     private final DistanceMatrixSourceInfo source;
 
     public DistanceMatrixInfo(DistanceMatrixMetadata distanceMatrixMetadata) {
-        this.distanceMatrixId = distanceMatrixMetadata.getId();
+        this.distanceMatrixId = distanceMatrixMetadata.getDistanceMatrixId();
         this.name = distanceMatrixMetadata.getName();
         this.sourceType = distanceMatrixMetadata.getSourceType();
         this.source = switch (distanceMatrixMetadata.getSourceType()) {

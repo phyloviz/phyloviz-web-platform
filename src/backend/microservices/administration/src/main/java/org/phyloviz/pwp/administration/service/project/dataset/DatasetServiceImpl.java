@@ -3,6 +3,7 @@ package org.phyloviz.pwp.administration.service.project.dataset;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.administration.service.dtos.dataset.CreateDatasetOutput;
 import org.phyloviz.pwp.administration.service.dtos.dataset.FullDatasetInfo;
+import org.phyloviz.pwp.administration.service.dtos.dataset.SetIsolateDataOfDatasetOutput;
 import org.phyloviz.pwp.administration.service.dtos.dataset.UpdateDatasetOutput;
 import org.phyloviz.pwp.administration.service.project.dataset.distance_matrix.DistanceMatrixService;
 import org.phyloviz.pwp.administration.service.project.dataset.tree.TreeService;
@@ -124,6 +125,43 @@ public class DatasetServiceImpl implements DatasetService {
         return new UpdateDatasetOutput(previousName, name, previousDescription, description);
     }
 
+    @Override
+    public SetIsolateDataOfDatasetOutput setIsolateDataOfDataset(String isolateDataId, String isolateDataKey, String projectId, String datasetId, String userId) {
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
+
+        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
+                .orElseThrow(DatasetNotFoundException::new);
+
+        String previousIsolateDataId = dataset.getIsolateDataId();
+        String previousIsolateDataKey = dataset.getIsolateDataKey();
+
+        if (previousIsolateDataId != null || previousIsolateDataKey != null)
+            throw new InvalidArgumentException("Dataset already has an isolate data associated");
+
+        if (isolateDataId == null || isolateDataKey == null)
+            throw new InvalidArgumentException("You have to provide both isolateDataId and isolateDataKey");
+
+        if (isolateDataId.isBlank() || isolateDataKey.isBlank())
+            throw new InvalidArgumentException("IsolateDataId and isolateDataKey can't be blank");
+
+        IsolateDataMetadata isolateDataMetadata =
+                isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(projectId, isolateDataId)
+                        .orElseThrow(IsolateDataDoesNotExistException::new);
+
+        if (!isolateDataMetadata.getKeys().contains(isolateDataKey))
+            throw new InvalidArgumentException(String.format("Isolate data key %s does not exist in isolate data %s",
+                    isolateDataKey, isolateDataId
+            ));
+
+        dataset.setIsolateDataId(isolateDataId);
+        dataset.setIsolateDataKey(isolateDataKey);
+
+        datasetRepository.save(dataset);
+
+        return new SetIsolateDataOfDatasetOutput(isolateDataId, isolateDataKey);
+    }
+
     private void deleteAllChildrenByProjectIdAndDatasetId(String projectId, String datasetId) {
         treeViewService.deleteAllByProjectIdAndDatasetId(projectId, datasetId);
         treeService.deleteAllByProjectIdAndDatasetId(projectId, datasetId);
@@ -141,6 +179,7 @@ public class DatasetServiceImpl implements DatasetService {
                 dataset.getDescription(),
                 dataset.getTypingDataId(),
                 dataset.getIsolateDataId(),
+                dataset.getIsolateDataKey(),
                 distanceMatrixService.getDistanceMatrixInfos(dataset.getId()),
                 treeService.getTreeInfos(dataset.getId()),
                 treeViewService.getTreeViewInfos(dataset.getId())
@@ -153,11 +192,11 @@ public class DatasetServiceImpl implements DatasetService {
             throw new ProjectNotFoundException();
 
         if (name == null || name.isBlank()) {
-            throw new InvalidArgumentException("Dataset name cannot be empty");
+            throw new InvalidArgumentException("Dataset name cannot be blank");
         }
 
         if (typingDataId == null || typingDataId.isBlank()) {
-            throw new InvalidArgumentException("Typing data id cannot be empty");
+            throw new InvalidArgumentException("Typing data id cannot be blank");
         }
 
         if (!UUIDUtils.isValidUUID(typingDataId)) {
@@ -166,7 +205,7 @@ public class DatasetServiceImpl implements DatasetService {
 
         if (isolateDataId != null) {
             if (isolateDataId.isBlank()) {
-                throw new InvalidArgumentException("Isolate data id cannot be empty (but can be null).");
+                throw new InvalidArgumentException("Isolate data id cannot be blank (but can be null).");
             } else if (!UUIDUtils.isValidUUID(isolateDataId)) {
                 throw new InvalidArgumentException("Isolate data id is not a valid UUID.");
             }
@@ -176,18 +215,21 @@ public class DatasetServiceImpl implements DatasetService {
             throw new TypingDataDoesNotExistException();
 
         if (isolateDataId != null) {
-            IsolateDataMetadata isolateDataMetadata =
-                    isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(projectId, isolateDataId)
-                            .orElseThrow(IsolateDataDoesNotExistException::new);
-
             if (isolateDataKey == null)
                 throw new InvalidArgumentException("Isolate data key must not be null. " +
                         "If an isolate data id is specified, an associated key should too."
                 );
+
+            IsolateDataMetadata isolateDataMetadata =
+                    isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(projectId, isolateDataId)
+                            .orElseThrow(IsolateDataDoesNotExistException::new);
+
             if (!isolateDataMetadata.getKeys().contains(isolateDataKey))
                 throw new InvalidArgumentException(String.format("Isolate data key %s does not exist in isolate data %s",
                         isolateDataKey, isolateDataId
                 ));
+        } else if (isolateDataKey != null) {
+            throw new InvalidArgumentException("Isolate data key must be null if isolate data id is null.");
         }
     }
 }

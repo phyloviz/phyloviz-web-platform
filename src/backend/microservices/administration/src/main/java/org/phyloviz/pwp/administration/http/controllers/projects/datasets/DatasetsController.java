@@ -6,10 +6,13 @@ import org.phyloviz.pwp.administration.http.models.datasets.create_dataset.Creat
 import org.phyloviz.pwp.administration.http.models.datasets.delete_dataset.DeleteDatasetOutputModel;
 import org.phyloviz.pwp.administration.http.models.datasets.get_dataset.GetDatasetOutputModel;
 import org.phyloviz.pwp.administration.http.models.datasets.get_datasets.GetDatasetsOutputModel;
+import org.phyloviz.pwp.administration.http.models.datasets.set_isolate_data_of_dataset.SetIsolateDataOfDatasetInputModel;
+import org.phyloviz.pwp.administration.http.models.datasets.set_isolate_data_of_dataset.SetIsolateDataOfDatasetOutputModel;
 import org.phyloviz.pwp.administration.http.models.datasets.update_dataset.UpdateDatasetInputModel;
 import org.phyloviz.pwp.administration.http.models.datasets.update_dataset.UpdateDatasetOutputModel;
 import org.phyloviz.pwp.administration.service.dtos.dataset.CreateDatasetOutput;
 import org.phyloviz.pwp.administration.service.dtos.dataset.FullDatasetInfo;
+import org.phyloviz.pwp.administration.service.dtos.dataset.SetIsolateDataOfDatasetOutput;
 import org.phyloviz.pwp.administration.service.dtos.dataset.UpdateDatasetOutput;
 import org.phyloviz.pwp.administration.service.project.dataset.DatasetService;
 import org.phyloviz.pwp.shared.domain.User;
@@ -128,6 +131,29 @@ public class DatasetsController {
         );
 
         return new UpdateDatasetOutputModel(updateDatasetOutput);
+    }
+
+    /**
+     * Sets the isolate data of a dataset.
+     *
+     * @param projectId the id of the project to which the dataset belongs
+     * @param datasetId the id of the dataset to be updated
+     * @param user      the user that is updating the dataset
+     * @return information about the update
+     */
+    @PostMapping("/projects/{projectId}/datasets/{datasetId}/isolateData")
+    public SetIsolateDataOfDatasetOutputModel setIsolateDataOfDataset(
+            @PathVariable String projectId,
+            @PathVariable String datasetId,
+            @RequestBody SetIsolateDataOfDatasetInputModel setIsolateDataOfDatasetInputModel,
+            User user
+    ) {
+        SetIsolateDataOfDatasetOutput setIsolateDataOfDatasetOutput = datasetService.setIsolateDataOfDataset(
+                setIsolateDataOfDatasetInputModel.getIsolateDataId(), setIsolateDataOfDatasetInputModel.getIsolateDataKey(),
+                projectId, datasetId, user.getId()
+        );
+
+        return new SetIsolateDataOfDatasetOutputModel(setIsolateDataOfDatasetOutput);
     }
 
     /**

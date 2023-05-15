@@ -1,9 +1,7 @@
 package org.phyloviz.pwp.shared.repository.metadata.isolate_data.mongo;
 
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
-import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,7 +13,7 @@ public interface IsolateDataMetadataMongoRepository extends MongoRepository<Isol
     /**
      * Find the first isolate data metadata with the given id. Analogous to findAny().
      *
-     * @param projectId    the id of the project
+     * @param projectId     the id of the project
      * @param isolateDataId the id of the isolate data resource
      * @return a isolate data metadata
      */
@@ -31,7 +29,8 @@ public interface IsolateDataMetadataMongoRepository extends MongoRepository<Isol
 
     /**
      * Checks if a isolate data metadata exists from a project id and isolate data id.
-     * @param projectId the id of the project
+     *
+     * @param projectId     the id of the project
      * @param isolateDataId the id of the isolate data resource
      * @return true if the isolate data metadata exists, false otherwise
      */

@@ -40,7 +40,7 @@ public interface TreeViewMetadataMongoRepository extends MongoRepository<TreeVie
      * Check if a tree view metadata exists by dataset id and its source is a tree of tree id.
      *
      * @param datasetId the id of the dataset
-     * @param treeId the id of the tree
+     * @param treeId    the id of the tree
      * @return true if exists, false otherwise
      */
     @Query("{ 'datasetId' : ?0, 'source' : { 'treeId' : ?1 } }")

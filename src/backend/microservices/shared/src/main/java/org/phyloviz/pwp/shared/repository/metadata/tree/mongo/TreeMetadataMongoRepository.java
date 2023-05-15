@@ -39,7 +39,7 @@ public interface TreeMetadataMongoRepository extends MongoRepository<TreeMetadat
     /**
      * Check if a tree metadata exists by dataset id and its source is a distance matrix of distance matrix id.
      *
-     * @param datasetId the id of the dataset
+     * @param datasetId        the id of the dataset
      * @param distanceMatrixId the id of the distance matrix
      * @return true if exists, false otherwise
      */

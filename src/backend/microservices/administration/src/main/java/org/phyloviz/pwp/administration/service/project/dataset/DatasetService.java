@@ -2,6 +2,7 @@ package org.phyloviz.pwp.administration.service.project.dataset;
 
 import org.phyloviz.pwp.administration.service.dtos.dataset.CreateDatasetOutput;
 import org.phyloviz.pwp.administration.service.dtos.dataset.FullDatasetInfo;
+import org.phyloviz.pwp.administration.service.dtos.dataset.SetIsolateDataOfDatasetOutput;
 import org.phyloviz.pwp.administration.service.dtos.dataset.UpdateDatasetOutput;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface DatasetService {
     void deleteAllByProjectId(String projectId);
 
     UpdateDatasetOutput updateDataset(String name, String description, String projectId, String datasetId, String userId);
+
+    SetIsolateDataOfDatasetOutput setIsolateDataOfDataset(String isolateDataId, String isolateDataKey, String projectId, String datasetId, String userId);
 }

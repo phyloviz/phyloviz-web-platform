@@ -131,6 +131,34 @@
     ]
   },
   {
+    "name": "index-isolate-data",
+    "description": "Index Isolate Data Workflow",
+    "arguments": {
+      "datasetId": {
+        "type": "datasetId"
+      }
+    },
+    "tasks": [
+      {
+        "taskId": "download",
+        "tool": "downloader",
+        "action": {
+          "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=isolate-data  --workflow-id=${workflowId} --out=/phyloviz-web-platform/isolate_data.txt"
+        },
+        "children": [
+          "isolateDataIndexing"
+        ]
+      },
+      {
+        "taskId": "isolateDataIndexing",
+        "tool": "isolate_data_indexer",
+        "action": {
+          "command": "--isolate-data-file-path=/phyloviz-web-platform/isolate_data.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId}"
+        }
+      }
+    ]
+  },
+  {
     "name": "index-tree",
     "description": "Index Tree Workflow",
     "arguments": {

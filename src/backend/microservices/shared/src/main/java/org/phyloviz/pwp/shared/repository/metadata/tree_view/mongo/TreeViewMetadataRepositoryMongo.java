@@ -1,7 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.tree_view.mongo;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.repository.data.tree_view.TreeViewDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.TreeViewMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.TreeViewMetadata;
 import org.springframework.context.annotation.Primary;
