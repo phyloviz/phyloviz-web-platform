@@ -42,6 +42,7 @@ export function useTypingData() {
             rows: typingDataProfiles?.profiles.map((profile) => (
                 {
                     id: profile.id,
+                    ST: profile.id,
                     ...profile.profile.reduce((acc, curr, index) => {
                         acc[typingDataSchema!.loci[index]] = curr
                         return acc

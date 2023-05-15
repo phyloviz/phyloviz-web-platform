@@ -5,8 +5,8 @@ import {
     GetIsolateDataRowsOutputModel
 } from "../../../../Services/Visualization/models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel";
 import {
-    GetIsolateDataSchemaOutputModel
-} from "../../../../Services/Visualization/models/getIsolateDataSchema/GetIsolateDataSchemaOutputModel";
+    GetIsolateDataKeysOutputModel
+} from "../../../../Services/Visualization/models/getIsolateDataSchema/GetIsolateDataKeysOutputModel";
 import {useTreeViewContext} from "../useTreeView";
 
 /**
@@ -16,7 +16,7 @@ export function useIsolateDataFilter() {
     const {projectId} = useParams<{ projectId: string }>()
     const {isolateDataId} = useTreeViewContext()
 
-    const [isolateDataSchema, setIsolateDataSchema] = useState<GetIsolateDataSchemaOutputModel>()
+    const [isolateDataSchema, setIsolateDataSchema] = useState<GetIsolateDataKeysOutputModel>()
     const [isolateDataRows, setIsolateDataRows] = useState<GetIsolateDataRowsOutputModel>()
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
@@ -24,7 +24,7 @@ export function useIsolateDataFilter() {
 
     useEffect(() => {
         setLoading(true)
-        VisualizationService.getIsolateDataSchema(projectId!, isolateDataId!)
+        VisualizationService.getIsolateDataKeys(projectId!, isolateDataId!)
             .then((res) => setIsolateDataSchema(res))
             .catch((err) => setError(err))
 
@@ -36,14 +36,14 @@ export function useIsolateDataFilter() {
 
     return {
         data: {
-            columns: isolateDataSchema?.headers.map((header) => (
+            columns: isolateDataSchema?.keys.map((header) => (
                 {field: header, headerName: header, width: 100}
             )) ?? [],
             rows: isolateDataRows?.rows.map((row) => (
                 {
                     id: row.id,
-                    ...row.row.reduce((acc, curr, index) => {
-                        acc[isolateDataSchema!.headers[index]] = curr
+                    ...Object.entries(row.row).reduce((acc, curr) => {
+                        acc[curr[0]] = curr[1]
                         return acc
                     }, {} as Record<string, string>)
                 }

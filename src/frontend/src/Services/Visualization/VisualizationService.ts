@@ -3,7 +3,7 @@ import {WebApiUris} from "../WebApiUris"
 import {GetTypingDataSchemaOutputModel} from "./models/getTypingDataSchema/GetTypingDataSchemaOutputModel"
 import {GetTypingDataProfilesOutputModel} from "./models/getTypingDataProfiles/GetTypingDataProfilesOutputModel"
 import {GetTypingDataFileOutputModel} from "./models/getTypingDataFile/GetTypingDataFileOutputModel"
-import {GetIsolateDataSchemaOutputModel} from "./models/getIsolateDataSchema/GetIsolateDataSchemaOutputModel"
+import {GetIsolateDataKeysOutputModel} from "./models/getIsolateDataSchema/GetIsolateDataKeysOutputModel"
 import {GetIsolateDataRowsOutputModel} from "./models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel"
 import {GetIsolateDataFileOutputModel} from "./models/getIsolateDataFile/GetIsolateDataFileOutputModel"
 import {GetDistanceMatrixOutputModel} from "./models/getDistanceMatrix/GetDistanceMatrixOutputModel"
@@ -56,17 +56,17 @@ namespace VisualizationService {
     }
 
     /**
-     * Get the isolate data schema.
+     * Gets the keys of an isolate data.
      *
      * @param projectId The project id.
      * @param isolateDataId The isolate data id.
-     * @returns The isolate data schema.
+     * @returns The isolate data keys.
      */
-    export async function getIsolateDataSchema(
+    export async function getIsolateDataKeys(
         projectId: string,
         isolateDataId: string
-    ): Promise<GetIsolateDataSchemaOutputModel> {
-        return await get<GetIsolateDataSchemaOutputModel>(WebApiUris.getIsolateDataSchema(projectId, isolateDataId))
+    ): Promise<GetIsolateDataKeysOutputModel> {
+        return await get<GetIsolateDataKeysOutputModel>(WebApiUris.getIsolateDataKeys(projectId, isolateDataId))
     }
 
     /**
