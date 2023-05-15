@@ -1,6 +1,5 @@
 package org.phyloviz.pwp.compute.service;
 
-import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.ToolTemplateRepository;
 import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.documents.ToolTemplate;
@@ -38,7 +37,6 @@ import java.util.Map;
  * Implementation of the {@link ComputeService} interface.
  */
 @Service
-@RequiredArgsConstructor
 public class ComputeServiceImpl implements ComputeService {
 
     private final ProjectRepository projectRepository;
@@ -47,6 +45,26 @@ public class ComputeServiceImpl implements ComputeService {
     private final WorkflowInstanceRepository workflowInstanceRepository;
     private final ToolTemplateRepository toolTemplateRepository;
     private final FLOWViZClient flowVizClient;
+
+    /**
+     * Constructor. Calls the {@link WorkflowTemplateRepository#findAll()} method to validate the workflow templates
+     * using the constructor.
+     */
+    ComputeServiceImpl(
+            ProjectRepository projectRepository,
+            WorkflowTemplateRepository workflowTemplateRepository,
+            WorkflowInstanceRepository workflowInstanceRepository,
+            ToolTemplateRepository toolTemplateRepository,
+            FLOWViZClient flowVizClient
+    ) {
+        this.projectRepository = projectRepository;
+        this.workflowTemplateRepository = workflowTemplateRepository;
+        this.workflowInstanceRepository = workflowInstanceRepository;
+        this.toolTemplateRepository = toolTemplateRepository;
+        this.flowVizClient = flowVizClient;
+
+        workflowTemplateRepository.findAll();
+    }
 
     @Override
     public CreateWorkflowOutput createWorkflow(
@@ -140,14 +158,13 @@ public class ComputeServiceImpl implements ComputeService {
             case "running" -> WorkflowStatus.RUNNING;
             case "success" -> WorkflowStatus.SUCCESS;
             case "failed" -> WorkflowStatus.FAILED;
-            default -> throw new IllegalStateException("Unexpected value: " + airflowStatus);
+            default -> throw new IllegalStateException("Unexpected airflow status value: " + airflowStatus);
         };
     }
 
     private CreateWorkflowOutput createWorkflow(String projectId, String workflowType, Map<String, String> properties) {
         //TODO: Fix transactions
 
-        // Maybe we should only retrieve the workflow template on startup?
         WorkflowTemplate workflowTemplate = workflowTemplateRepository
                 .findByName(workflowType)
                 .orElseThrow(() -> new InvalidWorkflowException("Workflow type not found"));

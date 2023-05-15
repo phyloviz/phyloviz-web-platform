@@ -6,8 +6,8 @@ spring:
     import: application-shared.yml
   servlet:
     multipart:
-      max-file-size: 20MB
-      max-request-size: 20MB
+      max-file-size: 1GB
+      max-request-size: 1GB
 
 data-repositories:
   upload-typing-data-repository: S3
