@@ -121,19 +121,55 @@ public class ComputeServiceImpl implements ComputeService {
                 .map(this::getWorkflowStatusOutput).toList();
     }
 
+    /**
+     * Gets the status of the workflow.
+     * <p>
+     * If the workflow instance metadata has the status as running, it calls the FLOWViZ API to get the status of
+     * the workflow to confirm if it is still running. If the workflow is not running, it updates the status of the
+     * workflow instance metadata.
+     * If the workflow instance metadata has the status as failed and failure reason is null, it updates the failure
+     * reason "Internal Server Error".
+     * If the workflow instance metadata has the status as success and progress is less than 100, it updates the
+     * progress to 100.
+     *
+     * @param workflowInstance the workflow instance metadata
+     * @return the status of the workflow
+     */
     private GetWorkflowStatusOutput getWorkflowStatusOutput(WorkflowInstance workflowInstance) {
         if (workflowInstance.getStatus() == WorkflowStatus.RUNNING) {
-            workflowInstance.setStatus(getWorkflowStatusFromFLOWViZ(workflowInstance));
+            WorkflowStatus status = getWorkflowStatusFromFLOWViZ(workflowInstance);
+            if (status != WorkflowStatus.RUNNING) {
+                workflowInstance.setStatus(status);
+                workflowInstanceRepository.save(workflowInstance);
+            }
+        }
+
+        if (workflowInstance.getStatus() == WorkflowStatus.FAILED && workflowInstance.getFailureReason() == null) {
+            workflowInstance.setFailureReason("Internal Server Error");
             workflowInstanceRepository.save(workflowInstance);
         }
+
+        if (workflowInstance.getStatus() == WorkflowStatus.SUCCESS && workflowInstance.getProgress() < 100) {
+            workflowInstance.setProgress(100);
+            workflowInstanceRepository.save(workflowInstance);
+        }
+
         return new GetWorkflowStatusOutput(
                 workflowInstance.getId(),
                 workflowInstance.getType(),
                 workflowInstance.getStatus(),
+                workflowInstance.getFailureReason(),
+                workflowInstance.getProgress(),
                 workflowInstance.getData()
         );
     }
 
+    /**
+     * Gets the workflow status from the FLOWViZ API.
+     *
+     * @param workflowInstance the workflow instance metadata
+     * @return the workflow status
+     */
     private WorkflowStatus getWorkflowStatusFromFLOWViZ(WorkflowInstance workflowInstance) {
         GetWorkflowResponse workflow;
         try {
@@ -178,6 +214,7 @@ public class ComputeServiceImpl implements ComputeService {
         workflowInstance.setProjectId(projectId);
         workflowInstance.setType(workflowType);
         workflowInstance.setStatus(WorkflowStatus.RUNNING);
+        workflowInstance.setProgress(0.0);
         workflowInstance.setData(workflowInstanceData);
         workflowInstance = workflowInstanceRepository.save(workflowInstance);
 
