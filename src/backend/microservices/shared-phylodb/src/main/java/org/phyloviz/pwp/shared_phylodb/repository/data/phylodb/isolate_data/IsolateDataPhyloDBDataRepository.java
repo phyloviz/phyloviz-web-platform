@@ -44,14 +44,16 @@ public class IsolateDataPhyloDBDataRepository implements IsolateDataDataReposito
         ).orElseThrow(() -> new RuntimeException("Isolates not found in PhyloDB"));
 
         return new GetIsolateDataRowsOutput(
-                isolates.stream().map(isolate -> new IsolateDataRow(
-                                isolate.getPrimaryKey().getId(),
-                                isolate.getProfile().getPrimaryKey().getId(),
-                                Arrays.stream(isolate.getAncillaries()).collect(
-                                        Collectors.toMap(Ancillary::getKey, Ancillary::getValue)
+                isolates.stream()
+                        .filter(isolate -> isolate.getProfile() != null)
+                        .map(isolate -> new IsolateDataRow(
+                                        isolate.getPrimaryKey().getId(),
+                                        isolate.getProfile().getPrimaryKey().getId(),
+                                        Arrays.stream(isolate.getAncillaries()).collect(
+                                                Collectors.toMap(Ancillary::getKey, Ancillary::getValue)
+                                        )
                                 )
-                        )
-                ).toList(),
+                        ).toList(),
                 isolates.size()
         );
     }
