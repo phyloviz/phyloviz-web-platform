@@ -1,31 +1,34 @@
-import {useParams} from "react-router-dom"
-import VisualizationService from "../../../Services/Visualization/VisualizationService"
+import {useNavigate, useParams} from "react-router-dom"
 import {useEffect, useState} from "react"
-import {
-    GetTypingDataProfilesOutputModel
-} from "../../../Services/Visualization/models/getTypingDataProfiles/GetTypingDataProfilesOutputModel"
+import VisualizationService from "../../../../Services/Visualization/VisualizationService"
 import {
     GetTypingDataSchemaOutputModel
-} from "../../../Services/Visualization/models/getTypingDataSchema/GetTypingDataSchemaOutputModel"
+} from "../../../../Services/Visualization/models/getTypingDataSchema/GetTypingDataSchemaOutputModel";
+import {
+    GetTypingDataProfilesOutputModel
+} from "../../../../Services/Visualization/models/getTypingDataProfiles/GetTypingDataProfilesOutputModel";
+import {useTreeViewContext} from "../useTreeView";
 
 /**
- * Hook for typing data page.
+ * Hook for typing data filter page.
  */
-export function useTypingData() {
-    const {projectId, typingDataId} = useParams<{ projectId: string, typingDataId: string }>()
+export function useTypingDataFilter() {
+    const {projectId} = useParams<{ projectId: string }>()
+    const {typingDataId} = useTreeViewContext()
 
     const [typingDataSchema, setTypingDataSchema] = useState<GetTypingDataSchemaOutputModel>()
     const [typingDataProfiles, setTypingDataProfiles] = useState<GetTypingDataProfilesOutputModel>()
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         setLoading(true)
-        VisualizationService.getTypingDataSchema(projectId!, typingDataId!)
+        VisualizationService.getTypingDataSchema(projectId!, typingDataId)
             .then((res) => setTypingDataSchema(res))
             .catch((err) => setError(err))
 
-        VisualizationService.getTypingDataProfiles(projectId!, typingDataId!)
+        VisualizationService.getTypingDataProfiles(projectId!, typingDataId)
             .then((res) => setTypingDataProfiles(res))
             .catch((err) => setError(err))
             .finally(() => setLoading(false))
@@ -42,7 +45,6 @@ export function useTypingData() {
             rows: typingDataProfiles?.profiles.map((profile) => (
                 {
                     id: profile.id,
-                    ST: profile.id,
                     ...profile.profile.reduce((acc, curr, index) => {
                         acc[typingDataSchema!.loci[index]] = curr
                         return acc
@@ -56,6 +58,16 @@ export function useTypingData() {
             }
         },
         loading,
+
+        handleClearFilter: () => {
+            // TODO: Clear filter
+            navigate(-1)
+        },
+        handleApplyFilter: () => {
+            // TODO: Apply filter
+            navigate(-1)
+        },
+
         error,
         clearError: () => setError(null)
     }

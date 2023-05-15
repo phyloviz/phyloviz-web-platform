@@ -47,7 +47,7 @@ export namespace WebApiUris {
     export const getTypingDataProfiles = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}/profiles`
     export const getTypingDataFile = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}/file`
 
-    export const getIsolateDataSchema = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}`
+    export const getIsolateDataKeys = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}`
     export const getIsolateDataRows = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}/rows`
     export const getIsolateDataFile = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}/file`
 

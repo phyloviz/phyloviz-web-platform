@@ -53,8 +53,7 @@ export function TreeViewInfoCard({treeView}: TreeViewInfoCardProps) {
                 onClick={handleTreeViewInfoExpandClick}
                 size={"small"}
                 startIcon={
-                    <ExpandMore color={"inherit"} expand={treeViewInfoExpanded} onClick={handleTreeViewInfoExpandClick}
-                                size={"small"}>
+                    <ExpandMore color={"inherit"} expand={treeViewInfoExpanded} size={"small"}>
                         <ExpandMoreIcon color={"inherit"}/>
                     </ExpandMore>
                 }>

@@ -6,7 +6,9 @@ import {Pause, PhotoCamera, PlayArrow, ZoomIn, ZoomOut} from "@mui/icons-materia
 import {TreeViewOptions} from "./TreeViewOptions";
 import {TreeViewFilters} from "./TreeViewFilters";
 
-
+/**
+ * Props for TreeViewSettingsCard component.
+ */
 interface TreeViewSettingsCardProps {
     onPauseAnimation: () => void
     onRestartAnimation: () => void
@@ -44,6 +46,9 @@ interface TreeViewSettingsCardProps {
     onChangeLinkLabel: (event: React.ChangeEvent<HTMLInputElement>) => void
     onChangeLinkLabelSize: (linkLabelSize: number) => void
     onChangeLinkLabelType: (event: SelectChangeEvent, child: ReactNode) => void
+
+    onTypingDataFilter: () => void
+    onIsolateDataFilter: () => void
 
     onExportOptions: () => void
     onExportFilters: () => void
@@ -95,6 +100,9 @@ export function TreeViewSettingsCard(
         onChangeLinkLabelSize,
         onChangeLinkLabelType,
 
+        onTypingDataFilter,
+        onIsolateDataFilter,
+
         onExportOptions,
         onExportFilters,
 
@@ -139,6 +147,8 @@ export function TreeViewSettingsCard(
         </Collapse>
         <Collapse in={filtersOpen}>
             <TreeViewFilters
+                onTypingDataFilter={onTypingDataFilter}
+                onIsolateDataFilter={onIsolateDataFilter}
                 onExport={onExportFilters}
                 resetSimulationFilters={resetSimulationFilters}
             />

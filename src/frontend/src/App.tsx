@@ -33,6 +33,8 @@ import ComputeHammingDistance
 import EditProject from "./Pages/Project/EditProject/EditProject";
 import EditDataset from "./Pages/Project/EditDataset/EditDataset";
 import {ComputeTreeView} from "./Pages/Project/Compute/TreeView/ComputeTreeView";
+import TypingDataFilter from "./Pages/Project/TreeView/TypingDataFilter/TypingDataFilter";
+import IsolateDataFilter from "./Pages/Project/TreeView/IsolateDataFilter/IsolateDataFilter";
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;
@@ -59,6 +61,8 @@ import COMPUTE_HAMMING_DISTANCE = WebUiUris.COMPUTE_HAMMING_DISTANCE;
 import EDIT_PROJECT = WebUiUris.EDIT_PROJECT;
 import EDIT_DATASET = WebUiUris.EDIT_DATASET;
 import COMPUTE_TREE_VIEW = WebUiUris.COMPUTE_TREE_VIEW;
+import TREE_VIEW_TYPING_DATA = WebUiUris.TREE_VIEW_TYPING_DATA;
+import TREE_VIEW_ISOLATE_DATA = WebUiUris.TREE_VIEW_ISOLATE_DATA;
 
 /**
  * App component.
@@ -125,7 +129,16 @@ export default function App() {
                             <Route
                                 path={TREE_VIEW}
                                 element={<ProtectedRoute><TreeView/></ProtectedRoute>}
-                            />
+                            >
+                                <Route
+                                    path={TREE_VIEW_TYPING_DATA}
+                                    element={<ProtectedRoute><TypingDataFilter/></ProtectedRoute>}
+                                />
+                                <Route
+                                    path={TREE_VIEW_ISOLATE_DATA}
+                                    element={<ProtectedRoute><IsolateDataFilter/></ProtectedRoute>}
+                                />
+                            </Route>
                             <Route
                                 path={REPORT}
                                 element={<ProtectedRoute><Report/></ProtectedRoute>}
