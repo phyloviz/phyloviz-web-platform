@@ -1,7 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.tree_view.mongo;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.repository.data.tree_view.TreeViewDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.TreeViewMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.TreeViewMetadata;
 import org.springframework.context.annotation.Primary;
@@ -20,32 +19,8 @@ public class TreeViewMetadataRepositoryMongo implements TreeViewMetadataReposito
     private final TreeViewMetadataMongoRepository treeViewMetadataMongoRepository;
 
     @Override
-    public Optional<TreeViewMetadata> findAnyByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId) {
-        return treeViewMetadataMongoRepository.findFirstByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId);
-    }
-
-    @Override
-    public List<TreeViewMetadata> findAllByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId) {
-        return treeViewMetadataMongoRepository.findAllByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId);
-    }
-
-    @Override
-    public List<TreeViewMetadata> findAllByTreeViewId(String treeViewId) {
-        return treeViewMetadataMongoRepository.findAllByTreeViewId(treeViewId);
-    }
-
-    @Override
-    public Optional<TreeViewMetadata> findByTreeViewIdAndRepositoryId(String treeViewId, TreeViewDataRepositoryId repositoryId) {
-        return treeViewMetadataMongoRepository.findByTreeViewIdAndRepositoryId(
-                treeViewId, repositoryId.name().toLowerCase()
-        );
-    }
-
-    @Override
-    public Optional<TreeViewMetadata> findByProjectIdAndDatasetIdAndTreeViewIdAndRepositoryId(String projectId, String datasetId, String treeViewId, TreeViewDataRepositoryId repositoryId) {
-        return treeViewMetadataMongoRepository.findByProjectIdAndDatasetIdAndTreeViewIdAndRepositoryId(
-                projectId, datasetId, treeViewId, repositoryId.name().toLowerCase()
-        );
+    public Optional<TreeViewMetadata> findByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId) {
+        return treeViewMetadataMongoRepository.findByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId);
     }
 
     @Override
@@ -81,10 +56,5 @@ public class TreeViewMetadataRepositoryMongo implements TreeViewMetadataReposito
     @Override
     public boolean existsByDatasetIdAndTreeIdSource(String datasetId, String treeId) {
         return treeViewMetadataMongoRepository.existsByDatasetIdAndTreeIdSource(datasetId, treeId);
-    }
-
-    @Override
-    public boolean existsByProjectIdAndDatasetIdAndTreeViewId(String projectId, String datasetId, String treeViewId) {
-        return treeViewMetadataMongoRepository.existsByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId);
     }
 }

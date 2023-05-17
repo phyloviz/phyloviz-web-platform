@@ -2,8 +2,8 @@ import {useParams} from "react-router-dom"
 import {useEffect, useState} from "react"
 import VisualizationService from "../../../Services/Visualization/VisualizationService"
 import {
-    GetIsolateDataSchemaOutputModel
-} from "../../../Services/Visualization/models/getIsolateDataSchema/GetIsolateDataSchemaOutputModel"
+    GetIsolateDataKeysOutputModel
+} from "../../../Services/Visualization/models/getIsolateDataSchema/GetIsolateDataKeysOutputModel"
 import {
     GetIsolateDataRowsOutputModel
 } from "../../../Services/Visualization/models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel"
@@ -14,14 +14,14 @@ import {
 export function useIsolateData() {
     const {projectId, isolateDataId} = useParams<{ projectId: string, isolateDataId: string }>()
 
-    const [isolateDataSchema, setIsolateDataSchema] = useState<GetIsolateDataSchemaOutputModel>()
+    const [isolateDataSchema, setIsolateDataSchema] = useState<GetIsolateDataKeysOutputModel>()
     const [isolateDataRows, setIsolateDataRows] = useState<GetIsolateDataRowsOutputModel>()
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
         setLoading(true)
-        VisualizationService.getIsolateDataSchema(projectId!, isolateDataId!)
+        VisualizationService.getIsolateDataKeys(projectId!, isolateDataId!)
             .then((res) => setIsolateDataSchema(res))
             .catch((err) => setError(err))
 
@@ -33,16 +33,16 @@ export function useIsolateData() {
 
     return {
         data: {
-            columns: isolateDataSchema?.headers.map((header) => (
+            columns: isolateDataSchema?.keys.map((header) => (
                 {field: header, headerName: header, width: 100}
             )) ?? [],
             rows: isolateDataRows?.rows.map((row) => (
                 {
                     id: row.id,
-                    ...(Object.values(row.row).reduce((acc: any, curr, index) => {
-                        acc[isolateDataSchema!.headers[index]] = curr
+                    ...Object.entries(row.row).reduce((acc, curr) => {
+                        acc[curr[0]] = curr[1]
                         return acc
-                    }, {} as Record<string, string>) as any)
+                    }, {} as Record<string, string>)
                 }
             )) ?? [],
             initialState: {

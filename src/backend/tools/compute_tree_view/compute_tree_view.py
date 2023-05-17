@@ -17,8 +17,10 @@ client = MongoClient(mongo_uri)
 db = client['phyloviz-web-platform']
 workflows_collection = db['workflow-instances']
 tree_views_collection = db['tree-views']
-tree_collection = db['trees']
+trees_collection = db['trees']
 datasets_collection = db['datasets']
+projects_collection = db['projects']
+
 
 def create_visualization_job(project_id, dataset_id, inference_id):
     data = {
@@ -60,10 +62,36 @@ def get_job(project_id, job_id):
     return None
 
 
-def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
-    # Retrieve inference id from the tree
-    tree = tree_collection.find_one({'treeId': tree_id, 'repositoryId': 'phylodb'})
-    inference_id = tree['repositorySpecificData']['inferenceId']
+def compute_tree_view(project_id, dataset_id, tree_id, workflow_id, layout):
+    print(f"Project ID: {project_id}")
+    print(f"Dataset ID: {dataset_id}")
+    print(f"Tree ID: {tree_id}")
+    print(f"Layout: {layout}")
+    print(f"Workflow ID: {workflow_id}")
+
+    if projects_collection.find_one({'_id': ObjectId(project_id)}) is None:
+        raise Exception(f"Project with ID {project_id} does not exist in PHYLOViZ Web Platform")
+
+    dataset_metadata = datasets_collection.find_one({'_id': ObjectId(dataset_id), 'projectId': project_id})
+    if dataset_metadata is None:
+        raise Exception(
+            f"Dataset with ID {dataset_id} and Project ID {project_id} does not exist in PHYLOViZ Web Platform")
+
+    tree_metadata = trees_collection.find_one(
+        {
+            'projectId': project_id,
+            'datasetId': dataset_id,
+            'treeId': tree_id
+        }
+    )
+
+    if tree_metadata is None:
+        raise Exception(f"Tree with ID {tree_id} does not exist in PHYLOViZ Web Platform")
+
+    if tree_metadata["repositorySpecificData"].get("phylodb") is None:
+        raise Exception(f"Tree with ID {tree_id} is not indexed in PhyloDB. Index it first.")
+
+    inference_id = tree_metadata["repositorySpecificData"]["phylodb"]["inferenceId"]
 
     (vis_job_id, visualization_id) = create_visualization_job(project_id, dataset_id, inference_id)
 
@@ -79,7 +107,7 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
         # Send GET request to status URL
         job_status = get_job(project_id, vis_job_id)
 
-        if (job_status is None):
+        if job_status is None:
             print("Job not found (probably was completed)")
             break
 
@@ -90,22 +118,14 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
             break
 
         elif job_status["cancelled"] is True:
-            print("Job cancelled")
-            break
+            raise Exception("Visualization Job was cancelled")
+
         i += 1
 
     end_time = time.time()
     print("Time taken: ", end_time - start_time, " seconds +- 5 seconds")
 
-    # TODO: Maybe it's not necessary to add this to workflow extra data?
-    # Update the workflow with the resource_id
-    workflows_collection.update_one(
-        {'_id': ObjectId(workflow_id)},
-        {'$set': {
-            'data.visualizationId': visualization_id
-        }})
-
-    # Create the metadata in the resourceType collection
+    # Create the metadata in the tree collection
     tree_view_metadata = {
         'projectId': project_id,
         'datasetId': dataset_id,
@@ -114,17 +134,24 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id):
         'source': {
             'treeId': tree_id
         },
-        'layout': 'radial',
-        'repositoryId': 'phylodb',
+        'layout': layout,
         'repositorySpecificData': {
-            'projectId': project_id,
-            'datasetId': dataset_id,
-            'inferenceId': inference_id,
-            'visualizationId': visualization_id,
+            'phylodb': {
+                'projectId': project_id,
+                'datasetId': dataset_id,
+                'inferenceId': inference_id,
+                'visualizationId': visualization_id
+            }
         }
     }
 
     tree_views_collection.insert_one(tree_view_metadata)
+
+    workflows_collection.update_one(
+        {'_id': ObjectId(workflow_id)},
+        {'$set': {
+            'data.treeViewId': visualization_id
+        }})
 
 
 if __name__ == '__main__':
@@ -133,6 +160,7 @@ if __name__ == '__main__':
     parser.add_argument('--dataset-id', help='The dataset Id', required=True)
     parser.add_argument('--tree-id', help='The tree Id', required=True)
     parser.add_argument('--workflow-id', help='The workflow Id', required=True)
+    parser.add_argument('--layout', help='The layout', required=True)
 
     args = parser.parse_args()
-    compute_tree_view(args.project_id, args.dataset_id, args.tree_id, args.workflow_id)
+    compute_tree_view(args.project_id, args.dataset_id, args.tree_id, args.workflow_id, args.layout)

@@ -1,6 +1,6 @@
 package org.phyloviz.pwp.visualization.http.pipeline;
 
-import org.phyloviz.pwp.visualization.service.exceptions.TreeIndexingNeededException;
+import org.phyloviz.pwp.visualization.service.exceptions.IndexingNeededException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.zalando.problem.Problem;
@@ -16,7 +16,7 @@ public class VisualizationExceptionHandler {
      * @return a Problem with the status BAD_REQUEST
      */
     @ExceptionHandler(value = {
-            TreeIndexingNeededException.class
+            IndexingNeededException.class
     })
     public Problem handleBadRequestException(Exception e) {
         return Problem.builder()

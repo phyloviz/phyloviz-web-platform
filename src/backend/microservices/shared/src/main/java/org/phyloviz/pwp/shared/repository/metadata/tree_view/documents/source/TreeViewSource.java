@@ -9,6 +9,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TreeViewSource {
     private String treeId;
-    private String typingDataId;
-    private String isolateDataId;
 }

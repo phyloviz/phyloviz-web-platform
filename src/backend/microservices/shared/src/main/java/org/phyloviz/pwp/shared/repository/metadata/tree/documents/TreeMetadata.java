@@ -10,7 +10,9 @@ import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSou
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "#{@mongoMetadataCollectionNames.treeMetadataCollection}")
+import java.util.Map;
+
+@Document(collection = "trees")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,18 +26,16 @@ public class TreeMetadata {
     private String name;
     private TreeSourceType sourceType;
     private TreeSource source;
-    private TreeDataRepositoryId repositoryId;
-    private TreeDataRepositorySpecificData repositorySpecificData;
+    private Map<TreeDataRepositoryId, TreeDataRepositorySpecificData> repositorySpecificData;
 
     public TreeMetadata(String projectId, String datasetId, String treeId, String name, TreeSourceType sourceType, TreeSource source,
-                        TreeDataRepositoryId repositoryId, TreeDataRepositorySpecificData repositorySpecificData) {
+                        Map<TreeDataRepositoryId, TreeDataRepositorySpecificData> repositorySpecificData) {
         this.projectId = projectId;
         this.datasetId = datasetId;
         this.treeId = treeId;
         this.name = name;
         this.sourceType = sourceType;
         this.source = source;
-        this.repositoryId = repositoryId;
         this.repositorySpecificData = repositorySpecificData;
     }
 }

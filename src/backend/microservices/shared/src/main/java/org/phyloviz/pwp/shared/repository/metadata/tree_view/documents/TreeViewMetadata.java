@@ -9,7 +9,9 @@ import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.source.Tr
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "#{@mongoMetadataCollectionNames.treeViewMetadataCollection}")
+import java.util.Map;
+
+@Document(collection = "tree-views")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,19 +24,22 @@ public class TreeViewMetadata {
     private String treeViewId;
     private String name;
     private String layout;
+    /*private Filters filters = { "nodeSizeByIsolateNumber": true,
+            "showNodeLabels": true,
+            "showLinkWeightLabels": true,
+            "typingDataColumns": [],
+            "isolateDataColumns": ["country"];*/
     private TreeViewSource source;
-    private TreeViewDataRepositoryId repositoryId;
-    private TreeViewDataRepositorySpecificData repositorySpecificData;
+    private Map<TreeViewDataRepositoryId, TreeViewDataRepositorySpecificData> repositorySpecificData;
 
     public TreeViewMetadata(String projectId, String datasetId, String treeViewId, String name, String layout, TreeViewSource source,
-                            TreeViewDataRepositoryId repositoryId, TreeViewDataRepositorySpecificData repositorySpecificData) {
+                            Map<TreeViewDataRepositoryId, TreeViewDataRepositorySpecificData> repositorySpecificData) {
         this.projectId = projectId;
         this.datasetId = datasetId;
         this.treeViewId = treeViewId;
         this.name = name;
         this.layout = layout;
         this.source = source;
-        this.repositoryId = repositoryId;
         this.repositorySpecificData = repositorySpecificData;
     }
 }

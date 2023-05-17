@@ -13,7 +13,5 @@ public interface TypingDataService {
 
     void deleteAllByProjectId(String projectId);
 
-    void deleteTypingData(String typingDataId);
-
     UpdateTypingDataOutput updateTypingData(String name, String projectId, String typingDataId, String userId);
 }

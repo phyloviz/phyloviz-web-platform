@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom"
+import {useNavigate, useOutletContext, useParams} from "react-router-dom"
 import * as React from 'react';
 import {ReactNode, useEffect, useRef, useState} from 'react';
 import {TreeViewGraph} from "./cosmos/TreeViewGraph"
@@ -26,6 +26,7 @@ import {SelectChangeEvent} from "@mui/material";
 import {BubbleDataPoint, ChartData, Point} from "chart.js";
 import interpolate from 'color-interpolate'
 import {MAX_NUM_SLICES} from "./cosmos/modules/Points";
+import {WebUiUris} from "../../WebUiUris";
 
 export type VizNode = {
     id: string
@@ -70,8 +71,12 @@ const ZOOM_DURATION = 100
 export function useTreeView() {
     const {projectId, datasetId, treeViewId} = useParams<{ projectId: string, datasetId: string, treeViewId: string }>()
     const {project} = useProjectContext()
+    const typingDataId = project?.datasets.find(dataset => dataset.datasetId === datasetId)?.typingDataId
+    const isolateDataId = project?.datasets.find(dataset => dataset.datasetId === datasetId)?.isolateDataId
+
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const graphRef = useRef<TreeViewGraph<VizNode, VizLink>>()
+    const navigate = useNavigate()
 
     const [linkSpring, setLinkSpring] = useState(defaultConfig.simulation!.linkSpring!)
     const [linkDistance, setLinkDistance] = useState(defaultConfig.simulation!.linkDistance!)
@@ -108,6 +113,8 @@ export function useTreeView() {
             const isolateDataSchema = await VisualizationService.getIsolateDataSchema(projectId!, isolateDataId)
             setIsolateDataSchema(isolateDataSchema.headers)
 
+            if (!canvasRef.current)
+                return
 
             function findBiggestGroup(nodes: Node[], edges: Edge[]): Node[] {
                 const visited = new Set<string>()
@@ -161,13 +168,13 @@ export function useTreeView() {
                 }
             })
 
-            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, defaultConfig)
+            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current, defaultConfig)
             await graph.setData(nodes, links)
             graphRef.current = graph
         }
 
         init()
-    }, [])
+    }, [canvasRef.current])
 
     const treeView: TreeView = project?.datasets
         .find(dataset => dataset.datasetId === datasetId)?.treeViews
@@ -386,6 +393,11 @@ export function useTreeView() {
         }
         ,
 
+        handleTypingDataFilter: () => navigate(WebUiUris.treeViewTypingData(projectId!!, datasetId!!, treeViewId!!)),
+        typingDataId,
+        handleIsolateDataFilter: () => navigate(WebUiUris.treeViewIsolateData(projectId!!, datasetId!!, treeViewId!!)),
+        isolateDataId,
+
         handleExportOptions: () => {
             // TODO: implement export options
         },
@@ -410,78 +422,21 @@ function capitalize(s: string): string {
 }
 
 /**
- * RGB color regexp
+ * Context for the TreeView page.
+ *
+ * @property treeView - the tree view to display
+ * @property typingDataId - the typing data id to filter by
+ * @property isolateDataId - the isolate data id to filter by
  */
-export const RGB_REG_EXP = /rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/;
+interface TreeViewContext {
+    treeView: TreeView
+    typingDataId: string
+    isolateDataId?: string
+}
 
 /**
- * HEX color regexp
+ * Hook to use the TreeView context.
  */
-export const HEX_REG_EXP = /^#?(([\da-f]){3}|([\da-f]){6})$/i;
-
-/**
- * Converts HEX to RGB.
- *
- * Color must be only HEX string and must be:
- *  - 7-characters starts with "#" symbol ('#ffffff')
- *  - or 6-characters without "#" symbol ('ffffff')
- *  - or 4-characters starts with "#" symbol ('#fff')
- *  - or 3-characters without "#" symbol ('fff')
- *
- * @function { color: string => string } convertHexToRgb
- * @return { string } returns RGB color string or empty string
- */
-export const hexToRgb = (color: string): number[] => {
-    const errMessage = `
-    Something went wrong while working with colors...
-    
-    Make sure the colors provided to the "PieDonutChart" meet the following requirements:
-    
-    Color must be only HEX string and must be 
-    7-characters starts with "#" symbol ('#ffffff')
-    or 6-characters without "#" symbol ('ffffff')
-    or 4-characters starts with "#" symbol ('#fff')
-    or 3-characters without "#" symbol ('fff')
-    
-    - - - - - - - - -
-    
-    Error in: "convertHexToRgb" function
-    Received value: ${color}
-  `;
-
-    if (
-        !color
-        || typeof color !== 'string'
-        || color.length < 3
-        || color.length > 7
-    ) {
-        console.error(errMessage);
-        return [];
-    }
-
-    const replacer = (...args: string[]) => {
-        const [
-            _,
-            r,
-            g,
-            b,
-        ] = args;
-
-        return '' + r + r + g + g + b + b;
-    };
-
-    const rgbHexArr = color
-        ?.replace(HEX_REG_EXP, replacer)
-        .match(/.{2}/g)
-        ?.map(x => parseInt(x, 16));
-
-    /**
-     * "HEX_REG_EXP.test" is here to create more strong tests
-     */
-    if (rgbHexArr && Array.isArray(rgbHexArr) && HEX_REG_EXP.test(color)) {
-        return rgbHexArr
-    }
-
-    console.error(errMessage);
-    return [];
-};
+export function useTreeViewContext() {
+    return useOutletContext<TreeViewContext>()
+}

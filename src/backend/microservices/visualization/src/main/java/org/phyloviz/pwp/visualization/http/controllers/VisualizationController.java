@@ -3,13 +3,12 @@ package org.phyloviz.pwp.visualization.http.controllers;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
-import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
 import org.phyloviz.pwp.visualization.http.models.get_tree_view.GetTreeViewOutputModel;
 import org.phyloviz.pwp.visualization.http.models.isolate_data.get_isolate_data_rows.GetIsolateDataRowsOutputModel;
-import org.phyloviz.pwp.visualization.http.models.isolate_data.get_isolate_data_schema.GetIsolateDataSchemaOutputModel;
+import org.phyloviz.pwp.visualization.http.models.isolate_data.get_isolate_data_schema.GetIsolateDataKeysOutputModel;
 import org.phyloviz.pwp.visualization.http.models.typing_data.get_typing_data_profiles.GetTypingDataProfilesOutputModel;
 import org.phyloviz.pwp.visualization.http.models.typing_data.get_typing_data_schema.GetTypingDataSchemaOutputModel;
 import org.phyloviz.pwp.visualization.service.VisualizationService;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Controller for the Visualization Microservice.
@@ -133,35 +134,35 @@ public class VisualizationController {
     }
 
     /**
-     * Gets an isolate data's schema.
+     * Gets the keys of an isolate data.
      *
      * @param projectId     the id of the project
      * @param isolateDataId the id of the isolate data
      * @param user          the user
-     * @return the isolate data schema
+     * @return the isolate data keys
      */
     @GetMapping("/projects/{projectId}/files/isolate-data/{isolateDataId}")
-    public GetIsolateDataSchemaOutputModel getIsolateDataSchema(
+    public GetIsolateDataKeysOutputModel getIsolateDataKeys(
             @PathVariable String projectId,
             @PathVariable String isolateDataId,
             User user
     ) {
-        GetIsolateDataSchemaOutput getIsolateDataSchemaOutput = visualizationService.getIsolateDataSchema(
+        List<String> keys = visualizationService.getIsolateDataKeys(
                 projectId, isolateDataId, user.getId()
         );
 
-        return new GetIsolateDataSchemaOutputModel(getIsolateDataSchemaOutput);
+        return new GetIsolateDataKeysOutputModel(keys);
     }
 
     /**
-     * Gets an isolate data's rows, with pagination.
+     * Gets the rows of an isolate data, with pagination.
      *
      * @param projectId     the id of the project
      * @param isolateDataId the id of the isolate data
      * @param limit         the limit of rows to return
      * @param offset        the offset of rows to return
      * @param user          the user
-     * @return the isolate data's rows
+     * @return the isolate data rows
      */
     @GetMapping("/projects/{projectId}/files/isolate-data/{isolateDataId}/rows")
     public GetIsolateDataRowsOutputModel getIsolateDataRows(

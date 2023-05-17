@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * A project is a collection of resources.
  */
-@Document(collection = "#{@mongoMetadataCollectionNames.projectsCollection}")
+@Document(collection = "projects")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

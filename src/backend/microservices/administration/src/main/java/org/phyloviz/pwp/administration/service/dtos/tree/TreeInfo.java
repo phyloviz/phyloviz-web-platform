@@ -15,7 +15,7 @@ public class TreeInfo {
     private final TreeSourceInfo source;
 
     public TreeInfo(TreeMetadata treeMetadata) {
-        this.treeId = treeMetadata.getId();
+        this.treeId = treeMetadata.getTreeId();
         this.name = treeMetadata.getName();
         this.sourceType = treeMetadata.getSourceType();
         this.source = switch (treeMetadata.getSourceType()) {

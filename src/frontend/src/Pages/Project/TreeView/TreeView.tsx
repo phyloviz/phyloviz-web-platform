@@ -7,6 +7,7 @@ import {TreeViewSettingsCard} from "../../../Components/Project/TreeView/TreeVie
 import {ArcElement, Chart as ChartJS, ChartOptions, Legend, Tooltip} from "chart.js";
 import {Doughnut} from "react-chartjs-2";
 import Typography from "@mui/material/Typography";
+import {Outlet, useOutlet} from "react-router-dom";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -22,6 +23,7 @@ const options: ChartOptions = {
  * TreeView page.
  */
 export default function TreeView() {
+    const outlet = useOutlet()
     const {
         treeView,
         canvasRef,
@@ -62,12 +64,15 @@ export default function TreeView() {
         updateLinkLabel,
         updateLinkLabelSize,
         updateLinkLabelType,
-
         handleSearch,
 
         isolateDataHeaders,
         colorByIsolateData,
         updateColorByIsolateData,
+        handleTypingDataFilter,
+        typingDataId,
+        handleIsolateDataFilter,
+        isolateDataId,
 
         handleExportOptions,
         handleExportFilters,
@@ -78,86 +83,94 @@ export default function TreeView() {
         handlePrint,
     } = useTreeView()
 
+    // TODO: Fix bug where the outlet is not updated when the project is changed
 
     return (
         <Box sx={{position: "relative", width: "90%"}}>
             <TreeViewInfoCard treeView={treeView}/>
-            <div ref={toPrintRef}>
-                <canvas ref={canvasRef}/>
-            </div>
-            {doughnutChartData != null && (
-                <Box
-                    sx={{
-                        position: "absolute",
-                        right: 0,
-                        top: "20%",
-                        zIndex: 1,
-                        backgroundColor: "white",
-                        borderRadius: 3,
-                        p: 1,
-                        mr: "10px",
-                        border: 1,
-                        borderColor: 'divider',
-                        maxHeight: "300px",
-                        overflow: "auto",
-                    }}
-                >
-                    <Typography sx={{mb:2}}>{colorByIsolateData}</Typography>
-                    <Doughnut data={doughnutChartData!} options={options}/>
-                </Box>
-            )
+            {outlet
+                ? <Outlet context={{treeView, typingDataId, isolateDataId}}/>
+                : <>
+                    <div ref={toPrintRef}>
+                        <canvas ref={canvasRef}/>
+                    </div>
+                    {doughnutChartData != null && (
+                        <Box
+                            sx={{
+                                position: "absolute",
+                                right: 0,
+                                top: "20%",
+                                zIndex: 1,
+                                backgroundColor: "white",
+                                borderRadius: 3,
+                                p: 1,
+                                mr: "10px",
+                                border: 1,
+                                borderColor: 'divider',
+                                maxHeight: "300px",
+                                overflow: "auto",
+                            }}
+                        >
+                            <Typography sx={{mb: 2}}>{colorByIsolateData}</Typography>
+                            <Doughnut data={doughnutChartData!} options={options}/>
+                        </Box>
+                    )
+                    }
+                    <TreeViewSettingsCard
+                        onPauseAnimation={pauseAnimation}
+                        onRestartAnimation={restartAnimation}
+                        resetSimulationConfig={resetSimulationConfig}
+                        resetSimulationFilters={resetSimulationFilters}
+
+                        linkSpring={linkSpring}
+                        linkDistance={linkDistance}
+                        gravity={gravity}
+                        friction={friction}
+                        repulsion={repulsion}
+                        repulsionTheta={repulsionTheta}
+                        decay={decay}
+
+                        onChangeLinkSpring={updateLinkSpring}
+                        onChangeLinkDistance={updateLinkDistance}
+                        onChangeGravity={updateGravity}
+                        onChangeFriction={updateFriction}
+                        onChangeRepulsion={updateRepulsion}
+                        onChangeRepulsionTheta={updateRepulsionTheta}
+                        onChangeDecay={updateDecay}
+
+                        nodeSize={nodeSize}
+                        nodeLabel={nodeLabel}
+                        nodeLabelSize={nodeLabelSize}
+                        linkLength={linkLength}
+                        linkLabel={linkLabel}
+                        linkLabelSize={linkLabelSize}
+                        linkLabelType={linkLabelType}
+
+                        onChangeNodeSize={updateNodeSize}
+                        onChangeNodeLabel={updateNodeLabel}
+                        onChangeNodeLabelSize={updateNodeLabelSize}
+                        onChangeLinkLength={updateLinkLength}
+                        onChangeLinkLabel={updateLinkLabel}
+                        onChangeLinkLabelSize={updateLinkLabelSize}
+                        onChangeLinkLabelType={updateLinkLabelType}
+
+                        isolateDataHeaders={isolateDataHeaders}
+                        colorByIsolateData={colorByIsolateData}
+                        onChangeColorByIsolateData={updateColorByIsolateData}
+
+                        onTypingDataFilter={handleTypingDataFilter}
+                        onIsolateDataFilter={handleIsolateDataFilter}
+
+                        onExportOptions={handleExportOptions}
+                        onExportFilters={handleExportFilters}
+
+                        onZoomIn={handleZoomIn}
+                        onZoomOut={handleZoomOut}
+                        onPrint={handlePrint}
+                    />
+                    <TreeViewSearchCard onSearch={handleSearch}/>
+                </>
             }
-
-            <TreeViewSettingsCard
-                onPauseAnimation={pauseAnimation}
-                onRestartAnimation={restartAnimation}
-                resetSimulationConfig={resetSimulationConfig}
-                resetSimulationFilters={resetSimulationFilters}
-
-                linkSpring={linkSpring}
-                linkDistance={linkDistance}
-                gravity={gravity}
-                friction={friction}
-                repulsion={repulsion}
-                repulsionTheta={repulsionTheta}
-                decay={decay}
-
-                onChangeLinkSpring={updateLinkSpring}
-                onChangeLinkDistance={updateLinkDistance}
-                onChangeGravity={updateGravity}
-                onChangeFriction={updateFriction}
-                onChangeRepulsion={updateRepulsion}
-                onChangeRepulsionTheta={updateRepulsionTheta}
-                onChangeDecay={updateDecay}
-
-                nodeSize={nodeSize}
-                nodeLabel={nodeLabel}
-                nodeLabelSize={nodeLabelSize}
-                linkLength={linkLength}
-                linkLabel={linkLabel}
-                linkLabelSize={linkLabelSize}
-                linkLabelType={linkLabelType}
-
-                onChangeNodeSize={updateNodeSize}
-                onChangeNodeLabel={updateNodeLabel}
-                onChangeNodeLabelSize={updateNodeLabelSize}
-                onChangeLinkLength={updateLinkLength}
-                onChangeLinkLabel={updateLinkLabel}
-                onChangeLinkLabelSize={updateLinkLabelSize}
-                onChangeLinkLabelType={updateLinkLabelType}
-
-                isolateDataHeaders={isolateDataHeaders}
-                colorByIsolateData={colorByIsolateData}
-                onChangeColorByIsolateData={updateColorByIsolateData}
-
-                onExportOptions={handleExportOptions}
-                onExportFilters={handleExportFilters}
-
-                onZoomIn={handleZoomIn}
-                onZoomOut={handleZoomOut}
-                onPrint={handlePrint}
-            />
-            <TreeViewSearchCard onSearch={handleSearch}/>
         </Box>
     )
 }

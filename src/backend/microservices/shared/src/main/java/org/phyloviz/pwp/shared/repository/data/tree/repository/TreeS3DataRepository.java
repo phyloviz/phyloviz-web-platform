@@ -18,11 +18,6 @@ public class TreeS3DataRepository implements TreeDataRepository {
     }
 
     @Override
-    public boolean isFileRepository() {
-        return true;
-    }
-
-    @Override
     public void deleteTree(TreeDataRepositorySpecificData treeDataRepositorySpecificData) {
         TreeS3DataRepositorySpecificData repositorySpecificData =
                 (TreeS3DataRepositorySpecificData) treeDataRepositorySpecificData;

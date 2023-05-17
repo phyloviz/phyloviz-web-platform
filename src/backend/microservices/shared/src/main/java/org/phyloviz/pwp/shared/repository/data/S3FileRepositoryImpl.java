@@ -1,20 +1,27 @@
 package org.phyloviz.pwp.shared.repository.data;
 
+import org.phyloviz.pwp.shared.service.exceptions.FileCorruptedException;
 import org.phyloviz.pwp.shared.service.exceptions.MultipartFileReadException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.core.BytesWrapper;
 import software.amazon.awssdk.core.async.AsyncRequestBody;
+import software.amazon.awssdk.core.async.AsyncResponseTransformer;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
 import software.amazon.awssdk.transfer.s3.model.Upload;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -55,7 +62,7 @@ public class S3FileRepositoryImpl implements S3FileRepository {
     }
 
     @Override
-    public boolean store(String url, MultipartFile multipartFile) {
+    public boolean upload(String url, MultipartFile multipartFile) {
         AsyncRequestBody requestBody;
         try {
             requestBody = AsyncRequestBody.fromInputStream(
@@ -75,6 +82,51 @@ public class S3FileRepositoryImpl implements S3FileRepository {
         upload.completionFuture().join();
 
         return true;
+    }
+
+    @Override
+    public String download(String url) {
+        if (!url.startsWith(getLocation()))
+            throw new IllegalArgumentException("URL does not start with the object storage endpoint");
+
+        String key = url.substring(getLocation().length());
+
+        /*s3Client.listObjectsV2(ListObjectsV2Request.builder().bucket(bucketName).build())
+                .thenAccept(response -> {
+                    // TODO: Consume `response` the way you need
+                    response.contents().forEach(object -> {
+                        if(object.key().equals(key))
+                            System.out.println("Found");
+                    });
+                })
+                .exceptionally(error -> {
+                    // TODO: Handle `error` the way you need
+                    error.printStackTrace();
+                    return null;
+                }).join();*/
+
+        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                .bucket(bucketName)
+                .key(key)
+                .build();
+        /*GetObjectResponse getResponse = s3Client.getObject(getObjectRequest, Path.of(
+                "C:\\Users\\nyckb\\Downloads\\")).join();*/
+
+        CompletableFuture<String> completableFuture = s3Client.getObject(getObjectRequest, AsyncResponseTransformer.toBytes())
+                .thenApply(BytesWrapper::asUtf8String);
+
+        try {
+            String contents = completableFuture.join();
+            if (contents == null)
+                throw new FileCorruptedException("File corrupted? File contents are null. Perhaps error downloading from S3");
+
+            return contents;
+        } catch (CompletionException e) {
+            if (e.getCause() instanceof NoSuchKeyException)
+                throw new FileCorruptedException("File corrupted? File not found in S3");
+            e.printStackTrace();
+            throw new CompletionException("Error while downloading file from S3", e);
+        }
     }
 
     @Override

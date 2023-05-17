@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.repository.data.S3FileRepository;
 import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.specific_data.IsolateDataDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.specific_data.IsolateDataS3DataRepositorySpecificData;
+import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,19 +18,22 @@ public class IsolateDataS3DataRepository implements IsolateDataDataRepository {
     public IsolateDataDataRepositorySpecificData uploadIsolateData(String projectId, String isolateDataId, MultipartFile multipartFile) {
         String url = projectId + "/isolate-data/" + isolateDataId;
 
-        s3FileRepository.store(url, multipartFile);
+        s3FileRepository.upload(url, multipartFile);
 
         return new IsolateDataS3DataRepositorySpecificData(s3FileRepository.getLocation() + "/" + url, multipartFile.getOriginalFilename());
     }
 
     @Override
-    public String getIsolateData(IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData) {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public String downloadIsolateData(IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData) {
+        IsolateDataS3DataRepositorySpecificData repositorySpecificData =
+                (IsolateDataS3DataRepositorySpecificData) isolateDataDataRepositorySpecificData;
+
+        return s3FileRepository.download(repositorySpecificData.getUrl());
     }
 
     @Override
-    public boolean isFileRepository() {
-        return true;
+    public GetIsolateDataRowsOutput getIsolateDataRows(IsolateDataDataRepositorySpecificData isolateDataDataRepositorySpecificData, int limit, int offset) {
+        throw new UnsupportedOperationException("Not supported.");
     }
 
     @Override
@@ -39,5 +43,4 @@ public class IsolateDataS3DataRepository implements IsolateDataDataRepository {
 
         s3FileRepository.delete(isolateDataS3DataRepositorySpecificData.getUrl());
     }
-
 }

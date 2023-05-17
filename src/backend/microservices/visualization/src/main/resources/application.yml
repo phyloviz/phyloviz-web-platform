@@ -9,6 +9,8 @@ data-repositories:
   get-distance-matrix-repository: S3
   get-tree-repository: PHYLODB
   get-tree-view-repository: PHYLODB
+  get-typing-data-repository: PHYLODB
+  get-isolate-data-repository: PHYLODB
 
 logging:
   level:

@@ -8,10 +8,12 @@ import org.phyloviz.pwp.shared.repository.data.typing_data.repository.specific_d
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Map;
+
 /**
  * Metadata for a representation of a typing data.
  */
-@Document(collection = "#{@mongoMetadataCollectionNames.typingDataMetadataCollection}")
+@Document(collection = "typing-data")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,16 +23,16 @@ public class TypingDataMetadata {
 
     private String projectId;
     private String typingDataId;
+    private String type;
     private String name;
-    private TypingDataDataRepositoryId repositoryId;
-    private TypingDataDataRepositorySpecificData repositorySpecificData;
+    private Map<TypingDataDataRepositoryId, TypingDataDataRepositorySpecificData> repositorySpecificData;
 
-    public TypingDataMetadata(String projectId, String typingDataId, String name, TypingDataDataRepositoryId repositoryId,
-                              TypingDataDataRepositorySpecificData repositorySpecificData) {
+    public TypingDataMetadata(String projectId, String typingDataId, String type, String name,
+                              Map<TypingDataDataRepositoryId, TypingDataDataRepositorySpecificData> repositorySpecificData) {
         this.projectId = projectId;
         this.typingDataId = typingDataId;
+        this.type = type;
         this.name = name;
-        this.repositoryId = repositoryId;
         this.repositorySpecificData = repositorySpecificData;
     }
 }

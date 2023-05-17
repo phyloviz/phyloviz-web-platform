@@ -16,26 +16,16 @@ import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.arguments.WorkflowTemplateArgumentProperties;
 import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
 import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
-import org.phyloviz.pwp.compute.service.exceptions.DatasetDoesNotExistException;
-import org.phyloviz.pwp.compute.service.exceptions.DistanceMatrixDoesNotExistException;
 import org.phyloviz.pwp.compute.service.exceptions.InvalidWorkflowException;
 import org.phyloviz.pwp.compute.service.exceptions.TemplateNotFound;
-import org.phyloviz.pwp.compute.service.exceptions.TreeDoesNotExistException;
-import org.phyloviz.pwp.compute.service.exceptions.TreeViewDoesNotExistException;
 import org.phyloviz.pwp.compute.service.exceptions.WorkflowInstanceNotFoundException;
-import org.phyloviz.pwp.compute.service.exceptions.WorkflowTemplateConfigurationException;
 import org.phyloviz.pwp.compute.service.flowviz.FLOWViZClient;
 import org.phyloviz.pwp.compute.service.flowviz.exceptions.UnexpectedResponseException;
 import org.phyloviz.pwp.compute.service.flowviz.models.get_workflow.AirflowWorkflowStatus;
 import org.phyloviz.pwp.compute.service.flowviz.models.get_workflow.GetWorkflowResponse;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.Tool;
 import org.phyloviz.pwp.compute.service.flowviz.models.workflow.Workflow;
-import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
-import org.phyloviz.pwp.shared.repository.metadata.dataset.documents.Dataset;
-import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.DistanceMatrixMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
-import org.phyloviz.pwp.shared.repository.metadata.tree.TreeMetadataRepository;
-import org.phyloviz.pwp.shared.repository.metadata.tree_view.TreeViewMetadataRepository;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.utils.UUIDUtils;
 import org.springframework.stereotype.Service;
@@ -52,11 +42,6 @@ import java.util.Map;
 public class ComputeServiceImpl implements ComputeService {
 
     private final ProjectRepository projectRepository;
-    private final DatasetRepository datasetRepository;
-
-    private final DistanceMatrixMetadataRepository distanceMatrixMetadataRepository;
-    private final TreeMetadataRepository treeMetadataRepository;
-    private final TreeViewMetadataRepository treeViewMetadataRepository;
 
     private final WorkflowTemplateRepository workflowTemplateRepository;
     private final WorkflowInstanceRepository workflowInstanceRepository;
@@ -167,7 +152,7 @@ public class ComputeServiceImpl implements ComputeService {
                 .findByName(workflowType)
                 .orElseThrow(() -> new InvalidWorkflowException("Workflow type not found"));
 
-        validateCreateWorkflowArguments(workflowTemplate.getArguments(), properties, projectId);
+        validateCreateWorkflowArguments(workflowTemplate.getArguments(), properties);
 
         Map<String, Object> workflowInstanceData = new HashMap<>(properties);
         workflowInstanceData.put("projectId", projectId);
@@ -230,10 +215,15 @@ public class ComputeServiceImpl implements ComputeService {
         return new CreateWorkflowOutput(workflowId);
     }
 
+    /**
+     * Validates that the arguments received in the request are valid for the workflow template. Verifies that all
+     * required arguments are present and that the types are correct.
+     *
+     * @param createWorkflowArguments the arguments defined in the workflow template
+     * @param properties              the arguments received in the request
+     */
     private void validateCreateWorkflowArguments(Map<String, WorkflowTemplateArgumentProperties> createWorkflowArguments,
-                                                 Map<String, String> properties, String projectId) {
-        Map<String, String> specialArguments = new HashMap<>();
-
+                                                 Map<String, String> properties) {
         properties.keySet().stream().filter(key -> !createWorkflowArguments.containsKey(key)).findAny()
                 .ifPresent(key -> {
                     throw new InvalidWorkflowException(String.format("Unknown argument: '%s'", key));
@@ -244,16 +234,12 @@ public class ComputeServiceImpl implements ComputeService {
                 throw new InvalidWorkflowException(String.format("Missing argument: '%s'", argumentName));
 
             switch (argumentProperties.getType()) {
-                case OBJECTID -> validateObjectIdArgument(properties.get(argumentName), argumentName);
-                case UUID -> validateUUIDArgument(properties.get(argumentName), argumentName);
+                case OBJECTID, DATASETID -> validateObjectIdArgument(properties.get(argumentName), argumentName);
+                case UUID, DISTANCEMATRIXID, TREEID, TREEVIEWID ->
+                        validateUUIDArgument(properties.get(argumentName), argumentName);
                 case STRING -> validateStringArgument(properties.get(argumentName), argumentName,
                         argumentProperties.getAllowedValues());
-                case DATASETID -> validateDatasetIdArgument(properties, projectId, specialArguments, argumentName,
-                        argumentProperties);
-                case DISTANCEMATRIXID -> validateDistanceMatrixIdArgument(properties, projectId, specialArguments,
-                        argumentName);
-                case TREEID -> validateTreeIdArgument(properties, projectId, specialArguments, argumentName);
-                case TREEVIEWID -> validateTreeViewIdArgument(properties, projectId, specialArguments, argumentName);
+                case NUMBER -> validateNumberArgument(properties.get(argumentName), argumentName);
             }
         });
     }
@@ -275,73 +261,11 @@ public class ComputeServiceImpl implements ComputeService {
             );
     }
 
-    private void validateDatasetIdArgument(Map<String, String> properties, String projectId,
-                                           Map<String, String> specialArguments, String argumentName,
-                                           WorkflowTemplateArgumentProperties argumentProperties) {
-        String datasetId = properties.get(argumentName);
-        validateObjectIdArgument(datasetId, argumentName);
-
-        specialArguments.put("datasetId", datasetId);
-
-        Dataset dataset = datasetRepository.findByProjectIdAndId(projectId, datasetId)
-                .orElseThrow(DatasetDoesNotExistException::new);
-
-        if (argumentProperties.getObtainExtra() == null)
-            return;
-
-        argumentProperties.getObtainExtra().forEach((extraArgumentName, extraArgumentProperties) -> {
-            switch (extraArgumentProperties.getType()) {
-                case TYPINGDATAID -> properties.put(extraArgumentName, dataset.getTypingDataId());
-                case ISOLATEDATAID -> properties.put(extraArgumentName, dataset.getIsolateDataId());
-            }
-        });
-    }
-
-    private void validateDistanceMatrixIdArgument(Map<String, String> properties, String projectId,
-                                                  Map<String, String> specialArguments, String argumentName) {
-        String distanceMatrixId = properties.get(argumentName);
-        validateUUIDArgument(distanceMatrixId, argumentName);
-
-        if (!specialArguments.containsKey("datasetId"))
-            throw new WorkflowTemplateConfigurationException("Missing datasetId argument before distanceMatrixId argument.");
-
-        String datasetId = specialArguments.get("datasetId");
-
-        if (!distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
-            throw new DistanceMatrixDoesNotExistException();
-
-        specialArguments.put("distanceMatrixId", distanceMatrixId);
-    }
-
-    private void validateTreeIdArgument(Map<String, String> properties, String projectId,
-                                        Map<String, String> specialArguments, String argumentName) {
-        String treeId = properties.get(argumentName);
-        validateUUIDArgument(treeId, argumentName);
-
-        if (!specialArguments.containsKey("datasetId"))
-            throw new WorkflowTemplateConfigurationException("Missing datasetId argument before treeId argument.");
-
-        String datasetId = specialArguments.get("datasetId");
-
-        if (!treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId))
-            throw new TreeDoesNotExistException();
-
-        specialArguments.put("treeId", treeId);
-    }
-
-    private void validateTreeViewIdArgument(Map<String, String> properties, String projectId,
-                                            Map<String, String> specialArguments, String argumentName) {
-        String treeViewId = properties.get(argumentName);
-        validateUUIDArgument(treeViewId, argumentName);
-
-        if (!specialArguments.containsKey("datasetId"))
-            throw new WorkflowTemplateConfigurationException("Missing datasetId argument before treeViewId argument.");
-
-        String datasetId = specialArguments.get("datasetId");
-
-        if (!treeViewMetadataRepository.existsByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId))
-            throw new TreeViewDoesNotExistException();
-
-        specialArguments.put("treeViewId", treeViewId);
+    private void validateNumberArgument(String argument, String argumentName) {
+        try {
+            Double.parseDouble(argument);
+        } catch (NumberFormatException e) {
+            throw new InvalidWorkflowException(String.format("Invalid argument: '%s'. Must be a number.", argumentName));
+        }
     }
 }

@@ -263,6 +263,31 @@
   },
   {
     "general": {
+      "name": "isolate_data_indexer",
+      "description": "The Isolate Data Indexer script"
+    },
+    "access": {
+      "_type": "library",
+      "details": {
+        "address": "localhost",
+        "dockerUrl": "unix://var/run/docker.sock",
+        "dockerImage": "localhost:5000/isolate-data-indexer",
+        "dockerAutoRemove": "never",
+        "dockerNetworkMode": "bridge",
+        "dockerApiVersion": "auto",
+        "dockerVolumes": [
+          {
+            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+            "target": "/phyloviz-web-platform",
+            "_type": "bind"
+          }
+        ]
+      }
+    },
+    "library": []
+  },
+  {
+    "general": {
       "name": "compute_tree_view",
       "description": "The Compute Tree View script"
     },

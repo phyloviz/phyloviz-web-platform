@@ -1,7 +1,6 @@
 package org.phyloviz.pwp.shared.repository.metadata.distance_matrix.mongo;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.repository.data.distance_matrix.DistanceMatrixDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.DistanceMatrixMetadataRepository;
 import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.DistanceMatrixMetadata;
 import org.springframework.context.annotation.Primary;
@@ -20,15 +19,10 @@ public class DistanceMatrixMetadataRepositoryMongo implements DistanceMatrixMeta
     private final DistanceMatrixMetadataMongoRepository distanceMatrixMetadataMongoRepository;
 
     @Override
-    public Optional<DistanceMatrixMetadata> findAnyByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId) {
-        return distanceMatrixMetadataMongoRepository.findFirstByProjectIdAndDatasetIdAndDistanceMatrixId(
+    public Optional<DistanceMatrixMetadata> findByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId) {
+        return distanceMatrixMetadataMongoRepository.findByProjectIdAndDatasetIdAndDistanceMatrixId(
                 projectId, datasetId, distanceMatrixId
         );
-    }
-
-    @Override
-    public List<DistanceMatrixMetadata> findAllByDistanceMatrixId(String distanceMatrixId) {
-        return distanceMatrixMetadataMongoRepository.findAllByDistanceMatrixId(distanceMatrixId);
     }
 
     @Override
@@ -47,27 +41,8 @@ public class DistanceMatrixMetadataRepositoryMongo implements DistanceMatrixMeta
     }
 
     @Override
-    public List<DistanceMatrixMetadata> findAllByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId) {
-        return distanceMatrixMetadataMongoRepository.findAllByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId);
-    }
-
-    @Override
-    public Optional<DistanceMatrixMetadata> findByProjectIdAndDatasetIdAndDistanceMatrixIdAndRepositoryId(
-            String projectId, String datasetId, String distanceMatrixId, DistanceMatrixDataRepositoryId repositoryId
-    ) {
-        return distanceMatrixMetadataMongoRepository.findByProjectIdAndDatasetIdAndDistanceMatrixIdAndRepositoryId(
-                projectId, datasetId, distanceMatrixId, repositoryId.name().toLowerCase()
-        );
-    }
-
-    @Override
     public List<DistanceMatrixMetadata> findAllByProjectIdAndDatasetId(String projectId, String datasetId) {
         return distanceMatrixMetadataMongoRepository.findAllByProjectIdAndDatasetId(projectId, datasetId);
-    }
-
-    @Override
-    public boolean existsByProjectIdAndDatasetIdAndDistanceMatrixId(String projectId, String datasetId, String distanceMatrixId) {
-        return distanceMatrixMetadataMongoRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId);
     }
 
     @Override

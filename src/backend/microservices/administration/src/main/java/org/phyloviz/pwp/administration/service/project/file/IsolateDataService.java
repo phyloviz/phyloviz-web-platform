@@ -13,7 +13,5 @@ public interface IsolateDataService {
 
     void deleteAllByProjectId(String projectId);
 
-    void deleteIsolateData(String isolateDataId);
-
     UpdateIsolateDataOutput updateIsolateData(String name, String projectId, String isolateDataId, String userId);
 }

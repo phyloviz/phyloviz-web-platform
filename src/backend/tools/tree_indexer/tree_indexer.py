@@ -10,6 +10,15 @@ json_headers = {
     'Content-Type': 'application/json'
 }
 
+# Connect to MongoDB
+mongo_uri = os.environ['MONGO_URI']
+client = MongoClient(mongo_uri)
+db = client['phyloviz-web-platform']
+trees_collection = db['trees']
+datasets_collection = db['datasets']
+projects_collection = db['projects']
+typing_data_collection = db['typing-data']
+
 
 def upload_inference(project_id, dataset_id, inference_file_path):
     files = {
@@ -29,43 +38,56 @@ def upload_inference(project_id, dataset_id, inference_file_path):
 
 
 def index_tree(tree_file_path, project_id, dataset_id, tree_id, workflow_id):
+    print(f"Project ID: {project_id}")
+    print(f"Dataset ID: {dataset_id}")
+    print(f"Tree ID: {tree_id}")
+    print(f"Tree File Path: {tree_file_path}")
+    print(f"Workflow ID: {workflow_id}")
+
+    if projects_collection.find_one({'_id': ObjectId(project_id)}) is None:
+        raise Exception(f"Project with ID {project_id} does not exist in PHYLOViZ Web Platform")
+
+    dataset_metadata = datasets_collection.find_one({'_id': ObjectId(dataset_id), 'projectId': project_id})
+    if dataset_metadata is None:
+        raise Exception(
+            f"Dataset with ID {dataset_id} and Project ID {project_id} does not exist in PHYLOViZ Web Platform")
+
+    tree_metadata = trees_collection.find_one(
+        {
+            'projectId': project_id,
+            'datasetId': dataset_id,
+            'treeId': tree_id
+        }
+    )
+
+    if tree_metadata is None:
+        raise Exception(f"Tree with ID {tree_id} does not exist in PHYLOViZ Web Platform")
+
+    if tree_metadata["repositorySpecificData"].get("phylodb") is not None:
+        raise Exception(f"Tree with ID {tree_id} is already indexed in PhyloDB")
+
+    if typing_data_collection.find_one(
+            {
+                'typingDataId': dataset_metadata['typingDataId'],
+                'repositorySpecificData.phylodb.datasetIds': {'$in': [dataset_id]}
+            }
+    ) is None:
+        raise Exception(f"Dataset with ID {dataset_id} does not have Typing Data indexed in PhyloDB. Index it first.")
+
     inference_id = upload_inference(project_id, dataset_id, tree_file_path)
     print("Done uploading inference")
 
-    # Connect to MongoDB
-    mongo_uri = os.environ['MONGO_URI']
-    client = MongoClient(mongo_uri)
-    db = client['phyloviz-web-platform']
-    workflows_collection = db['workflow-instances']
-    trees_collection = db['trees']
-
-    # TODO: Maybe it's not necessary to add this to workflow extra data?
-    # Update the workflow with the resource_id
-    workflows_collection.update_one(
-        {'_id': ObjectId(workflow_id)},
+    # Add repositorySpecificData to the metadata of the tree
+    trees_collection.update_one(
+        {'treeId': tree_id},
         {'$set': {
-            'data.inferenceId': inference_id
-        }})
-
-    # Create the metadata in the resourceType collection
-    tree_metadata = trees_collection.find_one({'treeId': tree_id})
-
-    new_tree_metadata = {
-        'projectId': project_id,
-        'datasetId': dataset_id,
-        'treeId': tree_id,
-        'name': tree_metadata['name'],
-        'sourceType': tree_metadata['sourceType'],
-        'source': tree_metadata['source'],
-        'repositoryId': 'phylodb',
-        'repositorySpecificData': {
-            'projectId': project_id,
-            'datasetId': dataset_id,
-            'inferenceId': inference_id,
-        }
-    }
-
-    trees_collection.insert_one(new_tree_metadata)
+            'repositorySpecificData.phylodb': {
+                'projectId': project_id,
+                'datasetId': dataset_id,
+                'inferenceId': inference_id,
+            }
+        }}
+    )
 
 
 if __name__ == '__main__':

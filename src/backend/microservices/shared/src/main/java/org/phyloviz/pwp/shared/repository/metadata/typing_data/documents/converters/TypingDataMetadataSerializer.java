@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.convert.MongoConverter;
 import javax.validation.constraints.NotNull;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @WritingConverter
 @RequiredArgsConstructor
@@ -24,10 +25,16 @@ public class TypingDataMetadataSerializer implements Converter<TypingDataMetadat
                     Map.of(
                             "projectId", typingDataMetadata.getProjectId(),
                             "typingDataId", typingDataMetadata.getTypingDataId(),
+                            "type", typingDataMetadata.getType(),
                             "name", typingDataMetadata.getName(),
-                            "repositoryId", typingDataMetadata.getRepositoryId().name().toLowerCase(),
                             "repositorySpecificData", Objects.requireNonNull(
-                                    mongoConverter.convertToMongoType(typingDataMetadata.getRepositorySpecificData())
+                                    mongoConverter.convertToMongoType(
+                                            typingDataMetadata.getRepositorySpecificData().entrySet().stream()
+                                                    .collect(Collectors.toMap(
+                                                            entry -> entry.getKey().name().toLowerCase(),
+                                                            Map.Entry::getValue
+                                                    ))
+                                    )
                             )
                     )
             );

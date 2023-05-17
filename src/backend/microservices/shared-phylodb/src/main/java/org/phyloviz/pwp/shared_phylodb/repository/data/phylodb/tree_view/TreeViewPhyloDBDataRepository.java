@@ -3,10 +3,11 @@ package org.phyloviz.pwp.shared_phylodb.repository.data.phylodb.tree_view;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.shared.repository.data.tree_view.repository.TreeViewDataRepository;
 import org.phyloviz.pwp.shared.repository.data.tree_view.repository.specific_data.TreeViewDataRepositorySpecificData;
+import org.phyloviz.pwp.shared.repository.data.tree_view.repository.specific_data.TreeViewPhyloDBDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.Edge;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.Node;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import pt.ist.meic.phylodb.analysis.inference.InferenceService;
 import pt.ist.meic.phylodb.analysis.inference.model.Inference;
 import pt.ist.meic.phylodb.analysis.visualization.VisualizationService;
@@ -17,7 +18,7 @@ import pt.ist.meic.phylodb.typing.profile.model.Profile;
 import java.util.HashMap;
 import java.util.List;
 
-@Service
+@Repository
 @RequiredArgsConstructor
 public class TreeViewPhyloDBDataRepository implements TreeViewDataRepository {
 
@@ -75,7 +76,9 @@ public class TreeViewPhyloDBDataRepository implements TreeViewDataRepository {
 
         return new GetTreeViewOutput(
                 nodes,
-                edges
+                nodes.size(),
+                edges,
+                edges.size()
         );
     }
 

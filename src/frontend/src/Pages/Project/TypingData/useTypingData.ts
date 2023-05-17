@@ -31,14 +31,18 @@ export function useTypingData() {
             .finally(() => setLoading(false))
     }, [projectId, typingDataId])
 
+    const columns = (typingDataSchema?.loci.map((locus) => (
+        {field: locus, headerName: locus, width: 100}
+    )) ?? [])
+    columns.unshift({field: 'ST', headerName: 'ST', width: 100})
+
     return {
         data: {
-            columns: typingDataSchema?.loci.map((locus) => (
-                {field: locus, headerName: locus, width: 100}
-            )) ?? [],
+            columns,
             rows: typingDataProfiles?.profiles.map((profile) => (
                 {
                     id: profile.id,
+                    ST: profile.id,
                     ...profile.profile.reduce((acc, curr, index) => {
                         acc[typingDataSchema!.loci[index]] = curr
                         return acc

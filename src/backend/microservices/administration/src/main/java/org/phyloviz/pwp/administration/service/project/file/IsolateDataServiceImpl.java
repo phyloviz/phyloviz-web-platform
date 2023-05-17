@@ -38,8 +38,9 @@ public class IsolateDataServiceImpl implements IsolateDataService {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
-        if (!isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId))
-            throw new IsolateDataNotFoundException();
+        IsolateDataMetadata isolateDataMetadata = isolateDataMetadataRepository
+                .findByProjectIdAndIsolateDataId(projectId, isolateDataId)
+                .orElseThrow(IsolateDataNotFoundException::new);
 
         if (datasetRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId)) {
             throw new DeniedFileDeletionException(
@@ -47,7 +48,7 @@ public class IsolateDataServiceImpl implements IsolateDataService {
             );
         }
 
-        deleteIsolateData(isolateDataId);
+        deleteIsolateData(isolateDataMetadata);
     }
 
     @Override
@@ -57,22 +58,15 @@ public class IsolateDataServiceImpl implements IsolateDataService {
     }
 
     @Override
-    public void deleteIsolateData(String isolateDataId) {
-        isolateDataMetadataRepository.findAllByIsolateDataId(isolateDataId)
-                .forEach(this::deleteIsolateData);
-    }
-
-    @Override
     public UpdateIsolateDataOutput updateIsolateData(String name, String projectId, String isolateDataId, String userId) {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
 
-        if (!isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(projectId, isolateDataId))
-            throw new IsolateDataNotFoundException();
+        IsolateDataMetadata isolateDataMetadata = isolateDataMetadataRepository
+                .findByProjectIdAndIsolateDataId(projectId, isolateDataId)
+                .orElseThrow(IsolateDataNotFoundException::new);
 
-        String previousName = isolateDataMetadataRepository.findAnyByProjectIdAndIsolateDataId(projectId, isolateDataId)
-                .orElseThrow(IsolateDataNotFoundException::new)
-                .getName();
+        String previousName = isolateDataMetadata.getName();
 
         if (name == null)
             throw new InvalidArgumentException("You have to provide at least one field to update");
@@ -80,20 +74,19 @@ public class IsolateDataServiceImpl implements IsolateDataService {
         if (name.isBlank())
             throw new InvalidArgumentException("Name can't be blank");
 
-        if (!name.equals(previousName))
-            isolateDataMetadataRepository.findAllByProjectIdAndIsolateDataId(projectId, isolateDataId)
-                    .forEach(isolateDataMetadata -> {
-                        isolateDataMetadata.setName(name);
-
-                        isolateDataMetadataRepository.save(isolateDataMetadata);
-                    });
+        if (!name.equals(previousName)) {
+            isolateDataMetadata.setName(name);
+            isolateDataMetadataRepository.save(isolateDataMetadata);
+        }
 
         return new UpdateIsolateDataOutput(previousName, name);
     }
 
     private void deleteIsolateData(IsolateDataMetadata isolateDataMetadata) {
-        isolateDataDataRepositoryFactory.getRepository(isolateDataMetadata.getRepositoryId())
-                .deleteIsolateData(isolateDataMetadata.getRepositorySpecificData());
+        isolateDataMetadata.getRepositorySpecificData().forEach((repositoryId, repositorySpecificData) ->
+                isolateDataDataRepositoryFactory.getRepository(repositoryId)
+                        .deleteIsolateData(repositorySpecificData)
+        );
 
         isolateDataMetadataRepository.delete(isolateDataMetadata);
     }

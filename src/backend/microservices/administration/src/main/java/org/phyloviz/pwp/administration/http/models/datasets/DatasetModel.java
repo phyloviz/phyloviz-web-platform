@@ -15,6 +15,7 @@ public class DatasetModel {
     private String description;
     private String typingDataId;
     private String isolateDataId;
+    private String isolateDataKey;
     private List<DistanceMatrixOutputModel> distanceMatrices;
     private List<TreeOutputModel> trees;
     private List<TreeViewOutputModel> treeViews;
@@ -25,6 +26,7 @@ public class DatasetModel {
         this.description = fullDatasetInfo.getDescription();
         this.typingDataId = fullDatasetInfo.getTypingDataId();
         this.isolateDataId = fullDatasetInfo.getIsolateDataId();
+        this.isolateDataKey = fullDatasetInfo.getIsolateDataKey();
         this.distanceMatrices = fullDatasetInfo.getDistanceMatrices().stream().map(DistanceMatrixOutputModel::new).toList();
         this.trees = fullDatasetInfo.getTrees().stream().map(TreeOutputModel::new).toList();
         this.treeViews = fullDatasetInfo.getTreeViews().stream().map(TreeViewOutputModel::new).toList();
