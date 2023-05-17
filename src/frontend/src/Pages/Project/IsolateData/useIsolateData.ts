@@ -39,10 +39,10 @@ export function useIsolateData() {
             rows: isolateDataRows?.rows.map((row) => (
                 {
                     id: row.id,
-                    ...row.row.reduce((acc, curr, index) => {
+                    ...(Object.values(row.row).reduce((acc: any, curr, index) => {
                         acc[isolateDataSchema!.headers[index]] = curr
                         return acc
-                    }, {} as Record<string, string>)
+                    }, {} as Record<string, string>) as any)
                 }
             )) ?? [],
             initialState: {

@@ -68,20 +68,6 @@ export class GraphData<N extends CosmosInputNode, L extends CosmosInputLink> {
         })
 
 
-        // Calculate node text meshes
-        inputNodes.forEach((n, i) => {
-          const text = n.id
-          // const textMesh = vectorizeText(text, {
-          //   font: "Roboto",
-          //   textAlign: 'center',
-          //   textBaseline: 'middle',
-          //
-          // })
-
-
-          // this.idToTextMeshesMap.set(n.id, textMesh)
-        })
-
         // Calculate node outdegree/indegree values
         // And filter links if source/target node does not exist
         this.completeLinks.clear()

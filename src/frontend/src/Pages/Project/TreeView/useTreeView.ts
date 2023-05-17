@@ -23,6 +23,9 @@ import {useProjectContext} from "../useProject"
 import {GraphConfigInterface} from "./cosmos/config"
 import {useReactToPrint} from "react-to-print";
 import {SelectChangeEvent} from "@mui/material";
+import {BubbleDataPoint, ChartData, Point} from "chart.js";
+import interpolate from 'color-interpolate'
+import {MAX_NUM_SLICES} from "./cosmos/modules/Points";
 
 export type VizNode = {
     id: string
@@ -33,6 +36,7 @@ export type VizNode = {
 export type VizLink = {
     source: string
     target: string
+    weight: number
 }
 
 const defaultConfig: GraphConfigInterface<VizNode, VizLink> = {
@@ -78,13 +82,15 @@ export function useTreeView() {
     const [decay, setDecay] = useState(defaultConfig.simulation!.decay!)
 
     const [nodeSize, setNodeSize] = useState<number>(defaultConfig.nodeSize! as number)
-    const [nodeLabel, setNodeLabel] = useState(false)
+    const [nodeLabel, setNodeLabel] = useState(true)
     const [nodeLabelSize, setNodeLabelSize] = useState(0)
     const [linkLength, setLinkLength] = useState<number>(defaultConfig.linkWidth! as number)
     const [linkLabel, setLinkLabel] = useState(false)
     const [linkLabelSize, setLinkLabelSize] = useState(0)
     const [linkLabelType, setLinkLabelType] = useState("")
-
+    const [doughnutChartData, setDoughnutChartData] = useState<ChartData<"doughnut", (number | [number, number] | Point | BubbleDataPoint | null)[], unknown> | null>(null)
+    const [isolateDataSchema, setIsolateDataSchema] = useState<string[]>([])
+    const [colorByIsolateData, setColorByIsolateData] = useState<string>("")
 
     const toPrintRef = useRef(null);
     const reactToPrintContent = React.useCallback(() => {
@@ -98,6 +104,10 @@ export function useTreeView() {
     useEffect(() => {
         async function init() {
             const data: GetTreeViewOutputModel = await VisualizationService.getTreeView(projectId!, datasetId!, treeViewId!)
+            const isolateDataId = "" // TODO: Get isolate data id
+            const isolateDataSchema = await VisualizationService.getIsolateDataSchema(projectId!, isolateDataId)
+            setIsolateDataSchema(isolateDataSchema.headers)
+
 
             function findBiggestGroup(nodes: Node[], edges: Edge[]): Node[] {
                 const visited = new Set<string>()
@@ -147,6 +157,7 @@ export function useTreeView() {
                 return {
                     source: edge.from,
                     target: edge.to,
+                    weight: edge.weight
                 }
             })
 
@@ -272,6 +283,7 @@ export function useTreeView() {
         },
         updateNodeLabel: (event: React.ChangeEvent<HTMLInputElement>) => {
             setNodeLabel(event.target.checked)
+            graphRef.current!.renderNodeLabels(event.target.checked)
         },
         updateNodeLabelSize: (value: number) => {
             // TODO: implement node label size
@@ -282,13 +294,97 @@ export function useTreeView() {
         },
         updateLinkLabel: (event: React.ChangeEvent<HTMLInputElement>) => {
             setLinkLabel(event.target.checked)
+            graphRef.current!.renderLinkLabels(event.target.checked)
         },
         updateLinkLabelSize: (value: number) => {
             // TODO: implement link label size
         },
-        updateLinkLabelType: (event: SelectChangeEvent, child: ReactNode) => {
+        updateLinkLabelType: async (event: SelectChangeEvent, child: ReactNode) => {
             // TODO: implement link label type
+
         },
+        isolateDataHeaders: isolateDataSchema,
+        colorByIsolateData,
+        updateColorByIsolateData: async (event: SelectChangeEvent, child: ReactNode) => {
+            const selectedHeader = event.target.value
+            setColorByIsolateData(selectedHeader)
+
+            const key = "ST (MLST)"
+            const isolateDataId = "" // TODO: Get isolate data id
+
+            const isolateData = await VisualizationService.getIsolateDataRows(projectId!, isolateDataId)
+
+            const selectedHeaderValues = isolateData.rows.map((row) => row.row[selectedHeader])
+            const selectedHeaderValuesSet = new Set(selectedHeaderValues)
+
+            const pallete = ["#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93"]
+
+            const doughnutChartLabels = Array.from(selectedHeaderValuesSet)
+
+            const doughnutChartHashMap = new Map<string, number>()
+
+            for (let i = 0; i < doughnutChartLabels.length; i++) {
+                doughnutChartHashMap.set(doughnutChartLabels[i], i)
+            }
+
+            const doughtnutChartColors = doughnutChartLabels.map((label) => {
+                return interpolate(pallete)(Math.random())
+            })
+
+            const doughnutChartData = doughnutChartLabels.map((label) => {
+                return selectedHeaderValues.filter((value) => value === label).length
+            })
+
+            const occurencesColorMap = new Map<string, { label: string, occurences: number, color: number[] }[]>()
+
+            for (let i = 0; i < isolateData.rows.length; i++) {
+                const row = isolateData.rows[i]
+                const profileId = row.profileId
+                const rowId = parseInt(row.id)
+                const data = occurencesColorMap.get(profileId)
+                const label = row.row[selectedHeader]
+
+                const labelIndex = doughnutChartHashMap.get(label)!
+
+                if (data) {
+                    const ocurrencesColor = data.find((d) => d.label === label)
+
+                    if (ocurrencesColor && ocurrencesColor.occurences <= MAX_NUM_SLICES) {
+                        ocurrencesColor.occurences += 1
+                    }
+                    continue
+                }
+
+                const color = doughtnutChartColors[labelIndex]
+
+                if (!color) {
+                    throw new Error("Color not found")
+                }
+                //3222 -> 2477
+                occurencesColorMap.set(profileId, [
+                    {
+                        label,
+                        occurences: 1,
+                        color: [231, 30, 133]
+                    }
+                ])
+            }
+            console.log(occurencesColorMap)
+            graphRef.current!.renderPieCharts(occurencesColorMap)
+
+            setDoughnutChartData({
+                labels: doughnutChartLabels,
+                datasets: [
+                    {
+                        label: capitalize(selectedHeader),
+                        data: doughnutChartData,
+                        backgroundColor: doughtnutChartColors,
+                        borderWidth: 1
+                    }
+                ]
+            })
+        }
+        ,
 
         handleExportOptions: () => {
             // TODO: implement export options
@@ -296,6 +392,10 @@ export function useTreeView() {
         handleExportFilters: () => {
             // TODO: implement export filters
         },
+        handleSearch: (st: string): boolean => {
+            return graphRef.current?.zoomToNodeById(st, 1000, 15, false)!
+        },
+        doughnutChartData,
 
         handleZoomIn: () => graphRef.current?.zoom(graphRef.current.getZoomLevel() * ZOOM_IN_SCALE, ZOOM_DURATION),
         handleZoomOut: () => graphRef.current?.zoom(graphRef.current.getZoomLevel() * ZOOM_OUT_SCALE, ZOOM_DURATION),
@@ -304,3 +404,84 @@ export function useTreeView() {
         handlePrint
     }
 }
+
+function capitalize(s: string): string {
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+/**
+ * RGB color regexp
+ */
+export const RGB_REG_EXP = /rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/;
+
+/**
+ * HEX color regexp
+ */
+export const HEX_REG_EXP = /^#?(([\da-f]){3}|([\da-f]){6})$/i;
+
+/**
+ * Converts HEX to RGB.
+ *
+ * Color must be only HEX string and must be:
+ *  - 7-characters starts with "#" symbol ('#ffffff')
+ *  - or 6-characters without "#" symbol ('ffffff')
+ *  - or 4-characters starts with "#" symbol ('#fff')
+ *  - or 3-characters without "#" symbol ('fff')
+ *
+ * @function { color: string => string } convertHexToRgb
+ * @return { string } returns RGB color string or empty string
+ */
+export const hexToRgb = (color: string): number[] => {
+    const errMessage = `
+    Something went wrong while working with colors...
+    
+    Make sure the colors provided to the "PieDonutChart" meet the following requirements:
+    
+    Color must be only HEX string and must be 
+    7-characters starts with "#" symbol ('#ffffff')
+    or 6-characters without "#" symbol ('ffffff')
+    or 4-characters starts with "#" symbol ('#fff')
+    or 3-characters without "#" symbol ('fff')
+    
+    - - - - - - - - -
+    
+    Error in: "convertHexToRgb" function
+    Received value: ${color}
+  `;
+
+    if (
+        !color
+        || typeof color !== 'string'
+        || color.length < 3
+        || color.length > 7
+    ) {
+        console.error(errMessage);
+        return [];
+    }
+
+    const replacer = (...args: string[]) => {
+        const [
+            _,
+            r,
+            g,
+            b,
+        ] = args;
+
+        return '' + r + r + g + g + b + b;
+    };
+
+    const rgbHexArr = color
+        ?.replace(HEX_REG_EXP, replacer)
+        .match(/.{2}/g)
+        ?.map(x => parseInt(x, 16));
+
+    /**
+     * "HEX_REG_EXP.test" is here to create more strong tests
+     */
+    if (rgbHexArr && Array.isArray(rgbHexArr) && HEX_REG_EXP.test(color)) {
+        return rgbHexArr
+    }
+
+    console.error(errMessage);
+    return [];
+};

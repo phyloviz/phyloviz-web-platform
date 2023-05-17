@@ -96,6 +96,12 @@ interface TreeViewOptionsProps {
     onChangeLinkLabelSize: (linkLabelSize: number) => void
     onChangeLinkLabelType: (event: SelectChangeEvent, child: ReactNode) => void
 
+   isolateDataHeaders: string[]
+
+    colorByIsolateData: string
+    onChangeColorByIsolateData: (event: SelectChangeEvent, child: ReactNode) => void
+
+
     onExport: () => void,
     resetSimulationConfig: () => void
 }
@@ -110,8 +116,6 @@ export function TreeViewOptions(
         friction, onChangeFriction,
         repulsion, onChangeRepulsion,
         repulsionTheta, onChangeRepulsionTheta,
-        onExport,
-        resetSimulationConfig,
 
         nodeSize,
         nodeLabel,
@@ -128,6 +132,14 @@ export function TreeViewOptions(
         onChangeLinkLabel,
         onChangeLinkLabelSize,
         onChangeLinkLabelType,
+
+        isolateDataHeaders,
+
+        colorByIsolateData,
+        onChangeColorByIsolateData,
+
+        onExport,
+        resetSimulationConfig
     }: TreeViewOptionsProps
 ) {
     const [layoutPropertiesExpanded, setLayoutPropertiesExpanded] = React.useState(false)
@@ -323,15 +335,15 @@ export function TreeViewOptions(
                 <Select
                     labelId="color-by-profile"
                     label="Color by Profile"
-                    //value={colorByProfile}
-                    //onChange={onChangeColorByProfile}
+                    // value={colorByProfile}
+                    // onChange={onChangeColorByProfile}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
-                    {/*{profiles.map((value) => (
-                        <MenuItem key={value} value={value}>
-                            {value}
-                        </MenuItem>
-                    ))}*/}
+                    {/*{profiles != null && profiles.map((value) => (*/}
+                    {/*    <MenuItem key={value} value={value}>*/}
+                    {/*        {value}*/}
+                    {/*    </MenuItem>*/}
+                    {/*))}*/}
                 </Select>
             </FormControl>
             <FormControl sx={{width: "100%", mb: 1, mt: 2}} size="small">
@@ -339,15 +351,15 @@ export function TreeViewOptions(
                 <Select
                     labelId="color-by-isolate-datae"
                     label="Color by Isolate Data"
-                    //value={colorByIsolateData}
-                    //onChange={onChangeColorByIsolateData}
+                    value={colorByIsolateData}
+                    onChange={onChangeColorByIsolateData}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
-                    {/*{isolateDataRows.map((value) => (
+                    { isolateDataHeaders.map((value) => (
                         <MenuItem key={value} value={value}>
                             {value}
                         </MenuItem>
-                    ))}*/}
+                    )) }
                 </Select>
             </FormControl>
         </Collapse>

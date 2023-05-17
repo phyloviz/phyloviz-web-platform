@@ -6,6 +6,8 @@ import drawPointsVert from '../../modules/Points/draw-points.vert'
 import findPointsOnAreaSelectionFrag from '../../modules/Points/find-points-on-area-selection.frag'
 import drawHighlightedFrag from '../../modules/Points/draw-highlighted.frag'
 import drawHighlightedVert from '../../modules/Points/draw-highlighted.vert'
+import drawPieChartNodesVert from '../../modules/Points/draw-pie-chart-nodes.vert'
+import drawPieChartNodesFrag from '../../modules/Points/draw-pie-chart-nodes.frag'
 import findHoveredPointFrag from '../../modules/Points/find-hovered-point.frag'
 import findHoveredPointVert from '../../modules/Points/find-hovered-point.vert'
 import {createSizeBuffer, getNodeSize} from '../../modules/Points/size-buffer'
@@ -19,6 +21,8 @@ import {defaultConfigValues} from '../../variables'
 import {readPixels} from '../../helper'
 import {CosmosInputLink, CosmosInputNode} from '../../types'
 import {mat4} from 'gl-matrix'
+
+export const MAX_NUM_SLICES = 5
 
 export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extends CoreModule<N, L> {
     public currentPositionFbo: regl.Framebuffer2D | undefined
@@ -39,13 +43,20 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
     private findHoveredPointCommand: regl.DrawCommand | undefined
     private clearHoveredFboCommand: regl.DrawCommand | undefined
     private trackPointsCommand: regl.DrawCommand | undefined
-    public drawLabelsCommand: regl.DrawCommand | undefined
     private trackedIds: string[] | undefined
     private trackedPositionsById: Map<string, [number, number]> = new Map()
-     public labelPositionsTex: regl.Texture2D | undefined
+    public drawLabelsCommand: regl.DrawCommand | undefined
+    public labelPositionsTex: regl.Texture2D | undefined
     public labelPositionsData: Float32Array | undefined
-    public labelPositionsDataMatrices: Float32Array[] = []
-    glyphWidth: number | undefined;
+    public labelPositionsDataMatrices = new Map<string, Float32Array>()
+    public glyphWidth: number | undefined;
+    public renderLabels: boolean = true;
+    public drawPieCharts: regl.DrawCommand | undefined
+    public anglesAndColorsTexture: regl.Texture2D | undefined;
+    public slicesPerNodeTexture: regl.Texture2D | undefined;
+    public renderPieCharts: boolean = false;
+    public anglesAndColors: Float32Array | undefined;
+    public slicesPerNode: Float32Array | undefined
 
     public create(): void {
         const {reglInstance, config, store, data} = this
@@ -308,11 +319,11 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
         const texcoords: number[] = [];
         const messageIds: number[] = [];
         this.labelPositionsData = new Float32Array(messages.length * 16);
-        this.labelPositionsDataMatrices = [];
+
         const quadPositions = [-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1];
         const quadTexcoords = [0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0];
         messages.forEach((message, id) => {
-            this.labelPositionsDataMatrices.push(this.labelPositionsData!.subarray(id * 16, (id + 1) * 16));
+            this.labelPositionsDataMatrices.set(message, this.labelPositionsData!.subarray(id * 16, (id + 1) * 16));
             for (let i = 0; i < message.length; ++i) {
                 const c = convertToGlyphIndex(message[i]);
                 const u = (c % glyphsAcross) * glyphUWidth;
@@ -335,8 +346,7 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
         this.labelPositionsTex = reglInstance.texture({
             data: this.labelPositionsData,
             type: 'float',
-            width: 4,
-            height: messages.length,
+            shape: [4, messages.length, 4],
             mag: 'nearest',
             min: 'nearest',
             wrap: 'clamp',
@@ -378,7 +388,6 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
         gl_FragColor = glyphColor;
       }
     `,
-
             attributes: {
                 position: {
                     buffer: positions,
@@ -394,7 +403,7 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
                 },
             },
             uniforms: {
-                viewProjection: ({ viewportWidth, viewportHeight }) =>
+                viewProjection: ({viewportWidth, viewportHeight}) =>
                     mat4.ortho(mat4.create(), 0, viewportWidth, 0, viewportHeight, -1, 1),
                 matrixTex: this.labelPositionsTex,
                 matrixTexSize: [4, messages.length],
@@ -403,69 +412,86 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
             count: positions.length / 2,
         });
 
+        const numNodes = this.data.nodes.length;
 
-        // for (const element of data.nodes) {
-        //     const node = element
-        //     const textMesh = this.data.getTextMeshById(node.id)!
-        //
-        //     const drawText = this.reglInstance({
-        //         frag: `
-        //     precision mediump float;
-        //     uniform float t;
-        //     void main () {
-        //       gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-        //     }`,
-        //
-        //         vert: `
-        //     attribute vec2 position;
-        //     uniform float x;
-        //     uniform float y;
-        //     uniform mat3 transform;
-        //     uniform float spaceSize;
-        //     uniform vec2 screenSize;
-        //
-        //     void main () {
-        //       vec2 point = vec2(x,y);
-        //       vec2 p = 2.0 * point / spaceSize - 1.0;
-        //       p *= spaceSize / screenSize;
-        //       vec3 final = transform * vec3(p, 1);
-        //
-        //       vec2 scale = vec2(transform[0][0])/200.0;
-        //       scale.y = -scale.y;
-        //       gl_Position = vec4(final.rg+scale*position, 0, 1);
-        //     }`,
-        //         attributes: {
-        //             position: textMesh.positions,
-        //         },
-        //
-        //         uniforms: {
-        //             x: reglInstance.prop<{ x: number }, 'x'>('x'),
-        //             y: reglInstance.prop<{ y: number }, 'y'>('y'),
-        //             spaceSize: () => config.spaceSize,
-        //             screenSize: () => store.screenSize,
-        //             transform: () => store.transform,
-        //         },
-        //         elements: textMesh.edges,
-        //         blend: {
-        //             enable: true,
-        //             func: {
-        //                 dstRGB: 'one minus src alpha',
-        //                 srcRGB: 'src alpha',
-        //                 dstAlpha: 'one minus src alpha',
-        //                 srcAlpha: 'one',
-        //             },
-        //             equation: {
-        //                 rgb: 'add',
-        //                 alpha: 'add',
-        //             },
-        //         },
-        //         depth: {enable: false},
-        //
-        //     })
-        //
-        //     this.drawTextCommands.set(node.id, drawText)
-        // }
+// Define the size of the texture.
 
+// Initialize an additional array for colors and angles.
+        this.anglesAndColors = new Float32Array(
+            numNodes * MAX_NUM_SLICES * 4
+        ); // 4 channels per texel
+
+
+// Create color and angle texture
+        this.anglesAndColorsTexture = reglInstance.texture({
+            data: this.anglesAndColors,
+            shape: [MAX_NUM_SLICES, numNodes, 4],
+            type: 'float',
+        });
+
+// Initialize an array for the number of slices per node.
+        this.slicesPerNode = new Float32Array(numNodes);
+// Create slices per node texture
+        this.slicesPerNodeTexture = reglInstance.texture({
+            data: this.slicesPerNode,
+            shape: [1, numNodes, 1],
+            type: 'float',
+        });
+
+
+        this.drawPieCharts = reglInstance({
+            frag: drawPieChartNodesFrag,
+
+            vert: drawPieChartNodesVert,
+            attributes: {
+                indexes: createIndexesBuffer(reglInstance, this.store.pointsTextureSize),
+                nodeIndex: createOneDimentionalIndexesBuffer(numNodes),
+            },
+            primitive: 'points',
+            uniforms: {
+                positions: () => this.currentPositionFbo,
+                particleColor: () => this.colorFbo,
+                particleGreyoutStatus: () => this.greyoutStatusFbo,
+                particleSize: () => this.sizeFbo,
+                ratio: () => config.pixelRatio,
+                sizeScale: () => config.nodeSizeScale,
+                pointsTextureSize: () => store.pointsTextureSize,
+                transform: () => store.transform,
+                spaceSize: () => config.spaceSize,
+                screenSize: () => store.screenSize,
+                greyoutOpacity: () => config.nodeGreyoutOpacity,
+                scaleNodesOnZoom: () => config.scaleNodesOnZoom,
+                u_resolution: ({viewportWidth, viewportHeight}) => [
+                    viewportWidth,
+                    viewportHeight,
+                ],
+                u_time: () => {
+                    return reglInstance.now();
+                },
+                anglesAndColors: () => this.anglesAndColorsTexture,
+                slicesPerNodeTexture: () => this.slicesPerNodeTexture,
+                slicesPerNodeTextureSize: [1, numNodes],
+                anglesAndColorsTextureSize: [MAX_NUM_SLICES, numNodes],
+            },
+            blend: {
+                enable: true,
+                func: {
+                    dstRGB: 'one minus src alpha',
+                    srcRGB: 'src alpha',
+                    dstAlpha: 'one minus src alpha',
+                    srcAlpha: 'one',
+                },
+                equation: {
+                    rgb: 'add',
+                    alpha: 'add',
+                },
+            },
+            depth: {
+                enable: false,
+                mask: false,
+            },
+            count: numNodes,
+        });
 
     }
 
@@ -491,9 +517,14 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
     }
 
     public draw(): void {
-        this.drawCommand?.()
 
-        this.drawLabelsCommand?.()
+        if (this.renderPieCharts)
+            this.drawPieCharts?.()
+        else
+            this.drawCommand?.()
+
+        if (this.renderLabels)
+            this.drawLabelsCommand?.()
         if (this.config.renderHighlightedNodeRing) {
             if (this.store.hoveredNode) {
                 this.drawHighlightedCommand?.({
@@ -511,8 +542,6 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
             }
         }
     }
-
-
 
 
     public updatePosition(): void {
@@ -579,6 +608,53 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
         this.currentPositionFbo = temp
     }
 
+    public updateAnglesAndColors(occurencesColorMap: Map<string, { occurences: number; color: number[] }[]>) {
+        // for (let i = 0; i < this.data.nodes.length; ++i) {
+        //     const node = this.data.nodes[i];
+        //
+        //     const occurrencesColors = occurencesColorMap.get(node.id);
+        //
+        //     if (!occurrencesColors) {
+        //         continue;
+        //     }
+        //
+        //     console.log(occurrencesColors)
+        //
+        //     const values = occurrencesColors.map(occurrenceColor => occurrenceColor.occurences);
+        //     const sumOfValues = values.reduce((a, b) => a + b, 0);
+        //
+        //     for (let j = 0; j < occurrencesColors.length; ++j) {
+        //         const index = i * occurrencesColors.length * 4 + j * 4; // Each color and angle pair takes up 2 texels
+        //         const color = occurrencesColors[j].color;
+        //         console.log("Updating angles and colors", index, color, values[j], sumOfValues)
+        //         this.anglesAndColors![index] =
+        //             (values[j] / sumOfValues) * 2 * Math.PI; // Normalized angle
+        //         this.anglesAndColors![index + 1] = Math.random();
+        //         this.anglesAndColors![index + 2] = Math.random();
+        //         this.anglesAndColors![index + 3] = Math.random();
+        //     }
+        // }
+
+        this.anglesAndColorsTexture?.subimage(this.anglesAndColors!);
+    }
+
+    updateSlicesPerNode(occurencesColorMap: Map<string, { occurences: number; color: number[] }[]>) {
+        // for (let i = 0; i < this.data.nodes.length; ++i) {
+        //     // this.slicesPerNode![i] = 2;
+        //     const node = this.data.nodes[i];
+        //
+        //     const occurrencesColors = occurencesColorMap.get(node.id);
+        //
+        //     if (!occurrencesColors) {
+        //         this.slicesPerNode![i] = 0;
+        //         continue;
+        //     }
+        //
+        //     this.slicesPerNode![i] = occurrencesColors.length;
+        // }
+        //
+        this.slicesPerNodeTexture?.subimage(this.slicesPerNode!);
+    }
 }
 
 function loadImage(url: string): Promise<HTMLImageElement> {
@@ -591,6 +667,18 @@ function loadImage(url: string): Promise<HTMLImageElement> {
     });
 }
 
+function createOneDimentionalIndexesBuffer(size: number) {
+    const data = Array(size)
+        .fill(0)
+        .map((v, i) => i);
+
+    console.log(data);
+    return {
+        buffer: data,
+        size: 1,
+    };
+}
+
 function convertToGlyphIndex(c: string) {
     c = c.toUpperCase();
     if (c >= 'A' && c <= 'Z') {
@@ -601,3 +689,5 @@ function convertToGlyphIndex(c: string) {
         return 255;
     }
 }
+
+

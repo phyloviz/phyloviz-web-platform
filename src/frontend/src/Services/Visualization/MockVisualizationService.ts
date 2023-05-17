@@ -6,7 +6,7 @@ import {GetIsolateDataRowsOutputModel} from "./models/getIsolateDataProfiles/Get
 import {GetIsolateDataFileOutputModel} from "./models/getIsolateDataFile/GetIsolateDataFileOutputModel"
 import {GetDistanceMatrixOutputModel} from "./models/getDistanceMatrix/GetDistanceMatrixOutputModel"
 import {GetTreeOutputModel} from "./models/getTree/GetTreeOutputModel"
-import {Edge, GetTreeViewOutputModel, Node} from './models/getTreeView/GetTreeViewOutputModel';
+import {GetTreeViewOutputModel} from './models/getTreeView/GetTreeViewOutputModel';
 
 export namespace MockVisualizationService {
 
@@ -95,8 +95,40 @@ export namespace MockVisualizationService {
     ): Promise<GetIsolateDataSchemaOutputModel> {
         return {
             type: "mlst7",
-            headers: ["id", "isolate", "aliases", "country", "continent", "region", "town_or_city", "year", "month", "isolation_date"],
-            totalCount: 10
+            headers: [
+                "id",
+                "isolate",
+                "aliases",
+                "country",
+                "continent",
+                "region",
+                "town_or_city",
+                "year",
+                "month",
+                "isolation_date",
+                "received_date",
+                "age_yr",
+                "age_mth",
+                "sex",
+                "disease",
+                "source",
+                "epidemiology",
+                "species",
+                "penner",
+                "bioproject_accession",
+                "biosample_accession",
+                "NCBI_assembly_accession",
+                "ENA_run_accession",
+                "private_project",
+                "comments",
+                "sender",
+                "curator",
+                "date_entered",
+                "datestamp",
+                "ST (MLST)",
+                "clonal_complex (MLST)"
+            ],
+            totalCount: 30
         }
     }
 
@@ -111,23 +143,31 @@ export namespace MockVisualizationService {
         projectId: string,
         isolateDataId: string
     ): Promise<GetIsolateDataRowsOutputModel> {
+        // return {
+        //     rows: [
+        //         {
+        //             "id": "1",
+        //             "profileId": "3222",
+        //             "row": {
+        //                 "continent": "Oceania",
+        //                 "country": "New Zealand",
+        //                 "datestamp": "2019-06-19",
+        //                 "isolate": "PH155",
+        //                 "curator": "20",
+        //                 "penner": "Untypable",
+        //                 "sender": "47",
+        //                 "species": "Campylobacter coli",
+        //                 "year": "2001",
+        //                 "date_entered": "2007-12-18",
+        //                 "source": "sheep"
+        //             }
+        //         }
+        //     ], totalCount: 1
+        //
+        // }
         return new Promise(resolve => setTimeout(resolve, DELAY))
             .then(() => (
-                {
-                    rows: [
-                        {id: "1", row: ["1", "P09", "", "Unknown", "", "", "", "", "", ""]},
-                        {id: "2", row: ["2", "P12", "", "Unknown", "", "", "", "", "", ""]},
-                        {id: "3", row: ["3", "P18", "ATCC43439", "Canada", "North America", "", "", "", "", ""]},
-                        {id: "4", row: ["4", "P22", "ATCC43448", "Canada", "North America", "", "", "", "", ""]},
-                        {id: "5", row: ["5", "P26", "ATCC43477", "Unknown", "", "", "", "", "", ""]},
-                        {id: "6", row: ["6", "P27", "", "Unknown", "", "", "", "", "", ""]},
-                        {id: "7", row: ["7", "P31", "", "Unknown", "", "", "", "", "", ""]},
-                        {id: "8", row: ["8", "P33", "", "Unknown", "", "", "", "", "", ""]},
-                        {id: "9", row: ["9", "P43", "", "Canada", "North America", "Vancouver", "", "", "", ""]},
-                        {id: "10", row: ["10", "P55", "", "Unknown", "", "", "", "", "", ""]}
-                    ],
-                    totalCount: 10
-                }
+                fetch('/mock/isolate_data_rows.json').then(response => response.json())
             ))
     }
 
@@ -197,9 +237,14 @@ export namespace MockVisualizationService {
         // const edges: Edge[] = [];
         // const nodes: Node[] = [];
         // const n = 100;
-        // const m = 10;
+        // const m = 100;
         // for (let node = 0; node < n * m; node += 1) {
-        //     nodes.push({ st: node.toString(), coordinates: [0, 0], profile: Array.from({ length: 8 }, () => Math.floor(Math.random() * 100).toString()), auxiliaryData: {} });
+        //     nodes.push({
+        //         st: node.toString(),
+        //         coordinates: [0, 0],
+        //         profile: Array.from({length: 8}, () => Math.floor(Math.random() * 100).toString()),
+        //         auxiliaryData: {}
+        //     });
         //     const nextNode = node + 1;
         //     const bottomNode = node + n;
         //     const nodeLine = Math.floor(node / n);
@@ -207,11 +252,11 @@ export namespace MockVisualizationService {
         //     const bottomNodeLine = Math.floor(bottomNode / n);
         //
         //     if (nodeLine === nextNodeLine)
-        //         edges.push({ from: `${node}`, to: `${nextNode}` });
+        //         edges.push({from: `${node}`, to: `${nextNode}`, weight: Math.floor(Number(Math.random() * 7+1))});
         //     if (bottomNodeLine < m)
-        //         edges.push({ from: `${node}`, to: `${bottomNode}` });
+        //         edges.push({from: `${node}`, to: `${bottomNode}`, weight: Math.floor(Number(Math.random() * 7+1))});
         // }
-        // return { nodes, edges }
-        return await fetch('/mock/tree-view.json').then(response => response.json())
+        // return {nodes, edges}
+        return await fetch('/mock/tree_view.json').then(response => response.json())
     }
 }

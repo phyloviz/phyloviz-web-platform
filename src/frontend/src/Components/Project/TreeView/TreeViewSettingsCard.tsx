@@ -45,6 +45,10 @@ interface TreeViewSettingsCardProps {
     onChangeLinkLabelSize: (linkLabelSize: number) => void
     onChangeLinkLabelType: (event: SelectChangeEvent, child: ReactNode) => void
 
+    isolateDataHeaders: string[]
+    colorByIsolateData: string
+    onChangeColorByIsolateData: (event: SelectChangeEvent, child: ReactNode) => void
+
     onExportOptions: () => void
     onExportFilters: () => void
 
@@ -95,6 +99,10 @@ export function TreeViewSettingsCard(
         onChangeLinkLabelSize,
         onChangeLinkLabelType,
 
+        isolateDataHeaders,
+        colorByIsolateData,
+        onChangeColorByIsolateData,
+
         onExportOptions,
         onExportFilters,
 
@@ -134,6 +142,9 @@ export function TreeViewSettingsCard(
                 linkLabel={linkLabel} onChangeLinkLabel={onChangeLinkLabel}
                 linkLabelSize={linkLabelSize} onChangeLinkLabelSize={onChangeLinkLabelSize}
                 linkLabelType={linkLabelType} onChangeLinkLabelType={onChangeLinkLabelType}
+                isolateDataHeaders={isolateDataHeaders}
+                colorByIsolateData={colorByIsolateData}
+                onChangeColorByIsolateData={onChangeColorByIsolateData}
                 onExport={onExportOptions}
                 resetSimulationConfig={resetSimulationConfig}/>
         </Collapse>

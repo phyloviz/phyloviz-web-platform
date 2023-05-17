@@ -15,8 +15,8 @@ import {ForceManyBody} from './modules/ForceManyBody'
 import {ForceManyBodyQuadtree} from './modules/ForceManyBodyQuadtree'
 import {ForceMouse} from './modules/ForceMouse'
 import {GraphData} from './modules/GraphData'
-import {Lines} from './modules/Lines'
-import {Points} from './modules/Points'
+import {Lines, NumberPair} from './modules/Lines'
+import {MAX_NUM_SLICES, Points} from './modules/Points'
 import {ALPHA_MIN, MAX_POINT_SIZE, Store} from './modules/Store'
 import {defaultConfigValues, defaultScaleToZoom} from './variables'
 import {Zoom} from './modules/Zoom'
@@ -47,6 +47,8 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
     private hasBeenRecentlyDestroyed = false
     private currentEvent: D3ZoomEvent<HTMLCanvasElement, undefined> | MouseEvent | undefined
     idToText = new Map<string, any>()
+    private updatePieCharts: boolean = false;
+    private occurencesColorMap: Map<string, { occurences: number; color: number[] }[]> | undefined
 
     public constructor(canvas: HTMLCanvasElement, config?: GraphConfigInterface<N, L>) {
         if (config) this.config.init(config)
@@ -88,6 +90,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
                 .on('start', (e: any) => {
                     this.onMouseMove(e.sourceEvent)
                     const selectedNode = this.store.hoveredNode
+                    console.log("DRAGGING NODE: ", selectedNode)
                     if (selectedNode) {
                         this.store.draggedNode = selectedNode
                         this.store.draggedX = e.x
@@ -235,10 +238,12 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
      * @param scale Scale value to zoom in or out (`3` by default).
      * @param canZoomOut Set to `false` to prevent zooming out from the node (`true` by default).
      */
-    public zoomToNodeById(id: string, duration = 700, scale = defaultScaleToZoom, canZoomOut = true): void {
+    public zoomToNodeById(id: string, duration = 700, scale = defaultScaleToZoom, canZoomOut = true): boolean {
         const node = this.graph.getNodeById(id)
-        if (!node) return
+
+        if (!node) return false
         this.zoomToNode(node, duration, scale, canZoomOut)
+        return true
     }
 
     /**
@@ -282,6 +287,14 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
      */
     public getZoomLevel(): number {
         return this.zoomInstance.eventTransform.k
+    }
+
+    public renderLinkLabels(checked: boolean) {
+        this.lines.renderLabels = checked
+    }
+
+    public renderNodeLabels(checked: boolean) {
+        this.points.renderLabels = checked
     }
 
     /**
@@ -622,7 +635,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 
     private async initPrograms() {
         await this.points.initPrograms()
-        this.lines.initPrograms()
+        await this.lines.initPrograms()
         this.forceGravity.initPrograms()
         this.forceLinkIncoming.initPrograms()
         this.forceLinkOutgoing.initPrograms()
@@ -680,7 +693,46 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
             this.points.trackPoints()
 
             this.updateLabelPositions(now)
+
+            if (this.updatePieCharts) {
+                console.log("Updating Pie Charts", this.occurencesColorMap)
+                const numNodes = this.graph.nodes.length
+                this.points.slicesPerNode = new Float32Array(numNodes);
+                for (let i = 0; i < numNodes; ++i) {
+                    this.points.slicesPerNode [i] = Math.min(
+                        Math.floor(Math.random() * MAX_NUM_SLICES + 1),
+                        MAX_NUM_SLICES
+                    ); // Random number of slices
+                }
+
+                for (let i = 0; i < numNodes; ++i) {
+                    // Generate random angles.
+                    let randomValues = Array(MAX_NUM_SLICES)
+                        .fill(0)
+                        .map((x, i) => Math.random());
+
+                    randomValues[0] = 6;
+                    let sumOfValues = randomValues.reduce((a, b) => a + b, 0);
+
+                    // Assign random colors and normalized angles.
+                    for (let j = 0; j < MAX_NUM_SLICES; ++j) {
+                        const index = i * MAX_NUM_SLICES * 4 + j* 4; // Each color and angle pair takes up 2 texels
+                        console.log("Updating angles and colors, original", index, randomValues[j], sumOfValues)
+                        this.points.anglesAndColors![index  + 0] =
+                            (randomValues[j] / sumOfValues) * 2 * Math.PI; // Normalized angle
+                        this.points.anglesAndColors![index + 1] = Math.random(); // Red
+                        this.points.anglesAndColors![index  + 2] = Math.random(); // Green
+                        this.points.anglesAndColors![index  + 3] = Math.random(); // Blue
+                    }
+                }
+                this.points.updateSlicesPerNode(this.occurencesColorMap!);
+                this.points.updateAnglesAndColors(this.occurencesColorMap!);
+
+                this.updatePieCharts = false
+            }
+
             this.points.labelPositionsTex?.subimage(this.points.labelPositionsData!)
+            this.lines.labelPositionsTex?.subimage(this.lines.labelPositionsData!)
 
             // Clear canvas
             this.reglInstance.clear({
@@ -694,76 +746,6 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
             }
 
             this.points.draw()
-            // const textMesh: TextMesh = vectorizeText('hello regl!', {
-            // 	textAlign: 'center',
-            // 	textBaseline: 'middle'
-            // })
-            // const drawText = this.reglInstance({
-            // 	frag: `
-            // 	precision mediump float;
-            // 	void main () {
-            // 	  gl_FragColor = vec4(
-            // 		1);
-            // 	}`,
-
-            // 	vert: `
-            // 	attribute vec2 position;
-
-            // 	void main () {
-            // 	  gl_Position = vec4(position, 0, 1);
-            // 	}`,
-
-            // 	attributes: {
-            // 		position: textMesh.positions
-            // 	},
-
-            // 	elements: textMesh.edges,
-
-            // 	depth: { enable: false }
-            // })
-            // drawText()
-            // const nodePositions = this.getNodePositions()
-            // const nodes = Object.keys(nodePositions).map((key) => {
-            //     return {
-            //         id: key,
-            //         x: nodePositions[key].x,
-            //         y: nodePositions[key].y,
-            //     }
-            // })
-            //
-            //
-            // for (const element of nodes) {
-            //     const node = element
-            //     // const drawCommand = this.points.drawTextCommands.get(node.id)!
-            //
-            //     let text = this.idToText.get(node.id)
-            //
-            //     if (text == null) {
-            //         text = new Text({
-            //             regl: this.reglInstance,
-            //             canvas: this.canvas
-            //         })
-            //         this.idToText.set(node.id, text)
-            //     }
-            //
-            //     console.log(this.idToText.values())
-            //     const screenPosition = this.spaceToScreenPosition([node.x, node.y])
-            //     const radius = this.spaceToScreenRadius(
-            //         this.getNodeRadiusById(node.id) as number
-            //     );
-            //
-            //     console.log(this.store.transform[0])
-            //     text.update({
-            //         position: [screenPosition[0] * 2, this.canvas.height - screenPosition[1] * 2.0],
-            //         text: node.id,
-            //         font: `${2 * this.store.transform[0]}px Helvetica, sans-serif`,
-            //     })
-            //
-            //
-            //     text.render()
-            //     // drawCommand({ x: node.x, y: node.y })
-            // }
-
 
             this.fpsMonitor?.end(now)
 
@@ -775,31 +757,49 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 
 
     updateLabelPositions(time: number) {
+        const nodePositions = this.getNodePositionsMap()
 
-        const nodePositions = this.getNodePositions()
-        const nodes = Object.keys(nodePositions).map((key) => {
-            return {
-                id: key,
-                x: nodePositions[key].x,
-                y: nodePositions[key].y,
-            }
-        })
+        if (this.points.renderLabels)
+            this.points.labelPositionsDataMatrices.forEach((mat, id) => {
+                const [nodeX, nodeY] = nodePositions.get(id)!
 
+                const screenPosition = this.spaceToScreenPosition([nodeX, nodeY])
+                const radius = this.getNodeRadiusById(id)!
 
-        this.points.labelPositionsDataMatrices.forEach((mat, i) => {
-            const node = nodes[i]
+                const x = screenPosition[0] * 2
+                const y = this.canvas.height - screenPosition[1] * 2.0
 
-            const screenPosition = this.spaceToScreenPosition([node.x, node.y])
-            const radius = this.getNodeRadiusById(node.id)!
+                mat4.fromTranslation(mat, [x, y, 0]);
+                mat4.scale(mat, mat, [this.store.transform[0] * radius * 0.7, this.store.transform[0] * radius * 0.7, 1]);
+            });
 
+        if (this.lines.renderLabels)
+            this.graph.completeLinks.forEach((link, key) => {
+                const hashCode = new NumberPair(link.source, link.target).hashCode()
+                const mat = this.lines.labelPositionsDataMatrices.get(hashCode)!
 
-            const x = screenPosition[0] * 2
-            const y = this.canvas.height - screenPosition[1] * 2.0
+                const [sourceX, sourceY] = nodePositions.get(link.source)!
+                const [targetX, targetY] = nodePositions.get(link.target)!
 
-            mat4.fromTranslation(mat, [x, y, 0]);
-            mat4.scale(mat, mat, [this.store.transform[0]*radius*0.9, this.store.transform[0]*radius*0.9, 1]);
-        });
+                // Find middle point
+                const [middleX, middleY] = [(sourceX + targetX) / 2, (sourceY + targetY) / 2]
+
+                const screenPosition = this.spaceToScreenPosition([middleX, middleY])
+
+                const x = screenPosition[0] * 2
+                const y = this.canvas.height - screenPosition[1] * 2.0
+
+                mat4.fromTranslation(mat, [x, y, 0]);
+                mat4.scale(mat, mat, [this.store.transform[0] * 2, this.store.transform[0] * 2, 1]);
+            });
     }
+
+    renderPieCharts(occurencesColorMap: Map<string, { occurences: number; color: number[] }[]>) {
+        this.occurencesColorMap = occurencesColorMap
+        this.updatePieCharts = true
+        this.points.renderPieCharts = true
+    }
+
 
     private stopFrames(): void {
         if (this.requestAnimationFrameId) window.cancelAnimationFrame(this.requestAnimationFrameId)
