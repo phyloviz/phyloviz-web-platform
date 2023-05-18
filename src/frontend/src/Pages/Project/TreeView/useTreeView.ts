@@ -110,11 +110,8 @@ export function useTreeView() {
         async function init() {
             const data: GetTreeViewOutputModel = await VisualizationService.getTreeView(projectId!, datasetId!, treeViewId!)
             const isolateDataId = "" // TODO: Get isolate data id
-            const isolateDataSchema = await VisualizationService.getIsolateDataSchema(projectId!, isolateDataId)
-            setIsolateDataSchema(isolateDataSchema.headers)
-
-            if (!canvasRef.current)
-                return
+            const isolateDataSchema = await VisualizationService.getIsolateDataKeys(projectId!, isolateDataId)
+            setIsolateDataSchema(isolateDataSchema.keys)
 
             function findBiggestGroup(nodes: Node[], edges: Edge[]): Node[] {
                 const visited = new Set<string>()
@@ -168,13 +165,13 @@ export function useTreeView() {
                 }
             })
 
-            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current, defaultConfig)
+            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, defaultConfig)
             await graph.setData(nodes, links)
             graphRef.current = graph
         }
 
         init()
-    }, [canvasRef.current])
+    }, [])
 
     const treeView: TreeView = project?.datasets
         .find(dataset => dataset.datasetId === datasetId)?.treeViews
