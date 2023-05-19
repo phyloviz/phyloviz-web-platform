@@ -323,7 +323,7 @@ export function useTreeView() {
 
             const pallete = ["#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93"]
 
-            const doughnutChartLabels = Array.from(selectedHeaderValuesSet)
+            const doughnutChartLabels = Array.from(selectedHeaderValuesSet).slice(0, 9)
 
             const doughnutChartHashMap = new Map<string, number>()
 
@@ -359,21 +359,23 @@ export function useTreeView() {
                     continue
                 }
 
-                const color = doughtnutChartColors[labelIndex]
+                let color = doughtnutChartColors[labelIndex]
 
                 if (!color) {
-                    throw new Error("Color not found")
+                    // throw new Error("Color not found")
+                    color = "rgb(0,0,0)"
                 }
                 //3222 -> 2477
                 occurencesColorMap.set(profileId, [
                     {
                         label,
                         occurences: 1,
-                        color: [231, 30, 133]
+                        color: parseRGB(color)
                     }
                 ])
             }
             console.log(occurencesColorMap)
+            graphRef.current!.colors = doughtnutChartColors.map((color) => parseRGB(color))
             graphRef.current!.renderPieCharts(occurencesColorMap)
 
             setDoughnutChartData({
@@ -436,4 +438,20 @@ interface TreeViewContext {
  */
 export function useTreeViewContext() {
     return useOutletContext<TreeViewContext>()
+}
+
+export function parseRGB(rgbString: string) {
+    const rgbPattern = /^rgb\((\d+),(\d+),(\d+)\)$/;
+
+    const matches = rgbString.match(rgbPattern);
+
+    if (matches) {
+        const red = parseInt(matches[1], 10);
+        const green = parseInt(matches[2], 10);
+        const blue = parseInt(matches[3], 10);
+
+        return [red, green, blue];
+    } else {
+        throw new Error("Invalid RGB string");
+    }
 }

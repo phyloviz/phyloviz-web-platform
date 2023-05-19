@@ -33,7 +33,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 
     private graph = new GraphData<N, L>()
     private store = new Store<N>()
-    private points: Points<N, L>
+    points: Points<N, L>
     private lines: Lines<N, L>
     private forceGravity: ForceGravity<N, L>
     private forceCenter: ForceCenter<N, L>
@@ -49,6 +49,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
     idToText = new Map<string, any>()
     private updatePieCharts: boolean = false;
     private occurencesColorMap: Map<string, { occurences: number; color: number[] }[]> | undefined
+    colors: number[][] = []
 
     public constructor(canvas: HTMLCanvasElement, config?: GraphConfigInterface<N, L>) {
         if (config) this.config.init(config)
@@ -709,20 +710,27 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
                     // Generate random angles.
                     let randomValues = Array(MAX_NUM_SLICES)
                         .fill(0)
-                        .map((x, i) => Math.random());
+                        .map((x, i) => Math.min(Math.random(), 0.1));
 
-                    randomValues[0] = 6;
                     let sumOfValues = randomValues.reduce((a, b) => a + b, 0);
 
                     // Assign random colors and normalized angles.
                     for (let j = 0; j < MAX_NUM_SLICES; ++j) {
-                        const index = i * MAX_NUM_SLICES * 4 + j* 4; // Each color and angle pair takes up 2 texels
-                        console.log("Updating angles and colors, original", index, randomValues[j], sumOfValues)
-                        this.points.anglesAndColors![index  + 0] =
+                        const index = i * MAX_NUM_SLICES * 4 + j * 4; // Each color and angle pair takes up 2 texels
+
+                        // const color = this.occurencesColorMap![i]
+                        let color = this.colors[j]
+                        if (color == null) {
+                            color = [Math.random(), Math.random(), Math.random()]
+                        } else {
+                            color = [color[0] / 256, color[1] / 256, color[2] / 256]
+                        }
+
+                        this.points.anglesAndColors![index + 0] =
                             (randomValues[j] / sumOfValues) * 2 * Math.PI; // Normalized angle
-                        this.points.anglesAndColors![index + 1] = Math.random(); // Red
-                        this.points.anglesAndColors![index  + 2] = Math.random(); // Green
-                        this.points.anglesAndColors![index  + 3] = Math.random(); // Blue
+                        this.points.anglesAndColors![index + 1] = color[0]; // Red
+                        this.points.anglesAndColors![index + 2] = color[1]; // Green
+                        this.points.anglesAndColors![index + 3] = color[2]; // Blue
                     }
                 }
                 this.points.updateSlicesPerNode(this.occurencesColorMap!);
