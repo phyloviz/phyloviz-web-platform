@@ -1,6 +1,5 @@
 package org.phyloviz.pwp.compute.service;
 
-import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.ToolTemplateRepository;
 import org.phyloviz.pwp.compute.repository.metadata.templates.tool_template.documents.ToolTemplate;
@@ -38,7 +37,6 @@ import java.util.Map;
  * Implementation of the {@link ComputeService} interface.
  */
 @Service
-@RequiredArgsConstructor
 public class ComputeServiceImpl implements ComputeService {
 
     private final ProjectRepository projectRepository;
@@ -47,6 +45,26 @@ public class ComputeServiceImpl implements ComputeService {
     private final WorkflowInstanceRepository workflowInstanceRepository;
     private final ToolTemplateRepository toolTemplateRepository;
     private final FLOWViZClient flowVizClient;
+
+    /**
+     * Constructor. Calls the {@link WorkflowTemplateRepository#findAll()} method to validate the workflow templates
+     * using the constructor.
+     */
+    ComputeServiceImpl(
+            ProjectRepository projectRepository,
+            WorkflowTemplateRepository workflowTemplateRepository,
+            WorkflowInstanceRepository workflowInstanceRepository,
+            ToolTemplateRepository toolTemplateRepository,
+            FLOWViZClient flowVizClient
+    ) {
+        this.projectRepository = projectRepository;
+        this.workflowTemplateRepository = workflowTemplateRepository;
+        this.workflowInstanceRepository = workflowInstanceRepository;
+        this.toolTemplateRepository = toolTemplateRepository;
+        this.flowVizClient = flowVizClient;
+
+        workflowTemplateRepository.findAll();
+    }
 
     @Override
     public CreateWorkflowOutput createWorkflow(
@@ -103,19 +121,52 @@ public class ComputeServiceImpl implements ComputeService {
                 .map(this::getWorkflowStatusOutput).toList();
     }
 
+    /**
+     * Gets the status of the workflow.
+     * <p>
+     * If the workflow instance metadata has the status as running, it calls the FLOWViZ API to get the status of
+     * the workflow to confirm if it is still running.
+     * Sets the failure reason to "Internal Server Error" if no failure reason was provided.
+     * Sets progress to 100 if status is success.
+     *
+     * @param workflowInstance the workflow instance metadata
+     * @return the status of the workflow
+     */
     private GetWorkflowStatusOutput getWorkflowStatusOutput(WorkflowInstance workflowInstance) {
         if (workflowInstance.getStatus() == WorkflowStatus.RUNNING) {
-            workflowInstance.setStatus(getWorkflowStatusFromFLOWViZ(workflowInstance));
+            WorkflowStatus status = getWorkflowStatusFromFLOWViZ(workflowInstance);
+            if (status != WorkflowStatus.RUNNING) {
+                workflowInstance.setStatus(status);
+                workflowInstanceRepository.save(workflowInstance);
+            }
+        }
+
+        if (workflowInstance.getStatus() == WorkflowStatus.FAILED && workflowInstance.getFailureReason() == null) {
+            workflowInstance.setFailureReason("Internal Server Error");
             workflowInstanceRepository.save(workflowInstance);
         }
+
+        if (workflowInstance.getStatus() == WorkflowStatus.SUCCESS && workflowInstance.getProgress() < 100) {
+            workflowInstance.setProgress(100);
+            workflowInstanceRepository.save(workflowInstance);
+        }
+
         return new GetWorkflowStatusOutput(
                 workflowInstance.getId(),
                 workflowInstance.getType(),
                 workflowInstance.getStatus(),
+                workflowInstance.getFailureReason(),
+                workflowInstance.getProgress(),
                 workflowInstance.getData()
         );
     }
 
+    /**
+     * Gets the workflow status from the FLOWViZ API.
+     *
+     * @param workflowInstance the workflow instance metadata
+     * @return the workflow status
+     */
     private WorkflowStatus getWorkflowStatusFromFLOWViZ(WorkflowInstance workflowInstance) {
         GetWorkflowResponse workflow;
         try {
@@ -140,14 +191,13 @@ public class ComputeServiceImpl implements ComputeService {
             case "running" -> WorkflowStatus.RUNNING;
             case "success" -> WorkflowStatus.SUCCESS;
             case "failed" -> WorkflowStatus.FAILED;
-            default -> throw new IllegalStateException("Unexpected value: " + airflowStatus);
+            default -> throw new IllegalStateException("Unexpected airflow status value: " + airflowStatus);
         };
     }
 
     private CreateWorkflowOutput createWorkflow(String projectId, String workflowType, Map<String, String> properties) {
         //TODO: Fix transactions
 
-        // Maybe we should only retrieve the workflow template on startup?
         WorkflowTemplate workflowTemplate = workflowTemplateRepository
                 .findByName(workflowType)
                 .orElseThrow(() -> new InvalidWorkflowException("Workflow type not found"));
@@ -161,6 +211,7 @@ public class ComputeServiceImpl implements ComputeService {
         workflowInstance.setProjectId(projectId);
         workflowInstance.setType(workflowType);
         workflowInstance.setStatus(WorkflowStatus.RUNNING);
+        workflowInstance.setProgress(0.0);
         workflowInstance.setData(workflowInstanceData);
         workflowInstance = workflowInstanceRepository.save(workflowInstance);
 

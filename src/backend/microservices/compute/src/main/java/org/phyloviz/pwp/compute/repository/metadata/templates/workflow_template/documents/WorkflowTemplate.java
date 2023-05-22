@@ -24,17 +24,37 @@ public class WorkflowTemplate {
     @Id
     private String id;
 
-    public WorkflowTemplate(String name, String description, Map<String, WorkflowTemplateArgumentProperties> arguments, List<TaskTemplate> tasks) {
-        this.name = name;
-        this.description = description;
+    public WorkflowTemplate(String id, String name, String description, Map<String, WorkflowTemplateArgumentProperties> arguments, List<TaskTemplate> tasks) {
+        if (name == null || name.isBlank()) {
+            throw new WorkflowTemplateConfigurationException(
+                    String.format("Workflow template %s - name cannot be null or blank", id));
+        }
+        if (description == null || description.isBlank()) {
+            throw new WorkflowTemplateConfigurationException(
+                    String.format("Workflow template %s - description cannot be null or blank", id));
+        }
+        if (arguments == null || arguments.isEmpty()) {
+            throw new WorkflowTemplateConfigurationException(
+                    String.format("Workflow template %s - arguments cannot be null or empty", id));
+        }
+        if (tasks == null || tasks.isEmpty()) {
+            throw new WorkflowTemplateConfigurationException(
+                    String.format("Workflow template %s - tasks cannot be null or empty", id));
+        }
+
         arguments.forEach((key, value) -> {
             if (key.equals("projectId")) {
-                throw new WorkflowTemplateConfigurationException("projectId is a reserved argument name");
+                throw new WorkflowTemplateConfigurationException(
+                        String.format("Workflow template %s - arguments - projectId is a reserved argument name", id));
             }
             if (key.equals("workflowId")) {
-                throw new WorkflowTemplateConfigurationException("workflowId is a reserved argument name");
+                throw new WorkflowTemplateConfigurationException(
+                        String.format("Workflow template %s - arguments - workflowId is a reserved argument name", id));
             }
         });
+
+        this.name = name;
+        this.description = description;
         this.arguments = arguments;
         this.tasks = tasks;
     }

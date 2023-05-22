@@ -21,5 +21,9 @@ public class WorkflowInstance {
 
     private WorkflowStatus status;
 
+    private String failureReason;
+
+    private double progress;
+
     private Map<String, Object> data;
 }

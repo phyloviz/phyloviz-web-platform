@@ -8,5 +8,12 @@ import java.util.Optional;
 
 @Repository
 public interface WorkflowTemplateMongoRepository extends MongoRepository<WorkflowTemplate, String> {
+
+    /**
+     * Finds a workflow template by its name.
+     *
+     * @param name the name of the workflow template
+     * @return the workflow template
+     */
     Optional<WorkflowTemplate> findByName(String name);
 }

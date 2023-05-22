@@ -5,7 +5,6 @@ import org.phyloviz.pwp.compute.service.exceptions.WorkflowTemplateConfiguration
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
-import java.util.Map;
 
 @Getter
 public class WorkflowTemplateArgumentProperties {
@@ -14,11 +13,7 @@ public class WorkflowTemplateArgumentProperties {
     @Field("allowed-values")
     private final List<String> allowedValues;
 
-    @Field("obtain-extra")
-    private final Map<String, ObtainExtraArgumentProperties> obtainExtra;
-
-    public WorkflowTemplateArgumentProperties(WorkflowTemplateArgumentType type, List<String> allowedValues,
-                                              Map<String, ObtainExtraArgumentProperties> obtainExtra) {
+    public WorkflowTemplateArgumentProperties(WorkflowTemplateArgumentType type, List<String> allowedValues) {
         this.type = type;
 
         if (type == WorkflowTemplateArgumentType.STRING) {
@@ -30,10 +25,5 @@ public class WorkflowTemplateArgumentProperties {
         }
 
         this.allowedValues = allowedValues;
-
-        if (type != WorkflowTemplateArgumentType.DATASETID && obtainExtra != null) {
-            throw new WorkflowTemplateConfigurationException("Only arguments of type 'datasetId' can have extra arguments to obtain");
-        }
-        this.obtainExtra = obtainExtra;
     }
 }
