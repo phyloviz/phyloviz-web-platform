@@ -125,12 +125,9 @@ public class ComputeServiceImpl implements ComputeService {
      * Gets the status of the workflow.
      * <p>
      * If the workflow instance metadata has the status as running, it calls the FLOWViZ API to get the status of
-     * the workflow to confirm if it is still running. If the workflow is not running, it updates the status of the
-     * workflow instance metadata.
-     * If the workflow instance metadata has the status as failed and failure reason is null, it updates the failure
-     * reason "Internal Server Error".
-     * If the workflow instance metadata has the status as success and progress is less than 100, it updates the
-     * progress to 100.
+     * the workflow to confirm if it is still running.
+     * Sets the failure reason to "Internal Server Error" if no failure reason was provided.
+     * Sets progress to 100 if status is success.
      *
      * @param workflowInstance the workflow instance metadata
      * @return the status of the workflow
