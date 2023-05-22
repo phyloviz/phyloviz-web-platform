@@ -30,6 +30,8 @@ pwp:
           path: /projects/{projectId}/datasets/{datasetId}
         - method: PATCH
           path: /projects/{projectId}/datasets/{datasetId}
+        - method: POST
+          path: /projects/{projectId}/datasets/{datasetId}/isolateData
         - method: DELETE
           path: /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}
         - method: PATCH
@@ -75,21 +77,21 @@ pwp:
         - method: GET
           path: /projects/{projectId}/files/isolate-data/{isolateDataId}/rows
         - method: GET
-          path: /projects/{projectId}/files/isolate-data/{isolateDataId}/file
-        - method: GET
           path: /projects/{projectId}/files/typing-data/{typingDataId}
         - method: GET
           path: /projects/{projectId}/files/typing-data/{typingDataId}/profiles
-        - method: GET
-          path: /projects/{projectId}/files/typing-data/{typingDataId}/file
 
     file-transfer:
       uri: http://localhost:8089
       routes:
         - method: POST
           path: /projects/{projectId}/files/typing-data
+        - method: GET
+          path: /projects/{projectId}/files/typing-data/{typingDataId}/file
         - method: POST
           path: /projects/{projectId}/files/isolate-data
+        - method: GET
+          path: /projects/{projectId}/files/isolate-data/{isolateDataId}/file
 
 
 server:

@@ -136,20 +136,21 @@ public class DatasetsController {
     /**
      * Sets the isolate data of a dataset.
      *
-     * @param projectId the id of the project to which the dataset belongs
-     * @param datasetId the id of the dataset to be updated
-     * @param user      the user that is updating the dataset
+     * @param projectId  the id of the project to which the dataset belongs
+     * @param datasetId  the id of the dataset to be updated
+     * @param inputModel the input model with the isolate data information to be set
+     * @param user       the user that is updating the dataset
      * @return information about the update
      */
     @PostMapping("/projects/{projectId}/datasets/{datasetId}/isolateData")
     public SetIsolateDataOfDatasetOutputModel setIsolateDataOfDataset(
             @PathVariable String projectId,
             @PathVariable String datasetId,
-            @RequestBody SetIsolateDataOfDatasetInputModel setIsolateDataOfDatasetInputModel,
+            @RequestBody SetIsolateDataOfDatasetInputModel inputModel,
             User user
     ) {
         SetIsolateDataOfDatasetOutput setIsolateDataOfDatasetOutput = datasetService.setIsolateDataOfDataset(
-                setIsolateDataOfDatasetInputModel.getIsolateDataId(), setIsolateDataOfDatasetInputModel.getIsolateDataKey(),
+                inputModel.getIsolateDataId(), inputModel.getIsolateDataKey(),
                 projectId, datasetId, user.getId()
         );
 
