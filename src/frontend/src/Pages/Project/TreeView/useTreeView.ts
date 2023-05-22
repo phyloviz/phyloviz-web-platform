@@ -23,6 +23,8 @@ import {useProjectContext} from "../useProject"
 import {GraphConfigInterface} from "./cosmos/config"
 import {useReactToPrint} from "react-to-print";
 import {SelectChangeEvent} from "@mui/material";
+import {BubbleDataPoint, ChartData, Point} from "chart.js";
+import interpolate from 'color-interpolate'
 import {WebUiUris} from "../../WebUiUris";
 
 export type VizNode = {
@@ -34,6 +36,7 @@ export type VizNode = {
 export type VizLink = {
     source: string
     target: string
+    weight: number
 }
 
 const defaultConfig: GraphConfigInterface<VizNode, VizLink> = {
@@ -45,6 +48,7 @@ const defaultConfig: GraphConfigInterface<VizNode, VizLink> = {
     linkColor: "#5F74C2",
     linkArrows: false,
     linkGreyoutOpacity: 0,
+    spaceSize: 8192,
     simulation: {
         decay: 100000,
         gravity: 0.01,
@@ -82,13 +86,15 @@ export function useTreeView() {
     const [decay, setDecay] = useState(defaultConfig.simulation!.decay!)
 
     const [nodeSize, setNodeSize] = useState<number>(defaultConfig.nodeSize! as number)
-    const [nodeLabel, setNodeLabel] = useState(false)
+    const [nodeLabel, setNodeLabel] = useState(true)
     const [nodeLabelSize, setNodeLabelSize] = useState(0)
     const [linkLength, setLinkLength] = useState<number>(defaultConfig.linkWidth! as number)
     const [linkLabel, setLinkLabel] = useState(false)
     const [linkLabelSize, setLinkLabelSize] = useState(0)
     const [linkLabelType, setLinkLabelType] = useState("")
-
+    const [doughnutChartData, setDoughnutChartData] = useState<ChartData<"doughnut", (number | [number, number] | Point | BubbleDataPoint | null)[], unknown> | null>(null)
+    const [isolateDataSchema, setIsolateDataSchema] = useState<string[]>([])
+    const [colorByIsolateData, setColorByIsolateData] = useState<string>("")
 
     const toPrintRef = useRef(null);
     const reactToPrintContent = React.useCallback(() => {
@@ -102,8 +108,9 @@ export function useTreeView() {
     useEffect(() => {
         async function init() {
             const data: GetTreeViewOutputModel = await VisualizationService.getTreeView(projectId!, datasetId!, treeViewId!)
-            if (!canvasRef.current)
-                return
+            const isolateDataId = "" // TODO: Get isolate data id
+            const isolateDataSchema = await VisualizationService.getIsolateDataKeys(projectId!, isolateDataId)
+            setIsolateDataSchema(isolateDataSchema.keys)
 
             function findBiggestGroup(nodes: Node[], edges: Edge[]): Node[] {
                 const visited = new Set<string>()
@@ -153,16 +160,17 @@ export function useTreeView() {
                 return {
                     source: edge.from,
                     target: edge.to,
+                    weight: edge.weight
                 }
             })
 
-            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current, defaultConfig)
-            graph.setData(nodes, links)
+            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, defaultConfig)
+            await graph.setData(nodes, links)
             graphRef.current = graph
         }
 
         init()
-    }, [canvasRef.current])
+    }, [])
 
     const treeView: TreeView = project?.datasets
         .find(dataset => dataset.datasetId === datasetId)?.treeViews
@@ -278,6 +286,7 @@ export function useTreeView() {
         },
         updateNodeLabel: (event: React.ChangeEvent<HTMLInputElement>) => {
             setNodeLabel(event.target.checked)
+            graphRef.current!.renderNodeLabels(event.target.checked)
         },
         updateNodeLabelSize: (value: number) => {
             // TODO: implement node label size
@@ -288,13 +297,100 @@ export function useTreeView() {
         },
         updateLinkLabel: (event: React.ChangeEvent<HTMLInputElement>) => {
             setLinkLabel(event.target.checked)
+            graphRef.current!.renderLinkLabels(event.target.checked)
         },
         updateLinkLabelSize: (value: number) => {
             // TODO: implement link label size
         },
-        updateLinkLabelType: (event: SelectChangeEvent, child: ReactNode) => {
+        updateLinkLabelType: async (event: SelectChangeEvent, child: ReactNode) => {
             // TODO: implement link label type
+
         },
+        isolateDataHeaders: isolateDataSchema,
+        colorByIsolateData,
+        updateColorByIsolateData: async (event: SelectChangeEvent, child: ReactNode) => {
+            const selectedHeader = event.target.value
+            setColorByIsolateData(selectedHeader)
+
+            const key = "ST (MLST)"
+            const isolateDataId = "" // TODO: Get isolate data id
+
+            const isolateData = await VisualizationService.getIsolateDataRows(projectId!, isolateDataId)
+
+            const selectedHeaderValues = isolateData.rows.map((row) => row.row[selectedHeader])
+
+            const pallete = ["#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93"]
+
+            const doughnutChartLabels = Array.from(new Set(selectedHeaderValues))
+
+            const doughnutChartLabelToLabelIndexHashMap = new Map<string, number>()
+
+            for (let i = 0; i < doughnutChartLabels.length; i++) {
+                doughnutChartLabelToLabelIndexHashMap.set(doughnutChartLabels[i], i)
+            }
+
+            const doughtnutChartColors = doughnutChartLabels.map((label) => {
+                return interpolate(pallete)(Math.random())
+            })
+
+            const doughnutChartData = doughnutChartLabels.map((label) => {
+                return selectedHeaderValues.filter((value) => value === label).length
+            })
+
+            const sliceData = new Map<string, { label: string, occurences: number, color: number[] }[]>()
+
+            for (let i = 0; i < isolateData.rows.length; i++) {
+                const row = isolateData.rows[i]
+                const profileId = row.profileId
+                const rowId = parseInt(row.id)
+                const nodeSliceData = sliceData.get(profileId)
+                const label = row.row[selectedHeader]
+
+                const labelIndex = doughnutChartLabelToLabelIndexHashMap.get(label)!
+
+                if (nodeSliceData) {
+                    const slice = nodeSliceData.find((slice) => slice.label === label)
+
+                    if (slice) {
+                        slice.occurences += 1
+                        continue
+                    }
+                }
+
+                let color = doughtnutChartColors[labelIndex]
+
+                if (!color) {
+                    // throw new Error("Color not found")
+                    color = "rgb(0,0,0)"
+                }
+                const newSliceData = {
+                    label,
+                    occurences: 1,
+                    color: parseRGB(color)
+                }
+
+                const newNodeData = nodeSliceData ? [...nodeSliceData, newSliceData] : [newSliceData]
+
+                newNodeData.sort((a, b) => b.occurences - a.occurences)
+
+                sliceData.set(profileId, newNodeData)
+            }
+
+            graphRef.current!.renderPieCharts(sliceData)
+
+            setDoughnutChartData({
+                labels: doughnutChartLabels,
+                datasets: [
+                    {
+                        label: capitalize(selectedHeader),
+                        data: doughnutChartData,
+                        backgroundColor: doughtnutChartColors,
+                        borderWidth: 1
+                    }
+                ]
+            })
+        }
+        ,
 
         handleTypingDataFilter: () => navigate(WebUiUris.treeViewTypingData(projectId!!, datasetId!!, treeViewId!!)),
         typingDataId,
@@ -307,6 +403,10 @@ export function useTreeView() {
         handleExportFilters: () => {
             // TODO: implement export filters
         },
+        handleSearch: (st: string): boolean => {
+            return graphRef.current?.zoomToNodeById(st, 1000, 15, false)!
+        },
+        doughnutChartData,
 
         handleZoomIn: () => graphRef.current?.zoom(graphRef.current.getZoomLevel() * ZOOM_IN_SCALE, ZOOM_DURATION),
         handleZoomOut: () => graphRef.current?.zoom(graphRef.current.getZoomLevel() * ZOOM_OUT_SCALE, ZOOM_DURATION),
@@ -314,6 +414,10 @@ export function useTreeView() {
         toPrintRef,
         handlePrint
     }
+}
+
+function capitalize(s: string): string {
+    return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 /**
@@ -334,4 +438,20 @@ interface TreeViewContext {
  */
 export function useTreeViewContext() {
     return useOutletContext<TreeViewContext>()
+}
+
+export function parseRGB(rgbString: string) {
+    const rgbPattern = /^rgb\((\d+),(\d+),(\d+)\)$/;
+
+    const matches = rgbString.match(rgbPattern);
+
+    if (matches) {
+        const red = parseInt(matches[1], 10);
+        const green = parseInt(matches[2], 10);
+        const blue = parseInt(matches[3], 10);
+
+        return [red, green, blue];
+    } else {
+        throw new Error("Invalid RGB string");
+    }
 }

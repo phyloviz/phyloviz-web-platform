@@ -80,6 +80,29 @@ export namespace MockVisualizationService {
         projectId: string,
         isolateDataId: string
     ): Promise<GetIsolateDataRowsOutputModel> {
+        const row = ({
+            "continent": "Oceania",
+            "country": "New Zealand",
+            "datestamp": "2019-06-19",
+            "isolate": "PH155",
+            "curator": "20",
+            "penner": "Untypable",
+            "sender": "47",
+            "species": "Campylobacter coli",
+            "year": "2001",
+            "date_entered": "2007-12-18",
+            "source": "sheep"
+        })
+        // return {
+        //     rows: [
+        //         {
+        //             "id": "1",
+        //             "profileId": "3",
+        //             "row":  row as any
+        //         },
+        //     ],
+        //     totalCount: 1,
+        // }
         return await fetch(`${MOCK_DIR}/isolate-data-rows.json`).then(response => response.json())
     }
 

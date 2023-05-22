@@ -7,9 +7,11 @@ import org.phyloviz.pwp.shared.service.dtos.tree_view.Edge;
 public class EdgeModel {
     private String from;
     private String to;
+    private long weight;
 
     public EdgeModel(Edge edge) {
         this.from = edge.getFrom();
         this.to = edge.getTo();
+        this.weight = edge.getWeight();
     }
 }

@@ -46,7 +46,8 @@ public class TreeViewPhyloDBDataRepository implements TreeViewDataRepository {
 
         List<Edge> edges = inference.getEdges().stream().map(edge -> new Edge(
                 edge.getFrom().getPrimaryKey().getId(),
-                edge.getTo().getPrimaryKey().getId()
+                edge.getTo().getPrimaryKey().getId(),
+                edge.getWeight()
         )).toList();
 
         List<Profile> profiles = profileRepository.findAll(

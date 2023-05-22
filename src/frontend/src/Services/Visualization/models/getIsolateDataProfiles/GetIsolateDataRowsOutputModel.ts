@@ -6,5 +6,5 @@ export interface GetIsolateDataRowsOutputModel {
 export interface Row {
     id: string
     profileId: string
-    row: Map<string, string>
+    [row: string]: string
 }

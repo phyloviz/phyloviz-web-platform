@@ -44,11 +44,11 @@ void main() {
   // Size
   vec4 pSize = texture2D(particleSize, (index + 0.5) / pointsTextureSize);
   float size = pSize.r * sizeScale;
+  gl_PointSize = pointSize(size);
 
   // Color
   vec4 pColor = texture2D(particleColor, (index + 0.5) / pointsTextureSize);
   rgbColor = pColor.rgb;
-  gl_PointSize = pointSize(size);
 
   alpha = pColor.a;
   // Alpha of selected points

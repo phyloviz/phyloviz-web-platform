@@ -4,9 +4,21 @@ import {useTreeView} from "./useTreeView"
 import {TreeViewInfoCard} from "../../../Components/Project/TreeView/TreeViewInfoCard"
 import {TreeViewSearchCard} from "../../../Components/Project/TreeView/TreeViewSearchCard"
 import {TreeViewSettingsCard} from "../../../Components/Project/TreeView/TreeViewSettingsCard"
+import {ArcElement, Chart as ChartJS, ChartOptions, Legend, Tooltip} from "chart.js";
+import {Doughnut} from "react-chartjs-2";
+import Typography from "@mui/material/Typography";
 import {Outlet, useOutlet} from "react-router-dom";
 
+ChartJS.register(ArcElement, Tooltip, Legend);
 
+
+const options: ChartOptions = {
+    plugins: {
+        legend: {
+            position: 'bottom'
+        }
+    }
+};
 /**
  * TreeView page.
  */
@@ -52,7 +64,11 @@ export default function TreeView() {
         updateLinkLabel,
         updateLinkLabelSize,
         updateLinkLabelType,
+        handleSearch,
 
+        isolateDataHeaders,
+        colorByIsolateData,
+        updateColorByIsolateData,
         handleTypingDataFilter,
         typingDataId,
         handleIsolateDataFilter,
@@ -60,7 +76,7 @@ export default function TreeView() {
 
         handleExportOptions,
         handleExportFilters,
-
+        doughnutChartData,
         handleZoomIn,
         handleZoomOut,
         toPrintRef,
@@ -78,6 +94,28 @@ export default function TreeView() {
                     <div ref={toPrintRef}>
                         <canvas ref={canvasRef}/>
                     </div>
+                    {doughnutChartData != null && (
+                        <Box
+                            sx={{
+                                position: "absolute",
+                                right: 0,
+                                top: "20%",
+                                zIndex: 1,
+                                backgroundColor: "white",
+                                borderRadius: 3,
+                                p: 1,
+                                mr: "10px",
+                                border: 1,
+                                borderColor: 'divider',
+                                maxHeight: "300px",
+                                overflow: "auto",
+                            }}
+                        >
+                            <Typography sx={{mb: 2}}>{colorByIsolateData}</Typography>
+                            <Doughnut data={doughnutChartData!} options={options}/>
+                        </Box>
+                    )
+                    }
                     <TreeViewSettingsCard
                         onPauseAnimation={pauseAnimation}
                         onRestartAnimation={restartAnimation}
@@ -116,6 +154,10 @@ export default function TreeView() {
                         onChangeLinkLabelSize={updateLinkLabelSize}
                         onChangeLinkLabelType={updateLinkLabelType}
 
+                        isolateDataHeaders={isolateDataHeaders}
+                        colorByIsolateData={colorByIsolateData}
+                        onChangeColorByIsolateData={updateColorByIsolateData}
+
                         onTypingDataFilter={handleTypingDataFilter}
                         onIsolateDataFilter={handleIsolateDataFilter}
 
@@ -126,7 +168,7 @@ export default function TreeView() {
                         onZoomOut={handleZoomOut}
                         onPrint={handlePrint}
                     />
-                    <TreeViewSearchCard/>
+                    <TreeViewSearchCard onSearch={handleSearch}/>
                 </>
             }
         </Box>

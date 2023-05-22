@@ -1,4 +1,4 @@
-import {Box, InputBase} from "@mui/material"
+import {Box, TextField} from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import {Search} from "@mui/icons-material"
 import * as React from "react"
@@ -6,8 +6,9 @@ import * as React from "react"
 /**
  * Card for searching for a specific ST in the tree view page.
  */
-export function TreeViewSearchCard() {
-    // TODO: Implement search functionality
+export function TreeViewSearchCard({onSearch}: { onSearch: (searchST: string) => boolean }) {
+    const [searchST, setSearchST] = React.useState<string>("")
+    const [searchSTError, setSearchSTError] = React.useState<boolean>(false)
 
     return <Box sx={{
         position: "absolute",
@@ -17,16 +18,35 @@ export function TreeViewSearchCard() {
         backgroundColor: "white",
         borderRadius: 1,
         p: 1,
-        m: 1,
+        me: 1,
         border: 1,
         borderColor: 'divider',
     }}>
-        <InputBase
+        <TextField
             sx={{ml: 1, flex: 1}}
             margin={"dense"}
             placeholder="Search for a ST"
+
+            value={searchST}
+            onChange={(e) => setSearchST(e.target.value)}
+            onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                    if (!onSearch(searchST))
+                        setSearchSTError(true)
+                    else
+                        setSearchSTError(false)
+                }
+            }}
+            variant={"standard"}
+            size={"small"}
+            error={searchSTError}
         />
-        <IconButton type="button" size={"small"} sx={{p: '10px'}}>
+        <IconButton type="button" size={"small"} sx={{p: '10px'}} onClick={() => {
+            if (!onSearch(searchST))
+                setSearchSTError(true)
+            else
+                setSearchSTError(false)
+        }}>
             <Search/>
         </IconButton>
     </Box>
