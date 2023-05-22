@@ -1,7 +1,5 @@
 import REGL from 'regl';
 import {CosmosInputLink, CosmosInputNode} from '../../types'
-import vectorizeText from 'vectorize-text'
-import Text from "gl-text";
 
 export interface TextMesh {
     edges: REGL.Vec2;
@@ -29,7 +27,7 @@ export class GraphData<N extends CosmosInputNode, L extends CosmosInputLink> {
      * and and we store multiple maps that help us referencing the right data objects
      * and other properties by original node index, sorted index, and id 👇. */
     /** Mapping the original id to the sorted index of the node */
-    private idToSortedIndexMap: Map<string, number> = new Map()
+    public idToSortedIndexMap: Map<string, number> = new Map()
     /** Mapping the original index to the original id of the node */
     private inputIndexToIdMap: Map<number, string> = new Map()
     /** Mapping the original id to the indegree value of the node */
@@ -37,7 +35,7 @@ export class GraphData<N extends CosmosInputNode, L extends CosmosInputLink> {
     /** Mapping the original id to the outdegree value of the node */
     private idToOutdegreeMap: Map<string, number> = new Map()
     private idToTextMeshesMap: Map<string, TextMesh> = new Map()
-    private _nodes: N[] = []
+    _nodes: N[] = []
 
     public get nodes(): N[] {
         return this._nodes
@@ -153,5 +151,9 @@ export class GraphData<N extends CosmosInputNode, L extends CosmosInputLink> {
 
     public getTextMeshById(id: string): TextMesh | undefined {
         return this.idToTextMeshesMap.get(id)
+    }
+
+    getNodeBySortedIndex(testSortedIndex: number) {
+        return (this._nodes)[this.getInputIndexBySortedIndex(testSortedIndex) as number]
     }
 }

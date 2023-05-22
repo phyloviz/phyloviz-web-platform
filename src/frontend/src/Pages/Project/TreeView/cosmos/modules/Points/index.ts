@@ -21,6 +21,7 @@ import {defaultConfigValues} from '../../variables'
 import {readPixels} from '../../helper'
 import {CosmosInputLink, CosmosInputNode} from '../../types'
 import {mat4} from 'gl-matrix'
+import {sum} from "d3-array";
 
 export const MAX_NUM_SLICES = 5
 
@@ -438,14 +439,11 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
             type: 'float',
         });
 
-
         this.drawPieCharts = reglInstance({
             frag: drawPieChartNodesFrag,
-
             vert: drawPieChartNodesVert,
             attributes: {
                 indexes: createIndexesBuffer(reglInstance, this.store.pointsTextureSize),
-                nodeIndex: createOneDimentionalIndexesBuffer(numNodes),
             },
             primitive: 'points',
             uniforms: {
@@ -608,51 +606,64 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
         this.currentPositionFbo = temp
     }
 
-    public updateAnglesAndColors(occurencesColorMap: Map<string, { occurences: number; color: number[] }[]>) {
-        // for (let i = 0; i < this.data.nodes.length; ++i) {
-        //     const node = this.data.nodes[i];
-        //
-        //     const occurrencesColors = occurencesColorMap.get(node.id);
-        //
-        //     if (!occurrencesColors) {
-        //         continue;
-        //     }
-        //
-        //     console.log(occurrencesColors)
-        //
-        //     const values = occurrencesColors.map(occurrenceColor => occurrenceColor.occurences);
-        //     const sumOfValues = values.reduce((a, b) => a + b, 0);
-        //
-        //     for (let j = 0; j < occurrencesColors.length; ++j) {
-        //         const index = i * occurrencesColors.length * 4 + j * 4; // Each color and angle pair takes up 2 texels
-        //         const color = occurrencesColors[j].color;
-        //         console.log("Updating angles and colors", index, color, values[j], sumOfValues)
-        //         this.anglesAndColors![index] =
-        //             (values[j] / sumOfValues) * 2 * Math.PI; // Normalized angle
-        //         this.anglesAndColors![index + 1] = Math.random();
-        //         this.anglesAndColors![index + 2] = Math.random();
-        //         this.anglesAndColors![index + 3] = Math.random();
-        //     }
-        // }
+    public updateAnglesAndColors(sliceData: Map<string, { occurences: number; color: number[] }[]>) {
+        for (let i = 0; i < this.data.nodes.length; ++i) {
+            const node = this.data.nodes[i];
 
+            const nodeSliceData = sliceData.get(node.id);
+
+            if (!nodeSliceData) {
+                continue;
+            }
+
+            const ocurrences = nodeSliceData.slice(0, MAX_NUM_SLICES).map(slice => slice.occurences);
+            const sumOfOccurences = sum(ocurrences);
+            const sortedIndex = this.data.getSortedIndexById(node.id)!;
+
+            const nodeId = this.data.getNodeBySortedIndex(sortedIndex)
+
+            if (node.id == "227") {
+                console.log("TEEST", this.data.getNodeBySortedIndex(5830))
+                console.log("Node slice data", nodeSliceData)
+                console.log("Occurrences: ", ocurrences)
+                console.log("Sum of occurences", sumOfOccurences)
+                console.log("Node id", nodeId)
+                console.log("Real Node id", node.id)
+            }
+
+            for (let j = 0; j < nodeSliceData.length && j < MAX_NUM_SLICES; ++j) {
+                const index = sortedIndex * MAX_NUM_SLICES * 4 + j * 4; // Each color and angle pair takes up 2 texels
+                const color = nodeSliceData[j].color;
+                if (node.id == "227") {
+                    console.log("Updating angles and colors", index, color, ocurrences[j], sumOfOccurences, "New angle: ", (ocurrences[j] / sumOfOccurences) * 2 * Math.PI)
+                }
+                this.anglesAndColors![index] = (ocurrences[j] / sumOfOccurences) * 2 * Math.PI; // Normalized angle
+                this.anglesAndColors![index + 1] = color[0] / 255;
+                this.anglesAndColors![index + 2] = color[1] / 255;
+                this.anglesAndColors![index + 3] = color[2] / 255;
+            }
+        }
+        // console.log("Angles and colors: ", this.anglesAndColors)
         this.anglesAndColorsTexture?.subimage(this.anglesAndColors!);
     }
 
     updateSlicesPerNode(occurencesColorMap: Map<string, { occurences: number; color: number[] }[]>) {
-        // for (let i = 0; i < this.data.nodes.length; ++i) {
-        //     // this.slicesPerNode![i] = 2;
-        //     const node = this.data.nodes[i];
-        //
-        //     const occurrencesColors = occurencesColorMap.get(node.id);
-        //
-        //     if (!occurrencesColors) {
-        //         this.slicesPerNode![i] = 0;
-        //         continue;
-        //     }
-        //
-        //     this.slicesPerNode![i] = occurrencesColors.length;
-        // }
-        //
+        for (let i = 0; i < this.data.nodes.length; ++i) {
+            const node = this.data.nodes[i];
+            const sortedIndex = this.data.getSortedIndexById(node.id)!;
+            const occurrencesColors = occurencesColorMap.get(node.id);
+            if (!occurrencesColors) {
+                this.slicesPerNode![sortedIndex] = 0;
+                continue;
+            }
+
+            if (occurrencesColors.length > MAX_NUM_SLICES) {
+                this.slicesPerNode![sortedIndex] = MAX_NUM_SLICES;
+            } else {
+                this.slicesPerNode![sortedIndex] = occurrencesColors.length;
+            }
+        }
+
         this.slicesPerNodeTexture?.subimage(this.slicesPerNode!);
     }
 }

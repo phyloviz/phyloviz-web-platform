@@ -49,7 +49,6 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
     idToText = new Map<string, any>()
     private updatePieCharts: boolean = false;
     private occurencesColorMap: Map<string, { occurences: number; color: number[] }[]> | undefined
-    colors: number[][] = []
 
     public constructor(canvas: HTMLCanvasElement, config?: GraphConfigInterface<N, L>) {
         if (config) this.config.init(config)
@@ -697,44 +696,83 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 
             if (this.updatePieCharts) {
                 console.log("Updating Pie Charts", this.occurencesColorMap)
-                const numNodes = this.graph.nodes.length
-                this.points.slicesPerNode = new Float32Array(numNodes);
-                for (let i = 0; i < numNodes; ++i) {
-                    this.points.slicesPerNode [i] = Math.min(
-                        Math.floor(Math.random() * MAX_NUM_SLICES + 1),
-                        MAX_NUM_SLICES
-                    ); // Random number of slices
-                }
+                // const numNodes = this.graph.nodes.length
+                // this.points.slicesPerNode = new Float32Array(numNodes);
+                // // for (let i = 0; i < numNodes; ++i) {
+                // //     this.points.slicesPerNode [i] = Math.min(
+                // //         Math.floor(Math.random() * MAX_NUM_SLICES + 2),
+                // //         MAX_NUM_SLICES
+                // //     ); // Random number of slices
+                // // }
+                // //
+                // for (let i = 0; i < numNodes; ++i) {
+                //     // Generate random angles.
+                //     let randomValues = Array(MAX_NUM_SLICES)
+                //         .fill(0)
+                //         .map((x, i) => Math.min(Math.random(), 0.1));
+                //
+                //     let sumOfValues = randomValues.reduce((a, b) => a + b, 0);
+                //
+                //     // Assign random colors and normalized angles.
+                //     for (let j = 0; j < MAX_NUM_SLICES; ++j) {
+                //         const index = i * MAX_NUM_SLICES * 4 + j * 4; // Each color and angle pair takes up 2 texels
+                //
+                //         // const color = this.occurencesColorMap![i]
+                //         let color = this.colors[j]
+                //         if (color == null) {
+                //             color = [Math.random(), Math.random(), Math.random()]
+                //         } else {
+                //             color = [color[0] / 256, color[1] / 256, color[2] / 256]
+                //         }
+                //
+                //         this.points.anglesAndColors![index + 0] =
+                //             (randomValues[j] / sumOfValues) * 2 * Math.PI; // Normalized angle
+                //         this.points.anglesAndColors![index + 1] = color[0]; // Red
+                //         this.points.anglesAndColors![index + 2] = color[1]; // Green
+                //         this.points.anglesAndColors![index + 3] = color[2]; // Blue
+                //     }
+                // }
 
-                for (let i = 0; i < numNodes; ++i) {
-                    // Generate random angles.
-                    let randomValues = Array(MAX_NUM_SLICES)
-                        .fill(0)
-                        .map((x, i) => Math.min(Math.random(), 0.1));
+                // console.log("Node id", this.graph.getNodeByIndex(testSortedIndex))
+                // console.log(this.graph._nodes)
+                const nodeId = "2274"
+                const testSortedIndex = this.graph.getSortedIndexById(nodeId)!
+                //
+                // console.log("Sorted Index: ", testSortedIndex)
+                // console.log("Node id", this.graph.getNodeBySortedIndex(testSortedIndex))
+                // console.log("Node id right one", this.graph.getNodeBySortedIndex(724))
+                // console.log("Node map", this.graph.idToSortedIndexMap)
+                // this.points.slicesPerNode![testSortedIndex] = 3
+                //
+                // const angles = [
+                //     1.5707963267948966,
+                //     1.5707963267948966,
+                //     3.141592653589793
+                // ]
+                //
+                // const colors = [
+                //     [87, 89, 159],
+                //     [255, 105, 89],
+                //     [27, 128, 194]
+                // ]
+                // for (let j = 0; j < 3; ++j) {
+                //     const index = testSortedIndex * MAX_NUM_SLICES * 4 + j * 4; // Each color and angle pair takes up 2 texels
+                //
+                //     // const color = this.occurencesColorMap![i]
+                //     const color = colors[j]
+                //
+                //     this.points.anglesAndColors![index + 0] = angles[j]
+                //     this.points.anglesAndColors![index + 1] = color[0] / 255.0; // Red
+                //     this.points.anglesAndColors![index + 2] = color[1] / 255.0; // Green
+                //     this.points.anglesAndColors![index + 3] = color[2] / 255.0; // Blue
+                // }
 
-                    let sumOfValues = randomValues.reduce((a, b) => a + b, 0);
-
-                    // Assign random colors and normalized angles.
-                    for (let j = 0; j < MAX_NUM_SLICES; ++j) {
-                        const index = i * MAX_NUM_SLICES * 4 + j * 4; // Each color and angle pair takes up 2 texels
-
-                        // const color = this.occurencesColorMap![i]
-                        let color = this.colors[j]
-                        if (color == null) {
-                            color = [Math.random(), Math.random(), Math.random()]
-                        } else {
-                            color = [color[0] / 256, color[1] / 256, color[2] / 256]
-                        }
-
-                        this.points.anglesAndColors![index + 0] =
-                            (randomValues[j] / sumOfValues) * 2 * Math.PI; // Normalized angle
-                        this.points.anglesAndColors![index + 1] = color[0]; // Red
-                        this.points.anglesAndColors![index + 2] = color[1]; // Green
-                        this.points.anglesAndColors![index + 3] = color[2]; // Blue
-                    }
-                }
                 this.points.updateSlicesPerNode(this.occurencesColorMap!);
                 this.points.updateAnglesAndColors(this.occurencesColorMap!);
+                console.log("Angles and colors", this.points.anglesAndColors)
+                console.log(testSortedIndex * MAX_NUM_SLICES * 4)
+                console.log("Slices per node", this.points.slicesPerNode)
+                console.log(testSortedIndex)
 
                 this.updatePieCharts = false
             }
@@ -802,8 +840,8 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
             });
     }
 
-    renderPieCharts(occurencesColorMap: Map<string, { occurences: number; color: number[] }[]>) {
-        this.occurencesColorMap = occurencesColorMap
+    renderPieCharts(nodeSliceDataMap: Map<string, { occurences: number; color: number[] }[]>) {
+        this.occurencesColorMap = nodeSliceDataMap
         this.updatePieCharts = true
         this.points.renderPieCharts = true
     }

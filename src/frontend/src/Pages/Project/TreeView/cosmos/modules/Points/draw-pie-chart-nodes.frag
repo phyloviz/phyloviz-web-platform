@@ -103,15 +103,12 @@ void main() {
     r = dot(cxy, cxy);
     float opacity = alpha* (1.0 - smoothstep(smoothing, 1.0, r));
 
-
     vec2 ref = vec2(100000.0);
     vec2 p = gl_PointCoord.xy * ref;
     vec2 c = ref / 2.0;
 
     vec2 slicesUv = (vec2(0, _nodeIndex) + 0.5) / slicesPerNodeTextureSize;
     int numSlices = int(floor(texture2D(slicesPerNodeTexture, slicesUv).x));
-
-
 
     float angles[MAX_NUM_SLICES];
     vec3 colors[MAX_NUM_SLICES];
@@ -133,11 +130,6 @@ void main() {
 
     if (numSlices == 0) {
         gl_FragColor = vec4(Gray.xyz, opacity);
-        return;
-    }
-
-    if (numSlices == 1) {
-        gl_FragColor = vec4(colors[0], opacity);
         return;
     }
 

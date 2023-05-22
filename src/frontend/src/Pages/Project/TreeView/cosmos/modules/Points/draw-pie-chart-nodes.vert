@@ -22,7 +22,6 @@ varying vec2 index;
 varying vec3 rgbColor;
 varying float alpha;
 
-attribute float nodeIndex;
 varying float _nodeIndex;
 
 float pointSize(float size) {
@@ -36,7 +35,7 @@ float pointSize(float size) {
 }
 
 void main() {
-    _nodeIndex = nodeIndex;
+    _nodeIndex = indexes.y * pointsTextureSize + indexes.x;
     index = indexes;
     // Position
     vec4 pointPosition = texture2D(positions, (index + 0.5) / pointsTextureSize);
