@@ -11,12 +11,16 @@ public class GetWorkflowStatusOutputModel {
     private String workflowId;
     private String type;
     private WorkflowStatus status;
+    private String failureReason;
+    private double progress;
     private Map<String, Object> data;
 
     public GetWorkflowStatusOutputModel(GetWorkflowStatusOutput getWorkflowStatusOutput) {
         this.workflowId = getWorkflowStatusOutput.getWorkflowId();
         this.type = getWorkflowStatusOutput.getType();
         this.status = getWorkflowStatusOutput.getStatus();
+        this.failureReason = getWorkflowStatusOutput.getFailureReason();
+        this.progress = getWorkflowStatusOutput.getProgress();
         this.data = getWorkflowStatusOutput.getData();
     }
 }

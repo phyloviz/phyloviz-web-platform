@@ -5,6 +5,7 @@ import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.WorkflowTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,5 +16,10 @@ public class WorkflowTemplateRepositoryMongo implements WorkflowTemplateReposito
     @Override
     public Optional<WorkflowTemplate> findByName(String name) {
         return repository.findByName(name);
+    }
+
+    @Override
+    public List<WorkflowTemplate> findAll() {
+        return repository.findAll();
     }
 }
