@@ -38,7 +38,7 @@ export function IsolateDataFileTreeItem({nodeId, file}: IsolateDataFileTreeItemP
         />
         <DeleteResourceBackdrop
             open={deleteBackdropOpen}
-            title={"Delete Isolate Data File?"}
+            title={`Delete Isolate Data File with name ${file.name}?`}
             subheader={"Are you sure you want to delete this isolate data file? This action cannot be undone."}
             handleClose={handleDeleteBackdropClose}
             handleDelete={handleDelete}

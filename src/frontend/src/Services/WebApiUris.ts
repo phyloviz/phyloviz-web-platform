@@ -30,11 +30,11 @@ export namespace WebApiUris {
     export const deleteTreeView = (projectId: string, datasetId: string, treeViewId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/tree-views/${treeViewId}`
     export const updateTreeView = (projectId: string, datasetId: string, treeViewId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/tree-views/${treeViewId}`
 
-    export const deleteTypingData = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/typing-data/${typingDataId}`
-    export const updateTypingData = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/typing-data/${typingDataId}`
+    export const deleteTypingData = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}`
+    export const updateTypingData = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}`
 
-    export const deleteIsolateData = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/isolate-data/${isolateDataId}`
-    export const updateIsolateData = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/isolate-data/${isolateDataId}`
+    export const deleteIsolateData = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}`
+    export const updateIsolateData = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}`
 
 
     // Compute

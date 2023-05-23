@@ -6,6 +6,7 @@ import {useDeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBac
 import {useState} from "react"
 import AdministrationService from "../../../../../../Services/Administration/AdministrationService"
 import {TreeViewIcon} from "../../../../../Shared/Icons";
+import {Problem} from "../../../../../../Services/utils/Problem";
 
 /**
  * Hook for the TreeTreeItem component.
@@ -71,7 +72,17 @@ export function useTreeTreeItem(datasetId: string, tree: Tree) {
                     handleDeleteBackdropClose()
                     navigate(WebUiUris.project(projectId!))
                 })
-                .catch(error => setError(error.message))
+                .catch(error => {
+                    if(error instanceof Problem) {
+                        let problem = error as Problem
+                        if (problem.title === "Denied Deletion") {
+                            setError("Cannot delete tree. It is a dependency of a tree view. Delete the tree view first.")
+                        }
+                    }
+                    else {
+                        setError("Could not delete the tree. An unexpected error occurred while trying to delete it.")
+                    }
+                })
         },
         error,
         clearError: () => setError(null)

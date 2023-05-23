@@ -43,6 +43,7 @@ public class ProblemJsonResponseBodyAdvice implements ResponseBodyAdvice<Problem
             status = HttpStatus.valueOf(problemStatus.getStatusCode());
 
         response.setStatusCode(status);
+        response.getHeaders().setContentType(MediaType.APPLICATION_PROBLEM_JSON);
 
         return problem;
     }

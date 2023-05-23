@@ -75,7 +75,7 @@ export function DatasetTreeItem({nodeId, dataset}: DatasetTreeItemProps) {
         </StyledTreeItem>
         <DeleteResourceBackdrop
             open={deleteBackdropOpen}
-            title={"Delete Dataset?"}
+            title={`Delete Dataset with name '${dataset.name}'?`}
             subheader={"Are you sure you want to delete this dataset? This action cannot be undone."}
             handleClose={handleDeleteBackdropClose}
             handleDelete={handleDelete}

@@ -24,6 +24,7 @@ interface IsolateDataStepCardProps {
     isolateDataKeys: string[]
     selectedIsolateDataKey: string | null
     onIsolateDataKeyChange: (event: SelectChangeEvent, child: ReactNode) => void
+    triedSubmitting: boolean
 }
 
 /**
@@ -37,7 +38,8 @@ export function IsolateDataStepCard(
         onFileUploaderChange,
         isolateDataKeys,
         selectedIsolateDataKey,
-        onIsolateDataKeyChange
+        onIsolateDataKeyChange,
+        triedSubmitting
     }: IsolateDataStepCardProps
 ) {
     return (
@@ -79,6 +81,7 @@ export function IsolateDataStepCard(
                     label="Key"
                     value={selectedIsolateDataKey ?? ""}
                     onChange={onIsolateDataKeyChange}
+                    error={triedSubmitting && !!selectedIsolateData && !selectedIsolateDataKey}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
                     {isolateDataKeys.map((isolateDataKey) => (

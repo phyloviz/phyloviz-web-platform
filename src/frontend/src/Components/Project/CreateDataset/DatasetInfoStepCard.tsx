@@ -13,10 +13,13 @@ import {TypingDataType} from "../../../Pages/Project/CreateDataset/useCreateData
  * @property onDatasetTypeChange the function to be called when the dataset type is changed
  */
 interface DatasetInfoStepCardProps {
+    datasetName: string,
+    datasetDescription: string,
     datasetType: TypingDataType
     onDatasetNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void
     onDatasetDescriptionChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-    onDatasetTypeChange: (event: SelectChangeEvent, child: ReactNode) => void
+    onDatasetTypeChange: (event: SelectChangeEvent, child: ReactNode) => void,
+    triedSubmitting: boolean
 }
 
 /**
@@ -24,17 +27,22 @@ interface DatasetInfoStepCardProps {
  */
 export function DatasetInfoStepCard(
     {
+        datasetName,
+        datasetDescription,
         datasetType,
         onDatasetNameChange,
         onDatasetDescriptionChange,
-        onDatasetTypeChange
+        onDatasetTypeChange,
+        triedSubmitting
     }: DatasetInfoStepCardProps
 ) {
     return <>
         <TextField
             label="Dataset Name"
+            value={datasetName}
             variant="outlined"
             onChange={onDatasetNameChange}
+            error={datasetName === "" && triedSubmitting}
             required sx={{width: "100%", mb: 1}}
         />
         <Typography variant="caption" align={"justify"} sx={{mb: 4, width: "100%"}}>
@@ -44,6 +52,7 @@ export function DatasetInfoStepCard(
 
         <TextField
             label="Dataset Description"
+            value={datasetDescription}
             variant="outlined"
             onChange={onDatasetDescriptionChange}
             multiline
@@ -58,14 +67,15 @@ export function DatasetInfoStepCard(
             <InputLabel id="dataset-type">Dataset Type</InputLabel>
             <Select
                 labelId="dataset-type"
-                value={datasetType.valueOf()}
                 label="Dataset Type"
+                value={datasetType.valueOf()}
                 onChange={onDatasetTypeChange}
                 MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
             >
                 {
                     Object.values(TypingDataType).map((datasetType) => (
-                        <MenuItem key={datasetType.valueOf()} value={datasetType.valueOf()}>{datasetType.valueOf()}</MenuItem>
+                        <MenuItem key={datasetType.valueOf()}
+                                  value={datasetType.valueOf()}>{datasetType.valueOf()}</MenuItem>
                     ))
                 }
             </Select>

@@ -19,6 +19,8 @@ import {ErrorAlert} from "../../../Components/Shared/ErrorAlert"
  */
 export default function CreateDataset() {
     const {
+        datasetName,
+        datasetDescription,
         datasetType,
         project,
         handleDatasetNameChange,
@@ -39,7 +41,8 @@ export default function CreateDataset() {
         createDatasetStep,
         currStep,
         error,
-        clearError
+        clearError,
+        triedSubmitting
     } = useCreateDataset()
 
     return (
@@ -84,10 +87,13 @@ export default function CreateDataset() {
                             {
                                 createDatasetStep === CreateDatasetStep.INFO
                                     ? <DatasetInfoStepCard
+                                        datasetName={datasetName}
+                                        datasetDescription={datasetDescription}
                                         datasetType={datasetType}
                                         onDatasetNameChange={handleDatasetNameChange}
                                         onDatasetDescriptionChange={handleDatasetDescriptionChange}
                                         onDatasetTypeChange={handleDatasetTypeChange}
+                                        triedSubmitting={triedSubmitting}
                                     />
                                     : createDatasetStep === CreateDatasetStep.TYPING_DATA
                                         ? <TypingDataStepCard
@@ -96,6 +102,7 @@ export default function CreateDataset() {
                                             typingData={project?.files.typingData!}
                                             onFileSelecterChange={handleTypingDataFileSelectorChange}
                                             onFileUploaderChange={handleTypingDataFileUploaderChange}
+                                            triedSubmitting={triedSubmitting}
                                         />
                                         : <IsolateDataStepCard
                                             selectedIsolateData={selectedIsolateData}
@@ -105,6 +112,7 @@ export default function CreateDataset() {
                                             isolateDataKeys={isolateDataKeys}
                                             selectedIsolateDataKey={selectedIsolateDataKey}
                                             onIsolateDataKeyChange={handleIsolateDataKeyChange}
+                                            triedSubmitting={triedSubmitting}
                                         />
                             }
                         </Box>

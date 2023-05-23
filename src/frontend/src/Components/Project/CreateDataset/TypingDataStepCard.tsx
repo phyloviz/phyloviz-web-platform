@@ -21,6 +21,7 @@ interface TypingDataStepCardProps {
     selectedTypingData: string | null
     onFileSelecterChange: (event: SelectChangeEvent, child: ReactNode) => void
     onFileUploaderChange: (file: React.SetStateAction<File | null>) => void
+    triedSubmitting: boolean
 }
 
 /**
@@ -32,7 +33,8 @@ export function TypingDataStepCard(
         typingData,
         selectedTypingData,
         onFileSelecterChange,
-        onFileUploaderChange
+        onFileUploaderChange,
+        triedSubmitting
     }: TypingDataStepCardProps
 ) {
     return (

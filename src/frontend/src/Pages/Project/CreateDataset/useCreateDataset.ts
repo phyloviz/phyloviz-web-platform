@@ -48,9 +48,13 @@ export function useCreateDataset() {
     const [selectedIsolateDataKey, setSelectedIsolateDataKey] = useState<string | null>(null)
     const [isolateDataFile, setIsolateDataFile] = useState<File | null>(null)
 
+    const [triedSubmitting, setTriedSubmitting] = useState(false)
+
     const [error, setError] = useState<string | null>(null)
 
     return {
+        datasetName: name,
+        datasetDescription: description,
         datasetType,
         project,
         handleDatasetNameChange: (event: SelectChangeEvent) => setName(event.target.value),
@@ -84,15 +88,35 @@ export function useCreateDataset() {
             fileToRead!.text()
                 .then(text => {
                     const lines = text.split("\n")
-                    const keys = lines[0].split(/\s+/)
+                    const keys = lines[0].split(/\t+/)
                     setIsolateDataKeys(keys)
                 })
+
+            /*const stream = fileToRead.stream(); // Get a ReadableStream from the File object
+            const reader = stream.getReader(); // Create a reader for the stream
+            reader.read().then(function processChunk({ done, value }) {
+                if (done) {
+                    reader.releaseLock();
+                    stream.cancel();
+                    return;
+                }
+                const text = new TextDecoder().decode(value);
+                const lines = text.split(/\n/);
+                const firstLine = lines[0];
+                const keys = firstLine.split(/\t+/);
+                console.log("Total File read time:", Date.now() - fileReadStartTime)
+                setIsolateDataKeys(keys);
+                reader.releaseLock();
+                stream.cancel();
+            });*/
         },
         isolateDataKeys,
         selectedIsolateDataKey,
         handleIsolateDataKeyChange: (event: SelectChangeEvent) => setSelectedIsolateDataKey(event.target.value),
         handleCancel: () => navigate(-1),
         handleBack: () => {
+            setError(null)
+
             if (createDatasetStep === CreateDatasetStep.TYPING_DATA) {
                 setCreateDatasetStep(CreateDatasetStep.INFO)
                 setCurrStep(0)
@@ -101,24 +125,49 @@ export function useCreateDataset() {
                 setCurrStep(1)
             }
         },
-        handleNext: () => {
+        handleNext: async () => {
+            setError(null)
+
             if (createDatasetStep === CreateDatasetStep.INFO) {
+                setTriedSubmitting(true)
+                if (!name) {
+                    setError("Please enter a name for the dataset.")
+                    return
+                }
+                setTriedSubmitting(false)
+
                 setCreateDatasetStep(CreateDatasetStep.TYPING_DATA)
                 setCurrStep(1)
             } else if (createDatasetStep === CreateDatasetStep.TYPING_DATA) {
+                setTriedSubmitting(true)
+                if (!selectedTypingData && !typingDataFile) {
+                    setError("Please select a typing data file or upload a new one.")
+                    return
+                }
+                setTriedSubmitting(false)
+
                 setCreateDatasetStep(CreateDatasetStep.ISOLATE_DATA)
                 setCurrStep(2)
             } else {
+                setTriedSubmitting(true)
+                if ((selectedIsolateData || isolateDataFile) && !selectedIsolateDataKey) {
+                    setError("Please select a key for the isolate data.")
+                    return
+                }
+                setTriedSubmitting(false)
+
                 let typingDataId = selectedTypingData
                 let isolateDataId = selectedIsolateData
 
+                // TODO LOADING SPINNER WHILE UPLOADING AND CREATING DATASET
+
                 if (typingDataFile) {
-                    FileTransferService.uploadTypingData(project?.projectId!, typingDataFile, datasetType)
+                    await FileTransferService.uploadTypingData(project?.projectId!, typingDataFile, datasetType)
                         .then(res => typingDataId = res.typingDataId)
                         .catch(err => setError(err.message))
                 }
                 if (isolateDataFile) {
-                    FileTransferService.uploadIsolateData(project?.projectId!, isolateDataFile)
+                    await FileTransferService.uploadIsolateData(project?.projectId!, isolateDataFile)
                         .then(res => isolateDataId = res.isolateDataId)
                         .catch(err => setError(err.message))
                 }
@@ -144,5 +193,6 @@ export function useCreateDataset() {
         currStep,
         error,
         clearError: () => setError(null),
+        triedSubmitting
     }
 }

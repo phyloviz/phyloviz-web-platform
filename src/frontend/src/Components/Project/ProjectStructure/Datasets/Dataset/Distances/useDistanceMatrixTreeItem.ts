@@ -7,6 +7,7 @@ import {WebUiUris} from "../../../../../../Pages/WebUiUris"
 import {useDeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBackdrop"
 import {useState} from "react"
 import AdministrationService from "../../../../../../Services/Administration/AdministrationService"
+import {Problem} from "../../../../../../Services/utils/Problem";
 
 /**
  * Hook for the DistanceMatrixTreeItem component.
@@ -44,7 +45,17 @@ export function useDistanceMatrixTreeItem(datasetId: string, distanceMatrix: Dis
                     handleDeleteBackdropClose()
                     navigate(WebUiUris.project(projectId!))
                 })
-                .catch(error => setError(error.message))
+                .catch(error => {
+                    if(error instanceof Problem) {
+                        let problem = error as Problem
+                        if (problem.title === "Denied Deletion") {
+                            setError("Cannot delete distance matrix. It is a dependency of a tree. Delete the tree first.")
+                        }
+                    }
+                    else {
+                        setError("Could not delete the distance matrix. An unexpected error occurred while trying to delete it.")
+                    }
+                })
         },
         error,
         clearError: () => setError(null)
