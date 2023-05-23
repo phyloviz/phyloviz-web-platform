@@ -33,6 +33,12 @@ import {UpdateTreeViewOutputModel} from "./models/treeViews/updateTreeView/Updat
 import {UpdateTreeViewInputModel} from "./models/treeViews/updateTreeView/UpdateTreeViewInputModel";
 import {UpdateDatasetInputModel} from "./models/datasets/updateDataset/UpdateDatasetInputModel";
 import {UpdateDatasetOutputModel} from "./models/datasets/updateDataset/UpdateDatasetOutputModel";
+import {
+    SetIsolateDataOfDatasetInputModel
+} from "./models/datasets/setIsolateDataOfDataset/SetIsolateDataOfDatasetInputModel";
+import {
+    SetIsolateDataOfDatasetOutputModel
+} from "./models/datasets/setIsolateDataOfDataset/SetIsolateDataOfDatasetOutputModel";
 
 export namespace MockAdministrationService {
 
@@ -555,22 +561,56 @@ export namespace MockAdministrationService {
      *
      * @param projectId the id of the project to which the dataset belongs
      * @param datasetId the id of the dataset to be updated
-     * @param updateDatasetInputModel the input model for updating a dataset
+     * @param inputModel the input model with the dataset information to be updated
      * @return information about the update
      */
     export async function updateDataset(
         projectId: string,
         datasetId: string,
-        updateDatasetInputModel: UpdateDatasetInputModel
+        inputModel: UpdateDatasetInputModel
     ): Promise<UpdateDatasetOutputModel> {
         const dataset = mockProjects.get(projectId)!.datasets.find(dataset => dataset.datasetId === datasetId)!
 
-        dataset.name = updateDatasetInputModel.name
-        dataset.description = updateDatasetInputModel.description
+        dataset.name = inputModel.name
+        dataset.description = inputModel.description
 
         return {
             name: dataset.name,
             description: dataset.description
+        }
+    }
+
+    /**
+     * Sets the isolate data of a dataset.
+     *
+     * @param projectId  the id of the project to which the dataset belongs
+     * @param datasetId  the id of the dataset to be updated
+     * @param inputModel the input model with the isolate data information to be set
+     * @return information about the update
+     */
+    export async function setIsolateDataOfDataset(
+        projectId: string,
+        datasetId: string,
+        inputModel: SetIsolateDataOfDatasetInputModel
+    ): Promise<SetIsolateDataOfDatasetOutputModel> {
+        const dataset = mockProjects.get(projectId)!.datasets.find(dataset => dataset.datasetId === datasetId)!
+
+        const isolateData = mockProjects.get(projectId)!.files.isolateData.find(isolateData => isolateData.isolateDataId)
+
+        if (!isolateData) {
+            throw new Error('Isolate data not found')
+        }
+
+        if(isolateData.keys.indexOf(inputModel.isolateDataKey) === -1) {
+            throw new Error('Isolate data key not found')
+        }
+
+        dataset.isolateDataId = inputModel.isolateDataId
+        dataset.isolateDataKey = inputModel.isolateDataKey
+
+        return {
+            isolateDataId: dataset.isolateDataId,
+            isolateDataKey: dataset.isolateDataKey
         }
     }
 }

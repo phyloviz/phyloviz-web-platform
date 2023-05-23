@@ -13,9 +13,9 @@ export enum CreateDatasetStep {
 }
 
 /**
- * The type of dataset.
+ * The type of typing data.
  */
-export enum DatasetType {
+export enum TypingDataType {
     MLST = "Multi-Locus Sequence Typing (MLST)",
     MLVA = "Multi-Locus Variable Number Tandem Repeat Analysis (MLVA)",
     FASTA = "Aligned Sequences (FASTA)",
@@ -31,7 +31,7 @@ export enum DatasetType {
 export function useCreateDataset() {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
-    const [datasetType, setDatasetType] = useState(DatasetType.MLST)
+    const [datasetType, setDatasetType] = useState(TypingDataType.MLST)
 
     const [createDatasetStep, setCreateDatasetStep] = useState(CreateDatasetStep.INFO)
     const [currStep, setCurrStep] = useState(0)
@@ -55,7 +55,7 @@ export function useCreateDataset() {
         project,
         handleDatasetNameChange: (event: SelectChangeEvent) => setName(event.target.value),
         handleDatasetDescriptionChange: (event: SelectChangeEvent) => setDescription(event.target.value),
-        handleDatasetTypeChange: (event: SelectChangeEvent) => setDatasetType(event.target.value as DatasetType),
+        handleDatasetTypeChange: (event: SelectChangeEvent) => setDatasetType(event.target.value as TypingDataType),
         selectedTypingData,
         handleTypingDataFileSelectorChange: (event: SelectChangeEvent) => {
             setSelectedTypingData(event.target.value)
@@ -113,7 +113,7 @@ export function useCreateDataset() {
                 let isolateDataId = selectedIsolateData
 
                 if (typingDataFile) {
-                    FileTransferService.uploadTypingData(project?.projectId!, typingDataFile)
+                    FileTransferService.uploadTypingData(project?.projectId!, typingDataFile, datasetType)
                         .then(res => typingDataId = res.typingDataId)
                         .catch(err => setError(err.message))
                 }
