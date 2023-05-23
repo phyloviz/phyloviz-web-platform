@@ -61,7 +61,7 @@ services:
       - ./src/backend/redis/redis.conf:/usr/local/etc/redis/redis.conf
       - cache:/data
 
-  registry:
+  tool_registry:
     image: registry:2.8.1
     restart: always
     ports:
@@ -70,20 +70,20 @@ services:
       REGISTRY_HTTP_ADDR: :5000
       REGISTRY_STORAGE: filesystem
       REGISTRY_STORAGE_DELETE_ENABLED: 'true'
-      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/tool_registry
     volumes:
-      - ./src/backend/registry/data:/var/lib/registry
-      - ./src/backend/registry/config/config.yml:/etc/docker/registry/config.yml
-  registry_ui:
+      - ./src/backend/registry/data:/var/lib/tool_registry
+      - ./src/backend/registry/config/config.yml:/etc/docker/tool_registry/config.yml
+  tool_registry_ui:
     image: joxit/docker-registry-ui:2.4.1
     ports:
       - '8084:80'
     environment:
-      - REGISTRY_TITLE=My Private Docker Registry
+      - REGISTRY_TITLE=Tool Images Private Docker Registry
       - REGISTRY_URL=http://localhost:5000
       - SINGLE_REGISTRY=true
     depends_on:
-      - registry
+      - tool_registry
 
 volumes:
   keycloak_db_data:

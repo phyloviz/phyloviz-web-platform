@@ -59,7 +59,7 @@
       "details": {
         "address": "localhost",
         "dockerUrl": "unix://var/run/docker.sock",
-        "dockerImage": "luanab/phylolib",
+        "dockerImage": "localhost:5000/phylolib",
         "dockerAutoRemove": "never",
         "dockerNetworkMode": "bridge",
         "dockerApiVersion": "auto",
