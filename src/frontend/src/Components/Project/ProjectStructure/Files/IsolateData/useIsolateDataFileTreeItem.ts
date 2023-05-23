@@ -46,13 +46,9 @@ export function useIsolateDataFileTreeItem(file: IsolateDataFile) {
                     navigate(WebUiUris.project(projectId!))
                 })
                 .catch(error => {
-                    if(error instanceof Problem) {
-                        let problem = error as Problem
-                        if (problem.title === "Denied Deletion") {
-                            setError("Cannot delete file. File is still being used in one or more datasets. Delete the datasets first.")
-                        }
-                    }
-                    else {
+                    if (error instanceof Problem && error.title === "Denied Deletion") {
+                        setError("Cannot delete file. File is still being used in one or more datasets. Delete the datasets first.")
+                    } else {
                         setError("Could not delete the file. An unexpected error occurred while trying to delete it.")
                     }
                 })

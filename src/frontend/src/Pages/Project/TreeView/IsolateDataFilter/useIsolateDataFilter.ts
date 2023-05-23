@@ -8,6 +8,7 @@ import {
     GetIsolateDataKeysOutputModel
 } from "../../../../Services/Visualization/models/getIsolateDataSchema/GetIsolateDataKeysOutputModel";
 import {useTreeViewContext} from "../useTreeView";
+import {Problem} from "../../../../Services/utils/Problem";
 
 /**
  * Hook for IsolateData page.
@@ -26,11 +27,23 @@ export function useIsolateDataFilter() {
         setLoading(true)
         VisualizationService.getIsolateDataKeys(projectId!, isolateDataId!)
             .then((res) => setIsolateDataSchema(res))
-            .catch((err) => setError(err))
+            .catch((error) => {
+                if (error instanceof Problem && error.title === "Indexing Needed") {
+                    setError("Isolate Data isn't indexed in the database. Indexing of Isolate Data required.")
+                } else {
+                    setError("Unknown error during Isolate Data fetch")
+                }
+            })
 
-        VisualizationService.getIsolateDataRows(projectId!, isolateDataId!)
+        VisualizationService.getIsolateDataRows(projectId!, isolateDataId!, 100000, 0)  // TODO is pagination needed?
             .then((res) => setIsolateDataRows(res))
-            .catch((err) => setError(err))
+            .catch((error) => {
+                if (error instanceof Problem && error.title === "Indexing Needed") {
+                    setError("Isolate Data isn't indexed in the database. Indexing of Isolate Data required.")
+                } else {
+                    setError("Unknown error during Isolate Data fetch")
+                }
+            })
             .finally(() => setLoading(false))
     }, [projectId, isolateDataId])
 

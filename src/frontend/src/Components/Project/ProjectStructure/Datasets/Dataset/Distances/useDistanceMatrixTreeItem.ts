@@ -46,13 +46,9 @@ export function useDistanceMatrixTreeItem(datasetId: string, distanceMatrix: Dis
                     navigate(WebUiUris.project(projectId!))
                 })
                 .catch(error => {
-                    if(error instanceof Problem) {
-                        let problem = error as Problem
-                        if (problem.title === "Denied Deletion") {
-                            setError("Cannot delete distance matrix. It is a dependency of a tree. Delete the tree first.")
-                        }
-                    }
-                    else {
+                    if (error instanceof Problem && error.title === "Denied Deletion") {
+                        setError("Cannot delete distance matrix. It is a dependency of a tree. Delete the tree first.")
+                    } else {
                         setError("Could not delete the distance matrix. An unexpected error occurred while trying to delete it.")
                     }
                 })

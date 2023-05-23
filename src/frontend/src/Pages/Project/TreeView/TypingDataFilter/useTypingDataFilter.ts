@@ -8,6 +8,7 @@ import {
     GetTypingDataProfilesOutputModel
 } from "../../../../Services/Visualization/models/getTypingDataProfiles/GetTypingDataProfilesOutputModel";
 import {useTreeViewContext} from "../useTreeView";
+import {Problem} from "../../../../Services/utils/Problem";
 
 /**
  * Hook for typing data filter page.
@@ -26,11 +27,23 @@ export function useTypingDataFilter() {
         setLoading(true)
         VisualizationService.getTypingDataSchema(projectId!, typingDataId)
             .then((res) => setTypingDataSchema(res))
-            .catch((err) => setError(err))
+            .catch((error) => {
+                if (error instanceof Problem && error.title === "Indexing Needed") {
+                    setError("Typing Data isn't indexed in the database. Indexing of Typing Data required.")
+                } else {
+                    setError("Unknown error during Typing Data fetch")
+                }
+            })
 
-        VisualizationService.getTypingDataProfiles(projectId!, typingDataId)
+        VisualizationService.getTypingDataProfiles(projectId!, typingDataId, 100000, 0)  // TODO is pagination needed?
             .then((res) => setTypingDataProfiles(res))
-            .catch((err) => setError(err))
+            .catch((error) => {
+                if (error instanceof Problem && error.title === "Indexing Needed") {
+                    setError("Typing Data isn't indexed in the database. Indexing of Typing Data required.")
+                } else {
+                    setError("Unknown error during Typing Data fetch")
+                }
+            })
             .finally(() => setLoading(false))
     }, [projectId, typingDataId])
 

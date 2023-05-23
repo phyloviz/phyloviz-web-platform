@@ -30,13 +30,17 @@ namespace VisualizationService {
      *
      * @param projectId The project id.
      * @param typingDataId The typing data id.
+     * @param limit The limit.
+     * @param offset The offset.
      * @returns The typing data profiles.
      */
     export async function getTypingDataProfiles(
         projectId: string,
-        typingDataId: string
+        typingDataId: string,
+        limit: number,
+        offset: number
     ): Promise<GetTypingDataProfilesOutputModel> {
-        return await get<GetTypingDataProfilesOutputModel>(WebApiUris.getTypingDataProfiles(projectId, typingDataId))
+        return await get<GetTypingDataProfilesOutputModel>(WebApiUris.getTypingDataProfiles(projectId, typingDataId, limit, offset))
     }
 
     /**
@@ -58,13 +62,17 @@ namespace VisualizationService {
      *
      * @param projectId The project id.
      * @param isolateDataId The isolate data id.
+     * @param limit The limit.
+     * @param offset The offset.
      * @returns The isolate data rows.
      */
     export async function getIsolateDataRows(
         projectId: string,
-        isolateDataId: string
+        isolateDataId: string,
+        limit: number,
+        offset: number
     ): Promise<GetIsolateDataRowsOutputModel> {
-        return await get<GetIsolateDataRowsOutputModel>(WebApiUris.getIsolateDataRows(projectId, isolateDataId))
+        return await get<GetIsolateDataRowsOutputModel>(WebApiUris.getIsolateDataRows(projectId, isolateDataId, limit, offset))
     }
 
     /**

@@ -51,7 +51,7 @@ export function TypingDataStepCard(
                     onChange={onFileSelecterChange}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
-                    {typingData.map((typingDataFile) => (
+                    {typingData.map((typingDataFile) => ( // TODO Show only those with correct type
                         <MenuItem key={typingDataFile.typingDataId}
                                   value={typingDataFile.typingDataId}>{typingDataFile.name}</MenuItem>
                     ))}

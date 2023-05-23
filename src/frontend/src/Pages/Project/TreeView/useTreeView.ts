@@ -315,7 +315,7 @@ export function useTreeView() {
             const key = "ST (MLST)"
             const isolateDataId = "" // TODO: Get isolate data id
 
-            const isolateData = await VisualizationService.getIsolateDataRows(projectId!, isolateDataId)
+            const isolateData = await VisualizationService.getIsolateDataRows(projectId!, isolateDataId, 100000, 0) // TODO is pagination needed?
 
             const selectedHeaderValues = isolateData.rows.map((row) => row.row[selectedHeader])
 

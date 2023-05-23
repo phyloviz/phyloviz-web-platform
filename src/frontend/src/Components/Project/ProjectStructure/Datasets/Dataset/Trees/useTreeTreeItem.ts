@@ -73,13 +73,9 @@ export function useTreeTreeItem(datasetId: string, tree: Tree) {
                     navigate(WebUiUris.project(projectId!))
                 })
                 .catch(error => {
-                    if(error instanceof Problem) {
-                        let problem = error as Problem
-                        if (problem.title === "Denied Deletion") {
-                            setError("Cannot delete tree. It is a dependency of a tree view. Delete the tree view first.")
-                        }
-                    }
-                    else {
+                    if (error instanceof Problem && error.title === "Denied Deletion") {
+                        setError("Cannot delete tree. It is a dependency of a tree view. Delete the tree view first.")
+                    } else {
                         setError("Could not delete the tree. An unexpected error occurred while trying to delete it.")
                     }
                 })
