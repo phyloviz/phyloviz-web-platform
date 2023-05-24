@@ -14,6 +14,7 @@ import {
 interface NeighborJoiningConfigMethodStepProps {
     selectedCriteria: NeighborJoiningCriteria | null
     onCriteriaChange: (event: SelectChangeEvent) => void
+    triedSubmitting: boolean
 }
 
 /**
@@ -22,7 +23,8 @@ interface NeighborJoiningConfigMethodStepProps {
 export function NeighborJoiningConfigMethodStep(
     {
         selectedCriteria,
-        onCriteriaChange
+        onCriteriaChange,
+        triedSubmitting
     }: NeighborJoiningConfigMethodStepProps
 ) {
 
@@ -37,6 +39,7 @@ export function NeighborJoiningConfigMethodStep(
                     labelId="criteria"
                     label="Criteria"
                     value={selectedCriteria ?? ""}
+                    error={selectedCriteria === null && triedSubmitting}
                     onChange={onCriteriaChange}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
@@ -51,7 +54,7 @@ export function NeighborJoiningConfigMethodStep(
             <Typography display="inline" variant="caption" align={"left"} sx={{width: "100%", whiteSpace: "pre-wrap"}}>
                 {
                     "The Neighbor-Joining algorithm\n" +
-                    `This method is based on the minimum evolution principle and provides trees with near-minimal sum of branch-length estimates proposed by ${selectedCriteria == NeighborJoiningCriteria.SAILOU_AND_NEI ? "Sailou and Nei" : "Studier and Keppler"}.`
+                    `This method is based on the minimum evolution principle and provides trees with near-minimal sum of branch-length estimates proposed by ${selectedCriteria == NeighborJoiningCriteria.SAITOU_AND_NEI ? "Sailou and Nei" : "Studier and Keppler"}.`
                 }
             </Typography>
         </>

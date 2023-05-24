@@ -71,7 +71,7 @@ export namespace MockAdministrationService {
                             {
                                 treeId: "tree1",
                                 name: "GoeBurst",
-                                sourceType: "algorithmDistanceMatrix",
+                                sourceType: "algorithm_distance_matrix",
                                 source: {
                                     algorithm: "goeBURST",
                                     distanceMatrixId: "distanceMatrix1",
@@ -81,7 +81,7 @@ export namespace MockAdministrationService {
                             {
                                 treeId: "tree2",
                                 name: "GoeBurst Dynamic",
-                                sourceType: "algorithmTypingData",
+                                sourceType: "algorithm_typing_data",
                                 source: {
                                     algorithm: "goeBURST",
                                     parameters: "{ level: 'SLV' }"

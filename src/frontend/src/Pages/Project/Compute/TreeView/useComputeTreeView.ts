@@ -33,6 +33,8 @@ export function useComputeTreeView() {
 
     const [selectedLayout, setSelectedLayout] = useState<string | null>(null)
 
+    const [triedSubmitting, setTriedSubmitting] = useState<boolean>(false)
+
     const {createWorkflow} = useCompute()
     const [error, setError] = useState<string | null>(null)
 
@@ -71,20 +73,27 @@ export function useComputeTreeView() {
             }
         },
         handleNext: () => {
+            setError(null)
+
             if (step === ComputeTreeViewStep.TREE) {
+                setTriedSubmitting(true)
+                if (selectedTree === null) {
+                    setError("Please select a tree.")
+                    return
+                }
+                setTriedSubmitting(false)
+
                 setStep(ComputeTreeViewStep.LAYOUT)
                 setCurrStep(1)
                 return
             }
-
-            if (selectedTree === null) {
-                setError("Please select a tree.")
-                return
-            }
-
-            if (selectedLayout === null) {
-                setError("Please select a layout.")
-                return
+            else if (step === ComputeTreeViewStep.LAYOUT) {
+                setTriedSubmitting(true)
+                if (selectedLayout === null) {
+                    setError("Please select a layout.")
+                    return
+                }
+                setTriedSubmitting(false)
             }
 
             createWorkflow(
@@ -98,6 +107,7 @@ export function useComputeTreeView() {
                 }
             )
         },
+        triedSubmitting,
         error,
         clearError: () => setError(null)
     }

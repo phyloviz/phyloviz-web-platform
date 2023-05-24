@@ -15,6 +15,7 @@ interface GoeBURSTConfigDistanceStepProps {
     distances: DistanceMatrix[]
     selectedDistance: string | null
     onDistanceChange: (event: SelectChangeEvent, child: ReactNode) => void
+    triedSubmitting: boolean
 }
 
 /**
@@ -24,7 +25,8 @@ export function GoeBURSTConfigDistanceStep(
     {
         distances,
         selectedDistance,
-        onDistanceChange
+        onDistanceChange,
+        triedSubmitting
     }: GoeBURSTConfigDistanceStepProps
 ) {
     return (
@@ -39,6 +41,7 @@ export function GoeBURSTConfigDistanceStep(
                     label="Distance"
                     value={selectedDistance ?? ""}
                     onChange={onDistanceChange}
+                    error={selectedDistance === null && triedSubmitting}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
                     {distances.map((distance) => (

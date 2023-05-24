@@ -18,6 +18,8 @@ export function useGoeBURSTFullMSTConfig() {
         .find((dataset) => dataset.datasetId === datasetId)
         ?.distanceMatrices ?? []
 
+    const [triedSubmitting, setTriedSubmitting] = useState<boolean>(false)
+
     const [error, setError] = useState<string | null>(null)
 
     return {
@@ -27,10 +29,16 @@ export function useGoeBURSTFullMSTConfig() {
 
         handleCancel: () => navigate(-1),
         handleFinish: () => {
+            /* TODO phylolib doesn't have this algorithm, what to do?
+
+            setError(null)
+
+            setTriedSubmitting(true)
             if (selectedDistance === null) {
                 setError("Please select a distance matrix.")
                 return
             }
+            setTriedSubmitting(false)
 
             createWorkflow(
                 {
@@ -41,9 +49,10 @@ export function useGoeBURSTFullMSTConfig() {
                         algorithm: "goeburst-full-mst"
                     }
                 }
-            )
+            )*/
         },
         error,
+        triedSubmitting,
         clearError: () => setError(null)
     }
 }

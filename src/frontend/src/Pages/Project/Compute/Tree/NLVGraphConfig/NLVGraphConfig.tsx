@@ -9,6 +9,7 @@ import {
     NLVGraphConfigDistanceStep
 } from "../../../../../Components/Project/Compute/Tree/NLVGraphConfig/NLVGraphConfigDistanceStep"
 import {useNLVGraphConfig} from "./useNLVGraphConfig"
+import Alert from "@mui/material/Alert";
 
 /**
  * NLVGraphConfig page.
@@ -48,6 +49,9 @@ export default function NLVGraphConfig() {
                     <Typography component="h1" variant="h4">
                         nLV Graph Configuration
                     </Typography>
+                    <Alert severity="info">
+                        This feature is not yet implemented.
+                    </Alert>
                     <Box sx={{
                         width: "100%",
                         display: "flex",

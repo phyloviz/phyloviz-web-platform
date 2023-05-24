@@ -32,6 +32,8 @@ export default function GoeBURSTConfig() {
         handleBack,
         handleNext,
 
+        triedSubmitting,
+
         error,
         clearError
     } = useGoeBURSTConfig()
@@ -81,6 +83,7 @@ export default function GoeBURSTConfig() {
                                         distances={distances}
                                         selectedDistance={selectedDistance}
                                         onDistanceChange={handleDistanceChange}
+                                        triedSubmitting={triedSubmitting}
                                     />
                                     : <GoeBURSTConfigLevelStep/>
                             }

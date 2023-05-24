@@ -25,6 +25,8 @@ export function useGoeBURSTConfig() {
         .find((dataset) => dataset.datasetId === datasetId)
         ?.distanceMatrices ?? []
 
+    const [triedSubmitting, setTriedSubmitting] = useState<boolean>(false)
+
     const {createWorkflow} = useCompute()
     const [error, setError] = useState<string | null>(null)
 
@@ -42,14 +44,18 @@ export function useGoeBURSTConfig() {
             }
         },
         handleNext: () => {
+            setError(null)
+
             if (step === GoeBURSTConfigurationStep.DISTANCE) {
+                setTriedSubmitting(true)
+                if (selectedDistance === null) {
+                    setError("Please select a distance matrix.")
+                    return
+                }
+                setTriedSubmitting(false)
+
                 setStep(GoeBURSTConfigurationStep.LEVEL)
                 setCurrStep(1)
-                return
-            }
-
-            if (selectedDistance === null) {
-                setError("Please select a distance matrix.")
                 return
             }
 
@@ -64,6 +70,7 @@ export function useGoeBURSTConfig() {
                 }
             )
         },
+        triedSubmitting,
         error,
         clearError: () => setError(null)
     }

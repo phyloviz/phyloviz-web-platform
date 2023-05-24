@@ -4,7 +4,7 @@ export interface TreeViewSource {
     isolateDataId: string | null
 }
 
-export type TreeSourceType = "algorithmTypingData" | "algorithmDistanceMatrix" | "file"
+export type TreeSourceType = "algorithm_typing_data" | "algorithm_distance_matrix" | "file"
 
 export interface TreeSource {
 

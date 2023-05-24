@@ -15,6 +15,7 @@ interface HierarchicalClusteringConfigDistanceStepProps {
     distances: DistanceMatrix[]
     selectedDistance: string | null
     onDistanceChange: (event: SelectChangeEvent, child: ReactNode) => void
+    triedSubmitting: boolean
 }
 
 
@@ -25,7 +26,8 @@ export function HierarchicalClusteringConfigDistanceStep(
     {
         distances,
         selectedDistance,
-        onDistanceChange
+        onDistanceChange,
+        triedSubmitting
     }: HierarchicalClusteringConfigDistanceStepProps
 ) {
     return (
@@ -39,6 +41,7 @@ export function HierarchicalClusteringConfigDistanceStep(
                     labelId="distance"
                     label="Distance"
                     value={selectedDistance ?? ""}
+                    error={selectedDistance === null && triedSubmitting}
                     onChange={onDistanceChange}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >

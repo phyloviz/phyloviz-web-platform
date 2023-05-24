@@ -10,7 +10,7 @@ export enum NeighborJoiningConfigurationStep {
 }
 
 export enum NeighborJoiningCriteria {
-    SAILOU_AND_NEI = "Sailou-Nei",
+    SAITOU_AND_NEI = "Saitou-Nei",
     STUDIER_AND_KEPPLER = "Studier-Keppler",
 }
 
@@ -31,6 +31,8 @@ export function useNeighborJoiningConfig() {
         ?.distanceMatrices ?? []
 
     const [selectedCriteria, setSelectedCriteria] = useState<NeighborJoiningCriteria | null>(null)
+
+    const [triedSubmitting, setTriedSubmitting] = useState<boolean>(false)
 
     const {createWorkflow} = useCompute()
     const [error, setError] = useState<string | null>(null)
@@ -54,20 +56,27 @@ export function useNeighborJoiningConfig() {
             }
         },
         handleNext: () => {
+            setError(null)
+
             if (step === NeighborJoiningConfigurationStep.DISTANCE) {
+                setTriedSubmitting(true)
+                if (selectedDistance === null) {
+                    setError("Please select a distance matrix.")
+                    return
+                }
+                setTriedSubmitting(false)
+
                 setStep(NeighborJoiningConfigurationStep.METHOD)
                 setCurrStep(1)
                 return
             }
-
-            if (selectedDistance === null) {
-                setError("Please select a distance matrix.")
-                return
-            }
-
-            if (selectedCriteria === null) {
-                setError("Please select a criteria.")
-                return
+            else if (step === NeighborJoiningConfigurationStep.METHOD) {
+                setTriedSubmitting(true)
+                if (selectedCriteria === null) {
+                    setError("Please select a criteria.")
+                    return
+                }
+                setTriedSubmitting(false)
             }
 
             createWorkflow(
@@ -76,11 +85,12 @@ export function useNeighborJoiningConfig() {
                     properties: {
                         datasetId: datasetId,
                         distanceMatrixId: selectedDistance,
-                        algorithm: selectedCriteria === NeighborJoiningCriteria.SAILOU_AND_NEI ? "saitounei" : "studierkepler"
+                        algorithm: selectedCriteria === NeighborJoiningCriteria.SAITOU_AND_NEI ? "saitounei" : "studierkepler"
                     }
                 }
             )
         },
+        triedSubmitting,
         error,
         clearError: () => setError(null)
     }

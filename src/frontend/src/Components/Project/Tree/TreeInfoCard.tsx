@@ -5,7 +5,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import {styled} from "@mui/material/styles"
 import IconButton from "@mui/material/IconButton"
 import {CascadingInfoTree} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
-import {TreeInfo} from "../Tree/TreeInfo";
+import {TreeInfo} from "./TreeInfo";
 
 /**
  * Props for the TreeInfoCard component.

@@ -14,6 +14,7 @@ import {ComputeTreeViewLayout} from "../../../../Pages/Project/Compute/TreeView/
 interface ComputeTreeViewLayoutStepProps {
     selectedLayout: string | null
     onLayoutChange: (event: SelectChangeEvent, child: ReactNode) => void
+    triedSubmitting: boolean
 }
 
 /**
@@ -22,7 +23,8 @@ interface ComputeTreeViewLayoutStepProps {
 export function ComputeTreeViewLayoutStep(
     {
         selectedLayout,
-        onLayoutChange
+        onLayoutChange,
+        triedSubmitting
     }: ComputeTreeViewLayoutStepProps
 ) {
     return (
@@ -36,6 +38,7 @@ export function ComputeTreeViewLayoutStep(
                     labelId="layout"
                     label="Layout"
                     value={selectedLayout ?? ""}
+                    error={selectedLayout === null && triedSubmitting}
                     onChange={onLayoutChange}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >

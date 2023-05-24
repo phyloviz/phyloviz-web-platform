@@ -5,6 +5,7 @@ import {SelectChangeEvent} from "@mui/material"
 import {useProjectContext} from "../useProject"
 import AdministrationService from "../../../Services/Administration/AdministrationService"
 import FileTransferService from "../../../Services/FileTransfer/FileTransferService";
+import {useCompute} from "../Compute/useCompute";
 
 export enum CreateDatasetStep {
     INFO = "Dataset Info",
@@ -29,6 +30,7 @@ export enum TypingDataType {
  * Hook for the CreateDataset page.
  */
 export function useCreateDataset() {
+    const {createWorkflow, error: computeError, clearError: clearComputeError} = useCompute()
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [datasetType, setDatasetType] = useState(TypingDataType.MLST)
@@ -182,9 +184,26 @@ export function useCreateDataset() {
                         isolateDataKey: selectedIsolateDataKey
                     }
                 )
-                    .then(() => {
+                    .then((output) => {
                         onFileStructureUpdate()
-                        navigate(-1)
+                        createWorkflow( // TODO workflow to index both typing and isolate data, isolate data after
+                            {
+                                type: "index-typing-data",
+                                properties: {
+                                    datasetId: output.datasetId
+                                }
+                            }
+                        )
+                        /*if (isolateDataId) {
+                            createWorkflow(
+                                {
+                                    type: "index-isolate-data",
+                                    properties: {
+                                        datasetId: output.datasetId
+                                    }
+                                }
+                            )
+                        }*/
                     })
                     .catch(err => setError(err.message))
             }

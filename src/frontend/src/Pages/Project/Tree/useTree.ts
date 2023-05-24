@@ -21,7 +21,7 @@ export function useTree() {
         .find(dataset => dataset.datasetId === datasetId)?.trees
         .find(tree => tree.treeId === treeId) as Tree
 
-    const distanceMatrix = tree.sourceType === "algorithmDistanceMatrix" ? project?.datasets
+    const distanceMatrix = tree.sourceType === "algorithm_distance_matrix" ? project?.datasets
             .find(dataset => dataset.datasetId === datasetId)?.distanceMatrices
             .find(distanceMatrix =>
                 distanceMatrix.distanceMatrixId === (tree.source as AlgorithmDistanceMatrixTreeSource).distanceMatrixId) as DistanceMatrix
@@ -32,9 +32,9 @@ export function useTree() {
         name: tree.name,
         sourceType: tree.sourceType,
         source:
-            tree.sourceType === "algorithmTypingData"
+            tree.sourceType === "algorithm_typing_data"
                 ? tree.source as CascadingInfoAlgorithmTypingDataTreeSource
-                : tree.sourceType === "algorithmDistanceMatrix"
+                : tree.sourceType === "algorithm_distance_matrix"
                     ? {
                         algorithm: (tree.source as AlgorithmDistanceMatrixTreeSource).algorithm,
                         distanceMatrix: distanceMatrix,

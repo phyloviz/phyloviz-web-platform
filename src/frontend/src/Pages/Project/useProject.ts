@@ -39,6 +39,7 @@ export function useProject() {
     const [error, setError] = useState<string | null>(null)
     const navigate = useNavigate()
 
+    // TODO implement seamless loading / refresh of project file structure
     useEffect(() => {
         if (projectId === undefined)
             throw new Error("Project id is undefined")
@@ -69,11 +70,16 @@ export function useProject() {
         if (workflows.length === 0)
             return false
 
-        for (const workflow of workflows) {
-            const updatedWorkflow = await ComputeService.getWorkflowStatus(projectId!, workflow.workflowId)
-            if (updatedWorkflow.status !== workflow.status) {
+        // TODO implement something with better performance
+
+        const updatedWorkflows = await ComputeService.getWorkflows(projectId!)
+        for (const updatedWorkflow of updatedWorkflows.workflows) {
+            const workflow = workflows.find(w => w.workflowId === updatedWorkflow.workflowId)
+            if (workflow === undefined || workflow.status !== updatedWorkflow.status) {
+                console.log("NEED UPDATE WORKFLOWS")
                 setWorkflowsUpdated(workflowsUpdated => !workflowsUpdated)
                 setFilesUpdated(filesUpdated => !filesUpdated)
+                return false
             }
         }
 

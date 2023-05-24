@@ -94,7 +94,7 @@ export function useTreeView() {
     const [linkLabelSize, setLinkLabelSize] = useState(0)
     const [linkLabelType, setLinkLabelType] = useState("")
     const [doughnutChartData, setDoughnutChartData] = useState<ChartData<"doughnut", (number | [number, number] | Point | BubbleDataPoint | null)[], unknown> | null>(null)
-    const [isolateDataSchema, setIsolateDataSchema] = useState<string[]>([])
+    const [isolateDataHeaders, setIsolateDataHeaders] = useState<string[]>([])
     const [colorByIsolateData, setColorByIsolateData] = useState<string>("")
 
     const toPrintRef = useRef(null);
@@ -108,11 +108,22 @@ export function useTreeView() {
 
     useEffect(() => {
         async function init() {
-
             const data: GetTreeViewOutputModel = await VisualizationService.getTreeView(projectId!, datasetId!, treeViewId!)
 
-            const isolateDataSchema = await VisualizationService.getIsolateDataKeys(projectId!, isolateDataId!)
-            setIsolateDataSchema(isolateDataSchema.keys)
+            if (isolateDataId) {
+                VisualizationService.getIsolateDataRows(projectId!, isolateDataId, 1, 0)
+                    .then(response => {
+                        if (response && response.rows.length > 0) {
+                            VisualizationService.getIsolateDataKeys(projectId!, isolateDataId)
+                                .then(response => {
+                                    setIsolateDataHeaders(response.keys)
+                                })
+                        }
+                    })
+                    .catch(() => {
+                        return undefined
+                    })
+            }
 
             function findBiggestGroup(nodes: Node[], edges: Edge[]): Node[] {
                 const visited = new Set<string>()
@@ -182,7 +193,7 @@ export function useTreeView() {
         .find(dataset => dataset.datasetId === datasetId)?.trees
         .find(tree => tree.treeId === treeView.source.treeId) as Tree
 
-    const distanceMatrix = tree.sourceType === "algorithmDistanceMatrix"
+    const distanceMatrix = tree.sourceType === "algorithm_distance_matrix"
         ? project?.datasets
             .find(dataset => dataset.datasetId === datasetId)?.distanceMatrices
             .find(distanceMatrix =>
@@ -194,9 +205,9 @@ export function useTreeView() {
         name: tree.name,
         sourceType: tree.sourceType,
         source:
-            tree.sourceType === "algorithmTypingData"
+            tree.sourceType === "algorithm_typing_data"
                 ? tree.source as CascadingInfoAlgorithmTypingDataTreeSource
-                : tree.sourceType === "algorithmDistanceMatrix"
+                : tree.sourceType === "algorithm_distance_matrix"
                     ? {
                         algorithm: (tree.source as AlgorithmDistanceMatrixTreeSource).algorithm,
                         distanceMatrix: distanceMatrix,
@@ -308,13 +319,18 @@ export function useTreeView() {
             // TODO: implement link label type
 
         },
-        isolateDataHeaders: isolateDataSchema,
+        isolateDataHeaders,
         colorByIsolateData,
         updateColorByIsolateData: async (event: SelectChangeEvent, child: ReactNode) => {
+            if (!isolateDataId)
+                return
+
             const selectedHeader = event.target.value
             setColorByIsolateData(selectedHeader)
 
-            const isolateData = await VisualizationService.getIsolateDataRows(projectId!, isolateDataId!, 100000, 0) // TODO is pagination needed?
+            const key = "ST (MLST)"
+
+            const isolateData = await VisualizationService.getIsolateDataRows(projectId!, isolateDataId, 100000, 0) // TODO is pagination needed?
 
             const selectedHeaderValues = isolateData.rows.map((row) => row.row[selectedHeader])
 

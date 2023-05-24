@@ -16,6 +16,7 @@ interface ComputeTreeViewTreeStepProps {
     trees: Tree[]
     selectedTree: string | null
     onTreeChange: (event: SelectChangeEvent, child: ReactNode) => void
+    triedSubmitting: boolean
 }
 
 
@@ -26,7 +27,8 @@ export function ComputeTreeViewTreeStep(
     {
         trees,
         selectedTree,
-        onTreeChange
+        onTreeChange,
+        triedSubmitting
     }: ComputeTreeViewTreeStepProps
 ) {
     return (
@@ -40,6 +42,7 @@ export function ComputeTreeViewTreeStep(
                     labelId="tree"
                     label="Tree"
                     value={selectedTree ?? ""}
+                    error={selectedTree === null && triedSubmitting}
                     onChange={onTreeChange}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >

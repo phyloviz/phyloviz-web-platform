@@ -6,6 +6,7 @@ import {
     FormControl,
     FormControlLabel,
     FormGroup,
+    FormHelperText,
     InputLabel,
     MenuItem,
     Select,
@@ -53,7 +54,7 @@ const NODE_LABEL_SIZE_MIN = 1
 const NODE_LABEL_SIZE_MAX = 100
 const NODE_LABEL_SIZE_STEP = 1
 
-const LINK_LENGTH_MIN =  0.1
+const LINK_LENGTH_MIN = 0.1
 const LINK_LENGTH_MAX = 5
 const LINK_LENGTH_STEP = 0.1
 
@@ -96,7 +97,7 @@ interface TreeViewOptionsProps {
     onChangeLinkLabelSize: (linkLabelSize: number) => void
     onChangeLinkLabelType: (event: SelectChangeEvent, child: ReactNode) => void
 
-   isolateDataHeaders: string[]
+    isolateDataHeaders: string[]
 
     colorByIsolateData: string
     onChangeColorByIsolateData: (event: SelectChangeEvent, child: ReactNode) => void
@@ -335,6 +336,7 @@ export function TreeViewOptions(
                 <Select
                     labelId="color-by-profile"
                     label="Color by Profile"
+                    disabled={true} // TODO: Implement
                     // value={colorByProfile}
                     // onChange={onChangeColorByProfile}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
@@ -345,22 +347,28 @@ export function TreeViewOptions(
                     {/*    </MenuItem>*/}
                     {/*))}*/}
                 </Select>
+                <FormHelperText>Not implemented yet.</FormHelperText>
             </FormControl>
             <FormControl sx={{width: "100%", mb: 1, mt: 2}} size="small">
                 <InputLabel id="color-by-isolate-data">Color by Isolate Data</InputLabel>
                 <Select
-                    labelId="color-by-isolate-datae"
+                    labelId="color-by-isolate-data"
                     label="Color by Isolate Data"
                     value={colorByIsolateData}
+                    disabled={isolateDataHeaders.length === 0}
                     onChange={onChangeColorByIsolateData}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
-                    { isolateDataHeaders.map((value) => (
+                    {isolateDataHeaders.map((value) => (
                         <MenuItem key={value} value={value}>
                             {value}
                         </MenuItem>
-                    )) }
+                    ))}
                 </Select>
+                {
+                    isolateDataHeaders.length === 0 &&
+                    <FormHelperText>Can't select. Isolate Data not Indexed</FormHelperText>
+                }
             </FormControl>
         </Collapse>
 

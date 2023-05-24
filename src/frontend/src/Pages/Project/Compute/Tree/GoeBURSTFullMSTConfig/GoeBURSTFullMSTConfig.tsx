@@ -10,6 +10,7 @@ import {
 } from "../../../../../Components/Project/Compute/Tree/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfigDistanceStep"
 import {useGoeBURSTFullMSTConfig} from "./useGoeBURSTFullMSTConfig"
 import {ErrorAlert} from "../../../../../Components/Shared/ErrorAlert"
+import Alert from "@mui/material/Alert";
 
 /**
  * GoeBURSTFullMSTConfig page.
@@ -22,6 +23,9 @@ export default function GoeBURSTFullMSTConfig() {
 
         handleCancel,
         handleFinish,
+
+        triedSubmitting,
+
         error,
         clearError
     } = useGoeBURSTFullMSTConfig()
@@ -45,6 +49,9 @@ export default function GoeBURSTFullMSTConfig() {
                     <Typography component="h1" variant="h4">
                         goeBURST Full MST Configuration
                     </Typography>
+                    <Alert severity="info">
+                        This feature is not yet implemented.
+                    </Alert>
                     <ErrorAlert error={error} clearError={clearError}/>
                     <Box sx={{
                         width: "100%",
@@ -62,6 +69,7 @@ export default function GoeBURSTFullMSTConfig() {
                                 distances={distances}
                                 selectedDistance={selectedDistance}
                                 onDistanceChange={handleDistanceChange}
+                                triedSubmitting={triedSubmitting}
                             />
                         </Box>
 

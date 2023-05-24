@@ -3,6 +3,7 @@ import {StyledTreeItem} from "../Utils/StyledTreeItem"
 import {WorkflowTreeItem} from "./WorkflowTreeItem"
 import {Workflow} from "../../../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
 import {WorkflowsIcon} from "../../../Shared/Icons";
+import {CircularProgress} from "@mui/material";
 
 /**
  * Props of the WorkflowsTreeItem.
@@ -23,6 +24,10 @@ export function WorkflowsTreeItem({workflows}: WorkflowsTreeItemProps) {
             nodeId="workflows"
             labelText={"Workflows"}
             labelIcon={WorkflowsIcon}
+            rightContent={
+                workflows.find(workflow => workflow.status === "RUNNING") !== undefined
+                    ? <CircularProgress size={12} sx={{ml: 1}}/> : null
+            }
         >
             {
                 workflows.map((workflow, index) => {
