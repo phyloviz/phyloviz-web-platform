@@ -1,6 +1,8 @@
 pwp:
   base-url: http://localhost:8083
   react-client-url: http://localhost:4200
+  static-folder-path: C:\ISEL\6th semester\PFC\phyloviz-web-platform\src\backend\microservices\gateway\src\main\resources\static\
+  debug: true
   security:
     logout-url: /api/logout
     oauth2:
@@ -116,7 +118,7 @@ spring:
           phyloviz-web-platform-client:
             provider: keycloak
             client-id: phyloviz-web-platform-client
-            client-secret: gmaFeUwf9AXnxMaQyTuXEtTAgbJlBpgy
+            client-secret: whCCD9r37qj8mx9H7R4mzIrSezYf3H7R
             redirect-uri: "{baseUrl}/${pwp.security.oauth2.redirect-uri}"
 
             scope:

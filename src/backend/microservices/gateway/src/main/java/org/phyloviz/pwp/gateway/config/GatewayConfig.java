@@ -5,12 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.gateway.config.MicroservicesProperties.ApiRoute;
 import org.phyloviz.pwp.gateway.config.MicroservicesProperties.MicroserviceProperties;
+import org.phyloviz.pwp.gateway.http.NegatePathResourceLookupFunction;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.GatewayFilterSpec;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.PathContainer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -28,6 +32,9 @@ import org.springframework.security.web.server.authentication.logout.ServerLogou
 import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
 import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
 import org.springframework.security.web.server.util.matcher.PathPatternParserServerWebExchangeMatcher;
+import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.RouterFunctions;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.util.pattern.PathPattern;
 import org.springframework.web.util.pattern.PathPatternParser;
 
@@ -57,6 +64,12 @@ public class GatewayConfig {
 
     @Value("${pwp.react-client-url}")
     private String reactClientUrl;
+
+    @Value("${pwp.debug}")
+    private boolean debug;
+
+    @Value("${pwp.static-folder-path}")
+    private String staticFolderPath;
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(
@@ -141,21 +154,29 @@ public class GatewayConfig {
             routesBuilder = createApiRoutes(routesBuilder, properties.getUri(), properties.getRoutes());
         }
 
-        PathPatternParser patternParser = new PathPatternParser();
-        PathPattern apiPathPattern = patternParser.parse("/api/**");
-
         // Home requests receive all but api requests
-        routesBuilder.route("home",
-                routeSpec -> routeSpec
-                        .order(Integer.MAX_VALUE)
-                        .path("/**")
-                        .and()
-                        .predicate(request -> !apiPathPattern.matches(PathContainer.parsePath(request.getRequest().getPath().pathWithinApplication().value())))
-                        .filters(GatewayFilterSpec::tokenRelay)
-                        .uri(reactClientUrl)
-        );
+        if (debug) {
+            PathPatternParser patternParser = new PathPatternParser();
+            PathPattern apiPathPattern = patternParser.parse("/api/**");
+
+            routesBuilder.route("home",
+                    routeSpec -> routeSpec
+                            .order(Integer.MAX_VALUE)
+                            .path("/**")
+                            .and()
+                            .predicate(request -> !apiPathPattern.matches(PathContainer.parsePath(request.getRequest().getPath().pathWithinApplication().value())))
+                            .filters(GatewayFilterSpec::tokenRelay)
+                            .uri(reactClientUrl)
+            );
+        }
 
         return routesBuilder.build();
+    }
+
+    @Bean
+    @ConditionalOnProperty(value = "pwp.debug", havingValue = "false")
+    RouterFunction<ServerResponse> staticResourceRouter() {
+        return RouterFunctions.resources(new NegatePathResourceLookupFunction("/api/**", new FileSystemResource(staticFolderPath)));
     }
 
 

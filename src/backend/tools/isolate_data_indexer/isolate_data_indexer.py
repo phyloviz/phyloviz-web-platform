@@ -27,7 +27,7 @@ def upload_isolates(project_id, dataset_id, file):
     }
 
     response = requests.request(
-        "POST", f"{base_url}/projects/{project_id}/datasets/{dataset_id}/isolates/files", files=files)
+        "PUT", f"{base_url}/projects/{project_id}/datasets/{dataset_id}/isolates/files", files=files)
 
     if response.status_code not in range(200, 299):
         raise Exception(

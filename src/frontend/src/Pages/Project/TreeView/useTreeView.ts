@@ -70,6 +70,7 @@ const ZOOM_DURATION = 100
 export function useTreeView() {
     const {projectId, datasetId, treeViewId} = useParams<{ projectId: string, datasetId: string, treeViewId: string }>()
     const {project} = useProjectContext()
+    const dataset = project?.datasets.find(dataset => dataset.datasetId === datasetId)
     const typingDataId = project?.datasets.find(dataset => dataset.datasetId === datasetId)?.typingDataId
     const isolateDataId = project?.datasets.find(dataset => dataset.datasetId === datasetId)?.isolateDataId
 
@@ -107,9 +108,10 @@ export function useTreeView() {
 
     useEffect(() => {
         async function init() {
+
             const data: GetTreeViewOutputModel = await VisualizationService.getTreeView(projectId!, datasetId!, treeViewId!)
-            const isolateDataId = "" // TODO: Get isolate data id
-            const isolateDataSchema = await VisualizationService.getIsolateDataKeys(projectId!, isolateDataId)
+
+            const isolateDataSchema = await VisualizationService.getIsolateDataKeys(projectId!, isolateDataId!)
             setIsolateDataSchema(isolateDataSchema.keys)
 
             function findBiggestGroup(nodes: Node[], edges: Edge[]): Node[] {
@@ -312,10 +314,7 @@ export function useTreeView() {
             const selectedHeader = event.target.value
             setColorByIsolateData(selectedHeader)
 
-            const key = "ST (MLST)"
-            const isolateDataId = "" // TODO: Get isolate data id
-
-            const isolateData = await VisualizationService.getIsolateDataRows(projectId!, isolateDataId, 100000, 0) // TODO is pagination needed?
+            const isolateData = await VisualizationService.getIsolateDataRows(projectId!, isolateDataId!, 100000, 0) // TODO is pagination needed?
 
             const selectedHeaderValues = isolateData.rows.map((row) => row.row[selectedHeader])
 
