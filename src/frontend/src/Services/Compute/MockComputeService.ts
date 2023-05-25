@@ -18,6 +18,7 @@ export namespace MockComputeService {
         }],
         ["compute-tree", {treeId: "8039f350-e12f-4877-8887-67caa258a143"}],
         ["compute-tree-view", {treeViewId: "8039f350-e12f-4877-8887-67caa258a143"}],
+        ["compute-tree-and-index", {treeId: "8039f350-e12f-4877-8887-67caa258a143"}],
         // Add more mock data here if needed
     ])
 

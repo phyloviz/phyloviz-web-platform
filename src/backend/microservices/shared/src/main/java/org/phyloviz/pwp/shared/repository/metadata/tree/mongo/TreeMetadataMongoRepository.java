@@ -37,12 +37,12 @@ public interface TreeMetadataMongoRepository extends MongoRepository<TreeMetadat
     List<TreeMetadata> findAllByDatasetId(String datasetId);
 
     /**
-     * Check if a tree metadata exists by dataset id and its source is a distance matrix of distance matrix id.
+     * Find a tree metadata with dataset id and its source is a distance matrix of distance matrix id.
      *
      * @param datasetId        the id of the dataset
      * @param distanceMatrixId the id of the distance matrix
-     * @return true if exists, false otherwise
+     * @return the tree metadata
      */
-    @Query("{ 'datasetId' : ?0, 'source' : { 'distanceMatrixId' : ?1 } }")
-    boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
+    @Query("{ 'datasetId' : ?0, 'source.distanceMatrixId' : ?1 }")
+    Optional<TreeMetadata> findByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
 }

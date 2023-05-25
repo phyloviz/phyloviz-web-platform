@@ -61,7 +61,7 @@ export function useGoeBURSTConfig() {
 
             createWorkflow(
                 {
-                    type: "compute-tree",
+                    type: "compute-tree-and-index",
                     properties: {
                         datasetId: datasetId,
                         distanceMatrixId: selectedDistance,

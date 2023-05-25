@@ -37,12 +37,12 @@ public interface TreeViewMetadataMongoRepository extends MongoRepository<TreeVie
     List<TreeViewMetadata> findAllByDatasetId(String datasetId);
 
     /**
-     * Check if a tree view metadata exists by dataset id and its source is a tree of tree id.
+     * Find a tree view metadata with dataset id and its source is a tree of tree id.
      *
      * @param datasetId the id of the dataset
      * @param treeId    the id of the tree
-     * @return true if exists, false otherwise
+     * @return the tree view metadata
      */
-    @Query("{ 'datasetId' : ?0, 'source' : { 'treeId' : ?1 } }")
-    boolean existsByDatasetIdAndTreeIdSource(String datasetId, String treeId);
+    @Query("{ 'datasetId' : ?0, 'source.treeId' : ?1 }")
+    Optional<TreeViewMetadata> findByDatasetIdAndTreeIdSource(String datasetId, String treeId);
 }

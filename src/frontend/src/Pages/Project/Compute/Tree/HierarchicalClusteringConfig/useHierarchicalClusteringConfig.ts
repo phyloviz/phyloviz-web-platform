@@ -101,7 +101,7 @@ export function useHierarchicalClusteringConfig() {
 
             createWorkflow(
                 {
-                    type: "compute-tree",
+                    type: "compute-tree-and-index",
                     properties: {
                         datasetId: datasetId,
                         distanceMatrixId: selectedDistance,

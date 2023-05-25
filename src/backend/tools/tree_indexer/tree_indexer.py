@@ -18,6 +18,7 @@ trees_collection = db['trees']
 datasets_collection = db['datasets']
 projects_collection = db['projects']
 typing_data_collection = db['typing-data']
+workflows_collection = db['workflow-instances']
 
 
 def upload_inference(project_id, dataset_id, inference_file_path):
@@ -38,6 +39,13 @@ def upload_inference(project_id, dataset_id, inference_file_path):
 
 
 def index_tree(tree_file_path, project_id, dataset_id, tree_id, workflow_id):
+    # If tree_id is not provided, get it from the workflow
+    if tree_id is None:
+        workflow = workflows_collection.find_one({'_id': ObjectId(workflow_id)})
+        tree_id = workflow['data'].get('treeId')
+        if tree_id is None:
+            raise Exception(f"Workflow with ID {workflow_id} does not have a tree associated with it")
+
     print(f"Project ID: {project_id}")
     print(f"Dataset ID: {dataset_id}")
     print(f"Tree ID: {tree_id}")
@@ -95,7 +103,7 @@ if __name__ == '__main__':
     parser.add_argument('--tree-file-path', help='The tree file path', required=True)
     parser.add_argument('--project-id', help='The project Id', required=True)
     parser.add_argument('--dataset-id', help='The dataset Id', required=True)
-    parser.add_argument('--tree-id', help='The tree Id', required=True)
+    parser.add_argument('--tree-id', help='The tree Id', required=False)
     parser.add_argument('--workflow-id', help='The workflow Id', required=True)
 
     args = parser.parse_args()

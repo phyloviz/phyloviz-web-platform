@@ -186,24 +186,25 @@ export function useCreateDataset() {
                 )
                     .then((output) => {
                         onFileStructureUpdate()
-                        createWorkflow( // TODO workflow to index both typing and isolate data, isolate data after
-                            {
-                                type: "index-typing-data",
-                                properties: {
-                                    datasetId: output.datasetId
-                                }
-                            }
-                        )
-                        /*if (isolateDataId) {
+                        if (!isolateDataId) {
                             createWorkflow(
                                 {
-                                    type: "index-isolate-data",
+                                    type: "index-typing-data",
                                     properties: {
                                         datasetId: output.datasetId
                                     }
                                 }
                             )
-                        }*/
+                            return
+                        }
+                        createWorkflow(
+                            {
+                                type: "index-typing-and-isolate-data",
+                                properties: {
+                                    datasetId: output.datasetId
+                                }
+                            }
+                        )
                     })
                     .catch(err => setError(err.message))
             }
