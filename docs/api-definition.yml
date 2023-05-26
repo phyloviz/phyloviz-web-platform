@@ -25,6 +25,7 @@ tags:
   - name: Administration > Projects > Datasets > Distance Matrices
   - name: Administration > Projects > Datasets > Trees
   - name: Administration > Projects > Datasets > Tree Views
+  - name: Administration > Projects > Datasets > Isolate Data
   - name: Administration > Projects > Files > Typing Data
   - name: Administration > Projects > Files > Isolate Data
   - name: FileTransfer > Projects > Files > Typing Data
@@ -323,6 +324,7 @@ paths:
               schema:
                 type: object
               example:
+                projectId: ''
                 datasetId: ''
     patch:
       tags:
@@ -362,6 +364,45 @@ paths:
               example:
                 name: ''
                 description: ''
+  /projects/{projectId}/datasets/{datasetId}/isolateData:
+    post:
+      tags:
+        - Administration > Projects > Datasets > Isolate Data
+      summary: Set isolate data of dataset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                isolateDataId: ''
+                isolateDataKey: ''
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isolateDataId: ''
+                isolateDataKey: ''
   /projects/{projectId}/files/typing-data:
     post:
       tags:
