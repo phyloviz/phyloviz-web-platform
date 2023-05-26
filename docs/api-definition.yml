@@ -1,0 +1,1386 @@
+openapi: 3.0.0
+info:
+  title: PHYLOViZ Web Platform
+  description: A Modular and Web-Based Tool for Phylogenetic Analysis.
+  version: 1.0.0
+
+servers:
+  - url: https://web.phyloviz.net
+    description: Production server
+  - url: http://localhost:8083
+    description: Local server
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+security:
+  - bearerAuth: [ ]
+
+tags:
+  - name: Administration > Projects
+  - name: Administration > Projects > Datasets
+  - name: Administration > Projects > Datasets > Distance Matrices
+  - name: Administration > Projects > Datasets > Trees
+  - name: Administration > Projects > Datasets > Tree Views
+  - name: Administration > Projects > Datasets > Isolate Data
+  - name: Administration > Projects > Files > Typing Data
+  - name: Administration > Projects > Files > Isolate Data
+  - name: FileTransfer > Projects > Files > Typing Data
+  - name: FileTransfer > Projects > Files > Isolate Data
+  - name: Compute > Workflows
+  - name: Visualization > Datasets > Trees
+  - name: Visualization > Datasets > Tree Views
+  - name: Visualization > Datasets > Distance Matrices
+  - name: Visualization > Files > Isolate Data
+  - name: Visualization > Files > Typing Data
+
+paths:
+  /projects:
+    post:
+      tags:
+        - Administration > Projects
+      summary: Create Project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Project1
+                description: My first project.
+      responses:
+        '201':
+          description: Created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                projectId: 0f333f3e-a94b-4464-8c50-5fcc81fa7e27
+    get:
+      tags:
+        - Administration > Projects
+      summary: Get Projects
+      responses:
+        '200':
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                projects:
+                  - projectId: ''
+                    name: ''
+                    description: ''
+  /projects/{projectId}:
+    get:
+      tags:
+        - Administration > Projects
+      summary: Get Project
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                projectId: '641b192701e70f57f102a811'
+                name: 'My Project'
+                description: 'My first project.'
+                owner: ''
+                datasets:
+                  - datasetId: '641b192701e70f57f102a811'
+                    name: 'My Dataset'
+                    description: 'My first dataset.'
+                    typingDataId: '641b192701e70f57f102a811'
+                    isolateDataId: '641b192701e70f57f102a811'
+                    isolateDataKey: '641b192701e70f57f102a811'
+                    distanceMatrices:
+                      - distanceMatrixId: '641b192701e70f57f102a811'
+                        name: Hamming
+                        algorithm: hamming
+                        sourceType: function
+                        source:
+                          function: hamming
+                      - trees:
+                          - treeId: '641b192701e70f57f102a811'
+                            name: GoeBurst
+                            sourceType: file
+                            source:
+                              file: ''
+                      - treeViews:
+                          - treeViewId: '641b192701e70f57f102a811'
+                            name: Radial
+                            layout: radial
+                            source: ''
+                files:
+                  typing-data:
+                    - typingDataId: ''
+                      name: ''
+                  isolate-data:
+                    - isolateDataId: ''
+                      name: ''
+                      keys: [ ]
+    delete:
+      tags:
+        - Administration > Projects
+      summary: Delete Project
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+          example: 641b192701e70f57f102a811
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                projectId: '641b192701e70f57f102a811'
+    patch:
+      tags:
+        - Administration > Projects
+      summary: Update Project
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+          example: 641b192701e70f57f102a811
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: ''
+                description: ''
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                name: ''
+                description: ''
+  /projects/{projectId}/datasets:
+    post:
+      tags:
+        - Administration > Projects > Datasets
+      summary: Create Dataset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: ''
+                description: ''
+                typingDataId: ''
+                isolateDataId: ''
+                isolateDataKey: ''
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '201':
+          description: Created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                projectId: ''
+                datasetId: ''
+  /projects/{projectId}/datasets/{datasetId}:
+    get:
+      tags:
+        - Administration > Projects > Datasets
+      summary: Get Dataset
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                - datasetId: '641b192701e70f57f102a811'
+                  name: 'My Dataset'
+                  description: 'My first dataset.'
+                  typingDataId: '641b192701e70f57f102a811'
+                  isolateDataId: '641b192701e70f57f102a811'
+                  isolateDataKey: '641b192701e70f57f102a811'
+                  distanceMatrices:
+                    - distanceMatrixId: '641b192701e70f57f102a811'
+                      name: Hamming
+                      algorithm: hamming
+                      sourceType: function
+                      source:
+                        function: hamming
+                    - trees:
+                        - treeId: '641b192701e70f57f102a811'
+                          name: GoeBurst
+                          sourceType: file
+                          source:
+                            file: ''
+                    - treeViews:
+                        - treeViewId: '641b192701e70f57f102a811'
+                          name: Radial
+                          layout: radial
+                          source: ''
+    delete:
+      tags:
+        - Administration > Projects > Datasets
+      summary: Delete Dataset
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                projectId: ''
+                datasetId: ''
+    patch:
+      tags:
+        - Administration > Projects > Datasets
+      summary: Update Dataset
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: ''
+                description: ''
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                name: ''
+                description: ''
+  /projects/{projectId}/datasets/{datasetId}/isolateData:
+    post:
+      tags:
+        - Administration > Projects > Datasets > Isolate Data
+      summary: Set isolate data of dataset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                isolateDataId: ''
+                isolateDataKey: ''
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isolateDataId: ''
+                isolateDataKey: ''
+  /projects/{projectId}/files/typing-data:
+    post:
+      tags:
+        - FileTransfer > Projects > Files > Typing Data
+      summary: Upload Typing Data File
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                type:
+                  type: string
+                  example: 'mlst'
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '201':
+          description: Created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                projectId: ''
+                typingDataId: ''
+  /projects/{projectId}/files/typing-data/{typingDataId}:
+    delete:
+      tags:
+        - Administration > Projects > Files > Typing Data
+      summary: Delete Typing Data File
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: typingDataId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                projectId: ''
+                typingDataId: ''
+    patch:
+      tags:
+        - Administration > Projects > Files > Typing Data
+      summary: Update Typing Data File
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: typingDataId
+          in: path
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: ''
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: ''
+    get:
+      tags:
+        - Visualization > Files > Typing Data
+      summary: Get Typing Data Schema
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: typingDataId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                type: mlst7
+                loci:
+                  - aspA
+                  - glnA
+                  - gltA
+                  - glyA
+                  - pgm
+                  - tkt
+                  - uncA
+  /projects/{projectId}/files/typing-data/{typingDataId}/file:
+    get:
+      tags:
+        - FileTransfer > Projects > Files > Typing Data
+      summary: Download Typing Data File
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: typingDataId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/octet-stream
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /projects/{projectId}/files/isolate-data:
+    post:
+      tags:
+        - FileTransfer > Projects > Files > Isolate Data
+      summary: Upload Isolate Data File
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '201':
+          description: Created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                projectId: ''
+                isolateDataId: ''
+  /projects/{projectId}/files/isolate-data/{isolateDataId}:
+    delete:
+      tags:
+        - Administration > Projects > Files > Isolate Data
+      summary: Delete Isolate Data File
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: isolateDataId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                projectId: ''
+                isolateDataId: ''
+    patch:
+      tags:
+        - Administration > Projects > Files > Isolate Data
+      summary: Update Isolate Data File
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: isolateDataId
+          in: path
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: ''
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  name: ''
+    get:
+      tags:
+        - Visualization > Files > Isolate Data
+      summary: Get Isolate Data Keys
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: isolateDataId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                keys:
+                  - '1'
+                  - '2'
+                  - '3'
+  /projects/{projectId}/files/isolate-data/{isolateDataId}/file:
+    get:
+      tags:
+        - FileTransfer > Projects > Files > Isolate Data
+      summary: Download Isolate Data File
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: isolateDataId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/octet-stream
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /projects/{projectId}/workflows:
+    post:
+      tags:
+        - Compute > Workflows
+      summary: Create Workflow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                type: compute-distance-matrix
+                properties:
+                  typingDataId: ''
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '202':
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Index Isolate Data
+                  value:
+                    workflowId: 8039f350-e12f-4877-8887-67caa258a133
+                example-1:
+                  summary: Index Typing Data
+                  value:
+                    workflowId: 8039f350-e12f-4877-8887-67caa258a133
+                example-2:
+                  summary: Compute Tree View
+                  value:
+                    workflowId: 8039f350-e12f-4877-8887-67caa258a133
+                example-3:
+                  summary: Compute Tree
+                  value:
+                    workflowId: 8039f350-e12f-4877-8887-67caa258a133
+                example-4:
+                  summary: Compute Distance Matrix
+                  value:
+                    workflowId: 8039f350-e12f-4877-8887-67caa258a133
+    get:
+      tags:
+        - Compute > Workflows
+      summary: Get Workflows
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                workflows:
+                  - workflowId: 8039f350-e12f-4877-8887-67caa258a133
+                    type: compute-distance-matrix
+                    status: COMPLETED
+                    failureReason: ''
+                    progress: 0.5
+                    data:
+                      distanceMatrixId: 8039f350-e12f-4877-8887-67caa258a143
+  /projects/{projectId}/workflows/{workflowsId}:
+    get:
+      tags:
+        - Compute > Workflows
+      summary: Get Workflow Status
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: workflowsId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: Index Isolate Data
+                  value:
+                    workflowId: 8039f350-e12f-4877-8887-67caa258a133
+                    type: index-isolate-data
+                    status: COMPLETED
+                    failureReason: ''
+                    progress: 1.0
+                    data:
+                      isolateDataId: 8039f350-e12f-4877-8887-67caa258a143
+                example-1:
+                  summary: Index Typing Data
+                  value:
+                    workflowId: 8039f350-e12f-4877-8887-67caa258a133
+                    type: index-typing-data
+                    status: COMPLETED
+                    failureReason: ''
+                    progress: 1.0
+                    data:
+                      typingDataId: 8039f350-e12f-4877-8887-67caa258a143
+                example-2:
+                  summary: Compute Tree View
+                  value:
+                    workflowId: 8039f350-e12f-4877-8887-67caa258a133
+                    type: compute-tree-view
+                    status: COMPLETED
+                    failureReason: ''
+                    progress: 1.0
+                    data:
+                      treeViewId: 8039f350-e12f-4877-8887-67caa258a143
+                example-3:
+                  summary: Compute Tree
+                  value:
+                    workflowId: 8039f350-e12f-4877-8887-67caa258a133
+                    type: compute-tree
+                    status: COMPLETED
+                    failureReason: ''
+                    progress: 1.0
+                    data:
+                      treeId: 8039f350-e12f-4877-8887-67caa258a143
+                example-4:
+                  summary: Compute Distance Matrix
+                  value:
+                    workflowId: 8039f350-e12f-4877-8887-67caa258a133
+                    type: compute-distance-matrix
+                    status: COMPLETED
+                    failureReason: ''
+                    progress: 1.0
+                    data:
+                      distanceMatrixId: 8039f350-e12f-4877-8887-67caa258a143
+  /projects/{projectId}/datasets/{datasetId}/trees/{treeId}:
+    get:
+      tags:
+        - Visualization > Datasets > Trees
+      summary: Get Tree
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: treeId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                (11222:1.0,3555:1.0,(625:2.0)2975:1.0,3362:1.0,3683:1.0,3686:1.0,9325:1.0,(7210:2.0)2182:1.0,(235:1.0)283:1.0,(1793:1.0)6382:1.0,8202:1.0,6234:1.0,3884:1.0,(4347:1.0)4180:1.0,5167:1.0,8863:1.0,5761:1.0,(7651:2.0))
+    delete:
+      tags:
+        - Administration > Projects > Datasets > Trees
+      summary: Delete Tree
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: treeId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                projectId: ''
+                datasetId: ''
+                treeId: ''
+    patch:
+      tags:
+        - Administration > Projects > Datasets > Trees
+      summary: Update Tree
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: treeId
+          in: path
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: ''
+  /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}:
+    get:
+      tags:
+        - Visualization > Datasets > Tree Views
+      summary: Get Tree View
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: treeViewId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                nodes:
+                  - st: '30'
+                    coordinates:
+                      - 0
+                      - 0
+                    profile:
+                      - '2'
+                      - '1'
+                      - '54'
+                      - '3'
+                      - '4'
+                      - '1'
+                      - '5'
+                    auxiliaryData:
+                      country: Portugal
+                totalCount: 1
+    delete:
+      tags:
+        - Administration > Projects > Datasets > Tree Views
+      summary: Delete Tree View
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: treeViewId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                treeViewId: ''
+    patch:
+      tags:
+        - Administration > Projects > Datasets > Tree Views
+      summary: Update Tree View
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: treeViewId
+          in: path
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: ''
+  /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}:
+    get:
+      tags:
+        - Visualization > Datasets > Distance Matrices
+      summary: Get Distance Matrix
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: distanceMatrixId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                distances:
+                  '1':
+                    - '7.0'
+                    - '2.0'
+                  '2':
+                    - '3.0'
+                    - '4.0'
+                    - '5.0'
+                totalCount: 12322
+    delete:
+      tags:
+        - Administration > Projects > Datasets > Distance Matrices
+      summary: Delete Distance Matrix
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: distanceMatrixId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                distanceMatrixId: ''
+    patch:
+      tags:
+        - Administration > Projects > Datasets > Distance Matrices
+      summary: Update Distance Matrix
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: datasetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: distanceMatrixId
+          in: path
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: ''
+  /projects/{projectId}/files/isolate-data/{isolateDataId}/rows:
+    get:
+      tags:
+        - Visualization > Files > Isolate Data
+      summary: Get Isolate Data Rows
+      parameters:
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: isolateDataId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                rows:
+                  - id: '1'
+                    profileId: '1'
+                    row:
+                      - '2'
+                      - '1'
+                      - '54'
+                      - '3'
+                      - '4'
+                      - '1'
+                      - '5'
+                  - id: 2
+                    row:
+                      - '4'
+                      - '7'
+                      - '51'
+                      - '4'
+                      - '1'
+                      - '7'
+                      - '1'
+                totalCount: 1000
+  /projects/{projectId}/files/typing-data/{typingDataId}/profiles:
+    get:
+      tags:
+        - Visualization > Files > Typing Data
+      summary: Get Typing Data Profiles
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '100'
+        - name: offset
+          in: query
+          schema:
+            type: integer
+          example: '0'
+        - name: projectId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: typingDataId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                profiles:
+                  - id: 1
+                    profile:
+                      - '2'
+                      - '1'
+                      - '54'
+                      - '3'
+                      - '4'
+                      - '1'
+                      - '5'
+                  - id: 2
+                    profile:
+                      - '4'
+                      - '7'
+                      - '51'
+                      - '4'
+                      - '1'
+                      - '7'
+                      - '1'
+                totalCount: 2
