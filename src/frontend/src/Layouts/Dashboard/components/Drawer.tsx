@@ -33,7 +33,7 @@ export const mainListItems = [
         name: 'API',
         href: WebUiUris.API_INFO,
         icon: <ApiIcon/>,
-    },
+    }
 ]
 
 /**

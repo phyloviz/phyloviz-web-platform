@@ -1,17 +1,14 @@
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import {Button} from "@mui/material"
-import NewProjectIcon from "@mui/icons-material/CreateNewFolder"
 import * as React from "react"
-import {useNavigate} from "react-router-dom"
 import {WebUiUris} from "../../Pages/WebUiUris"
+import {Info} from "@mui/icons-material";
 
 /**
- * Card for the new project feature in the home page.
+ * Card for the get started section in the home page.
  */
-export function NewProjectCard() {
-    const navigate = useNavigate()
-
+export function GetStartedCard() {
     return (
         <Paper sx={{
             p: 4,
@@ -22,18 +19,18 @@ export function NewProjectCard() {
             justifyContent: "space-between"
         }}>
             <Typography component="h1" variant="h5">
-                <strong>New Project</strong>
+                <strong>Get Started</strong>
             </Typography>
             <Typography component="h1" variant="body1">
-                Create a new project, load a dataset <br/> and start exploring your data!
+                If you are new to PHYLOViZ Web Platform, read our documentation to learn how to use it.
             </Typography>
             <Button
                 variant="contained"
-                startIcon={<NewProjectIcon/>}
-                onClick={() => navigate(WebUiUris.NEW_PROJECT)}
+                startIcon={<Info/>}
+                onClick={() => window.location.href = WebUiUris.GET_STARTED}
                 sx={{mt: 4, width: "75%"}}
             >
-                New Project
+                Get Started
             </Button>
         </Paper>
     )

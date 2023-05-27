@@ -16,6 +16,8 @@ import ListItemText from "@mui/material/ListItemText"
 import Logo from "../../Assets/logo.png"
 import AccountMenu from "./components/AccountMenu"
 import {useDashboard} from "./useDashboard"
+import {Button} from "@mui/material";
+import {WebUiUris} from "../../Pages/WebUiUris";
 
 
 /**
@@ -66,10 +68,32 @@ export default function Dashboard({children}: DashboardProps) {
                             <strong>PHYLOViZ Web Platform</strong>
                         </Typography>
                     </Box>
-                    <AccountMenu
-                        avatar={loggedIn && session?.picture ? session!.picture : ""}
-                        settings={loggedIn ? authSettings : nonAuthSettings}
-                    />
+                    {
+                        loggedIn
+                            ? <AccountMenu
+                                avatar={loggedIn && session?.picture ? session.picture : ""}
+                                settings={authSettings}
+                            />
+                            : <>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size={"small"}
+                                    onClick={() => window.location.href = WebUiUris.SIGN_UP} // TODO: Fix Sign Up URI
+                                >
+                                    Sign Up
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size={"small"}
+                                    onClick={() => window.location.href = WebUiUris.LOGIN}
+                                >
+                                    Sign In
+                                </Button>
+                            </>
+                    }
+
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>

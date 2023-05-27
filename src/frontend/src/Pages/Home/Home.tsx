@@ -4,11 +4,16 @@ import {NewProjectCard} from "../../Components/Home/NewProjectCard"
 import {OpenProjectCard} from "../../Components/Home/OpenProjectCard"
 import * as React from "react"
 import {Container} from "@mui/material"
+import {useLoggedIn} from "../../Session/Session";
+import {GetStartedCard} from "../../Components/Home/GetStartedCard";
+import {SignUpCard} from "../../Components/Home/SignUpCard"
 
 /**
  * Home page.
  */
 export function Home() {
+    const loggedIn = useLoggedIn()
+
     return (
         <Container>
             <HomeMainCard/>
@@ -20,8 +25,8 @@ export function Home() {
                 justifyContent: "space-between",
                 width: "100%"
             }}>
-                <NewProjectCard/>
-                <OpenProjectCard/>
+                {loggedIn ? <NewProjectCard/> : <GetStartedCard/>}
+                {loggedIn ? <OpenProjectCard/> : <SignUpCard/>}
             </Box>
         </Container>
     )

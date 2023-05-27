@@ -1,17 +1,14 @@
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import {Button} from "@mui/material"
-import NewProjectIcon from "@mui/icons-material/CreateNewFolder"
 import * as React from "react"
-import {useNavigate} from "react-router-dom"
 import {WebUiUris} from "../../Pages/WebUiUris"
+import {Login} from "@mui/icons-material";
 
 /**
- * Card for the new project feature in the home page.
+ * Card for the sign up section in the home page.
  */
-export function NewProjectCard() {
-    const navigate = useNavigate()
-
+export function SignUpCard() {
     return (
         <Paper sx={{
             p: 4,
@@ -22,18 +19,18 @@ export function NewProjectCard() {
             justifyContent: "space-between"
         }}>
             <Typography component="h1" variant="h5">
-                <strong>New Project</strong>
+                <strong>Sign Up</strong>
             </Typography>
             <Typography component="h1" variant="body1">
-                Create a new project, load a dataset <br/> and start exploring your data!
+                Sign up to PHYLOViZ Web Platform to start using it.
             </Typography>
             <Button
                 variant="contained"
-                startIcon={<NewProjectIcon/>}
-                onClick={() => navigate(WebUiUris.NEW_PROJECT)}
+                startIcon={<Login/>}
+                onClick={() => window.location.href = WebUiUris.SIGN_UP}
                 sx={{mt: 4, width: "75%"}}
             >
-                New Project
+                Sign Up
             </Button>
         </Paper>
     )
