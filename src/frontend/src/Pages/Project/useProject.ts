@@ -36,6 +36,8 @@ export function useProject() {
     const [workflowsUpdated, setWorkflowsUpdated] = useState<boolean>(false)
     const [loadingWorkflows, setLoadingWorkflows] = useState<boolean>(true)
 
+    const [projectStructureWidth, setProjectStructureWidth] = useState<number>(300)
+
     const [error, setError] = useState<string | null>(null)
     const navigate = useNavigate()
 
@@ -96,6 +98,9 @@ export function useProject() {
         workflows,
         loadingWorkflows,
         onWorkflowsUpdate: () => setWorkflowsUpdated(workflowsUpdated => !workflowsUpdated),
+
+        projectStructureWidth,
+        onProjectStructureWidthChange: (width: number) => setProjectStructureWidth(width),
 
         error,
         clearError: () => setError(null)

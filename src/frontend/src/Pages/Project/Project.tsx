@@ -18,6 +18,8 @@ export default function Project() {
         workflows,
         loadingWorkflows,
         onWorkflowsUpdate,
+        projectStructureWidth,
+        onProjectStructureWidthChange,
         error,
         clearError
     } = useProject()
@@ -32,7 +34,8 @@ export default function Project() {
             width: '100%',
             position: "relative"
         }}>
-            <ProjectStructure project={project} workflows={workflows} loading={loadingFiles || loadingWorkflows}/>
+            <ProjectStructure project={project} workflows={workflows} loading={loadingFiles || loadingWorkflows}
+                              width={projectStructureWidth} onWidthChange={onProjectStructureWidthChange}/>
             {
                 outlet && !loadingFiles && !error
                     ? <Outlet context={{project, onFileStructureUpdate, onWorkflowsUpdate}}/>
