@@ -62,17 +62,12 @@ services:
       - cache:/data
 
   tool_registry:
-    image: registry:2.8.1
+    image: registry:2.8.2
     restart: always
     ports:
       - '5000:5000'
-    environment:
-      REGISTRY_HTTP_ADDR: :5000
-      REGISTRY_STORAGE: filesystem
-      REGISTRY_STORAGE_DELETE_ENABLED: 'true'
-      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/tool_registry
     volumes:
-      - ./src/backend/registry/data:/var/lib/tool_registry
+      - tool-registry-data:/var/lib/tool_registry
       - ./src/backend/registry/config/config.yml:/etc/docker/tool_registry/config.yml
   tool_registry_ui:
     image: joxit/docker-registry-ui:2.4.1
@@ -84,6 +79,51 @@ services:
       - SINGLE_REGISTRY=true
     depends_on:
       - tool_registry
+  administration:
+    build:
+      context: ./src/backend/microservices/administration
+      dockerfile: Dockerfile
+    ports:
+      - '8088:8088'
+    depends_on:
+      - mongodb
+      - cache
+  compute:
+    build:
+      context: ./src/backend/microservices/compute
+      dockerfile: Dockerfile
+    ports:
+      - '8086:8086'
+    depends_on:
+      - mongodb
+      - cache
+  file-transfer:
+    build:
+      context: ./src/backend/microservices/file-transfer
+      dockerfile: Dockerfile
+    ports:
+      - '8089:8089'
+    depends_on:
+      - mongodb
+      - cache
+  gateway:
+    build:
+      context: ./src/backend/microservices/gateway
+      dockerfile: Dockerfile
+    ports:
+      - '8083:8083'
+    depends_on:
+      - mongodb
+      - cache
+  visualization:
+    build:
+      context: ./src/backend/microservices/visualization
+      dockerfile: Dockerfile
+    ports:
+      - '8085:8085'
+    depends_on:
+      - mongodb
+      - cache
 
 volumes:
   keycloak_db_data:
@@ -91,4 +131,6 @@ volumes:
   cache:
     driver: local
   mongodb-data:
+    driver: local
+  tool-registry-data:
     driver: local
