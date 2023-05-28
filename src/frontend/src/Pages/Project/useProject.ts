@@ -25,51 +25,46 @@ interface ProjectContext {
  * Hook for the Project page.
  */
 export function useProject() {
-    const {projectId} = useParams<{ projectId: string }>()
+    const projectId = (useParams<{ projectId: string }>().projectId)!
 
     const [project, setProject] = useState<Project | null>(null)
     const [workflows, setWorkflows] = useState<Workflow[]>([])
 
-    const [filesUpdated, setFilesUpdated] = useState<boolean>(false)
     const [loadingFiles, setLoadingFiles] = useState<boolean>(true)
-
-    const [workflowsUpdated, setWorkflowsUpdated] = useState<boolean>(false)
     const [loadingWorkflows, setLoadingWorkflows] = useState<boolean>(true)
-
-    const [projectStructureWidth, setProjectStructureWidth] = useState<number>(300)
 
     const [error, setError] = useState<string | null>(null)
     const navigate = useNavigate()
 
-    // TODO implement seamless loading / refresh of project file structure
+    // TODO implement project structure only updating the needed places -> workflows only changing workflows folder, same for project
     useEffect(() => {
-        if (projectId === undefined)
-            throw new Error("Project id is undefined")
+        loadProject()
+        loadWorkflows()
+    }, [projectId])
 
+    function loadProject() {
         setLoadingFiles(true)
-
         AdministrationService.getProject(projectId)
             .then((res) => setProject(res))
             .catch((err: Error) => setError("Could not load project: " + err.message))
             .finally(() => setLoadingFiles(false))
-    }, [projectId, filesUpdated])
+    }
 
-    useEffect(() => {
+    function loadWorkflows() {
         setLoadingWorkflows(true)
-        ComputeService.getWorkflows(projectId!)
+        ComputeService.getWorkflows(projectId)
             .then(res => setWorkflows(res.workflows))
             .catch((err: Error) => setError("Could not load workflows: " + err.message))
             .finally(() => setLoadingWorkflows(false))
-    }, [projectId, workflowsUpdated])
+    }
 
-
-    useInterval(updateWorkflows, 1000, [projectId, workflows, workflowsUpdated])
+    useInterval(pollWorkflows, 1000, [projectId, workflows, loadingWorkflows])
 
     /**
-     * Updates the workflows.
+     * Polls the workflows for any changes.
      */
-    async function updateWorkflows() {
-        if (workflows.length === 0)
+    async function pollWorkflows() {
+        if (loadingWorkflows)
             return false
 
         // TODO implement something with better performance
@@ -78,9 +73,8 @@ export function useProject() {
         for (const updatedWorkflow of updatedWorkflows.workflows) {
             const workflow = workflows.find(w => w.workflowId === updatedWorkflow.workflowId)
             if (workflow === undefined || workflow.status !== updatedWorkflow.status) {
-                console.log("NEED UPDATE WORKFLOWS")
-                setWorkflowsUpdated(workflowsUpdated => !workflowsUpdated)
-                setFilesUpdated(filesUpdated => !filesUpdated)
+                console.log("UPDATING WORKFLOWS")
+                loadWorkflows()
                 return false
             }
         }
@@ -92,15 +86,12 @@ export function useProject() {
         project,
 
         loadingFiles,
-        onFileStructureUpdate: () => setFilesUpdated(filesUpdated => !filesUpdated),
+        onFileStructureUpdate: () => loadProject,
         handleEditProject: () => navigate(WebUiUris.editProject(projectId!)),
 
         workflows,
         loadingWorkflows,
-        onWorkflowsUpdate: () => setWorkflowsUpdated(workflowsUpdated => !workflowsUpdated),
-
-        projectStructureWidth,
-        onProjectStructureWidthChange: (width: number) => setProjectStructureWidth(width),
+        onWorkflowsUpdate: () => loadWorkflows,
 
         error,
         clearError: () => setError(null)

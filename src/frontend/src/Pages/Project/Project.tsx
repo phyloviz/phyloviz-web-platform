@@ -18,13 +18,13 @@ export default function Project() {
         workflows,
         loadingWorkflows,
         onWorkflowsUpdate,
-        projectStructureWidth,
-        onProjectStructureWidthChange,
         error,
         clearError
     } = useProject()
 
     // TODO: Fix bug where the outlet is not updated when the project is changed
+
+    console.log("Project.tsx: project", project?.projectId, " loadingWorkflows: ", loadingWorkflows, " loadingFiles: ", loadingFiles)
 
     return (
         <Box sx={{
@@ -34,8 +34,7 @@ export default function Project() {
             width: '100%',
             position: "relative"
         }}>
-            <ProjectStructure project={project} workflows={workflows} loading={loadingFiles || loadingWorkflows}
-                              width={projectStructureWidth} onWidthChange={onProjectStructureWidthChange}/>
+            <ProjectStructure project={project} workflows={workflows} loading={loadingFiles || loadingWorkflows}/>
             {
                 outlet && !loadingFiles && !error
                     ? <Outlet context={{project, onFileStructureUpdate, onWorkflowsUpdate}}/>

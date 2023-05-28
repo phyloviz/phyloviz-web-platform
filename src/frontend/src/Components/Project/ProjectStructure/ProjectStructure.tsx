@@ -25,25 +25,24 @@ import {WorkflowsTreeItem} from "./Workflows/WorkflowsTreeItem";
 interface ProjectStructureProps {
     project: Project | null
     workflows: Workflow[]
-    loading: boolean,
-    width: number,
-    onWidthChange: (width: number) => void
+    loading: boolean
 }
 
 
 /**
  * ProjectStructureProps of a project.
  */
-export function ProjectStructure({project, workflows, loading, width, onWidthChange}: ProjectStructureProps) {
+export function ProjectStructure({project, workflows, loading}: ProjectStructureProps) {
     const navigate = useNavigate()
-    // TODO: Make the tree view responsive (collapse, or hide, idk)
+
+    const [projectStructureWidth, setProjectStructureWidth] = React.useState(300)
 
     return <Resizable
-        size={{width: width, height: "100%"}}
+        size={{width: projectStructureWidth, height: "100%"}}
         minWidth={100}
         maxWidth={1000}
         onResizeStop={(e, direction, ref, d) => {
-            onWidthChange(width + d.width)
+            setProjectStructureWidth((width) => width + d.width)
         }}
         enable={{
             top: false,

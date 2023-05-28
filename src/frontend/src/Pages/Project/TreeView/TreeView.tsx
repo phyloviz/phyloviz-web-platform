@@ -85,6 +85,8 @@ export default function TreeView() {
 
     // TODO: Fix bug where the outlet is not updated when the project is changed
 
+    console.log("TreeView.tsx: treeView", treeView?.treeViewId)
+
     return (
         <Box sx={{position: "relative", width: "90%"}}>
             <TreeViewInfoCard treeView={treeView}/>
