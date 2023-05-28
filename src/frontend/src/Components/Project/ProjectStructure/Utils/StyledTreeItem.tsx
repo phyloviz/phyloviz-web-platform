@@ -107,7 +107,7 @@ export function StyledTreeItem(
                             <Typography variant="body2" sx={{fontWeight: 'inherit'}}>
                                 {labelText}
                             </Typography>
-                            {rightContent}
+                            <Box>{rightContent}</Box>
                         </Box>
                     </div>
                 }
