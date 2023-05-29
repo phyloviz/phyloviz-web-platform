@@ -7,11 +7,10 @@ import List from "@mui/material/List"
 import ListItemButton from "@mui/material/ListItemButton"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
-import {WebUiUris} from "../../../Pages/WebUiUris"
 import {styled} from "@mui/material/styles"
 import IconButton from "@mui/material/IconButton"
 import {CascadingInfoTreeView} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
-import {IsolateDataIcon, TreeIcon, TypingDataIcon} from "../../Shared/Icons";
+import {TreeIcon} from "../../Shared/Icons";
 import {TreeInfo} from "../Tree/TreeInfo";
 
 /**
@@ -27,7 +26,7 @@ interface TreeViewInfoCardProps {
  * Card with information about the tree view.
  */
 export function TreeViewInfoCard({treeView}: TreeViewInfoCardProps) {
-    const {projectId} = useParams<{ projectId: string }>()
+    const projectId = (useParams<{ projectId: string }>().projectId)!
     const navigate = useNavigate()
     const [treeViewInfoExpanded, setTreeViewInfoExpanded] = React.useState(false)
     const handleTreeViewInfoExpandClick = () => setTreeViewInfoExpanded(!treeViewInfoExpanded)
@@ -88,28 +87,6 @@ export function TreeViewInfoCard({treeView}: TreeViewInfoCardProps) {
                                       handleDistanceMatrixInfoExpandClick={handleDistanceMatrixInfoExpandClick}/>
                         </Collapse>
                     </ListItem>
-                    {
-                        treeView.source.typingDataId &&
-                        <ListItem disablePadding>
-                            <ListItemButton
-                                onClick={() => navigate(WebUiUris.typingData(projectId!, treeView.source.typingDataId!))}
-                            >
-                                <ListItemIcon><TypingDataIcon/></ListItemIcon>
-                                <ListItemText primary="Typing Data"/>
-                            </ListItemButton>
-                        </ListItem>
-                    }
-                    {
-                        treeView.source.isolateDataId &&
-                        <ListItem disablePadding>
-                            <ListItemButton
-                                onClick={() => navigate(WebUiUris.isolateData(projectId!, treeView.source.isolateDataId!))}
-                            >
-                                <ListItemIcon><IsolateDataIcon/></ListItemIcon>
-                                <ListItemText primary="Isolate Data"/>
-                            </ListItemButton>
-                        </ListItem>
-                    }
                 </List>
             </Collapse>
         </Box>
@@ -123,7 +100,7 @@ interface ExpandMoreProps extends IconButtonProps {
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
     const {expand, ...other} = props
-    return <IconButton {...other} />
+    return <IconButton {...other} component={"span"}/>
 })(({theme, expand}) => ({
     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
     marginLeft: 'auto',

@@ -103,9 +103,7 @@ export namespace MockAdministrationService {
                                 name: "Tree View 1",
                                 layout: "force-directed",
                                 source: {
-                                    treeId: "tree1",
-                                    typingDataId: "typingData1",
-                                    isolateDataId: "isolateData1"
+                                    treeId: "tree1"
                                 }
                             }
                         ]

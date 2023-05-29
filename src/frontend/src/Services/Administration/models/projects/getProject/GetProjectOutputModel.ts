@@ -1,7 +1,5 @@
 export interface TreeViewSource {
     treeId: string
-    typingDataId: string | null
-    isolateDataId: string | null
 }
 
 export type TreeSourceType = "algorithm_typing_data" | "algorithm_distance_matrix" | "file"
@@ -102,8 +100,6 @@ export interface CascadingInfoTreeView {
 
 export interface CascadingInfoTreeViewSource extends CascadingInfoSource {
     tree: CascadingInfoTree
-    typingDataId: string | null
-    isolateDataId: string | null
 }
 
 export interface CascadingInfoTree {
