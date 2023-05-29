@@ -48,7 +48,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
     private currentEvent: D3ZoomEvent<HTMLCanvasElement, undefined> | MouseEvent | undefined
     idToText = new Map<string, any>()
     private updatePieCharts: boolean = false;
-    private occurencesColorMap: Map<string, { occurences: number; color: number[] }[]> | undefined
+    private occurrencesColorMap: Map<string, { occurrences: number; color: number[] }[]> | undefined
 
     public constructor(canvas: HTMLCanvasElement, config?: GraphConfigInterface<N, L>) {
         if (config) this.config.init(config)
@@ -695,7 +695,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
             this.updateLabelPositions(now)
 
             if (this.updatePieCharts) {
-                console.log("Updating Pie Charts", this.occurencesColorMap)
+                console.log("Updating Pie Charts", this.occurrencesColorMap)
                 // const numNodes = this.graph.nodes.length
                 // this.points.slicesPerNode = new Float32Array(numNodes);
                 // // for (let i = 0; i < numNodes; ++i) {
@@ -717,7 +717,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
                 //     for (let j = 0; j < MAX_NUM_SLICES; ++j) {
                 //         const index = i * MAX_NUM_SLICES * 4 + j * 4; // Each color and angle pair takes up 2 texels
                 //
-                //         // const color = this.occurencesColorMap![i]
+                //         // const color = this.occurrencesColorMap![i]
                 //         let color = this.colors[j]
                 //         if (color == null) {
                 //             color = [Math.random(), Math.random(), Math.random()]
@@ -758,7 +758,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
                 // for (let j = 0; j < 3; ++j) {
                 //     const index = testSortedIndex * MAX_NUM_SLICES * 4 + j * 4; // Each color and angle pair takes up 2 texels
                 //
-                //     // const color = this.occurencesColorMap![i]
+                //     // const color = this.occurrencesColorMap![i]
                 //     const color = colors[j]
                 //
                 //     this.points.anglesAndColors![index + 0] = angles[j]
@@ -767,8 +767,8 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
                 //     this.points.anglesAndColors![index + 3] = color[2] / 255.0; // Blue
                 // }
 
-                this.points.updateSlicesPerNode(this.occurencesColorMap!);
-                this.points.updateAnglesAndColors(this.occurencesColorMap!);
+                this.points.updateSlicesPerNode(this.occurrencesColorMap!);
+                this.points.updateAnglesAndColors(this.occurrencesColorMap!);
                 console.log("Angles and colors", this.points.anglesAndColors)
                 console.log(testSortedIndex * MAX_NUM_SLICES * 4)
                 console.log("Slices per node", this.points.slicesPerNode)
@@ -840,12 +840,15 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
             });
     }
 
-    renderPieCharts(nodeSliceDataMap: Map<string, { occurences: number; color: number[] }[]>) {
-        this.occurencesColorMap = nodeSliceDataMap
+    renderPieCharts(nodeSliceDataMap: Map<string, { occurrences: number; color: number[] }[]>) {
+        this.occurrencesColorMap = nodeSliceDataMap
         this.updatePieCharts = true
         this.points.renderPieCharts = true
     }
 
+    removePieCharts() {
+        this.points.renderPieCharts = false
+    }
 
     private stopFrames(): void {
         if (this.requestAnimationFrameId) window.cancelAnimationFrame(this.requestAnimationFrameId)

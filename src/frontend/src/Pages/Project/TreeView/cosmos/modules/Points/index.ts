@@ -606,7 +606,7 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
         this.currentPositionFbo = temp
     }
 
-    public updateAnglesAndColors(sliceData: Map<string, { occurences: number; color: number[] }[]>) {
+    public updateAnglesAndColors(sliceData: Map<string, { occurrences: number; color: number[] }[]>) {
         for (let i = 0; i < this.data.nodes.length; ++i) {
             const node = this.data.nodes[i];
 
@@ -616,7 +616,7 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
                 continue;
             }
 
-            const ocurrences = nodeSliceData.slice(0, MAX_NUM_SLICES).map(slice => slice.occurences);
+            const ocurrences = nodeSliceData.slice(0, MAX_NUM_SLICES).map(slice => slice.occurrences);
             const sumOfOccurences = sum(ocurrences);
             const sortedIndex = this.data.getSortedIndexById(node.id)!;
 
@@ -626,7 +626,7 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
                 console.log("TEEST", this.data.getNodeBySortedIndex(5830))
                 console.log("Node slice data", nodeSliceData)
                 console.log("Occurrences: ", ocurrences)
-                console.log("Sum of occurences", sumOfOccurences)
+                console.log("Sum of occurrences", sumOfOccurences)
                 console.log("Node id", nodeId)
                 console.log("Real Node id", node.id)
             }
@@ -647,11 +647,11 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
         this.anglesAndColorsTexture?.subimage(this.anglesAndColors!);
     }
 
-    updateSlicesPerNode(occurencesColorMap: Map<string, { occurences: number; color: number[] }[]>) {
+    updateSlicesPerNode(occurrencesColorMap: Map<string, { occurrences: number; color: number[] }[]>) {
         for (let i = 0; i < this.data.nodes.length; ++i) {
             const node = this.data.nodes[i];
             const sortedIndex = this.data.getSortedIndexById(node.id)!;
-            const occurrencesColors = occurencesColorMap.get(node.id);
+            const occurrencesColors = occurrencesColorMap.get(node.id);
             if (!occurrencesColors) {
                 this.slicesPerNode![sortedIndex] = 0;
                 continue;

@@ -4,86 +4,50 @@ import {useTreeView} from "./useTreeView"
 import {TreeViewInfoCard} from "../../../Components/Project/TreeView/TreeViewInfoCard"
 import {TreeViewSearchCard} from "../../../Components/Project/TreeView/TreeViewSearchCard"
 import {TreeViewSettingsCard} from "../../../Components/Project/TreeView/TreeViewSettingsCard"
-import {ArcElement, Chart as ChartJS, ChartOptions, Legend, Tooltip} from "chart.js";
-import {Doughnut} from "react-chartjs-2";
-import Typography from "@mui/material/Typography";
+import {ArcElement, Chart as ChartJS, Legend, Tooltip} from "chart.js";
 import {Outlet, useOutlet} from "react-router-dom";
+import {DoughnutChart} from "../../../Components/Project/TreeView/DoughnutChart";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-
-const options: ChartOptions = {
-    plugins: {
-        legend: {
-            position: 'bottom'
-        }
-    }
-};
 /**
  * TreeView page.
  */
 export default function TreeView() {
     const outlet = useOutlet()
     const {
-        treeView,
         canvasRef,
-        restartAnimation,
-        pauseAnimation,
+        treeView,
 
-        resetSimulationConfig,
+        pauseAnimation,
+        restartAnimation,
+
         resetSimulationFilters,
 
-        linkSpring,
-        linkDistance,
-        gravity,
-        friction,
-        repulsion,
-        repulsionTheta,
-        decay,
-
-        updateLinkSpring,
-        updateLinkDistance,
-        updateGravity,
-        updateFriction,
-        updateRepulsion,
-        updateRepulsionTheta,
-        updateDecay,
-
-        nodeSize,
-        nodeLabel,
-        nodeLabelSize,
-        linkLength,
-        linkLabel,
-        linkLabelSize,
-        linkLabelType,
-
-        updateNodeSize,
-        updateNodeLabel,
-        updateNodeLabelSize,
-        updateLinkLength,
-        updateLinkLabel,
-        updateLinkLabelSize,
-        updateLinkLabelType,
-        handleSearch,
+        simulationConfig,
+        nodeTransformationsConfig,
 
         isolateDataHeaders,
-        colorByIsolateData,
-        updateColorByIsolateData,
+        selectedIsolateHeader,
+        setSelectedIsolateHeader,
+
+        doughnutChartTitle,
+        doughnutChartData,
+
         handleTypingDataFilter,
         typingDataId,
         handleIsolateDataFilter,
         isolateDataId,
 
+        handleSearch,
         handleExportOptions,
         handleExportFilters,
-        doughnutChartData,
+
         handleZoomIn,
         handleZoomOut,
         toPrintRef,
         handlePrint,
     } = useTreeView()
-
-    // TODO: Fix bug where the outlet is not updated when the project is changed
 
     console.log("TreeView.tsx: treeView", treeView?.treeViewId)
 
@@ -96,70 +60,21 @@ export default function TreeView() {
                     <div ref={toPrintRef}>
                         <canvas ref={canvasRef}/>
                     </div>
-                    {doughnutChartData != null && (
-                        <Box
-                            sx={{
-                                position: "absolute",
-                                right: 0,
-                                top: "20%",
-                                zIndex: 1,
-                                backgroundColor: "white",
-                                borderRadius: 3,
-                                p: 1,
-                                mr: "10px",
-                                border: 1,
-                                borderColor: 'divider',
-                                maxHeight: "300px",
-                                overflow: "auto",
-                            }}
-                        >
-                            <Typography sx={{mb: 2}}>{colorByIsolateData}</Typography>
-                            <Doughnut data={doughnutChartData!} options={options}/>
-                        </Box>
-                    )
+                    {doughnutChartData != null &&
+                        <DoughnutChart doughnutChartData={doughnutChartData} title={doughnutChartTitle}/>
                     }
                     <TreeViewSettingsCard
                         onPauseAnimation={pauseAnimation}
                         onRestartAnimation={restartAnimation}
-                        resetSimulationConfig={resetSimulationConfig}
-                        resetSimulationFilters={resetSimulationFilters}
 
-                        linkSpring={linkSpring}
-                        linkDistance={linkDistance}
-                        gravity={gravity}
-                        friction={friction}
-                        repulsion={repulsion}
-                        repulsionTheta={repulsionTheta}
-                        decay={decay}
-
-                        onChangeLinkSpring={updateLinkSpring}
-                        onChangeLinkDistance={updateLinkDistance}
-                        onChangeGravity={updateGravity}
-                        onChangeFriction={updateFriction}
-                        onChangeRepulsion={updateRepulsion}
-                        onChangeRepulsionTheta={updateRepulsionTheta}
-                        onChangeDecay={updateDecay}
-
-                        nodeSize={nodeSize}
-                        nodeLabel={nodeLabel}
-                        nodeLabelSize={nodeLabelSize}
-                        linkLength={linkLength}
-                        linkLabel={linkLabel}
-                        linkLabelSize={linkLabelSize}
-                        linkLabelType={linkLabelType}
-
-                        onChangeNodeSize={updateNodeSize}
-                        onChangeNodeLabel={updateNodeLabel}
-                        onChangeNodeLabelSize={updateNodeLabelSize}
-                        onChangeLinkLength={updateLinkLength}
-                        onChangeLinkLabel={updateLinkLabel}
-                        onChangeLinkLabelSize={updateLinkLabelSize}
-                        onChangeLinkLabelType={updateLinkLabelType}
+                        simulationConfig={simulationConfig}
+                        nodeTransformationsConfig={nodeTransformationsConfig}
 
                         isolateDataHeaders={isolateDataHeaders}
-                        colorByIsolateData={colorByIsolateData}
-                        onChangeColorByIsolateData={updateColorByIsolateData}
+                        selectedIsolateHeader={selectedIsolateHeader}
+                        setSelectedIsolateHeader={setSelectedIsolateHeader}
 
+                        resetSimulationFilters={resetSimulationFilters}
                         onTypingDataFilter={handleTypingDataFilter}
                         onIsolateDataFilter={handleIsolateDataFilter}
 

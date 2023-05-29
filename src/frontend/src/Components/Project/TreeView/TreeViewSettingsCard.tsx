@@ -1,10 +1,12 @@
 import * as React from "react"
-import {ReactNode, useState} from "react"
-import {Box, Button, Collapse, SelectChangeEvent} from "@mui/material"
+import {useState} from "react"
+import {Box, Button, Collapse} from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import {Pause, PhotoCamera, PlayArrow, ZoomIn, ZoomOut} from "@mui/icons-material"
 import {TreeViewOptions} from "./TreeViewOptions";
 import {TreeViewFilters} from "./TreeViewFilters";
+import {SimulationConfig} from "../../../Pages/Project/TreeView/useSimulationConfig";
+import {NodeTransformationsConfig} from "../../../Pages/Project/TreeView/useNodeTransformationsConfig";
 
 /**
  * Props for TreeViewSettingsCard component.
@@ -12,45 +14,17 @@ import {TreeViewFilters} from "./TreeViewFilters";
 interface TreeViewSettingsCardProps {
     onPauseAnimation: () => void
     onRestartAnimation: () => void
-    resetSimulationConfig: () => void
+
+    simulationConfig: SimulationConfig,
+    nodeTransformationsConfig: NodeTransformationsConfig,
+
+    isolateDataHeaders: string[]
+    selectedIsolateHeader: string
+    setSelectedIsolateHeader: (selectedHeader: string) => void
+
     resetSimulationFilters: () => void
-
-    linkSpring: number
-    linkDistance: number
-    gravity: number
-    friction: number
-    repulsion: number
-    repulsionTheta: number
-    decay: number
-
-    onChangeLinkSpring: (linkSpring: number) => void
-    onChangeLinkDistance: (linkDistance: number) => void
-    onChangeGravity: (gravity: number) => void
-    onChangeFriction: (friction: number) => void
-    onChangeRepulsion: (repulsion: number) => void
-    onChangeRepulsionTheta: (repulsionTheta: number) => void
-    onChangeDecay: (decay: number) => void
-
-    nodeSize: number
-    nodeLabel: boolean
-    nodeLabelSize: number
-    linkLength: number
-    linkLabel: boolean
-    linkLabelSize: number
-    linkLabelType: string
-
-    onChangeNodeSize: (nodeSize: number) => void
-    onChangeNodeLabel: (event: React.ChangeEvent<HTMLInputElement>) => void
-    onChangeNodeLabelSize: (nodeLabelSize: number) => void
-    onChangeLinkLength: (linkLength: number) => void
-    onChangeLinkLabel: (event: React.ChangeEvent<HTMLInputElement>) => void
-    onChangeLinkLabelSize: (linkLabelSize: number) => void
-    onChangeLinkLabelType: (event: SelectChangeEvent, child: ReactNode) => void
     onTypingDataFilter: () => void
     onIsolateDataFilter: () => void
-    isolateDataHeaders: string[]
-    colorByIsolateData: string
-    onChangeColorByIsolateData: (event: SelectChangeEvent, child: ReactNode) => void
 
     onExportOptions: () => void
     onExportFilters: () => void
@@ -67,43 +41,15 @@ export function TreeViewSettingsCard(
     {
         onPauseAnimation,
         onRestartAnimation,
-        resetSimulationConfig,
-        resetSimulationFilters,
 
-        linkSpring,
-        linkDistance,
-        gravity,
-        friction,
-        repulsion,
-        repulsionTheta,
-        decay,
+        simulationConfig,
+        nodeTransformationsConfig,
 
-        onChangeLinkSpring,
-        onChangeLinkDistance,
-        onChangeGravity,
-        onChangeFriction,
-        onChangeRepulsion,
-        onChangeRepulsionTheta,
-        onChangeDecay,
-
-        nodeSize,
-        nodeLabel,
-        nodeLabelSize,
-        linkLength,
-        linkLabel,
-        linkLabelSize,
-        linkLabelType,
-
-        onChangeNodeSize,
-        onChangeNodeLabel,
-        onChangeNodeLabelSize,
-        onChangeLinkLength,
-        onChangeLinkLabel,
-        onChangeLinkLabelSize,
-        onChangeLinkLabelType,
         isolateDataHeaders,
-        colorByIsolateData,
-        onChangeColorByIsolateData,
+        selectedIsolateHeader,
+        setSelectedIsolateHeader,
+
+        resetSimulationFilters,
         onTypingDataFilter,
         onIsolateDataFilter,
 
@@ -133,24 +79,15 @@ export function TreeViewSettingsCard(
     }}>
         <Collapse in={settingsOpen}>
             <TreeViewOptions
-                linkSpring={linkSpring} onChangeLinkSpring={onChangeLinkSpring}
-                linkDistance={linkDistance} onChangeLinkDistance={onChangeLinkDistance}
-                gravity={gravity} onChangeGravity={onChangeGravity}
-                friction={friction} onChangeFriction={onChangeFriction}
-                repulsion={repulsion} onChangeRepulsion={onChangeRepulsion}
-                repulsionTheta={repulsionTheta} onChangeRepulsionTheta={onChangeRepulsionTheta}
-                nodeSize={nodeSize} onChangeNodeSize={onChangeNodeSize}
-                nodeLabel={nodeLabel} onChangeNodeLabel={onChangeNodeLabel}
-                nodeLabelSize={nodeLabelSize} onChangeNodeLabelSize={onChangeNodeLabelSize}
-                linkLength={linkLength} onChangeLinkLength={onChangeLinkLength}
-                linkLabel={linkLabel} onChangeLinkLabel={onChangeLinkLabel}
-                linkLabelSize={linkLabelSize} onChangeLinkLabelSize={onChangeLinkLabelSize}
-                linkLabelType={linkLabelType} onChangeLinkLabelType={onChangeLinkLabelType}
+                simulationConfig={simulationConfig}
+                nodeTransformationsConfig={nodeTransformationsConfig}
+
                 isolateDataHeaders={isolateDataHeaders}
-                colorByIsolateData={colorByIsolateData}
-                onChangeColorByIsolateData={onChangeColorByIsolateData}
+                selectedIsolateHeader={selectedIsolateHeader}
+                setSelectedIsolateHeader={setSelectedIsolateHeader}
+
                 onExport={onExportOptions}
-                resetSimulationConfig={resetSimulationConfig}/>
+            />
         </Collapse>
         <Collapse in={filtersOpen}>
             <TreeViewFilters

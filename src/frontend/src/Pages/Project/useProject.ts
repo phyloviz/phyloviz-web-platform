@@ -54,7 +54,9 @@ export function useProject() {
         setLoadingWorkflows(true)
         ComputeService.getWorkflows(projectId)
             .then(res => setWorkflows(res.workflows))
-            .catch((err: Error) => setError("Could not load workflows: " + err.message))
+            .catch((err: Error) => {
+                setError("Could not load workflows: Unexpected error.")
+            })
             .finally(() => setLoadingWorkflows(false))
     }
 
@@ -70,10 +72,16 @@ export function useProject() {
         // TODO implement something with better performance
 
         const updatedWorkflows = await ComputeService.getWorkflows(projectId!)
+            .catch((err: Error) => {
+                return null
+            })
+
+        if (updatedWorkflows === null)
+            return false
+
         for (const updatedWorkflow of updatedWorkflows.workflows) {
             const workflow = workflows.find(w => w.workflowId === updatedWorkflow.workflowId)
             if (workflow === undefined || workflow.status !== updatedWorkflow.status) {
-                console.log("UPDATING WORKFLOWS")
                 loadWorkflows()
                 return false
             }

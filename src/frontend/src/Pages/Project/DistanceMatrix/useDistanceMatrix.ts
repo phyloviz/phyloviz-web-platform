@@ -6,15 +6,15 @@ import {useProjectContext} from "../useProject";
  * Hook for DistanceMatrix page.
  */
 export function useDistanceMatrix() {
-    const {projectId, datasetId, distanceMatrixId} = useParams<{
-        projectId: string,
-        datasetId: string,
-        distanceMatrixId: string
-    }>()
-    const {project} = useProjectContext()
+    const pathParams = useParams<{ projectId: string, datasetId: string, distanceMatrixId: string }>()
+    const projectId = pathParams.projectId!
+    const datasetId = pathParams.datasetId!
+    const distanceMatrixId = pathParams.distanceMatrixId!
 
-    const distanceMatrix = project?.datasets
-        .find(dataset => dataset.datasetId === datasetId)?.distanceMatrices
+    const {project} = useProjectContext()
+    const dataset = project?.datasets.find(dataset => dataset.datasetId === datasetId)
+
+    const distanceMatrix = dataset?.distanceMatrices
         .find(distanceMatrix => distanceMatrix.distanceMatrixId === distanceMatrixId) as DistanceMatrix
 
     return {

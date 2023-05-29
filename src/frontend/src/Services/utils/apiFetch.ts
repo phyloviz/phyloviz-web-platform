@@ -30,10 +30,12 @@ async function apiFetch<T>(
     }
 
     if (!res.ok) {
-        if (res?.headers.get('Content-Type') !== problemMediaType)
+        if (res?.headers.get('Content-Type') !== problemMediaType) {
+            // console.log("API fetch non-Problem+JSON error:", res)
             throw new UnexpectedResponseError(`Unexpected response type: ${res.headers.get('Content-Type')}`)
+        }
 
-        console.log("API fetch Problem JSON:", res)
+        console.log("API fetch Problem+JSON:", res)
         throw new Problem(await res.json())
     }
     if (res?.headers.get('Content-Type') !== 'application/json')

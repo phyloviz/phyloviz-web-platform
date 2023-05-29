@@ -1,31 +1,19 @@
 import {useNavigate, useOutletContext, useParams} from "react-router-dom"
 import * as React from 'react';
-import {ReactNode, useEffect, useRef, useState} from 'react';
-import {TreeViewGraph} from "./cosmos/TreeViewGraph"
-import {
-    Edge,
-    GetTreeViewOutputModel,
-    Node
-} from "../../../Services/Visualization/models/getTreeView/GetTreeViewOutputModel"
-import VisualizationService from "../../../Services/Visualization/VisualizationService"
-import {
-    AlgorithmDistanceMatrixTreeSource,
-    CascadingInfoAlgorithmDistanceMatrixTreeSource,
-    CascadingInfoAlgorithmTypingDataTreeSource,
-    CascadingInfoFileTreeSource,
-    CascadingInfoTree,
-    CascadingInfoTreeView,
-    DistanceMatrix,
-    Tree,
-    TreeView
-} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
+import {useRef, useState} from 'react';
+import {TreeView} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {useProjectContext} from "../useProject"
 import {GraphConfigInterface} from "./cosmos/config"
 import {useReactToPrint} from "react-to-print";
-import {SelectChangeEvent} from "@mui/material";
 import {BubbleDataPoint, ChartData, Point} from "chart.js";
-import interpolate from 'color-interpolate'
 import {WebUiUris} from "../../WebUiUris";
+import {useCascadingInfoTreeView} from "./useCascadingInfoTreeView";
+import {useGraph} from "./useGraph";
+import {useIsolateDataRows} from "./useIsolateDataRows";
+import {useSelectIsolateDataHeader} from "./useSelectIsolateDataHeader";
+import {useIsolateDataHeaders} from "./useIsolateDataHeaders";
+import {useSimulationConfig} from "./useSimulationConfig";
+import {useNodeTransformationsConfig} from "./useNodeTransformationsConfig";
 
 export type VizNode = {
     id: string
@@ -39,7 +27,7 @@ export type VizLink = {
     weight: number
 }
 
-const defaultConfig: GraphConfigInterface<VizNode, VizLink> = {
+export const defaultConfig: GraphConfigInterface<VizNode, VizLink> = {
     backgroundColor: "#FFFFFF",
     nodeSize: 4,
     nodeColor: "#4B5BBF",
@@ -68,34 +56,35 @@ const ZOOM_DURATION = 100
  * Hook for the TreeView page.
  */
 export function useTreeView() {
-    const {projectId, datasetId, treeViewId} = useParams<{ projectId: string, datasetId: string, treeViewId: string }>()
+    const pathParams = useParams<{ projectId: string, datasetId: string, treeViewId: string }>()
+    const projectId = pathParams.projectId!
+    const datasetId = pathParams.datasetId!
+    const treeViewId = pathParams.treeViewId!
+
     const {project} = useProjectContext()
     const dataset = project?.datasets.find(dataset => dataset.datasetId === datasetId)
-    const typingDataId = project?.datasets.find(dataset => dataset.datasetId === datasetId)?.typingDataId
-    const isolateDataId = project?.datasets.find(dataset => dataset.datasetId === datasetId)?.isolateDataId
+    const typingDataId = dataset?.typingDataId
+    const isolateDataId = dataset?.isolateDataId
 
-    const canvasRef = useRef<HTMLCanvasElement>(null)
-    const graphRef = useRef<TreeViewGraph<VizNode, VizLink>>()
+    const {cascadingInfoTreeView} = useCascadingInfoTreeView(dataset, treeViewId)
+
+    const {isolateDataHeaders} = useIsolateDataHeaders(projectId, isolateDataId)
+    const {isolateDataRows} = useIsolateDataRows(projectId, isolateDataId)
+
+    const {graphRef, canvasRef} = useGraph(projectId, datasetId, treeViewId)
+
     const navigate = useNavigate()
 
-    const [linkSpring, setLinkSpring] = useState(defaultConfig.simulation!.linkSpring!)
-    const [linkDistance, setLinkDistance] = useState(defaultConfig.simulation!.linkDistance!)
-    const [gravity, setGravity] = useState(defaultConfig.simulation!.gravity!)
-    const [repulsion, setRepulsion] = useState(defaultConfig.simulation!.repulsion!)
-    const [friction, setFriction] = useState(defaultConfig.simulation!.friction!)
-    const [repulsionTheta, setRepulsionTheta] = useState(defaultConfig.simulation!.repulsionTheta!)
-    const [decay, setDecay] = useState(defaultConfig.simulation!.decay!)
+    const simulationConfig = useSimulationConfig(graphRef)
+    const nodeTransformationsConfig = useNodeTransformationsConfig(graphRef)
 
-    const [nodeSize, setNodeSize] = useState<number>(defaultConfig.nodeSize! as number)
-    const [nodeLabel, setNodeLabel] = useState(true)
-    const [nodeLabelSize, setNodeLabelSize] = useState(0)
-    const [linkLength, setLinkLength] = useState<number>(defaultConfig.linkWidth! as number)
-    const [linkLabel, setLinkLabel] = useState(false)
-    const [linkLabelSize, setLinkLabelSize] = useState(0)
-    const [linkLabelType, setLinkLabelType] = useState("")
+    const [doughnutChartTitle, setDoughnutChartTitle] = useState<string>("")
     const [doughnutChartData, setDoughnutChartData] = useState<ChartData<"doughnut", (number | [number, number] | Point | BubbleDataPoint | null)[], unknown> | null>(null)
-    const [isolateDataHeaders, setIsolateDataHeaders] = useState<string[]>([])
-    const [colorByIsolateData, setColorByIsolateData] = useState<string>("")
+
+    const {
+        selectedIsolateHeader,
+        setSelectedIsolateHeader
+    } = useSelectIsolateDataHeader(isolateDataRows, graphRef, setDoughnutChartData, setDoughnutChartTitle)
 
     const toPrintRef = useRef(null);
     const reactToPrintContent = React.useCallback(() => {
@@ -106,322 +95,41 @@ export function useTreeView() {
         documentTitle: "Tree Visualization"
     });
 
-    useEffect(() => {
-        async function init() {
-            const data: GetTreeViewOutputModel = await VisualizationService.getTreeView(projectId!, datasetId!, treeViewId!)
-
-            if (isolateDataId) {
-                VisualizationService.getIsolateDataRows(projectId!, isolateDataId, 1, 0)
-                    .then(response => {
-                        if (response && response.rows.length > 0) {
-                            VisualizationService.getIsolateDataKeys(projectId!, isolateDataId)
-                                .then(response => {
-                                    setIsolateDataHeaders(response.keys)
-                                })
-                        }
-                    })
-                    .catch(() => {
-                        return undefined
-                    })
-            }
-
-            function findBiggestGroup(nodes: Node[], edges: Edge[]): Node[] {
-                const visited = new Set<string>()
-                let maxGroup: Node[] = []
-
-                for (const node of nodes) {
-                    if (!visited.has(node.st)) {
-                        const group = dfs(node, nodes, edges, visited)
-                        if (group.length > maxGroup.length)
-                            maxGroup = group
-                    }
-                }
-
-                return maxGroup
-            }
-
-            function dfs(node: Node, nodes: Node[], edges: Edge[], visited: Set<string>): Node[] {
-                const group: Node[] = []
-                const stack: Node[] = [node]
-
-                while (stack.length > 0) {
-                    const current = stack.pop()!
-                    visited.add(current.st)
-                    group.push(current)
-
-                    for (const edge of edges) {
-                        if (edge.from === current.st && !visited.has(edge.to)) {
-                            const neighbor = nodes.find(node => node.st === edge.to)!
-                            stack.push(neighbor)
-                            visited.add(neighbor.st)
-                        }
-                    }
-                }
-
-                return group
-            }
-
-            const nodes = findBiggestGroup(data.nodes, data.edges).map(node => {
-                return {
-                    id: node.st,
-                    // x: node.coordinates[0],
-                    // y: node.coordinates[1],
-                }
-            })
-
-            const links = data.edges.map(edge => {
-                return {
-                    source: edge.from,
-                    target: edge.to,
-                    weight: edge.weight
-                }
-            })
-
-            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, defaultConfig)
-            await graph.setData(nodes, links)
-            graphRef.current = graph
-        }
-
-        init()
-    }, [])
-
-    const treeView: TreeView = project?.datasets
-        .find(dataset => dataset.datasetId === datasetId)?.treeViews
-        .find(treeView => treeView.treeViewId === treeViewId) as TreeView
-
-    const tree: Tree = project?.datasets
-        .find(dataset => dataset.datasetId === datasetId)?.trees
-        .find(tree => tree.treeId === treeView.source.treeId) as Tree
-
-    const distanceMatrix = tree.sourceType === "algorithm_distance_matrix"
-        ? project?.datasets
-            .find(dataset => dataset.datasetId === datasetId)?.distanceMatrices
-            .find(distanceMatrix =>
-                distanceMatrix.distanceMatrixId === (tree.source as AlgorithmDistanceMatrixTreeSource).distanceMatrixId) as DistanceMatrix
-        : undefined
-
-    const cascadingInfoTree: CascadingInfoTree = {
-        treeId: tree.treeId,
-        name: tree.name,
-        sourceType: tree.sourceType,
-        source:
-            tree.sourceType === "algorithm_typing_data"
-                ? tree.source as CascadingInfoAlgorithmTypingDataTreeSource
-                : tree.sourceType === "algorithm_distance_matrix"
-                    ? {
-                        algorithm: (tree.source as AlgorithmDistanceMatrixTreeSource).algorithm,
-                        distanceMatrix: distanceMatrix,
-                        parameters: (tree.source as AlgorithmDistanceMatrixTreeSource).parameters
-                    } as CascadingInfoAlgorithmDistanceMatrixTreeSource
-                    : tree.source as CascadingInfoFileTreeSource
-    }
-
-    const cascadingInfoTreeView: CascadingInfoTreeView = {
-        treeViewId: treeView.treeViewId,
-        name: treeView.name,
-        layout: treeView.layout,
-        source: {
-            tree: cascadingInfoTree,
-            typingDataId: treeView.source.typingDataId,
-            isolateDataId: treeView.source.isolateDataId
-        }
-    } as CascadingInfoTreeView
-
     return {
         canvasRef,
         treeView: cascadingInfoTreeView,
+
         pauseAnimation: () => graphRef.current?.pause(),
         restartAnimation: () => graphRef.current?.restart(),
-        resetSimulationConfig: () => {
-            setLinkSpring(defaultConfig.simulation!.linkSpring!)
-            setLinkDistance(defaultConfig.simulation!.linkDistance!)
-            setGravity(defaultConfig.simulation!.gravity!)
-            setRepulsion(defaultConfig.simulation!.repulsion!)
-            setFriction(defaultConfig.simulation!.friction!)
-            setRepulsionTheta(defaultConfig.simulation!.repulsionTheta!)
-            setDecay(defaultConfig.simulation!.decay!)
-
-            graphRef.current?.setConfig(defaultConfig)
-        },
 
         resetSimulationFilters: () => {
             // TODO: reset filters
         },
 
-        linkSpring,
-        linkDistance,
-        gravity,
-        friction,
-        repulsion,
-        repulsionTheta,
-        decay,
+        simulationConfig,
+        nodeTransformationsConfig,
 
-        updateLinkSpring: (value: number) => {
-            setLinkSpring(value)
-            graphRef.current?.setConfig({simulation: {linkSpring: value}})
-        },
-        updateLinkDistance: (value: number) => {
-            setLinkDistance(value)
-            graphRef.current?.setConfig({simulation: {linkDistance: value}})
-        },
-        updateGravity: (value: number) => {
-            setGravity(value)
-            graphRef.current?.setConfig({simulation: {gravity: value}})
-        },
-        updateFriction: (value: number) => {
-            setFriction(value)
-            graphRef.current?.setConfig({simulation: {friction: value}})
-        },
-        updateRepulsion: (value: number) => {
-            setRepulsion(value)
-            graphRef.current?.setConfig({simulation: {repulsion: value}})
-        },
-        updateRepulsionTheta: (value: number) => {
-            setRepulsionTheta(value)
-            graphRef.current?.setConfig({simulation: {repulsionTheta: value}})
-        },
-        updateDecay: (value: number) => {
-            setDecay(value)
-            graphRef.current?.setConfig({simulation: {decay: value}})
-        },
-
-        nodeSize,
-        nodeLabel,
-        nodeLabelSize,
-        linkLength,
-        linkLabel,
-        linkLabelSize,
-        linkLabelType,
-
-        updateNodeSize: (value: number) => {
-            setNodeSize(value)
-            graphRef.current?.setConfig({nodeSize: value})
-        },
-        updateNodeLabel: (event: React.ChangeEvent<HTMLInputElement>) => {
-            setNodeLabel(event.target.checked)
-            graphRef.current!.renderNodeLabels(event.target.checked)
-        },
-        updateNodeLabelSize: (value: number) => {
-            // TODO: implement node label size
-        },
-        updateLinkLength: (value: number) => {
-            setLinkLength(value)
-            graphRef.current?.setConfig({linkWidth: value})
-        },
-        updateLinkLabel: (event: React.ChangeEvent<HTMLInputElement>) => {
-            setLinkLabel(event.target.checked)
-            graphRef.current!.renderLinkLabels(event.target.checked)
-        },
-        updateLinkLabelSize: (value: number) => {
-            // TODO: implement link label size
-        },
-        updateLinkLabelType: async (event: SelectChangeEvent, child: ReactNode) => {
-            // TODO: implement link label type
-
-        },
         isolateDataHeaders,
-        colorByIsolateData,
-        updateColorByIsolateData: async (event: SelectChangeEvent, child: ReactNode) => {
-            if (!isolateDataId)
-                return
+        selectedIsolateHeader,
+        setSelectedIsolateHeader,
 
-            const selectedHeader = event.target.value
-            setColorByIsolateData(selectedHeader)
+        doughnutChartTitle,
+        doughnutChartData,
 
-            const key = "ST (MLST)"
-
-            const isolateData = await VisualizationService.getIsolateDataRows(projectId!, isolateDataId, 100000, 0) // TODO is pagination needed?
-
-            const selectedHeaderValues = isolateData.rows.map((row) => row.row[selectedHeader])
-
-            const pallete = ["#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93"]
-
-            const doughnutChartLabels = Array.from(new Set(selectedHeaderValues))
-
-            const doughnutChartLabelToLabelIndexHashMap = new Map<string, number>()
-
-            for (let i = 0; i < doughnutChartLabels.length; i++) {
-                doughnutChartLabelToLabelIndexHashMap.set(doughnutChartLabels[i], i)
-            }
-
-            const doughtnutChartColors = doughnutChartLabels.map((label) => {
-                return interpolate(pallete)(Math.random())
-            })
-
-            const doughnutChartData = doughnutChartLabels.map((label) => {
-                return selectedHeaderValues.filter((value) => value === label).length
-            })
-
-            const sliceData = new Map<string, { label: string, occurences: number, color: number[] }[]>()
-
-            for (let i = 0; i < isolateData.rows.length; i++) {
-                const row = isolateData.rows[i]
-                const profileId = row.profileId
-                const rowId = parseInt(row.id)
-                const nodeSliceData = sliceData.get(profileId)
-                const label = row.row[selectedHeader]
-
-                const labelIndex = doughnutChartLabelToLabelIndexHashMap.get(label)!
-
-                if (nodeSliceData) {
-                    const slice = nodeSliceData.find((slice) => slice.label === label)
-
-                    if (slice) {
-                        slice.occurences += 1
-                        continue
-                    }
-                }
-
-                let color = doughtnutChartColors[labelIndex]
-
-                if (!color) {
-                    // throw new Error("Color not found")
-                    color = "rgb(0,0,0)"
-                }
-                const newSliceData = {
-                    label,
-                    occurences: 1,
-                    color: parseRGB(color)
-                }
-
-                const newNodeData = nodeSliceData ? [...nodeSliceData, newSliceData] : [newSliceData]
-
-                newNodeData.sort((a, b) => b.occurences - a.occurences)
-
-                sliceData.set(profileId, newNodeData)
-            }
-
-            graphRef.current!.renderPieCharts(sliceData)
-
-            setDoughnutChartData({
-                labels: doughnutChartLabels,
-                datasets: [
-                    {
-                        label: capitalize(selectedHeader),
-                        data: doughnutChartData,
-                        backgroundColor: doughtnutChartColors,
-                        borderWidth: 1
-                    }
-                ]
-            })
-        }
-        ,
-
-        handleTypingDataFilter: () => navigate(WebUiUris.treeViewTypingData(projectId!!, datasetId!!, treeViewId!!)),
+        handleTypingDataFilter: () => navigate(WebUiUris.treeViewTypingData(projectId, datasetId, treeViewId)),
         typingDataId,
-        handleIsolateDataFilter: () => navigate(WebUiUris.treeViewIsolateData(projectId!!, datasetId!!, treeViewId!!)),
+        handleIsolateDataFilter: () => navigate(WebUiUris.treeViewIsolateData(projectId, datasetId, treeViewId)),
         isolateDataId,
 
+        handleSearch: (st: string): boolean => {
+            return graphRef.current?.zoomToNodeById(st, 1000, 15, false)!
+        },
         handleExportOptions: () => {
             // TODO: implement export options
         },
         handleExportFilters: () => {
             // TODO: implement export filters
         },
-        handleSearch: (st: string): boolean => {
-            return graphRef.current?.zoomToNodeById(st, 1000, 15, false)!
-        },
-        doughnutChartData,
 
         handleZoomIn: () => graphRef.current?.zoom(graphRef.current.getZoomLevel() * ZOOM_IN_SCALE, ZOOM_DURATION),
         handleZoomOut: () => graphRef.current?.zoom(graphRef.current.getZoomLevel() * ZOOM_OUT_SCALE, ZOOM_DURATION),

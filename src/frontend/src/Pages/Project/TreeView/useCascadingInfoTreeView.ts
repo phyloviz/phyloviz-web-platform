@@ -1,29 +1,22 @@
-import {useParams} from "react-router-dom";
-import {useProjectContext} from "../useProject";
 import {
     AlgorithmDistanceMatrixTreeSource,
     CascadingInfoAlgorithmDistanceMatrixTreeSource,
     CascadingInfoAlgorithmTypingDataTreeSource,
     CascadingInfoFileTreeSource,
     CascadingInfoTree,
+    CascadingInfoTreeView,
+    Dataset,
     DistanceMatrix,
-    Tree
+    Tree,
+    TreeView
 } from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel";
 
-/**
- * Hook for Tree page.
- */
-export function useTree() {
-    const pathParams = useParams<{ projectId: string, datasetId: string, treeId: string }>()
-    const projectId = pathParams.projectId!
-    const datasetId = pathParams.datasetId!
-    const treeId = pathParams.treeId!
-
-    const {project} = useProjectContext()
-    const dataset = project?.datasets.find(dataset => dataset.datasetId === datasetId)
+export function useCascadingInfoTreeView(dataset: Dataset | undefined, treeViewId: string) {
+    const treeView: TreeView = dataset?.treeViews
+        .find(treeView => treeView.treeViewId === treeViewId) as TreeView
 
     const tree: Tree = dataset?.trees
-        .find(tree => tree.treeId === treeId) as Tree
+        .find(tree => tree.treeId === treeView.source.treeId) as Tree
 
     const distanceMatrix = tree.sourceType === "algorithm_distance_matrix"
         ? dataset?.distanceMatrices
@@ -47,7 +40,16 @@ export function useTree() {
                     : tree.source as CascadingInfoFileTreeSource
     }
 
+    const cascadingInfoTreeView: CascadingInfoTreeView = {
+        treeViewId: treeView.treeViewId,
+        name: treeView.name,
+        layout: treeView.layout,
+        source: {
+            tree: cascadingInfoTree
+        }
+    } as CascadingInfoTreeView
+
     return {
-        tree: cascadingInfoTree
+        cascadingInfoTreeView
     }
 }
