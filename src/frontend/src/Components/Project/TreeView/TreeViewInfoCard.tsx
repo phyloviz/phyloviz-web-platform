@@ -1,4 +1,3 @@
-import {useNavigate, useParams} from "react-router-dom"
 import * as React from "react"
 import {Box, Button, Collapse, IconButtonProps, ListItem} from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
@@ -26,12 +25,12 @@ interface TreeViewInfoCardProps {
  * Card with information about the tree view.
  */
 export function TreeViewInfoCard({treeView}: TreeViewInfoCardProps) {
-    const projectId = (useParams<{ projectId: string }>().projectId)!
-    const navigate = useNavigate()
     const [treeViewInfoExpanded, setTreeViewInfoExpanded] = React.useState(false)
     const handleTreeViewInfoExpandClick = () => setTreeViewInfoExpanded(!treeViewInfoExpanded)
+
     const [treeInfoExpanded, setTreeInfoExpanded] = React.useState(false)
     const handleTreeInfoExpandClick = () => setTreeInfoExpanded(!treeInfoExpanded)
+
     const [distanceMatrixInfoExpanded, setDistanceMatrixInfoExpanded] = React.useState(false)
     const handleDistanceMatrixInfoExpandClick = () => setDistanceMatrixInfoExpanded(!distanceMatrixInfoExpanded)
 

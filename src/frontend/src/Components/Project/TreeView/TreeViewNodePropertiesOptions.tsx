@@ -2,7 +2,9 @@ import {Button, Checkbox, Collapse, FormControlLabel, FormGroup, Typography} fro
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {InputSlider} from "./InputSlider";
 import * as React from "react";
-import {NodeTransformationsConfig} from "../../../Pages/Project/TreeView/useNodeTransformationsConfig";
+import {
+    GraphTransformationsConfig
+} from "../../../Pages/Project/TreeView/Layouts/ForceDirectedLayout/utils/useGraphTransformationsConfig";
 
 const NODE_SIZE_MIN = 1
 const NODE_SIZE_MAX = 20
@@ -14,7 +16,7 @@ const NODE_LABEL_SIZE_STEP = 1
 
 interface TreeViewNodePropertiesOptionsProps {
     expanded: boolean
-    nodeTransformationsConfig: NodeTransformationsConfig
+    nodeTransformationsConfig: GraphTransformationsConfig
 
     onClick: () => void
 }

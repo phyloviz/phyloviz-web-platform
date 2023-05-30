@@ -5,8 +5,10 @@ import IconButton from "@mui/material/IconButton"
 import {Pause, PhotoCamera, PlayArrow, ZoomIn, ZoomOut} from "@mui/icons-material"
 import {TreeViewOptions} from "./TreeViewOptions";
 import {TreeViewFilters} from "./TreeViewFilters";
-import {SimulationConfig} from "../../../Pages/Project/TreeView/useSimulationConfig";
-import {NodeTransformationsConfig} from "../../../Pages/Project/TreeView/useNodeTransformationsConfig";
+import {SimulationConfig} from "../../../Pages/Project/TreeView/Layouts/ForceDirectedLayout/utils/useSimulationConfig";
+import {
+    GraphTransformationsConfig
+} from "../../../Pages/Project/TreeView/Layouts/ForceDirectedLayout/utils/useGraphTransformationsConfig";
 
 /**
  * Props for TreeViewSettingsCard component.
@@ -16,7 +18,7 @@ interface TreeViewSettingsCardProps {
     onRestartAnimation: () => void
 
     simulationConfig: SimulationConfig,
-    nodeTransformationsConfig: NodeTransformationsConfig,
+    nodeTransformationsConfig: GraphTransformationsConfig,
 
     isolateDataHeaders: string[]
     selectedIsolateHeader: string

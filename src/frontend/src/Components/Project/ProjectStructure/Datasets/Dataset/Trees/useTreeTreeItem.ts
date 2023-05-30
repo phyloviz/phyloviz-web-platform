@@ -27,8 +27,8 @@ export function useTreeTreeItem(datasetId: string, tree: Tree) {
             label: "Radial"
         },
         {
-            id: "dendrogram",
-            label: "Dendrogram"
+            id: "phylogram",
+            label: "Phylogram"
         }
     ]
 

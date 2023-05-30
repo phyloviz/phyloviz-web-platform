@@ -13,7 +13,9 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {InputSlider} from "./InputSlider";
 import * as React from "react";
-import {NodeTransformationsConfig} from "../../../Pages/Project/TreeView/useNodeTransformationsConfig";
+import {
+    GraphTransformationsConfig
+} from "../../../Pages/Project/TreeView/Layouts/ForceDirectedLayout/utils/useGraphTransformationsConfig";
 
 const LINK_WIDTH_MIN = 0.1
 const LINK_WIDTH_MAX = 5
@@ -30,7 +32,7 @@ enum LinkLabelType {
 
 interface TreeViewLinkPropertiesOptionsProps {
     expanded: boolean
-    nodeTransformationsConfig: NodeTransformationsConfig
+    nodeTransformationsConfig: GraphTransformationsConfig
 
     onClick: () => void
 }

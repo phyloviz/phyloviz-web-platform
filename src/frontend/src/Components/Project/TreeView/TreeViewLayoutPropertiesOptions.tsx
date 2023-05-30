@@ -2,7 +2,7 @@ import {Button, Collapse, Typography} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {InputSlider} from "./InputSlider";
 import * as React from "react";
-import {SimulationConfig} from "../../../Pages/Project/TreeView/useSimulationConfig";
+import {SimulationConfig} from "../../../Pages/Project/TreeView/Layouts/ForceDirectedLayout/utils/useSimulationConfig";
 
 const LINK_SPRING_STEP = 0.1
 const LINK_SPRING_MIN = 0

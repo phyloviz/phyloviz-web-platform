@@ -62,5 +62,5 @@ const layoutDescriptions = {
 
     [ComputeTreeViewLayout.RADIAL]: "Radial layout is a tree layout where the nodes are placed on concentric circles. The root node is placed at the center of the first circle. The children of the root node are placed on the second circle, and so on.",
 
-    [ComputeTreeViewLayout.DENDROGRAM]: "Denrogram layout is a tree layout where the nodes are placed on horizontal lines. The root node is placed on the first line. The children of the root node are placed on the second line, and so on.",
+    [ComputeTreeViewLayout.PHYLOGRAM]: "Phylogram layout is a tree layout where the nodes are placed on horizontal lines. The root node is placed on the first line. The children of the root node are placed on the second line, and so on.",
 }

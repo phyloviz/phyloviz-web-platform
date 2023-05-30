@@ -58,17 +58,17 @@ export function HierarchicalClusteringConfigMethodStep(
 const methodDescriptions = {
     [HierarchicalClusteringMethod.COMPLETE_LINKAGE]: "CL (Complete - Linkage) is a simple agglomerative (bottom-up) hierarchical clustering method. It is also known as farthest neighbour clustering\n" +
     "CL is used for the creation of phenetic trees (phenograms) and in a phylogenetic context, it assumes a constant rate of evolution (molecular clock hypothesis), and is not a well-regarded method for inferring relationships unless this assumption has been tested and justified for the data set being used.\n" +
-    "This algorithm constructs a rooted tree (dendrogram) that reflects the structure present in a pairwise dissimilarity matrix. At each step, the nearest two clusters are combined into a higher-level cluster. The distance between any two clusters A and B is the farthest distance between elements of each cluster.\n" +
+    "This algorithm constructs a rooted tree (phylogram) that reflects the structure present in a pairwise dissimilarity matrix. At each step, the nearest two clusters are combined into a higher-level cluster. The distance between any two clusters A and B is the farthest distance between elements of each cluster.\n" +
     "The method is attributed to D. Defays.",
 
     [HierarchicalClusteringMethod.SINGLE_LINKAGE]: "SL (Single - Linkage) is a simple agglomerative (bottom-up) hierarchical clustering method. It is also known as nearest neighbour clustering\n" +
     "SL is used for the creation of phenetic trees (phenograms) and in a phylogenetic context, it assumes a constant rate of evolution (molecular clock hypothesis), and is not a well-regarded method for inferring relationships unless this assumption has been tested and justified for the data set being used.\n" +
-    "This algorithm constructs a rooted tree (dendrogram) that reflects the structure present in a pairwise dissimilarity matrix. At each step, the nearest two clusters are combined into a higher-level cluster. The distance between any two clusters A and B is the shortest distance between elements of each cluster.\n" +
+    "This algorithm constructs a rooted tree (phylogram) that reflects the structure present in a pairwise dissimilarity matrix. At each step, the nearest two clusters are combined into a higher-level cluster. The distance between any two clusters A and B is the shortest distance between elements of each cluster.\n" +
     "The method is attributed to R. Sibson.",
 
     [HierarchicalClusteringMethod.UPGMA]: "UPGMA (Unweighted Pair Group Method with Arithmetic mean) is a simple agglomerative (bottom-up) hierarchical clustering method. It is one of the most popular methods in ecology for the classification of sampling units (such as vegetation plots) on the basis of their pairwise similarities in relevant descriptor variables (such as species composition).\n" +
     "UPGMA is used for the creation of phenetic trees (phenograms) and in a phylogenetic context, it assumes a constant rate of evolution (molecular clock hypothesis), and is not a well-regarded method for inferring relationships unless this assumption has been tested and justified for the data set being used.\n" +
-    "This algorithm constructs a rooted tree (dendrogram) that reflects the structure present in a pairwise dissimilarity matrix. At each step, the nearest two clusters are combined into a higher-level cluster. The distance between any two clusters A and B is the mean distance between elements of each cluster.\n" +
+    "This algorithm constructs a rooted tree (phylogram) that reflects the structure present in a pairwise dissimilarity matrix. At each step, the nearest two clusters are combined into a higher-level cluster. The distance between any two clusters A and B is the mean distance between elements of each cluster.\n" +
     "The method is attributed to Robert R. Sokal and Charles D. Michener.",
 
     [HierarchicalClusteringMethod.WPGMA]: "WPGMA (Weighted Pair Group Method with Arithmetic mean)"

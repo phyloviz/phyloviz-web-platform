@@ -1,7 +1,9 @@
 import {Box, Button} from "@mui/material";
 import * as React from "react";
-import {SimulationConfig} from "../../../Pages/Project/TreeView/useSimulationConfig";
-import {NodeTransformationsConfig} from "../../../Pages/Project/TreeView/useNodeTransformationsConfig";
+import {SimulationConfig} from "../../../Pages/Project/TreeView/Layouts/ForceDirectedLayout/utils/useSimulationConfig";
+import {
+    GraphTransformationsConfig
+} from "../../../Pages/Project/TreeView/Layouts/ForceDirectedLayout/utils/useGraphTransformationsConfig";
 import {TreeViewLayoutPropertiesOptions} from "./TreeViewLayoutPropertiesOptions";
 import {TreeViewNodePropertiesOptions} from "./TreeViewNodePropertiesOptions";
 import {TreeViewLinkPropertiesOptions} from "./TreeViewLinkPropertiesOptions";
@@ -10,7 +12,7 @@ import {TreeViewAssignColorsOptions} from "./TreeViewAssignColorsOptions";
 
 interface TreeViewOptionsProps {
     simulationConfig: SimulationConfig
-    nodeTransformationsConfig: NodeTransformationsConfig
+    nodeTransformationsConfig: GraphTransformationsConfig
 
     isolateDataHeaders: string[]
     selectedIsolateHeader: string

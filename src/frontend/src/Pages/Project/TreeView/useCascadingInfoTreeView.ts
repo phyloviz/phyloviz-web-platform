@@ -11,6 +11,13 @@ import {
     TreeView
 } from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel";
 
+/**
+ * Returns the cascading info of a tree view.
+ *
+ * @param dataset the dataset to which the tree view belongs
+ * @param treeViewId the id of the tree view
+ * @returns the cascading info of the tree view
+ */
 export function useCascadingInfoTreeView(dataset: Dataset | undefined, treeViewId: string) {
     const treeView: TreeView = dataset?.treeViews
         .find(treeView => treeView.treeViewId === treeViewId) as TreeView

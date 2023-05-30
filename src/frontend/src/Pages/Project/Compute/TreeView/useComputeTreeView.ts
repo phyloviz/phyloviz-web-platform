@@ -12,7 +12,7 @@ export enum ComputeTreeViewStep {
 export enum ComputeTreeViewLayout {
     FORCE_DIRECTED = "Force Directed",
     RADIAL = "Radial",
-    DENDROGRAM = "Dendrogram",
+    PHYLOGRAM = "Phylogram",
 }
 
 /**
@@ -47,8 +47,8 @@ export function useComputeTreeView() {
                 return "force-directed"
             case ComputeTreeViewLayout.RADIAL:
                 return "radial"
-            case ComputeTreeViewLayout.DENDROGRAM:
-                return "dendrogram"
+            case ComputeTreeViewLayout.PHYLOGRAM:
+                return "phylogram"
             default:
                 throw new Error("Invalid layout.")
         }
