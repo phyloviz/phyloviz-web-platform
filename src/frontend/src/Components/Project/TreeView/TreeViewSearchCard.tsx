@@ -37,7 +37,9 @@ export function TreeViewSearchCard({onSearch}: { onSearch: (searchST: string) =>
             value={searchST}
             onChange={(e) => setSearchST(e.target.value)}
             onKeyPress={(e) => {
-                search()
+                if (e.key === 'Enter') {
+                    search()
+                }
             }}
             variant={"standard"}
             size={"small"}

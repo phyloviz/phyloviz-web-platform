@@ -49,8 +49,6 @@ export default function TreeView() {
         handlePrint,
     } = useTreeView()
 
-    console.log("TreeView.tsx: treeView", treeView?.treeViewId)
-
     return (
         <Box sx={{position: "relative", width: "90%"}}>
             <TreeViewInfoCard treeView={treeView}/>
