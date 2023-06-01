@@ -55,6 +55,6 @@ public class TreeViewMetadataRepositoryMongo implements TreeViewMetadataReposito
 
     @Override
     public boolean existsByDatasetIdAndTreeIdSource(String datasetId, String treeId) {
-        return treeViewMetadataMongoRepository.existsByDatasetIdAndTreeIdSource(datasetId, treeId);
+        return treeViewMetadataMongoRepository.findByDatasetIdAndTreeIdSource(datasetId, treeId).isPresent();
     }
 }

@@ -5,6 +5,7 @@ import {IsolateDataFile} from "../../../../../Services/Administration/models/pro
 import {useDeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdrop"
 import AdministrationService from "../../../../../Services/Administration/AdministrationService"
 import {WebUiUris} from "../../../../../Pages/WebUiUris"
+import {Problem} from "../../../../../Services/utils/Problem";
 
 /**
  * Hook for the IsolateDataFileTreeItem component.
@@ -44,7 +45,13 @@ export function useIsolateDataFileTreeItem(file: IsolateDataFile) {
                     handleDeleteBackdropClose()
                     navigate(WebUiUris.project(projectId!))
                 })
-                .catch(error => setError(error.message))
+                .catch(error => {
+                    if (error instanceof Problem && error.title === "Denied Deletion") {
+                        setError("Cannot delete file. File is still being used in one or more datasets. Delete the datasets first.")
+                    } else {
+                        setError("Could not delete the file. An unexpected error occurred while trying to delete it.")
+                    }
+                })
         },
         error,
         clearError: () => setError(null)

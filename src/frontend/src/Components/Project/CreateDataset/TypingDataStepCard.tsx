@@ -1,7 +1,7 @@
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material"
 import * as React from "react"
 import {ReactNode} from "react"
-import {DatasetType} from "../../../Pages/Project/CreateDataset/useCreateDataset"
+import {TypingDataType} from "../../../Pages/Project/CreateDataset/useCreateDataset"
 import Typography from "@mui/material/Typography"
 import {FileUploader} from "react-drag-drop-files"
 import {TypingDataFile} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
@@ -16,11 +16,12 @@ import {TypingDataFile} from "../../../Services/Administration/models/projects/g
  * @property onFileUploaderChange the function to call when the file on the file uploader changes
  */
 interface TypingDataStepCardProps {
-    datasetType: DatasetType
+    datasetType: TypingDataType
     typingData: TypingDataFile[]
     selectedTypingData: string | null
     onFileSelecterChange: (event: SelectChangeEvent, child: ReactNode) => void
     onFileUploaderChange: (file: React.SetStateAction<File | null>) => void
+    triedSubmitting: boolean
 }
 
 /**
@@ -32,7 +33,8 @@ export function TypingDataStepCard(
         typingData,
         selectedTypingData,
         onFileSelecterChange,
-        onFileUploaderChange
+        onFileUploaderChange,
+        triedSubmitting
     }: TypingDataStepCardProps
 ) {
     return (
@@ -49,7 +51,7 @@ export function TypingDataStepCard(
                     onChange={onFileSelecterChange}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
-                    {typingData.map((typingDataFile) => (
+                    {typingData.map((typingDataFile) => ( // TODO Show only those with correct type
                         <MenuItem key={typingDataFile.typingDataId}
                                   value={typingDataFile.typingDataId}>{typingDataFile.name}</MenuItem>
                     ))}
@@ -79,7 +81,7 @@ export function TypingDataStepCard(
  * Examples of the typing data for each dataset type.
  */
 const typingDataExamples = {
-    [DatasetType.MLST]: "The data format for the typing data should be as follows. Load a tab separated " +
+    [TypingDataType.MLST]: "The data format for the typing data should be as follows. Load a tab separated " +
     "file with the first row containing column headers (field names). The first column should be a Sequence " +
     "Identifier, such as the ST for MLST data. Other columns should be the different loci used in the typing " +
     "scheme. Example of a MLST dataset for Streptococcus dysgalactiae subspecies equisimilis:\n" +
@@ -94,7 +96,7 @@ const typingDataExamples = {
     "  8       1       1       1       1       1       1       4\n" +
     "This files should not contain missing data. If any allele missing data is found the entire line is discarded.",
 
-    [DatasetType.MLVA]: "The data format for the typing data should be as follows. Load a tab separated file " +
+    [TypingDataType.MLVA]: "The data format for the typing data should be as follows. Load a tab separated file " +
     "with the first row containing column headers (field names). The first column should be a Sequence " +
     "Identifier, an unique ID for the complete allelic profile. Other columns should be the different loci " +
     "used in the typing scheme. For each loci the number of repeats found should be given.  The following example " +
@@ -106,7 +108,7 @@ const typingDataExamples = {
     "  (...)\n" +
     "This files should not contain missing data. If any allele missing data is found the entire line is discarded.",
 
-    [DatasetType.FASTA]: "The data format for the typing data should be as follows. Load a text file containing " +
+    [TypingDataType.FASTA]: "The data format for the typing data should be as follows. Load a text file containing " +
     "only the sequences. All the sequences should have the same length. A sequential ID identified will be " +
     "attributed to each sequence based on the order of the sequences in the file. The Fasta header will be used " +
     "to identify the isolate when you click on it. This format can also be used to analyze SNP data.  An example " +
@@ -122,15 +124,15 @@ const typingDataExamples = {
     "    ATATTAGTTTATATGGCCCGAT\n" +
     "    >aaa 5\n",
 
-    [DatasetType.ALIGNED_SEQUENCES]: "The dataset type Aligned Sequences (without explicit ID) is designed to analyze " +
+    [TypingDataType.ALIGNED_SEQUENCES]: "The dataset type Aligned Sequences (without explicit ID) is designed to analyze " +
     "sequence data without having a predefined ID selected. The sequences need to be all of the same size. " +
     "Sequences of different sizes will be excluded.",
 
-    [DatasetType.SNP]: "The dataset type Single Nucleotide Polymorphism (SNP) is designed to analyze SNP data " +
+    [TypingDataType.SNP]: "The dataset type Single Nucleotide Polymorphism (SNP) is designed to analyze SNP data " +
     "based on the presence and absence of a SNP. The sequences need to be all of the same size. " +
     "Sequences of different sizes will be excluded.",
 
-    [DatasetType.SNP_WITHOUT_EXPLICIT_ID]: "The dataset type Single Nucleotide Polymorphism (SNP) (without " +
+    [TypingDataType.SNP_WITHOUT_EXPLICIT_ID]: "The dataset type Single Nucleotide Polymorphism (SNP) (without " +
     "explicit ID) is designed to analyze SNP data based on the presence and absence of a SNP, and no explicit ID " +
     "was attributed to the entire SNP profile. The sequences need to be all of the same size. Sequences of " +
     "different sizes will be excluded."

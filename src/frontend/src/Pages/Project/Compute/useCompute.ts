@@ -22,7 +22,6 @@ export function useCompute() {
             .catch((err) => setError(err.message))
             .finally(() => {
                 onWorkflowsUpdate()
-                navigate(-1)
             })
     }
 

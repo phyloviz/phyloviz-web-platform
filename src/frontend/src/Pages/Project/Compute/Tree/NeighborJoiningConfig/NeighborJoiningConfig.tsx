@@ -34,6 +34,9 @@ export default function NeighborJoiningConfig() {
         handleCancel,
         handleBack,
         handleNext,
+
+        triedSubmitting,
+
         error,
         clearError
     } = useNeighborJoiningConfig()
@@ -83,10 +86,12 @@ export default function NeighborJoiningConfig() {
                                         distances={distances}
                                         selectedDistance={selectedDistance}
                                         onDistanceChange={handleDistanceChange}
+                                        triedSubmitting={triedSubmitting}
                                     />
                                     : <NeighborJoiningConfigMethodStep
                                         selectedCriteria={selectedCriteria}
                                         onCriteriaChange={handleCriteriaChange}
+                                        triedSubmitting={triedSubmitting}
                                     />
                             }
                         </Box>

@@ -38,7 +38,7 @@ export function TypingDataFileTreeItem({nodeId, file}: TypingDataFileTreeItemPro
         />
         <DeleteResourceBackdrop
             open={deleteBackdropOpen}
-            title={"Delete Typing Data File?"}
+            title={`Delete Typing Data File with name '${file.name}'?`}
             subheader={"Are you sure you want to delete this typing data file? This action cannot be undone."}
             handleClose={handleDeleteBackdropClose}
             handleDelete={handleDelete}

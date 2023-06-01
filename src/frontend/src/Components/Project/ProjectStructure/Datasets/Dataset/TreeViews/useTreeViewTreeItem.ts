@@ -45,7 +45,9 @@ export function useTreeViewTreeItem(datasetId: string, treeView: TreeView) {
                     handleDeleteBackdropClose()
                     navigate(WebUiUris.project(projectId!))
                 })
-                .catch(error => setError(error.message))
+                .catch(error => {
+                    setError("An unexpected error occurred while deleting the tree view.")
+                })
         },
         error,
         clearError: () => setError(null)

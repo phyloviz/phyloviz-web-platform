@@ -34,6 +34,9 @@ export default function HierarchicalClusteringConfig() {
         handleCancel,
         handleBack,
         handleNext,
+
+        triedSubmitting,
+
         error,
         clearError
     } = useHierarchicalClusteringConfig()
@@ -83,6 +86,7 @@ export default function HierarchicalClusteringConfig() {
                                         distances={distances}
                                         selectedDistance={selectedDistance}
                                         onDistanceChange={handleDistanceChange}
+                                        triedSubmitting={triedSubmitting}
                                     />
                                     : <HierarchicalClusteringConfigMethodStep
                                         selectedMethod={selectedMethod}

@@ -2,10 +2,8 @@ import {get} from "../utils/apiFetch"
 import {WebApiUris} from "../WebApiUris"
 import {GetTypingDataSchemaOutputModel} from "./models/getTypingDataSchema/GetTypingDataSchemaOutputModel"
 import {GetTypingDataProfilesOutputModel} from "./models/getTypingDataProfiles/GetTypingDataProfilesOutputModel"
-import {GetTypingDataFileOutputModel} from "./models/getTypingDataFile/GetTypingDataFileOutputModel"
 import {GetIsolateDataKeysOutputModel} from "./models/getIsolateDataSchema/GetIsolateDataKeysOutputModel"
 import {GetIsolateDataRowsOutputModel} from "./models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel"
-import {GetIsolateDataFileOutputModel} from "./models/getIsolateDataFile/GetIsolateDataFileOutputModel"
 import {GetDistanceMatrixOutputModel} from "./models/getDistanceMatrix/GetDistanceMatrixOutputModel"
 import {GetTreeOutputModel} from "./models/getTree/GetTreeOutputModel"
 import {GetTreeViewOutputModel} from "./models/getTreeView/GetTreeViewOutputModel"
@@ -32,27 +30,17 @@ namespace VisualizationService {
      *
      * @param projectId The project id.
      * @param typingDataId The typing data id.
+     * @param limit The limit.
+     * @param offset The offset.
      * @returns The typing data profiles.
      */
     export async function getTypingDataProfiles(
         projectId: string,
-        typingDataId: string
+        typingDataId: string,
+        limit: number,
+        offset: number
     ): Promise<GetTypingDataProfilesOutputModel> {
-        return await get<GetTypingDataProfilesOutputModel>(WebApiUris.getTypingDataProfiles(projectId, typingDataId))
-    }
-
-    /**
-     * Get the typing data file.
-     *
-     * @param projectId The project id.
-     * @param typingDataId The typing data id.
-     * @returns The typing data file.
-     */
-    export async function getTypingDataFile(
-        projectId: string,
-        typingDataId: string
-    ): Promise<GetTypingDataFileOutputModel> {
-        return await get<GetTypingDataFileOutputModel>(WebApiUris.getTypingDataFile(projectId, typingDataId))
+        return await get<GetTypingDataProfilesOutputModel>(WebApiUris.getTypingDataProfiles(projectId, typingDataId, limit, offset))
     }
 
     /**
@@ -74,27 +62,17 @@ namespace VisualizationService {
      *
      * @param projectId The project id.
      * @param isolateDataId The isolate data id.
+     * @param limit The limit.
+     * @param offset The offset.
      * @returns The isolate data rows.
      */
     export async function getIsolateDataRows(
         projectId: string,
-        isolateDataId: string
+        isolateDataId: string,
+        limit: number,
+        offset: number
     ): Promise<GetIsolateDataRowsOutputModel> {
-        return await get<GetIsolateDataRowsOutputModel>(WebApiUris.getIsolateDataRows(projectId, isolateDataId))
-    }
-
-    /**
-     * Get the isolate data file.
-     *
-     * @param projectId The project id.
-     * @param isolateDataId The isolate data id.
-     * @returns The isolate data file.
-     */
-    export async function getIsolateDataFile(
-        projectId: string,
-        isolateDataId: string
-    ): Promise<GetIsolateDataFileOutputModel> {
-        return await get<GetIsolateDataFileOutputModel>(WebApiUris.getIsolateDataFile(projectId, isolateDataId))
+        return await get<GetIsolateDataRowsOutputModel>(WebApiUris.getIsolateDataRows(projectId, isolateDataId, limit, offset))
     }
 
     /**

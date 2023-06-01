@@ -10,7 +10,7 @@ import org.zalando.problem.Status;
 public class VisualizationExceptionHandler {
 
     /**
-     * Handles Bad Request Exceptions.
+     * Handles Indexing Needed Exceptions.
      *
      * @param e the exception
      * @return a Problem with the status BAD_REQUEST
@@ -18,9 +18,9 @@ public class VisualizationExceptionHandler {
     @ExceptionHandler(value = {
             IndexingNeededException.class
     })
-    public Problem handleBadRequestException(Exception e) {
+    public Problem handleIndexingNeededException(Exception e) {
         return Problem.builder()
-                .withTitle("Bad Request")
+                .withTitle("Indexing Needed")
                 .withDetail(e.getMessage())
                 .withStatus(Status.BAD_REQUEST)
                 .build();

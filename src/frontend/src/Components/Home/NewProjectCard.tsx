@@ -25,8 +25,7 @@ export function NewProjectCard() {
                 <strong>New Project</strong>
             </Typography>
             <Typography component="h1" variant="body1">
-                Create a new project, load a dataset and start exploring your data!
-                You need to be logged in to create a new project.
+                Create a new project, load a dataset <br/> and start exploring your data!
             </Typography>
             <Button
                 variant="contained"

@@ -821,7 +821,7 @@ paths:
                     progress: 0.5
                     data:
                       distanceMatrixId: 8039f350-e12f-4877-8887-67caa258a143
-  /projects/{projectId}/workflows/{workflowsId}:
+  /projects/{projectId}/workflows/{workflowId}:
     get:
       tags:
         - Compute > Workflows
@@ -832,7 +832,7 @@ paths:
           schema:
             type: string
           required: true
-        - name: workflowsId
+        - name: workflowId
           in: path
           schema:
             type: string

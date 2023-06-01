@@ -4,6 +4,7 @@ import Box from "@mui/material/Box"
 import IselLogo from "../../Assets/isel.png"
 import InescLogo from "../../Assets/inesc.png"
 import IstLogo from "../../Assets/ist.png"
+import ImmLogo from "../../Assets/imm.png"
 import * as React from "react"
 
 /**
@@ -31,6 +32,8 @@ export function ContactsCard() {
             Cátia Vaz (1,2) - <a href={"mailto:cvaz@cc.isel.ipl.pt"}>cvaz@cc.isel.ipl.pt</a>
             <br/>
             Alexandre P. Francisco (2,3) - <a href={"mailto:aplf@ist.utl.pt"}>aplf@ist.utl.pt</a>
+            <br/>
+            Mário Ramirez (4) - <a href={"mailto:ramirez@medicina.ulisboa.pt"}>ramirez@medicina.ulisboa.pt</a>
         </Typography>
         <Box sx={{
             mt: 2,
@@ -42,7 +45,8 @@ export function ContactsCard() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                width: "30%"
+                justifyContent: "space-between",
+                width: "25%"
             }}>
                 <img src={IselLogo} alt="ISEL Logo" width="60%"/>
                 <Typography component="h1" variant="body2">
@@ -54,7 +58,8 @@ export function ContactsCard() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                width: "30%"
+                justifyContent: "space-between",
+                width: "25%"
             }}>
                 <img src={InescLogo} alt="INESC-ID Logo" width="60%"/>
                 <Typography component="h1" variant="body2">
@@ -65,11 +70,25 @@ export function ContactsCard() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                width: "30%"
+                justifyContent: "space-between",
+                width: "25%"
             }}>
                 <img src={IstLogo} alt="IST Logo" width="60%"/>
                 <Typography component="h1" variant="body2">
                     (3) Instituto Superior Técnico, Universidade de Lisboa, Lisboa, Portugal
+                </Typography>
+            </Box>
+            <Box sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "25%"
+            }}>
+                <img src={ImmLogo} alt="IMM Logo" width="80%"/>
+                <Typography component="h1" variant="body2">
+                    (4) Instituto de Medicina Molecular João Lobo Antunes, Faculdade de Medicina, Universidade de
+                    Lisboa, Lisboa, Portugal
                 </Typography>
             </Box>
         </Box>

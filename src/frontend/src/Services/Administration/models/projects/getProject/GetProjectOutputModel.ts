@@ -1,19 +1,54 @@
-export interface TreeViewSource {
-    treeId: string
-    typingDataId: string | null
-    isolateDataId: string | null
+export interface GetProjectOutputModel {
+    projectId: string
+    name: string
+    description: string
+    owner: string
+    datasets: Dataset[]
+    files: ProjectFiles
 }
 
-export type TreeSourceType = "algorithmTypingData" | "algorithmDistanceMatrix" | "file"
+export type Project = GetProjectOutputModel
 
-export interface TreeSource {
 
+export interface Dataset {
+    datasetId: string
+    name: string
+    description: string
+    typingDataId: string
+    isolateDataId: string | null
+    isolateDataKey: string | null
+    distanceMatrices: DistanceMatrix[]
+    trees: Tree[]
+    treeViews: TreeView[]
+}
+
+export interface DistanceMatrix {
+    distanceMatrixId: string
+    name: string
+    sourceType: DistanceMatrixSourceType
+    source: DistanceMatrixSource
 }
 
 export type DistanceMatrixSourceType = "function"
 
 export interface DistanceMatrixSource {
+}
 
+export interface FunctionDistanceMatrixSource extends DistanceMatrixSource {
+    function: string
+}
+
+
+export interface Tree {
+    treeId: string
+    name: string
+    sourceType: TreeSourceType
+    source: TreeSource
+}
+
+export type TreeSourceType = "algorithm_typing_data" | "algorithm_distance_matrix" | "file"
+
+export interface TreeSource {
 }
 
 export interface AlgorithmTypingDataTreeSource extends TreeSource {
@@ -32,9 +67,6 @@ export interface FileTreeSource extends TreeSource {
     fileName: string
 }
 
-export interface FunctionDistanceMatrixSource extends DistanceMatrixSource {
-    function: string
-}
 
 export interface TreeView {
     treeViewId: string
@@ -43,31 +75,10 @@ export interface TreeView {
     source: TreeViewSource
 }
 
-export interface Tree {
+export interface TreeViewSource {
     treeId: string
-    name: string
-    sourceType: TreeSourceType
-    source: TreeSource
 }
 
-export interface DistanceMatrix {
-    distanceMatrixId: string
-    name: string
-    sourceType: DistanceMatrixSourceType
-    source: DistanceMatrixSource
-}
-
-export interface Dataset {
-    datasetId: string
-    name: string
-    description: string
-    typingDataId: string
-    isolateDataId: string | null
-    isolateDataKey: string | null
-    distanceMatrices: DistanceMatrix[]
-    trees: Tree[]
-    treeViews: TreeView[]
-}
 
 export interface TypingDataFile {
     typingDataId: string
@@ -86,11 +97,9 @@ export interface ProjectFiles {
 }
 
 export interface CascadingInfoSource {
-
 }
 
 export interface CascadingInfoTreeSource {
-
 }
 
 export interface CascadingInfoTreeView {
@@ -102,8 +111,6 @@ export interface CascadingInfoTreeView {
 
 export interface CascadingInfoTreeViewSource extends CascadingInfoSource {
     tree: CascadingInfoTree
-    typingDataId: string | null
-    isolateDataId: string | null
 }
 
 export interface CascadingInfoTree {
@@ -129,13 +136,3 @@ export interface CascadingInfoFileTreeSource extends CascadingInfoTreeSource {
     fileName: string
 }
 
-export interface GetProjectOutputModel {
-    projectId: string
-    name: string
-    description: string
-    owner: string
-    datasets: Dataset[]
-    files: ProjectFiles
-}
-
-export type Project = GetProjectOutputModel

@@ -72,8 +72,8 @@ export default function DistanceMatrix() {
                                 <Select
                                     labelId="order"
                                     label="Order"
-                                    //TODO: value={}
-                                    //TODO: onChange={}
+                                    value=""
+                                    onChange={() => {}}
                                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                                 >
                                     <MenuItem value={"st"}>ST</MenuItem>

@@ -10,6 +10,13 @@ export function TreeViewSearchCard({onSearch}: { onSearch: (searchST: string) =>
     const [searchST, setSearchST] = React.useState<string>("")
     const [searchSTError, setSearchSTError] = React.useState<boolean>(false)
 
+    function search() {
+        if (!onSearch(searchST))
+            setSearchSTError(true)
+        else
+            setSearchSTError(false)
+    }
+
     return <Box sx={{
         position: "absolute",
         bottom: 0,
@@ -31,10 +38,7 @@ export function TreeViewSearchCard({onSearch}: { onSearch: (searchST: string) =>
             onChange={(e) => setSearchST(e.target.value)}
             onKeyPress={(e) => {
                 if (e.key === 'Enter') {
-                    if (!onSearch(searchST))
-                        setSearchSTError(true)
-                    else
-                        setSearchSTError(false)
+                    search()
                 }
             }}
             variant={"standard"}
@@ -42,10 +46,7 @@ export function TreeViewSearchCard({onSearch}: { onSearch: (searchST: string) =>
             error={searchSTError}
         />
         <IconButton type="button" size={"small"} sx={{p: '10px'}} onClick={() => {
-            if (!onSearch(searchST))
-                setSearchSTError(true)
-            else
-                setSearchSTError(false)
+            search()
         }}>
             <Search/>
         </IconButton>

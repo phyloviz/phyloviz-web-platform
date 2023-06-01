@@ -14,15 +14,19 @@ import {
  * Hook for Tree page.
  */
 export function useTree() {
-    const {projectId, datasetId, treeId} = useParams<{ projectId: string, datasetId: string, treeId: string }>()
-    const {project} = useProjectContext()
+    const pathParams = useParams<{ projectId: string, datasetId: string, treeId: string }>()
+    const projectId = pathParams.projectId!
+    const datasetId = pathParams.datasetId!
+    const treeId = pathParams.treeId!
 
-    const tree: Tree = project?.datasets
-        .find(dataset => dataset.datasetId === datasetId)?.trees
+    const {project} = useProjectContext()
+    const dataset = project?.datasets.find(dataset => dataset.datasetId === datasetId)
+
+    const tree: Tree = dataset?.trees
         .find(tree => tree.treeId === treeId) as Tree
 
-    const distanceMatrix = tree.sourceType === "algorithmDistanceMatrix" ? project?.datasets
-            .find(dataset => dataset.datasetId === datasetId)?.distanceMatrices
+    const distanceMatrix = tree.sourceType === "algorithm_distance_matrix"
+        ? dataset?.distanceMatrices
             .find(distanceMatrix =>
                 distanceMatrix.distanceMatrixId === (tree.source as AlgorithmDistanceMatrixTreeSource).distanceMatrixId) as DistanceMatrix
         : undefined
@@ -32,9 +36,9 @@ export function useTree() {
         name: tree.name,
         sourceType: tree.sourceType,
         source:
-            tree.sourceType === "algorithmTypingData"
+            tree.sourceType === "algorithm_typing_data"
                 ? tree.source as CascadingInfoAlgorithmTypingDataTreeSource
-                : tree.sourceType === "algorithmDistanceMatrix"
+                : tree.sourceType === "algorithm_distance_matrix"
                     ? {
                         algorithm: (tree.source as AlgorithmDistanceMatrixTreeSource).algorithm,
                         distanceMatrix: distanceMatrix,

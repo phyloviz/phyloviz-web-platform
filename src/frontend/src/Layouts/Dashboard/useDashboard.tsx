@@ -24,11 +24,11 @@ export function useDashboard() {
             const response = await fetch(WebApiUris.getSession, {
                 method: 'GET'
             })
-            const data = await response.json()
 
-            if (response.status === 200)
+            if (response.status === 200) {
+                const data = await response.json()
                 sessionManager.setSession(data)
-            else
+            } else
                 sessionManager.clearSession()
         }
 

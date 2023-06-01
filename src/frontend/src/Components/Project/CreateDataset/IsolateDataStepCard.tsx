@@ -24,6 +24,7 @@ interface IsolateDataStepCardProps {
     isolateDataKeys: string[]
     selectedIsolateDataKey: string | null
     onIsolateDataKeyChange: (event: SelectChangeEvent, child: ReactNode) => void
+    triedSubmitting: boolean
 }
 
 /**
@@ -37,7 +38,8 @@ export function IsolateDataStepCard(
         onFileUploaderChange,
         isolateDataKeys,
         selectedIsolateDataKey,
-        onIsolateDataKeyChange
+        onIsolateDataKeyChange,
+        triedSubmitting
     }: IsolateDataStepCardProps
 ) {
     return (
@@ -79,6 +81,7 @@ export function IsolateDataStepCard(
                     label="Key"
                     value={selectedIsolateDataKey ?? ""}
                     onChange={onIsolateDataKeyChange}
+                    error={triedSubmitting && !!selectedIsolateData && !selectedIsolateDataKey}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
                     {isolateDataKeys.map((isolateDataKey) => (
@@ -93,7 +96,7 @@ export function IsolateDataStepCard(
                 further represent it on the algorithm. This file should be a tab separated file with the first row with
                 column headers (field names). One of the fields should be the Sequence identifier. Choose this field in
                 the Key drop down menu to link the ancillary data to the allelic profile data.
-                If you don't have any available data or don't wish do load any leave this fields blank an press Finish.
+                If you don't have any available data or don't wish do load any leave these fields blank an press Finish.
             </Typography>
         </>
     )

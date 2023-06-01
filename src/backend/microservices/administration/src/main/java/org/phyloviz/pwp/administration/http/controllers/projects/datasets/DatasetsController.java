@@ -113,20 +113,21 @@ public class DatasetsController {
     /**
      * Updates a dataset.
      *
-     * @param projectId the id of the project to which the dataset belongs
-     * @param datasetId the id of the dataset to be updated
-     * @param user      the user that is updating the dataset
+     * @param projectId  the id of the project to which the dataset belongs
+     * @param datasetId  the id of the dataset to be updated
+     * @param inputModel the input model with the dataset information to be updated
+     * @param user       the user that is updating the dataset
      * @return information about the update
      */
     @PatchMapping("/projects/{projectId}/datasets/{datasetId}")
     public UpdateDatasetOutputModel updateDataset(
             @PathVariable String projectId,
             @PathVariable String datasetId,
-            @RequestBody UpdateDatasetInputModel updateDatasetInputModel,
+            @RequestBody UpdateDatasetInputModel inputModel,
             User user
     ) {
         UpdateDatasetOutput updateDatasetOutput = datasetService.updateDataset(
-                updateDatasetInputModel.getName(), updateDatasetInputModel.getDescription(),
+                inputModel.getName(), inputModel.getDescription(),
                 projectId, datasetId, user.getId()
         );
 

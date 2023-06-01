@@ -36,6 +36,12 @@ import {UpdateTreeInputModel} from "./models/trees/updateTree/UpdateTreeInputMod
 import {UpdateTreeOutputModel} from "./models/trees/updateTree/UpdateTreeOutputModel";
 import {UpdateTreeViewInputModel} from "./models/treeViews/updateTreeView/UpdateTreeViewInputModel";
 import {UpdateTreeViewOutputModel} from "./models/treeViews/updateTreeView/UpdateTreeViewOutputModel";
+import {
+    SetIsolateDataOfDatasetInputModel
+} from "./models/datasets/setIsolateDataOfDataset/SetIsolateDataOfDatasetInputModel";
+import {
+    SetIsolateDataOfDatasetOutputModel
+} from "./models/datasets/setIsolateDataOfDataset/SetIsolateDataOfDatasetOutputModel";
 
 namespace AdministrationService {
 
@@ -342,17 +348,36 @@ namespace AdministrationService {
      *
      * @param projectId the id of the project to which the dataset belongs
      * @param datasetId the id of the dataset to be updated
-     * @param updateDatasetInputModel the input model for updating a dataset
+     * @param inputModel the input model with the dataset information to be updated
      * @return information about the update
      */
     export async function updateDataset(
         projectId: string,
         datasetId: string,
-        updateDatasetInputModel: UpdateDatasetInputModel
+        inputModel: UpdateDatasetInputModel
     ): Promise<UpdateDatasetOutputModel> {
         return await patch<UpdateDatasetOutputModel>(
             WebApiUris.updateDataset(projectId, datasetId),
-            JSON.stringify(updateDatasetInputModel)
+            JSON.stringify(inputModel)
+        )
+    }
+
+    /**
+     * Sets the isolate data of a dataset.
+     *
+     * @param projectId  the id of the project to which the dataset belongs
+     * @param datasetId  the id of the dataset to be updated
+     * @param inputModel the input model with the isolate data information to be set
+     * @return information about the update
+     */
+    export async function setIsolateDataOfDataset(
+        projectId: string,
+        datasetId: string,
+        inputModel: SetIsolateDataOfDatasetInputModel
+    ): Promise<SetIsolateDataOfDatasetOutputModel> {
+        return await patch<SetIsolateDataOfDatasetOutputModel>(
+            WebApiUris.setIsolateDataOfDataset(projectId, datasetId),
+            JSON.stringify(inputModel)
         )
     }
 }

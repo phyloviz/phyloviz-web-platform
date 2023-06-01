@@ -5,7 +5,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import {styled} from "@mui/material/styles"
 import IconButton from "@mui/material/IconButton"
 import {CascadingInfoTree} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
-import {TreeInfo} from "../Tree/TreeInfo";
+import {TreeInfo} from "./TreeInfo";
 
 /**
  * Props for the TreeInfoCard component.
@@ -68,7 +68,7 @@ interface ExpandMoreProps extends IconButtonProps {
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
     const {expand, ...other} = props
-    return <IconButton {...other} />
+    return <IconButton {...other} component={"span"}/>
 })(({theme, expand}) => ({
     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
     marginLeft: 'auto',

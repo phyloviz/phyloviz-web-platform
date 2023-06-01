@@ -34,6 +34,8 @@ export function useHierarchicalClusteringConfig() {
 
     const [selectedMethod, setSelectedMethod] = useState<string | null>(null)
 
+    const [triedSubmitting, setTriedSubmitting] = useState<boolean>(false)
+
     const {createWorkflow} = useCompute()
     const [error, setError] = useState<string | null>(null)
 
@@ -74,25 +76,32 @@ export function useHierarchicalClusteringConfig() {
             }
         },
         handleNext: () => {
+            setError(null)
+
             if (step === HierarchicalClusteringConfigStep.DISTANCE) {
+                setTriedSubmitting(true)
+                if (selectedDistance === null) {
+                    setError("Please select a distance matrix.")
+                    return
+                }
+                setTriedSubmitting(false)
+
                 setStep(HierarchicalClusteringConfigStep.METHOD)
                 setCurrStep(1)
                 return
             }
-
-            if (selectedDistance === null) {
-                setError("Please select a distance matrix.")
-                return
-            }
-
-            if (selectedMethod === null) {
-                setError("Please select a method.")
-                return
+            else if (step === HierarchicalClusteringConfigStep.METHOD) {
+                setTriedSubmitting(true)
+                if (selectedMethod === null) {
+                    setError("Please select a method.")
+                    return
+                }
+                setTriedSubmitting(false)
             }
 
             createWorkflow(
                 {
-                    type: "compute-tree",
+                    type: "compute-tree-and-index",
                     properties: {
                         datasetId: datasetId,
                         distanceMatrixId: selectedDistance,
@@ -101,6 +110,7 @@ export function useHierarchicalClusteringConfig() {
                 }
             )
         },
+        triedSubmitting,
         error,
         clearError: () => setError(null)
     }

@@ -33,8 +33,8 @@ import ComputeHammingDistance
 import EditProject from "./Pages/Project/EditProject/EditProject";
 import EditDataset from "./Pages/Project/EditDataset/EditDataset";
 import {ComputeTreeView} from "./Pages/Project/Compute/TreeView/ComputeTreeView";
-import TypingDataFilter from "./Pages/Project/TreeView/TypingDataFilter/TypingDataFilter";
-import IsolateDataFilter from "./Pages/Project/TreeView/IsolateDataFilter/IsolateDataFilter";
+import TypingDataFilter from "./Pages/Project/TreeView/Filters/TypingDataFilter/TypingDataFilter";
+import IsolateDataFilter from "./Pages/Project/TreeView/Filters/IsolateDataFilter/IsolateDataFilter";
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;

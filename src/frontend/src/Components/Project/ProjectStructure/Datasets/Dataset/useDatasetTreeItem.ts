@@ -102,7 +102,7 @@ export function useDatasetTreeItem(dataset: Dataset) {
             AdministrationService.deleteDataset(projectId!, dataset.datasetId)
                 .then(() => {
                     handleDeleteBackdropClose()
-                    navigate(WebUiUris.project(projectId!))
+                    navigate(WebUiUris.project(projectId!)) // TODO Should we actually even leave the page?
                 })
                 .catch(error => setError(error.message))
         },

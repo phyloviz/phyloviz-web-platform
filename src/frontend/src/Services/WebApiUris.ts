@@ -19,6 +19,7 @@ export namespace WebApiUris {
     export const deleteDataset = (projectId: string, datasetId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}`
     export const getDatasets = (projectId: string) => `${API_BASE_URL}/projects/${projectId}/datasets`
     export const updateDataset = (projectId: string, datasetId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}`
+    export const setIsolateDataOfDataset = (projectId: string, datasetId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/isolateData`
 
     export const deleteDistanceMatrix = (projectId: string, datasetId: string, distanceMatrixId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/distance-matrices/${distanceMatrixId}`
     export const updateDistanceMatrix = (projectId: string, datasetId: string, distanceMatrixId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/distance-matrices/${distanceMatrixId}`
@@ -29,11 +30,11 @@ export namespace WebApiUris {
     export const deleteTreeView = (projectId: string, datasetId: string, treeViewId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/tree-views/${treeViewId}`
     export const updateTreeView = (projectId: string, datasetId: string, treeViewId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/tree-views/${treeViewId}`
 
-    export const deleteTypingData = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/typing-data/${typingDataId}`
-    export const updateTypingData = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/typing-data/${typingDataId}`
+    export const deleteTypingData = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}`
+    export const updateTypingData = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}`
 
-    export const deleteIsolateData = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/isolate-data/${isolateDataId}`
-    export const updateIsolateData = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/isolate-data/${isolateDataId}`
+    export const deleteIsolateData = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}`
+    export const updateIsolateData = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}`
 
 
     // Compute
@@ -44,12 +45,10 @@ export namespace WebApiUris {
 
     // Visualization 
     export const getTypingDataSchema = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}`
-    export const getTypingDataProfiles = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}/profiles`
-    export const getTypingDataFile = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}/file`
+    export const getTypingDataProfiles = (projectId: string, typingDataId: string, limit: number, offset: number) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}/profiles?limit=${limit}&offset=${offset}`
 
     export const getIsolateDataKeys = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}`
-    export const getIsolateDataRows = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}/rows`
-    export const getIsolateDataFile = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}/file`
+    export const getIsolateDataRows = (projectId: string, isolateDataId: string, limit: number, offset: number) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}/rows?limit=${limit}&offset=${offset}`
 
     export const getDistanceMatrix = (projectId: string, datasetId: string, distanceMatrixId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/distance-matrices/${distanceMatrixId}`
     export const getTree = (projectId: string, datasetId: string, treeId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/trees/${treeId}`
@@ -58,5 +57,7 @@ export namespace WebApiUris {
 
     // File Transfer
     export const uploadTypingData = (projectId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data`
+    export const downloadTypingData = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}/file`
     export const uploadIsolateData = (projectId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data`
+    export const downloadIsolateData = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}/file`
 }

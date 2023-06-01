@@ -1,5 +1,16 @@
 import * as React from "react"
-import {Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material"
+import {
+    Button,
+    Container,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    InputLabel,
+    MenuItem,
+    Radio,
+    RadioGroup,
+    Select
+} from "@mui/material"
 import Box from "@mui/material/Box"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
@@ -9,6 +20,7 @@ import CancelIcon from "@mui/icons-material/Cancel"
 import {FileType, useUploadFiles} from "./useUploadFiles"
 import LoadingSpinner from "../../../Components/Shared/LoadingSpinner"
 import {ErrorAlert} from "../../../Components/Shared/ErrorAlert"
+import {TypingDataType} from "../CreateDataset/useCreateDataset";
 
 /**
  * Upload Files page.
@@ -16,7 +28,9 @@ import {ErrorAlert} from "../../../Components/Shared/ErrorAlert"
 export default function UploadFiles() {
     const {
         fileType,
+        typingDataType,
         handleFileTypeChange,
+        handleTypingDataTypeChange,
         handleFileChange,
         handleCancel,
         handleSubmit,
@@ -73,6 +87,28 @@ export default function UploadFiles() {
                                     }
                                 </RadioGroup>
                             </FormControl>
+                            {fileType === FileType.TYPING_DATA &&
+                                (
+                                    <FormControl required sx={{width: "100%", mb: 1}}>
+                                        <InputLabel id="typing-data-type">Typing Data Type</InputLabel>
+                                        <Select
+                                            labelId="typing-data-type"
+                                            value={typingDataType.valueOf()}
+                                            label="Typing Data Type"
+                                            onChange={(event) => handleTypingDataTypeChange(event.target.value as TypingDataType)}
+                                            MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
+                                        >
+                                            {
+                                                Object.values(TypingDataType).map((typingDataType) => (
+                                                    <MenuItem
+                                                        key={typingDataType.valueOf()}
+                                                        value={typingDataType.valueOf()}>{typingDataType.valueOf()}</MenuItem>
+                                                ))
+                                            }
+                                        </Select>
+                                    </FormControl>
+                                )
+                            }
 
                             <FileUploader handleChange={handleFileChange} name="file" required/>
                             <ErrorAlert error={error} clearError={clearError}/>

@@ -15,6 +15,7 @@ interface NeighborJoiningConfigDistanceStepProps {
     distances: DistanceMatrix[]
     selectedDistance: string | null
     onDistanceChange: (event: SelectChangeEvent, child: ReactNode) => void
+    triedSubmitting: boolean
 }
 
 /**
@@ -24,7 +25,8 @@ export function NeighborJoiningConfigDistanceStep(
     {
         distances,
         selectedDistance,
-        onDistanceChange
+        onDistanceChange,
+        triedSubmitting
     }: NeighborJoiningConfigDistanceStepProps
 ) {
     return (
@@ -38,6 +40,7 @@ export function NeighborJoiningConfigDistanceStep(
                     labelId="distance"
                     label="Distance"
                     value={selectedDistance ?? ""}
+                    error={selectedDistance === null && triedSubmitting}
                     onChange={onDistanceChange}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >

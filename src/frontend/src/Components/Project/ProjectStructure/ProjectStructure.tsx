@@ -2,17 +2,18 @@ import * as React from "react"
 import {TreeView} from "@mui/lab"
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
-import {WorkflowsTreeItem} from "./Workflows/WorkflowsTreeItem"
 import {Project} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {Workflow} from "../../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
 import {Edit, Info} from "@mui/icons-material"
 import {WebUiUris} from "../../../Pages/WebUiUris"
-import {DatasetsTreeItem} from "./Datasets/DatasetsTreeItem"
 import {StyledTreeItem} from "./Utils/StyledTreeItem"
-import {useNavigate} from "react-router-dom"
-import LoadingSpinner from "../../Shared/LoadingSpinner"
-import {FilesTreeItem} from "./Files/FilesTreeItem"
 import {ProjectIcon} from "../../Shared/Icons";
+import {useNavigate} from "react-router-dom"
+import {Resizable} from "re-resizable"
+import LoadingSpinner from "../../Shared/LoadingSpinner";
+import {DatasetsTreeItem} from "./Datasets/DatasetsTreeItem";
+import {FilesTreeItem} from "./Files/FilesTreeItem";
+import {WorkflowsTreeItem} from "./Workflows/WorkflowsTreeItem";
 
 /**
  * Properties of the project structure.
@@ -33,20 +34,35 @@ interface ProjectStructureProps {
  */
 export function ProjectStructure({project, workflows, loading}: ProjectStructureProps) {
     const navigate = useNavigate()
-    // TODO: Make the tree view responsive (collapse, or hide, idk)
 
-    return (<>
+    const [projectStructureWidth, setProjectStructureWidth] = React.useState("20%")
+
+    return <Resizable
+        size={{width: projectStructureWidth, height: "100%"}}
+        minWidth={"5%"}
+        maxWidth={"50%"}
+        onResizeStop={(e, direction, ref, d) => {
+            setProjectStructureWidth((width) => width + d.width)
+        }}
+        enable={{
+            top: false,
+            right: true,
+            bottom: false,
+            left: false,
+        }}
+    >
         <TreeView
-            defaultExpanded={['fileManager', 'workflows']}
+            defaultExpanded={['fileManager']}
             defaultCollapseIcon={<ArrowDropDownIcon/>}
             defaultExpandIcon={<ArrowRightIcon/>}
             sx={{
                 height: '100%',
-                maxWidth: 300,
+                width: '100%',
                 flexGrow: 1,
                 borderRight: 1,
                 borderBottom: 1,
                 borderColor: 'divider',
+                overflowX: 'auto',
                 overflowY: 'auto'
             }}
         >
@@ -78,6 +94,6 @@ export function ProjectStructure({project, workflows, loading}: ProjectStructure
                 }
             </StyledTreeItem>
         </TreeView>
-    </>)
+    </Resizable>
 }
 

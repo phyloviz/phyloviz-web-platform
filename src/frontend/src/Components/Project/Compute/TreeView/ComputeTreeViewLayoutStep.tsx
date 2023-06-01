@@ -14,6 +14,7 @@ import {ComputeTreeViewLayout} from "../../../../Pages/Project/Compute/TreeView/
 interface ComputeTreeViewLayoutStepProps {
     selectedLayout: string | null
     onLayoutChange: (event: SelectChangeEvent, child: ReactNode) => void
+    triedSubmitting: boolean
 }
 
 /**
@@ -22,7 +23,8 @@ interface ComputeTreeViewLayoutStepProps {
 export function ComputeTreeViewLayoutStep(
     {
         selectedLayout,
-        onLayoutChange
+        onLayoutChange,
+        triedSubmitting
     }: ComputeTreeViewLayoutStepProps
 ) {
     return (
@@ -36,6 +38,7 @@ export function ComputeTreeViewLayoutStep(
                     labelId="layout"
                     label="Layout"
                     value={selectedLayout ?? ""}
+                    error={selectedLayout === null && triedSubmitting}
                     onChange={onLayoutChange}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
@@ -59,5 +62,5 @@ const layoutDescriptions = {
 
     [ComputeTreeViewLayout.RADIAL]: "Radial layout is a tree layout where the nodes are placed on concentric circles. The root node is placed at the center of the first circle. The children of the root node are placed on the second circle, and so on.",
 
-    [ComputeTreeViewLayout.DENDROGRAM]: "Denrogram layout is a tree layout where the nodes are placed on horizontal lines. The root node is placed on the first line. The children of the root node are placed on the second line, and so on.",
+    [ComputeTreeViewLayout.PHYLOGRAM]: "Phylogram layout is a tree layout where the nodes are placed on horizontal lines. The root node is placed on the first line. The children of the root node are placed on the second line, and so on.",
 }

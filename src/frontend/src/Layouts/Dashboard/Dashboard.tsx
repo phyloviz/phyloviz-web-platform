@@ -16,6 +16,8 @@ import ListItemText from "@mui/material/ListItemText"
 import Logo from "../../Assets/logo.png"
 import AccountMenu from "./components/AccountMenu"
 import {useDashboard} from "./useDashboard"
+import {Button, ButtonBase} from "@mui/material";
+import {WebUiUris} from "../../Pages/WebUiUris";
 
 
 /**
@@ -56,20 +58,39 @@ export default function Dashboard({children}: DashboardProps) {
                         <MenuIcon/>
                     </IconButton>
                     <Box sx={{flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <img alt="logo" src={Logo} width={40} height={40} style={{marginRight: '10px'}}/>
-                        <Typography
-                            component="h1"
-                            variant="body1"
-                            color="inherit"
-                            noWrap
-                        >
-                            <strong>PHYLOViZ Web Platform</strong>
-                        </Typography>
+                        <ButtonBase onClick={() => navigate(WebUiUris.HOME)} sx={{display: 'flex', alignItems: 'center'}}>
+                            <img alt="logo" src={Logo} width={40} height={40} style={{marginRight: '10px'}}/>
+                            <Typography component="h1" variant="body1" color="inherit" noWrap>
+                                <strong>PHYLOViZ Web Platform</strong>
+                            </Typography>
+                        </ButtonBase>
                     </Box>
-                    <AccountMenu
-                        avatar={loggedIn && session?.picture ? session!.picture : ""}
-                        settings={loggedIn ? authSettings : nonAuthSettings}
-                    />
+                    {
+                        loggedIn
+                            ? <AccountMenu
+                                avatar={loggedIn && session?.picture ? session.picture : ""}
+                                settings={authSettings}
+                            />
+                            : <>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size={"small"}
+                                    onClick={() => window.location.href = WebUiUris.SIGN_UP} // TODO: Fix Sign Up URI
+                                >
+                                    Sign Up
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size={"small"}
+                                    onClick={() => window.location.href = WebUiUris.LOGIN}
+                                >
+                                    Sign In
+                                </Button>
+                            </>
+                    }
+
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>

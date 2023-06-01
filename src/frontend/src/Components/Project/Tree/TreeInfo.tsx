@@ -36,7 +36,7 @@ export function TreeInfo({tree, distanceMatrixInfoExpanded, handleDistanceMatrix
             <strong>Name:</strong> {tree.name}
         </Typography>
         {
-            tree.sourceType === "algorithmDistanceMatrix" ?
+            tree.sourceType === "algorithm_distance_matrix" ?
                 <div>
                     <Typography variant="body2" textAlign={"left"} gutterBottom>
                         <strong>Algorithm:</strong> {
@@ -60,7 +60,7 @@ export function TreeInfo({tree, distanceMatrixInfoExpanded, handleDistanceMatrix
                     </List>
                 </div>
                 :
-                tree.sourceType === "algorithmTypingData" ?
+                tree.sourceType === "algorithm_typing_data" ?
                     <div>
                         <Typography variant="body2" textAlign={"left"} gutterBottom>
                             <strong>Algorithm:</strong> {
@@ -103,7 +103,7 @@ interface ExpandMoreProps extends IconButtonProps {
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
     const {expand, ...other} = props
-    return <IconButton {...other} />
+    return <IconButton {...other} component={"span"}/>
 })(({theme, expand}) => ({
     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
     marginLeft: 'auto',

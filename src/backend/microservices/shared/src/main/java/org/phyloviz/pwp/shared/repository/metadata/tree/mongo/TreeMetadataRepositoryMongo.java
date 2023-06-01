@@ -55,6 +55,6 @@ public class TreeMetadataRepositoryMongo implements TreeMetadataRepository {
 
     @Override
     public boolean existsByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId) {
-        return treeMetadataMongoRepository.existsByDatasetIdAndDistanceMatrixIdSource(datasetId, distanceMatrixId);
+        return treeMetadataMongoRepository.findByDatasetIdAndDistanceMatrixIdSource(datasetId, distanceMatrixId).isPresent();
     }
 }

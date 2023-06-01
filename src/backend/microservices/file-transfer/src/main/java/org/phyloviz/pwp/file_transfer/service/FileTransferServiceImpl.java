@@ -150,6 +150,7 @@ public class FileTransferServiceImpl implements FileTransferService {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
             String firstLine = reader.readLine();
+            reader.close();
 
             return List.of(firstLine.split("\t+"));
         } catch (IOException e) {

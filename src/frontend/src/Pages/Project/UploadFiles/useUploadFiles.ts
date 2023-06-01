@@ -4,6 +4,7 @@ import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../WebUiUris"
 import {useProjectContext} from "../useProject"
 import FileTransferService from "../../../Services/FileTransfer/FileTransferService";
+import {TypingDataType} from "../CreateDataset/useCreateDataset";
 
 export enum FileType {
     // noinspection JSUnusedGlobalSymbols
@@ -18,7 +19,8 @@ export enum FileType {
 export function useUploadFiles() {
     const {projectId} = useParams<{ projectId: string }>()
     const {onFileStructureUpdate} = useProjectContext()
-    const [fileType, setfileType] = useState<FileType>(FileType.TYPING_DATA)
+    const [fileType, setFileType] = useState<FileType>(FileType.TYPING_DATA)
+    const [typingDataType, setTypingDataType] = useState<TypingDataType>(TypingDataType.MLST)
     const [file, setFile] = useState<File | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [isUploading, setIsUploading] = useState(false)
@@ -27,7 +29,9 @@ export function useUploadFiles() {
 
     return {
         fileType,
-        handleFileTypeChange: (value: FileType) => setfileType(value),
+        typingDataType,
+        handleFileTypeChange: (value: FileType) => setFileType(value),
+        handleTypingDataTypeChange: (value: TypingDataType) => setTypingDataType(value),
         handleFileChange: (file: React.SetStateAction<File | null>) => setFile(file),
         handleCancel: () => navigate(-1),
         handleSubmit: () => {
@@ -39,7 +43,7 @@ export function useUploadFiles() {
             setIsUploading(true)
 
             if (fileType === FileType.TYPING_DATA)
-                FileTransferService.uploadTypingData(projectId!, file)
+                FileTransferService.uploadTypingData(projectId!, file, typingDataType)
                     .then(() => {
                         onFileStructureUpdate()
                         navigate(WebUiUris.project(projectId!))

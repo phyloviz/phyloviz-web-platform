@@ -27,6 +27,9 @@ export function ComputeTreeView() {
         handleCancel,
         handleBack,
         handleNext,
+
+        triedSubmitting,
+
         error,
         clearError
     } = useComputeTreeView()
@@ -76,10 +79,12 @@ export function ComputeTreeView() {
                                         trees={trees}
                                         selectedTree={selectedTree}
                                         onTreeChange={handleTreeChange}
+                                        triedSubmitting={triedSubmitting}
                                     />
                                     : <ComputeTreeViewLayoutStep
                                         selectedLayout={selectedLayout}
                                         onLayoutChange={handleLayoutChange}
+                                        triedSubmitting={triedSubmitting}
                                     />
                             }
                         </Box>
