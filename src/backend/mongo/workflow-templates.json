@@ -103,6 +103,150 @@
     ]
   },
   {
+    "name": "compute-tree-without-distance-matrix",
+    "description": "Compute Tree Without Distance Matrix Workflow",
+    "arguments": {
+      "datasetId": {
+        "type": "datasetId"
+      },
+      "function": {
+        "type": "string",
+        "allowed-values": [
+          "hamming",
+          "grapetree",
+          "kimura"
+        ]
+      },
+      "algorithm": {
+        "type": "string",
+        "allowed-values": [
+          "goeburst",
+          "edmonds",
+          "sl",
+          "cl",
+          "upgma",
+          "upgmc",
+          "wpgma",
+          "wpgmc",
+          "saitounei",
+          "studierkepler",
+          "unj"
+        ]
+      }
+    },
+    "tasks": [
+      {
+        "taskId": "download",
+        "tool": "downloader",
+        "action": {
+          "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
+        },
+        "children": [
+          "treeCalculation"
+        ]
+      },
+      {
+        "taskId": "treeCalculation",
+        "tool": "phylolib",
+        "action": {
+          "command": "algorithm ${algorithm} --out=newick:/phyloviz-web-platform/tree.txt : distance ${function} --dataset=ml:/phyloviz-web-platform/typing_dataset.txt"
+        },
+        "children": [
+          "upload"
+        ]
+      },
+      {
+        "taskId": "upload",
+        "tool": "uploader",
+        "action": {
+          "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree --source-type=algorithm-typing-data --algorithm=${algorithm} --parameters={}"
+        }
+      }
+    ]
+  },
+  {
+    "name": "compute-distance-matrix-and-tree",
+    "description": "Compute Distance Matrix and Tree Workflow",
+    "arguments": {
+      "datasetId": {
+        "type": "datasetId"
+      },
+      "function": {
+        "type": "string",
+        "allowed-values": [
+          "hamming",
+          "grapetree",
+          "kimura"
+        ]
+      },
+      "algorithm": {
+        "type": "string",
+        "allowed-values": [
+          "goeburst",
+          "edmonds",
+          "sl",
+          "cl",
+          "upgma",
+          "upgmc",
+          "wpgma",
+          "wpgmc",
+          "saitounei",
+          "studierkepler",
+          "unj"
+        ]
+      }
+    },
+    "tasks": [
+      {
+        "taskId": "download",
+        "tool": "downloader",
+        "action": {
+          "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
+        },
+        "children": [
+          "distanceCalculation"
+        ]
+      },
+      {
+        "taskId": "distanceCalculation",
+        "tool": "phylolib",
+        "action": {
+          "command": "distance ${function} --dataset=ml:/phyloviz-web-platform/typing_dataset.txt --out=symmetric:/phyloviz-web-platform/distance_matrix.txt"
+        },
+        "children": [
+          "upload_distance_matrix"
+        ]
+      },
+      {
+        "taskId": "upload_distance_matrix",
+        "tool": "uploader",
+        "action": {
+          "command": " --file-path=/phyloviz-web-platform/distance_matrix.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=distance-matrix --source-type=function --function=${function}"
+        },
+        "children": [
+          "treeCalculation"
+        ]
+      },
+      {
+        "taskId": "treeCalculation",
+        "tool": "phylolib",
+        "action": {
+          "command": "algorithm ${algorithm} --matrix=symmetric:/phyloviz-web-platform/distance_matrix.txt --out=newick:/phyloviz-web-platform/tree.txt"
+        },
+        "children": [
+          "upload_tree"
+        ]
+      },
+      {
+        "taskId": "upload_tree",
+        "tool": "uploader",
+        "action": {
+          "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree --source-type=algorithm-distance-matrix --algorithm=${algorithm} --parameters={}"
+        }
+      }
+    ]
+  },
+  {
     "name": "compute-tree-and-index",
     "description": "Compute Tree And Index Workflow",
     "arguments": {

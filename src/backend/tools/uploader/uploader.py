@@ -31,17 +31,35 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
 
     if source_type == 'algorithm-distance-matrix':
         source_type = 'algorithm_distance_matrix'
+
+        if distance_matrix_id is None:
+            # Get the distance matrix ID from the workflow instance
+            workflow_instance = workflows_collection.find_one(
+                {
+                    '_id': ObjectId(workflow_id)
+                }
+            )
+
+            if workflow_instance is None:
+                raise Exception(f'Workflow instance with ID {workflow_id} not found')
+
+            distance_matrix_id = workflow_instance.get('data').get('distanceMatrixId')
+
+            if distance_matrix_id is None:
+                raise Exception('Distance matrix ID is required when source type is algorithm-distance-matrix')
+
         source = {
             'algorithm': algorithm,
             'distanceMatrixId': distance_matrix_id,
             'parameters': parameters
         }
+        name = f'Tree - {algorithm}'
     elif source_type == 'algorithm-typing-data':
         source_type = 'algorithm_typing_data'
         dataset = datasets_collection.find_one(
             {
-                'project_Id': project_id,
-                'datasetId': dataset_id
+                '_id': ObjectId(dataset_id),
+                'projectId': project_id,
             }
         )
 
@@ -53,6 +71,7 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
             'typingDataId': dataset['typingDataId'],
             'parameters': parameters
         }
+        name = f'Tree - {algorithm}'
     else:
         raise Exception(f'Unknown source type: {source_type}')
 
@@ -60,7 +79,7 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
         'treeId': tree_id,
         'projectId': project_id,
         'datasetId': dataset_id,
-        'name': f'Tree {tree_id}',
+        'name': name,
         'sourceType': source_type,
         'source': source,
         'repositorySpecificData': {
@@ -90,6 +109,7 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id,
         source = {
             'function': function
         }
+        name = f'Distance Matrix - {function}'
     else:
         raise Exception(f'Unknown source type: {source_type}')
 
@@ -97,7 +117,7 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id,
         'projectId': project_id,
         'datasetId': dataset_id,
         'distanceMatrixId': distance_matrix_id,
-        'name': f'Distance Matrix {distance_matrix_id}',
+        'name': name,
         'sourceType': source_type,
         'source': source,
         'repositorySpecificData': {

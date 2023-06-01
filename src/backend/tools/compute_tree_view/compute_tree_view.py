@@ -125,12 +125,14 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id, layout):
     end_time = time.time()
     print("Time taken: ", end_time - start_time, " seconds +- 5 seconds")
 
+    name = f"Tree View - {layout}"
+
     # Create the metadata in the tree collection
     tree_view_metadata = {
         'projectId': project_id,
         'datasetId': dataset_id,
         'treeViewId': visualization_id,
-        'name': 'Tree View ' + visualization_id,
+        'name': name,
         'source': {
             'treeId': tree_id
         },
