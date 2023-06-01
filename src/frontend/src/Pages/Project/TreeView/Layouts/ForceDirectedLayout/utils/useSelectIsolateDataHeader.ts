@@ -1,44 +1,43 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import interpolate from "color-interpolate";
-import {parseRGB, VizLink, VizNode} from "../useForceDirectedLayout";
+import {capitalize} from "@mui/material";
+import {DoughnutChartData} from "../../../../../../Components/Project/TreeView/DoughnutChart";
 import {
     Row
 } from "../../../../../../Services/Visualization/models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel";
 import {TreeViewGraph} from "../cosmos/TreeViewGraph";
-import {capitalize} from "@mui/material";
-import {BubbleDataPoint, ChartData, Point} from "chart.js";
+import {parseRGB, VizLink, VizNode} from "../useForceDirectedLayout";
 
 const colorPallete = ["#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93"]
 
-/**
- * Returns the selected header.
- *
- * @param isolateDataRows the rows of isolate data
- * @param graphRef the graph reference
- * @param setDoughnutChartData the doughnut chart data
- * @param setDoughnutChartTitle the doughnut chart title
- */
+export interface SliceData {
+    label: string
+    occurrences: number
+    color: number[]
+}
+
 export function useSelectIsolateDataHeader(
-    isolateDataRows: Row[],
+    isolateDataRows: Row[] | undefined,
+    loadingIsolateDataRows: boolean,
     graphRef: React.MutableRefObject<TreeViewGraph<VizNode, VizLink> | undefined>,
-    setDoughnutChartData: React.Dispatch<React.SetStateAction<ChartData<"doughnut", (number | [number, number] | Point | BubbleDataPoint | null)[]> | null>>,
-    setDoughnutChartTitle: React.Dispatch<React.SetStateAction<string>>
+    setDoughnutChartData: (data: DoughnutChartData | null) => void,
+    setDoughnutChartTitle: (title: string) => void
 ) {
     const [selectedHeader, setSelectedHeader] = useState<string>('')
 
     useEffect(() => {
-        if (graphRef.current === undefined || isolateDataRows.length === 0) {
+        if (graphRef.current === undefined || loadingIsolateDataRows || !isolateDataRows) {
             return
         }
 
         if (selectedHeader === '') {
             graphRef.current?.removePieCharts()
-            setDoughnutChartTitle(selectedHeader)
+            setDoughnutChartTitle('')
             setDoughnutChartData(null)
             return
         }
 
-        const selectedHeaderValues = isolateDataRows.map((row) => row.row[selectedHeader])
+        const selectedHeaderValues = isolateDataRows.map((row) => row.row[selectedHeader]).filter((value) => value !== undefined)
 
         const doughnutChartLabels = Array.from(new Set(selectedHeaderValues))
 
@@ -56,15 +55,13 @@ export function useSelectIsolateDataHeader(
             return selectedHeaderValues.filter((value) => value === label).length
         })
 
-        const sliceData = new Map<string, { label: string, occurrences: number, color: number[] }[]>()
+        const sliceData = new Map<string, SliceData[]>()
 
         for (const row of isolateDataRows) {
             const profileId = row.profileId
             parseInt(row.id);
             const nodeSliceData = sliceData.get(profileId)
             const label = row.row[selectedHeader]
-
-            const labelIndex = doughnutChartLabelToLabelIndexHashMap.get(label)!
 
             if (nodeSliceData) {
                 const slice = nodeSliceData.find((slice) => slice.label === label)
@@ -75,12 +72,13 @@ export function useSelectIsolateDataHeader(
                 }
             }
 
+            const labelIndex = doughnutChartLabelToLabelIndexHashMap.get(label)!
             let color = doughtnutChartColors[labelIndex]
 
             if (!color) {
-                // throw new Error("Color not found")
-                color = "rgb(0,0,0)"
+                continue
             }
+
             const newSliceData = {
                 label,
                 occurrences: 1,
@@ -115,4 +113,3 @@ export function useSelectIsolateDataHeader(
         setSelectedIsolateHeader: setSelectedHeader
     }
 }
-

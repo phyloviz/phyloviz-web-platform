@@ -2,17 +2,16 @@ import {useNavigate, useParams} from "react-router-dom"
 import * as React from 'react';
 import {useRef, useState} from 'react';
 import {useReactToPrint} from "react-to-print";
-import {BubbleDataPoint, ChartData, Point} from "chart.js";
 import {GraphConfigInterface} from "./cosmos/config";
 import {useProjectContext} from "../../../useProject";
 import {useCascadingInfoTreeView} from "../../useCascadingInfoTreeView";
-import {useIsolateDataHeaders} from "./utils/useIsolateDataHeaders";
-import {useIsolateDataRows} from "./utils/useIsolateDataRows";
+import {useIsolateData} from "./utils/useIsolateData";
 import {useGraph} from "./utils/useGraph";
 import {useSimulationConfig} from "./utils/useSimulationConfig";
 import {useGraphTransformationsConfig} from "./utils/useGraphTransformationsConfig";
 import {useSelectIsolateDataHeader} from "./utils/useSelectIsolateDataHeader";
 import {WebUiUris} from "../../../../WebUiUris";
+import {DoughnutChartData} from "../../../../../Components/Project/TreeView/DoughnutChart";
 
 export type VizNode = {
     id: string
@@ -67,8 +66,7 @@ export function useForceDirectedLayout() {
 
     const {cascadingInfoTreeView} = useCascadingInfoTreeView(dataset, treeViewId)
 
-    const {isolateDataHeaders} = useIsolateDataHeaders(projectId, isolateDataId)
-    const {isolateDataRows} = useIsolateDataRows(projectId, isolateDataId)
+    const {isolateDataRows, loadingIsolateDataRows, isolateDataHeaders} = useIsolateData(projectId, isolateDataId)
 
     const {graphRef, canvasRef} = useGraph(projectId, datasetId, treeViewId)
 
@@ -78,12 +76,12 @@ export function useForceDirectedLayout() {
     const nodeTransformationsConfig = useGraphTransformationsConfig(graphRef)
 
     const [doughnutChartTitle, setDoughnutChartTitle] = useState<string>("")
-    const [doughnutChartData, setDoughnutChartData] = useState<ChartData<"doughnut", (number | [number, number] | Point | BubbleDataPoint | null)[]> | null>(null)
+    const [doughnutChartData, setDoughnutChartData] = useState<DoughnutChartData | null>(null)
 
     const {
         selectedIsolateHeader,
-        setSelectedIsolateHeader
-    } = useSelectIsolateDataHeader(isolateDataRows, graphRef, setDoughnutChartData, setDoughnutChartTitle)
+        setSelectedIsolateHeader,
+    } = useSelectIsolateDataHeader(isolateDataRows, loadingIsolateDataRows, graphRef, setDoughnutChartData, setDoughnutChartTitle)
 
     const toPrintRef = useRef(null);
     const reactToPrintContent = React.useCallback(() => {
@@ -111,6 +109,8 @@ export function useForceDirectedLayout() {
         isolateDataHeaders,
         selectedIsolateHeader,
         setSelectedIsolateHeader,
+
+        loadingIsolateDataRows,
 
         doughnutChartTitle,
         doughnutChartData,

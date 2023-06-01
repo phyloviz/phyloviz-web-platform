@@ -24,6 +24,8 @@ interface TreeViewSettingsCardProps {
     selectedIsolateHeader: string
     setSelectedIsolateHeader: (selectedHeader: string) => void
 
+    loadingIsolateDataRows: boolean
+
     resetSimulationFilters: () => void
     onTypingDataFilter: () => void
     onIsolateDataFilter: () => void
@@ -50,6 +52,8 @@ export function TreeViewSettingsCard(
         isolateDataHeaders,
         selectedIsolateHeader,
         setSelectedIsolateHeader,
+
+        loadingIsolateDataRows,
 
         resetSimulationFilters,
         onTypingDataFilter,
@@ -87,6 +91,8 @@ export function TreeViewSettingsCard(
                 isolateDataHeaders={isolateDataHeaders}
                 selectedIsolateHeader={selectedIsolateHeader}
                 setSelectedIsolateHeader={setSelectedIsolateHeader}
+
+                loadingIsolateDataRows={loadingIsolateDataRows}
 
                 onExport={onExportOptions}
             />

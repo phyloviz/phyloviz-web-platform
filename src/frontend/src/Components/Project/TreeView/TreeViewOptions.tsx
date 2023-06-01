@@ -18,6 +18,8 @@ interface TreeViewOptionsProps {
     selectedIsolateHeader: string
     setSelectedIsolateHeader: (selectedHeader: string) => void
 
+    loadingIsolateDataRows: boolean
+
     onExport: () => void
 }
 
@@ -30,6 +32,8 @@ export function TreeViewOptions(
         isolateDataHeaders,
         selectedIsolateHeader,
         setSelectedIsolateHeader,
+
+        loadingIsolateDataRows,
 
         onExport
     }: TreeViewOptionsProps
@@ -82,6 +86,7 @@ export function TreeViewOptions(
             isolateDataHeaders={isolateDataHeaders}
             selectedIsolateHeader={selectedIsolateHeader}
             setSelectedIsolateHeader={setSelectedIsolateHeader}
+            loadingIsolateDataRows={loadingIsolateDataRows}
             onClick={() => {
                 setAssignColorsExpanded((prev) => !prev)
                 setLinkPropertiesExpanded(false)

@@ -9,6 +9,8 @@ interface TreeViewAssignColorsOptionsProps {
     selectedIsolateHeader: string
     setSelectedIsolateHeader: (selectedHeader: string) => void
 
+    loadingIsolateDataRows: boolean
+
     onClick: () => void
 }
 
@@ -19,6 +21,8 @@ export function TreeViewAssignColorsOptions(
         isolateDataHeaders,
         selectedIsolateHeader,
         setSelectedIsolateHeader,
+
+        loadingIsolateDataRows,
 
         onClick
     }: TreeViewAssignColorsOptionsProps
@@ -40,7 +44,8 @@ export function TreeViewAssignColorsOptions(
                     label="Color by Profile"
                     disabled={true} // TODO: Implement
                     value={""}
-                    onChange={() => {}}
+                    onChange={() => {
+                    }}
 
                     // value={colorByProfile}
                     // onChange={(event, child) => setSelectedTypingLocus(event.target.value)}
@@ -60,7 +65,7 @@ export function TreeViewAssignColorsOptions(
                     labelId="color-by-isolate-data"
                     label="Color by Isolate Data"
                     value={selectedIsolateHeader}
-                    disabled={isolateDataHeaders.length === 0}
+                    disabled={isolateDataHeaders.length === 0 && loadingIsolateDataRows}
                     onChange={(event, child) => setSelectedIsolateHeader(event.target.value)}
                     MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                 >
@@ -73,8 +78,11 @@ export function TreeViewAssignColorsOptions(
                         </MenuItem>
                     ))}
                 </Select>
-                {isolateDataHeaders.length === 0 &&
-                    <FormHelperText>Can't select. Isolate Data not Indexed</FormHelperText>}
+                {(isolateDataHeaders.length === 0 && loadingIsolateDataRows) ?
+                    <FormHelperText>Can't select. Isolate Data still loading.</FormHelperText>
+                    : (isolateDataHeaders.length === 0 && !loadingIsolateDataRows) ?
+                        <FormHelperText>Can't select. Couldn't load Isolate Data.</FormHelperText> : null
+                }
             </FormControl>
         </Collapse>
     </>

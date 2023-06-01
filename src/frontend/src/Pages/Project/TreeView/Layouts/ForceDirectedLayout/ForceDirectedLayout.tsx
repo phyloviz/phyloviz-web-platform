@@ -1,12 +1,9 @@
 import {Outlet, useOutlet} from "react-router-dom";
-import {ArcElement, Chart as ChartJS, Legend, Tooltip} from "chart.js";
 import {TreeViewSettingsCard} from "../../../../../Components/Project/TreeView/TreeViewSettingsCard";
 import {DoughnutChart} from "../../../../../Components/Project/TreeView/DoughnutChart";
 import {TreeViewSearchCard} from "../../../../../Components/Project/TreeView/TreeViewSearchCard";
 import React from "react";
 import {useForceDirectedLayout} from "./useForceDirectedLayout";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 
 /**
@@ -29,6 +26,8 @@ export default function ForceDirectedLayout() {
         isolateDataHeaders,
         selectedIsolateHeader,
         setSelectedIsolateHeader,
+
+        loadingIsolateDataRows,
 
         doughnutChartTitle,
         doughnutChartData,
@@ -56,7 +55,9 @@ export default function ForceDirectedLayout() {
                 <canvas ref={canvasRef}/>
             </div>
             {doughnutChartData != null &&
-                <DoughnutChart doughnutChartData={doughnutChartData} title={doughnutChartTitle}/>
+                <DoughnutChart doughnutChartData={doughnutChartData}
+                               title={doughnutChartTitle}
+                />
             }
             <TreeViewSettingsCard
                 onPauseAnimation={pauseAnimation}
@@ -68,6 +69,8 @@ export default function ForceDirectedLayout() {
                 isolateDataHeaders={isolateDataHeaders}
                 selectedIsolateHeader={selectedIsolateHeader}
                 setSelectedIsolateHeader={setSelectedIsolateHeader}
+
+                loadingIsolateDataRows={loadingIsolateDataRows}
 
                 resetSimulationFilters={resetSimulationFilters}
                 onTypingDataFilter={handleTypingDataFilter}
