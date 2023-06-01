@@ -51,7 +51,10 @@ export default function ForceDirectedLayout() {
     return outlet
         ? <Outlet context={{treeView, typingDataId, isolateDataId}}/>
         : <>
-            <div ref={toPrintRef}>
+            <div ref={toPrintRef} style={{
+                width: "100%",
+                height: "100%"
+            }}>
                 <canvas ref={canvasRef}/>
             </div>
             {doughnutChartData != null &&

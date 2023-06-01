@@ -14,7 +14,7 @@ export default function TreeView() {
     const {treeView} = useTreeView()
 
     return (
-        <Box sx={{position: "relative", width: "90%"}}>
+        <Box sx={{position: "relative", width: "100%"}}>
             <TreeViewInfoCard treeView={treeView}/>
             {
                 treeView.layout === "force-directed"

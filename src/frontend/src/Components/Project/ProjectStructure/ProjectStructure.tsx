@@ -35,12 +35,12 @@ interface ProjectStructureProps {
 export function ProjectStructure({project, workflows, loading}: ProjectStructureProps) {
     const navigate = useNavigate()
 
-    const [projectStructureWidth, setProjectStructureWidth] = React.useState(300)
+    const [projectStructureWidth, setProjectStructureWidth] = React.useState("20%")
 
     return <Resizable
         size={{width: projectStructureWidth, height: "100%"}}
-        minWidth={100}
-        maxWidth={1000}
+        minWidth={"5%"}
+        maxWidth={"50%"}
         onResizeStop={(e, direction, ref, d) => {
             setProjectStructureWidth((width) => width + d.width)
         }}
