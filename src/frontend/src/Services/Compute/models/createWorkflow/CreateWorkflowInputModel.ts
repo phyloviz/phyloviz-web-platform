@@ -1,6 +1,4 @@
-import {WorkflowType} from "../getWorkflowStatus/GetWorkflowStatusOutputModel"
-
 export interface CreateWorkflowInputModel {
-    type: WorkflowType
+    type: string
     properties: any
 }

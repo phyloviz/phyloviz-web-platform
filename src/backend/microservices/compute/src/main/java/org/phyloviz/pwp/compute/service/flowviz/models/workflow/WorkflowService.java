@@ -15,7 +15,7 @@ public class WorkflowService extends FLOWViZHttpService {
         this.post("/workflow", workflow, Void.class);
     }
 
-    public GetWorkflowResponse getWorkflow(String id) throws UnexpectedResponseException, ConnectionRefusedException {
-        return this.get("/workflow/" + id, GetWorkflowResponse.class);
+    public GetWorkflowResponse getWorkflow(String name) throws UnexpectedResponseException, ConnectionRefusedException {
+        return this.get("/workflow/" + name, GetWorkflowResponse.class);
     }
 }

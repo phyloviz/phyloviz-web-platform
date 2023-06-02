@@ -41,6 +41,7 @@ export namespace MockComputeService {
         workflows!.set(workflowId, {
             workflowId,
             type: createWorkflowInputModel.type,
+            name: `Test workflow - ${createWorkflowInputModel.type}`,
             status: "RUNNING",
             data: createWorkflowInputModel.properties as Map<string, string>
         })
@@ -49,6 +50,7 @@ export namespace MockComputeService {
             workflows!.set(workflowId, {
                 workflowId,
                 type: createWorkflowInputModel.type,
+                name: `Test workflow - ${createWorkflowInputModel.type}`,
                 status: "SUCCESS",
                 data: mockWorkflowData.get(createWorkflowInputModel.type)
             })
@@ -82,6 +84,7 @@ export namespace MockComputeService {
         return {
             workflowId,
             type: workflow.type,
+            name: workflow.name,
             status: workflow.status,
             data: workflow.data
         }

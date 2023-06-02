@@ -9,8 +9,10 @@ import java.util.Map;
 public class GetWorkflowStatusOutput {
     private final String workflowId;
     private final String type;
+    private final String name;
     private final WorkflowStatus status;
     private final String failureReason;
+    private final String failureLog;
     private final double progress;
     private final Map<String, Object> data;
 }

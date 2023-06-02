@@ -10,12 +10,12 @@ import java.util.Optional;
 public interface WorkflowTemplateRepository {
 
     /**
-     * Finds a workflow template by its name.
+     * Finds a workflow template by its type.
      *
-     * @param name the name of the workflow template
+     * @param type the type of the workflow template
      * @return the workflow template
      */
-    Optional<WorkflowTemplate> findByName(String name);
+    Optional<WorkflowTemplate> findByType(String type);
 
     /**
      * Finds all workflow templates.

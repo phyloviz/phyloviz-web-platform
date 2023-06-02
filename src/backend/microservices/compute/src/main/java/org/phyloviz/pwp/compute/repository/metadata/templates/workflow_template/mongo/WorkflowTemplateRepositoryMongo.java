@@ -14,8 +14,8 @@ public class WorkflowTemplateRepositoryMongo implements WorkflowTemplateReposito
     private final WorkflowTemplateMongoRepository repository;
 
     @Override
-    public Optional<WorkflowTemplate> findByName(String name) {
-        return repository.findByName(name);
+    public Optional<WorkflowTemplate> findByType(String type) {
+        return repository.findByType(type);
     }
 
     @Override

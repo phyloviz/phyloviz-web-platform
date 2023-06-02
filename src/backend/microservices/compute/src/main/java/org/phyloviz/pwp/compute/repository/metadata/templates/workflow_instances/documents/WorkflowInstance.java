@@ -17,11 +17,15 @@ public class WorkflowInstance {
 
     private String type;
 
+    private String name;
+
     private Workflow workflow;
 
     private WorkflowStatus status;
 
     private String failureReason;
+
+    private String failureLog;
 
     private double progress;
 
