@@ -3,6 +3,8 @@ export interface GetWorkflowStatusOutputModel {
     type: string
     name: string
     status: WorkflowStatus
+    failureReason?: string
+    failureLog?: string
     data?: Map<string, any>
 }
 

@@ -63,6 +63,8 @@ import EDIT_DATASET = WebUiUris.EDIT_DATASET;
 import COMPUTE_TREE_VIEW = WebUiUris.COMPUTE_TREE_VIEW;
 import TREE_VIEW_TYPING_DATA = WebUiUris.TREE_VIEW_TYPING_DATA;
 import TREE_VIEW_ISOLATE_DATA = WebUiUris.TREE_VIEW_ISOLATE_DATA;
+import WORKFLOW = WebUiUris.WORKFLOW;
+import Workflow from "./Pages/Project/Workflow/Workflow";
 
 /**
  * App component.
@@ -109,6 +111,10 @@ export default function App() {
                             <Route
                                 path={ISOLATE_DATA}
                                 element={<ProtectedRoute><IsolateData/></ProtectedRoute>}
+                            />
+                            <Route
+                                path={WORKFLOW}
+                                element={<ProtectedRoute><Workflow/></ProtectedRoute>}
                             />
                             <Route
                                 path={DATASET}

@@ -26,7 +26,13 @@ interface WorkflowTreeItemProps {
  * Tree item for a workflow.
  */
 export function WorkflowTreeItem({nodeId, workflow}: WorkflowTreeItemProps) {
-    const {anchorEl, handlePopoverOpen, handlePopoverClose, open} = useWorkflowTreeItem()
+    const {
+        anchorEl,
+        handlePopoverOpen,
+        handlePopoverClose,
+        open,
+        contextMenuItems
+    } = useWorkflowTreeItem(workflow.workflowId)
 
     return (<>
             <StyledTreeItem
@@ -41,6 +47,7 @@ export function WorkflowTreeItem({nodeId, workflow}: WorkflowTreeItemProps) {
                 }
                 onMouseEnter={handlePopoverOpen}
                 onMouseLeave={handlePopoverClose}
+                contextMenuItems={contextMenuItems}
             />
             <Popover
                 sx={{
