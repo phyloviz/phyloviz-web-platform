@@ -19,6 +19,8 @@ export namespace WebUiUris {
     export const CREATE_DATASET = `${PROJECT}/create-dataset`
     export const UPLOAD_FILES = `${PROJECT}/upload-files`
 
+    export const WORKFLOW = `${PROJECT}/workflow/:workflowId`
+
     export const TYPING_DATA = `${PROJECT}/typing-data/:typingDataId`
     export const ISOLATE_DATA = `${PROJECT}/isolate-data/:isolateDataId`
 
@@ -49,6 +51,8 @@ export namespace WebUiUris {
     export const editProject = (projectId: string) => `/projects/${projectId}/edit`
     export const createDataset = (projectId: string) => `/projects/${projectId}/create-dataset`
     export const uploadFiles = (projectId: string) => `/projects/${projectId}/upload-files`
+
+    export const workflow = (projectId: string, workflowId: string) => `/projects/${projectId}/workflow/${workflowId}`
 
     export const typingData = (projectId: string, typingDataId: string) => `/projects/${projectId}/typing-data/${typingDataId}`
     export const isolateData = (projectId: string, isolateDataId: string) => `/projects/${projectId}/isolate-data/${isolateDataId}`

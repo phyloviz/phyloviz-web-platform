@@ -1,7 +1,6 @@
 import {
     Workflow,
-    workflowStatusToWorkflowStatusString,
-    workflowTypeToWorkflowName
+    workflowStatusToWorkflowStatusString
 } from "../../../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
 import {Cancel} from "@mui/icons-material"
@@ -27,12 +26,18 @@ interface WorkflowTreeItemProps {
  * Tree item for a workflow.
  */
 export function WorkflowTreeItem({nodeId, workflow}: WorkflowTreeItemProps) {
-    const {anchorEl, handlePopoverOpen, handlePopoverClose, open} = useWorkflowTreeItem()
+    const {
+        anchorEl,
+        handlePopoverOpen,
+        handlePopoverClose,
+        open,
+        contextMenuItems
+    } = useWorkflowTreeItem(workflow.workflowId)
 
     return (<>
             <StyledTreeItem
                 nodeId={nodeId}
-                labelText={workflowTypeToWorkflowName(workflow.type)}
+                labelText={workflow.name}
                 rightContent={
                     workflow.status === "RUNNING"
                         ? <CircularProgress size={12} sx={{ml: 1}}/>
@@ -42,6 +47,7 @@ export function WorkflowTreeItem({nodeId, workflow}: WorkflowTreeItemProps) {
                 }
                 onMouseEnter={handlePopoverOpen}
                 onMouseLeave={handlePopoverClose}
+                contextMenuItems={contextMenuItems}
             />
             <Popover
                 sx={{
@@ -62,7 +68,7 @@ export function WorkflowTreeItem({nodeId, workflow}: WorkflowTreeItemProps) {
             >
                 <Box sx={{p: 2}}>
                     <Typography variant={"body2"}>
-                        <strong>{workflowTypeToWorkflowName(workflow.type)}</strong>
+                        <strong>{workflow.name}</strong>
                     </Typography>
                     <Typography variant={"body2"}>
                         <strong>Status: </strong>{workflowStatusToWorkflowStatusString(workflow.status)}

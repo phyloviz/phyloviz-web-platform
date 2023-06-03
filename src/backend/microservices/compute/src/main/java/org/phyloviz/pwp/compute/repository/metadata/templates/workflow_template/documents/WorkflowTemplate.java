@@ -17,6 +17,7 @@ import java.util.Map;
 @Document(collection = "workflow-templates")
 public class WorkflowTemplate {
 
+    private final String type;
     private final String name;
     private final String description;
     private final Map<String, WorkflowTemplateArgumentProperties> arguments;
@@ -24,7 +25,11 @@ public class WorkflowTemplate {
     @Id
     private String id;
 
-    public WorkflowTemplate(String id, String name, String description, Map<String, WorkflowTemplateArgumentProperties> arguments, List<TaskTemplate> tasks) {
+    public WorkflowTemplate(String id, String type, String name, String description, Map<String, WorkflowTemplateArgumentProperties> arguments, List<TaskTemplate> tasks) {
+        if (type == null || type.isBlank()) {
+            throw new WorkflowTemplateConfigurationException(
+                    String.format("Workflow template %s - type cannot be null or blank", id));
+        }
         if (name == null || name.isBlank()) {
             throw new WorkflowTemplateConfigurationException(
                     String.format("Workflow template %s - name cannot be null or blank", id));
@@ -41,6 +46,12 @@ public class WorkflowTemplate {
             throw new WorkflowTemplateConfigurationException(
                     String.format("Workflow template %s - tasks cannot be null or empty", id));
         }
+        tasks.stream().map(TaskTemplate::getTaskId).forEach(taskId -> {
+            if (tasks.stream().filter(task -> task.getTaskId().equals(taskId)).count() > 1) {
+                throw new WorkflowTemplateConfigurationException(
+                        String.format("Workflow template %s - tasks - taskId %s is not unique", id, taskId));
+            }
+        });
 
         arguments.forEach((key, value) -> {
             if (key.equals("projectId")) {
@@ -53,6 +64,7 @@ public class WorkflowTemplate {
             }
         });
 
+        this.type = type;
         this.name = name;
         this.description = description;
         this.arguments = arguments;
@@ -62,10 +74,10 @@ public class WorkflowTemplate {
     public Workflow buildWorkflow(WorkflowTemplateData workflowTemplateData) {
 
         return Workflow.builder()
-                .name(name + "-" + workflowTemplateData.getWorkflowId())
+                .name(type + "-" + workflowTemplateData.getWorkflowId())
                 .description(description)
                 // Need to set start date to be in the past to allow workflow to run immediately
-                .startDate(LocalDateTime.now().minus(1, ChronoUnit.HOURS))
+                .startDate(LocalDateTime.now().minus(1, ChronoUnit.HOURS)) // TODO does it need to be 1 hour?
                 .tasks(tasks.stream().map(task -> task.buildTask(workflowTemplateData)).toList())
                 .build();
     }

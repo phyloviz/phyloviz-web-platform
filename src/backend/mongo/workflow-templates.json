@@ -1,7 +1,8 @@
 [
   {
-    "name": "compute-distance-matrix",
-    "description": "Compute Distance Matrix Workflow",
+    "type": "compute-distance-matrix",
+    "name": "Compute Distance Matrix",
+    "description": "Computes a distance matrix using the typing data file in the dataset, given the distance calculation function.",
     "arguments": {
       "datasetId": {
         "type": "datasetId"
@@ -46,8 +47,9 @@
     ]
   },
   {
-    "name": "compute-tree",
-    "description": "Compute Tree Workflow",
+    "type": "compute-tree",
+    "name": "Compute Tree",
+    "description": "Computes a tree, given an existing distance matrix of the dataset and the tree calculation algorithm.",
     "arguments": {
       "datasetId": {
         "type": "datasetId"
@@ -103,8 +105,9 @@
     ]
   },
   {
-    "name": "compute-tree-without-distance-matrix",
-    "description": "Compute Tree Without Distance Matrix Workflow",
+    "type": "compute-tree-without-distance-matrix",
+    "name": "Compute Tree Without Distance Matrix",
+    "description": "Computes a tree from the typing data file of the dataset (distance matrix internally calculated), given the distance calculation function and the tree calculation algorithm.",
     "arguments": {
       "datasetId": {
         "type": "datasetId"
@@ -165,8 +168,9 @@
     ]
   },
   {
-    "name": "compute-distance-matrix-and-tree",
-    "description": "Compute Distance Matrix and Tree Workflow",
+    "type": "compute-distance-matrix-and-tree",
+    "name": "Compute Distance Matrix and Tree",
+    "description": "Computes a distance matrix and a tree from the typing data file of the dataset, given the distance calculation function and the tree calculation algorithm.",
     "arguments": {
       "datasetId": {
         "type": "datasetId"
@@ -247,8 +251,9 @@
     ]
   },
   {
-    "name": "compute-tree-and-index",
-    "description": "Compute Tree And Index Workflow",
+    "type": "compute-tree-and-index",
+    "name": "Compute Tree And Index",
+    "description": "Computes a tree and indexes it in the database, given an existing distance matrix of the dataset and the tree calculation algorithm.",
     "arguments": {
       "datasetId": {
         "type": "datasetId"
@@ -314,8 +319,9 @@
     ]
   },
   {
-    "name": "index-typing-data",
-    "description": "Index Typing Data Workflow",
+    "type": "index-typing-data",
+    "name": "Index Typing Data",
+    "description": "Indexes the typing data of a dataset in the database.",
     "arguments": {
       "datasetId": {
         "type": "datasetId"
@@ -342,8 +348,9 @@
     ]
   },
   {
-    "name": "index-isolate-data",
-    "description": "Index Isolate Data Workflow",
+    "type": "index-isolate-data",
+    "name": "Index Isolate Data",
+    "description": "Indexes the isolate data of a dataset in the database.",
     "arguments": {
       "datasetId": {
         "type": "datasetId"
@@ -370,8 +377,9 @@
     ]
   },
   {
-    "name": "index-typing-and-isolate-data",
-    "description": "Index Typing and Isolate Data Workflow",
+    "type": "index-typing-and-isolate-data",
+    "name": "Index Typing and Isolate Data",
+    "description": "Indexes the typing and isolate data of a dataset in the database.",
     "arguments": {
       "datasetId": {
         "type": "datasetId"
@@ -418,8 +426,9 @@
     ]
   },
   {
-    "name": "index-tree",
-    "description": "Index Tree Workflow",
+    "type": "index-tree",
+    "name": "Index Tree",
+    "description": "Indexes a tree in the database.",
     "arguments": {
       "datasetId": {
         "type": "datasetId"
@@ -449,8 +458,9 @@
     ]
   },
   {
-    "name": "compute-tree-view",
-    "description": "Compute Tree View Workflow",
+    "type": "compute-tree-view",
+    "name": "Compute Tree View",
+    "description": "Computes the tree view of a tree, given a tree visualization layout.",
     "arguments": {
       "datasetId": {
         "type": "datasetId"
