@@ -4,18 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import okhttp3.*;
 import org.phyloviz.pwp.compute.service.flowviz.adapters.AccessDeserializer;
 import org.phyloviz.pwp.compute.service.flowviz.adapters.AccessSerializer;
 import org.phyloviz.pwp.compute.service.flowviz.adapters.LocalDateTimeDeserializer;
 import org.phyloviz.pwp.compute.service.flowviz.adapters.LocalDateTimeSerializer;
+import org.phyloviz.pwp.compute.service.flowviz.exceptions.AuthenticationException;
 import org.phyloviz.pwp.compute.service.flowviz.exceptions.ConnectionRefusedException;
 import org.phyloviz.pwp.compute.service.flowviz.exceptions.UnexpectedResponseException;
+import org.phyloviz.pwp.compute.service.flowviz.identity.Credentials;
 import org.phyloviz.pwp.compute.service.flowviz.identity.Token;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.Access;
 
@@ -32,10 +29,13 @@ public class FLOWViZHttpService {
     private final String baseUrl;
     private final OkHttpClient client;
     private final Gson gson;
+    protected final Credentials credentials;
     protected Token token;
 
-    public FLOWViZHttpService(String baseUrl) {
+    public FLOWViZHttpService(String baseUrl, Credentials credentials) {
         this.baseUrl = baseUrl;
+        this.token = authenticate(credentials);
+        this.credentials = credentials;
         this.client = new OkHttpClient();
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(Access.class, new AccessSerializer())
@@ -50,7 +50,23 @@ public class FLOWViZHttpService {
         this.client = httpService.client;
         this.gson = httpService.gson;
         this.token = httpService.token;
+        this.credentials = httpService.credentials;
     }
+
+    /**
+     * Authenticate with the FLOWViZ API.
+     *
+     * @param credentials the credentials to authenticate with
+     * @return the authentication token
+     */
+    private Token authenticate(Credentials credentials) {
+        try {
+            return this.post("/login", credentials, Token.class);
+        } catch (UnexpectedResponseException e) {
+            throw new AuthenticationException("Failed to authenticate");
+        }
+    }
+
 
     private <T> T execute(
             Request request,
@@ -99,7 +115,17 @@ public class FLOWViZHttpService {
 
         Request request = addTokenToRequest(reqBuilder);
 
-        return execute(request, resClazz);
+        try {
+            return execute(request, resClazz);
+        } catch (final UnexpectedResponseException e) {
+            if (e.getResponse().code() == 401) {
+                this.token = authenticate(this.credentials);
+                request = addTokenToRequest(reqBuilder);
+                return execute(request, resClazz);
+            }
+
+            throw e;
+        }
     }
 
     public <T> T post(String path, Object body, Class<T> resClazz) throws ConnectionRefusedException, UnexpectedResponseException {
@@ -115,6 +141,7 @@ public class FLOWViZHttpService {
 
     public <T> T put(String path, Object body, Class<T> resClazz) throws ConnectionRefusedException, UnexpectedResponseException {
         RequestBody requestBody = generateRequestBody(body);
+
 
         return execute(
                 new Request.Builder()

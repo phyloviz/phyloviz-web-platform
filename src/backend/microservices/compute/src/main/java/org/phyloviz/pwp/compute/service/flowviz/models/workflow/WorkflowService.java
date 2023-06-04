@@ -18,4 +18,8 @@ public class WorkflowService extends FLOWViZHttpService {
     public GetWorkflowResponse getWorkflow(String name) throws UnexpectedResponseException, ConnectionRefusedException {
         return this.get("/workflow/" + name, GetWorkflowResponse.class);
     }
+
+    public GetWorkflowTaskLogResponse getWorkflowDagRunTaskLog(String name, String dagRunId, String taskId, String logId) {
+        return this.get("/workflow/" + name + "/" + dagRunId + "/tasks/" + taskId + "/log/"+ logId, GetWorkflowTaskLogResponse.class);
+    }
 }

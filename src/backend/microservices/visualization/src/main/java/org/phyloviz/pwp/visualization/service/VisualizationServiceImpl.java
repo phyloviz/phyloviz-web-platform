@@ -37,20 +37,16 @@ import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRow
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
-import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.IsolateDataNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.TreeViewNotFoundException;
-import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.*;
 import org.phyloviz.pwp.visualization.service.exceptions.IndexingNeededException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class VisualizationServiceImpl implements VisualizationService {
 

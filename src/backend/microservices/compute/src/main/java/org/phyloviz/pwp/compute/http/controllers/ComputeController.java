@@ -3,9 +3,11 @@ package org.phyloviz.pwp.compute.http.controllers;
 import lombok.RequiredArgsConstructor;
 import org.phyloviz.pwp.compute.http.models.create_workflow.CreateWorkflowInputModel;
 import org.phyloviz.pwp.compute.http.models.create_workflow.CreateWorkflowOutputModel;
+import org.phyloviz.pwp.compute.http.models.get_workflow.GetWorkflowOutputModel;
 import org.phyloviz.pwp.compute.http.models.get_workflow_status.GetWorkflowStatusOutputModel;
 import org.phyloviz.pwp.compute.http.models.get_workflows.GetWorkflowsOutputModel;
 import org.phyloviz.pwp.compute.service.ComputeService;
+import org.phyloviz.pwp.compute.service.GetWorkflowOutput;
 import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
 import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
 import org.phyloviz.pwp.shared.domain.User;
@@ -59,7 +61,7 @@ public class ComputeController {
      * @param user       the user who is requesting the workflow status
      * @return information about the workflow
      */
-    @GetMapping("/projects/{projectId}/workflows/{workflowId}")
+    @GetMapping("/projects/{projectId}/workflows/{workflowId}/status")
     public GetWorkflowStatusOutputModel getWorkflowStatus(
             @PathVariable String projectId,
             @PathVariable String workflowId,
@@ -71,7 +73,26 @@ public class ComputeController {
 
         return new GetWorkflowStatusOutputModel(getWorkflowStatusOutput);
     }
+    /**
+     * Gets the workflow.
+     *
+     * @param projectId  the project id of the project to which the workflow belongs
+     * @param workflowId the id of the workflow
+     * @param user       the user who is requesting the workflow status
+     * @return information about the workflow
+     */
+    @GetMapping("/projects/{projectId}/workflows/{workflowId}")
+    public GetWorkflowOutputModel getWorkflow(
+            @PathVariable String projectId,
+            @PathVariable String workflowId,
+            User user
+    ) {
+        GetWorkflowOutput getWorkflowOutput = computeService.getWorkflow(
+                projectId, workflowId, user.getId()
+        );
 
+        return new GetWorkflowOutputModel(getWorkflowOutput);
+    }
     /**
      * Gets the workflows of a project.
      *

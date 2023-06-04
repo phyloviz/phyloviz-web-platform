@@ -25,7 +25,7 @@ public class WorkflowInstance {
 
     private String failureReason;
 
-    private String failureLog;
+    private Map<String, String> logs;
 
     private double progress;
 

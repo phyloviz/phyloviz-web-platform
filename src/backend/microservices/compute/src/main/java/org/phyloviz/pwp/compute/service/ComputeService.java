@@ -2,15 +2,10 @@ package org.phyloviz.pwp.compute.service;
 
 import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
 import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-/**
- * Service for the Compute Microservice.
- */
-@Service
 public interface ComputeService {
 
     /**
@@ -38,6 +33,16 @@ public interface ComputeService {
      * @return the output information of the workflow
      */
     GetWorkflowStatusOutput getWorkflowStatus(String projectId, String workflowId, String userId);
+
+    /**
+     * Gets workflow.
+     *
+     * @param projectId  the project id where the workflow is located
+     * @param workflowId the workflow id
+     * @param userId     the id of the user who is requesting the workflow
+     * @return the output information of the workflow
+     */
+    GetWorkflowOutput getWorkflow(String projectId, String workflowId, String userId);
 
     /**
      * Gets all the workflows of a project.

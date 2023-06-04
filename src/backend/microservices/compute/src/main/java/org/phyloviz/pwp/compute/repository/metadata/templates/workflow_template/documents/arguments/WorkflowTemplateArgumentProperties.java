@@ -10,10 +10,14 @@ import java.util.List;
 public class WorkflowTemplateArgumentProperties {
     private final WorkflowTemplateArgumentType type;
 
+    private final boolean required;
+
+    private final String prefix;
+
     @Field("allowed-values")
     private final List<String> allowedValues;
 
-    public WorkflowTemplateArgumentProperties(WorkflowTemplateArgumentType type, List<String> allowedValues) {
+    public WorkflowTemplateArgumentProperties(WorkflowTemplateArgumentType type, Boolean required, String prefix, List<String> allowedValues) {
         this.type = type;
 
         if (type == WorkflowTemplateArgumentType.STRING) {
@@ -25,5 +29,7 @@ public class WorkflowTemplateArgumentProperties {
         }
 
         this.allowedValues = allowedValues;
+        this.required = required == null || required;
+        this.prefix = prefix;
     }
 }
