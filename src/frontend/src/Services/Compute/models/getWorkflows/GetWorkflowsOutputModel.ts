@@ -1,4 +1,4 @@
-import {GetWorkflowStatusOutputModel} from "../getWorkflowStatus/GetWorkflowStatusOutputModel"
+import {GetWorkflowStatusOutputModel} from "../getWorkflow/GetWorkflowOutputModel"
 
 export interface GetWorkflowsOutputModel {
     workflows: GetWorkflowStatusOutputModel[]

@@ -4,11 +4,22 @@ export interface GetWorkflowStatusOutputModel {
     name: string
     status: WorkflowStatus
     failureReason?: string
-    failureLog?: string
+    progress: number
     data?: Map<string, any>
 }
 
-export type Workflow = GetWorkflowStatusOutputModel
+export interface GetWorkflowOutputModel {
+    workflowId: string
+    type: string
+    name: string
+    status: WorkflowStatus
+    failureReason?: string
+    logs: {[taskName: string]: string}
+    progress: number
+    data?: Map<string, any>
+}
+
+export type Workflow = GetWorkflowOutputModel
 
 export type WorkflowStatus = "RUNNING" | "SUCCESS" | "FAILED"
 

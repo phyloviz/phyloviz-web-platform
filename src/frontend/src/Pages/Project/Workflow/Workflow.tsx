@@ -52,15 +52,22 @@ export default function Workflow() {
                                 </Typography>
                             }
                             {
-                                workflow.status === "FAILED" && workflow.failureReason == "Internal Server Error" &&
-                                <Typography component="p" variant="body1">
-                                    Log: {workflow.failureLog}
-                                </Typography>
+                                (!workflow.logs && <Typography component="p" variant="body1">
+                                    No logs present.
+                                </Typography>)
+                                ||
+                                (workflow.logs && Object.keys(workflow.logs).map((taskName) => {
+                                    return (
+                                        <Typography component="p" variant="body1">
+                                            {taskName}: {workflow.logs[taskName]}
+                                        </Typography>
+                                    )
+                                }))
                             }
                         </Box>
                     }
                 </Paper>
             </Container>
         </Box>
-)
+    )
 }

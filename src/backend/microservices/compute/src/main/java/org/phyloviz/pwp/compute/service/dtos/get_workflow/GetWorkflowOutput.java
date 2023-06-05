@@ -1,4 +1,4 @@
-package org.phyloviz.pwp.compute.service;
+package org.phyloviz.pwp.compute.service.dtos.get_workflow;
 
 import lombok.Data;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_instances.documents.WorkflowStatus;
@@ -13,7 +13,6 @@ public class GetWorkflowOutput {
     private final WorkflowStatus status;
     private final String failureReason;
     private final Map<String, String> logs;
-
     private final double progress;
     private final Map<String, Object> data;
 }

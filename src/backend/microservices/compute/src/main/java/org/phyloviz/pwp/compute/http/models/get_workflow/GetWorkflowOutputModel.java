@@ -2,8 +2,7 @@ package org.phyloviz.pwp.compute.http.models.get_workflow;
 
 import lombok.Data;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_instances.documents.WorkflowStatus;
-import org.phyloviz.pwp.compute.service.GetWorkflowOutput;
-import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
+import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowOutput;
 
 import java.util.Map;
 

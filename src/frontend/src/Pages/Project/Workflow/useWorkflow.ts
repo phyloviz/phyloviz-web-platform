@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import ComputeService from "../../../Services/Compute/ComputeService";
-import {Workflow} from "../../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel";
+import {Workflow} from "../../../Services/Compute/models/getWorkflow/GetWorkflowOutputModel";
 
 
 /**
@@ -16,7 +16,7 @@ export function useWorkflow() {
     const [error, setError] = useState<string | undefined>(undefined)
 
     useEffect(() => {
-        ComputeService.getWorkflowStatus(projectId, workflowId)
+        ComputeService.getWorkflow(projectId, workflowId)
             .then(res => {
                 setWorkflow(res)
             })

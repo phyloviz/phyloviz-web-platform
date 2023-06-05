@@ -3,7 +3,10 @@ import {TreeView} from "@mui/lab"
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import {Project} from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
-import {Workflow} from "../../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+import {
+    GetWorkflowStatusOutputModel,
+    Workflow
+} from "../../../Services/Compute/models/getWorkflow/GetWorkflowOutputModel"
 import {Edit, Info} from "@mui/icons-material"
 import {WebUiUris} from "../../../Pages/WebUiUris"
 import {StyledTreeItem} from "./Utils/StyledTreeItem"
@@ -24,7 +27,7 @@ import {WorkflowsTreeItem} from "./Workflows/WorkflowsTreeItem";
  */
 interface ProjectStructureProps {
     project: Project | null
-    workflows: Workflow[]
+    workflows: GetWorkflowStatusOutputModel[]
     loading: boolean
 }
 

@@ -14,6 +14,7 @@ import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.WorkflowTemplateData;
 import org.phyloviz.pwp.compute.repository.metadata.templates.workflow_template.documents.arguments.WorkflowTemplateArgumentProperties;
 import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
+import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowOutput;
 import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
 import org.phyloviz.pwp.compute.service.exceptions.InvalidWorkflowException;
 import org.phyloviz.pwp.compute.service.exceptions.TemplateNotFound;
@@ -36,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional
+//@Transactional
 public class ComputeServiceImpl implements ComputeService {
 
     private final ProjectRepository projectRepository;
@@ -264,6 +265,7 @@ public class ComputeServiceImpl implements ComputeService {
         });
 
         workflowInstance.setLogs(logs);
+        workflowInstanceRepository.save(workflowInstance);
 
         switch (airflowStatus) {
             case "running", "queued", "no_status" -> {
@@ -372,7 +374,7 @@ public class ComputeServiceImpl implements ComputeService {
 
         createWorkflowArguments.forEach((argumentName, argumentProperties) -> {
             boolean propertyExists = properties.containsKey(argumentName);
-            if (argumentProperties.isRequired() && propertyExists)
+            if (argumentProperties.isRequired() && !propertyExists)
                 throw new InvalidWorkflowException(String.format("Missing argument: '%s'", argumentName));
 
             switch (argumentProperties.getType()) {

@@ -1,7 +1,10 @@
 import * as React from "react"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
 import {WorkflowTreeItem} from "./WorkflowTreeItem"
-import {Workflow} from "../../../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+import {
+    GetWorkflowStatusOutputModel,
+    Workflow
+} from "../../../../Services/Compute/models/getWorkflow/GetWorkflowOutputModel"
 import {WorkflowsIcon} from "../../../Shared/Icons";
 import {CircularProgress} from "@mui/material";
 
@@ -11,7 +14,7 @@ import {CircularProgress} from "@mui/material";
  * @property workflows workflows to display
  */
 interface WorkflowsTreeItemProps {
-    workflows: Workflow[]
+    workflows: GetWorkflowStatusOutputModel[]
 }
 
 

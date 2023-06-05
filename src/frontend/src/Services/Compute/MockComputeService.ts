@@ -1,7 +1,8 @@
-import {GetWorkflowStatusOutputModel, Workflow} from "./models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+import {GetWorkflowStatusOutputModel, Workflow} from "./models/getWorkflow/GetWorkflowOutputModel"
 import {CreateWorkflowOutputModel} from "./models/createWorkflow/CreateWorkflowOutputModel"
 import {CreateWorkflowInputModel} from "./models/createWorkflow/CreateWorkflowInputModel"
 import {GetWorkflowsOutputModel} from "./models/getWorkflows/GetWorkflowsOutputModel"
+import {GetWorkflowOutputModel} from "./models/getWorkflow/GetWorkflowOutputModel";
 
 export namespace MockComputeService {
 
@@ -34,7 +35,7 @@ export namespace MockComputeService {
         createWorkflowInputModel: CreateWorkflowInputModel
     ): Promise<CreateWorkflowOutputModel> {
         if (!projectsWorkflows.has(projectId))
-            projectsWorkflows.set(projectId, new Map<string, GetWorkflowStatusOutputModel>())
+            projectsWorkflows.set(projectId, new Map<string, GetWorkflowOutputModel>())
 
         const workflows = projectsWorkflows.get(projectId)
         const workflowId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
@@ -43,6 +44,8 @@ export namespace MockComputeService {
             type: createWorkflowInputModel.type,
             name: `Test workflow - ${createWorkflowInputModel.type}`,
             status: "RUNNING",
+            logs: {},
+            progress: 0,
             data: createWorkflowInputModel.properties as Map<string, string>
         })
 
@@ -52,6 +55,8 @@ export namespace MockComputeService {
                 type: createWorkflowInputModel.type,
                 name: `Test workflow - ${createWorkflowInputModel.type}`,
                 status: "SUCCESS",
+                logs: {},
+                progress: 100,
                 data: mockWorkflowData.get(createWorkflowInputModel.type)
             })
         }, WORKFLOW_DURATION)
@@ -73,7 +78,7 @@ export namespace MockComputeService {
         workflowId: string
     ): Promise<GetWorkflowStatusOutputModel> {
         if (!projectsWorkflows.has(projectId))
-            projectsWorkflows.set(projectId, new Map<string, GetWorkflowStatusOutputModel>())
+            projectsWorkflows.set(projectId, new Map<string, GetWorkflowOutputModel>())
 
         const workflows = projectsWorkflows.get(projectId)
         if (!workflows!.has(workflowId))
@@ -86,6 +91,38 @@ export namespace MockComputeService {
             type: workflow.type,
             name: workflow.name,
             status: workflow.status,
+            progress: workflow.progress,
+            data: workflow.data
+        }
+    }
+
+    /**
+     * Get a workflow.
+     *
+     * @param projectId The project id.
+     * @param workflowId The workflow id.
+     * @returns The workflow.
+     */
+    export async function getWorkflow(
+        projectId: string,
+        workflowId: string
+    ): Promise<GetWorkflowOutputModel> {
+        if (!projectsWorkflows.has(projectId))
+            projectsWorkflows.set(projectId, new Map<string, GetWorkflowOutputModel>())
+
+        const workflows = projectsWorkflows.get(projectId)
+        if (!workflows!.has(workflowId))
+            throw new Error("Workflow not found")
+
+        const workflow = workflows!.get(workflowId)!
+
+        return {
+            workflowId,
+            type: workflow.type,
+            name: workflow.name,
+            status: workflow.status,
+            logs: workflow.logs,
+            progress: workflow.progress,
             data: workflow.data
         }
     }
@@ -100,7 +137,7 @@ export namespace MockComputeService {
         projectId: string
     ): Promise<GetWorkflowsOutputModel> {
         if (!projectsWorkflows.has(projectId))
-            projectsWorkflows.set(projectId, new Map<string, GetWorkflowStatusOutputModel>())
+            projectsWorkflows.set(projectId, new Map<string, GetWorkflowOutputModel>())
 
         return {
             workflows: Array.from(projectsWorkflows.get(projectId)!.values())

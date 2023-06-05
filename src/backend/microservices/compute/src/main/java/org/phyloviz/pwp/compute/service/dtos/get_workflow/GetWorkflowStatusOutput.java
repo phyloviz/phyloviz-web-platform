@@ -12,7 +12,6 @@ public class GetWorkflowStatusOutput {
     private final String name;
     private final WorkflowStatus status;
     private final String failureReason;
-
     private final double progress;
     private final Map<String, Object> data;
 }

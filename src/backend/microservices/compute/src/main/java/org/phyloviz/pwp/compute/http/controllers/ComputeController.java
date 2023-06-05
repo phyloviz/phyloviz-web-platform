@@ -7,7 +7,7 @@ import org.phyloviz.pwp.compute.http.models.get_workflow.GetWorkflowOutputModel;
 import org.phyloviz.pwp.compute.http.models.get_workflow_status.GetWorkflowStatusOutputModel;
 import org.phyloviz.pwp.compute.http.models.get_workflows.GetWorkflowsOutputModel;
 import org.phyloviz.pwp.compute.service.ComputeService;
-import org.phyloviz.pwp.compute.service.GetWorkflowOutput;
+import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowOutput;
 import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
 import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
 import org.phyloviz.pwp.shared.domain.User;

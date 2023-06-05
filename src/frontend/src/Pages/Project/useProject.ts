@@ -2,7 +2,7 @@ import {useNavigate, useOutletContext, useParams} from "react-router-dom"
 import {useEffect, useState} from "react"
 import {Project} from "../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import AdministrationService from "../../Services/Administration/AdministrationService"
-import {Workflow} from "../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+import {GetWorkflowStatusOutputModel, Workflow} from "../../Services/Compute/models/getWorkflow/GetWorkflowOutputModel"
 import ComputeService from "../../Services/Compute/ComputeService"
 import {useInterval} from "../../Components/Shared/Hooks/useInterval"
 import {WebUiUris} from "../WebUiUris";
@@ -28,7 +28,7 @@ export function useProject() {
     const projectId = (useParams<{ projectId: string }>().projectId)!
 
     const [project, setProject] = useState<Project | null>(null)
-    const [workflows, setWorkflows] = useState<Workflow[]>([])
+    const [workflows, setWorkflows] = useState<GetWorkflowStatusOutputModel[]>([])
 
     const [loadingFiles, setLoadingFiles] = useState<boolean>(true)
     const [loadingWorkflows, setLoadingWorkflows] = useState<boolean>(true)

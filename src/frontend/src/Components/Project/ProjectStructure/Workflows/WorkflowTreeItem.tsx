@@ -1,7 +1,8 @@
 import {
+    GetWorkflowStatusOutputModel,
     Workflow,
     workflowStatusToWorkflowStatusString
-} from "../../../../Services/Compute/models/getWorkflowStatus/GetWorkflowStatusOutputModel"
+} from "../../../../Services/Compute/models/getWorkflow/GetWorkflowOutputModel"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
 import {Cancel} from "@mui/icons-material"
 import * as React from "react"
@@ -19,7 +20,7 @@ import Box from "@mui/material/Box"
  */
 interface WorkflowTreeItemProps {
     nodeId: string
-    workflow: Workflow
+    workflow: GetWorkflowStatusOutputModel
 }
 
 /**

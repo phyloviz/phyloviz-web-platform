@@ -39,7 +39,8 @@ export namespace WebApiUris {
 
     // Compute
     export const createWorkflow = (projectId: string) => `${API_BASE_URL}/projects/${projectId}/workflows`
-    export const getWorkflowStatus = (projectId: string, workflowId: string) => `${API_BASE_URL}/projects/${projectId}/workflows/${workflowId}`
+    export const getWorkflowStatus = (projectId: string, workflowId: string) => `${API_BASE_URL}/projects/${projectId}/workflows/${workflowId}/status`
+    export const getWorkflow = (projectId: string, workflowId: string) => `${API_BASE_URL}/projects/${projectId}/workflows/${workflowId}`
     export const getWorkflows = (projectId: string) => `${API_BASE_URL}/projects/${projectId}/workflows`
 
 
