@@ -34,7 +34,6 @@ public class FLOWViZHttpService {
 
     public FLOWViZHttpService(String baseUrl, Credentials credentials) {
         this.baseUrl = baseUrl;
-        this.token = authenticate(credentials);
         this.credentials = credentials;
         this.client = new OkHttpClient();
         this.gson = new GsonBuilder()
@@ -43,6 +42,7 @@ public class FLOWViZHttpService {
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
                 .create();
+        this.token = authenticate(credentials);
     }
 
     public FLOWViZHttpService(FLOWViZHttpService httpService) {
