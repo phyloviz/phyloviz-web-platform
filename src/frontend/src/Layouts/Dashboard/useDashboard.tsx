@@ -46,9 +46,18 @@ export function useDashboard() {
             icon: <LogoutIcon/>,
             callback: async () => {
                 sessionManager.clearSession()
-                await fetch(WebApiUris.logout, {
-                    method: 'POST'
-                })
+
+                const form = document.createElement("form");
+
+                //Move the submit function to another variable
+                //so that it doesn't get overwritten.
+                form._submit_function_ = form.submit;
+
+                form.setAttribute("method", "post");
+                form.setAttribute("action", WebApiUris.logout);
+
+                document.body.appendChild(form);
+                form._submit_function_(); //Call the renamed function.
             }
         }
     ]

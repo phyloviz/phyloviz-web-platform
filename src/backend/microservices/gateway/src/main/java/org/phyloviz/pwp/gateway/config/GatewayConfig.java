@@ -13,7 +13,6 @@ import org.springframework.cloud.gateway.route.builder.GatewayFilterSpec;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.PathContainer;
@@ -22,15 +21,12 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.client.oidc.web.server.logout.OidcClientInitiatedServerLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
-import org.springframework.security.oauth2.client.web.server.WebSessionServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authentication.HttpStatusServerEntryPoint;
 import org.springframework.security.web.server.authentication.ServerAuthenticationEntryPointFailureHandler;
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
-import org.springframework.security.web.server.authentication.logout.ServerLogoutHandler;
 import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
-import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
 import org.springframework.security.web.server.util.matcher.PathPatternParserServerWebExchangeMatcher;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
@@ -38,7 +34,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.util.pattern.PathPattern;
 import org.springframework.web.util.pattern.PathPatternParser;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -78,6 +73,7 @@ public class GatewayConfig {
     ) {
         http
                 .authorizeExchange()
+                .pathMatchers("/api/logout", "/api/login/**").permitAll()
                 .pathMatchers("/api/**").authenticated()
                 .anyExchange().permitAll()
                 .and()
@@ -97,35 +93,18 @@ public class GatewayConfig {
                 // so I can't change disable that endpoint...... Would be an interesting issue to add
                 // to https://github.com/spring-projects/spring-security/issues
                 .oauth2Client(oAuth2ClientSpec -> oAuth2ClientSpec.authorizedClientRepository(authorizedClientRepository))
-                .logout(logoutSpec ->
-                        logoutSpec
-                                .logoutUrl(logoutUrl)
-                                .logoutHandler(logoutHandler())
-                                .logoutSuccessHandler(logoutSuccessHandler())
-                );
+                .logout()
+                .logoutUrl(logoutUrl)
+                .logoutSuccessHandler(logoutSuccessHandler())
+        ;
 
         return http.build();
-    }
-
-
-    // Saves the authorized client (containing access, refresh token, etc)
-    // in the spring session. since we included the redis session dependency
-    // the spring session will be saved in redis
-    // so the authorized client will be saved in redis too
-    @Bean
-    public ServerOAuth2AuthorizedClientRepository authorizedClientRepository() {
-        return new WebSessionServerOAuth2AuthorizedClientRepository();
-    }
-
-    public ServerLogoutHandler logoutHandler() {
-        // Deletes Web Sesssion
-        return new WebSessionServerLogoutHandler();
     }
 
     public ServerLogoutSuccessHandler logoutSuccessHandler() {
         OidcClientInitiatedServerLogoutSuccessHandler oidcLogoutSuccessHandler =
                 new OidcClientInitiatedServerLogoutSuccessHandler(clientRegistrationRepository);
-        oidcLogoutSuccessHandler.setLogoutSuccessUrl(URI.create(baseUrl)); //Doing useless redirect...
+
         oidcLogoutSuccessHandler.setPostLogoutRedirectUri(baseUrl);
 
         return oidcLogoutSuccessHandler;
