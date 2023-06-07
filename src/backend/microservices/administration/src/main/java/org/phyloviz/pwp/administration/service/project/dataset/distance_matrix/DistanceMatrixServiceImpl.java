@@ -41,7 +41,7 @@ public class DistanceMatrixServiceImpl implements DistanceMatrixService {
     public void deleteDistanceMatrix(String projectId, String datasetId, String distanceMatrixId, String userId) {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
-        if (!datasetRepository.existsByProjectIdAndId(datasetId, projectId))
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId))
             throw new DatasetNotFoundException();
 
         DistanceMatrixMetadata distanceMatrixMetadata = distanceMatrixMetadataRepository
@@ -66,7 +66,7 @@ public class DistanceMatrixServiceImpl implements DistanceMatrixService {
     public UpdateDistanceMatrixOutput updateDistanceMatrix(String name, String projectId, String datasetId, String distanceMatrixId, String userId) {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
-        if (!datasetRepository.existsByProjectIdAndId(datasetId, projectId))
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId))
             throw new DatasetNotFoundException();
 
         DistanceMatrixMetadata distanceMatrixMetadata = distanceMatrixMetadataRepository

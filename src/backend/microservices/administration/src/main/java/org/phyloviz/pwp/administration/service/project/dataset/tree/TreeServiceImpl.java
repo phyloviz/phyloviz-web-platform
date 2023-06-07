@@ -66,7 +66,7 @@ public class TreeServiceImpl implements TreeService {
     public UpdateTreeOutput updateTree(String name, String projectId, String datasetId, String treeId, String userId) {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
-        if (!datasetRepository.existsByProjectIdAndId(datasetId, projectId))
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId))
             throw new DatasetNotFoundException();
 
         TreeMetadata treeMetadata = treeMetadataRepository

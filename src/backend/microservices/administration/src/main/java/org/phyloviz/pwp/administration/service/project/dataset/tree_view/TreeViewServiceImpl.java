@@ -38,7 +38,7 @@ public class TreeViewServiceImpl implements TreeViewService {
     public void deleteTreeView(String projectId, String datasetId, String treeViewId, String userId) {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
-        if (!datasetRepository.existsByProjectIdAndId(datasetId, projectId))
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId))
             throw new DatasetNotFoundException();
 
         TreeViewMetadata treeViewMetadata = treeViewMetadataRepository
@@ -58,7 +58,7 @@ public class TreeViewServiceImpl implements TreeViewService {
     public UpdateTreeViewOutput updateTreeView(String name, String projectId, String datasetId, String treeViewId, String userId) {
         if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
             throw new ProjectNotFoundException();
-        if (!datasetRepository.existsByProjectIdAndId(datasetId, projectId))
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId))
             throw new DatasetNotFoundException();
 
         TreeViewMetadata treeViewMetadata = treeViewMetadataRepository
