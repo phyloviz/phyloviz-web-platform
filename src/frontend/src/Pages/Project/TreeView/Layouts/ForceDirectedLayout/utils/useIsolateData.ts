@@ -3,6 +3,7 @@ import VisualizationService from "../../../../../../Services/Visualization/Visua
 import {
     Row
 } from "../../../../../../Services/Visualization/models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel";
+import {MAX_INTEGER} from "../../../../TypingData/useTypingData";
 
 /**
  * This hook is used to get the rows and headers of isolate data.
@@ -24,7 +25,7 @@ export function useIsolateData(
                 return
 
             setLoadingIsolateDataRows(true)
-            const isolateData = await VisualizationService.getIsolateDataRows(projectId, isolateDataId, 100000, 0) // TODO is pagination needed?
+            const isolateData = await VisualizationService.getIsolateDataRows(projectId, isolateDataId, MAX_INTEGER, 0)
             setIsolateDataRows(isolateData.rows)
             setLoadingIsolateDataRows(false)
         }

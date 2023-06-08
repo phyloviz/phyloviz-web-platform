@@ -9,6 +9,7 @@ import {
 } from "../../../../../Services/Visualization/models/getTypingDataProfiles/GetTypingDataProfilesOutputModel";
 import {useTreeViewContext} from "../../useTreeView";
 import {Problem} from "../../../../../Services/utils/Problem";
+import {MAX_INTEGER} from "../../../TypingData/useTypingData";
 
 /**
  * Hook for typing data filter page.
@@ -35,7 +36,7 @@ export function useTypingDataFilter() {
                 }
             })
 
-        VisualizationService.getTypingDataProfiles(projectId!, typingDataId, 100000, 0)  // TODO is pagination needed?
+        VisualizationService.getTypingDataProfiles(projectId!, typingDataId, MAX_INTEGER, 0)
             .then((res) => setTypingDataProfiles(res))
             .catch((error) => {
                 if (error instanceof Problem && error.title === "Indexing Needed") {

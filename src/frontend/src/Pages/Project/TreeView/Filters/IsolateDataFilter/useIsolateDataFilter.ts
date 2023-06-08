@@ -9,6 +9,7 @@ import {
 } from "../../../../../Services/Visualization/models/getIsolateDataSchema/GetIsolateDataKeysOutputModel";
 import {useTreeViewContext} from "../../useTreeView";
 import {Problem} from "../../../../../Services/utils/Problem";
+import {MAX_INTEGER} from "../../../TypingData/useTypingData";
 
 /**
  * Hook for IsolateData page.
@@ -35,7 +36,7 @@ export function useIsolateDataFilter() {
                 }
             })
 
-        VisualizationService.getIsolateDataRows(projectId!, isolateDataId!, 100000, 0)  // TODO is pagination needed?
+        VisualizationService.getIsolateDataRows(projectId!, isolateDataId!, MAX_INTEGER, 0)
             .then((res) => setIsolateDataRows(res))
             .catch((error) => {
                 if (error instanceof Problem && error.title === "Indexing Needed") {
