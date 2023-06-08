@@ -8,6 +8,7 @@ import {useDeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBac
 import {useState} from "react"
 import AdministrationService from "../../../../../../Services/Administration/AdministrationService"
 import {Problem} from "../../../../../../Services/utils/Problem";
+import {useProjectContext} from "../../../../../../Pages/Project/useProject";
 
 /**
  * Hook for the DistanceMatrixTreeItem component.
@@ -17,6 +18,7 @@ export function useDistanceMatrixTreeItem(datasetId: string, distanceMatrix: Dis
     const {projectId} = useParams<{ projectId: string }>()
     const {deleteBackdropOpen, handleDeleteBackdropOpen, handleDeleteBackdropClose} = useDeleteResourceBackdrop()
     const [error, setError] = useState<string | null>(null)
+    const {onFileStructureUpdate} = useProjectContext()
 
     return {
         contextMenuItems: [
@@ -44,6 +46,8 @@ export function useDistanceMatrixTreeItem(datasetId: string, distanceMatrix: Dis
                 .then(() => {
                     handleDeleteBackdropClose()
                     navigate(WebUiUris.project(projectId!))
+                    console.log("deleting")
+                    onFileStructureUpdate()
                 })
                 .catch(error => {
                     if (error instanceof Problem && error.title === "Denied Deletion") {

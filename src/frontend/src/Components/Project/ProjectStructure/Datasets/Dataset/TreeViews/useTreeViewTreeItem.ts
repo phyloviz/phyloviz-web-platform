@@ -5,6 +5,7 @@ import {WebUiUris} from "../../../../../../Pages/WebUiUris"
 import {useDeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBackdrop"
 import {useState} from "react"
 import AdministrationService from "../../../../../../Services/Administration/AdministrationService"
+import {useProjectContext} from "../../../../../../Pages/Project/useProject";
 
 /**
  * Hook for the TreeViewTreeItem component.
@@ -17,6 +18,7 @@ export function useTreeViewTreeItem(datasetId: string, treeView: TreeView) {
     const {projectId} = useParams<{ projectId: string }>()
     const {deleteBackdropOpen, handleDeleteBackdropOpen, handleDeleteBackdropClose} = useDeleteResourceBackdrop()
     const [error, setError] = useState<string | null>(null)
+    const {onFileStructureUpdate} = useProjectContext()
 
     return {
         contextMenuItems: [
@@ -44,6 +46,7 @@ export function useTreeViewTreeItem(datasetId: string, treeView: TreeView) {
                 .then(() => {
                     handleDeleteBackdropClose()
                     navigate(WebUiUris.project(projectId!))
+                    onFileStructureUpdate()
                 })
                 .catch(error => {
                     setError("An unexpected error occurred while deleting the tree view.")

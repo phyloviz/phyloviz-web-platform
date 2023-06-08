@@ -6,6 +6,7 @@ import {useDeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdr
 import AdministrationService from "../../../../../Services/Administration/AdministrationService"
 import {WebUiUris} from "../../../../../Pages/WebUiUris"
 import {Problem} from "../../../../../Services/utils/Problem";
+import {useProjectContext} from "../../../../../Pages/Project/useProject";
 
 /**
  * Hook for the IsolateDataFileTreeItem component.
@@ -17,6 +18,7 @@ export function useIsolateDataFileTreeItem(file: IsolateDataFile) {
     const {projectId} = useParams<{ projectId: string }>()
     const {deleteBackdropOpen, handleDeleteBackdropOpen, handleDeleteBackdropClose} = useDeleteResourceBackdrop()
     const [error, setError] = useState<string | null>(null)
+    const {onFileStructureUpdate} = useProjectContext()
 
     return {
         contextMenuItems: [
@@ -44,6 +46,7 @@ export function useIsolateDataFileTreeItem(file: IsolateDataFile) {
                 .then(() => {
                     handleDeleteBackdropClose()
                     navigate(WebUiUris.project(projectId!))
+                    onFileStructureUpdate()
                 })
                 .catch(error => {
                     if (error instanceof Problem && error.title === "Denied Deletion") {

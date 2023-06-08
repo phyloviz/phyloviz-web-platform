@@ -3,6 +3,7 @@ import ComputeService from "../../../Services/Compute/ComputeService"
 import {CreateWorkflowInputModel} from "../../../Services/Compute/models/createWorkflow/CreateWorkflowInputModel"
 import {useProjectContext} from "../useProject"
 import {useNavigate} from "react-router-dom"
+import {WebUiUris} from "../../WebUiUris";
 
 /**
  * Hook that handles computations.
@@ -22,6 +23,7 @@ export function useCompute() {
             .catch((err) => setError(err.message))
             .finally(() => {
                 onWorkflowsUpdate()
+                navigate(WebUiUris.project(project?.projectId!))
             })
     }
 

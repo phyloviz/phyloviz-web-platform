@@ -6,6 +6,7 @@ import {useDeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdr
 import AdministrationService from "../../../../../Services/Administration/AdministrationService"
 import {useState} from "react"
 import {DistanceMatricesIcon, DistanceMatrixIcon, TreeIcon, TreesIcon, TreeViewsIcon} from "../../../../Shared/Icons";
+import {useProjectContext} from "../../../../../Pages/Project/useProject";
 
 /**
  * Hook for the DatasetTreeItem component.
@@ -15,6 +16,7 @@ export function useDatasetTreeItem(dataset: Dataset) {
     const navigate = useNavigate()
     const {deleteBackdropOpen, handleDeleteBackdropOpen, handleDeleteBackdropClose} = useDeleteResourceBackdrop()
     const [error, setError] = useState<string | null>(null)
+    const {onFileStructureUpdate} = useProjectContext()
 
     const computeTreeOptions = [
         {
@@ -103,6 +105,7 @@ export function useDatasetTreeItem(dataset: Dataset) {
                 .then(() => {
                     handleDeleteBackdropClose()
                     navigate(WebUiUris.project(projectId!)) // TODO Should we actually even leave the page?
+                    onFileStructureUpdate()
                 })
                 .catch(error => setError(error.message))
         },

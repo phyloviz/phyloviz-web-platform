@@ -1,11 +1,25 @@
-import {useNavigate, useOutletContext, useParams} from "react-router-dom"
-import {useEffect, useState} from "react"
+import {useNavigate, useParams} from "react-router-dom"
+import * as React from "react"
+import {useContext, useEffect, useState} from "react"
 import {Project} from "../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import AdministrationService from "../../Services/Administration/AdministrationService"
-import {GetWorkflowStatusOutputModel, Workflow} from "../../Services/Compute/models/getWorkflow/GetWorkflowOutputModel"
+import {GetWorkflowStatusOutputModel} from "../../Services/Compute/models/getWorkflow/GetWorkflowOutputModel"
 import ComputeService from "../../Services/Compute/ComputeService"
 import {useInterval} from "../../Components/Shared/Hooks/useInterval"
 import {WebUiUris} from "../WebUiUris";
+
+/**
+ * Properties of the context for the Project page.
+ *
+ * @property project the project to display
+ * @property onFileStructureUpdate callback when the file structure has been updated
+ * @property onWorkflowsUpdate callback when the workflows have been updated
+ */
+export interface ProjectContextProps {
+    project: Project | null
+    onFileStructureUpdate: () => void
+    onWorkflowsUpdate: () => void
+}
 
 /**
  * Context for the Project page.
@@ -14,11 +28,14 @@ import {WebUiUris} from "../WebUiUris";
  * @property onFileStructureUpdate callback when the file structure has been updated
  * @property onWorkflowsUpdate callback when the workflows have been updated
  */
-interface ProjectContext {
-    project: Project | null,
-    onFileStructureUpdate: () => void
-    onWorkflowsUpdate: () => void
-}
+export const ProjectContext = React.createContext<ProjectContextProps>({
+    project: null,
+    onFileStructureUpdate: () => {
+        console.log("being called for some reason")
+    },
+    onWorkflowsUpdate: () => {
+    }
+})
 
 
 /**
@@ -43,6 +60,7 @@ export function useProject() {
     }, [projectId])
 
     function loadProject() {
+        console.log("loadProject")
         setLoadingFiles(true)
         AdministrationService.getProject(projectId)
             .then((res) => setProject(res))
@@ -82,7 +100,8 @@ export function useProject() {
         for (const updatedWorkflow of updatedWorkflows.workflows) {
             const workflow = workflows.find(w => w.workflowId === updatedWorkflow.workflowId)
             if (workflow === undefined || workflow.status !== updatedWorkflow.status) {
-                loadWorkflows()
+                // loadWorkflows()
+                setWorkflows(updatedWorkflows.workflows)
                 return false
             }
         }
@@ -94,12 +113,12 @@ export function useProject() {
         project,
 
         loadingFiles,
-        onFileStructureUpdate: () => loadProject,
+        onFileStructureUpdate: () => loadProject(),
         handleEditProject: () => navigate(WebUiUris.editProject(projectId!)),
 
         workflows,
         loadingWorkflows,
-        onWorkflowsUpdate: () => loadWorkflows,
+        onWorkflowsUpdate: () => loadWorkflows(),
 
         error,
         clearError: () => setError(null)
@@ -110,5 +129,5 @@ export function useProject() {
  * Hook to use the project context.
  */
 export function useProjectContext() {
-    return useOutletContext<ProjectContext>()
+    return useContext(ProjectContext)
 }

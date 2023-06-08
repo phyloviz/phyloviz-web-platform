@@ -7,6 +7,7 @@ import {useState} from "react"
 import AdministrationService from "../../../../../../Services/Administration/AdministrationService"
 import {TreeViewIcon} from "../../../../../Shared/Icons";
 import {Problem} from "../../../../../../Services/utils/Problem";
+import {useProjectContext} from "../../../../../../Pages/Project/useProject";
 
 /**
  * Hook for the TreeTreeItem component.
@@ -16,6 +17,7 @@ export function useTreeTreeItem(datasetId: string, tree: Tree) {
     const {projectId} = useParams<{ projectId: string }>()
     const {deleteBackdropOpen, handleDeleteBackdropOpen, handleDeleteBackdropClose} = useDeleteResourceBackdrop()
     const [error, setError] = useState<string | null>(null)
+    const {onFileStructureUpdate} = useProjectContext()
 
     const layoutOptions = [
         {
@@ -71,6 +73,7 @@ export function useTreeTreeItem(datasetId: string, tree: Tree) {
                 .then(() => {
                     handleDeleteBackdropClose()
                     navigate(WebUiUris.project(projectId!))
+                    onFileStructureUpdate()
                 })
                 .catch(error => {
                     if (error instanceof Problem && error.title === "Denied Deletion") {
