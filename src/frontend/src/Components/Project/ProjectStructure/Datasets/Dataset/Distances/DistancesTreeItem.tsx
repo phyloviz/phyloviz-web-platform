@@ -5,6 +5,7 @@ import {
     DistanceMatrix
 } from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {DistanceMatricesIcon} from "../../../../../Shared/Icons";
+import {useDistancesTreeItem} from "./useDistancesTreeItem";
 
 
 /**
@@ -24,11 +25,15 @@ interface DistancesTreeItemProps {
  * Tree item for the distance matrices of a dataset.
  */
 export function DistancesTreeItem({nodeId, datasetId, distanceMatrices}: DistancesTreeItemProps) {
+
+    const {contextMenuItems} = useDistancesTreeItem(datasetId)
+
     return (
         <StyledTreeItem
             nodeId={nodeId}
             labelText="Distances"
             labelIcon={DistanceMatricesIcon}
+            contextMenuItems={contextMenuItems}
         >
             {
                 distanceMatrices.map((distance, index) => {

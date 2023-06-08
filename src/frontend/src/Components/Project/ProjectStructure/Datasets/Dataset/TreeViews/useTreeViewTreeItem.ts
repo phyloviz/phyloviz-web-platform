@@ -27,12 +27,12 @@ export function useTreeViewTreeItem(datasetId: string, treeView: TreeView) {
                 icon: Visibility,
                 onClick: () => navigate(WebUiUris.treeView(projectId!, datasetId, treeView.treeViewId))
             },
-            {
+            /*{
                 label: "Export",
                 icon: Download,
-                onClick: () => {/*TODO: To be implemented*/
+                onClick: () => {/!*TODO: To be implemented*!/
                 }
-            },
+            },*/
             {
                 label: "Delete",
                 icon: Delete,

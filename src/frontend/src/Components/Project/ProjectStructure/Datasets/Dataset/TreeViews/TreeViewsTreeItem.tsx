@@ -3,6 +3,7 @@ import {StyledTreeItem} from "../../../Utils/StyledTreeItem"
 import {TreeViewTreeItem} from "./TreeViewTreeItem"
 import * as React from "react"
 import {TreeViewsIcon} from "../../../../../Shared/Icons";
+import {useTreeViewsTreeItem} from "./useTreeViewsTreeItem";
 
 /**
  * Props for the TreeViewsTreeItem component.
@@ -21,11 +22,14 @@ interface TreeViewsTreeItemProps {
  * Tree item for the tree views of a dataset.
  */
 export function TreeViewsTreeItem({nodeId, datasetId, treeViews}: TreeViewsTreeItemProps) {
+    const {contextMenuItems} = useTreeViewsTreeItem(datasetId)
+
     return (
         <StyledTreeItem
             nodeId={nodeId}
             labelText="Tree Views"
             labelIcon={TreeViewsIcon}
+            contextMenuItems={contextMenuItems}
         >
             {
                 treeViews.map((treeView, index) => {

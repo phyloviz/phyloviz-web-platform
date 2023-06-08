@@ -7,6 +7,8 @@ import AdministrationService from "../../../../../Services/Administration/Admini
 import {useState} from "react"
 import {DistanceMatricesIcon, DistanceMatrixIcon, TreeIcon, TreesIcon, TreeViewsIcon} from "../../../../Shared/Icons";
 import {useProjectContext} from "../../../../../Pages/Project/useProject";
+import {computeDistanceMatrixOptions} from "./Distances/useDistancesTreeItem";
+import {computeTreeOptions} from "./Trees/useTreesTreeItem";
 
 /**
  * Hook for the DatasetTreeItem component.
@@ -18,42 +20,12 @@ export function useDatasetTreeItem(dataset: Dataset) {
     const [error, setError] = useState<string | null>(null)
     const {onFileStructureUpdate} = useProjectContext()
 
-    const computeTreeOptions = [
-        {
-            label: "goeBURST",
-            url: WebUiUris.computeGoeburst(projectId!, dataset.datasetId)
-        },
-        {
-            label: "goeBURST Full MST",
-            url: WebUiUris.computeGoeburstFullMst(projectId!, dataset.datasetId)
-        },
-        {
-            label: "Hierarchical Clustering",
-            url: WebUiUris.computeHierarchicalClustering(projectId!, dataset.datasetId)
-        },
-        {
-            label: "Neighbor Joining",
-            url: WebUiUris.computeNeighborJoining(projectId!, dataset.datasetId)
-        },
-        {
-            label: "nLV Graph",
-            url: WebUiUris.computeNlvGraph(projectId!, dataset.datasetId)
-        }
-    ]
-
-    const computeDistanceMatrixOptions = [
-        {
-            label: "Hamming Distance",
-            url: WebUiUris.computeHammingDistance(projectId!, dataset.datasetId)
-        }
-    ]
-
     return {
         contextMenuItems: [
             {
                 label: "Compute Distances",
                 icon: DistanceMatricesIcon,
-                nestedItems: computeDistanceMatrixOptions.map((option) => {
+                nestedItems: computeDistanceMatrixOptions(projectId!, dataset.datasetId).map((option) => {
                     return {
                         label: option.label,
                         icon: DistanceMatrixIcon,
@@ -64,7 +36,7 @@ export function useDatasetTreeItem(dataset: Dataset) {
             {
                 label: "Compute Tree",
                 icon: TreesIcon,
-                nestedItems: computeTreeOptions.map((option) => {
+                nestedItems: computeTreeOptions(projectId!, dataset.datasetId).map((option) => {
                     return {
                         label: option.label,
                         icon: TreeIcon,
@@ -104,7 +76,7 @@ export function useDatasetTreeItem(dataset: Dataset) {
             AdministrationService.deleteDataset(projectId!, dataset.datasetId)
                 .then(() => {
                     handleDeleteBackdropClose()
-                    navigate(WebUiUris.project(projectId!)) // TODO Should we actually even leave the page?
+                    navigate(WebUiUris.project(projectId!))
                     onFileStructureUpdate()
                 })
                 .catch(error => setError(error.message))

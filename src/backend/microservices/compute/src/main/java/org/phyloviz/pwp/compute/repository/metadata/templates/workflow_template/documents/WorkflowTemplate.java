@@ -77,7 +77,7 @@ public class WorkflowTemplate {
                 .name(type + "-" + workflowTemplateData.getWorkflowId())
                 .description(description)
                 // Need to set start date to be in the past to allow workflow to run immediately
-                .startDate(LocalDateTime.now().minus(1, ChronoUnit.MINUTES))
+                .startDate(LocalDateTime.now().minus(1, ChronoUnit.DAYS))
                 .tasks(tasks.stream().map(task -> task.buildTask(workflowTemplateData)).toList())
                 .build();
     }

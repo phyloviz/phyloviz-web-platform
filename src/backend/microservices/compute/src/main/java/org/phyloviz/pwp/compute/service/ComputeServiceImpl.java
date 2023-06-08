@@ -30,7 +30,6 @@ import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.utils.UUIDUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -169,9 +168,7 @@ public class ComputeServiceImpl implements ComputeService {
      * @return information about the workflow
      */
     private GetWorkflowOutput getWorkflowOutput(WorkflowInstance workflowInstance) {
-        if (workflowInstance.getStatus() == WorkflowStatus.RUNNING) {
-            updateWorkflowFromFLOWViZ(workflowInstance);
-        }
+        updateWorkflowFromFLOWViZ(workflowInstance);
 
         return new GetWorkflowOutput(
                 workflowInstance.getId(),
@@ -254,14 +251,18 @@ public class ComputeServiceImpl implements ComputeService {
         String airflowStatus = airflowWorkflowStatus.getState();
         String dagRunId = airflowWorkflowStatus.getDagRunId();
 
-
         Map<String, String> logs = new HashMap<>(workflowInstance.getWorkflow().getTasks().size());
 
         workflowInstance.getWorkflow().getTasks().forEach((task) -> {
-            GetWorkflowTaskLogResponse workflowTaskLogResponse;
-            workflowTaskLogResponse = flowVizClient.workflowService().getWorkflowDagRunTaskLog(workflowInstance.getWorkflow().getName(), dagRunId, "task_" + task.getId(), "1");
+            try {
+                GetWorkflowTaskLogResponse workflowTaskLogResponse;
+                workflowTaskLogResponse = flowVizClient.workflowService().getWorkflowDagRunTaskLog(workflowInstance.getWorkflow().getName(), dagRunId, "task_" + task.getId(), "1");
 
-            logs.put(task.getId(), workflowTaskLogResponse.getContent());
+                logs.put(task.getId(), workflowTaskLogResponse.getContent());
+            } catch (UnexpectedResponseException e) {
+                if (e.getResponse().code() != 404)
+                    throw e;
+            }
         });
 
         workflowInstance.setLogs(logs);

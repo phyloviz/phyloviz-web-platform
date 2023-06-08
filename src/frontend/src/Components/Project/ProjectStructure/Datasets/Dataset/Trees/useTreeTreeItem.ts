@@ -54,12 +54,12 @@ export function useTreeTreeItem(datasetId: string, tree: Tree) {
                     }
                 })
             },
-            {
+            /*{
                 label: "Export",
                 icon: Download,
-                onClick: () => {/*TODO: To be implemented*/
+                onClick: () => {/!*TODO: To be implemented*!/
                 }
-            },
+            },*/
             {
                 label: "Delete",
                 icon: Delete,

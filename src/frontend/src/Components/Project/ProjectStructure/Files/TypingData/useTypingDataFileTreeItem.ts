@@ -27,12 +27,12 @@ export function useTypingDataFileTreeItem(file: TypingDataFile) {
                 icon: Visibility,
                 onClick: () => navigate(WebUiUris.typingData(projectId!, file.typingDataId))
             },
-            {
+            /*{
                 label: "Export",
                 icon: Download,
-                onClick: () => {/*TODO: To be implemented*/
+                onClick: () => {/!*TODO: To be implemented*!/
                 }
-            },
+            },*/
             {
                 label: "Delete",
                 icon: Delete,

@@ -16,12 +16,12 @@ export function useTypingDataTreeItem(typingDataId: string) {
                 icon: Visibility,
                 onClick: () => navigate(WebUiUris.typingData(projectId!, typingDataId))
             },
-            {
+            /*{
                 label: "Export",
                 icon: Download,
-                onClick: () => {/*TODO: To be implemented*/
+                onClick: () => {/!*TODO: To be implemented*!/
                 }
-            }
+            }*/
         ]
     }
 }

@@ -27,12 +27,12 @@ export function useDistanceMatrixTreeItem(datasetId: string, distanceMatrix: Dis
                 icon: Visibility,
                 onClick: () => navigate(WebUiUris.distanceMatrix(projectId!, datasetId, distanceMatrix.distanceMatrixId))
             },
-            {
+            /*{
                 label: "Export",
                 icon: Download,
-                onClick: () => {/*TODO: To be implemented*/
+                onClick: () => {/!*TODO: To be implemented*!/
                 }
-            },
+            },*/
             {
                 label: "Delete",
                 icon: Delete,
@@ -46,7 +46,6 @@ export function useDistanceMatrixTreeItem(datasetId: string, distanceMatrix: Dis
                 .then(() => {
                     handleDeleteBackdropClose()
                     navigate(WebUiUris.project(projectId!))
-                    console.log("deleting")
                     onFileStructureUpdate()
                 })
                 .catch(error => {

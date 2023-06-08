@@ -27,12 +27,12 @@ export function useIsolateDataFileTreeItem(file: IsolateDataFile) {
                 icon: Visibility,
                 onClick: () => navigate(WebUiUris.isolateData(projectId!, file.isolateDataId))
             },
-            {
+            /*{
                 label: "Export",
                 icon: Download,
-                onClick: () => {/*TODO: To be implemented*/
+                onClick: () => {/!*TODO: To be implemented*!/
                 }
-            },
+            },*/
             {
                 label: "Delete",
                 icon: Delete,

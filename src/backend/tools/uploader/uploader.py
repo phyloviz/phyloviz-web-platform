@@ -53,7 +53,8 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
             'distanceMatrixId': distance_matrix_id,
             'parameters': parameters
         }
-        name = f'Tree - {algorithm}'
+        tree_count = trees_collection.count_documents({"projectId": project_id, "datasetId": dataset_id})
+        name = f'Tree {tree_count + 1} - {algorithm}'
     elif source_type == 'algorithm-typing-data':
         source_type = 'algorithm_typing_data'
         dataset = datasets_collection.find_one(
@@ -71,7 +72,8 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
             'typingDataId': dataset['typingDataId'],
             'parameters': parameters
         }
-        name = f'Tree - {algorithm}'
+        tree_count = trees_collection.count_documents({"projectId": project_id, "datasetId": dataset_id})
+        name = f'Tree {tree_count + 1} - {algorithm}'
     else:
         raise Exception(f'Unknown source type: {source_type}')
 
@@ -109,7 +111,8 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id,
         source = {
             'function': function
         }
-        name = f'Distance Matrix - {function}'
+        distance_matrix_count = distance_matrix_collection.count_documents({"projectId": project_id, "datasetId": dataset_id})
+        name = f'Distance Matrix {distance_matrix_count + 1} - {function}'
     else:
         raise Exception(f'Unknown source type: {source_type}')
 

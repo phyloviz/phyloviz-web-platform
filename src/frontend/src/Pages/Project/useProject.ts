@@ -47,61 +47,58 @@ export function useProject() {
     const [project, setProject] = useState<Project | null>(null)
     const [workflows, setWorkflows] = useState<GetWorkflowStatusOutputModel[]>([])
 
-    const [loadingFiles, setLoadingFiles] = useState<boolean>(true)
+    const [loadingProject, setLoadingProject] = useState<boolean>(true)
     const [loadingWorkflows, setLoadingWorkflows] = useState<boolean>(true)
 
     const [error, setError] = useState<string | null>(null)
     const navigate = useNavigate()
 
-    // TODO implement project structure only updating the needed places -> workflows only changing workflows folder, same for project
     useEffect(() => {
-        loadProject()
-        loadWorkflows()
+        setLoadingProject(true)
+        loadProject().finally(() => setLoadingProject(false))
+
+        setLoadingWorkflows(true)
+        loadWorkflows().finally(() => setLoadingWorkflows(false))
     }, [projectId])
 
     function loadProject() {
-        console.log("loadProject")
-        setLoadingFiles(true)
-        AdministrationService.getProject(projectId)
+        return AdministrationService.getProject(projectId)
             .then((res) => setProject(res))
             .catch((err: Error) => setError("Could not load project: " + err.message))
-            .finally(() => setLoadingFiles(false))
     }
 
     function loadWorkflows() {
-        setLoadingWorkflows(true)
-        ComputeService.getWorkflows(projectId)
-            .then(res => setWorkflows(res.workflows))
+        return ComputeService.getWorkflows(projectId)
+            .then(res => {
+                setWorkflows(res.workflows)
+                return res.workflows
+            })
             .catch((err: Error) => {
                 setError("Could not load workflows: Unexpected error.")
             })
-            .finally(() => setLoadingWorkflows(false))
     }
 
-    useInterval(pollWorkflows, 1000, [projectId, workflows, loadingWorkflows])
+    useInterval(poll, 5000, [projectId])
 
     /**
      * Polls the workflows for any changes.
      */
-    async function pollWorkflows() {
-        if (loadingWorkflows)
-            return false
-
-        // TODO implement something with better performance
-
-        const updatedWorkflows = await ComputeService.getWorkflows(projectId!)
+    async function poll() {
+        const updatedWorkflows = await ComputeService.getWorkflows(projectId)
+            .then(res => {
+                setWorkflows(res.workflows)
+                return res.workflows
+            })
             .catch((err: Error) => {
-                return null
+                setError("Could not load workflows: Unexpected error.")
             })
 
-        if (updatedWorkflows === null)
-            return false
+        if(updatedWorkflows === undefined) return false
 
-        for (const updatedWorkflow of updatedWorkflows.workflows) {
+        for (const updatedWorkflow of updatedWorkflows) {
             const workflow = workflows.find(w => w.workflowId === updatedWorkflow.workflowId)
             if (workflow === undefined || workflow.status !== updatedWorkflow.status) {
-                // loadWorkflows()
-                setWorkflows(updatedWorkflows.workflows)
+                loadProject()
                 return false
             }
         }
@@ -112,7 +109,7 @@ export function useProject() {
     return {
         project,
 
-        loadingFiles,
+        loadingFiles: loadingProject,
         onFileStructureUpdate: () => loadProject(),
         handleEditProject: () => navigate(WebUiUris.editProject(projectId!)),
 

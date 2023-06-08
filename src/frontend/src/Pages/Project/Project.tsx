@@ -36,7 +36,7 @@ export default function Project() {
             <ProjectContext.Provider value={{project, onFileStructureUpdate, onWorkflowsUpdate}}>
                 <ProjectStructure project={project} workflows={workflows} loading={loadingFiles || loadingWorkflows}/>
                 {
-                    outlet && !loadingFiles && !error
+                    outlet && !loadingFiles
                         ? <Outlet/>
                         : <EmptyProject
                             project={project}

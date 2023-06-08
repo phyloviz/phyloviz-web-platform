@@ -125,7 +125,8 @@ def compute_tree_view(project_id, dataset_id, tree_id, workflow_id, layout):
     end_time = time.time()
     print("Time taken: ", end_time - start_time, " seconds +- 5 seconds")
 
-    name = f"Tree View - {layout}"
+    tree_view_count = tree_views_collection.count_documents({"projectId": project_id, "datasetId": dataset_id})
+    name = f"Tree View {tree_view_count + 1} - {layout}"
 
     # Create the metadata in the tree collection
     tree_view_metadata = {
