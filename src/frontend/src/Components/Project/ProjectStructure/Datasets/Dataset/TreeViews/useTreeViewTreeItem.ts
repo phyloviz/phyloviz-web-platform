@@ -1,6 +1,6 @@
 import {TreeView} from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {useNavigate, useParams} from "react-router-dom"
-import {Delete, Download, Visibility} from "@mui/icons-material"
+import {Delete, Visibility} from "@mui/icons-material"
 import {WebUiUris} from "../../../../../../Pages/WebUiUris"
 import {useDeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBackdrop"
 import {useState} from "react"
@@ -27,12 +27,13 @@ export function useTreeViewTreeItem(datasetId: string, treeView: TreeView) {
                 icon: Visibility,
                 onClick: () => navigate(WebUiUris.treeView(projectId!, datasetId, treeView.treeViewId))
             },
-            /*{
+            /* TODO: To be implemented,
+            {
                 label: "Export",
                 icon: Download,
-                onClick: () => {/!*TODO: To be implemented*!/
+                onClick: () => {TODO: To be implemented
                 }
-            },*/
+            }*/
             {
                 label: "Delete",
                 icon: Delete,

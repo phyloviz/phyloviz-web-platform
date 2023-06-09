@@ -47,6 +47,10 @@ export namespace WebUiUris {
     export const COMPUTE_NEIGHBOR_JOINING = `${COMPUTE_TREE}/neighbor-joining`
     export const COMPUTE_NLV_GRAPH = `${COMPUTE_TREE}/nlv-graph`
 
+    export const COMPUTE_RECTANGULAR_LAYOUT = `${COMPUTE_TREE_VIEW}/rectangular-layout`
+    export const COMPUTE_RADIAL_LAYOUT = `${COMPUTE_TREE_VIEW}/radial-layout`
+    export const COMPUTE_FORCE_DIRECTED_LAYOUT = `${COMPUTE_TREE_VIEW}/force-directed-layout`
+
     export const project = (projectId: string) => `/projects/${projectId}`
     export const editProject = (projectId: string) => `/projects/${projectId}/edit`
     export const createDataset = (projectId: string) => `/projects/${projectId}/create-dataset`
@@ -75,5 +79,7 @@ export namespace WebUiUris {
     export const computeNeighborJoining = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree/neighbor-joining`
     export const computeNlvGraph = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree/nlv-graph`
 
-    export const computeTreeView = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree-view`
+    export const computeForceDirectedLayout = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree-view/force-directed-layout`
+    export const computeRadialLayout = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree-view/radial-layout`
+    export const computeRectangularLayout = (projectId: string, datasetId: string) => `/projects/${projectId}/datasets/${datasetId}/compute/tree-view/rectangular-layout`
 }

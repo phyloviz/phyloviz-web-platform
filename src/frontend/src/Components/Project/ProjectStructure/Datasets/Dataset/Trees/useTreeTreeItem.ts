@@ -1,6 +1,6 @@
 import {Tree} from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {useNavigate, useParams} from "react-router-dom"
-import {Delete, Download, Visibility} from "@mui/icons-material"
+import {Delete, Visibility} from "@mui/icons-material"
 import {WebUiUris} from "../../../../../../Pages/WebUiUris"
 import {useDeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBackdrop"
 import {useState} from "react"
@@ -8,6 +8,7 @@ import AdministrationService from "../../../../../../Services/Administration/Adm
 import {TreeViewIcon} from "../../../../../Shared/Icons";
 import {Problem} from "../../../../../../Services/utils/Problem";
 import {useProjectContext} from "../../../../../../Pages/Project/useProject";
+import {useCompute} from "../../../../../../Pages/Project/Compute/useCompute";
 
 /**
  * Hook for the TreeTreeItem component.
@@ -17,20 +18,21 @@ export function useTreeTreeItem(datasetId: string, tree: Tree) {
     const {projectId} = useParams<{ projectId: string }>()
     const {deleteBackdropOpen, handleDeleteBackdropOpen, handleDeleteBackdropClose} = useDeleteResourceBackdrop()
     const [error, setError] = useState<string | null>(null)
+    const {createWorkflow} = useCompute()
     const {onFileStructureUpdate} = useProjectContext()
 
     const layoutOptions = [
         {
+            label: "Force Directed Layout",
             id: "force-directed",
-            label: "Force Directed"
         },
         {
+            label: "Radial Layout",
             id: "radial",
-            label: "Radial"
         },
         {
-            id: "phylogram",
-            label: "Phylogram"
+            label: "Rectangular Layout",
+            id: "rectangular",
         }
     ]
 
@@ -41,6 +43,7 @@ export function useTreeTreeItem(datasetId: string, tree: Tree) {
                 icon: Visibility,
                 onClick: () => navigate(WebUiUris.tree(projectId!, datasetId, tree.treeId))
             },
+
             {
                 label: "Compute View",
                 icon: TreeViewIcon,
@@ -49,17 +52,28 @@ export function useTreeTreeItem(datasetId: string, tree: Tree) {
                         label: option.label,
                         icon: TreeViewIcon,
                         onClick: () => {
-                            // TODO: To be implemented
+                            createWorkflow(
+                                {
+                                    type: "compute-tree-view",
+                                    properties: {
+                                        datasetId: datasetId,
+                                        treeId: tree.treeId,
+                                        layout: option.id
+                                    }
+                                }
+                            )
                         }
                     }
                 })
             },
-            /*{
+            /* TODO: To be implemented
+            {
                 label: "Export",
                 icon: Download,
-                onClick: () => {/!*TODO: To be implemented*!/
+                onClick: () => {
                 }
-            },*/
+            },
+            */
             {
                 label: "Delete",
                 icon: Delete,

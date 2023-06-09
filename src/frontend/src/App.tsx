@@ -13,7 +13,6 @@ import OpenProject from "./Pages/OpenProject/OpenProject"
 import Project from "./Pages/Project/Project"
 import {NotFoundPage} from "./Pages/NotFoundPage"
 import UploadFiles from "./Pages/Project/UploadFiles/UploadFiles"
-import {useLoggedIn} from "./Session/Session"
 import GoeBURSTConfig from "./Pages/Project/Compute/Tree/GoeBURSTConfig/GoeBURSTConfig"
 import GoeBURSTFullMSTConfig from "./Pages/Project/Compute/Tree/GoeBURSTFullMSTConfig/GoeBURSTFullMSTConfig"
 import HierarchicalClusteringConfig
@@ -32,9 +31,13 @@ import ComputeHammingDistance
     from "./Pages/Project/Compute/DistanceMatrix/ComputeHammingDistance/ComputeHammingDistance"
 import EditProject from "./Pages/Project/EditProject/EditProject";
 import EditDataset from "./Pages/Project/EditDataset/EditDataset";
-import {ComputeTreeView} from "./Pages/Project/Compute/TreeView/ComputeTreeView";
 import TypingDataFilter from "./Pages/Project/TreeView/Filters/TypingDataFilter/TypingDataFilter";
 import IsolateDataFilter from "./Pages/Project/TreeView/Filters/IsolateDataFilter/IsolateDataFilter";
+import ComputeForceDirectedLayout
+    from './Pages/Project/Compute/TreeView/ComputeForceDirectedLayout/ComputeForceDirectedLayout'
+import ComputeRadialLayout from './Pages/Project/Compute/TreeView/ComputeRadialLayout/ComputeRadialLayout'
+import ComputeRectangularLayout
+    from './Pages/Project/Compute/TreeView/ComputeRectangularLayout/ComputeRectangularLayout'
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;
@@ -60,11 +63,13 @@ import REPORT = WebUiUris.REPORT;
 import COMPUTE_HAMMING_DISTANCE = WebUiUris.COMPUTE_HAMMING_DISTANCE;
 import EDIT_PROJECT = WebUiUris.EDIT_PROJECT;
 import EDIT_DATASET = WebUiUris.EDIT_DATASET;
-import COMPUTE_TREE_VIEW = WebUiUris.COMPUTE_TREE_VIEW;
 import TREE_VIEW_TYPING_DATA = WebUiUris.TREE_VIEW_TYPING_DATA;
 import TREE_VIEW_ISOLATE_DATA = WebUiUris.TREE_VIEW_ISOLATE_DATA;
 import WORKFLOW = WebUiUris.WORKFLOW;
 import Workflow from "./Pages/Project/Workflow/Workflow";
+import COMPUTE_FORCE_DIRECTED_LAYOUT = WebUiUris.COMPUTE_FORCE_DIRECTED_LAYOUT;
+import COMPUTE_RADIAL_LAYOUT = WebUiUris.COMPUTE_RADIAL_LAYOUT;
+import COMPUTE_RECTANGULAR_LAYOUT = WebUiUris.COMPUTE_RECTANGULAR_LAYOUT;
 
 /**
  * App component.
@@ -174,8 +179,16 @@ export default function App() {
                                 element={<ProtectedRoute><NLVGraphConfig/></ProtectedRoute>}
                             />
                             <Route
-                                path={COMPUTE_TREE_VIEW}
-                                element={<ProtectedRoute><ComputeTreeView/></ProtectedRoute>}
+                                path={COMPUTE_FORCE_DIRECTED_LAYOUT}
+                                element={<ProtectedRoute><ComputeForceDirectedLayout/></ProtectedRoute>}
+                            />
+                            <Route
+                                path={COMPUTE_RADIAL_LAYOUT}
+                                element={<ProtectedRoute><ComputeRadialLayout/></ProtectedRoute>}
+                            />
+                            <Route
+                                path={COMPUTE_RECTANGULAR_LAYOUT}
+                                element={<ProtectedRoute><ComputeRectangularLayout/></ProtectedRoute>}
                             />
                         </Route>
 

@@ -4,24 +4,16 @@ import {SelectChangeEvent} from "@mui/material"
 import {useProjectContext} from "../../useProject";
 import {useCompute} from "../useCompute";
 
-export enum ComputeTreeViewStep {
-    TREE = "Tree",
-    LAYOUT = "Layout",
-}
-
 export enum ComputeTreeViewLayout {
     FORCE_DIRECTED = "Force Directed",
     RADIAL = "Radial",
-    PHYLOGRAM = "Phylogram",
+    RECTANGULAR = "Rectangular",
 }
 
 /**
- * Hook for the ComputeTreeView page.
+ * Hook for that handles the compute of a tree view.
  */
-export function useComputeTreeView() {
-    const [step, setStep] = useState(ComputeTreeViewStep.TREE)
-    const [currStep, setCurrStep] = useState(0)
-
+export function useComputeTreeView(layout: ComputeTreeViewLayout) {
     const navigate = useNavigate()
     const {datasetId} = useParams<{ datasetId: string }>()
     const {project} = useProjectContext()
@@ -30,8 +22,6 @@ export function useComputeTreeView() {
     const trees = project?.datasets
         .find((dataset) => dataset.datasetId === datasetId)
         ?.trees ?? []
-
-    const [selectedLayout, setSelectedLayout] = useState<string | null>(null)
 
     const [triedSubmitting, setTriedSubmitting] = useState<boolean>(false)
 
@@ -42,59 +32,33 @@ export function useComputeTreeView() {
      * Returns the layout string for the selected layout.
      */
     function getLayout(): string {
-        switch (selectedLayout) {
+        switch (layout) {
             case ComputeTreeViewLayout.FORCE_DIRECTED:
                 return "force-directed"
             case ComputeTreeViewLayout.RADIAL:
                 return "radial"
-            case ComputeTreeViewLayout.PHYLOGRAM:
-                return "phylogram"
+            case ComputeTreeViewLayout.RECTANGULAR:
+                return "rectangular"
             default:
                 throw new Error("Invalid layout.")
         }
     }
 
     return {
-        step,
-        currStep,
-
         trees,
         selectedTree,
         handleTreeChange: (event: SelectChangeEvent) => setSelectedTree(event.target.value),
 
-        selectedLayout,
-        handleLayoutChange: (event: SelectChangeEvent) => setSelectedLayout(event.target.value),
-
         handleCancel: () => navigate(-1),
-        handleBack: () => {
-            if (step === ComputeTreeViewStep.LAYOUT) {
-                setStep(ComputeTreeViewStep.TREE)
-                setCurrStep(0)
-            }
-        },
-        handleNext: () => {
+        handleCompute: () => {
             setError(null)
 
-            if (step === ComputeTreeViewStep.TREE) {
-                setTriedSubmitting(true)
-                if (selectedTree === null) {
-                    setError("Please select a tree.")
-                    return
-                }
-                setTriedSubmitting(false)
-
-                setStep(ComputeTreeViewStep.LAYOUT)
-                setCurrStep(1)
+            setTriedSubmitting(true)
+            if (selectedTree === null) {
+                setError("Please select a tree.")
                 return
             }
-            else if (step === ComputeTreeViewStep.LAYOUT) {
-                setTriedSubmitting(true)
-                if (selectedLayout === null) {
-                    setError("Please select a layout.")
-                    return
-                }
-                setTriedSubmitting(false)
-            }
+            setTriedSubmitting(false)
 
             createWorkflow(
                 {

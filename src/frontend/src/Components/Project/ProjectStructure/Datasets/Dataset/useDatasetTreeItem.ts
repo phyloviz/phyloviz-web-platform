@@ -1,7 +1,7 @@
 import {Dataset} from "../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../../../Pages/WebUiUris"
-import {Delete, Edit, Info, Summarize} from "@mui/icons-material"
+import {Delete, Edit, Info} from "@mui/icons-material"
 import {useDeleteResourceBackdrop} from "../../../../Shared/DeleteResourceBackdrop"
 import AdministrationService from "../../../../../Services/Administration/AdministrationService"
 import {useState} from "react"
@@ -19,6 +19,21 @@ export function useDatasetTreeItem(dataset: Dataset) {
     const {deleteBackdropOpen, handleDeleteBackdropOpen, handleDeleteBackdropClose} = useDeleteResourceBackdrop()
     const [error, setError] = useState<string | null>(null)
     const {onFileStructureUpdate} = useProjectContext()
+
+    const computeTreeViewsOptions = [
+        {
+            label: "Force Directed Layout",
+            url: WebUiUris.computeForceDirectedLayout(projectId!, dataset.datasetId)
+        },
+        {
+            label: "Radial Layout",
+            url: WebUiUris.computeRadialLayout(projectId!, dataset.datasetId)
+        },
+        {
+            label: "Rectangular Layout",
+            url: WebUiUris.computeRectangularLayout(projectId!, dataset.datasetId)
+        }
+    ]
 
     return {
         contextMenuItems: [
@@ -47,13 +62,22 @@ export function useDatasetTreeItem(dataset: Dataset) {
             {
                 label: "Compute Tree View",
                 icon: TreeViewsIcon,
-                onClick: () => navigate(WebUiUris.computeTreeView(projectId!, dataset.datasetId))
+                nestedItems: computeTreeViewsOptions.map((option) => {
+                    return {
+                        label: option.label,
+                        icon: TreeViewsIcon,
+                        onClick: () => navigate(option.url)
+                    }
+                })
             },
+            /*
+            TODO: Not implemented yet.
             {
                 label: "Generate Report",
                 icon: Summarize,
                 onClick: () => navigate(WebUiUris.report(projectId!, dataset.datasetId))
             },
+             */
             {
                 label: "Details",
                 icon: Info,

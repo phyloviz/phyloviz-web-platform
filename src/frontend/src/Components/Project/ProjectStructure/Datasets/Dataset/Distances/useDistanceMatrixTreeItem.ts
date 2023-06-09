@@ -1,7 +1,7 @@
 import {
     DistanceMatrix
 } from "../../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
-import {Delete, Download, Visibility} from "@mui/icons-material"
+import {Delete, Visibility} from "@mui/icons-material"
 import {useNavigate, useParams} from "react-router-dom"
 import {WebUiUris} from "../../../../../../Pages/WebUiUris"
 import {useDeleteResourceBackdrop} from "../../../../../Shared/DeleteResourceBackdrop"
@@ -27,12 +27,13 @@ export function useDistanceMatrixTreeItem(datasetId: string, distanceMatrix: Dis
                 icon: Visibility,
                 onClick: () => navigate(WebUiUris.distanceMatrix(projectId!, datasetId, distanceMatrix.distanceMatrixId))
             },
-            /*{
+            /* TODO: To be implemented,
+            {
                 label: "Export",
                 icon: Download,
-                onClick: () => {/!*TODO: To be implemented*!/
+                onClick: () => {TODO: To be implemented
                 }
-            },*/
+            }*/
             {
                 label: "Delete",
                 icon: Delete,

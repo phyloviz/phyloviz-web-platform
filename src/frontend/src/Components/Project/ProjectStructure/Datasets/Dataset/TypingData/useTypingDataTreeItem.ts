@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router-dom"
-import {Download, Visibility} from "@mui/icons-material"
+import {Visibility} from "@mui/icons-material"
 import {WebUiUris} from "../../../../../../Pages/WebUiUris"
 
 /**
@@ -16,10 +16,11 @@ export function useTypingDataTreeItem(typingDataId: string) {
                 icon: Visibility,
                 onClick: () => navigate(WebUiUris.typingData(projectId!, typingDataId))
             },
-            /*{
+            /* TODO: To be implemented,
+            {
                 label: "Export",
                 icon: Download,
-                onClick: () => {/!*TODO: To be implemented*!/
+                onClick: () => {TODO: To be implemented
                 }
             }*/
         ]
