@@ -10,19 +10,19 @@
 
 <p align="center">
   <a href="../../graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/bodybuilders-team/phyloviz-web-platform" alt="Contributors"/>
+    <img src="https://img.shields.io/github/contributors/phyloviz/phyloviz-web-platform" alt="Contributors"/>
   </a>
   <a href="../../stargazers">
-     <img src="https://img.shields.io/github/stars/bodybuilders-team/phyloviz-web-platform" alt="Stars"/>
+     <img src="https://img.shields.io/github/stars/phyloviz/phyloviz-web-platform" alt="Stars"/>
   </a>
   <a href="../../issues">
-     <img src="https://img.shields.io/github/issues/bodybuilders-team/phyloviz-web-platform" alt="Issues"/>
+     <img src="https://img.shields.io/github/issues/phyloviz/phyloviz-web-platform" alt="Issues"/>
   </a>
   <a href="../../pulls">
-     <img src="https://img.shields.io/github/issues-pr/bodybuilders-team/phyloviz-web-platform" alt="Pull requests"/>
+     <img src="https://img.shields.io/github/issues-pr/phyloviz/phyloviz-web-platform" alt="Pull requests"/>
   </a>
   <a href="../../commits/master">
-     <img src="https://img.shields.io/github/last-commit/bodybuilders-team/phyloviz-web-platform" alt="Last commit"/>
+     <img src="https://img.shields.io/github/last-commit/phyloviz/phyloviz-web-platform" alt="Last commit"/>
   </a>
 </p>
 
@@ -53,12 +53,12 @@ analysis, by visiting the [PHYLOViZ Web Platform](https://web.phyloviz.net/) web
 ## Documentation
 
 The wiki of the project contains technical documentation associated with the repository, being
-available [here](https://github.com/bodybuilders-team/phyloviz-web-platform/wiki).
+available [here](https://github.com/phyloviz/phyloviz-web-platform/wiki).
 
 Additionally, a final report of the project is
-available [here](https://github.com/bodybuilders-team/phyloviz-web-platform/blob/master/docs/report.pdf).
+available [here](https://github.com/phyloviz/phyloviz-web-platform/blob/master/docs/report.pdf).
 
-In the [docs](https://github.com/bodybuilders-team/phyloviz-web-platform/blob/master/docs) folder, you can find
+In the [docs](https://github.com/phyloviz/phyloviz-web-platform/blob/master/docs) folder, you can find
 additional documentation.
 
 ---
