@@ -10,6 +10,21 @@ import {useProjectContext} from "../../../../../Pages/Project/useProject";
 import {computeDistanceMatrixOptions} from "./Distances/useDistancesTreeItem";
 import {computeTreeOptions} from "./Trees/useTreesTreeItem";
 
+export const computeTreeViewsOptions = (projectId: string, datasetId: string) => [
+    {
+        label: "Force Directed Layout",
+        url: WebUiUris.computeForceDirectedLayout(projectId, datasetId)
+    },
+    {
+        label: "Radial Layout",
+        url: WebUiUris.computeRadialLayout(projectId, datasetId)
+    },
+    {
+        label: "Rectangular Layout",
+        url: WebUiUris.computeRectangularLayout(projectId, datasetId)
+    }
+]
+
 /**
  * Hook for the DatasetTreeItem component.
  */
@@ -19,21 +34,6 @@ export function useDatasetTreeItem(dataset: Dataset) {
     const {deleteBackdropOpen, handleDeleteBackdropOpen, handleDeleteBackdropClose} = useDeleteResourceBackdrop()
     const [error, setError] = useState<string | null>(null)
     const {onFileStructureUpdate} = useProjectContext()
-
-    const computeTreeViewsOptions = [
-        {
-            label: "Force Directed Layout",
-            url: WebUiUris.computeForceDirectedLayout(projectId!, dataset.datasetId)
-        },
-        {
-            label: "Radial Layout",
-            url: WebUiUris.computeRadialLayout(projectId!, dataset.datasetId)
-        },
-        {
-            label: "Rectangular Layout",
-            url: WebUiUris.computeRectangularLayout(projectId!, dataset.datasetId)
-        }
-    ]
 
     return {
         contextMenuItems: [
@@ -62,7 +62,7 @@ export function useDatasetTreeItem(dataset: Dataset) {
             {
                 label: "Compute Tree View",
                 icon: TreeViewsIcon,
-                nestedItems: computeTreeViewsOptions.map((option) => {
+                nestedItems: computeTreeViewsOptions(projectId!, dataset.datasetId).map((option) => {
                     return {
                         label: option.label,
                         icon: TreeViewsIcon,

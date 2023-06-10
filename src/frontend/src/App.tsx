@@ -70,6 +70,7 @@ import Workflow from "./Pages/Project/Workflow/Workflow";
 import COMPUTE_FORCE_DIRECTED_LAYOUT = WebUiUris.COMPUTE_FORCE_DIRECTED_LAYOUT;
 import COMPUTE_RADIAL_LAYOUT = WebUiUris.COMPUTE_RADIAL_LAYOUT;
 import COMPUTE_RECTANGULAR_LAYOUT = WebUiUris.COMPUTE_RECTANGULAR_LAYOUT;
+import {useLoggedIn} from "./Session/Session";
 
 /**
  * App component.

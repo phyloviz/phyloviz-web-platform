@@ -1,13 +1,13 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {TreeViewsIcon} from "../../../../../Shared/Icons";
-import {WebUiUris} from "../../../../../../Pages/WebUiUris";
+import {computeTreeViewsOptions} from "../useDatasetTreeItem";
 
 
 /**
  * Hook for the TreeViewsTreeItem component.
  */
 export function useTreeViewsTreeItem(datasetId: string) {
-    const {projectId} = useParams<{ projectId: string }>()
+    const projectId = useParams<{ projectId: string }>().projectId!
     const navigate = useNavigate()
 
     return {
@@ -15,7 +15,13 @@ export function useTreeViewsTreeItem(datasetId: string) {
             {
                 label: "Compute Tree View",
                 icon: TreeViewsIcon,
-                onClick: () => navigate(WebUiUris.computeTreeView(projectId!, datasetId))
+                nestedItems: computeTreeViewsOptions(projectId, datasetId).map((option) => {
+                    return {
+                        label: option.label,
+                        icon: TreeViewsIcon,
+                        onClick: () => navigate(option.url)
+                    }
+                })
             }
         ]
     }
