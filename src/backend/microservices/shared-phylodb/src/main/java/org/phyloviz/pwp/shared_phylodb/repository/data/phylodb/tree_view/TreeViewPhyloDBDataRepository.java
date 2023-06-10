@@ -85,6 +85,6 @@ public class TreeViewPhyloDBDataRepository implements TreeViewDataRepository {
 
     @Override
     public void deleteTreeView(TreeViewDataRepositorySpecificData treeViewDataRepositorySpecificData) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+//        throw new UnsupportedOperationException("Not implemented yet."); // TODO: Implement
     }
 }

@@ -38,10 +38,10 @@ def upload_inference(project_id, dataset_id, inference_file_path):
     return response.json()["id"]
 
 
-def index_tree(session, tree_file_path, project_id, dataset_id, tree_id, workflow_id):
+def index_tree(tree_file_path, project_id, dataset_id, tree_id, workflow_id):
     # If tree_id is not provided, get it from the workflow
     if tree_id is None:
-        workflow = workflows_collection.find_one({'_id': ObjectId(workflow_id)}, session=session)
+        workflow = workflows_collection.find_one({'_id': ObjectId(workflow_id)})
         tree_id = workflow['data'].get('treeId')
         if tree_id is None:
             raise Exception(f"Workflow with ID {workflow_id} does not have a tree associated with it")
@@ -52,11 +52,10 @@ def index_tree(session, tree_file_path, project_id, dataset_id, tree_id, workflo
     print(f"Tree File Path: {tree_file_path}")
     print(f"Workflow ID: {workflow_id}")
 
-    if projects_collection.find_one({'_id': ObjectId(project_id)}, session=session) is None:
+    if projects_collection.find_one({'_id': ObjectId(project_id)}) is None:
         raise Exception(f"Project with ID {project_id} does not exist in PHYLOViZ Web Platform")
 
-    dataset_metadata = datasets_collection.find_one({'_id': ObjectId(dataset_id), 'projectId': project_id},
-                                                    session=session)
+    dataset_metadata = datasets_collection.find_one({'_id': ObjectId(dataset_id), 'projectId': project_id})
     if dataset_metadata is None:
         raise Exception(
             f"Dataset with ID {dataset_id} and Project ID {project_id} does not exist in PHYLOViZ Web Platform")
@@ -66,7 +65,7 @@ def index_tree(session, tree_file_path, project_id, dataset_id, tree_id, workflo
             'projectId': project_id,
             'datasetId': dataset_id,
             'treeId': tree_id
-        }, session=session
+        }
     )
 
     if tree_metadata is None:
@@ -79,7 +78,7 @@ def index_tree(session, tree_file_path, project_id, dataset_id, tree_id, workflo
             {
                 'typingDataId': dataset_metadata['typingDataId'],
                 'repositorySpecificData.phylodb.datasetIds': {'$in': [dataset_id]}
-            }, session=session
+            }
     ) is None:
         raise Exception(f"Dataset with ID {dataset_id} does not have Typing Data indexed in PhyloDB. Index it first.")
 
@@ -95,7 +94,7 @@ def index_tree(session, tree_file_path, project_id, dataset_id, tree_id, workflo
                 'datasetId': dataset_id,
                 'inferenceId': inference_id,
             }
-        }}, session=session
+        }}
     )
 
 
@@ -108,7 +107,4 @@ if __name__ == '__main__':
     parser.add_argument('--workflow-id', help='The workflow Id', required=True)
 
     args = parser.parse_args()
-
-    with client.start_session() as session:
-        with session.start_transaction():
-            index_tree(session, args.tree_file_path, args.project_id, args.dataset_id, args.tree_id, args.workflow_id)
+    index_tree(args.tree_file_path, args.project_id, args.dataset_id, args.tree_id, args.workflow_id)
