@@ -68,7 +68,7 @@ export function useForceDirectedLayout() {
 
     const {isolateDataRows, loadingIsolateDataRows, isolateDataHeaders} = useIsolateData(projectId, isolateDataId)
 
-    const {graphRef, canvasRef} = useGraph(projectId, datasetId, treeViewId)
+    const {graphRef, canvasRef, loadingGraph} = useGraph(projectId, datasetId, treeViewId)
 
     const navigate = useNavigate()
 
@@ -94,6 +94,7 @@ export function useForceDirectedLayout() {
 
     return {
         canvasRef,
+        loadingGraph,
         treeView: cascadingInfoTreeView,
 
         pauseAnimation: () => graphRef.current?.pause(),

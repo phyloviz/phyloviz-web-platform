@@ -4,6 +4,7 @@ import {DoughnutChart} from "../../../../../Components/Project/TreeView/Doughnut
 import {TreeViewSearchCard} from "../../../../../Components/Project/TreeView/TreeViewSearchCard";
 import React from "react";
 import {useForceDirectedLayout} from "./useForceDirectedLayout";
+import LoadingSpinner from "../../../../../Components/Shared/LoadingSpinner";
 
 
 /**
@@ -13,6 +14,7 @@ export default function ForceDirectedLayout() {
     const outlet = useOutlet()
     const {
         canvasRef,
+        loadingGraph,
         treeView,
 
         pauseAnimation,
@@ -51,11 +53,31 @@ export default function ForceDirectedLayout() {
     return outlet
         ? <Outlet context={{treeView, typingDataId, isolateDataId}}/>
         : <>
-            <div ref={toPrintRef} style={{
+            <div style={{
                 width: "100%",
                 height: "100%"
             }}>
-                <canvas ref={canvasRef}/>
+                {loadingGraph &&
+                    <div style={{
+                        width: "100%",
+                        height: "100%",
+                        position: "absolute",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }}>
+                        <div style={{transform: "scale(1.5)"}}>
+                            <LoadingSpinner text={"Loading Graph..."}/>
+                        </div>
+                    </div>
+                }
+                <div ref={toPrintRef} style={{
+                    width: "100%",
+                    height: "100%",
+                    visibility: loadingGraph ? "hidden" : "visible"
+                }}>
+                    <canvas ref={canvasRef}/>
+                </div>
             </div>
             {doughnutChartData != null &&
                 <DoughnutChart doughnutChartData={doughnutChartData}

@@ -1,4 +1,4 @@
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {TreeViewGraph} from "../cosmos/TreeViewGraph";
 import {
     GetTreeViewOutputModel
@@ -17,10 +17,13 @@ import {defaultConfig, VizLink, VizNode} from "../useForceDirectedLayout";
 export function useGraph(projectId: string, datasetId: string, treeViewId: string) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const graphRef = useRef<TreeViewGraph<VizNode, VizLink>>()
+    const [loadingGraph, setLoadingGraph] = useState<boolean>(true)
 
     const {findBiggestGroup} = useClusterCalculation()
 
     useEffect(() => {
+        setLoadingGraph(true)
+
         async function init() {
             const data: GetTreeViewOutputModel = await VisualizationService.getTreeView(projectId, datasetId, treeViewId)
 
@@ -45,6 +48,8 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
             const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, defaultConfig)
             await graph.setData(nodes, links)
             graphRef.current = graph
+
+            setLoadingGraph(false)
         }
 
         init()
@@ -57,6 +62,7 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
 
     return {
         graphRef,
-        canvasRef
+        canvasRef,
+        loadingGraph
     }
 }
