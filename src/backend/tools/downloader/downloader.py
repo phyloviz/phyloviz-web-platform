@@ -55,7 +55,7 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
                 'datasetId': dataset_id,
                 get_resource_id_attr_from_resource_type(resource_type): resource_id,
                 "repositorySpecificData.s3": {"$exists": True}
-            }
+            }, session=session
         )
 
         if resource is None:
@@ -66,7 +66,7 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
             {
                 '_id': ObjectId(dataset_id),
                 'projectId': project_id,
-            }
+            }, session=session
         )
 
         if dataset is None:
@@ -83,7 +83,7 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
                 'projectId': project_id,
                 get_resource_id_attr_from_resource_type(resource_type): resource_id,
                 "repositorySpecificData.s3": {"$exists": True}
-            }
+            }, session=session
         )
 
         if resource is None:
@@ -101,7 +101,7 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
                         'data.typingDataId': dataset['typingDataId'],
                         'data.typingDataType': resource['type']
                     }
-                }
+                }, session=session
             )
         else:
             workflows_collection.update_one(
@@ -112,7 +112,7 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
                     '$set': {
                         'data.isolateDataId': dataset['isolateDataId']
                     }
-                }
+                }, session=session
             )
     else:
         raise Exception(f'Error: Invalid resource type: {resource_type}')
@@ -158,5 +158,9 @@ if __name__ == '__main__':
     parser.add_argument('--workflow-id', help='The workflow ID to update in MongoDB', required=True)
 
     args = parser.parse_args()
-    download_s3_object(args.project_id, args.dataset_id, args.resource_id, args.resource_type, args.out,
-                       args.workflow_id)
+
+    with client.start_session() as session:
+        with session.start_transaction():
+            download_s3_object(session, args.project_id, args.dataset_id, args.resource_id, args.resource_type,
+                               args.out,
+                               args.workflow_id)

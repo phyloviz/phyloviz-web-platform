@@ -18,7 +18,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 @Service
-//@Transactional
+@Transactional
 @RequiredArgsConstructor
 public class TypingDataServiceImpl implements TypingDataService {
 

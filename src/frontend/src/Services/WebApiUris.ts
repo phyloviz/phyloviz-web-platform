@@ -45,10 +45,10 @@ export namespace WebApiUris {
 
 
     // Visualization 
-    export const getTypingDataSchema = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}`
+    export const getTypingDataSchema = (projectId: string, typingDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}/schema`
     export const getTypingDataProfiles = (projectId: string, typingDataId: string, limit: number, offset: number) => `${API_BASE_URL}/projects/${projectId}/files/typing-data/${typingDataId}/profiles?limit=${limit}&offset=${offset}`
 
-    export const getIsolateDataKeys = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}`
+    export const getIsolateDataKeys = (projectId: string, isolateDataId: string) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}/keys`
     export const getIsolateDataRows = (projectId: string, isolateDataId: string, limit: number, offset: number) => `${API_BASE_URL}/projects/${projectId}/files/isolate-data/${isolateDataId}/rows?limit=${limit}&offset=${offset}`
 
     export const getDistanceMatrix = (projectId: string, datasetId: string, distanceMatrixId: string) => `${API_BASE_URL}/projects/${projectId}/datasets/${datasetId}/distance-matrices/${distanceMatrixId}`

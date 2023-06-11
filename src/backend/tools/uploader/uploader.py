@@ -25,7 +25,7 @@ workflows_collection = db['workflow-instances']
 datasets_collection = db['datasets']
 
 
-def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, source_type, algorithm,
+def tree_handler(session, s3_output_path, project_id, dataset_id, workflow_id, tree_id, source_type, algorithm,
                  distance_matrix_id, parameters):
     trees_collection = db['trees']
 
@@ -37,7 +37,7 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
             workflow_instance = workflows_collection.find_one(
                 {
                     '_id': ObjectId(workflow_id)
-                }
+                }, session=session
             )
 
             if workflow_instance is None:
@@ -53,7 +53,7 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
             'distanceMatrixId': distance_matrix_id,
             'parameters': parameters
         }
-        tree_count = trees_collection.count_documents({"projectId": project_id, "datasetId": dataset_id})
+        tree_count = trees_collection.count_documents({"projectId": project_id, "datasetId": dataset_id}, session=session)
         name = f'Tree {tree_count + 1} - {algorithm}'
     elif source_type == 'algorithm-typing-data':
         source_type = 'algorithm_typing_data'
@@ -61,7 +61,8 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
             {
                 '_id': ObjectId(dataset_id),
                 'projectId': project_id,
-            }
+            },
+            session=session
         )
 
         if dataset is None:
@@ -72,7 +73,7 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
             'typingDataId': dataset['typingDataId'],
             'parameters': parameters
         }
-        tree_count = trees_collection.count_documents({"projectId": project_id, "datasetId": dataset_id})
+        tree_count = trees_collection.count_documents({"projectId": project_id, "datasetId": dataset_id}, session=session)
         name = f'Tree {tree_count + 1} - {algorithm}'
     else:
         raise Exception(f'Unknown source type: {source_type}')
@@ -91,13 +92,14 @@ def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, s
         }
     }
 
-    trees_collection.insert_one(tree_metadata)
+    trees_collection.insert_one(tree_metadata, session=session)
 
     workflows_collection.update_one(
         {'_id': ObjectId(workflow_id)},
         {'$set': {
             'data.treeId': tree_id
-        }}
+        }},
+        session=session
     )
 
     print(f'File uploaded to S3 and metadata created in the tree collection with treeId: {tree_id}')
@@ -111,7 +113,7 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id,
         source = {
             'function': function
         }
-        distance_matrix_count = distance_matrix_collection.count_documents({"projectId": project_id, "datasetId": dataset_id})
+        distance_matrix_count = distance_matrix_collection.count_documents({"projectId": project_id, "datasetId": dataset_id}, session=session)
         name = f'Distance Matrix {distance_matrix_count + 1} - {function}'
     else:
         raise Exception(f'Unknown source type: {source_type}')
@@ -130,13 +132,14 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id,
         }
     }
 
-    distance_matrix_collection.insert_one(distance_matrix_metadata)
+    distance_matrix_collection.insert_one(distance_matrix_metadata, session=session)
 
     workflows_collection.update_one(
         {'_id': ObjectId(workflow_id)},
         {'$set': {
             'data.distanceMatrixId': distance_matrix_id
-        }}
+        }},
+        session=session
     )
 
     print(
@@ -153,7 +156,7 @@ def get_collection_from_resource_type(resource_type):
     return resource_type_collection_map[resource_type]
 
 
-def upload_file_to_s3(file_path, project_id, dataset_id, workflow_id, resource_id, resource_type, source_type,
+def upload_file_to_s3(session, file_path, project_id, dataset_id, workflow_id, resource_id, resource_type, source_type,
                       algorithm, distance_matrix_id, parameters, function):
     print(f"Project ID: {project_id}")
     print(f"Dataset ID: {dataset_id}")
@@ -175,11 +178,11 @@ def upload_file_to_s3(file_path, project_id, dataset_id, workflow_id, resource_i
 
     if resource_type == "tree":
         tree_id = resource_id
-        tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, source_type, algorithm,
+        tree_handler(session, s3_output_path, project_id, dataset_id, workflow_id, tree_id, source_type, algorithm,
                      distance_matrix_id, parameters)
     elif resource_type == "distance-matrix":
         distance_matrix_id = resource_id
-        distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id, distance_matrix_id, source_type,
+        distance_matrix_handler(session, s3_output_path, project_id, dataset_id, workflow_id, distance_matrix_id, source_type,
                                 function)
     else:
         raise Exception(f'Unknown resource type: {resource_type}')
@@ -203,6 +206,9 @@ if __name__ == '__main__':
     parser.add_argument('--function', help='The function', required=False)
     args = parser.parse_args()
 
-    upload_file_to_s3(args.file_path, args.project_id, args.dataset_id, args.workflow_id, args.resource_id,
-                      args.resource_type, args.source_type, args.algorithm, args.distance_matrix_id,
-                      args.parameters, args.function)
+    with client.start_session() as session:
+        with session.start_transaction():
+
+            upload_file_to_s3(session, args.file_path, args.project_id, args.dataset_id, args.workflow_id, args.resource_id,
+                              args.resource_type, args.source_type, args.algorithm, args.distance_matrix_id,
+                              args.parameters, args.function)

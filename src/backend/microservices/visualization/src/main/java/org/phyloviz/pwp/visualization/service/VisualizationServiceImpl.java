@@ -46,7 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-//@Transactional
+@Transactional
 @RequiredArgsConstructor
 public class VisualizationServiceImpl implements VisualizationService {
 

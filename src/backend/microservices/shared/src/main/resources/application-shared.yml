@@ -9,8 +9,6 @@ spring:
     mongodb:
       host: localhost
       port: 28017
-      username: root
-      password: root
       database: phyloviz-web-platform
       authentication-database: admin
       auto-index-creation: true

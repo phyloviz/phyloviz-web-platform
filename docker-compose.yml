@@ -37,18 +37,23 @@ services:
       - keycloak_db
 
   mongodb:
-    image: mongo:4.4.4
-    restart: always
-    ports:
-      - '28017:27017'
+    image: mongo:6.0.6
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
+      MONGO_APP_DATABASE: phyloviz-web-platform
+      MONGO_REPLICA_HOST: host.docker.internal
+      MONGO_REPLICA_PORT: 27018
+
+    entrypoint: >
+      /bin/bash -c '
+      echo "rs.initiate()" > /docker-entrypoint-initdb.d/1-init-replicaset.js &&
+      /usr/local/bin/docker-entrypoint.sh mongod --replSet rs0 --bind_ip_all --noauth'
+    expose:
+      - 27017
     volumes:
-      - ./src/backend/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-      - ./src/backend/mongo/workflow-templates.json:/docker-entrypoint-initdb.d/workflow-templates.json:ro
-      - ./src/backend/mongo/tool-templates.json:/docker-entrypoint-initdb.d/tool-templates.json:ro
+      - ./src/backend/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
       - mongodb-data:/data/db
+    ports:
+      - "28017:27017"
 
   cache:
     image: redis:7.0.9-alpine
@@ -85,6 +90,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - '8088:8088'
+    network_mode: host
     depends_on:
       - mongodb
       - cache
@@ -94,6 +100,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - '8086:8086'
+    network_mode: host
     depends_on:
       - mongodb
       - cache
@@ -103,6 +110,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - '8089:8089'
+    network_mode: host
     depends_on:
       - mongodb
       - cache
@@ -112,6 +120,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - '8083:8083'
+    network_mode: host
     depends_on:
       - mongodb
       - cache
@@ -121,6 +130,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - '8085:8085'
+    network_mode: host
     depends_on:
       - mongodb
       - cache

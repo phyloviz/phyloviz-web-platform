@@ -30,13 +30,14 @@ import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.utils.UUIDUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
-//@Transactional
+@Transactional
 public class ComputeServiceImpl implements ComputeService {
 
     private final ProjectRepository projectRepository;

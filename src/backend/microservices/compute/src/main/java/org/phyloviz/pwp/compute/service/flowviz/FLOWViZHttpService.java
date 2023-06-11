@@ -42,7 +42,11 @@ public class FLOWViZHttpService {
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
                 .create();
-        this.token = authenticate(credentials);
+        try {
+            this.token = authenticate(credentials);
+        } catch (final AuthenticationException | ConnectionRefusedException e) {
+            this.token = null;
+        }
     }
 
     public FLOWViZHttpService(FLOWViZHttpService httpService) {

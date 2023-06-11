@@ -95,7 +95,7 @@ public class VisualizationController {
      * @param user         the user
      * @return the typing data schema
      */
-    @GetMapping("/projects/{projectId}/files/typing-data/{typingDataId}")
+    @GetMapping("/projects/{projectId}/files/typing-data/{typingDataId}/rows")
     public GetTypingDataSchemaOutputModel getTypingDataSchema(
             @PathVariable String projectId,
             @PathVariable String typingDataId,
@@ -141,7 +141,7 @@ public class VisualizationController {
      * @param user          the user
      * @return the isolate data keys
      */
-    @GetMapping("/projects/{projectId}/files/isolate-data/{isolateDataId}")
+    @GetMapping("/projects/{projectId}/files/isolate-data/{isolateDataId}/keys")
     public GetIsolateDataKeysOutputModel getIsolateDataKeys(
             @PathVariable String projectId,
             @PathVariable String isolateDataId,
