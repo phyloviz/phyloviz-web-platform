@@ -28,6 +28,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -128,14 +129,13 @@ class DatasetServiceTests {
         when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(true);
 
-        when(isolateDataMetadataRepository.findAnyByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
+        when(isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(Optional.of(new IsolateDataMetadata(
                         projectId,
                         isolateDataId,
                         List.of(isolateDataKey),
                         isolateDataName,
-                        IsolateDataDataRepositoryId.S3,
-                        new IsolateDataS3DataRepositorySpecificData()
+                        Map.of(IsolateDataDataRepositoryId.S3, new IsolateDataS3DataRepositorySpecificData())
                 )));
 
         when(datasetRepository.save(any()))
@@ -180,14 +180,13 @@ class DatasetServiceTests {
         when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(true);
 
-        when(isolateDataMetadataRepository.findAnyByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
+        when(isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(Optional.of(new IsolateDataMetadata(
                         projectId,
                         isolateDataId,
-                        List.of(),
+                        List.of(isolateDataKey),
                         isolateDataName,
-                        IsolateDataDataRepositoryId.S3,
-                        new IsolateDataS3DataRepositorySpecificData()
+                        Map.of(IsolateDataDataRepositoryId.S3, new IsolateDataS3DataRepositorySpecificData())
                 )));
 
         assertThrows(
@@ -221,14 +220,13 @@ class DatasetServiceTests {
         when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(true);
 
-        when(isolateDataMetadataRepository.findAnyByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
+        when(isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(Optional.of(new IsolateDataMetadata(
                         projectId,
                         isolateDataId,
-                        List.of(),
+                        List.of(isolateDataKey),
                         isolateDataName,
-                        IsolateDataDataRepositoryId.S3,
-                        new IsolateDataS3DataRepositorySpecificData()
+                        Map.of(IsolateDataDataRepositoryId.S3, new IsolateDataS3DataRepositorySpecificData())
                 )));
 
         assertThrows(

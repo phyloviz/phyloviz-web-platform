@@ -26,6 +26,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -63,7 +64,7 @@ class TreeViewServiceTests {
         String treeViewId = "treeViewId";
         String name = "name";
         String layout = "layout";
-        TreeViewSource source = new TreeViewSource("treeId", null, null);
+        TreeViewSource source = new TreeViewSource("treeId");
         TreeViewDataRepositoryId repositoryId = TreeViewDataRepositoryId.S3;
         TreeViewDataRepositorySpecificData repositorySpecificData = new TreeViewS3DataRepositorySpecificData("url");
 
@@ -76,8 +77,7 @@ class TreeViewServiceTests {
                                 name,
                                 layout,
                                 source,
-                                repositoryId,
-                                repositorySpecificData
+                                Map.of(repositoryId, repositorySpecificData)
                         )
                 ));
 
@@ -94,17 +94,28 @@ class TreeViewServiceTests {
         String projectId = "projectId";
         String datasetId = "datasetId";
         String treeViewId = "treeViewId";
+        String name = "name";
+        String layout = "layout";
+        TreeViewSource source = new TreeViewSource("treeId");
+        TreeViewDataRepositoryId repositoryId = TreeViewDataRepositoryId.S3;
+        TreeViewDataRepositorySpecificData repositorySpecificData = new TreeViewS3DataRepositorySpecificData("url");
+
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeViewMetadataRepository.existsByProjectIdAndDatasetIdAndTreeViewId(any(String.class), any(String.class), any(String.class)))
-                .thenReturn(true);
-        when(treeViewMetadataRepository.findAllByTreeViewId(any(String.class)))
-                .thenReturn(List.of());
-
+        when(treeViewMetadataRepository.findByProjectIdAndDatasetIdAndTreeViewId(any(String.class), any(String.class), any(String.class)))
+                .thenReturn(Optional.of(new TreeViewMetadata(
+                        projectId,
+                        datasetId,
+                        treeViewId,
+                        name,
+                        layout,
+                        source,
+                        Map.of(repositoryId, repositorySpecificData)
+                )));
         treeViewService.deleteTreeView(projectId, datasetId, treeViewId, userId);
 
         verify(treeViewMetadataRepository, times(0)).delete(any(TreeViewMetadata.class));
@@ -147,14 +158,28 @@ class TreeViewServiceTests {
         String projectId = "projectId";
         String datasetId = "datasetId";
         String treeViewId = "treeViewId";
+        String name = "name";
+        String layout = "layout";
+        TreeViewSource source = new TreeViewSource("treeId");
+        TreeViewDataRepositoryId repositoryId = TreeViewDataRepositoryId.S3;
+        TreeViewDataRepositorySpecificData repositorySpecificData = new TreeViewS3DataRepositorySpecificData("url");
+
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeViewMetadataRepository.existsByProjectIdAndDatasetIdAndTreeViewId(any(String.class), any(String.class), any(String.class)))
-                .thenReturn(false);
+        when(treeViewMetadataRepository.findByProjectIdAndDatasetIdAndTreeViewId(any(String.class), any(String.class), any(String.class)))
+                .thenReturn(Optional.of(new TreeViewMetadata(
+                        projectId,
+                        datasetId,
+                        treeViewId,
+                        name,
+                        layout,
+                        source,
+                        Map.of(repositoryId, repositorySpecificData)
+                )));
 
         assertThrows(TreeViewNotFoundException.class, () ->
                 treeViewService.deleteTreeView(projectId, datasetId, treeViewId, userId)
@@ -174,19 +199,6 @@ class TreeViewServiceTests {
         verify(treeViewMetadataRepository, times(0)).delete(any(TreeViewMetadata.class));
     }
 
-    // deleteTreeView
-    @Test
-    void deleteTreeViewByIdIsSuccessful() {
-        String treeViewId = "treeViewId";
-
-        when(treeViewMetadataRepository.findAllByTreeViewId(any(String.class)))
-                .thenReturn(List.of());
-
-        treeViewService.deleteTreeView(treeViewId);
-
-        verify(treeViewMetadataRepository, times(0)).delete(any(TreeViewMetadata.class));
-    }
-
     // updateTreeView
     @Test
     void updateTreeViewIsSuccessful() {
@@ -197,15 +209,15 @@ class TreeViewServiceTests {
         String treeViewId = "treeViewId";
         String name = "name";
         String layout = "layout";
-        TreeViewSource source = new TreeViewSource("treeId", null, null);
+        TreeViewSource source = new TreeViewSource("treeId");
         TreeViewDataRepositoryId repositoryId = TreeViewDataRepositoryId.S3;
         TreeViewDataRepositorySpecificData repositorySpecificData = new TreeViewS3DataRepositorySpecificData("url");
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeViewMetadataRepository.existsByProjectIdAndDatasetIdAndTreeViewId(any(String.class), any(String.class), any(String.class)))
+        when(datasetRepository.existsByProjectIdAndId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeViewMetadataRepository.findAnyByProjectIdAndDatasetIdAndTreeViewId(any(String.class), any(String.class), any(String.class)))
+        when(treeViewMetadataRepository.findByProjectIdAndDatasetIdAndTreeViewId(any(String.class), any(String.class), any(String.class)))
                 .thenReturn(Optional.of(
                         new TreeViewMetadata(
                                 projectId,
@@ -214,8 +226,7 @@ class TreeViewServiceTests {
                                 name,
                                 layout,
                                 source,
-                                repositoryId,
-                                repositorySpecificData
+                                Map.of(repositoryId, repositorySpecificData)
                         )
                 ));
 
@@ -251,8 +262,10 @@ class TreeViewServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeViewMetadataRepository.existsByProjectIdAndDatasetIdAndTreeViewId(any(String.class), any(String.class), any(String.class)))
-                .thenReturn(false);
+        when(datasetRepository.existsByProjectIdAndId(any(String.class), any(String.class)))
+                .thenReturn(true);
+        when(treeViewMetadataRepository.findByProjectIdAndDatasetIdAndTreeViewId(any(String.class), any(String.class), any(String.class)))
+                .thenReturn(Optional.empty());
 
         assertThrows(TreeViewNotFoundException.class, () ->
                 treeViewService.updateTreeView(name, projectId, datasetId, treeViewId, userId)
@@ -269,9 +282,9 @@ class TreeViewServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeViewMetadataRepository.existsByProjectIdAndDatasetIdAndTreeViewId(any(String.class), any(String.class), any(String.class)))
+        when(datasetRepository.existsByProjectIdAndId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeViewMetadataRepository.findAnyByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId))
+        when(treeViewMetadataRepository.findByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId))
                 .thenReturn(Optional.of(new TreeViewMetadata()));
 
         assertThrows(InvalidArgumentException.class, () ->

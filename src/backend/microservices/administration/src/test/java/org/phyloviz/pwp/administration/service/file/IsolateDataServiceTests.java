@@ -72,10 +72,10 @@ class IsolateDataServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
-                .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(false);
+        when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
+                .thenReturn(true);
 
         isolateDataService.deleteIsolateData(projectId, isolateDataId, userId);
 
@@ -120,9 +120,9 @@ class IsolateDataServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
-                .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
+                .thenReturn(true);
+        when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(true);
 
         assertThrows(DeniedFileDeletionException.class, () ->
@@ -144,21 +144,6 @@ class IsolateDataServiceTests {
         verify(isolateDataMetadataRepository, times(0)).delete(any(IsolateDataMetadata.class));
     }
 
-
-    // deleteIsolateData
-    @Test
-    void deleteIsolateDataWithIdIsSuccessful() {
-        String isolateDataId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
-
-        when(isolateDataMetadataRepository.findAllByIsolateDataId(any(String.class)))
-                .thenReturn(List.of());
-
-        isolateDataService.deleteIsolateData(isolateDataId);
-
-        verify(isolateDataMetadataRepository, times(0)).delete(any(IsolateDataMetadata.class));
-    }
-
-
     // updateIsolateData
     @Test
     void updateIsolateDataIsSuccessful() {
@@ -169,14 +154,8 @@ class IsolateDataServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
-                .thenReturn(true);
-        when(isolateDataMetadataRepository.findAnyByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
+        when(isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(Optional.of(new IsolateDataMetadata()));
-        when(isolateDataMetadataRepository.findAllByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
-                .thenReturn(List.of());
-        when(isolateDataMetadataRepository.save(any(IsolateDataMetadata.class)))
-                .thenReturn(new IsolateDataMetadata());
         when(isolateDataMetadataRepository.save(any(IsolateDataMetadata.class)))
                 .thenReturn(new IsolateDataMetadata());
 
@@ -228,7 +207,7 @@ class IsolateDataServiceTests {
                 .thenReturn(true);
         when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(isolateDataMetadataRepository.findAnyByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
+        when(isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(Optional.of(new IsolateDataMetadata()));
 
         assertThrows(InvalidArgumentException.class, () ->

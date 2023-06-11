@@ -73,12 +73,10 @@ class TypingDataServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
-                .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(false);
-        when(typingDataMetadataRepository.findAllByTypingDataId(any(String.class)))
-                .thenReturn(List.of());
+        when(typingDataMetadataRepository.findByProjectIdAndTypingDataId(any(String.class), any(String.class)))
+                .thenReturn(Optional.of(new TypingDataMetadata()));
 
         typingDataService.deleteTypingData(projectId, typingDataId, userId);
 
@@ -123,9 +121,9 @@ class TypingDataServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
-                .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
+                .thenReturn(true);
+        when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(true);
 
         assertThrows(DeniedFileDeletionException.class, () ->
@@ -147,21 +145,6 @@ class TypingDataServiceTests {
         verify(typingDataMetadataRepository, times(0)).delete(any(TypingDataMetadata.class));
     }
 
-
-    // deleteTypingData
-    @Test
-    void deleteTypingDataWithIdIsSuccessful() {
-        String typingDataId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
-
-        when(typingDataMetadataRepository.findAllByTypingDataId(any(String.class)))
-                .thenReturn(List.of());
-
-        typingDataService.deleteTypingData(typingDataId);
-
-        verify(typingDataMetadataRepository, times(0)).delete(any(TypingDataMetadata.class));
-    }
-
-
     // updateTypingData
     @Test
     void updateTypingDataIsSuccessful() {
@@ -172,14 +155,8 @@ class TypingDataServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
-                .thenReturn(true);
-        when(typingDataMetadataRepository.findAnyByProjectIdAndTypingDataId(any(String.class), any(String.class)))
+        when(typingDataMetadataRepository.findByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(Optional.of(new TypingDataMetadata()));
-        when(typingDataMetadataRepository.findAllByProjectIdAndTypingDataId(any(String.class), any(String.class)))
-                .thenReturn(List.of());
-        when(typingDataMetadataRepository.save(any(TypingDataMetadata.class)))
-                .thenReturn(new TypingDataMetadata());
         when(typingDataMetadataRepository.save(any(TypingDataMetadata.class)))
                 .thenReturn(new TypingDataMetadata());
 
@@ -229,9 +206,7 @@ class TypingDataServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
-                .thenReturn(true);
-        when(typingDataMetadataRepository.findAnyByProjectIdAndTypingDataId(any(String.class), any(String.class)))
+        when(typingDataMetadataRepository.findByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(Optional.of(new TypingDataMetadata()));
 
         assertThrows(InvalidArgumentException.class, () ->

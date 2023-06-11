@@ -30,6 +30,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -83,8 +84,7 @@ class DistanceMatrixServiceTests {
                                 name,
                                 sourceType,
                                 source,
-                                repositoryId,
-                                repositorySpecificData
+                                Map.of(repositoryId, repositorySpecificData)
                         )));
 
         List<DistanceMatrixInfo> distanceMatrixInfos = distanceMatrixService.getDistanceMatrixInfos(datasetId);
@@ -100,11 +100,27 @@ class DistanceMatrixServiceTests {
         String projectId = "projectId";
         String datasetId = "datasetId";
         String distanceMatrixId = "distanceMatrixId";
+        String name = "name";
+        DistanceMatrixSourceType sourceType = DistanceMatrixSourceType.FUNCTION;
+        DistanceMatrixSource source = new DistanceMatrixSourceFunction("functionName");
+        DistanceMatrixDataRepositoryId repositoryId = DistanceMatrixDataRepositoryId.S3;
+        DistanceMatrixDataRepositorySpecificData repositorySpecificData = new DistanceMatrixS3DataRepositorySpecificData("url");
+
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(projectId, userId)).thenReturn(true);
         when(datasetRepository.existsByProjectIdAndId(datasetId, projectId)).thenReturn(true);
-        when(distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)).thenReturn(true);
+        when(distanceMatrixMetadataRepository.findByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
+                .thenReturn(
+                        Optional.of(new DistanceMatrixMetadata(
+                                projectId,
+                                datasetId,
+                                distanceMatrixId,
+                                name,
+                                sourceType,
+                                source,
+                                Map.of(repositoryId, repositorySpecificData)
+                        )));
         when(treeMetadataRepository.existsByDatasetIdAndDistanceMatrixIdSource(datasetId, distanceMatrixId)).thenReturn(false);
 
         distanceMatrixService.deleteDistanceMatrix(projectId, datasetId, distanceMatrixId, userId);
@@ -146,12 +162,27 @@ class DistanceMatrixServiceTests {
         String projectId = "projectId";
         String datasetId = "datasetId";
         String distanceMatrixId = "distanceMatrixId";
+        String name = "name";
+        DistanceMatrixSourceType sourceType = DistanceMatrixSourceType.FUNCTION;
+        DistanceMatrixSource source = new DistanceMatrixSourceFunction("functionName");
+        DistanceMatrixDataRepositoryId repositoryId = DistanceMatrixDataRepositoryId.S3;
+        DistanceMatrixDataRepositorySpecificData repositorySpecificData = new DistanceMatrixS3DataRepositorySpecificData("url");
+
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(projectId, userId)).thenReturn(true);
         when(datasetRepository.existsByProjectIdAndId(datasetId, projectId)).thenReturn(true);
-        when(distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)).thenReturn(false);
-
+        when(distanceMatrixMetadataRepository.findByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
+                .thenReturn(
+                        Optional.of(new DistanceMatrixMetadata(
+                                projectId,
+                                datasetId,
+                                distanceMatrixId,
+                                name,
+                                sourceType,
+                                source,
+                                Map.of(repositoryId, repositorySpecificData)
+                        )));
         assertThrows(DistanceMatrixNotFoundException.class, () ->
                 distanceMatrixService.deleteDistanceMatrix(projectId, datasetId, distanceMatrixId, userId)
         );
@@ -162,11 +193,26 @@ class DistanceMatrixServiceTests {
         String projectId = "projectId";
         String datasetId = "datasetId";
         String distanceMatrixId = "distanceMatrixId";
+        String name = "name";
+        DistanceMatrixSourceType sourceType = DistanceMatrixSourceType.FUNCTION;
+        DistanceMatrixSource source = new DistanceMatrixSourceFunction("functionName");
+        DistanceMatrixDataRepositoryId repositoryId = DistanceMatrixDataRepositoryId.S3;
+        DistanceMatrixDataRepositorySpecificData repositorySpecificData = new DistanceMatrixS3DataRepositorySpecificData("url");
+
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(projectId, userId)).thenReturn(true);
         when(datasetRepository.existsByProjectIdAndId(datasetId, projectId)).thenReturn(true);
-        when(distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)).thenReturn(true);
+        when(distanceMatrixMetadataRepository.findByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
+                .thenReturn(Optional.of(new DistanceMatrixMetadata(
+                        projectId,
+                        datasetId,
+                        distanceMatrixId,
+                        name,
+                        sourceType,
+                        source,
+                        Map.of(repositoryId, repositorySpecificData)
+                )));
         when(treeMetadataRepository.existsByDatasetIdAndDistanceMatrixIdSource(datasetId, distanceMatrixId)).thenReturn(true);
 
         assertThrows(DeniedResourceDeletionException.class, () ->
@@ -187,19 +233,6 @@ class DistanceMatrixServiceTests {
         verify(distanceMatrixMetadataRepository, times(0)).delete(any(DistanceMatrixMetadata.class));
     }
 
-    // deleteDistanceMatrix
-    @Test
-    void deleteDistanceMatrixWithIdIsSuccessful() {
-        String distanceMatrixId = "distanceMatrixId";
-
-        when(distanceMatrixMetadataRepository.findAllByDistanceMatrixId(any(String.class)))
-                .thenReturn(List.of());
-
-        distanceMatrixService.deleteDistanceMatrix(distanceMatrixId);
-
-        verify(distanceMatrixMetadataRepository, times(0)).delete(any(DistanceMatrixMetadata.class));
-    }
-
     // updateDistanceMatrix
     @Test
     void updateDistanceMatrixIsSuccessful() {
@@ -207,20 +240,24 @@ class DistanceMatrixServiceTests {
         String datasetId = "datasetId";
         String distanceMatrixId = "distanceMatrixId";
         String name = "name";
+        DistanceMatrixSourceType sourceType = DistanceMatrixSourceType.FUNCTION;
+        DistanceMatrixSource source = new DistanceMatrixSourceFunction("functionName");
+        DistanceMatrixDataRepositoryId repositoryId = DistanceMatrixDataRepositoryId.S3;
+        DistanceMatrixDataRepositorySpecificData repositorySpecificData = new DistanceMatrixS3DataRepositorySpecificData("url");
+
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(projectId, userId)).thenReturn(true);
-        when(distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)).thenReturn(true);
-        when(distanceMatrixMetadataRepository.findAnyByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
+        when(datasetRepository.existsByProjectIdAndId(projectId, datasetId)).thenReturn(true);
+        when(distanceMatrixMetadataRepository.findByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
                 .thenReturn(Optional.of(new DistanceMatrixMetadata(
                         projectId,
                         datasetId,
                         distanceMatrixId,
                         name,
-                        DistanceMatrixSourceType.FUNCTION,
-                        new DistanceMatrixSourceFunction("functionName"),
-                        DistanceMatrixDataRepositoryId.S3,
-                        new DistanceMatrixS3DataRepositorySpecificData("url")
+                        sourceType,
+                        source,
+                        Map.of(repositoryId, repositorySpecificData)
                 )));
 
         UpdateDistanceMatrixOutput output = distanceMatrixService.updateDistanceMatrix(name, projectId, datasetId, distanceMatrixId, userId);
@@ -250,10 +287,25 @@ class DistanceMatrixServiceTests {
         String datasetId = "datasetId";
         String distanceMatrixId = "distanceMatrixId";
         String name = "name";
+        DistanceMatrixSourceType sourceType = DistanceMatrixSourceType.FUNCTION;
+        DistanceMatrixSource source = new DistanceMatrixSourceFunction("functionName");
+        DistanceMatrixDataRepositoryId repositoryId = DistanceMatrixDataRepositoryId.S3;
+        DistanceMatrixDataRepositorySpecificData repositorySpecificData = new DistanceMatrixS3DataRepositorySpecificData("url");
+
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(projectId, userId)).thenReturn(true);
-        when(distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)).thenReturn(false);
+        when(datasetRepository.existsByProjectIdAndId(projectId, datasetId)).thenReturn(true);
+        when(distanceMatrixMetadataRepository.findByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
+                .thenReturn(Optional.of(new DistanceMatrixMetadata(
+                        projectId,
+                        datasetId,
+                        distanceMatrixId,
+                        name,
+                        sourceType,
+                        source,
+                        Map.of(repositoryId, repositorySpecificData)
+                )));
 
         assertThrows(DistanceMatrixNotFoundException.class, () ->
                 distanceMatrixService.updateDistanceMatrix(name, projectId, datasetId, distanceMatrixId, userId)
@@ -266,12 +318,25 @@ class DistanceMatrixServiceTests {
         String projectId = "projectId";
         String datasetId = "datasetId";
         String distanceMatrixId = "distanceMatrixId";
+        DistanceMatrixSourceType sourceType = DistanceMatrixSourceType.FUNCTION;
+        DistanceMatrixSource source = new DistanceMatrixSourceFunction("functionName");
+        DistanceMatrixDataRepositoryId repositoryId = DistanceMatrixDataRepositoryId.S3;
+        DistanceMatrixDataRepositorySpecificData repositorySpecificData = new DistanceMatrixS3DataRepositorySpecificData("url");
+
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(projectId, userId)).thenReturn(true);
-        when(distanceMatrixMetadataRepository.existsByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId)).thenReturn(true);
-        when(distanceMatrixMetadataRepository.findAnyByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
-                .thenReturn(Optional.of(new DistanceMatrixMetadata()));
+        when(datasetRepository.existsByProjectIdAndId(projectId, datasetId)).thenReturn(true);
+        when(distanceMatrixMetadataRepository.findByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
+                .thenReturn(Optional.of(new DistanceMatrixMetadata(
+                        projectId,
+                        datasetId,
+                        distanceMatrixId,
+                        name,
+                        sourceType,
+                        source,
+                        Map.of(repositoryId, repositorySpecificData)
+                )));
 
         assertThrows(InvalidArgumentException.class, () ->
                 distanceMatrixService.updateDistanceMatrix(name, projectId, datasetId, distanceMatrixId, userId)

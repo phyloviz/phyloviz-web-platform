@@ -30,6 +30,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -83,8 +84,7 @@ class TreeServiceTests {
                                 name,
                                 sourceType,
                                 source,
-                                repositoryId,
-                                repositorySpecificData
+                                Map.of(repositoryId, repositorySpecificData)
                         )
                 ));
 
@@ -101,14 +101,29 @@ class TreeServiceTests {
         String projectId = "projectId";
         String datasetId = "datasetId";
         String treeId = "treeId";
+        String name = "name";
+        TreeSourceType sourceType = TreeSourceType.FILE;
+        TreeSource source = new TreeSourceFile("fileType", "fileName");
+        TreeDataRepositoryId repositoryId = TreeDataRepositoryId.S3;
+        TreeDataRepositorySpecificData repositorySpecificData = new TreeS3DataRepositorySpecificData("url");
+
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
-                .thenReturn(true);
+        when(treeMetadataRepository.findByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
+                .thenReturn(Optional.of(new TreeMetadata(
+                                projectId,
+                                datasetId,
+                                treeId,
+                                name,
+                                sourceType,
+                                source,
+                                Map.of(repositoryId, repositorySpecificData)
+                        ))
+                );
         when(treeViewMetadataService.existsByDatasetIdAndTreeIdSource(any(String.class), any(String.class)))
                 .thenReturn(false);
 
@@ -154,14 +169,29 @@ class TreeServiceTests {
         String projectId = "projectId";
         String datasetId = "datasetId";
         String treeId = "treeId";
+        String name = "name";
+        TreeSourceType sourceType = TreeSourceType.FILE;
+        TreeSource source = new TreeSourceFile("fileType", "fileName");
+        TreeDataRepositoryId repositoryId = TreeDataRepositoryId.S3;
+        TreeDataRepositorySpecificData repositorySpecificData = new TreeS3DataRepositorySpecificData("url");
+
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
-                .thenReturn(false);
+        when(treeMetadataRepository.findByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
+                .thenReturn(Optional.of(new TreeMetadata(
+                                projectId,
+                                datasetId,
+                                treeId,
+                                name,
+                                sourceType,
+                                source,
+                                Map.of(repositoryId, repositorySpecificData)
+                        ))
+                );
 
         assertThrows(TreeNotFoundException.class, () ->
                 treeService.deleteTree(projectId, datasetId, treeId, userId)
@@ -173,14 +203,29 @@ class TreeServiceTests {
         String projectId = "projectId";
         String datasetId = "datasetId";
         String treeId = "treeId";
+        String name = "name";
+        TreeSourceType sourceType = TreeSourceType.FILE;
+        TreeSource source = new TreeSourceFile("fileType", "fileName");
+        TreeDataRepositoryId repositoryId = TreeDataRepositoryId.S3;
+        TreeDataRepositorySpecificData repositorySpecificData = new TreeS3DataRepositorySpecificData("url");
+
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
-                .thenReturn(true);
+        when(treeMetadataRepository.findByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
+                .thenReturn(Optional.of(new TreeMetadata(
+                                projectId,
+                                datasetId,
+                                treeId,
+                                name,
+                                sourceType,
+                                source,
+                                Map.of(repositoryId, repositorySpecificData)
+                        ))
+                );
         when(treeViewMetadataService.existsByDatasetIdAndTreeIdSource(any(String.class), any(String.class)))
                 .thenReturn(true);
 
@@ -202,19 +247,6 @@ class TreeServiceTests {
         verify(treeMetadataRepository, times(0)).delete(any(TreeMetadata.class));
     }
 
-    // deleteTree
-    @Test
-    void deleteTreeByIdIsSuccessful() {
-        String treeId = "treeId";
-
-        when(treeMetadataRepository.findAllByTreeId(any(String.class)))
-                .thenReturn(List.of());
-
-        treeService.deleteTree(treeId);
-
-        verify(treeMetadataRepository, times(0)).delete(any(TreeMetadata.class));
-    }
-
     // updateTree
     @Test
     void updateTreeIsSuccessful() {
@@ -231,9 +263,9 @@ class TreeServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
+        when(datasetRepository.existsByProjectIdAndId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeMetadataRepository.findAnyByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
+        when(treeMetadataRepository.findByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
                 .thenReturn(Optional.of(new TreeMetadata(
                         projectId,
                         datasetId,
@@ -241,8 +273,7 @@ class TreeServiceTests {
                         name,
                         sourceType,
                         source,
-                        repositoryId,
-                        repositorySpecificData
+                        Map.of(repositoryId, repositorySpecificData)
                 )));
 
         UpdateTreeOutput updateTreeOutput = treeService.updateTree(newName, projectId, datasetId, treeId, userId);
@@ -277,8 +308,8 @@ class TreeServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
-                .thenReturn(false);
+        when(treeMetadataRepository.findByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
+                .thenReturn(Optional.empty());
 
         assertThrows(TreeNotFoundException.class, () ->
                 treeService.updateTree(name, projectId, datasetId, treeId, userId)
@@ -291,14 +322,27 @@ class TreeServiceTests {
         String projectId = "projectId";
         String datasetId = "datasetId";
         String treeId = "treeId";
+        TreeSourceType sourceType = TreeSourceType.FILE;
+        TreeSource source = new TreeSourceFile("fileType", "fileName");
+        TreeDataRepositoryId repositoryId = TreeDataRepositoryId.S3;
+        TreeDataRepositorySpecificData repositorySpecificData = new TreeS3DataRepositorySpecificData("url");
+
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeMetadataRepository.existsByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
+        when(datasetRepository.existsByProjectIdAndId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(treeMetadataRepository.findAnyByProjectIdAndDatasetIdAndTreeId(projectId, datasetId, treeId))
-                .thenReturn(Optional.of(new TreeMetadata()));
+        when(treeMetadataRepository.findByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
+                .thenReturn(Optional.of(new TreeMetadata(
+                        projectId,
+                        datasetId,
+                        treeId,
+                        name,
+                        sourceType,
+                        source,
+                        Map.of(repositoryId, repositorySpecificData)
+                )));
 
         assertThrows(InvalidArgumentException.class, () ->
                 treeService.updateTree(name, projectId, datasetId, treeId, userId)
