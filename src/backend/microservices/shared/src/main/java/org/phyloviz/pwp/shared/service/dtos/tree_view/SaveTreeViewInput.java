@@ -5,13 +5,10 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * Output for the getTreeView service.
+ * Input for the saveTreeView service.
  */
 @Data
-public class GetTreeViewOutput {
+public class SaveTreeViewInput {
     private final List<Node> nodes;
-    private final int nodesTotalCount;
-    private final List<Edge> edges;
-    private final int edgesTotalCount;
     private final Transformations transformations;
 }

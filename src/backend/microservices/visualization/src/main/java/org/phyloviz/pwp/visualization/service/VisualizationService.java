@@ -4,6 +4,8 @@ import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRow
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
+import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewInput;
+import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewOutput;
 
 import java.util.List;
 
@@ -41,6 +43,19 @@ public interface VisualizationService {
      * @return the tree view
      */
     GetTreeViewOutput getTreeView(String projectId, String datasetId, String treeViewId, String userId);
+
+    /**
+     * Saves a tree view coordinates and applied transformations.
+     *
+     * @param projectId  the id of the project
+     * @param datasetId  the id of the dataset
+     * @param treeViewId the id of the tree view
+     * @param inputModel the input model
+     * @param userId     the id of the user
+     * @return the tree view
+     */
+    SaveTreeViewOutput saveTreeView(String projectId, String datasetId, String treeViewId, SaveTreeViewInput inputModel,
+                                    String userId);
 
     /**
      * Gets a typing data's schema.

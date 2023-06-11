@@ -19,4 +19,8 @@ public class NodeModel {
         this.coordinates = node.getCoordinates();
         this.profile = node.getProfile();
     }
+
+    public Node getDTO() {
+        return new Node(st, coordinates, profile);
+    }
 }

@@ -8,6 +8,7 @@ import org.phyloviz.pwp.shared.repository.data.tree_view.repository.specific_dat
 import org.phyloviz.pwp.shared.repository.metadata.DocumentConversionException;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.TreeViewMetadata;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.source.TreeViewSource;
+import org.phyloviz.pwp.shared.service.dtos.tree_view.Transformations;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
@@ -54,7 +55,8 @@ public class TreeViewMetadataDeserializer implements Converter<Document, TreeVie
                     document.getString("name"),
                     document.getString("layout"),
                     mongoConverter.read(TreeViewSource.class, (Document) document.get("source")),
-                    repositorySpecificDataMap
+                    repositorySpecificDataMap,
+                    mongoConverter.read(Transformations.class, (Document) document.get("transformations"))
             );
         } catch (Exception e) {
             throw new DocumentConversionException("Error converting Document to TreeViewMetadata:" + e);
