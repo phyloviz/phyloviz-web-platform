@@ -95,7 +95,7 @@ public class VisualizationController {
      * @param user         the user
      * @return the typing data schema
      */
-    @GetMapping("/projects/{projectId}/files/typing-data/{typingDataId}/rows")
+    @GetMapping("/projects/{projectId}/files/typing-data/{typingDataId}/schema")
     public GetTypingDataSchemaOutputModel getTypingDataSchema(
             @PathVariable String projectId,
             @PathVariable String typingDataId,
