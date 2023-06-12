@@ -21,6 +21,10 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
 
     const {findBiggestGroup} = useClusterCalculation()
 
+    const [autosave, setAutosave] = useState<boolean>(false)
+    const [saveFlag, setSaveFlag] = useState<boolean>(false)
+    const [savingGraph, setSavingGraph] = useState<boolean>(false)
+
     // Load graph
     useEffect(() => {
         setLoadingGraph(true)
@@ -77,7 +81,6 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
     }, [])
 
     // Save graph
-    const [savingGraph, setSavingGraph] = useState<boolean>(false)
     useEffect(() => {
             if (!graphRef.current) return
 
@@ -108,13 +111,19 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
                 }
             }).finally(() => setSavingGraph(false))
 
-        }, [graphRef.current?.config, graphRef.current?.getNodePositions()]
+        }, autosave ? [graphRef.current?.config, graphRef.current?.getNodePositions(), saveFlag] : [saveFlag]
+        // If autosave is enabled, save the graph every time the config or the node positions change, or if the user forces a save
+        // If autosave is disabled, only save the graph if the user forces a save
     )
 
     return {
         graphRef,
         canvasRef,
         loadingGraph,
+
+        autosave,
+        switchAutosave: () => setAutosave((prev) => !prev),
+        forceSave: () => setSaveFlag((prev) => !prev),
         savingGraph
     }
 }
