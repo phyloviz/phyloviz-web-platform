@@ -21,6 +21,7 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
 
     const {findBiggestGroup} = useClusterCalculation()
 
+    // Load graph
     useEffect(() => {
         setLoadingGraph(true)
 
@@ -30,8 +31,8 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
             const nodes = findBiggestGroup(data.nodes, data.edges).map(node => {
                 return {
                     id: node.st,
-                    // x: node.coordinates[0],
-                    // y: node.coordinates[1],
+                    x: node.coordinates[0],
+                    y: node.coordinates[1],
                 }
             })
 
@@ -43,12 +44,27 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
                 }
             })
 
-            if(!canvasRef.current) return // TODO sus canvasRef.current is null, service running twice -> async await promise problems?
+            if (!canvasRef.current) return // TODO sus canvasRef.current is null, service running twice -> async await promise problems?
 
-            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, defaultConfig)
+            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current, {
+                ...defaultConfig,
+                nodeSize: data.transformations.nodeSize,
+                linkWidth: data.transformations.linkWidth,
+                simulation: {
+                    linkSpring: data.transformations.linkSpring,
+                    linkDistance: data.transformations.linkDistance,
+                    gravity: data.transformations.gravity,
+                    repulsion: data.transformations.repulsion,
+                    friction: data.transformations.friction,
+                    repulsionTheta: data.transformations.repulsionTheta,
+                    decay: data.transformations.decay
+                }
+            })
             await graph.setData(nodes, links)
+
             graphRef.current = graph
 
+            console.log("finished loading graph")
             setLoadingGraph(false)
         }
 
@@ -60,9 +76,45 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
         }
     }, [])
 
+    // Save graph
+    const [savingGraph, setSavingGraph] = useState<boolean>(false)
+    useEffect(() => {
+            if (!graphRef.current) return
+
+            setSavingGraph(true)
+            console.log("saving graph")
+            VisualizationService.saveTreeView(projectId, datasetId, treeViewId, {
+                nodes: Object.entries(graphRef.current?.getNodePositions()).map(([st, coordinates]) => {
+                    return {
+                        st,
+                        coordinates: Object.values(coordinates)
+                    }
+                }),
+                transformations: {
+                    linkSpring: graphRef.current.config.simulation.linkSpring!,
+                    linkDistance: graphRef.current.config.simulation.linkDistance!,
+                    gravity: graphRef.current.config.simulation.gravity!,
+                    repulsion: graphRef.current.config.simulation.repulsion!,
+                    friction: graphRef.current.config.simulation.friction!,
+                    repulsionTheta: graphRef.current.config.simulation.repulsionTheta!,
+                    decay: graphRef.current.config.simulation.decay!,
+                    nodeSize: graphRef.current.config.nodeSize,
+                    nodeLabel: true, // TODO
+                    nodeLabelSize: 1, // TODO
+                    linkWidth: graphRef.current.config.linkWidth,
+                    linkLabel: false, // TODO
+                    linkLabelSize: 1, // TODO
+                    linkLabelType: "test" // TODO
+                }
+            }).finally(() => setSavingGraph(false))
+
+        }, [graphRef.current?.config, graphRef.current?.getNodePositions()]
+    )
+
     return {
         graphRef,
         canvasRef,
-        loadingGraph
+        loadingGraph,
+        savingGraph
     }
 }

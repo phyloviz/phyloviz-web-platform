@@ -38,11 +38,13 @@ const DEFAULT_LINK_LABEL_TYPE = ""
  *
  * @param graphRef Reference to the graph.
  */
-export function useGraphTransformationsConfig(graphRef: React.MutableRefObject<TreeViewGraph<VizNode, VizLink> | undefined>) {
-    const [nodeSize, setNodeSize] = useState<number>(defaultConfig.nodeSize! as number)
+export function useGraphTransformationsConfig(
+    graphRef: React.MutableRefObject<TreeViewGraph<VizNode, VizLink> | undefined>
+) {
+    const [nodeSize, setNodeSize] = useState<number>(graphRef.current?.config.nodeSize ?? defaultConfig.nodeSize! as number)
     const [nodeLabel, setNodeLabel] = useState(DEFAULT_NODE_LABEL_CHECKED)
     const [nodeLabelSize, setNodeLabelSize] = useState(DEFAULT_NODE_LABEL_SIZE)
-    const [linkWidth, setLinkWidth] = useState<number>(defaultConfig.linkWidth! as number)
+    const [linkWidth, setLinkWidth] = useState<number>(graphRef.current?.config.linkWidth ?? defaultConfig.linkWidth! as number)
     const [linkLabel, setLinkLabel] = useState(DEFAULT_LINK_LABEL_CHECKED)
     const [linkLabelSize, setLinkLabelSize] = useState(DEFAULT_LINK_LABEL_SIZE)
     const [linkLabelType, setLinkLabelType] = useState(DEFAULT_LINK_LABEL_TYPE)

@@ -30,14 +30,16 @@ export interface SimulationConfig {
  *
  * @param graphRef Reference to the graph.
  */
-export function useSimulationConfig(graphRef: React.MutableRefObject<TreeViewGraph<VizNode, VizLink> | undefined>): SimulationConfig {
-    const [linkSpring, setLinkSpring] = useState(defaultConfig.simulation!.linkSpring!)
-    const [linkDistance, setLinkDistance] = useState(defaultConfig.simulation!.linkDistance!)
-    const [gravity, setGravity] = useState(defaultConfig.simulation!.gravity!)
-    const [repulsion, setRepulsion] = useState(defaultConfig.simulation!.repulsion!)
-    const [friction, setFriction] = useState(defaultConfig.simulation!.friction!)
-    const [repulsionTheta, setRepulsionTheta] = useState(defaultConfig.simulation!.repulsionTheta!)
-    const [decay, setDecay] = useState(defaultConfig.simulation!.decay!)
+export function useSimulationConfig(
+    graphRef: React.MutableRefObject<TreeViewGraph<VizNode, VizLink> | undefined>
+): SimulationConfig {
+    const [linkSpring, setLinkSpring] = useState(graphRef.current?.config.simulation.linkSpring ?? defaultConfig.simulation!.linkSpring!)
+    const [linkDistance, setLinkDistance] = useState(graphRef.current?.config.simulation.linkDistance ?? defaultConfig.simulation!.linkDistance!)
+    const [gravity, setGravity] = useState(graphRef.current?.config.simulation.gravity ?? defaultConfig.simulation!.gravity!)
+    const [repulsion, setRepulsion] = useState(graphRef.current?.config.simulation.repulsion ?? defaultConfig.simulation!.repulsion!)
+    const [friction, setFriction] = useState(graphRef.current?.config.simulation.friction ?? defaultConfig.simulation!.friction!)
+    const [repulsionTheta, setRepulsionTheta] = useState(graphRef.current?.config.simulation.repulsionTheta ?? defaultConfig.simulation!.repulsionTheta!)
+    const [decay, setDecay] = useState(graphRef.current?.config.simulation.decay ?? defaultConfig.simulation!.decay!)
 
     return {
         linkSpring,
