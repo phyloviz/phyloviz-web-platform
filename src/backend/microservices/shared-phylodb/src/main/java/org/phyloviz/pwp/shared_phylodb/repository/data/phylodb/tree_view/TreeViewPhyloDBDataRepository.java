@@ -12,7 +12,6 @@ import pt.ist.meic.phylodb.analysis.inference.InferenceService;
 import pt.ist.meic.phylodb.analysis.inference.model.Inference;
 import pt.ist.meic.phylodb.analysis.visualization.VisualizationRepository;
 import pt.ist.meic.phylodb.analysis.visualization.VisualizationService;
-import pt.ist.meic.phylodb.analysis.visualization.model.Coordinate;
 import pt.ist.meic.phylodb.analysis.visualization.model.Visualization;
 import pt.ist.meic.phylodb.typing.profile.ProfileRepository;
 import pt.ist.meic.phylodb.typing.profile.model.Profile;
@@ -89,7 +88,9 @@ public class TreeViewPhyloDBDataRepository implements TreeViewDataRepository {
 
     @Override
     public void saveTreeView(TreeViewDataRepositorySpecificData treeViewDataRepositorySpecificData, List<Node> nodes) {
-        TreeViewPhyloDBDataRepositorySpecificData repositorySpecificData =
+        return; // TODO implement save visualization in PhyloDB
+
+        /*TreeViewPhyloDBDataRepositorySpecificData repositorySpecificData =
                 (TreeViewPhyloDBDataRepositorySpecificData) treeViewDataRepositorySpecificData;
 
         Visualization visualization = visualizationService.getVisualization(
@@ -118,11 +119,19 @@ public class TreeViewPhyloDBDataRepository implements TreeViewDataRepository {
                 visualization.isDeprecated(),
                 visualization.getAlgorithm(),
                 newCoordinates
-        ));
+        ));*/
     }
 
     @Override
     public void deleteTreeView(TreeViewDataRepositorySpecificData treeViewDataRepositorySpecificData) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        TreeViewPhyloDBDataRepositorySpecificData repositorySpecificData =
+                (TreeViewPhyloDBDataRepositorySpecificData) treeViewDataRepositorySpecificData;
+
+        return;
+        /*visualizationService.deleteVisualization( // TODO implement delete visualization in PhyloDB, it throws an exception: neo4j java.lang.IllegalArgumentException: Cannot get or create persistent entity
+                repositorySpecificData.getProjectId(),
+                repositorySpecificData.getDatasetId(),
+                repositorySpecificData.getInferenceId(),
+                repositorySpecificData.getVisualizationId());*/
     }
 }

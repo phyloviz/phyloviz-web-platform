@@ -47,6 +47,8 @@ public class TreeViewMetadataDeserializer implements Converter<Document, TreeVie
                 );
             });
 
+            Document transformationsDocument = (Document) document.get("transformations");
+
             return new TreeViewMetadata(
                     document.getObjectId("_id").toString(),
                     document.getString("projectId"),
@@ -56,7 +58,7 @@ public class TreeViewMetadataDeserializer implements Converter<Document, TreeVie
                     document.getString("layout"),
                     mongoConverter.read(TreeViewSource.class, (Document) document.get("source")),
                     repositorySpecificDataMap,
-                    mongoConverter.read(Transformations.class, (Document) document.get("transformations"))
+                    transformationsDocument != null ? mongoConverter.read(Transformations.class, transformationsDocument) : null
             );
         } catch (Exception e) {
             throw new DocumentConversionException("Error converting Document to TreeViewMetadata:" + e);

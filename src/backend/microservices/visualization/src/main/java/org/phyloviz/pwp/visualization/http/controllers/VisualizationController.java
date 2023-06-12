@@ -112,7 +112,7 @@ public class VisualizationController {
     ) {
         SaveTreeViewOutput saveTreeViewOutput = visualizationService.saveTreeView(
                 projectId, datasetId, treeViewId,
-                inputModel.getDTO(), user.getId());
+                inputModel.toDto(), user.getId());
 
         return new SaveTreeViewOutputModel(saveTreeViewOutput);
     }

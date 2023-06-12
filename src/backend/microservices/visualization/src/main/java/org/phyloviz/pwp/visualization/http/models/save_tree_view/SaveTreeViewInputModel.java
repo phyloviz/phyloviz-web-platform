@@ -14,7 +14,7 @@ public class SaveTreeViewInputModel {
     private List<NodeModel> nodes;
     private TransformationsModel transformations;
 
-    public SaveTreeViewInput getDTO() {
-        return new SaveTreeViewInput(nodes.stream().map(NodeModel::getDTO).toList(), transformations.getDTO());
+    public SaveTreeViewInput toDto() {
+        return new SaveTreeViewInput(nodes.stream().map(NodeModel::toDto).toList(), transformations.toDto());
     }
 }

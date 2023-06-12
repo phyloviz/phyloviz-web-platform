@@ -2,6 +2,7 @@ package org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.converte
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.phyloviz.pwp.shared.repository.metadata.DocumentConversionException;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.TreeViewMetadata;
 import org.springframework.core.convert.converter.Converter;
@@ -23,12 +24,13 @@ public class TreeViewMetadataSerializer implements Converter<TreeViewMetadata, D
         try {
             return new Document(
                     Map.of(
+                            "_id", Objects.requireNonNull(mongoConverter.convertId(treeViewMetadata.getId(), ObjectId.class)),
                             "projectId", treeViewMetadata.getProjectId(),
                             "datasetId", treeViewMetadata.getDatasetId(),
                             "treeViewId", treeViewMetadata.getTreeViewId(),
                             "name", treeViewMetadata.getName(),
                             "layout", treeViewMetadata.getLayout(),
-                            "source", treeViewMetadata.getSource(),
+                            "source", Objects.requireNonNull(mongoConverter.convertToMongoType(treeViewMetadata.getSource())),
                             "repositorySpecificData", Objects.requireNonNull(
                                     mongoConverter.convertToMongoType(
                                             treeViewMetadata.getRepositorySpecificData().entrySet().stream()
@@ -38,7 +40,7 @@ public class TreeViewMetadataSerializer implements Converter<TreeViewMetadata, D
                                                     ))
                                     )
                             ),
-                            "transformations", treeViewMetadata.getTransformations()
+                            "transformations", Objects.requireNonNull(mongoConverter.convertToMongoType(treeViewMetadata.getTransformations()))
                     )
             );
         } catch (Exception e) {

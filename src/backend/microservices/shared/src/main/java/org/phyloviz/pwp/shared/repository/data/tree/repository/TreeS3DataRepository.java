@@ -24,5 +24,4 @@ public class TreeS3DataRepository implements TreeDataRepository {
 
         s3FileRepository.delete(repositorySpecificData.getUrl());
     }
-
 }

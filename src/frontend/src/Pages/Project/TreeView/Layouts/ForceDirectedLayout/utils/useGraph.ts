@@ -55,20 +55,22 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
 
             if (!canvasRef.current) return // TODO sus canvasRef.current is null, service running twice -> async await promise problems?
 
-            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current, {
-                ...defaultConfig,
-                nodeSize: data.transformations.nodeSize,
-                linkWidth: data.transformations.linkWidth,
-                simulation: {
-                    linkSpring: data.transformations.linkSpring,
-                    linkDistance: data.transformations.linkDistance,
-                    gravity: data.transformations.gravity,
-                    repulsion: data.transformations.repulsion,
-                    friction: data.transformations.friction,
-                    repulsionTheta: data.transformations.repulsionTheta,
-                    decay: data.transformations.decay
-                }
-            })
+            const graph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current,
+                data.transformations != null ? {
+                    ...defaultConfig,
+                    nodeSize: data.transformations.nodeSize,
+                    linkWidth: data.transformations.linkWidth,
+                    simulation: {
+                        linkSpring: data.transformations.linkSpring,
+                        linkDistance: data.transformations.linkDistance,
+                        gravity: data.transformations.gravity,
+                        repulsion: data.transformations.repulsion,
+                        friction: data.transformations.friction,
+                        repulsionTheta: data.transformations.repulsionTheta,
+                        decay: data.transformations.decay
+                    }
+                } : defaultConfig
+            )
             await graph.setData(nodes, links)
 
             graphRef.current = graph

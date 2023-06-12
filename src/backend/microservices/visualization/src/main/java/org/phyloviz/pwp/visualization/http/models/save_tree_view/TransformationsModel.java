@@ -1,12 +1,14 @@
 package org.phyloviz.pwp.visualization.http.models.save_tree_view;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.Transformations;
 
 /**
  * Transformations model for the Tree View.
  */
 @Data
+@NoArgsConstructor
 public class TransformationsModel {
     private double linkSpring;
     private double linkDistance;
@@ -40,7 +42,7 @@ public class TransformationsModel {
         this.linkLabelType = transformations.getLinkLabelType();
     }
 
-    public Transformations getDTO() {
+    public Transformations toDto() {
         return new Transformations(linkSpring, linkDistance, gravity, repulsion, friction, repulsionTheta, decay,
                 nodeSize, nodeLabel, nodeLabelSize, linkWidth, linkLabel, linkLabelSize, linkLabelType);
     }

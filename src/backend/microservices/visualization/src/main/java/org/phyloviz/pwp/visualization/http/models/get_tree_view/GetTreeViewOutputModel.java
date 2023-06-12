@@ -22,6 +22,8 @@ public class GetTreeViewOutputModel {
         this.nodesTotalCount = getTreeViewOutput.getNodesTotalCount();
         this.edges = getTreeViewOutput.getEdges().stream().map(EdgeModel::new).toList();
         this.edgesTotalCount = getTreeViewOutput.getEdgesTotalCount();
-        this.transformations = new TransformationsModel(getTreeViewOutput.getTransformations());
+        this.transformations = getTreeViewOutput.getTransformations() != null ?
+                new TransformationsModel(getTreeViewOutput.getTransformations())
+                : null;
     }
 }
