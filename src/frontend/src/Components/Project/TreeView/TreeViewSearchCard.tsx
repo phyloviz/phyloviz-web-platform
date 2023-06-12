@@ -6,7 +6,10 @@ import * as React from "react"
 /**
  * Card for searching for a specific ST in the tree view page.
  */
-export function TreeViewSearchCard({onSearch}: { onSearch: (searchST: string) => boolean }) {
+export function TreeViewSearchCard({loadingGraph, onSearch}: {
+    loadingGraph: boolean,
+    onSearch: (searchST: string) => boolean
+}) {
     const [searchST, setSearchST] = React.useState<string>("")
     const [searchSTError, setSearchSTError] = React.useState<boolean>(false)
 
@@ -18,6 +21,8 @@ export function TreeViewSearchCard({onSearch}: { onSearch: (searchST: string) =>
     }
 
     return <Box sx={{
+        opacity: loadingGraph ? 0.5 : 1,
+        pointerEvents: loadingGraph ? "none": "initial",
         position: "absolute",
         bottom: 0,
         right: 0,

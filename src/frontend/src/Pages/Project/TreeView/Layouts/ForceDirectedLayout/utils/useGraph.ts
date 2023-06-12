@@ -6,6 +6,11 @@ import {
 import VisualizationService from "../../../../../../Services/Visualization/VisualizationService";
 import {useClusterCalculation} from "./useClusterCalculation";
 import {defaultConfig, VizLink, VizNode} from "../useForceDirectedLayout";
+import {
+    DEFAULT_LINK_LABEL_SIZE,
+    DEFAULT_LINK_LABEL_TYPE,
+    DEFAULT_NODE_LABEL_SIZE
+} from "./useGraphTransformationsConfig";
 
 /**
  * This hook is responsible for fetching the data from the server and initializing the graph.
@@ -82,7 +87,7 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
 
     // Save graph
     useEffect(() => {
-            if (!graphRef.current) return
+            if (loadingGraph || !graphRef.current) return
 
             setSavingGraph(true)
             console.log("saving graph")
@@ -102,12 +107,12 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
                     repulsionTheta: graphRef.current.config.simulation.repulsionTheta!,
                     decay: graphRef.current.config.simulation.decay!,
                     nodeSize: graphRef.current.config.nodeSize,
-                    nodeLabel: true, // TODO
-                    nodeLabelSize: 1, // TODO
+                    nodeLabel: graphRef.current?.nodeLabelsRendered(),
+                    nodeLabelSize: DEFAULT_NODE_LABEL_SIZE, // TODO
                     linkWidth: graphRef.current.config.linkWidth,
-                    linkLabel: false, // TODO
-                    linkLabelSize: 1, // TODO
-                    linkLabelType: "test" // TODO
+                    linkLabel: graphRef.current?.linkLabelsRendered(),
+                    linkLabelSize: DEFAULT_LINK_LABEL_SIZE, // TODO
+                    linkLabelType: DEFAULT_LINK_LABEL_TYPE // TODO
                 }
             }).finally(() => setSavingGraph(false))
 

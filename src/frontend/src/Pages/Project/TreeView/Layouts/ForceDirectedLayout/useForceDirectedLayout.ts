@@ -81,8 +81,8 @@ export function useForceDirectedLayout() {
 
     const navigate = useNavigate()
 
-    const simulationConfig = useSimulationConfig(graphRef)
-    const nodeTransformationsConfig = useGraphTransformationsConfig(graphRef)
+    const simulationConfig = useSimulationConfig(graphRef, loadingGraph)
+    const nodeTransformationsConfig = useGraphTransformationsConfig(graphRef, loadingGraph)
 
     const [doughnutChartTitle, setDoughnutChartTitle] = useState<string>("")
     const [doughnutChartData, setDoughnutChartData] = useState<DoughnutChartData | null>(null)

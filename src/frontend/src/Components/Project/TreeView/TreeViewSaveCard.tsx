@@ -1,12 +1,15 @@
 import * as React from "react"
-import {Box, FormControlLabel, Switch} from "@mui/material"
+import {Box, CircularProgress, FormControlLabel, Switch} from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import {Save} from "@mui/icons-material"
+import Typography from "@mui/material/Typography";
 
 /**
  * Props for TreeViewSaveCard component.
  */
 interface TreeViewSaveCardProps {
+    loadingGraph: boolean
+
     autosave: boolean
     switchAutosave: () => void
     forceSave: () => void
@@ -18,6 +21,7 @@ interface TreeViewSaveCardProps {
  */
 export function TreeViewSaveCard(
     {
+        loadingGraph,
         autosave,
         switchAutosave,
         forceSave,
@@ -37,17 +41,35 @@ export function TreeViewSaveCard(
         borderColor: 'divider',
     }}>
         <Box sx={{
+            opacity: loadingGraph ? 0.5 : 1,
+            pointerEvents: loadingGraph ? "none": "initial",
             display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
+            flexDirection: "column"
         }}>
-            <FormControlLabel control={
-                <Switch size="small" checked={autosave} onChange={switchAutosave}/>
-            } label="AutoSave"
-            />
-            <IconButton size="small" onClick={forceSave}>
-                <Save/>
-            </IconButton>
+            <Box sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+            }}>
+                <FormControlLabel control={
+                    <Switch size="small" checked={autosave} onChange={switchAutosave}/>
+                } label="AutoSave"
+                />
+                <IconButton size="small" onClick={forceSave}>
+                    <Save/>
+                </IconButton>
+            </Box>
+            {savingGraph &&
+                <Box sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                    <CircularProgress size={20} sx={{mr: 1}}/>
+                    {savingGraph && <Typography>Saving...</Typography>}
+                </Box>
+            }
         </Box>
     </Box>
 }

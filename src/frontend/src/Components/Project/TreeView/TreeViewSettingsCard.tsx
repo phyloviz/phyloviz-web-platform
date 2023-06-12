@@ -14,6 +14,8 @@ import {
  * Props for TreeViewSettingsCard component.
  */
 interface TreeViewSettingsCardProps {
+    loadingGraph: boolean
+
     onPauseAnimation: () => void
     onRestartAnimation: () => void
 
@@ -43,6 +45,8 @@ interface TreeViewSettingsCardProps {
  */
 export function TreeViewSettingsCard(
     {
+        loadingGraph,
+
         onPauseAnimation,
         onRestartAnimation,
 
@@ -72,6 +76,8 @@ export function TreeViewSettingsCard(
     const [filtersOpen, setFiltersOpen] = useState(false)
 
     return <Box sx={{
+        opacity: loadingGraph ? 0.5 : 1,
+        pointerEvents: loadingGraph ? "none": "initial",
         position: "absolute",
         bottom: 0,
         left: 0,

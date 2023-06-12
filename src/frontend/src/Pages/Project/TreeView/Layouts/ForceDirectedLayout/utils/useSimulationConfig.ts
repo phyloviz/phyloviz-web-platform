@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {TreeViewGraph} from "../cosmos/TreeViewGraph";
 import {defaultConfig, VizLink, VizNode} from "../useForceDirectedLayout";
 
@@ -29,9 +29,11 @@ export interface SimulationConfig {
  * Hook for managing simulation configuration.
  *
  * @param graphRef Reference to the graph.
+ * @param loadingGraph Whether the graph is loading.
  */
 export function useSimulationConfig(
-    graphRef: React.MutableRefObject<TreeViewGraph<VizNode, VizLink> | undefined>
+    graphRef: React.MutableRefObject<TreeViewGraph<VizNode, VizLink> | undefined>,
+    loadingGraph: boolean
 ): SimulationConfig {
     const [linkSpring, setLinkSpring] = useState(graphRef.current?.config.simulation.linkSpring ?? defaultConfig.simulation!.linkSpring!)
     const [linkDistance, setLinkDistance] = useState(graphRef.current?.config.simulation.linkDistance ?? defaultConfig.simulation!.linkDistance!)
@@ -40,6 +42,19 @@ export function useSimulationConfig(
     const [friction, setFriction] = useState(graphRef.current?.config.simulation.friction ?? defaultConfig.simulation!.friction!)
     const [repulsionTheta, setRepulsionTheta] = useState(graphRef.current?.config.simulation.repulsionTheta ?? defaultConfig.simulation!.repulsionTheta!)
     const [decay, setDecay] = useState(graphRef.current?.config.simulation.decay ?? defaultConfig.simulation!.decay!)
+
+    useEffect(() => {
+        if (loadingGraph)
+            return
+
+        setLinkSpring(graphRef.current?.config.simulation.linkSpring ?? defaultConfig.simulation!.linkSpring!)
+        setLinkDistance(graphRef.current?.config.simulation.linkDistance ?? defaultConfig.simulation!.linkDistance!)
+        setGravity(graphRef.current?.config.simulation.gravity ?? defaultConfig.simulation!.gravity!)
+        setRepulsion(graphRef.current?.config.simulation.repulsion ?? defaultConfig.simulation!.repulsion!)
+        setFriction(graphRef.current?.config.simulation.friction ?? defaultConfig.simulation!.friction!)
+        setRepulsionTheta(graphRef.current?.config.simulation.repulsionTheta ?? defaultConfig.simulation!.repulsionTheta!)
+        setDecay(graphRef.current?.config.simulation.decay ?? defaultConfig.simulation!.decay!)
+    }, [loadingGraph])
 
     return {
         linkSpring,
