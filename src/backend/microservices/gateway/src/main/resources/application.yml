@@ -72,6 +72,8 @@ pwp:
           path: /projects/{projectId}/datasets/{datasetId}/trees/{treeId}
         - method: GET
           path: /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}
+        - method: POST
+          path: /projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}
         - method: GET
           path: /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}
         - method: GET
