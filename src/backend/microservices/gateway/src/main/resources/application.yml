@@ -75,11 +75,11 @@ pwp:
         - method: GET
           path: /projects/{projectId}/datasets/{datasetId}/distance-matrices/{distanceMatrixId}
         - method: GET
-          path: /projects/{projectId}/files/isolate-data/{isolateDataId}
+          path: /projects/{projectId}/files/isolate-data/{isolateDataId}/keys
         - method: GET
           path: /projects/{projectId}/files/isolate-data/{isolateDataId}/rows
         - method: GET
-          path: /projects/{projectId}/files/typing-data/{typingDataId}
+          path: /projects/{projectId}/files/typing-data/{typingDataId}/schema
         - method: GET
           path: /projects/{projectId}/files/typing-data/{typingDataId}/profiles
 

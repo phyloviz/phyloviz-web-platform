@@ -168,6 +168,7 @@ public class DatasetServiceImpl implements DatasetService {
         treeViewService.deleteAllByProjectIdAndDatasetId(projectId, datasetId);
         treeService.deleteAllByProjectIdAndDatasetId(projectId, datasetId);
         distanceMatrixService.deleteAllByProjectIdAndDatasetId(projectId, datasetId);
+        // TODO: Delete isolate and typing data phylodb representations
     }
 
     /**

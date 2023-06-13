@@ -1,42 +1,26 @@
-import {useEffect} from "react"
+import {useEffect, useRef} from "react"
 
 /**
  * Hook that calls a function every interval.
  *
  * @param callback the function to call, if it returns true, the interval is cleared
  * @param delay the delay between calls
- * @param dependencies the dependencies of the hook
  */
 export function useInterval(
-    callback: () => Promise<boolean> | boolean | void,
-    delay: number,
-    dependencies?: any[]
+    callback: () => Promise<void>,
+    delay: number
 ) {
-    useEffect(activateInterval, dependencies)
+    const savedCallback = useRef<() => Promise<void>>();
 
-    /**
-     * Activates the interval.
-     */
-    function activateInterval() {
-        let cancelled = false
-        let timeoutId: NodeJS.Timeout | undefined = undefined
+    useEffect(() => {
+        savedCallback.current = callback;
+    }, [callback]);
 
-        /**
-         * Calls the callback and schedules the next call.
-         */
-        async function tick() {
-            const shouldStop = await callback()
-
-            if (!cancelled && !shouldStop)
-                timeoutId = setTimeout(tick, delay)
+    useEffect(() => {
+        function tick() {
+            savedCallback.current!();
         }
-
-        tick()
-
-        return () => {
-            cancelled = true
-            if (timeoutId !== undefined)
-                clearTimeout(timeoutId)
-        }
-    }
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+    }, []);
 }

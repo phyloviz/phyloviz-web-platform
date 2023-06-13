@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom"
 import * as React from "react"
-import {useContext, useEffect, useState} from "react"
+import {useContext, useEffect, useState, useCallback} from "react"
 import {Project} from "../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import AdministrationService from "../../Services/Administration/AdministrationService"
 import {GetWorkflowStatusOutputModel} from "../../Services/Compute/models/getWorkflow/GetWorkflowOutputModel"
@@ -78,12 +78,13 @@ export function useProject() {
             })
     }
 
-    useInterval(poll, 5000, [projectId])
+    useInterval(useCallback(poll, [projectId, workflows]), 5000)
 
     /**
      * Polls the workflows for any changes.
      */
     async function poll() {
+        const prevWorkflows = [...workflows]
         const updatedWorkflows = await ComputeService.getWorkflows(projectId)
             .then(res => {
                 setWorkflows(res.workflows)
@@ -93,17 +94,16 @@ export function useProject() {
                 setError("Could not load workflows: Unexpected error.")
             })
 
-        if(updatedWorkflows === undefined) return false
+        if (updatedWorkflows === undefined) return
 
         for (const updatedWorkflow of updatedWorkflows) {
-            const workflow = workflows.find(w => w.workflowId === updatedWorkflow.workflowId)
+            const workflow = prevWorkflows.find(w => w.workflowId === updatedWorkflow.workflowId)
             if (workflow === undefined || workflow.status !== updatedWorkflow.status) {
+                console.log(prevWorkflows)
                 loadProject()
-                return false
+                return
             }
         }
-
-        return false
     }
 
     return {
