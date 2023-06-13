@@ -103,7 +103,12 @@ export function useDatasetTreeItem(dataset: Dataset) {
                     navigate(WebUiUris.project(projectId!))
                     onFileStructureUpdate()
                 })
-                .catch(error => setError(error.message))
+                .catch(error => {
+                    /*if (error instanceof Problem && error.title === "") {
+                        setError("Cannot delete dataset. (...)") TODO Add possible errors (problems)
+                    } else */
+                    setError("Could not delete the dataset. An unexpected error occurred while trying to delete it.")
+                })
         },
         error,
         clearError: () => setError(null)

@@ -44,5 +44,5 @@ public interface TreeMetadataMongoRepository extends MongoRepository<TreeMetadat
      * @return the tree metadata
      */
     @Query("{ 'datasetId' : ?0, 'source.distanceMatrixId' : ?1 }")
-    Optional<TreeMetadata> findByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
+    List<TreeMetadata> findByDatasetIdAndDistanceMatrixIdSource(String datasetId, String distanceMatrixId);
 }

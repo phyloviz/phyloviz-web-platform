@@ -8,7 +8,6 @@ import {GetTreeViewOutputModel} from './models/getTreeView/GetTreeViewOutputMode
 
 export namespace MockVisualizationService {
 
-    const DELAY = 1000
     const MOCK_DIR = "/mock"
 
     /**

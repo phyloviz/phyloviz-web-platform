@@ -85,6 +85,8 @@ export default function ForceDirectedLayout() {
                 />
             }
             <TreeViewSettingsCard
+                loadingGraph={loadingGraph}
+
                 onPauseAnimation={pauseAnimation}
                 onRestartAnimation={restartAnimation}
 
@@ -108,6 +110,10 @@ export default function ForceDirectedLayout() {
                 onZoomOut={handleZoomOut}
                 onPrint={handlePrint}
             />
-            <TreeViewSearchCard onSearch={handleSearch}/>
+            <TreeViewSearchCard
+                loadingGraph={loadingGraph}
+
+                onSearch={handleSearch}
+            />
         </>
 }

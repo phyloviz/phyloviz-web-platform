@@ -44,5 +44,5 @@ public interface TreeViewMetadataMongoRepository extends MongoRepository<TreeVie
      * @return the tree view metadata
      */
     @Query("{ 'datasetId' : ?0, 'source.treeId' : ?1 }")
-    Optional<TreeViewMetadata> findByDatasetIdAndTreeIdSource(String datasetId, String treeId);
+    List<TreeViewMetadata> findByDatasetIdAndTreeIdSource(String datasetId, String treeId);
 }
