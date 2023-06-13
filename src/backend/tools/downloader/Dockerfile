@@ -17,7 +17,7 @@ COPY aws_credentials /root/.aws/credentials
 # Set the working directory to /app
 WORKDIR /app
 
-ENV MONGO_URI="mongodb://root:root@host.docker.internal:28017/?authMechanism=DEFAULT"
+ENV MONGO_URI="mongodb://host.docker.internal:28017/?directConnection=true"
 
 # Install any required packages
 RUN pip install --trusted-host pypi.python.org -r requirements.txt

@@ -54,6 +54,7 @@ services:
       - mongodb-data:/data/db
     ports:
       - "28017:27017"
+    restart: always
 
   cache:
     image: redis:7.0.9-alpine

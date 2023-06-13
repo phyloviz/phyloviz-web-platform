@@ -37,7 +37,7 @@ def get_resource_id_attr_from_resource_type(resource_type):
     return resource_type_id_attr_map[resource_type]
 
 
-def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, workflow_id):
+def download_s3_object(session, project_id, dataset_id, resource_id, resource_type, out, workflow_id):
     print(f'Downloading {resource_id} from {resource_type} to {out}...')
     resource_type_collection = db[get_collection_from_resource_type(resource_type)]
 
