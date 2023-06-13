@@ -17,7 +17,11 @@ export default function Workflow() {
     } = useWorkflow();
 
     return (
-        <Box sx={{position: "relative", width: "90%"}}>
+        <Box sx={{
+            position: "relative",
+            width: "90%",
+            overflow: "auto"
+        }}>
             {error &&
                 <Error sx={{
                     position: "absolute"
@@ -34,7 +38,7 @@ export default function Workflow() {
                     mt: 4,
                     alignItems: "center"
                 }}>
-                    <Typography component="h1" variant="h4">
+                    <Typography component="h1" variant="h3">
                         Workflow
                     </Typography>
                     {workflow &&
@@ -56,13 +60,31 @@ export default function Workflow() {
                                     No logs present.
                                 </Typography>)
                                 ||
-                                (workflow.logs && Object.keys(workflow.logs).map((taskName) => {
-                                    return (
-                                        <Typography component="p" variant="body1">
-                                            {taskName}: {workflow.logs[taskName]}
+                                (workflow.logs &&
+                                    <Box sx={{
+                                        //border: "3px solid red",
+                                        //overflow: "auto"
+                                    }}>
+                                        <Typography component="h1" variant="h4">
+                                            Logs
                                         </Typography>
-                                    )
-                                }))
+                                        {Object.keys(workflow.logs).map((taskName) => {
+                                            return <Box>
+                                                <Typography component="h1" variant="h5">
+                                                    {taskName}
+                                                </Typography>
+                                                <Typography component="p" variant="body1" sx={{
+                                                    backgroundColor: "#F0F0F0",
+                                                    borderRadius: "5px",
+                                                    whiteSpace: "pre-line",
+                                                    textAlign: 'left',
+                                                    m: 1
+                                                }}>
+                                                    {workflow.logs[taskName].replace(/(\\n)/g, '\n')}
+                                                </Typography>
+                                            </Box>
+                                        })}
+                                    </Box>)
                             }
                         </Box>
                     }
