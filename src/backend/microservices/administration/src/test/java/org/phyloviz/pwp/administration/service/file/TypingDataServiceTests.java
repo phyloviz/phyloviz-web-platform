@@ -1,14 +1,21 @@
 package org.phyloviz.pwp.administration.service.file;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.phyloviz.pwp.administration.service.dtos.files.typing_data.TypingDataInfo;
 import org.phyloviz.pwp.administration.service.dtos.files.typing_data.UpdateTypingDataOutput;
 import org.phyloviz.pwp.administration.service.exceptions.DeniedFileDeletionException;
-import org.phyloviz.pwp.administration.service.project.file.TypingDataService;
+import org.phyloviz.pwp.administration.service.project.file.TypingDataServiceImpl;
 import org.phyloviz.pwp.shared.repository.data.registry.typing_data.TypingDataDataRepositoryFactory;
+import org.phyloviz.pwp.shared.repository.data.typing_data.TypingDataDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.typing_data.repository.TypingDataDataRepository;
+import org.phyloviz.pwp.shared.repository.data.typing_data.repository.TypingDataS3DataRepository;
+import org.phyloviz.pwp.shared.repository.data.typing_data.repository.specific_data.TypingDataS3DataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadataRepository;
@@ -16,41 +23,32 @@ import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingD
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class TypingDataServiceTests {
 
-    @MockBean
+    @Mock
     private ProjectRepository projectRepository;
 
-    @MockBean
+    @Mock
     private DatasetRepository datasetRepository;
 
-    @MockBean
+    @Mock
     private TypingDataMetadataRepository typingDataMetadataRepository;
 
-    @MockBean
+    @Mock
     private TypingDataDataRepositoryFactory typingDataDataRepositoryFactory;
 
-    @Autowired
-    private TypingDataService typingDataService;
+    @InjectMocks
+    private TypingDataServiceImpl typingDataService;
 
     // getTypingDataInfos
     @Test
@@ -70,17 +68,29 @@ class TypingDataServiceTests {
         String projectId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
         String typingDataId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
         String userId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
+        String datasetId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(false);
         when(typingDataMetadataRepository.findByProjectIdAndTypingDataId(any(String.class), any(String.class)))
-                .thenReturn(Optional.of(new TypingDataMetadata()));
+                .thenReturn(Optional.of(
+                        new TypingDataMetadata(datasetId, projectId, typingDataId, "type", "name",
+                                Map.of(TypingDataDataRepositoryId.S3,
+                                        new TypingDataS3DataRepositorySpecificData("bucket", "key")
+                                ))
+                ));
+
+       TypingDataDataRepository rep =  mock(TypingDataS3DataRepository.class);
+
+        when(typingDataDataRepositoryFactory.getRepository(TypingDataDataRepositoryId.S3))
+                .thenReturn(rep);
+
 
         typingDataService.deleteTypingData(projectId, typingDataId, userId);
 
-        verify(typingDataMetadataRepository, times(0)).delete(any(TypingDataMetadata.class));
+        verify(typingDataMetadataRepository, times(1)).delete(any(TypingDataMetadata.class));
     }
 
     @Test
@@ -105,8 +115,6 @@ class TypingDataServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
-                .thenReturn(false);
 
         assertThrows(TypingDataNotFoundException.class, () ->
                 typingDataService.deleteTypingData(projectId, typingDataId, userId)
@@ -123,8 +131,8 @@ class TypingDataServiceTests {
                 .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
-                .thenReturn(true);
+        when(typingDataMetadataRepository.findByProjectIdAndTypingDataId(any(String.class), any(String.class)))
+                .thenReturn(Optional.of(new TypingDataMetadata()));
 
         assertThrows(DeniedFileDeletionException.class, () ->
                 typingDataService.deleteTypingData(projectId, typingDataId, userId)
@@ -189,8 +197,6 @@ class TypingDataServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
-                .thenReturn(false);
 
         assertThrows(TypingDataNotFoundException.class, () ->
                 typingDataService.updateTypingData(newName, projectId, typingDataId, userId)

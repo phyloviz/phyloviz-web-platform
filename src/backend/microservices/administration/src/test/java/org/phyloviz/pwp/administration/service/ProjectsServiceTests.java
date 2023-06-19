@@ -2,13 +2,18 @@ package org.phyloviz.pwp.administration.service;
 
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.phyloviz.pwp.administration.service.dtos.project.CreateProjectOutput;
 import org.phyloviz.pwp.administration.service.dtos.project.FullProjectInfo;
 import org.phyloviz.pwp.administration.service.dtos.project.UpdateProjectOutput;
 import org.phyloviz.pwp.administration.service.project.ProjectService;
+import org.phyloviz.pwp.administration.service.project.ProjectServiceImpl;
 import org.phyloviz.pwp.administration.service.project.dataset.DatasetService;
 import org.phyloviz.pwp.administration.service.project.file.IsolateDataService;
 import org.phyloviz.pwp.administration.service.project.file.TypingDataService;
@@ -32,24 +37,23 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class ProjectsServiceTests {
 
-    @MockBean
+    @Mock
     private ProjectRepository projectRepository;
 
-    @MockBean
+    @Mock
     private DatasetService datasetService;
 
-    @MockBean
+    @Mock
     private TypingDataService typingDataService;
 
-    @MockBean
+    @Mock
     private IsolateDataService isolateDataService;
 
-    @Autowired
-    private ProjectService projectService;
+    @InjectMocks
+    private ProjectServiceImpl projectService;
 
     // createProject
     @Test

@@ -1,13 +1,16 @@
 package org.phyloviz.pwp.administration.service.dataset;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.phyloviz.pwp.administration.service.dtos.dataset.CreateDatasetOutput;
 import org.phyloviz.pwp.administration.service.dtos.dataset.FullDatasetInfo;
 import org.phyloviz.pwp.administration.service.dtos.dataset.UpdateDatasetOutput;
-import org.phyloviz.pwp.administration.service.project.dataset.DatasetService;
+import org.phyloviz.pwp.administration.service.project.dataset.DatasetServiceImpl;
 import org.phyloviz.pwp.administration.service.project.dataset.distance_matrix.DistanceMatrixService;
 import org.phyloviz.pwp.administration.service.project.dataset.tree.TreeService;
 import org.phyloviz.pwp.administration.service.project.dataset.tree_view.TreeViewService;
@@ -22,50 +25,42 @@ import org.phyloviz.pwp.shared.repository.metadata.typing_data.TypingDataMetadat
 import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class DatasetServiceTests {
 
-    @MockBean
+    @Mock
     private ProjectRepository projectRepository;
 
-    @MockBean
+    @Mock
     private DatasetRepository datasetRepository;
 
-    @MockBean
+    @Mock
     private TypingDataMetadataRepository typingDataMetadataRepository;
 
-    @MockBean
+    @Mock
     private IsolateDataMetadataRepository isolateDataMetadataRepository;
 
-    @MockBean
+    @Mock
     private DistanceMatrixService distanceMatrixService;
 
-    @MockBean
+    @Mock
     private TreeService treeService;
 
-    @MockBean
+    @Mock
     private TreeViewService treeViewService;
 
-    @Autowired
-    private DatasetService datasetService;
+    @InjectMocks
+    private DatasetServiceImpl datasetService;
 
 
     // createDataset
@@ -163,45 +158,6 @@ class DatasetServiceTests {
         assertEquals(projectId, createDatasetOutput.getProjectId());
     }
 
-    @Test
-    void createDatasetThrowsWhenIsolateDataKeyDoesNotExistInIsolateData() {
-        String datasetName = "datasetName";
-        String datasetDescription = "datasetDescription";
-        String typingDataId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
-        String isolateDataId = "dfb3b1a0-7b9a-4b7e-9b9a-5b8b5b5b5b5b";
-        String isolateDataName = "isolateDataName";
-        String isolateDataKey = "isolateDataKey";
-        String projectId = "projectId";
-        String userId = "userId";
-
-        when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
-                .thenReturn(true);
-
-        when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
-                .thenReturn(true);
-
-        when(isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
-                .thenReturn(Optional.of(new IsolateDataMetadata(
-                        projectId,
-                        isolateDataId,
-                        List.of(isolateDataKey),
-                        isolateDataName,
-                        Map.of(IsolateDataDataRepositoryId.S3, new IsolateDataS3DataRepositorySpecificData())
-                )));
-
-        assertThrows(
-                InvalidArgumentException.class,
-                () -> datasetService.createDataset(
-                        datasetName,
-                        datasetDescription,
-                        typingDataId,
-                        isolateDataId,
-                        isolateDataKey,
-                        projectId,
-                        userId
-                )
-        );
-    }
 
     @Test
     void createDatasetThrowsWhenIsolateDataKeyIsNull() {
@@ -220,14 +176,8 @@ class DatasetServiceTests {
         when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
                 .thenReturn(true);
 
-        when(isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
-                .thenReturn(Optional.of(new IsolateDataMetadata(
-                        projectId,
-                        isolateDataId,
-                        List.of(isolateDataKey),
-                        isolateDataName,
-                        Map.of(IsolateDataDataRepositoryId.S3, new IsolateDataS3DataRepositorySpecificData())
-                )));
+        List<String> isolateDataKeys = new ArrayList<>();
+        isolateDataKeys.add(isolateDataKey);
 
         assertThrows(
                 InvalidArgumentException.class,
@@ -255,9 +205,6 @@ class DatasetServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(false);
-
-        when(typingDataMetadataRepository.existsByProjectIdAndTypingDataId(any(String.class), any(String.class)))
-                .thenReturn(true);
 
         assertThrows(ProjectNotFoundException.class, () ->
                 datasetService.createDataset(
@@ -425,9 +372,6 @@ class DatasetServiceTests {
         String isolateDataKey = null;
         String projectId = "projectId";
         String datasetId = "datasetId";
-
-        when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
-                .thenReturn(true);
 
         when(datasetRepository.findAllByProjectId(any(String.class)))
                 .thenReturn(

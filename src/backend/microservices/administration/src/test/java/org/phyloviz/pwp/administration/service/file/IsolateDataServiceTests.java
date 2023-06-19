@@ -1,13 +1,20 @@
 package org.phyloviz.pwp.administration.service.file;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.phyloviz.pwp.administration.service.dtos.files.isolate_data.IsolateDataInfo;
 import org.phyloviz.pwp.administration.service.dtos.files.isolate_data.UpdateIsolateDataOutput;
 import org.phyloviz.pwp.administration.service.exceptions.DeniedFileDeletionException;
-import org.phyloviz.pwp.administration.service.project.file.IsolateDataService;
+import org.phyloviz.pwp.administration.service.project.file.IsolateDataServiceImpl;
+import org.phyloviz.pwp.shared.repository.data.isolate_data.IsolateDataDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.IsolateDataDataRepository;
+import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.IsolateDataS3DataRepository;
+import org.phyloviz.pwp.shared.repository.data.isolate_data.repository.specific_data.IsolateDataS3DataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.data.registry.isolate_data.IsolateDataDataRepositoryFactory;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.IsolateDataMetadataRepository;
@@ -16,40 +23,31 @@ import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.IsolateDataNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class IsolateDataServiceTests {
-    @MockBean
+    @Mock
     private ProjectRepository projectRepository;
 
-    @MockBean
+    @Mock
     private DatasetRepository datasetRepository;
 
-    @MockBean
+    @Mock
     private IsolateDataMetadataRepository isolateDataMetadataRepository;
 
-    @MockBean
+    @Mock
     private IsolateDataDataRepositoryFactory isolateDataDataRepositoryFactory;
 
-    @Autowired
-    private IsolateDataService isolateDataService;
+    @InjectMocks
+    private IsolateDataServiceImpl isolateDataService;
 
     // getIsolateDataInfos
     @Test
@@ -69,17 +67,25 @@ class IsolateDataServiceTests {
         String projectId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
         String isolateDataId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
         String userId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
+        String isolateDataMetadataId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(false);
-        when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
-                .thenReturn(true);
+        when(isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
+                .thenReturn(Optional.of(
+                        new IsolateDataMetadata(isolateDataMetadataId, projectId, isolateDataId, List.of(), "name", Map.of(IsolateDataDataRepositoryId.S3, new IsolateDataS3DataRepositorySpecificData())
+                        )));
+
+        IsolateDataDataRepository rep = mock(IsolateDataS3DataRepository.class);
+
+        when(isolateDataDataRepositoryFactory.getRepository(IsolateDataDataRepositoryId.S3))
+                .thenReturn(rep);
 
         isolateDataService.deleteIsolateData(projectId, isolateDataId, userId);
 
-        verify(isolateDataMetadataRepository, times(0)).delete(any(IsolateDataMetadata.class));
+        verify(isolateDataMetadataRepository, times(1)).delete(any(IsolateDataMetadata.class));
     }
 
     @Test
@@ -104,8 +110,6 @@ class IsolateDataServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
-                .thenReturn(false);
 
         assertThrows(IsolateDataNotFoundException.class, () ->
                 isolateDataService.deleteIsolateData(projectId, isolateDataId, userId)
@@ -122,8 +126,8 @@ class IsolateDataServiceTests {
                 .thenReturn(true);
         when(datasetRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
-                .thenReturn(true);
+        when(isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
+                .thenReturn(Optional.of(new IsolateDataMetadata()));
 
         assertThrows(DeniedFileDeletionException.class, () ->
                 isolateDataService.deleteIsolateData(projectId, isolateDataId, userId)
@@ -188,8 +192,6 @@ class IsolateDataServiceTests {
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
-        when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
-                .thenReturn(false);
 
         assertThrows(IsolateDataNotFoundException.class, () ->
                 isolateDataService.updateIsolateData(newName, projectId, isolateDataId, userId)
@@ -204,8 +206,6 @@ class IsolateDataServiceTests {
         String userId = "ec7bae63-3238-4044-8d03-e2d9911f50f8";
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
-                .thenReturn(true);
-        when(isolateDataMetadataRepository.existsByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(true);
         when(isolateDataMetadataRepository.findByProjectIdAndIsolateDataId(any(String.class), any(String.class)))
                 .thenReturn(Optional.of(new IsolateDataMetadata()));

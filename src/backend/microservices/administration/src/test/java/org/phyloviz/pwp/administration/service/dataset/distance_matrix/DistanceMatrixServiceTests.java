@@ -1,14 +1,19 @@
 package org.phyloviz.pwp.administration.service.dataset.distance_matrix;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.phyloviz.pwp.administration.service.dtos.distance_matrix.DistanceMatrixInfo;
 import org.phyloviz.pwp.administration.service.dtos.distance_matrix.UpdateDistanceMatrixOutput;
 import org.phyloviz.pwp.administration.service.exceptions.DeniedResourceDeletionException;
-import org.phyloviz.pwp.administration.service.project.dataset.distance_matrix.DistanceMatrixService;
+import org.phyloviz.pwp.administration.service.project.dataset.distance_matrix.DistanceMatrixServiceImpl;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.DistanceMatrixDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.DistanceMatrixDataRepository;
+import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.DistanceMatrixS3DataRepository;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.specific_data.DistanceMatrixDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.specific_data.DistanceMatrixS3DataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.data.registry.distance_matrix.DistanceMatrixDataRepositoryFactory;
@@ -24,10 +29,6 @@ import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Map;
@@ -36,31 +37,28 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class DistanceMatrixServiceTests {
 
-    @MockBean
+    @Mock
     private ProjectRepository projectRepository;
 
-    @MockBean
+    @Mock
     private DatasetRepository datasetRepository;
 
-    @MockBean
+    @Mock
     private DistanceMatrixMetadataRepository distanceMatrixMetadataRepository;
 
-    @MockBean
+    @Mock
     private TreeMetadataRepository treeMetadataRepository;
 
-    @MockBean
+    @Mock
     private DistanceMatrixDataRepositoryFactory distanceMatrixDataRepositoryFactory;
 
-    @Autowired
-    private DistanceMatrixService distanceMatrixService;
+    @InjectMocks
+    private DistanceMatrixServiceImpl distanceMatrixService;
 
 
     // getDistanceMatrixInfos
@@ -109,7 +107,7 @@ class DistanceMatrixServiceTests {
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(projectId, userId)).thenReturn(true);
-        when(datasetRepository.existsByProjectIdAndId(datasetId, projectId)).thenReturn(true);
+        when(datasetRepository.existsByProjectIdAndId(projectId, datasetId)).thenReturn(true);
         when(distanceMatrixMetadataRepository.findByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
                 .thenReturn(
                         Optional.of(new DistanceMatrixMetadata(
@@ -123,9 +121,15 @@ class DistanceMatrixServiceTests {
                         )));
         when(treeMetadataRepository.existsByDatasetIdAndDistanceMatrixIdSource(datasetId, distanceMatrixId)).thenReturn(false);
 
+        DistanceMatrixDataRepository rep = mock(DistanceMatrixS3DataRepository.class);
+
+        when(distanceMatrixDataRepositoryFactory.getRepository(DistanceMatrixDataRepositoryId.S3))
+                .thenReturn(rep);
+
+
         distanceMatrixService.deleteDistanceMatrix(projectId, datasetId, distanceMatrixId, userId);
 
-        verify(distanceMatrixMetadataRepository, times(0)).delete(any(DistanceMatrixMetadata.class));
+        verify(distanceMatrixMetadataRepository, times(1)).delete(any(DistanceMatrixMetadata.class));
     }
 
     @Test
@@ -150,7 +154,7 @@ class DistanceMatrixServiceTests {
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(projectId, userId)).thenReturn(true);
-        when(datasetRepository.existsByProjectIdAndId(datasetId, projectId)).thenReturn(false);
+        when(datasetRepository.existsByProjectIdAndId(projectId, datasetId)).thenReturn(false);
 
         assertThrows(DatasetNotFoundException.class, () ->
                 distanceMatrixService.deleteDistanceMatrix(projectId, datasetId, distanceMatrixId, userId)
@@ -171,18 +175,10 @@ class DistanceMatrixServiceTests {
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(projectId, userId)).thenReturn(true);
-        when(datasetRepository.existsByProjectIdAndId(datasetId, projectId)).thenReturn(true);
+        when(datasetRepository.existsByProjectIdAndId(projectId, datasetId)).thenReturn(true);
         when(distanceMatrixMetadataRepository.findByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
                 .thenReturn(
-                        Optional.of(new DistanceMatrixMetadata(
-                                projectId,
-                                datasetId,
-                                distanceMatrixId,
-                                name,
-                                sourceType,
-                                source,
-                                Map.of(repositoryId, repositorySpecificData)
-                        )));
+                        Optional.empty());
         assertThrows(DistanceMatrixNotFoundException.class, () ->
                 distanceMatrixService.deleteDistanceMatrix(projectId, datasetId, distanceMatrixId, userId)
         );
@@ -202,7 +198,7 @@ class DistanceMatrixServiceTests {
         String userId = "userId";
 
         when(projectRepository.existsByIdAndOwnerId(projectId, userId)).thenReturn(true);
-        when(datasetRepository.existsByProjectIdAndId(datasetId, projectId)).thenReturn(true);
+        when(datasetRepository.existsByProjectIdAndId(projectId, datasetId)).thenReturn(true);
         when(distanceMatrixMetadataRepository.findByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
                 .thenReturn(Optional.of(new DistanceMatrixMetadata(
                         projectId,
@@ -297,15 +293,7 @@ class DistanceMatrixServiceTests {
         when(projectRepository.existsByIdAndOwnerId(projectId, userId)).thenReturn(true);
         when(datasetRepository.existsByProjectIdAndId(projectId, datasetId)).thenReturn(true);
         when(distanceMatrixMetadataRepository.findByProjectIdAndDatasetIdAndDistanceMatrixId(projectId, datasetId, distanceMatrixId))
-                .thenReturn(Optional.of(new DistanceMatrixMetadata(
-                        projectId,
-                        datasetId,
-                        distanceMatrixId,
-                        name,
-                        sourceType,
-                        source,
-                        Map.of(repositoryId, repositorySpecificData)
-                )));
+                .thenReturn(Optional.empty());
 
         assertThrows(DistanceMatrixNotFoundException.class, () ->
                 distanceMatrixService.updateDistanceMatrix(name, projectId, datasetId, distanceMatrixId, userId)

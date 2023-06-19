@@ -1,15 +1,20 @@
 package org.phyloviz.pwp.administration.service.dataset.tree;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.phyloviz.pwp.administration.service.dtos.tree.TreeInfo;
 import org.phyloviz.pwp.administration.service.dtos.tree.UpdateTreeOutput;
 import org.phyloviz.pwp.administration.service.exceptions.DeniedResourceDeletionException;
-import org.phyloviz.pwp.administration.service.project.dataset.tree.TreeService;
+import org.phyloviz.pwp.administration.service.project.dataset.tree.TreeServiceImpl;
 import org.phyloviz.pwp.shared.repository.data.registry.tree.TreeDataRepositoryFactory;
 import org.phyloviz.pwp.shared.repository.data.tree.TreeDataRepositoryId;
+import org.phyloviz.pwp.shared.repository.data.tree.repository.TreeDataRepository;
+import org.phyloviz.pwp.shared.repository.data.tree.repository.TreeS3DataRepository;
 import org.phyloviz.pwp.shared.repository.data.tree.repository.specific_data.TreeDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.data.tree.repository.specific_data.TreeS3DataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.dataset.DatasetRepository;
@@ -24,10 +29,6 @@ import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
 import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Map;
@@ -36,31 +37,28 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class TreeServiceTests {
 
-    @MockBean
+    @Mock
     private ProjectRepository projectRepository;
 
-    @MockBean
+    @Mock
     private DatasetRepository datasetRepository;
 
-    @MockBean
+    @Mock
     private TreeMetadataRepository treeMetadataRepository;
 
-    @MockBean
+    @Mock
     private TreeViewMetadataRepository treeViewMetadataService;
 
-    @MockBean
+    @Mock
     private TreeDataRepositoryFactory treeDataRepositoryFactory;
 
-    @Autowired
-    private TreeService treeService;
+    @InjectMocks
+    private TreeServiceImpl treeService;
 
 
     // getTreeInfos
@@ -127,9 +125,15 @@ class TreeServiceTests {
         when(treeViewMetadataService.existsByDatasetIdAndTreeIdSource(any(String.class), any(String.class)))
                 .thenReturn(false);
 
+        TreeDataRepository rep = mock(TreeS3DataRepository.class);
+
+        when(treeDataRepositoryFactory.getRepository(repositoryId))
+                .thenReturn(rep);
+
+
         treeService.deleteTree(projectId, datasetId, treeId, userId);
 
-        verify(treeMetadataRepository, times(0)).delete(any(TreeMetadata.class));
+        verify(treeMetadataRepository, times(1)).delete(any(TreeMetadata.class));
     }
 
     @Test
@@ -169,11 +173,6 @@ class TreeServiceTests {
         String projectId = "projectId";
         String datasetId = "datasetId";
         String treeId = "treeId";
-        String name = "name";
-        TreeSourceType sourceType = TreeSourceType.FILE;
-        TreeSource source = new TreeSourceFile("fileType", "fileName");
-        TreeDataRepositoryId repositoryId = TreeDataRepositoryId.S3;
-        TreeDataRepositorySpecificData repositorySpecificData = new TreeS3DataRepositorySpecificData("url");
 
         String userId = "userId";
 
@@ -182,16 +181,7 @@ class TreeServiceTests {
         when(datasetRepository.existsByProjectIdAndId(any(String.class), any(String.class)))
                 .thenReturn(true);
         when(treeMetadataRepository.findByProjectIdAndDatasetIdAndTreeId(any(String.class), any(String.class), any(String.class)))
-                .thenReturn(Optional.of(new TreeMetadata(
-                                projectId,
-                                datasetId,
-                                treeId,
-                                name,
-                                sourceType,
-                                source,
-                                Map.of(repositoryId, repositorySpecificData)
-                        ))
-                );
+                .thenReturn(Optional.empty());
 
         assertThrows(TreeNotFoundException.class, () ->
                 treeService.deleteTree(projectId, datasetId, treeId, userId)
@@ -305,6 +295,8 @@ class TreeServiceTests {
         String datasetId = "datasetId";
         String treeId = "treeId";
         String userId = "userId";
+
+        when(datasetRepository.existsByProjectIdAndId(any(String.class), any(String.class))).thenReturn(true);
 
         when(projectRepository.existsByIdAndOwnerId(any(String.class), any(String.class)))
                 .thenReturn(true);
