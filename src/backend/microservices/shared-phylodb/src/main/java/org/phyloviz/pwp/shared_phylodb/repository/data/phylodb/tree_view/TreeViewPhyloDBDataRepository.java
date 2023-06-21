@@ -124,14 +124,6 @@ public class TreeViewPhyloDBDataRepository implements TreeViewDataRepository {
 
     @Override
     public void deleteTreeView(TreeViewDataRepositorySpecificData treeViewDataRepositorySpecificData) {
-        TreeViewPhyloDBDataRepositorySpecificData repositorySpecificData =
-                (TreeViewPhyloDBDataRepositorySpecificData) treeViewDataRepositorySpecificData;
-
-        return;
-        /*visualizationService.deleteVisualization( // TODO implement delete visualization in PhyloDB, it throws an exception: neo4j java.lang.IllegalArgumentException: Cannot get or create persistent entity
-                repositorySpecificData.getProjectId(),
-                repositorySpecificData.getDatasetId(),
-                repositorySpecificData.getInferenceId(),
-                repositorySpecificData.getVisualizationId());*/
+//        throw new UnsupportedOperationException("Not implemented yet."); // TODO: Implement
     }
 }

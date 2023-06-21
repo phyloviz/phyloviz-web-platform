@@ -63,17 +63,16 @@ def dataset_exists(project_id, dataset_id):
     return True
 
 
-def index_isolate_data(session, isolate_data_file_path, project_id, dataset_id, workflow_id):
+def index_isolate_data(isolate_data_file_path, project_id, dataset_id, workflow_id):
     print(f"Project ID: {project_id}")
     print(f"Dataset ID: {dataset_id}")
     print(f"Isolate data file path: {isolate_data_file_path}")
     print(f"Workflow ID: {workflow_id}")
 
-    if projects_collection.find_one({'_id': ObjectId(project_id)}, session=session) is None:
+    if projects_collection.find_one({'_id': ObjectId(project_id)}) is None:
         raise Exception(f"Project with ID {project_id} does not exist in PHYLOViZ Web Platform")
 
-    dataset_metadata = datasets_collection.find_one({'_id': ObjectId(dataset_id), 'projectId': project_id},
-                                                    session=session)
+    dataset_metadata = datasets_collection.find_one({'_id': ObjectId(dataset_id), 'projectId': project_id})
     if dataset_metadata is None:
         raise Exception(
             f"Dataset with ID {dataset_id} and Project ID {project_id} does not exist in PHYLOViZ Web Platform")
@@ -87,7 +86,7 @@ def index_isolate_data(session, isolate_data_file_path, project_id, dataset_id, 
             {
                 'typingDataId': dataset_metadata['typingDataId'],
                 'repositorySpecificData.phylodb.datasetIds': {'$in': [dataset_id]}
-            }, session=session
+            }
     ) is None:
         raise Exception(
             f"Dataset with ID {dataset_id} does not have Typing Data indexed in PhyloDB. Indexing of Typing Data required")
@@ -96,7 +95,7 @@ def index_isolate_data(session, isolate_data_file_path, project_id, dataset_id, 
             {
                 'isolateDataId': isolate_data_id,
                 'repositorySpecificData.phylodb.datasetIds': {'$in': [dataset_id]}
-            }, session=session
+            }
     ) is not None:
         raise Exception(
             f"Dataset with ID {dataset_id} already has Isolate Data indexed in PhyloDB. No need to index again")
@@ -114,7 +113,7 @@ def index_isolate_data(session, isolate_data_file_path, project_id, dataset_id, 
         {
             'isolateDataId': isolate_data_id,
             'repositorySpecificData.phylodb': {'$exists': True}
-        }, session=session
+        }
     )
 
     if isolate_data_metadata is None:
@@ -125,14 +124,14 @@ def index_isolate_data(session, isolate_data_file_path, project_id, dataset_id, 
                     'projectId': project_id,
                     'datasetIds': [dataset_id]
                 }
-            }}, session=session
+            }}
         )
     else:
         isolate_data_collection.update_one(
             {'isolateDataId': isolate_data_id},
             {'$push': {
                 'repositorySpecificData.phylodb.datasetIds': dataset_id
-            }}, session=session
+            }}
         )
 
 
@@ -144,6 +143,4 @@ if __name__ == '__main__':
     parser.add_argument('--workflow-id', help='The workflow Id', required=True)
 
     args = parser.parse_args()
-    with client.start_session() as session:
-        with session.start_transaction():
-            index_isolate_data(session, args.isolate_data_file_path, args.project_id, args.dataset_id, args.workflow_id)
+    index_isolate_data(args.isolate_data_file_path, args.project_id, args.dataset_id, args.workflow_id)

@@ -33,6 +33,7 @@ dependencies {
     implementation 'org.zalando:problem-spring-web-starter:0.27.0'
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.6'
+    testImplementation 'junit:junit:4.13.1'
 }
 
 test {

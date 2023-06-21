@@ -62,18 +62,17 @@ def get_job(project_id, job_id):
     return None
 
 
-def compute_tree_view(session, project_id, dataset_id, tree_id, workflow_id, layout):
+def compute_tree_view(project_id, dataset_id, tree_id, workflow_id, layout):
     print(f"Project ID: {project_id}")
     print(f"Dataset ID: {dataset_id}")
     print(f"Tree ID: {tree_id}")
     print(f"Layout: {layout}")
     print(f"Workflow ID: {workflow_id}")
 
-    if projects_collection.find_one({'_id': ObjectId(project_id)}, session=session) is None:
+    if projects_collection.find_one({'_id': ObjectId(project_id)}) is None:
         raise Exception(f"Project with ID {project_id} does not exist in PHYLOViZ Web Platform")
 
-    dataset_metadata = datasets_collection.find_one({'_id': ObjectId(dataset_id), 'projectId': project_id},
-                                                    session=session)
+    dataset_metadata = datasets_collection.find_one({'_id': ObjectId(dataset_id), 'projectId': project_id})
     if dataset_metadata is None:
         raise Exception(
             f"Dataset with ID {dataset_id} and Project ID {project_id} does not exist in PHYLOViZ Web Platform")
@@ -83,7 +82,7 @@ def compute_tree_view(session, project_id, dataset_id, tree_id, workflow_id, lay
             'projectId': project_id,
             'datasetId': dataset_id,
             'treeId': tree_id
-        }, session=session
+        }
     )
 
     if tree_metadata is None:
@@ -126,8 +125,7 @@ def compute_tree_view(session, project_id, dataset_id, tree_id, workflow_id, lay
     end_time = time.time()
     print("Time taken: ", end_time - start_time, " seconds +- 5 seconds")
 
-    tree_view_count = tree_views_collection.count_documents({"projectId": project_id, "datasetId": dataset_id},
-                                                            session=session)
+    tree_view_count = tree_views_collection.count_documents({"projectId": project_id, "datasetId": dataset_id})
     name = f"Tree View {tree_view_count + 1} - {layout}"
 
     # Create the metadata in the tree collection
@@ -150,13 +148,13 @@ def compute_tree_view(session, project_id, dataset_id, tree_id, workflow_id, lay
         }
     }
 
-    tree_views_collection.insert_one(tree_view_metadata, session=session)
+    tree_views_collection.insert_one(tree_view_metadata)
 
     workflows_collection.update_one(
         {'_id': ObjectId(workflow_id)},
         {'$set': {
             'data.treeViewId': visualization_id
-        }}, session=session)
+        }})
 
 
 if __name__ == '__main__':
@@ -168,7 +166,4 @@ if __name__ == '__main__':
     parser.add_argument('--layout', help='The layout', required=True)
 
     args = parser.parse_args()
-
-    with client.start_session() as session:
-        with session.start_transaction():
-            compute_tree_view(session, args.project_id, args.dataset_id, args.tree_id, args.workflow_id, args.layout)
+    compute_tree_view(args.project_id, args.dataset_id, args.tree_id, args.workflow_id, args.layout)

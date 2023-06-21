@@ -46,7 +46,7 @@ services:
     entrypoint: >
       /bin/bash -c '
       echo "rs.initiate()" > /docker-entrypoint-initdb.d/1-init-replicaset.js &&
-      /usr/local/bin/docker-entrypoint.sh mongod --replSet rs0 --bind_ip_all --noauth'
+      /usr/local/bin/docker-entrypoint.sh mongod --replSet rs0 --bind_ip_all --noauth --setParameter "transactionLifetimeLimitSeconds=2629743"'
     expose:
       - 27017
     volumes:
