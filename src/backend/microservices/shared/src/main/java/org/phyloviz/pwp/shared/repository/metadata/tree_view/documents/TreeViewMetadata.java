@@ -28,4 +28,16 @@ public class TreeViewMetadata {
     private TreeViewSource source;
     private Map<TreeViewDataRepositoryId, TreeViewDataRepositorySpecificData> repositorySpecificData;
     private Transformations transformations;
+
+    public TreeViewMetadata(String projectId, String datasetId, String treeViewId, String name, String layout, TreeViewSource source,
+                            Map<TreeViewDataRepositoryId, TreeViewDataRepositorySpecificData> repositorySpecificData, Transformations transformations) {
+        this.projectId = projectId;
+        this.datasetId = datasetId;
+        this.treeViewId = treeViewId;
+        this.name = name;
+        this.layout = layout;
+        this.source = source;
+        this.repositorySpecificData = repositorySpecificData;
+        this.transformations = transformations;
+    }
 }
