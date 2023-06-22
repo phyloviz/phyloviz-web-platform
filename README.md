@@ -106,10 +106,7 @@ This software uses the following open source packages:
 
 ---
 
-## Authors
-
-PHYLOViZ Web Platform was developed in the scope of a final degree project
-for [ISEL (Instituto Superior de Engenharia de Lisboa)](https://www.isel.pt/).
+## Developers
 
 * [André Jesus](https://github.com/andre-j3sus)
 * [André Páscoa](https://github.com/devandrepascoa)
@@ -119,8 +116,3 @@ for [ISEL (Instituto Superior de Engenharia de Lisboa)](https://www.isel.pt/).
 
 * [Cátia Vaz](https://cvaz.github.io/) [ISEL, INESC-ID]
 * [Alexandre P. Francisco](https://fenix.tecnico.ulisboa.pt/homepage/ist14152) [IST, INESC-ID]
-
-@ISEL<br/>
-BSc in Computer Science and Computer Engineering<br/>
-Project and Seminary<br/>
-Summer Semester of 2022/2023
