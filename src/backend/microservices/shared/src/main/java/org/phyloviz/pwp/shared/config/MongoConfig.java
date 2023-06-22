@@ -11,6 +11,7 @@ import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.conver
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataSerializer;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.converters.TreeMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.converters.TreeViewMetadataDeserializer;
+import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.converters.TreeViewMetadataSerializer;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.converters.TypingDataMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.converters.TypingDataMetadataSerializer;
 import org.springframework.beans.factory.BeanFactory;
@@ -62,7 +63,8 @@ public class MongoConfig {
                 new IsolateDataMetadataSerializer(mongoConverter),
                 new DistanceMatrixMetadataDeserializer(mongoConverter, distanceMatrixDataRepositoryRegistry),
                 new TreeMetadataDeserializer(mongoConverter, treeDataRepositoryRegistry),
-                new TreeViewMetadataDeserializer(mongoConverter, treeViewDataRepositoryRegistry)
+                new TreeViewMetadataDeserializer(mongoConverter, treeViewDataRepositoryRegistry),
+                new TreeViewMetadataSerializer(mongoConverter)
         );
 
         return new MongoCustomConversions(converters);

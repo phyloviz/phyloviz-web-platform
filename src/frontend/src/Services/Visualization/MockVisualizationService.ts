@@ -5,6 +5,8 @@ import {GetIsolateDataRowsOutputModel} from "./models/getIsolateDataProfiles/Get
 import {GetDistanceMatrixOutputModel} from "./models/getDistanceMatrix/GetDistanceMatrixOutputModel"
 import {GetTreeOutputModel} from "./models/getTree/GetTreeOutputModel"
 import {GetTreeViewOutputModel} from './models/getTreeView/GetTreeViewOutputModel';
+import {SaveTreeViewInputModel} from "./models/saveTreeView/SaveTreeViewInputModel"
+import {SaveTreeViewOutputModel} from "./models/saveTreeView/SaveTreeViewOutputModel";
 
 export namespace MockVisualizationService {
 
@@ -146,5 +148,27 @@ export namespace MockVisualizationService {
         treeViewId: string
     ): Promise<GetTreeViewOutputModel> {
         return await fetch(`${MOCK_DIR}/tree-view.json`).then(response => response.json())
+    }
+
+    /**
+     * Saves a tree view coordinates and applied transformations.
+     *
+     * @param projectId  the id of the project
+     * @param datasetId  the id of the dataset
+     * @param treeViewId the id of the tree view
+     * @param inputModel the input mode
+     * @return the tree view
+     */
+    export async function saveTreeView(
+        projectId: string,
+        datasetId: string,
+        treeViewId: string,
+        inputModel: SaveTreeViewInputModel
+    ): Promise<SaveTreeViewOutputModel> {
+        return await new Promise(resolve => setTimeout(() => resolve({
+            projectId: projectId,
+            datasetId: datasetId,
+            treeViewId: treeViewId
+        })))
     }
 }

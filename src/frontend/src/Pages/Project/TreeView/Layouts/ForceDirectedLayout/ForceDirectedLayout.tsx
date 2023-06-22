@@ -5,6 +5,7 @@ import {TreeViewSearchCard} from "../../../../../Components/Project/TreeView/Tre
 import React from "react";
 import {useForceDirectedLayout} from "./useForceDirectedLayout";
 import LoadingSpinner from "../../../../../Components/Shared/LoadingSpinner";
+import {TreeViewSaveCard} from "../../../../../Components/Project/TreeView/TreeViewSaveCard";
 
 
 /**
@@ -16,6 +17,11 @@ export default function ForceDirectedLayout() {
         canvasRef,
         loadingGraph,
         treeView,
+
+        autosave,
+        switchAutosave,
+        forceSave,
+        savingGraph,
 
         pauseAnimation,
         restartAnimation,
@@ -114,6 +120,14 @@ export default function ForceDirectedLayout() {
                 loadingGraph={loadingGraph}
 
                 onSearch={handleSearch}
+            />
+            <TreeViewSaveCard
+                loadingGraph={loadingGraph}
+
+                autosave={autosave}
+                switchAutosave={switchAutosave}
+                forceSave={forceSave}
+                savingGraph={savingGraph}
             />
         </>
 }

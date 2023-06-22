@@ -10,6 +10,7 @@ import org.phyloviz.pwp.shared.service.dtos.tree_view.Node;
 import org.springframework.stereotype.Repository;
 import pt.ist.meic.phylodb.analysis.inference.InferenceService;
 import pt.ist.meic.phylodb.analysis.inference.model.Inference;
+import pt.ist.meic.phylodb.analysis.visualization.VisualizationRepository;
 import pt.ist.meic.phylodb.analysis.visualization.VisualizationService;
 import pt.ist.meic.phylodb.analysis.visualization.model.Visualization;
 import pt.ist.meic.phylodb.typing.profile.ProfileRepository;
@@ -25,6 +26,7 @@ public class TreeViewPhyloDBDataRepository implements TreeViewDataRepository {
     private final VisualizationService visualizationService;
     private final InferenceService inferenceService;
     private final ProfileRepository profileRepository;
+    private final VisualizationRepository visualizationRepository;
 
     @Override
     public GetTreeViewOutput getTreeView(TreeViewDataRepositorySpecificData treeViewDataRepositorySpecificData) {
@@ -79,8 +81,45 @@ public class TreeViewPhyloDBDataRepository implements TreeViewDataRepository {
                 nodes,
                 nodes.size(),
                 edges,
-                edges.size()
+                edges.size(),
+                null
         );
+    }
+
+    @Override
+    public void saveTreeView(TreeViewDataRepositorySpecificData treeViewDataRepositorySpecificData, List<Node> nodes) {
+        return; // TODO implement save visualization in PhyloDB
+
+        /*TreeViewPhyloDBDataRepositorySpecificData repositorySpecificData =
+                (TreeViewPhyloDBDataRepositorySpecificData) treeViewDataRepositorySpecificData;
+
+        Visualization visualization = visualizationService.getVisualization(
+                repositorySpecificData.getProjectId(),
+                repositorySpecificData.getDatasetId(),
+                repositorySpecificData.getInferenceId(),
+                repositorySpecificData.getVisualizationId()
+        ).orElseThrow(() -> new RuntimeException("Visualization not found in PhyloDB"));
+
+        List<Coordinate> newCoordinates = nodes.stream().map(node -> new Coordinate(
+                new Profile.PrimaryKey(
+                        repositorySpecificData.getProjectId(),
+                        repositorySpecificData.getDatasetId(),
+                        node.getSt()
+                ),
+                0,
+                node.getCoordinates()[0],
+                node.getCoordinates()[1]
+        )).toList();
+
+        visualizationRepository.save(new Visualization(
+                visualization.getPrimaryKey().getProjectId(),
+                visualization.getPrimaryKey().getDatasetId(),
+                visualization.getPrimaryKey().getInferenceId(),
+                visualization.getPrimaryKey().getId(),
+                visualization.isDeprecated(),
+                visualization.getAlgorithm(),
+                newCoordinates
+        ));*/
     }
 
     @Override

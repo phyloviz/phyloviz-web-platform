@@ -1,4 +1,4 @@
-import {get} from "../utils/apiFetch"
+import {get, post} from "../utils/apiFetch"
 import {WebApiUris} from "../WebApiUris"
 import {GetTypingDataSchemaOutputModel} from "./models/getTypingDataSchema/GetTypingDataSchemaOutputModel"
 import {GetTypingDataProfilesOutputModel} from "./models/getTypingDataProfiles/GetTypingDataProfilesOutputModel"
@@ -8,6 +8,8 @@ import {GetDistanceMatrixOutputModel} from "./models/getDistanceMatrix/GetDistan
 import {GetTreeOutputModel} from "./models/getTree/GetTreeOutputModel"
 import {GetTreeViewOutputModel} from "./models/getTreeView/GetTreeViewOutputModel"
 import {MockVisualizationService} from "./MockVisualizationService"
+import {SaveTreeViewInputModel} from "./models/saveTreeView/SaveTreeViewInputModel";
+import {SaveTreeViewOutputModel} from "./models/saveTreeView/SaveTreeViewOutputModel";
 
 namespace VisualizationService {
 
@@ -88,7 +90,7 @@ namespace VisualizationService {
         datasetId: string,
         distanceMatrixId: string
     ): Promise<GetDistanceMatrixOutputModel> {
-        return await get<any>(WebApiUris.getDistanceMatrix(projectId, datasetId, distanceMatrixId))
+        return await get<GetDistanceMatrixOutputModel>(WebApiUris.getDistanceMatrix(projectId, datasetId, distanceMatrixId))
     }
 
     /**
@@ -104,7 +106,7 @@ namespace VisualizationService {
         datasetId: string,
         treeId: string
     ): Promise<GetTreeOutputModel> {
-        return await get<any>(WebApiUris.getTree(projectId, datasetId, treeId))
+        return await get<GetTreeOutputModel>(WebApiUris.getTree(projectId, datasetId, treeId))
     }
 
     /**
@@ -120,7 +122,28 @@ namespace VisualizationService {
         datasetId: string,
         treeViewId: string
     ): Promise<GetTreeViewOutputModel> {
-        return await get<any>(WebApiUris.getTreeView(projectId, datasetId, treeViewId))
+        return await get<GetTreeViewOutputModel>(WebApiUris.getTreeView(projectId, datasetId, treeViewId))
+    }
+
+    /**
+     * Saves a tree view coordinates and applied transformations.
+     *
+     * @param projectId  the id of the project
+     * @param datasetId  the id of the dataset
+     * @param treeViewId the id of the tree view
+     * @param inputModel the input mode
+     * @return the tree view
+     */
+    export async function saveTreeView(
+        projectId: string,
+        datasetId: string,
+        treeViewId: string,
+        inputModel: SaveTreeViewInputModel
+    ): Promise<SaveTreeViewOutputModel> {
+        return await post<SaveTreeViewOutputModel>(
+            WebApiUris.saveTreeView(projectId, datasetId, treeViewId),
+            JSON.stringify(inputModel)
+        )
     }
 }
 

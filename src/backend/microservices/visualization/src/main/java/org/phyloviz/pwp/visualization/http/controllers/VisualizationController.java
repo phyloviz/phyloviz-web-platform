@@ -6,14 +6,19 @@ import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRow
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
+import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewOutput;
 import org.phyloviz.pwp.visualization.http.models.get_tree_view.GetTreeViewOutputModel;
 import org.phyloviz.pwp.visualization.http.models.isolate_data.get_isolate_data_rows.GetIsolateDataRowsOutputModel;
 import org.phyloviz.pwp.visualization.http.models.isolate_data.get_isolate_data_schema.GetIsolateDataKeysOutputModel;
+import org.phyloviz.pwp.visualization.http.models.save_tree_view.SaveTreeViewInputModel;
+import org.phyloviz.pwp.visualization.http.models.save_tree_view.SaveTreeViewOutputModel;
 import org.phyloviz.pwp.visualization.http.models.typing_data.get_typing_data_profiles.GetTypingDataProfilesOutputModel;
 import org.phyloviz.pwp.visualization.http.models.typing_data.get_typing_data_schema.GetTypingDataSchemaOutputModel;
 import org.phyloviz.pwp.visualization.service.VisualizationService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -85,6 +90,31 @@ public class VisualizationController {
         GetTreeViewOutput getTreeViewOutput = visualizationService.getTreeView(projectId, datasetId, treeViewId, user.getId());
 
         return new GetTreeViewOutputModel(getTreeViewOutput);
+    }
+
+    /**
+     * Saves a tree view coordinates and applied transformations.
+     *
+     * @param projectId  the id of the project
+     * @param datasetId  the id of the dataset
+     * @param treeViewId the id of the tree view
+     * @param inputModel the input model
+     * @param user       the user
+     * @return the tree view
+     */
+    @PostMapping("/projects/{projectId}/datasets/{datasetId}/tree-views/{treeViewId}")
+    public SaveTreeViewOutputModel saveTreeView(
+            @PathVariable String projectId,
+            @PathVariable String datasetId,
+            @PathVariable String treeViewId,
+            @RequestBody SaveTreeViewInputModel inputModel,
+            User user
+    ) {
+        SaveTreeViewOutput saveTreeViewOutput = visualizationService.saveTreeView(
+                projectId, datasetId, treeViewId,
+                inputModel.toDto(), user.getId());
+
+        return new SaveTreeViewOutputModel(saveTreeViewOutput);
     }
 
     /**

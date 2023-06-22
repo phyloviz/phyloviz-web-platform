@@ -1,6 +1,7 @@
 package org.phyloviz.pwp.visualization.service;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.DistanceMatrixDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.DistanceMatrixDataRepository;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.specific_data.DistanceMatrixDataRepositorySpecificData;
@@ -37,6 +38,8 @@ import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRow
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
+import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewInput;
+import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewOutput;
 import org.phyloviz.pwp.shared.service.exceptions.*;
 import org.phyloviz.pwp.visualization.service.exceptions.IndexingNeededException;
 import org.springframework.beans.factory.annotation.Value;
@@ -151,7 +154,44 @@ public class VisualizationServiceImpl implements VisualizationService {
 
         TreeViewDataRepository treeViewDataRepository = treeViewDataRepositoryFactory.getRepository(getTreeViewRepositoryId);
 
-        return treeViewDataRepository.getTreeView(repositorySpecificData);
+        GetTreeViewOutput output = treeViewDataRepository.getTreeView(repositorySpecificData);
+
+        return new GetTreeViewOutput(
+                output.getNodes(),
+                output.getNodesTotalCount(),
+                output.getEdges(),
+                output.getEdgesTotalCount(),
+                treeViewMetadata.getTransformations()
+        );
+    }
+
+    @Override
+    public SaveTreeViewOutput saveTreeView(String projectId, String datasetId, String treeViewId, SaveTreeViewInput inputModel, String userId) {
+        if (!projectRepository.existsByIdAndOwnerId(projectId, userId))
+            throw new ProjectNotFoundException();
+
+        if (!datasetRepository.existsByProjectIdAndId(projectId, datasetId))
+            throw new DatasetNotFoundException();
+
+        TreeViewMetadata treeViewMetadata = treeViewMetadataRepository
+                .findByProjectIdAndDatasetIdAndTreeViewId(projectId, datasetId, treeViewId)
+                .orElseThrow(TreeViewNotFoundException::new);
+
+        if (!treeViewMetadata.getRepositorySpecificData().containsKey(getTreeViewRepositoryId))
+            throw new IndexingNeededException("Tree View isn't indexed in the database. Indexing of Tree View required.");
+
+        TreeViewDataRepositorySpecificData repositorySpecificData = treeViewMetadata
+                .getRepositorySpecificData()
+                .get(getTreeViewRepositoryId);
+
+        TreeViewDataRepository treeViewDataRepository = treeViewDataRepositoryFactory.getRepository(getTreeViewRepositoryId);
+
+        treeViewMetadata.setTransformations(inputModel.getTransformations());
+        treeViewMetadataRepository.save(treeViewMetadata);
+
+        treeViewDataRepository.saveTreeView(repositorySpecificData, inputModel.getNodes());
+
+        return new SaveTreeViewOutput(projectId, datasetId, treeViewId);
     }
 
     @Override

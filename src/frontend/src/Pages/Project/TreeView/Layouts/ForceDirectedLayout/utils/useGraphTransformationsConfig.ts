@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {TreeViewGraph} from "../cosmos/TreeViewGraph";
 import {defaultConfig, VizLink, VizNode} from "../useForceDirectedLayout";
 
@@ -27,25 +27,39 @@ export interface GraphTransformationsConfig {
 }
 
 const DEFAULT_NODE_LABEL_CHECKED = true
-const DEFAULT_NODE_LABEL_SIZE = 0
+export const DEFAULT_NODE_LABEL_SIZE = 0
 
 const DEFAULT_LINK_LABEL_CHECKED = false
-const DEFAULT_LINK_LABEL_SIZE = 0
-const DEFAULT_LINK_LABEL_TYPE = ""
+export const DEFAULT_LINK_LABEL_SIZE = 0
+export const DEFAULT_LINK_LABEL_TYPE = ""
 
 /**
  * Hook for managing graph transformations configuration.
  *
  * @param graphRef Reference to the graph.
+ * @param loadingGraph Whether the graph is loading.
  */
-export function useGraphTransformationsConfig(graphRef: React.MutableRefObject<TreeViewGraph<VizNode, VizLink> | undefined>) {
-    const [nodeSize, setNodeSize] = useState<number>(defaultConfig.nodeSize! as number)
-    const [nodeLabel, setNodeLabel] = useState(DEFAULT_NODE_LABEL_CHECKED)
+export function useGraphTransformationsConfig(
+    graphRef: React.MutableRefObject<TreeViewGraph<VizNode, VizLink> | undefined>,
+    loadingGraph: boolean
+) {
+    const [nodeSize, setNodeSize] = useState<number>(graphRef.current?.config.nodeSize ?? defaultConfig.nodeSize! as number)
+    const [nodeLabel, setNodeLabel] = useState(graphRef.current?.nodeLabelsRendered() ?? DEFAULT_NODE_LABEL_CHECKED)
     const [nodeLabelSize, setNodeLabelSize] = useState(DEFAULT_NODE_LABEL_SIZE)
-    const [linkWidth, setLinkWidth] = useState<number>(defaultConfig.linkWidth! as number)
-    const [linkLabel, setLinkLabel] = useState(DEFAULT_LINK_LABEL_CHECKED)
+    const [linkWidth, setLinkWidth] = useState<number>(graphRef.current?.config.linkWidth ?? defaultConfig.linkWidth! as number)
+    const [linkLabel, setLinkLabel] = useState(graphRef.current?.linkLabelsRendered() ?? DEFAULT_LINK_LABEL_CHECKED)
     const [linkLabelSize, setLinkLabelSize] = useState(DEFAULT_LINK_LABEL_SIZE)
     const [linkLabelType, setLinkLabelType] = useState(DEFAULT_LINK_LABEL_TYPE)
+
+    useEffect(() => {
+        if (loadingGraph)
+            return
+
+        setNodeSize(graphRef.current?.config.nodeSize ?? defaultConfig.nodeSize! as number)
+        setNodeLabel(graphRef.current?.nodeLabelsRendered() ?? DEFAULT_NODE_LABEL_CHECKED)
+        setLinkWidth(graphRef.current?.config.linkWidth ?? defaultConfig.linkWidth! as number)
+        setLinkLabel(graphRef.current?.linkLabelsRendered() ?? DEFAULT_LINK_LABEL_CHECKED)
+    }, [loadingGraph])
 
     return {
         nodeSize,

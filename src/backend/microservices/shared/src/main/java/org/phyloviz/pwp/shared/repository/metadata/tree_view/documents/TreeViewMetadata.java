@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.phyloviz.pwp.shared.repository.data.tree_view.TreeViewDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.data.tree_view.repository.specific_data.TreeViewDataRepositorySpecificData;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.source.TreeViewSource;
+import org.phyloviz.pwp.shared.service.dtos.tree_view.Transformations;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,16 +25,12 @@ public class TreeViewMetadata {
     private String treeViewId;
     private String name;
     private String layout;
-    /*private Filters filters = { "nodeSizeByIsolateNumber": true,
-            "showNodeLabels": true,
-            "showLinkWeightLabels": true,
-            "typingDataColumns": [],
-            "isolateDataColumns": ["country"];*/
     private TreeViewSource source;
     private Map<TreeViewDataRepositoryId, TreeViewDataRepositorySpecificData> repositorySpecificData;
+    private Transformations transformations;
 
     public TreeViewMetadata(String projectId, String datasetId, String treeViewId, String name, String layout, TreeViewSource source,
-                            Map<TreeViewDataRepositoryId, TreeViewDataRepositorySpecificData> repositorySpecificData) {
+                            Map<TreeViewDataRepositoryId, TreeViewDataRepositorySpecificData> repositorySpecificData, Transformations transformations) {
         this.projectId = projectId;
         this.datasetId = datasetId;
         this.treeViewId = treeViewId;
@@ -41,5 +38,6 @@ public class TreeViewMetadata {
         this.layout = layout;
         this.source = source;
         this.repositorySpecificData = repositorySpecificData;
+        this.transformations = transformations;
     }
 }

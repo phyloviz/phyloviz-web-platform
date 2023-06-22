@@ -15,6 +15,7 @@ import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.conver
 import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataSerializer;
 import org.phyloviz.pwp.shared.repository.metadata.tree.documents.converters.TreeMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.converters.TreeViewMetadataDeserializer;
+import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.converters.TreeViewMetadataSerializer;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.converters.TypingDataMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.converters.TypingDataMetadataSerializer;
 import org.phyloviz.pwp.shared_phylodb.config.ResourceServerSharedPhylodbConfig;
@@ -118,6 +119,7 @@ public class ComputeConfig {
                 new DistanceMatrixMetadataDeserializer(mongoConverter, distanceMatrixDataRepositoryRegistry),
                 new TreeMetadataDeserializer(mongoConverter, treeDataRepositoryRegistry),
                 new TreeViewMetadataDeserializer(mongoConverter, treeViewDataRepositoryRegistry),
+                new TreeViewMetadataSerializer(mongoConverter),
                 new AccessTemplateSerializer(),
                 new AccessTemplateDeserializer(mongoConverter),
                 //https://stackoverflow.com/questions/12385920/spring-mongodb-storing-retrieving-enums-as-int-not-string/30024621#30024621

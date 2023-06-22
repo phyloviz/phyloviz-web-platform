@@ -13,4 +13,5 @@ public class GetTreeViewOutput {
     private final int nodesTotalCount;
     private final List<Edge> edges;
     private final int edgesTotalCount;
+    private final Transformations transformations;
 }

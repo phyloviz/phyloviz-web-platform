@@ -293,8 +293,16 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
         this.lines.renderLabels = checked
     }
 
+    public linkLabelsRendered() {
+        return this.lines.renderLabels
+    }
+
     public renderNodeLabels(checked: boolean) {
         this.points.renderLabels = checked
+    }
+
+    public nodeLabelsRendered() {
+        return this.points.renderLabels
     }
 
     /**
