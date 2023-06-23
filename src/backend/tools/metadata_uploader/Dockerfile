@@ -3,8 +3,8 @@ FROM python:3.8-slim
 
 
 # Copy the required files into the /app folder
-COPY uploader/uploader.py /app/uploader.py
-COPY uploader/requirements.txt /app/requirements.txt
+COPY metadata_uploader/metadata_uploader.py /app/metadata_uploader.py
+COPY metadata_uploader/requirements.txt /app/requirements.txt
 
 # Create the AWS config directories
 RUN mkdir -p /root/.aws
@@ -22,4 +22,4 @@ ENV MONGO_URI="mongodb://host.docker.internal:28017/?directConnection=true"
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 # Run the script when the container launches
-ENTRYPOINT ["python", "uploader.py"]
+ENTRYPOINT ["python", "metadata_uploader.py"]

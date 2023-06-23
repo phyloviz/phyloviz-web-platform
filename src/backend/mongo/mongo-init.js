@@ -182,6 +182,56 @@ db['tool-templates'].insertMany(
                 }
             },
             "library": []
+        },
+        {
+            "general": {
+                "name": "rclone",
+                "description": "RClone"
+            },
+            "access": {
+                "_type": "library",
+                "details": {
+                    "address": "localhost",
+                    "dockerUrl": "unix://var/run/docker.sock",
+                    "dockerImage": "localhost:5000/rclone",
+                    "dockerAutoRemove": "never",
+                    "dockerNetworkMode": "bridge",
+                    "dockerApiVersion": "auto",
+                    "dockerVolumes": [
+                        {
+                            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+                            "target": "/phyloviz-web-platform",
+                            "_type": "bind"
+                        }
+                    ]
+                }
+            },
+            "library": []
+        },
+        {
+            "general": {
+                "name": "metadata_uploader",
+                "description": "Metadata uploader"
+            },
+            "access": {
+                "_type": "library",
+                "details": {
+                    "address": "localhost",
+                    "dockerUrl": "unix://var/run/docker.sock",
+                    "dockerImage": "localhost:5000/metadata_uploader",
+                    "dockerAutoRemove": "never",
+                    "dockerNetworkMode": "bridge",
+                    "dockerApiVersion": "auto",
+                    "dockerVolumes": [
+                        {
+                            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+                            "target": "/phyloviz-web-platform",
+                            "_type": "bind"
+                        }
+                    ]
+                }
+            },
+            "library": []
         }
     ]
 )
@@ -670,6 +720,43 @@ db['workflow-templates'].insertMany([
                 "tool": "compute_tree_view",
                 "action": {
                     "command": "--project-id=${projectId} --dataset-id=${datasetId} --tree-id=${treeId} --workflow-id=${workflowId} --layout=${layout}"
+                }
+            }
+        ]
+    },
+    {
+        "type": "file-upload-by-url",
+        "name": "File Upload by URL",
+        "description": "Uploads a file to the project using an URL source.",
+        "arguments": {
+            "url": {
+                "type": "regex",
+                "pattern": "^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$"
+            },
+            "file_type": {
+                "type": "string",
+                "allowed-values": [
+                    "typing_data",
+                    "isolate_data"
+                ]
+            }
+        },
+        "tasks": [
+            {
+                "taskId": "upload",
+                "tool": "rclone",
+                "action": {
+                    "command": "copyurl ${url} phyloviz:phyloviz-web-platform/projects/${projectId}/${workflowId}"
+                },
+                "children": [
+                    "createMetadata"
+                ]
+            },
+            {
+                "taskId": "createMetadata",
+                "tool": "metadata_uploader",
+                "action": {
+                    "command": "--original_url=${url} --url=http://localhost:9444/phyloviz-web-platform/projects/${projectId}/${workflowId} --type=${file_type} --project-id=${projectId} --workflow-id=${workflowId}"
                 }
             }
         ]

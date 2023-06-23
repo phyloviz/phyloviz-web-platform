@@ -17,7 +17,10 @@ public class WorkflowTemplateArgumentProperties {
     @Field("allowed-values")
     private final List<String> allowedValues;
 
-    public WorkflowTemplateArgumentProperties(WorkflowTemplateArgumentType type, Boolean required, String prefix, List<String> allowedValues) {
+    private final String pattern;
+
+    public WorkflowTemplateArgumentProperties(WorkflowTemplateArgumentType type, Boolean required, String prefix, List<String> allowedValues,
+                                              String pattern) {
         this.type = type;
 
         if (type == WorkflowTemplateArgumentType.STRING) {
@@ -31,5 +34,6 @@ public class WorkflowTemplateArgumentProperties {
         this.allowedValues = allowedValues;
         this.required = required == null || required;
         this.prefix = prefix;
+        this.pattern = pattern;
     }
 }

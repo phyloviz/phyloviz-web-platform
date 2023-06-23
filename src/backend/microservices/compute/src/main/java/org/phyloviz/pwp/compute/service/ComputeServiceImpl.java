@@ -386,6 +386,8 @@ public class ComputeServiceImpl implements ComputeService {
                 case STRING -> validateStringArgument(properties.get(argumentName), argumentName,
                         argumentProperties.getAllowedValues());
                 case NUMBER -> validateNumberArgument(properties.get(argumentName), argumentName);
+                case REGEX -> validateRegexArgument(properties.get(argumentName), argumentName,
+                        argumentProperties.getPattern());
             }
 
             if (argumentProperties.getPrefix() != null && properties.containsKey(argumentName)) {
@@ -417,5 +419,10 @@ public class ComputeServiceImpl implements ComputeService {
         } catch (NumberFormatException e) {
             throw new InvalidWorkflowException(String.format("Invalid argument: '%s'. Must be a number.", argumentName));
         }
+    }
+
+    private void validateRegexArgument(String argument, String argumentName, String pattern) {
+        if (!argument.matches(pattern))
+            throw new InvalidWorkflowException(String.format("Invalid argument: '%s'. Must match the pattern: %s", argumentName, pattern));
     }
 }

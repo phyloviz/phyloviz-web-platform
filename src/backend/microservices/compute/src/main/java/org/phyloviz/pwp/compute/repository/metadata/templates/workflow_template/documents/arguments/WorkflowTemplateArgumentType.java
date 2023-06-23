@@ -5,6 +5,7 @@ public enum WorkflowTemplateArgumentType {
     UUID,
     STRING,
     NUMBER,
+    REGEX,
     DATASETID,
     DISTANCEMATRIXID,
     TREEID,
