@@ -13,20 +13,21 @@ export function useWorkflow() {
     const workflowId = pathParams.workflowId!
 
     const [workflow, setWorkflow] = useState<Workflow | undefined>(undefined)
-    const [error, setError] = useState<string | undefined>(undefined)
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<string | null>(null)
 
     useEffect(() => {
+        setLoading(true)
         ComputeService.getWorkflow(projectId, workflowId)
-            .then(res => {
-                setWorkflow(res)
-            })
-            .catch(err => {
-                setError(err.message)
-            })
+            .then(res => setWorkflow(res))
+            .catch(err => setError(err.message))
+            .finally(() => setLoading(false))
     }, [projectId, workflowId])
 
     return {
         workflow,
-        error
+        loading,
+        error,
+        clearError: () => setError(null)
     }
 }

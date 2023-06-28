@@ -1,12 +1,15 @@
 import * as React from "react"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
-import {Container} from "@mui/material"
+import {Button, Container} from "@mui/material"
 import {useOpenProject} from "./useOpenProject"
 import {ProjectCard} from "../../Components/OpenProject/ProjectCard"
 import Box from "@mui/material/Box"
 import LoadingSpinner from "../../Components/Shared/LoadingSpinner"
 import {ErrorAlert} from "../../Components/Shared/ErrorAlert"
+import NewProjectIcon from "@mui/icons-material/CreateNewFolder";
+import {WebUiUris} from "../WebUiUris";
+import {useNavigate} from "react-router-dom";
 
 /**
  * OpenProject page.
@@ -19,6 +22,7 @@ export default function OpenProject() {
         error,
         clearError
     } = useOpenProject()
+    const navigate = useNavigate()
 
     return (
         <Container>
@@ -50,9 +54,19 @@ export default function OpenProject() {
                     }
                     {
                         projects?.length == 0 && (
-                            <Typography component="h1" variant="body1" textAlign="justify">
-                                No projects found.
-                            </Typography>
+                            <>
+                                <Typography component="h1" variant="body1" textAlign="justify">
+                                    No projects found.
+                                </Typography>
+                                <Button
+                                    variant="contained"
+                                    startIcon={<NewProjectIcon/>}
+                                    onClick={() => navigate(WebUiUris.NEW_PROJECT)}
+                                    sx={{mt: 4, width: "30%"}}
+                                >
+                                    New Project
+                                </Button>
+                            </>
                         )
                     }
                     {

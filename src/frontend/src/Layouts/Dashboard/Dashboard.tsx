@@ -72,14 +72,14 @@ export default function Dashboard({children}: DashboardProps) {
                                 settings={authSettings}
                             />
                             : <>
-                                <Button
+                                {/*<Button
                                     variant="contained"
                                     color="primary"
                                     size={"small"}
                                     onClick={() => window.location.href = WebUiUris.SIGN_UP} // TODO: Fix Sign Up URI
                                 >
                                     Sign Up
-                                </Button>
+                                </Button>*/}
                                 <Button
                                     variant="contained"
                                     color="primary"

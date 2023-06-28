@@ -96,6 +96,7 @@ export function StyledTreeItem(
                     <div
                         style={{'cursor': contextMenuItems ? 'context-menu' : 'default'}}
                         onContextMenu={contextMenuItems ? handleContextMenu : undefined}
+                        onDoubleClick={contextMenuItems ? handleContextMenu : undefined}
                     >
                         <Box sx={{
                             display: 'flex', alignItems: 'center', p: 0.5, pr: 0,

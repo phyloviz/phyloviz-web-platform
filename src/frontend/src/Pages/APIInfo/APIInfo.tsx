@@ -2,7 +2,8 @@ import * as React from "react"
 import Paper from "@mui/material/Paper"
 import Logo from "../../Assets/logo.png"
 import Typography from "@mui/material/Typography"
-import {Container} from "@mui/material"
+import {Button, Container} from "@mui/material"
+import {OpenInNew} from "@mui/icons-material";
 
 /**
  * APIInfo page.
@@ -29,10 +30,14 @@ export default function APIInfo() {
                     can programmatically use some of PHYLOViZ Web Platform features without using the application's
                     graphical interface.
                 </Typography>
-                <Typography component="h1" variant="body1" sx={{mt: 4}}>
-                    The API documentation is available <a
-                    href="https://github.com/bodybuilders-team/phyloviz-web-platform/wiki/api-documentation">here</a>.
-                </Typography>
+                <Button
+                    variant="contained"
+                    startIcon={<OpenInNew/>}
+                    onClick={() => window.open("https://github.com/phyloviz/phyloviz-web-platform/wiki/api-documentation")}
+                    sx={{mt: 4, width: "30%"}}
+                >
+                    API Documentation
+                </Button>
             </Paper>
         </Container>
     )

@@ -48,11 +48,33 @@ export function ContactsCard() {
                 justifyContent: "space-between",
                 width: "25%"
             }}>
+                <a
+                    href={"https://www.isel.pt/en"}
+                    style={{textDecoration: "none"}}
+                >
                 <img src={IselLogo} alt="ISEL Logo" width="60%"/>
                 <Typography component="h1" variant="body2">
                     (1) Instituto Superior de Engenharia de Lisboa, Instituto Politécnico de Lisboa, Lisboa,
                     Portugal
                 </Typography>
+                </a>
+            </Box>
+            <Box sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "25%",
+            }}>
+                <a
+                    href={"https://www.inesc-id.pt/"}
+                    style={{textDecoration: "none"}}
+                >
+                    <img src={InescLogo} alt="INESC-ID Logo" width="60%"/>
+                    <Typography component="h1" variant="body2">
+                        (2) INESC-ID, R. Alves Redol 9, 1000-029 Lisboa, Portugal
+                    </Typography>
+                </a>
             </Box>
             <Box sx={{
                 display: "flex",
@@ -61,10 +83,15 @@ export function ContactsCard() {
                 justifyContent: "space-between",
                 width: "25%"
             }}>
-                <img src={InescLogo} alt="INESC-ID Logo" width="60%"/>
-                <Typography component="h1" variant="body2">
-                    (2) INESC-ID, R. Alves Redol 9, 1000-029 Lisboa, Portugal
-                </Typography>
+                <a
+                    href={"https://tecnico.ulisboa.pt/en/"}
+                    style={{textDecoration: "none"}}
+                >
+                    <img src={IstLogo} alt="IST Logo" width="60%"/>
+                    <Typography component="h1" variant="body2">
+                        (3) Instituto Superior Técnico, Universidade de Lisboa, Lisboa, Portugal
+                    </Typography>
+                </a>
             </Box>
             <Box sx={{
                 display: "flex",
@@ -73,23 +100,16 @@ export function ContactsCard() {
                 justifyContent: "space-between",
                 width: "25%"
             }}>
-                <img src={IstLogo} alt="IST Logo" width="60%"/>
-                <Typography component="h1" variant="body2">
-                    (3) Instituto Superior Técnico, Universidade de Lisboa, Lisboa, Portugal
-                </Typography>
-            </Box>
-            <Box sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "space-between",
-                width: "25%"
-            }}>
-                <img src={ImmLogo} alt="IMM Logo" width="80%"/>
-                <Typography component="h1" variant="body2">
-                    (4) Instituto de Medicina Molecular João Lobo Antunes, Faculdade de Medicina, Universidade de
-                    Lisboa, Lisboa, Portugal
-                </Typography>
+                <a
+                    href={"https://imm.medicina.ulisboa.pt/"}
+                    style={{textDecoration: "none"}}
+                >
+                    <img src={ImmLogo} alt="IMM Logo" width="80%"/>
+                    <Typography component="h1" variant="body2">
+                        (4) Instituto de Medicina Molecular João Lobo Antunes, Faculdade de Medicina, Universidade de
+                        Lisboa, Lisboa, Portugal
+                    </Typography>
+                </a>
             </Box>
         </Box>
     </Paper>
