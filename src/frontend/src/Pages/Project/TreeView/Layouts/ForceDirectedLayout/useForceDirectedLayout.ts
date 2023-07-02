@@ -12,6 +12,7 @@ import {useGraphTransformationsConfig} from "./utils/useGraphTransformationsConf
 import {useSelectIsolateDataHeader} from "./utils/useSelectIsolateDataHeader";
 import {WebUiUris} from "../../../../WebUiUris";
 import {DoughnutChartData} from "../../../../../Components/Project/TreeView/DoughnutChart";
+import * as cluster from "cluster";
 
 export type VizNode = {
     id: string
@@ -72,12 +73,15 @@ export function useForceDirectedLayout() {
         graphRef,
         canvasRef,
         loadingGraph,
-
+        selectedCluster,
+        focusRandom,
+        setSelectedCluster,
+        numClusters,
         autosave,
         switchAutosave,
         forceSave,
         savingGraph
-    } = useGraph(projectId, datasetId, treeViewId)
+    } = useGraph(projectId, datasetId, treeViewId, isolateDataRows)
 
     const navigate = useNavigate()
 
@@ -110,7 +114,9 @@ export function useForceDirectedLayout() {
         switchAutosave,
         forceSave,
         savingGraph,
-
+        numClusters,
+        selectedCluster,
+        setSelectedCluster,
         pauseAnimation: () => graphRef.current?.pause(),
         restartAnimation: () => graphRef.current?.restart(),
 
@@ -136,6 +142,8 @@ export function useForceDirectedLayout() {
         isolateDataId,
 
         handleSearch: (st: string): boolean => graphRef.current?.zoomToNodeById(st, 1000, 15, false)!,
+        focusRandom,
+
         handleExportOptions: () => {
             // TODO: implement export options
         },

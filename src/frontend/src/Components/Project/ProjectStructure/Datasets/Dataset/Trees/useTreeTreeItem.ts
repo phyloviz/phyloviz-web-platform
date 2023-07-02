@@ -26,14 +26,14 @@ export function useTreeTreeItem(datasetId: string, tree: Tree) {
             label: "Force Directed Layout",
             id: "force-directed",
         },
-        {
+/*        {
             label: "Radial Layout",
             id: "radial",
         },
         {
             label: "Rectangular Layout",
             id: "rectangular",
-        }
+        }*/
     ]
 
     return {

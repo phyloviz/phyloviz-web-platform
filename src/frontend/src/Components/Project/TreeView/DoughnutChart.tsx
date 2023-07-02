@@ -157,7 +157,7 @@ export function DoughnutChart(
                                         <Typography>{label}</Typography>
                                         {/*<Typography>{selectedChartData.datasets[0].data[index]
                                                     / selectedChartData.datasets[0].data.reduce((a, b) => a + b, 0) * 100
-                                                }</Typography>*/}
+                                                }<t wrTypography>*/}
                                     </Box>
                                 )
                             })
@@ -173,7 +173,6 @@ export function DoughnutChart(
                 }}>
                     {
                         unselectedLabelsIndices?.map((index, i) => {
-                            console.log(doughnutChartData.labels[index])
                             return (
                                 <Box
                                     key={doughnutChartData.labels[index]}

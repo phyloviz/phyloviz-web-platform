@@ -2,13 +2,15 @@ import {Box, TextField} from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import {Search} from "@mui/icons-material"
 import * as React from "react"
-
+import ShuffleIcon from '@mui/icons-material/Shuffle';
+import CasinoIcon from '@mui/icons-material/Casino';
 /**
  * Card for searching for a specific ST in the tree view page.
  */
-export function TreeViewSearchCard({loadingGraph, onSearch}: {
+export function TreeViewSearchCard({loadingGraph, onSearch, focusRandom}: {
     loadingGraph: boolean,
-    onSearch: (searchST: string) => boolean
+    onSearch: (searchST: string) => boolean,
+    focusRandom: () => void
 }) {
     const [searchST, setSearchST] = React.useState<string>("")
     const [searchSTError, setSearchSTError] = React.useState<boolean>(false)
@@ -55,5 +57,11 @@ export function TreeViewSearchCard({loadingGraph, onSearch}: {
         }}>
             <Search/>
         </IconButton>
+        <IconButton type="button" size={"small"} sx={{p: '10px'}} onClick={() => {
+            focusRandom()
+        }}>
+            <CasinoIcon/>
+        </IconButton>
+
     </Box>
 }

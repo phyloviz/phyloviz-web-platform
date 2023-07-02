@@ -41,6 +41,7 @@
     "react-heatmap-grid": "^0.9.0",
     "react-router-dom": "^6.4.3",
     "react-to-print": "^2.14.12",
+    "react-window": "^1.8.9",
     "regl": "^2.1.0",
     "vectorize-text": "^3.2.2"
   },
@@ -54,6 +55,7 @@
     "@types/d3-transition": "^3.0.1",
     "@types/d3-zoom": "^3.0.1",
     "@types/react-dom": "^18.0.11",
+    "@types/react-window": "^1.8.5",
     "css-loader": "^6.7.2",
     "dotenv-webpack": "^8.0.1",
     "file-loader": "^6.2.0",

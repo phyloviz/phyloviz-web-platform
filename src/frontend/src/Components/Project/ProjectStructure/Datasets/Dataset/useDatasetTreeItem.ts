@@ -15,14 +15,14 @@ export const computeTreeViewsOptions = (projectId: string, datasetId: string) =>
         label: "Force Directed Layout",
         url: WebUiUris.computeForceDirectedLayout(projectId, datasetId)
     },
-    {
-        label: "Radial Layout",
-        url: WebUiUris.computeRadialLayout(projectId, datasetId)
-    },
-    {
-        label: "Rectangular Layout",
-        url: WebUiUris.computeRectangularLayout(projectId, datasetId)
-    }
+    // {
+    //     label: "Radial Layout",
+    //     url: WebUiUris.computeRadialLayout(projectId, datasetId)
+    // },
+    // {
+    //     label: "Rectangular Layout",
+    //     url: WebUiUris.computeRectangularLayout(projectId, datasetId)
+    // }
 ]
 
 /**

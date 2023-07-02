@@ -51,15 +51,16 @@ export function useTree() {
 
     const [treeData, setTreeData] = useState<string | null>(null);
 
-    useEffect(() => {
-        VisualizationService.getTree(projectId, datasetId, treeId)
-            .then(tree => {
-                setTreeData(tree)
-            })
-    }, [projectId, treeId])
+    // useEffect(() => {
+    //     VisualizationService.getTree(projectId, datasetId, treeId)
+    //         .then(tree => {
+    //             setTreeData(tree)
+    //             console.log(tree)
+    //         })
+    // }, [projectId, treeId])
 
     return {
         tree: cascadingInfoTree,
-        treeData
+        treeData: null
     }
 }

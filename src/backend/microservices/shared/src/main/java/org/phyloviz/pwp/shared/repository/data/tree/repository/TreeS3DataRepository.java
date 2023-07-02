@@ -14,7 +14,10 @@ public class TreeS3DataRepository implements TreeDataRepository {
 
     @Override
     public String getTree(TreeDataRepositorySpecificData treeDataRepositorySpecificData) {
-        throw new UnsupportedOperationException("Unsupported operation");
+        TreeS3DataRepositorySpecificData repositorySpecificData =
+                (TreeS3DataRepositorySpecificData) treeDataRepositorySpecificData;
+
+        return s3FileRepository.download(repositorySpecificData.getUrl());
     }
 
     @Override

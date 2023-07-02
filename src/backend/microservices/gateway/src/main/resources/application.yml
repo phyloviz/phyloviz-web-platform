@@ -102,13 +102,6 @@ server:
   port: 8083
 
 spring:
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      password: aC29^iCMUfSyk^xpi7e1AUvfu96kbV
-
-
   security:
     oauth2:
       client:

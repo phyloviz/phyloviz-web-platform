@@ -1,12 +1,13 @@
 import {useNavigate, useParams} from "react-router-dom"
 import * as React from "react"
-import {useContext, useEffect, useState, useCallback} from "react"
+import {useCallback, useContext, useEffect, useState} from "react"
 import {Project} from "../../Services/Administration/models/projects/getProject/GetProjectOutputModel"
 import AdministrationService from "../../Services/Administration/AdministrationService"
 import {GetWorkflowStatusOutputModel} from "../../Services/Compute/models/getWorkflow/GetWorkflowOutputModel"
 import ComputeService from "../../Services/Compute/ComputeService"
 import {useInterval} from "../../Components/Shared/Hooks/useInterval"
 import {WebUiUris} from "../WebUiUris";
+import {Problem} from "../../Services/utils/Problem";
 
 /**
  * Properties of the context for the Project page.
@@ -63,8 +64,16 @@ export function useProject() {
 
     function loadProject() {
         return AdministrationService.getProject(projectId)
-            .then((res) => setProject(res))
-            .catch((err: Error) => setError("Could not load project: " + err.message))
+            .then((res) => {
+                setProject(res)
+                setError(null)
+            })
+            .catch((err: Error) => {
+                if(err instanceof Problem && err.status === 404) {
+                    navigate("not-found")
+                }
+                setError("Could not load project: " + err.message)}
+            )
     }
 
     function loadWorkflows() {
@@ -84,10 +93,14 @@ export function useProject() {
      * Polls the workflows for any changes.
      */
     async function poll() {
+        if (!project)
+            await loadProject()
+
         const prevWorkflows = [...workflows]
         const updatedWorkflows = await ComputeService.getWorkflows(projectId)
             .then(res => {
                 setWorkflows(res.workflows)
+                setError(null)
                 return res.workflows
             })
             .catch((err: Error) => {
@@ -99,7 +112,6 @@ export function useProject() {
         for (const updatedWorkflow of updatedWorkflows) {
             const workflow = prevWorkflows.find(w => w.workflowId === updatedWorkflow.workflowId)
             if (workflow === undefined || workflow.status !== updatedWorkflow.status) {
-                console.log(prevWorkflows)
                 loadProject()
                 return
             }

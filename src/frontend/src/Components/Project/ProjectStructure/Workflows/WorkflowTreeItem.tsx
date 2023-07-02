@@ -1,6 +1,5 @@
 import {
     GetWorkflowStatusOutputModel,
-    Workflow,
     workflowStatusToWorkflowStatusString
 } from "../../../../Services/Compute/models/getWorkflow/GetWorkflowOutputModel"
 import {StyledTreeItem} from "../Utils/StyledTreeItem"
@@ -11,6 +10,7 @@ import FinishIcon from "@mui/icons-material/Done"
 import Typography from "@mui/material/Typography"
 import {useWorkflowTreeItem} from "./useWorkflowTreeItem"
 import Box from "@mui/material/Box"
+import {useProjectContext} from "../../../../Pages/Project/useProject";
 
 /**
  * Props of the WorkflowTreeItem.
@@ -34,6 +34,8 @@ export function WorkflowTreeItem({nodeId, workflow}: WorkflowTreeItemProps) {
         open,
         contextMenuItems
     } = useWorkflowTreeItem(workflow.workflowId)
+
+    const project = useProjectContext().project!
 
     return (<>
             <StyledTreeItem
@@ -73,6 +75,9 @@ export function WorkflowTreeItem({nodeId, workflow}: WorkflowTreeItemProps) {
                     </Typography>
                     <Typography variant={"body2"}>
                         <strong>Status: </strong>{workflowStatusToWorkflowStatusString(workflow.status)}
+                    </Typography>
+                    <Typography variant={"body2"}>
+                        <strong>Dataset: </strong>{project?.datasets?.filter(dataset => dataset.datasetId == workflow?.data?.['datasetId'])[0].name ?? "None"}
                     </Typography>
                 </Box>
             </Popover>
