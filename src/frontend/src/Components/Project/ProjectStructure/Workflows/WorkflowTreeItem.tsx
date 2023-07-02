@@ -77,7 +77,7 @@ export function WorkflowTreeItem({nodeId, workflow}: WorkflowTreeItemProps) {
                         <strong>Status: </strong>{workflowStatusToWorkflowStatusString(workflow.status)}
                     </Typography>
                     <Typography variant={"body2"}>
-                        <strong>Dataset: </strong>{project?.datasets?.filter(dataset => dataset.datasetId == workflow?.data?.['datasetId'])[0].name ?? "None"}
+                        <strong>Dataset: </strong>{project?.datasets?.filter(dataset => dataset.datasetId == workflow?.data?.['dataset0Id'])[0]?.name ?? "None"}
                     </Typography>
                 </Box>
             </Popover>
