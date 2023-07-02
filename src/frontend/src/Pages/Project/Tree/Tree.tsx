@@ -11,7 +11,8 @@ import Box from "@mui/material/Box";
  */
 export default function Tree() {
     const {
-        tree
+        tree,
+        treeData
     } = useTree()
 
     return (
@@ -28,8 +29,15 @@ export default function Tree() {
                     <Typography component="h1" variant="h4">
                         Tree
                     </Typography>
-                    {
-                        // TODO: Add tree information
+                    {treeData && <Typography component="p" variant="body1" sx={{
+                        backgroundColor: "#F0F0F0",
+                        borderRadius: "5px",
+                        whiteSpace: "pre-line",
+                        textAlign: 'left',
+                        m: 1
+                    }}>
+                        {treeData}
+                    </Typography>
                     }
                 </Paper>
             </Container>

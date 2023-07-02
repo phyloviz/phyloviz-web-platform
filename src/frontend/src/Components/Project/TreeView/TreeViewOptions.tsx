@@ -96,9 +96,9 @@ export function TreeViewOptions(
         />
 
         <Box sx={{display: "flex"}}>
-            <Button size="small" sx={{flex: 1,}} onClick={onExport}>
+            {/*<Button size="small" sx={{flex: 1,}} onClick={onExport}>
                 Export
-            </Button>
+            </Button>*/}
             <Button size="small" sx={{flex: 1,}} onClick={() => {
                 simulationConfig.resetAll()
                 nodeTransformationsConfig.resetAll()

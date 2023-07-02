@@ -1,5 +1,5 @@
 import * as React from "react"
-import {useState} from "react"
+import {useRef, useState} from "react"
 import {useNavigate} from "react-router-dom"
 import {SelectChangeEvent} from "@mui/material"
 import {useProjectContext} from "../useProject"
@@ -11,6 +11,7 @@ export enum CreateDatasetStep {
     INFO = "Dataset Info",
     TYPING_DATA = "Typing Data",
     ISOLATE_DATA = "Isolate Data",
+    CREATING_DATASET = "Creating Dataset"
 }
 
 /**
@@ -53,6 +54,7 @@ export function useCreateDataset() {
     const [triedSubmitting, setTriedSubmitting] = useState(false)
 
     const [error, setError] = useState<string | null>(null)
+    const creatingDatasetRef = useRef(false)
 
     return {
         datasetName: name,
@@ -94,6 +96,7 @@ export function useCreateDataset() {
                     setIsolateDataKeys(keys)
                 })
 
+            //TODO: REMOVE
             /*const stream = fileToRead.stream(); // Get a ReadableStream from the File object
             const reader = stream.getReader(); // Create a reader for the stream
             reader.read().then(function processChunk({ done, value }) {
@@ -158,10 +161,13 @@ export function useCreateDataset() {
                 }
                 setTriedSubmitting(false)
 
+                if(creatingDatasetRef.current)
+                    return
+
+                creatingDatasetRef.current = true
+
                 let typingDataId = selectedTypingData
                 let isolateDataId = selectedIsolateData
-
-                // TODO LOADING SPINNER WHILE UPLOADING AND CREATING DATASET
 
                 if (typingDataFile) {
                     await FileTransferService.uploadTypingData(project?.projectId!, typingDataFile, datasetType)
@@ -173,6 +179,10 @@ export function useCreateDataset() {
                         .then(res => isolateDataId = res.isolateDataId)
                         .catch(err => setError(err.message))
                 }
+
+
+                setCreateDatasetStep(CreateDatasetStep.CREATING_DATASET)
+                setCurrStep(3)
 
                 AdministrationService.createDataset(
                     project?.projectId!,

@@ -9,6 +9,8 @@ import {
     DistanceMatrix,
     Tree
 } from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel";
+import {useEffect, useState} from "react";
+import VisualizationService from "../../../Services/Visualization/VisualizationService";
 
 /**
  * Hook for Tree page.
@@ -47,7 +49,18 @@ export function useTree() {
                     : tree.source as CascadingInfoFileTreeSource
     }
 
+    const [treeData, setTreeData] = useState<string | null>(null);
+
+    // useEffect(() => {
+    //     VisualizationService.getTree(projectId, datasetId, treeId)
+    //         .then(tree => {
+    //             setTreeData(tree)
+    //             console.log(tree)
+    //         })
+    // }, [projectId, treeId])
+
     return {
-        tree: cascadingInfoTree
+        tree: cascadingInfoTree,
+        treeData: null
     }
 }

@@ -17,6 +17,11 @@ export interface Node {
     coordinates: number[]
 }
 
+export interface Graph {
+    nodes: Node[]
+    edges: Edge[]
+}
+
 export interface Transformations {
     linkSpring: number
     linkDistance: number

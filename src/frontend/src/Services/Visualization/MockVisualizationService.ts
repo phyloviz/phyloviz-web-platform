@@ -131,7 +131,7 @@ export namespace MockVisualizationService {
         datasetId: string,
         treeId: string
     ): Promise<GetTreeOutputModel> {
-        return {}
+        return "(ant:17, (bat:31, cow:22):7, dog:22, (elk:33, fox:12):40);"
     }
 
     /**

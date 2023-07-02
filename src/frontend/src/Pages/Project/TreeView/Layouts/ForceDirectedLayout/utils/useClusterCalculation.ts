@@ -1,63 +1,62 @@
-import {Edge, Node} from "../../../../../../Services/Visualization/models/getTreeView/GetTreeViewOutputModel";
+import {Edge, Graph, Node} from "../../../../../../Services/Visualization/models/getTreeView/GetTreeViewOutputModel";
+
 
 /**
- * Returns a function that finds the biggest group of nodes in a graph.
+ * Finds the biggest group of nodes in a graph.
+ *
+ * @param nodes The nodes in the graph.
+ * @param edges The edges in the graph.
+ * @returns The biggest group of nodes in the graph.
  */
-export function useClusterCalculation() {
+export function findClusters(nodes: Node[], edges: Edge[]): Graph[] {
+    const visited = new Set<string>()
+    let clusters: Graph[] = []
 
-    /**
-     * Finds the biggest group of nodes in a graph.
-     *
-     * @param nodes The nodes in the graph.
-     * @param edges The edges in the graph.
-     * @returns The biggest group of nodes in the graph.
-     */
-    function findBiggestGroup(nodes: Node[], edges: Edge[]): Node[] {
-        const visited = new Set<string>()
-        let maxGroup: Node[] = []
+    for (const node of nodes) {
+        if (!visited.has(node.st)) {
+            const cluster = dfs(node, nodes, edges, visited)
 
-        for (const node of nodes) {
-            if (!visited.has(node.st)) {
-                const group = dfs(node, nodes, edges, visited)
-                if (group.length > maxGroup.length)
-                    maxGroup = group
-            }
+            clusters.push(cluster)
         }
-
-        return maxGroup
     }
 
-    /**
-     * Performs a depth-first search on a graph.
-     *
-     * @param node The node to start the search from.
-     * @param nodes The nodes in the graph.
-     * @param edges The edges in the graph.
-     * @param visited The nodes that have already been visited.
-     * @returns The nodes that were visited.
-     */
-    function dfs(node: Node, nodes: Node[], edges: Edge[], visited: Set<string>): Node[] {
-        const group: Node[] = []
-        const stack: Node[] = [node]
+    clusters = clusters.sort((a, b) => b.nodes.length - a.nodes.length)
 
-        while (stack.length > 0) {
-            const current = stack.pop()!
-            visited.add(current.st)
-            group.push(current)
+    return clusters
+}
 
-            for (const edge of edges) {
-                if (edge.from === current.st && !visited.has(edge.to)) {
-                    const neighbor = nodes.find(node => node.st === edge.to)!
-                    stack.push(neighbor)
-                    visited.add(neighbor.st)
-                }
+/**
+ * Performs a depth-first traversal on a graph.
+ *
+ * @param node The node to start the search from.
+ * @param nodes The nodes in the graph.
+ * @param edges The edges in the graph.
+ * @param visited The nodes that have already been visited.
+ * @returns The nodes that were visited.
+ */
+export function dfs(node: Node, nodes: Node[], edges: Edge[], visited: Set<string>): Graph {
+    const clusterNodes: Node[] = []
+    const clusterEdges : Edge[] = []
+    const stack: Node[] = [node]
+
+    while (stack.length > 0) {
+        const current = stack.pop()!
+        visited.add(current.st)
+        clusterNodes.push(current)
+
+        for (const edge of edges) { //TODO: add hashmap for edges
+            if (edge.from === current.st && !visited.has(edge.to)) {
+                const neighbor = nodes.find(node => node.st === edge.to)!
+                stack.push(neighbor)
+                visited.add(neighbor.st)
+                clusterEdges.push(edge)
             }
         }
-
-        return group
     }
 
     return {
-        findBiggestGroup
+        nodes: clusterNodes,
+        edges: clusterEdges
     }
 }
+

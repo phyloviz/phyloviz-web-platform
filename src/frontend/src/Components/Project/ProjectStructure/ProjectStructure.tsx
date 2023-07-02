@@ -87,7 +87,7 @@ export function ProjectStructure({project, workflows, loading}: ProjectStructure
                 ]}
             >
                 {
-                    loading
+                    loading || !project
                         ? <LoadingSpinner text={"Loading project..."}/>
                         : <>
                             <DatasetsTreeItem nodeId="datasets" datasets={project?.datasets!}/>

@@ -4,7 +4,6 @@ import {Box, Button, Collapse} from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import {Pause, PhotoCamera, PlayArrow, ZoomIn, ZoomOut} from "@mui/icons-material"
 import {TreeViewOptions} from "./TreeViewOptions";
-import {TreeViewFilters} from "./TreeViewFilters";
 import {SimulationConfig} from "../../../Pages/Project/TreeView/Layouts/ForceDirectedLayout/utils/useSimulationConfig";
 import {
     GraphTransformationsConfig
@@ -72,8 +71,7 @@ export function TreeViewSettingsCard(
     }: TreeViewSettingsCardProps
 ) {
     const [animationRunning, setAnimationRunning] = useState(true)
-    const [settingsOpen, setSettingsOpen] = useState(false)
-    const [filtersOpen, setFiltersOpen] = useState(false)
+    const [transformationsOpen, setTransformationsOpen] = useState(false)
 
     return <Box sx={{
         opacity: loadingGraph ? 0.5 : 1,
@@ -89,7 +87,7 @@ export function TreeViewSettingsCard(
         border: 1,
         borderColor: 'divider',
     }}>
-        <Collapse in={settingsOpen}>
+        <Collapse in={transformationsOpen}>
             <TreeViewOptions
                 simulationConfig={simulationConfig}
                 nodeTransformationsConfig={nodeTransformationsConfig}
@@ -103,39 +101,18 @@ export function TreeViewSettingsCard(
                 onExport={onExportOptions}
             />
         </Collapse>
-        <Collapse in={filtersOpen}>
-            <TreeViewFilters
-                onTypingDataFilter={onTypingDataFilter}
-                onIsolateDataFilter={onIsolateDataFilter}
-                onExport={onExportFilters}
-                resetSimulationFilters={resetSimulationFilters}
-            />
-        </Collapse>
         <Box sx={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
         }}>
             <Button
-                onClick={() => {
-                    setFiltersOpen(false)
-                    setSettingsOpen((settingsOpen) => !settingsOpen)
-                }}
+                onClick={() => setTransformationsOpen((transformationsOpen) => !transformationsOpen)}
                 size="small"
-                variant={settingsOpen ? "contained" : "text"}
+                variant={transformationsOpen ? "contained" : "text"}
                 sx={{mr: 1}}
             >
-                Options
-            </Button>
-            <Button
-                onClick={() => {
-                    setSettingsOpen(false)
-                    setFiltersOpen((filtersOpen) => !filtersOpen)
-                }}
-                size="small"
-                variant={filtersOpen ? "contained" : "text"}
-            >
-                Filters
+                Transformations
             </Button>
             <IconButton size="small" onClick={onZoomOut}>
                 <ZoomOut/>

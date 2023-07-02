@@ -19,18 +19,18 @@ export function SignUpCard() {
             justifyContent: "space-between"
         }}>
             <Typography component="h1" variant="h5">
-                <strong>Sign Up</strong>
+                <strong>Sign In</strong>
             </Typography>
             <Typography component="h1" variant="body1">
-                Sign up to PHYLOViZ Web Platform to start using it.
+                Sign in to PHYLOViZ Web Platform to start using it. Sign up if you don't have an account yet.
             </Typography>
             <Button
                 variant="contained"
                 startIcon={<Login/>}
-                onClick={() => window.location.href = WebUiUris.SIGN_UP}
+                onClick={() => window.location.href = WebUiUris.LOGIN}
                 sx={{mt: 4, width: "75%"}}
             >
-                Sign Up
+                Sign In
             </Button>
         </Paper>
     )

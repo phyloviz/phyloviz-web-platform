@@ -24,9 +24,9 @@ db['tool-templates'].insertMany(
                     "dockerApiVersion": "auto",
                     "dockerVolumes": [
                         {
-                            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+                            "source": "phyloviz-web-platform_${projectId}_${workflowId}",
                             "target": "/phyloviz-web-platform",
-                            "_type": "bind"
+                            "_type": "volume"
                         }
                     ]
                 }
@@ -49,9 +49,9 @@ db['tool-templates'].insertMany(
                     "dockerApiVersion": "auto",
                     "dockerVolumes": [
                         {
-                            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+                            "source": "phyloviz-web-platform_${projectId}_${workflowId}",
                             "target": "/phyloviz-web-platform",
-                            "_type": "bind"
+                            "_type": "volume"
                         }
                     ]
                 }
@@ -74,9 +74,9 @@ db['tool-templates'].insertMany(
                     "dockerApiVersion": "auto",
                     "dockerVolumes": [
                         {
-                            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+                            "source": "phyloviz-web-platform_${projectId}_${workflowId}",
                             "target": "/phyloviz-web-platform",
-                            "_type": "bind"
+                            "_type": "volume"
                         }
                     ]
                 }
@@ -99,9 +99,9 @@ db['tool-templates'].insertMany(
                     "dockerApiVersion": "auto",
                     "dockerVolumes": [
                         {
-                            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+                            "source": "phyloviz-web-platform_${projectId}_${workflowId}",
                             "target": "/phyloviz-web-platform",
-                            "_type": "bind"
+                            "_type": "volume"
                         }
                     ]
                 }
@@ -124,9 +124,9 @@ db['tool-templates'].insertMany(
                     "dockerApiVersion": "auto",
                     "dockerVolumes": [
                         {
-                            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+                            "source": "phyloviz-web-platform_${projectId}_${workflowId}",
                             "target": "/phyloviz-web-platform",
-                            "_type": "bind"
+                            "_type": "volume"
                         }
                     ]
                 }
@@ -149,9 +149,9 @@ db['tool-templates'].insertMany(
                     "dockerApiVersion": "auto",
                     "dockerVolumes": [
                         {
-                            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+                            "source": "phyloviz-web-platform_${projectId}_${workflowId}",
                             "target": "/phyloviz-web-platform",
-                            "_type": "bind"
+                            "_type": "volume"
                         }
                     ]
                 }
@@ -174,9 +174,9 @@ db['tool-templates'].insertMany(
                     "dockerApiVersion": "auto",
                     "dockerVolumes": [
                         {
-                            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+                            "source": "phyloviz-web-platform_${projectId}_${workflowId}",
                             "target": "/phyloviz-web-platform",
-                            "_type": "bind"
+                            "_type": "volume"
                         }
                     ]
                 }
@@ -199,9 +199,9 @@ db['tool-templates'].insertMany(
                     "dockerApiVersion": "auto",
                     "dockerVolumes": [
                         {
-                            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+                            "source": "phyloviz-web-platform_${projectId}_${workflowId}",
                             "target": "/phyloviz-web-platform",
-                            "_type": "bind"
+                            "_type": "volume"
                         }
                     ]
                 }
@@ -224,9 +224,9 @@ db['tool-templates'].insertMany(
                     "dockerApiVersion": "auto",
                     "dockerVolumes": [
                         {
-                            "source": "/mnt/phyloviz-web-platform/${projectId}/${workflowId}/",
+                            "source": "phyloviz-web-platform_${projectId}_${workflowId}",
                             "target": "/phyloviz-web-platform",
-                            "_type": "bind"
+                            "_type": "volume"
                         }
                     ]
                 }

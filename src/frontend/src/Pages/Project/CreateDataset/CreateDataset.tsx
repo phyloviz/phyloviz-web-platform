@@ -12,6 +12,7 @@ import {IsolateDataStepCard} from "../../../Components/Project/CreateDataset/Iso
 import CancelIcon from "@mui/icons-material/Cancel"
 import {CreateDatasetStep, useCreateDataset} from "./useCreateDataset"
 import {ErrorAlert} from "../../../Components/Shared/ErrorAlert"
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
 
 
 /**
@@ -104,7 +105,7 @@ export default function CreateDataset() {
                                             onFileUploaderChange={handleTypingDataFileUploaderChange}
                                             triedSubmitting={triedSubmitting}
                                         />
-                                        : <IsolateDataStepCard
+                                        : createDatasetStep !== CreateDatasetStep.CREATING_DATASET ? <IsolateDataStepCard
                                             selectedIsolateData={selectedIsolateData}
                                             isolateData={project?.files.isolateData!}
                                             onFileSelecterChange={handleIsolateDataFileSelectorChange}
@@ -113,52 +114,57 @@ export default function CreateDataset() {
                                             selectedIsolateDataKey={selectedIsolateDataKey}
                                             onIsolateDataKeyChange={handleIsolateDataKeyChange}
                                             triedSubmitting={triedSubmitting}
-                                        />
+                                        /> : <>
+                                            <LoadingSpinner text={"Uploading files..."}/>
+                                        </>
+
                             }
                         </Box>
 
-                        <Box sx={{
-                            width: "100%",
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "space-between"
-                        }}>
-                            <Button
-                                variant="contained"
-                                startIcon={<CancelIcon/>}
-                                onClick={handleCancel}
-                                sx={{mt: 4, width: "30%"}}
-                            >
-                                Cancel
-                            </Button>
+                        {createDatasetStep !== CreateDatasetStep.CREATING_DATASET &&
+                            <Box sx={{
+                                width: "100%",
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "space-between"
+                            }}>
+                                <Button
+                                    variant="contained"
+                                    startIcon={<CancelIcon/>}
+                                    onClick={handleCancel}
+                                    sx={{mt: 4, width: "30%"}}
+                                >
+                                    Cancel
+                                </Button>
 
-                            <Button
-                                variant="contained"
-                                startIcon={<BackIcon/>}
-                                disabled={createDatasetStep === CreateDatasetStep.INFO}
-                                onClick={handleBack}
-                                sx={{mt: 4, width: "30%"}}
-                            >
-                                Back
-                            </Button>
+                                <Button
+                                    variant="contained"
+                                    startIcon={<BackIcon/>}
+                                    disabled={createDatasetStep === CreateDatasetStep.INFO}
+                                    onClick={handleBack}
+                                    sx={{mt: 4, width: "30%"}}
+                                >
+                                    Back
+                                </Button>
 
-                            <Button
-                                variant="contained"
-                                startIcon={
-                                    createDatasetStep === CreateDatasetStep.ISOLATE_DATA
-                                        ? <FinishIcon/>
-                                        : <NextIcon/>
-                                }
-                                onClick={handleNext}
-                                sx={{mt: 4, width: "30%"}}
-                            >
-                                {
-                                    createDatasetStep === CreateDatasetStep.ISOLATE_DATA
-                                        ? "Finish"
-                                        : "Next"
-                                }
-                            </Button>
-                        </Box>
+                                <Button
+                                    variant="contained"
+                                    startIcon={
+                                        createDatasetStep === CreateDatasetStep.ISOLATE_DATA
+                                            ? <FinishIcon/>
+                                            : <NextIcon/>
+                                    }
+                                    onClick={handleNext}
+                                    sx={{mt: 4, width: "30%"}}
+                                >
+                                    {
+                                        createDatasetStep === CreateDatasetStep.ISOLATE_DATA
+                                            ? "Finish"
+                                            : "Next"
+                                    }
+                                </Button>
+                            </Box>
+                        }
                     </Box>
                 </Paper>
             </Box>

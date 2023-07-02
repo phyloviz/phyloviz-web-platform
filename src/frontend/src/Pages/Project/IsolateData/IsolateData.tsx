@@ -14,6 +14,7 @@ import {ErrorAlert} from "../../../Components/Shared/ErrorAlert"
 export default function IsolateData() {
     const {data, loading, error, clearError} = useIsolateData()
 
+    console.log(data)
     return (
         <Container>
             <Paper sx={{

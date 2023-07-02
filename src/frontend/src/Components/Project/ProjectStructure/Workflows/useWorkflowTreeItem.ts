@@ -1,6 +1,6 @@
 import * as React from "react"
 import {useState} from "react"
-import {Add, Visibility} from "@mui/icons-material";
+import {Visibility} from "@mui/icons-material";
 import {WebUiUris} from "../../../../Pages/WebUiUris";
 import {useNavigate, useParams} from "react-router-dom";
 

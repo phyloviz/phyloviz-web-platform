@@ -6,5 +6,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum VolumeType {
     @SerializedName("bind")
-    BIND
+    BIND,
+    @SerializedName("volume")
+    VOLUME
 }

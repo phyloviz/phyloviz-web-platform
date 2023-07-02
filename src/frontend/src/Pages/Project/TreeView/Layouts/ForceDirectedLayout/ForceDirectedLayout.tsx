@@ -6,7 +6,47 @@ import React from "react";
 import {useForceDirectedLayout} from "./useForceDirectedLayout";
 import LoadingSpinner from "../../../../../Components/Shared/LoadingSpinner";
 import {TreeViewSaveCard} from "../../../../../Components/Project/TreeView/TreeViewSaveCard";
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Box from "@mui/material/Box";
+import List from '@mui/material/List';
 
+function ClusterList({numClusters, setSelectedCluster, selectedCluster}: any) {
+    return (
+        <Box
+            sx={{
+                position: "absolute",
+                left: 0,
+                top: "10%",
+                zIndex: 1,
+                backgroundColor: "white",
+                borderRadius: 3,
+                p: 1,
+                ml: "10px",
+                border: 1,
+                borderColor: 'divider',
+                width: "170px",
+                height: "450px",
+                display: "flex",
+                flexDirection: "column",
+                overflow: "auto",
+            }}>
+
+            <List>
+                {
+                    Array.from(Array(numClusters).keys()).map((i) =>
+                        <ListItem key={i} disablePadding>
+                            <ListItemButton selected={i == selectedCluster} onClick={(event) => setSelectedCluster(i)}>
+                                <ListItemText primary={`Cluster ${i}`}/>
+                            </ListItemButton>
+                        </ListItem>
+                    )
+                }
+            </List>
+        </Box>
+    );
+}
 
 /**
  * Force Directed Layout for visualizing the tree.
@@ -17,6 +57,10 @@ export default function ForceDirectedLayout() {
         canvasRef,
         loadingGraph,
         treeView,
+        numClusters,
+        selectedCluster,
+        setSelectedCluster,
+        focusRandom,
 
         autosave,
         switchAutosave,
@@ -85,6 +129,12 @@ export default function ForceDirectedLayout() {
                     <canvas ref={canvasRef}/>
                 </div>
             </div>
+            {
+                !loadingGraph &&
+                <ClusterList numClusters={numClusters} selectedCluster={selectedCluster}
+                             setSelectedCluster={setSelectedCluster}/>
+            }
+
             {doughnutChartData != null &&
                 <DoughnutChart doughnutChartData={doughnutChartData}
                                title={doughnutChartTitle}
@@ -119,6 +169,7 @@ export default function ForceDirectedLayout() {
             <TreeViewSearchCard
                 loadingGraph={loadingGraph}
 
+                focusRandom={focusRandom}
                 onSearch={handleSearch}
             />
             <TreeViewSaveCard

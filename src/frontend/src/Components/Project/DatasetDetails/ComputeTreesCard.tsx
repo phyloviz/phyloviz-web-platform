@@ -30,10 +30,10 @@ export function ComputeTreesCard() {
             label: "Hierarchical Clustering",
             url: WebUiUris.computeHierarchicalClustering(projectId!, datasetId!)
         },
-        {
-            label: "Neighbor Joining",
-            url: WebUiUris.computeNeighborJoining(projectId!, datasetId!)
-        },
+        // {
+        //     label: "Neighbor Joining",
+        //     url: WebUiUris.computeNeighborJoining(projectId!, datasetId!)
+        // },
         {
             label: "nLV Graph",
             url: WebUiUris.computeNlvGraph(projectId!, datasetId!)

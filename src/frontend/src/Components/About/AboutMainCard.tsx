@@ -27,10 +27,10 @@ export function AboutMainCard() {
         </Typography>
         <Typography component="h1" variant="body1" sx={{mt: 4}}>
             The GitHub repository for the PHYLOViZ Web Platform is available <a
-            href={"https://github.com/bodybuilders-team/phyloviz-web-platform"}>here</a>.
+            href={"https://github.com/phyloviz/phyloviz-web-platform"}>here</a>.
             <br/>
             Any known issues or bugs can be reported to our <a
-            href={"https://github.com/bodybuilders-team/phyloviz-web-platform/issues"}>
+            href={"https://github.com/phyloviz/phyloviz-web-platform/issues"}>
             GitHub Issues page</a>.
         </Typography>
         <Box sx={{

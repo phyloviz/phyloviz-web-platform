@@ -4,7 +4,8 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import {useWorkflow} from "./useWorkflow";
 import React from "react";
-import {Error} from "@mui/icons-material";
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
+import {ErrorAlert} from "../../../Components/Shared/ErrorAlert";
 
 
 /**
@@ -13,7 +14,8 @@ import {Error} from "@mui/icons-material";
 export default function Workflow() {
     const {
         workflow,
-        error
+        loading,
+        error, clearError
     } = useWorkflow();
 
     return (
@@ -22,14 +24,6 @@ export default function Workflow() {
             width: "90%",
             overflow: "auto"
         }}>
-            {error &&
-                <Error sx={{
-                    position: "absolute"
-                }}>
-                    error
-                </Error>
-            }
-
             <Container>
                 <Paper sx={{
                     p: 4,
@@ -41,6 +35,10 @@ export default function Workflow() {
                     <Typography component="h1" variant="h3">
                         Workflow
                     </Typography>
+
+                    {loading && <LoadingSpinner text={"Loading workflow..."}/>}
+                    <ErrorAlert error={error} clearError={clearError}/>
+
                     {workflow &&
                         <Box>
                             <Typography component="h2" variant="h6">
@@ -69,7 +67,7 @@ export default function Workflow() {
                                             Logs
                                         </Typography>
                                         {Object.keys(workflow.logs).map((taskName) => {
-                                            return <Box>
+                                            return <Box key={taskName}>
                                                 <Typography component="h1" variant="h5">
                                                     {taskName}
                                                 </Typography>
