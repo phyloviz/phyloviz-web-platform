@@ -1,3 +1,1 @@
-export interface GetTreeOutputModel {
-    // TODO: Add properties.
-}
+export type GetTreeOutputModel = string
