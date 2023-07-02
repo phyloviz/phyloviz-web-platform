@@ -161,10 +161,13 @@ export function useCreateDataset() {
                 }
                 setTriedSubmitting(false)
 
-                if(creatingDatasetRef.current)
+                if (creatingDatasetRef.current)
                     return
 
                 creatingDatasetRef.current = true
+
+                setCreateDatasetStep(CreateDatasetStep.CREATING_DATASET)
+                setCurrStep(3)
 
                 let typingDataId = selectedTypingData
                 let isolateDataId = selectedIsolateData
@@ -180,9 +183,6 @@ export function useCreateDataset() {
                         .catch(err => setError(err.message))
                 }
 
-
-                setCreateDatasetStep(CreateDatasetStep.CREATING_DATASET)
-                setCurrStep(3)
 
                 AdministrationService.createDataset(
                     project?.projectId!,
