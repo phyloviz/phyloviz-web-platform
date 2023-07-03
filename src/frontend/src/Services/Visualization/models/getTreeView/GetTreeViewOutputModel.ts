@@ -3,7 +3,7 @@ export interface GetTreeViewOutputModel {
     nodesTotalCount: number
     edges: Edge[]
     edgesTotalCount: number
-    transformations: Transformations
+    transformations: Transformations | undefined
 }
 
 export interface Edge {

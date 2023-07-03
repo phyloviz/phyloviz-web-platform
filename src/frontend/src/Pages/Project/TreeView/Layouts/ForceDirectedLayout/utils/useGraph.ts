@@ -82,16 +82,16 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
 
         const config = {
             ...defaultConfig,
-            nodeSize: graphRef.current ? graphTransformationsConfig.nodeSize : (data.transformations.nodeSize || defaultConfig.nodeSize),
-            linkWidth: graphRef.current ? graphTransformationsConfig.linkWidth : (data.transformations.linkWidth || defaultConfig.linkWidth),
+            nodeSize: graphRef.current ? graphTransformationsConfig.nodeSize : (data.transformations?.nodeSize || defaultConfig.nodeSize),
+            linkWidth: graphRef.current ? graphTransformationsConfig.linkWidth : (data.transformations?.linkWidth || defaultConfig.linkWidth),
             simulation: {
-                linkSpring: graphRef.current ? simulationConfig.linkSpring : (data.transformations.linkSpring || defaultConfig.simulation?.linkSpring),
-                linkDistance: graphRef.current ? simulationConfig.linkDistance : (data.transformations.linkDistance || defaultConfig.simulation?.linkDistance),
-                gravity: graphRef.current ? simulationConfig.gravity : (data.transformations.gravity || defaultConfig.simulation?.gravity),
-                repulsion: graphRef.current ? simulationConfig.repulsion : (data.transformations.repulsion || defaultConfig.simulation?.repulsion),
-                friction: graphRef.current ? simulationConfig.friction : (data.transformations.friction || defaultConfig.simulation?.friction),
-                repulsionTheta: graphRef.current ? simulationConfig.repulsionTheta : (data.transformations.repulsionTheta || defaultConfig.simulation?.repulsionTheta),
-                decay: graphRef.current ? simulationConfig.decay : (data.transformations.decay || defaultConfig.simulation?.decay)
+                linkSpring: graphRef.current ? simulationConfig.linkSpring : (data.transformations?.linkSpring || defaultConfig.simulation?.linkSpring),
+                linkDistance: graphRef.current ? simulationConfig.linkDistance : (data.transformations?.linkDistance || defaultConfig.simulation?.linkDistance),
+                gravity: graphRef.current ? simulationConfig.gravity : (data.transformations?.gravity || defaultConfig.simulation?.gravity),
+                repulsion: graphRef.current ? simulationConfig.repulsion : (data.transformations?.repulsion || defaultConfig.simulation?.repulsion),
+                friction: graphRef.current ? simulationConfig.friction : (data.transformations?.friction || defaultConfig.simulation?.friction),
+                repulsionTheta: graphRef.current ? simulationConfig.repulsionTheta : (data.transformations?.repulsionTheta || defaultConfig.simulation?.repulsionTheta),
+                decay: graphRef.current ? simulationConfig.decay : (data.transformations?.decay || defaultConfig.simulation?.decay)
             }
         }
         //
@@ -123,8 +123,8 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
         const nodes = graph.nodes.map(node => {
             return {
                 id: node.st,
-                x: node.coordinates[0],
-                y: node.coordinates[1],
+                //x: node.coordinates[0],
+                //y: node.coordinates[1],
             }
         })
 
