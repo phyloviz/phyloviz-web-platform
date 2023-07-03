@@ -39,7 +39,7 @@ export function TreeViewInfoCard({treeView}: TreeViewInfoCardProps) {
             position: "absolute",
             top: 0,
             left: 0,
-            zIndex: 1,
+            zIndex: 2,
             backgroundColor: "white",
             borderRadius: 1,
             p: 1,
