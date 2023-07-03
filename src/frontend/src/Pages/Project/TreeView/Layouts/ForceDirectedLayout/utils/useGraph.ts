@@ -180,7 +180,7 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
         canvasRef,
         loadingGraph,
         selectedCluster,
-        focusRandom: () => graphRef.current?.zoomToNodeById(clusters[selectedCluster].nodes[Math.floor(Math.random() * clusters[selectedCluster].nodes.length)].st),
+        focusRandom: () => graphRef.current?.zoomToNodeById(clusters[selectedCluster].nodes[Math.floor(Math.random() * clusters[selectedCluster].nodes.length)].st, 1000, 15, false),
         setSelectedCluster: (i: number) => {
 
             const cluster = clusters[i]
