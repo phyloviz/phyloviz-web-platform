@@ -26,10 +26,10 @@ export interface GraphTransformationsConfig {
     resetAll: () => void;
 }
 
-const DEFAULT_NODE_LABEL_CHECKED = true
+export const DEFAULT_NODE_LABEL_CHECKED = true
 export const DEFAULT_NODE_LABEL_SIZE = 0
 
-const DEFAULT_LINK_LABEL_CHECKED = false
+export const DEFAULT_LINK_LABEL_CHECKED = false
 export const DEFAULT_LINK_LABEL_SIZE = 0
 export const DEFAULT_LINK_LABEL_TYPE = ""
 

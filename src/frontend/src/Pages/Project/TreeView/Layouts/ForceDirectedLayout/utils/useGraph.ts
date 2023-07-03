@@ -8,8 +8,10 @@ import VisualizationService from "../../../../../../Services/Visualization/Visua
 import {findClusters} from "./useClusterCalculation";
 import {defaultConfig, VizLink, VizNode} from "../useForceDirectedLayout";
 import {
+    DEFAULT_LINK_LABEL_CHECKED,
     DEFAULT_LINK_LABEL_SIZE,
     DEFAULT_LINK_LABEL_TYPE,
+    DEFAULT_NODE_LABEL_CHECKED,
     DEFAULT_NODE_LABEL_SIZE,
     useGraphTransformationsConfig
 } from "./useGraphTransformationsConfig";
@@ -82,16 +84,16 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
 
         const config = {
             ...defaultConfig,
-            nodeSize: graphRef.current ? graphTransformationsConfig.nodeSize : (data.transformations?.nodeSize || defaultConfig.nodeSize),
-            linkWidth: graphRef.current ? graphTransformationsConfig.linkWidth : (data.transformations?.linkWidth || defaultConfig.linkWidth),
+            nodeSize: graphRef.current ? graphTransformationsConfig.nodeSize : (data.transformations?.nodeSize ?? defaultConfig.nodeSize),
+            linkWidth: graphRef.current ? graphTransformationsConfig.linkWidth : (data.transformations?.linkWidth ?? defaultConfig.linkWidth),
             simulation: {
-                linkSpring: graphRef.current ? simulationConfig.linkSpring : (data.transformations?.linkSpring || defaultConfig.simulation?.linkSpring),
-                linkDistance: graphRef.current ? simulationConfig.linkDistance : (data.transformations?.linkDistance || defaultConfig.simulation?.linkDistance),
-                gravity: graphRef.current ? simulationConfig.gravity : (data.transformations?.gravity || defaultConfig.simulation?.gravity),
-                repulsion: graphRef.current ? simulationConfig.repulsion : (data.transformations?.repulsion || defaultConfig.simulation?.repulsion),
-                friction: graphRef.current ? simulationConfig.friction : (data.transformations?.friction || defaultConfig.simulation?.friction),
-                repulsionTheta: graphRef.current ? simulationConfig.repulsionTheta : (data.transformations?.repulsionTheta || defaultConfig.simulation?.repulsionTheta),
-                decay: graphRef.current ? simulationConfig.decay : (data.transformations?.decay || defaultConfig.simulation?.decay)
+                linkSpring: graphRef.current ? simulationConfig.linkSpring : (data.transformations?.linkSpring ?? defaultConfig.simulation?.linkSpring),
+                linkDistance: graphRef.current ? simulationConfig.linkDistance : (data.transformations?.linkDistance ?? defaultConfig.simulation?.linkDistance),
+                gravity: graphRef.current ? simulationConfig.gravity : (data.transformations?.gravity ?? defaultConfig.simulation?.gravity),
+                repulsion: graphRef.current ? simulationConfig.repulsion : (data.transformations?.repulsion ?? defaultConfig.simulation?.repulsion),
+                friction: graphRef.current ? simulationConfig.friction : (data.transformations?.friction ?? defaultConfig.simulation?.friction),
+                repulsionTheta: graphRef.current ? simulationConfig.repulsionTheta : (data.transformations?.repulsionTheta ?? defaultConfig.simulation?.repulsionTheta),
+                decay: graphRef.current ? simulationConfig.decay : (data.transformations?.decay ?? defaultConfig.simulation?.decay)
             }
         }
         //
@@ -106,7 +108,10 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
 
         const treeViewGraph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, config)
 
+        let firstClusterRendered = true
+
         if (graphRef.current) {
+            firstClusterRendered = false
             graphRef.current.destroy()
         }
 
@@ -129,9 +134,9 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
         })
 
         await graphRef.current!.setData(nodes, links)
-        graphRef.current?.renderNodeLabels(graphTransformationsConfig.nodeLabel)
-        graphRef.current?.renderLinkLabels(graphTransformationsConfig.linkLabel)
-        if(!simulationConfig.simulationRunning) {
+        graphRef.current?.renderNodeLabels(!firstClusterRendered ? graphTransformationsConfig.nodeLabel : (data.transformations?.nodeLabel ?? DEFAULT_NODE_LABEL_CHECKED))
+        graphRef.current?.renderLinkLabels(!firstClusterRendered ? graphTransformationsConfig.linkLabel : (data.transformations?.linkLabel ?? DEFAULT_LINK_LABEL_CHECKED))
+        if (!simulationConfig.simulationRunning) {
             graphRef.current?.pause()
         }
 
