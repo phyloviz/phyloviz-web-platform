@@ -106,6 +106,7 @@ export function useForceDirectedLayout() {
 
     return {
         canvasRef,
+        graphRef,
         loadingGraph,
         treeView: cascadingInfoTreeView,
 
@@ -116,8 +117,14 @@ export function useForceDirectedLayout() {
         numClusters,
         selectedCluster,
         setSelectedCluster,
-        pauseAnimation: () => graphRef.current?.pause(),
-        restartAnimation: () => graphRef.current?.restart(),
+        pauseAnimation: () => {
+            simulationConfig.setSimulationRunning(false)
+            graphRef.current?.pause()
+        },
+        restartAnimation: () => {
+            simulationConfig.setSimulationRunning(true)
+            graphRef.current?.restart()
+        },
 
         resetSimulationFilters: () => {
             // TODO: reset filters

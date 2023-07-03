@@ -13,6 +13,7 @@ export interface SimulationConfig {
     friction: number;
     repulsionTheta: number;
     decay: number;
+    simulationRunning: boolean;
 
     setLinkSpring: (value: number) => void;
     setLinkDistance: (value: number) => void;
@@ -21,6 +22,7 @@ export interface SimulationConfig {
     setRepulsion: (value: number) => void;
     setRepulsionTheta: (value: number) => void;
     setDecay: (value: number) => void;
+    setSimulationRunning: (value: boolean) => void;
 
     resetAll: () => void;
 }
@@ -43,6 +45,8 @@ export function useSimulationConfig(
     const [repulsionTheta, setRepulsionTheta] = useState(graphRef.current?.config.simulation.repulsionTheta ?? defaultConfig.simulation!.repulsionTheta!)
     const [decay, setDecay] = useState(graphRef.current?.config.simulation.decay ?? defaultConfig.simulation!.decay!)
 
+    const [simulationRunning, setSimulationRunning] = useState(graphRef.current?.isSimulationRunning ?? true)
+
     useEffect(() => {
         if (loadingGraph)
             return
@@ -54,6 +58,8 @@ export function useSimulationConfig(
         setFriction(graphRef.current?.config.simulation.friction ?? defaultConfig.simulation!.friction!)
         setRepulsionTheta(graphRef.current?.config.simulation.repulsionTheta ?? defaultConfig.simulation!.repulsionTheta!)
         setDecay(graphRef.current?.config.simulation.decay ?? defaultConfig.simulation!.decay!)
+        setSimulationRunning(graphRef.current?.isSimulationRunning ?? true)
+
     }, [loadingGraph])
 
     return {
@@ -64,6 +70,7 @@ export function useSimulationConfig(
         friction,
         repulsionTheta,
         decay,
+        simulationRunning,
 
         setLinkSpring: (value: number) => {
             setLinkSpring(value)
@@ -92,6 +99,9 @@ export function useSimulationConfig(
         setDecay: (value: number) => {
             setDecay(value)
             graphRef.current?.setConfig({simulation: {decay: value}})
+        },
+        setSimulationRunning: (value: boolean) => {
+            setSimulationRunning(value)
         },
 
         resetAll: () => {

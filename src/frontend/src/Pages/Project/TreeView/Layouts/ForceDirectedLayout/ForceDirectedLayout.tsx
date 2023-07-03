@@ -143,6 +143,8 @@ export default function ForceDirectedLayout() {
             <TreeViewSettingsCard
                 loadingGraph={loadingGraph}
 
+                simulationRunning={simulationConfig.simulationRunning}
+
                 onPauseAnimation={pauseAnimation}
                 onRestartAnimation={restartAnimation}
 

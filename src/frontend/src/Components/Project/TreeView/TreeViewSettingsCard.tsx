@@ -15,6 +15,8 @@ import {
 interface TreeViewSettingsCardProps {
     loadingGraph: boolean
 
+    simulationRunning: boolean
+
     onPauseAnimation: () => void
     onRestartAnimation: () => void
 
@@ -46,6 +48,8 @@ export function TreeViewSettingsCard(
     {
         loadingGraph,
 
+        simulationRunning,
+
         onPauseAnimation,
         onRestartAnimation,
 
@@ -70,7 +74,7 @@ export function TreeViewSettingsCard(
         onPrint
     }: TreeViewSettingsCardProps
 ) {
-    const [animationRunning, setAnimationRunning] = useState(true)
+    const [animationRunning, setAnimationRunning] = useState(simulationRunning)
     const [transformationsOpen, setTransformationsOpen] = useState(false)
 
     return <Box sx={{

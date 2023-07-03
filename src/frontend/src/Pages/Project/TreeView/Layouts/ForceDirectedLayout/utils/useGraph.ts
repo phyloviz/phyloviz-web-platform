@@ -131,6 +131,9 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
         await graphRef.current!.setData(nodes, links)
         graphRef.current?.renderNodeLabels(graphTransformationsConfig.nodeLabel)
         graphRef.current?.renderLinkLabels(graphTransformationsConfig.linkLabel)
+        if(!simulationConfig.simulationRunning) {
+            graphRef.current?.pause()
+        }
 
         console.log("finished loading graph")
         setLoadingGraph(false)
