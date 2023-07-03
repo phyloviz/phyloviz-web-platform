@@ -3,7 +3,7 @@
 
 db = db.getSiblingDB('phyloviz-web-platform')
 
-db.createCollection('workflow-templates', { capped: false });
+db.createCollection('workflow-templates', {capped: false});
 
 //WORKFLOW_TEMPLATES
 db['tool-templates'].insertMany(
@@ -236,529 +236,499 @@ db['tool-templates'].insertMany(
     ]
 )
 //TOOL_TEMPLATES
-db['workflow-templates'].insertMany([
-    {
-        "type": "compute-distance-matrix",
-        "name": "Compute Distance Matrix",
-        "description": "Computes a distance matrix using the typing data file in the dataset, given the distance calculation function.",
-        "arguments": {
-            "datasetId": {
-                "type": "datasetId"
-            },
-            "function": {
-                "type": "string",
-                "allowed-values": [
-                    "hamming",
-                    "grapetree",
-                    "kimura"
-                ]
-            }
-        },
-        "tasks": [
-            {
-                "taskId": "download",
-                "tool": "downloader",
-                "action": {
-                    "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
+db['workflow-templates'].insertMany(
+    [
+        {
+            "type": "compute-distance-matrix",
+            "name": "Compute Distance Matrix",
+            "description": "Computes a distance matrix using the typing data file in the dataset, given the distance calculation function.",
+            "arguments": {
+                "datasetId": {
+                    "type": "datasetId"
                 },
-                "children": [
-                    "distanceCalculation"
-                ]
-            },
-            {
-                "taskId": "distanceCalculation",
-                "tool": "phylolib",
-                "action": {
-                    "command": "distance ${function} --dataset=ml:/phyloviz-web-platform/typing_dataset.txt --out=symmetric:/phyloviz-web-platform/distance_matrix.txt"
-                },
-                "children": [
-                    "upload"
-                ]
-            },
-            {
-                "taskId": "upload",
-                "tool": "uploader",
-                "action": {
-                    "command": " --file-path=/phyloviz-web-platform/distance_matrix.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=distance-matrix --source-type=function --function=${function}"
+                "function": {
+                    "type": "string",
+                    "allowed-values": [
+                        "hamming",
+                        "grapetree",
+                        "kimura"
+                    ]
                 }
-            }
-        ]
-    },
-    {
-        "type": "compute-tree",
-        "name": "Compute Tree",
-        "description": "Computes a tree, given an existing distance matrix of the dataset and the tree calculation algorithm.",
-        "arguments": {
-            "datasetId": {
-                "type": "datasetId"
             },
-            "distanceMatrixId": {
-                "type": "distanceMatrixId"
-            },
-            "algorithm": {
-                "type": "string",
-                "allowed-values": [
-                    "goeburst",
-                    "edmonds",
-                    "sl",
-                    "cl",
-                    "upgma",
-                    "upgmc",
-                    "wpgma",
-                    "wpgmc",
-                    "saitounei",
-                    "studierkepler",
-                    "unj"
-                ]
-            }
-        },
-        "tasks": [
-            {
-                "taskId": "download",
-                "tool": "downloader",
-                "action": {
-                    "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-id=${distanceMatrixId} --resource-type=distance-matrix  --workflow-id=${workflowId} --out=/phyloviz-web-platform/distance_matrix.txt"
+            "tasks": [
+                {
+                    "taskId": "download",
+                    "tool": "downloader",
+                    "action": {
+                        "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
+                    },
+                    "children": [
+                        "distanceCalculation"
+                    ]
                 },
-                "children": [
-                    "treeCalculation"
-                ]
-            },
-            {
-                "taskId": "treeCalculation",
-                "tool": "phylolib",
-                "action": {
-                    "command": "algorithm ${algorithm} --matrix=symmetric:/phyloviz-web-platform/distance_matrix.txt --out=newick:/phyloviz-web-platform/tree.txt"
+                {
+                    "taskId": "distanceCalculation",
+                    "tool": "phylolib",
+                    "action": {
+                        "command": "distance ${function} --dataset=ml:/phyloviz-web-platform/typing_dataset.txt --out=symmetric:/phyloviz-web-platform/distance_matrix.txt"
+                    },
+                    "children": [
+                        "upload"
+                    ]
                 },
-                "children": [
-                    "upload"
-                ]
-            },
-            {
-                "taskId": "upload",
-                "tool": "uploader",
-                "action": {
-                    "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree --source-type=algorithm-distance-matrix --algorithm=${algorithm} --distance-matrix-id=${distanceMatrixId} --parameters={}"
+                {
+                    "taskId": "upload",
+                    "tool": "uploader",
+                    "action": {
+                        "command": " --file-path=/phyloviz-web-platform/distance_matrix.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=distance-matrix --source-type=function --function=${function}"
+                    }
                 }
-            }
-        ]
-    },
-    {
-        "type": "compute-tree-without-distance-matrix",
-        "name": "Compute Tree Without Distance Matrix",
-        "description": "Computes a tree from the typing data file of the dataset (distance matrix internally calculated), given the distance calculation function and the tree calculation algorithm.",
-        "arguments": {
-            "datasetId": {
-                "type": "datasetId"
-            },
-            "function": {
-                "type": "string",
-                "allowed-values": [
-                    "hamming",
-                    "grapetree",
-                    "kimura"
-                ]
-            },
-            "algorithm": {
-                "type": "string",
-                "allowed-values": [
-                    "goeburst",
-                    "edmonds",
-                    "sl",
-                    "cl",
-                    "upgma",
-                    "upgmc",
-                    "wpgma",
-                    "wpgmc",
-                    "saitounei",
-                    "studierkepler",
-                    "unj"
-                ]
-            }
+            ]
         },
-        "tasks": [
-            {
-                "taskId": "download",
-                "tool": "downloader",
-                "action": {
-                    "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
+        {
+            "type": "compute-tree",
+            "name": "Compute Tree",
+            "description": "Computes a tree, given an existing distance matrix of the dataset and the tree calculation algorithm.",
+            "arguments": {
+                "datasetId": {
+                    "type": "datasetId"
                 },
-                "children": [
-                    "treeCalculation"
-                ]
-            },
-            {
-                "taskId": "treeCalculation",
-                "tool": "phylolib",
-                "action": {
-                    "command": "algorithm ${algorithm} --out=newick:/phyloviz-web-platform/tree.txt : distance ${function} --dataset=ml:/phyloviz-web-platform/typing_dataset.txt"
+                "distanceMatrixId": {
+                    "type": "distanceMatrixId"
                 },
-                "children": [
-                    "upload"
-                ]
-            },
-            {
-                "taskId": "upload",
-                "tool": "uploader",
-                "action": {
-                    "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree --source-type=algorithm-typing-data --algorithm=${algorithm} --parameters={}"
+                "algorithm": {
+                    "type": "string",
+                    "allowed-values": [
+                        "goeburst",
+                        "edmonds",
+                        "sl",
+                        "cl",
+                        "upgma",
+                        "upgmc",
+                        "wpgma",
+                        "wpgmc",
+                        "saitounei",
+                        "studierkepler",
+                        "unj"
+                    ]
                 }
-            }
-        ]
-    },
-    {
-        "type": "compute-distance-matrix-and-tree",
-        "name": "Compute Distance Matrix and Tree",
-        "description": "Computes a distance matrix and a tree from the typing data file of the dataset, given the distance calculation function and the tree calculation algorithm.",
-        "arguments": {
-            "datasetId": {
-                "type": "datasetId"
             },
-            "function": {
-                "type": "string",
-                "allowed-values": [
-                    "hamming",
-                    "grapetree",
-                    "kimura"
-                ]
-            },
-            "algorithm": {
-                "type": "string",
-                "allowed-values": [
-                    "goeburst",
-                    "edmonds",
-                    "sl",
-                    "cl",
-                    "upgma",
-                    "upgmc",
-                    "wpgma",
-                    "wpgmc",
-                    "saitounei",
-                    "studierkepler",
-                    "unj"
-                ]
-            }
+            "tasks": [
+                {
+                    "taskId": "download",
+                    "tool": "downloader",
+                    "action": {
+                        "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-id=${distanceMatrixId} --resource-type=distance-matrix  --workflow-id=${workflowId} --out=/phyloviz-web-platform/distance_matrix.txt"
+                    },
+                    "children": [
+                        "treeCalculation"
+                    ]
+                },
+                {
+                    "taskId": "treeCalculation",
+                    "tool": "phylolib",
+                    "action": {
+                        "command": "algorithm ${algorithm} --matrix=symmetric:/phyloviz-web-platform/distance_matrix.txt --out=newick:/phyloviz-web-platform/tree.txt"
+                    },
+                    "children": [
+                        "upload"
+                    ]
+                },
+                {
+                    "taskId": "upload",
+                    "tool": "uploader",
+                    "action": {
+                        "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree --source-type=algorithm-distance-matrix --algorithm=${algorithm} --distance-matrix-id=${distanceMatrixId} --parameters={}"
+                    }
+                }
+            ]
         },
-        "tasks": [
-            {
-                "taskId": "download",
-                "tool": "downloader",
-                "action": {
-                    "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
+        {
+            "type": "compute-tree-without-distance-matrix",
+            "name": "Compute Tree Without Distance Matrix",
+            "description": "Computes a tree from the typing data file of the dataset (distance matrix internally calculated), given the distance calculation function and the tree calculation algorithm.",
+            "arguments": {
+                "datasetId": {
+                    "type": "datasetId"
                 },
-                "children": [
-                    "distanceCalculation"
-                ]
-            },
-            {
-                "taskId": "distanceCalculation",
-                "tool": "phylolib",
-                "action": {
-                    "command": "distance ${function} --dataset=ml:/phyloviz-web-platform/typing_dataset.txt --out=symmetric:/phyloviz-web-platform/distance_matrix.txt"
+                "function": {
+                    "type": "string",
+                    "allowed-values": [
+                        "hamming",
+                        "grapetree",
+                        "kimura"
+                    ]
                 },
-                "children": [
-                    "upload_distance_matrix"
-                ]
-            },
-            {
-                "taskId": "upload_distance_matrix",
-                "tool": "uploader",
-                "action": {
-                    "command": " --file-path=/phyloviz-web-platform/distance_matrix.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=distance-matrix --source-type=function --function=${function}"
-                },
-                "children": [
-                    "treeCalculation"
-                ]
-            },
-            {
-                "taskId": "treeCalculation",
-                "tool": "phylolib",
-                "action": {
-                    "command": "algorithm ${algorithm} --matrix=symmetric:/phyloviz-web-platform/distance_matrix.txt --out=newick:/phyloviz-web-platform/tree.txt"
-                },
-                "children": [
-                    "upload_tree"
-                ]
-            },
-            {
-                "taskId": "upload_tree",
-                "tool": "uploader",
-                "action": {
-                    "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree --source-type=algorithm-distance-matrix --algorithm=${algorithm} --parameters={}"
+                "algorithm": {
+                    "type": "string",
+                    "allowed-values": [
+                        "goeburst",
+                        "edmonds",
+                        "sl",
+                        "cl",
+                        "upgma",
+                        "upgmc",
+                        "wpgma",
+                        "wpgmc",
+                        "saitounei",
+                        "studierkepler",
+                        "unj"
+                    ]
                 }
-            }
-        ]
-    },
-    {
-        "type": "compute-tree-and-index",
-        "name": "Compute Tree And Index",
-        "description": "Computes a tree and indexes it in the database, given an existing distance matrix of the dataset and the tree calculation algorithm.",
-        "arguments": {
-            "datasetId": {
-                "type": "datasetId"
             },
-            "distanceMatrixId": {
-                "type": "distanceMatrixId"
-            },
-            "algorithm": {
-                "type": "string",
-                "allowed-values": [
-                    "goeburst",
-                    "edmonds",
-                    "sl",
-                    "cl",
-                    "upgma",
-                    "upgmc",
-                    "wpgma",
-                    "wpgmc",
-                    "saitounei",
-                    "studierkepler",
-                    "unj"
-                ]
-            }
+            "tasks": [
+                {
+                    "taskId": "download",
+                    "tool": "downloader",
+                    "action": {
+                        "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
+                    },
+                    "children": [
+                        "treeCalculation"
+                    ]
+                },
+                {
+                    "taskId": "treeCalculation",
+                    "tool": "phylolib",
+                    "action": {
+                        "command": "algorithm ${algorithm} --out=newick:/phyloviz-web-platform/tree.txt : distance ${function} --dataset=ml:/phyloviz-web-platform/typing_dataset.txt"
+                    },
+                    "children": [
+                        "upload"
+                    ]
+                },
+                {
+                    "taskId": "upload",
+                    "tool": "uploader",
+                    "action": {
+                        "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree --source-type=algorithm-typing-data --algorithm=${algorithm} --parameters={}"
+                    }
+                }
+            ]
         },
-        "tasks": [
-            {
-                "taskId": "download",
-                "tool": "downloader",
-                "action": {
-                    "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-id=${distanceMatrixId} --resource-type=distance-matrix  --workflow-id=${workflowId} --out=/phyloviz-web-platform/distance_matrix.txt"
+        {
+            "type": "compute-distance-matrix-and-tree",
+            "name": "Compute Distance Matrix and Tree",
+            "description": "Computes a distance matrix and a tree from the typing data file of the dataset, given the distance calculation function and the tree calculation algorithm.",
+            "arguments": {
+                "datasetId": {
+                    "type": "datasetId"
                 },
-                "children": [
-                    "treeCalculation"
-                ]
-            },
-            {
-                "taskId": "treeCalculation",
-                "tool": "phylolib",
-                "action": {
-                    "command": "algorithm ${algorithm} --matrix=symmetric:/phyloviz-web-platform/distance_matrix.txt --out=newick:/phyloviz-web-platform/tree.txt"
+                "function": {
+                    "type": "string",
+                    "allowed-values": [
+                        "hamming",
+                        "grapetree",
+                        "kimura"
+                    ]
                 },
-                "children": [
-                    "upload"
-                ]
-            },
-            {
-                "taskId": "upload",
-                "tool": "uploader",
-                "action": {
-                    "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree --source-type=algorithm-distance-matrix --algorithm=${algorithm} --distance-matrix-id=${distanceMatrixId} --parameters={}"
-                },
-                "children": [
-                    "treeIndexing"
-                ]
-            },
-            {
-                "taskId": "treeIndexing",
-                "tool": "tree_indexer",
-                "action": {
-                    "command": "--tree-file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId}"
+                "algorithm": {
+                    "type": "string",
+                    "allowed-values": [
+                        "goeburst",
+                        "edmonds",
+                        "sl",
+                        "cl",
+                        "upgma",
+                        "upgmc",
+                        "wpgma",
+                        "wpgmc",
+                        "saitounei",
+                        "studierkepler",
+                        "unj"
+                    ]
                 }
-            }
-        ]
-    },
-    {
-        "type": "index-typing-data",
-        "name": "Index Typing Data",
-        "description": "Indexes the typing data of a dataset in the database.",
-        "arguments": {
-            "datasetId": {
-                "type": "datasetId"
-            }
+            },
+            "tasks": [
+                {
+                    "taskId": "download",
+                    "tool": "downloader",
+                    "action": {
+                        "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
+                    },
+                    "children": [
+                        "distanceCalculation"
+                    ]
+                },
+                {
+                    "taskId": "distanceCalculation",
+                    "tool": "phylolib",
+                    "action": {
+                        "command": "distance ${function} --dataset=ml:/phyloviz-web-platform/typing_dataset.txt --out=symmetric:/phyloviz-web-platform/distance_matrix.txt"
+                    },
+                    "children": [
+                        "upload_distance_matrix"
+                    ]
+                },
+                {
+                    "taskId": "upload_distance_matrix",
+                    "tool": "uploader",
+                    "action": {
+                        "command": " --file-path=/phyloviz-web-platform/distance_matrix.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=distance-matrix --source-type=function --function=${function}"
+                    },
+                    "children": [
+                        "treeCalculation"
+                    ]
+                },
+                {
+                    "taskId": "treeCalculation",
+                    "tool": "phylolib",
+                    "action": {
+                        "command": "algorithm ${algorithm} --matrix=symmetric:/phyloviz-web-platform/distance_matrix.txt --out=newick:/phyloviz-web-platform/tree.txt"
+                    },
+                    "children": [
+                        "upload_tree"
+                    ]
+                },
+                {
+                    "taskId": "upload_tree",
+                    "tool": "uploader",
+                    "action": {
+                        "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree --source-type=algorithm-distance-matrix --algorithm=${algorithm} --parameters={}"
+                    }
+                }
+            ]
         },
-        "tasks": [
-            {
-                "taskId": "download",
-                "tool": "downloader",
-                "action": {
-                    "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data  --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
+        {
+            "type": "compute-tree-and-index",
+            "name": "Compute Tree And Index",
+            "description": "Computes a tree and indexes it in the database, given an existing distance matrix of the dataset and the tree calculation algorithm.",
+            "arguments": {
+                "datasetId": {
+                    "type": "datasetId"
                 },
-                "children": [
-                    "typingDataIndexing"
-                ]
-            },
-            {
-                "taskId": "typingDataIndexing",
-                "tool": "typing_data_indexer",
-                "action": {
-                    "command": "--typing-data-file-path=/phyloviz-web-platform/typing_dataset.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId}"
+                "distanceMatrixId": {
+                    "type": "distanceMatrixId"
+                },
+                "algorithm": {
+                    "type": "string",
+                    "allowed-values": [
+                        "goeburst",
+                        "edmonds",
+                        "sl",
+                        "cl",
+                        "upgma",
+                        "upgmc",
+                        "wpgma",
+                        "wpgmc",
+                        "saitounei",
+                        "studierkepler",
+                        "unj"
+                    ]
                 }
-            }
-        ]
-    },
-    {
-        "type": "index-isolate-data",
-        "name": "Index Isolate Data",
-        "description": "Indexes the isolate data of a dataset in the database.",
-        "arguments": {
-            "datasetId": {
-                "type": "datasetId"
-            }
+            },
+            "tasks": [
+                {
+                    "taskId": "download",
+                    "tool": "downloader",
+                    "action": {
+                        "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-id=${distanceMatrixId} --resource-type=distance-matrix  --workflow-id=${workflowId} --out=/phyloviz-web-platform/distance_matrix.txt"
+                    },
+                    "children": [
+                        "treeCalculation"
+                    ]
+                },
+                {
+                    "taskId": "treeCalculation",
+                    "tool": "phylolib",
+                    "action": {
+                        "command": "algorithm ${algorithm} --matrix=symmetric:/phyloviz-web-platform/distance_matrix.txt --out=newick:/phyloviz-web-platform/tree.txt"
+                    },
+                    "children": [
+                        "treeIndexing"
+                    ]
+                },
+                {
+                    "taskId": "treeIndexing",
+                    "tool": "tree_indexer",
+                    "action": {
+                        "command": "--tree-file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --source-type=algorithm-distance-matrix --algorithm=${algorithm} --distance-matrix-id=${distanceMatrixId} --parameters={}"
+                    },
+                    "children": [
+                        "upload"
+                    ]
+                },
+                {
+                    "taskId": "upload",
+                    "tool": "uploader",
+                    "action": {
+                        "command": " --file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId} --resource-type=tree"
+                    }
+                }
+            ]
         },
-        "tasks": [
-            {
-                "taskId": "download",
-                "tool": "downloader",
-                "action": {
-                    "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=isolate-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/isolate_data.txt"
-                },
-                "children": [
-                    "isolateDataIndexing"
-                ]
-            },
-            {
-                "taskId": "isolateDataIndexing",
-                "tool": "isolate_data_indexer",
-                "action": {
-                    "command": "--isolate-data-file-path=/phyloviz-web-platform/isolate_data.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId}"
+        {
+            "type": "index-typing-data",
+            "name": "Index Typing Data",
+            "description": "Indexes the typing data of a dataset in the database.",
+            "arguments": {
+                "datasetId": {
+                    "type": "datasetId"
                 }
-            }
-        ]
-    },
-    {
-        "type": "index-typing-and-isolate-data",
-        "name": "Index Typing and Isolate Data",
-        "description": "Indexes the typing and isolate data of a dataset in the database.",
-        "arguments": {
-            "datasetId": {
-                "type": "datasetId"
-            }
+            },
+            "tasks": [
+                {
+                    "taskId": "download",
+                    "tool": "downloader",
+                    "action": {
+                        "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data  --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
+                    },
+                    "children": [
+                        "typingDataIndexing"
+                    ]
+                },
+                {
+                    "taskId": "typingDataIndexing",
+                    "tool": "typing_data_indexer",
+                    "action": {
+                        "command": "--typing-data-file-path=/phyloviz-web-platform/typing_dataset.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId}"
+                    }
+                }
+            ]
         },
-        "tasks": [
-            {
-                "taskId": "downloadTyping",
-                "tool": "downloader",
-                "action": {
-                    "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data  --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
-                },
-                "children": [
-                    "typingDataIndexing"
-                ]
-            },
-            {
-                "taskId": "typingDataIndexing",
-                "tool": "typing_data_indexer",
-                "action": {
-                    "command": "--typing-data-file-path=/phyloviz-web-platform/typing_dataset.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId}"
-                },
-                "children": [
-                    "downloadIsolate"
-                ]
-            },
-            {
-                "taskId": "downloadIsolate",
-                "tool": "downloader",
-                "action": {
-                    "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=isolate-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/isolate_data.txt"
-                },
-                "children": [
-                    "isolateDataIndexing"
-                ]
-            },
-            {
-                "taskId": "isolateDataIndexing",
-                "tool": "isolate_data_indexer",
-                "action": {
-                    "command": "--isolate-data-file-path=/phyloviz-web-platform/isolate_data.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId}"
+        {
+            "type": "index-isolate-data",
+            "name": "Index Isolate Data",
+            "description": "Indexes the isolate data of a dataset in the database.",
+            "arguments": {
+                "datasetId": {
+                    "type": "datasetId"
                 }
-            }
-        ]
-    },
-    {
-        "type": "index-tree",
-        "name": "Index Tree",
-        "description": "Indexes a tree in the database.",
-        "arguments": {
-            "datasetId": {
-                "type": "datasetId"
             },
-            "treeId": {
-                "type": "treeId"
-            }
+            "tasks": [
+                {
+                    "taskId": "download",
+                    "tool": "downloader",
+                    "action": {
+                        "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=isolate-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/isolate_data.txt"
+                    },
+                    "children": [
+                        "isolateDataIndexing"
+                    ]
+                },
+                {
+                    "taskId": "isolateDataIndexing",
+                    "tool": "isolate_data_indexer",
+                    "action": {
+                        "command": "--isolate-data-file-path=/phyloviz-web-platform/isolate_data.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId}"
+                    }
+                }
+            ]
         },
-        "tasks": [
-            {
-                "taskId": "download",
-                "tool": "downloader",
-                "action": {
-                    "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-id=${treeId} --resource-type=tree --workflow-id=${workflowId} --out=/phyloviz-web-platform/tree.txt"
+        {
+            "type": "index-typing-and-isolate-data",
+            "name": "Index Typing and Isolate Data",
+            "description": "Indexes the typing and isolate data of a dataset in the database.",
+            "arguments": {
+                "datasetId": {
+                    "type": "datasetId"
+                }
+            },
+            "tasks": [
+                {
+                    "taskId": "downloadTyping",
+                    "tool": "downloader",
+                    "action": {
+                        "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=typing-data  --workflow-id=${workflowId} --out=/phyloviz-web-platform/typing_dataset.txt"
+                    },
+                    "children": [
+                        "typingDataIndexing"
+                    ]
                 },
-                "children": [
-                    "treeIndexing"
-                ]
-            },
-            {
-                "taskId": "treeIndexing",
-                "tool": "tree_indexer",
-                "action": {
-                    "command": "--tree-file-path=/phyloviz-web-platform/tree.txt --project-id=${projectId} --dataset-id=${datasetId} --tree-id=${treeId} --workflow-id=${workflowId}"
-                }
-            }
-        ]
-    },
-    {
-        "type": "compute-tree-view",
-        "name": "Compute Tree View",
-        "description": "Computes the tree view of a tree, given a tree visualization layout.",
-        "arguments": {
-            "datasetId": {
-                "type": "datasetId"
-            },
-            "treeId": {
-                "type": "treeId"
-            },
-            "layout": {
-                "type": "string",
-                "allowed-values": [
-                    "force-directed",
-                    "radial"
-                ]
-            }
-        },
-        "tasks": [
-            {
-                "taskId": "treeViewCompute",
-                "tool": "compute_tree_view",
-                "action": {
-                    "command": "--project-id=${projectId} --dataset-id=${datasetId} --tree-id=${treeId} --workflow-id=${workflowId} --layout=${layout}"
-                }
-            }
-        ]
-    },
-    {
-        "type": "file-upload-by-url",
-        "name": "File Upload by URL",
-        "description": "Uploads a file to the project using an URL source.",
-        "arguments": {
-            "url": {
-                "type": "regex",
-                "pattern": "^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$"
-            },
-            "file_type": {
-                "type": "string",
-                "allowed-values": [
-                    "typing_data",
-                    "isolate_data"
-                ]
-            }
-        },
-        "tasks": [
-            {
-                "taskId": "upload",
-                "tool": "rclone",
-                "action": {
-                    "command": "copyurl ${url} phyloviz:phyloviz-web-platform/projects/${projectId}/${workflowId}"
+                {
+                    "taskId": "typingDataIndexing",
+                    "tool": "typing_data_indexer",
+                    "action": {
+                        "command": "--typing-data-file-path=/phyloviz-web-platform/typing_dataset.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId}"
+                    },
+                    "children": [
+                        "downloadIsolate"
+                    ]
                 },
-                "children": [
-                    "createMetadata"
-                ]
-            },
-            {
-                "taskId": "createMetadata",
-                "tool": "metadata_uploader",
-                "action": {
-                    "command": "--original_url=${url} --url=http://localhost:9444/phyloviz-web-platform/projects/${projectId}/${workflowId} --type=${file_type} --project-id=${projectId} --workflow-id=${workflowId}"
+                {
+                    "taskId": "downloadIsolate",
+                    "tool": "downloader",
+                    "action": {
+                        "command": "--project-id=${projectId} --dataset-id=${datasetId} --resource-type=isolate-data --workflow-id=${workflowId} --out=/phyloviz-web-platform/isolate_data.txt"
+                    },
+                    "children": [
+                        "isolateDataIndexing"
+                    ]
+                },
+                {
+                    "taskId": "isolateDataIndexing",
+                    "tool": "isolate_data_indexer",
+                    "action": {
+                        "command": "--isolate-data-file-path=/phyloviz-web-platform/isolate_data.txt --project-id=${projectId} --dataset-id=${datasetId} --workflow-id=${workflowId}"
+                    }
                 }
-            }
-        ]
-    }
-])
+            ]
+        },
+        {
+            "type": "compute-tree-view",
+            "name": "Compute Tree View",
+            "description": "Computes the tree view of a tree, given a tree visualization layout.",
+            "arguments": {
+                "datasetId": {
+                    "type": "datasetId"
+                },
+                "treeId": {
+                    "type": "treeId"
+                },
+                "layout": {
+                    "type": "string",
+                    "allowed-values": [
+                        "force-directed",
+                        "radial"
+                    ]
+                }
+            },
+            "tasks": [
+                {
+                    "taskId": "treeViewCompute",
+                    "tool": "compute_tree_view",
+                    "action": {
+                        "command": "--project-id=${projectId} --dataset-id=${datasetId} --tree-id=${treeId} --workflow-id=${workflowId} --layout=${layout}"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "file-upload-by-url",
+            "name": "File Upload by URL",
+            "description": "Uploads a file to the project using an URL source.",
+            "arguments": {
+                "url": {
+                    "type": "regex",
+                    "pattern": "^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$"
+                },
+                "file_type": {
+                    "type": "string",
+                    "allowed-values": [
+                        "typing_data",
+                        "isolate_data"
+                    ]
+                }
+            },
+            "tasks": [
+                {
+                    "taskId": "upload",
+                    "tool": "rclone",
+                    "action": {
+                        "command": "copyurl ${url} phyloviz:phyloviz-web-platform/projects/${projectId}/${workflowId}"
+                    },
+                    "children": [
+                        "createMetadata"
+                    ]
+                },
+                {
+                    "taskId": "createMetadata",
+                    "tool": "metadata_uploader",
+                    "action": {
+                        "command": "--original_url=${url} --url=http://localhost:9444/phyloviz-web-platform/projects/${projectId}/${workflowId} --type=${file_type} --project-id=${projectId} --workflow-id=${workflowId}"
+                    }
+                }
+            ]
+        }
+    ]
+)

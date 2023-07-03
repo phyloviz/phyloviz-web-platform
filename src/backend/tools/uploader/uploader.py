@@ -25,82 +25,25 @@ workflows_collection = db['workflow-instances']
 datasets_collection = db['datasets']
 
 
-def tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, source_type, algorithm,
-                 distance_matrix_id, parameters):
+def tree_handler(s3_output_path, project_id, dataset_id, tree_id):
     trees_collection = db['trees']
 
-    if source_type == 'algorithm-distance-matrix':
-        source_type = 'algorithm_distance_matrix'
-
-        if distance_matrix_id is None:
-            # Get the distance matrix ID from the workflow instance
-            workflow_instance = workflows_collection.find_one(
-                {
-                    '_id': ObjectId(workflow_id)
-                }
-            )
-
-            if workflow_instance is None:
-                raise Exception(f'Workflow instance with ID {workflow_id} not found')
-
-            distance_matrix_id = workflow_instance.get('data').get('distanceMatrixId')
-
-            if distance_matrix_id is None:
-                raise Exception('Distance matrix ID is required when source type is algorithm-distance-matrix')
-
-        source = {
-            'algorithm': algorithm,
-            'distanceMatrixId': distance_matrix_id,
-            'parameters': parameters
-        }
-        tree_count = trees_collection.count_documents({"projectId": project_id, "datasetId": dataset_id})
-        name = f'Tree {tree_count + 1} - {algorithm}'
-    elif source_type == 'algorithm-typing-data':
-        source_type = 'algorithm_typing_data'
-        dataset = datasets_collection.find_one(
-            {
-                '_id': ObjectId(dataset_id),
-                'projectId': project_id,
-            }
-        )
-
-        if dataset is None:
-            raise Exception(f'Dataset with Project ID {project_id} and Dataset ID {dataset_id} not found')
-
-        source = {
-            'algorithm': algorithm,
-            'typingDataId': dataset['typingDataId'],
-            'parameters': parameters
-        }
-        tree_count = trees_collection.count_documents({"projectId": project_id, "datasetId": dataset_id})
-        name = f'Tree {tree_count + 1} - {algorithm}'
-    else:
-        raise Exception(f'Unknown source type: {source_type}')
-
-    tree_metadata = {
-        'treeId': tree_id,
-        'projectId': project_id,
-        'datasetId': dataset_id,
-        'name': name,
-        'sourceType': source_type,
-        'source': source,
-        'repositorySpecificData': {
-            's3': {
+    # Tree should already be indexed, so its metadata exists
+    # Add S3 repositorySpecificData to the metadata of the tree
+    trees_collection.update_one(
+        {
+            'projectId': project_id,
+            'datasetId': dataset_id,
+            'treeId': tree_id
+        },
+        {'$set': {
+            'repositorySpecificData.s3': {
                 'url': f'http://localhost:9444/{bucket_name}{s3_output_path}'
             }
-        }
-    }
-
-    trees_collection.insert_one(tree_metadata)
-
-    workflows_collection.update_one(
-        {'_id': ObjectId(workflow_id)},
-        {'$set': {
-            'data.treeId': tree_id
         }}
     )
 
-    print(f'File uploaded to S3 and metadata created in the tree collection with treeId: {tree_id}')
+    print(f'File uploaded to S3 and tree metadata updated of tree with treeId: {tree_id}')
 
 
 def distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id, distance_matrix_id, source_type,
@@ -111,7 +54,8 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id,
         source = {
             'function': function
         }
-        distance_matrix_count = distance_matrix_collection.count_documents({"projectId": project_id, "datasetId": dataset_id})
+        distance_matrix_count = distance_matrix_collection.count_documents(
+            {"projectId": project_id, "datasetId": dataset_id})
         name = f'Distance Matrix {distance_matrix_count + 1} - {function}'
     else:
         raise Exception(f'Unknown source type: {source_type}')
@@ -162,9 +106,16 @@ def upload_file_to_s3(file_path, project_id, dataset_id, workflow_id, resource_i
     print(f"File path: {file_path}")
     print(f"Workflow ID: {workflow_id}")
 
-    # Generate a unique resource_id if not provided
+    # Get or generate resource_id if not provided
     if not resource_id:
-        resource_id = str(uuid.uuid4())
+        if source_type == 'tree':
+            # If tree_id is not provided, get it from the workflow
+            workflow = workflows_collection.find_one({'_id': ObjectId(workflow_id)})
+            resource_id = workflow['data'].get('treeId')
+            if resource_id is None:
+                raise Exception(f"Workflow with ID {workflow_id} does not have a tree associated with it")
+        else:
+            resource_id = str(uuid.uuid4())
 
     collection_name = get_collection_from_resource_type(resource_type)
 
@@ -175,8 +126,7 @@ def upload_file_to_s3(file_path, project_id, dataset_id, workflow_id, resource_i
 
     if resource_type == "tree":
         tree_id = resource_id
-        tree_handler(s3_output_path, project_id, dataset_id, workflow_id, tree_id, source_type, algorithm,
-                     distance_matrix_id, parameters)
+        tree_handler(s3_output_path, project_id, dataset_id, tree_id)
     elif resource_type == "distance-matrix":
         distance_matrix_id = resource_id
         distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id, distance_matrix_id, source_type,
@@ -191,11 +141,9 @@ if __name__ == '__main__':
     parser.add_argument('--file-path', help='The file path', required=True)
     parser.add_argument('--project-id', help='The project id', required=True)
     parser.add_argument('--dataset-id', help='The dataset id', required=True)
-    parser.add_argument(
-        '--workflow-id', help='The workflow ID to update in MongoDB', required=True)
-    parser.add_argument(
-        '--resource-id', help='The optional ID of the resource', default=None)
+    parser.add_argument('--workflow-id', help='The workflow ID to update in MongoDB', required=True)
     parser.add_argument('--resource-type', help='The resource type', required=True)
+    parser.add_argument('--resource-id', help='The optional ID of the resource', default=None)
     parser.add_argument('--source-type', help='The source type', required=False)
     parser.add_argument('--algorithm', help='The algorithm', required=False)
     parser.add_argument('--distance-matrix-id', help='The distance matrix id', required=False)
