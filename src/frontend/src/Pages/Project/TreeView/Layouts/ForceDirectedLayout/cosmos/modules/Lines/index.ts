@@ -7,6 +7,7 @@ import {defaultLinkColor, defaultLinkWidth} from '../../variables'
 import {CosmosInputLink, CosmosInputNode} from '../../types'
 import {destroyBuffer} from '../Shared/buffer'
 import {mat4} from "gl-matrix";
+import TreeViewFontAtlasImage from "../../../../../../../../Assets/tree_view_font_atlas.png"
 
 
 function stringHash(message: string): number {
@@ -156,7 +157,7 @@ export class Lines<N extends CosmosInputNode, L extends CosmosInputLink> extends
 
 
         const glyphImg = await loadImage(
-            'https://webglfundamentals.org/webgl/resources/8x8-font.png'
+            TreeViewFontAtlasImage
         )
         const links = Array.from(data.completeLinks)
 

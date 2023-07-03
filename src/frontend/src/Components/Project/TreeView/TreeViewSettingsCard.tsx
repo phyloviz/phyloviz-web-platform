@@ -19,7 +19,7 @@ interface TreeViewSettingsCardProps {
     onRestartAnimation: () => void
 
     simulationConfig: SimulationConfig,
-    nodeTransformationsConfig: GraphTransformationsConfig,
+    graphTransformationsConfig: GraphTransformationsConfig,
 
     isolateDataHeaders: string[]
     selectedIsolateHeader: string
@@ -50,7 +50,7 @@ export function TreeViewSettingsCard(
         onRestartAnimation,
 
         simulationConfig,
-        nodeTransformationsConfig,
+        graphTransformationsConfig,
 
         isolateDataHeaders,
         selectedIsolateHeader,
@@ -90,7 +90,7 @@ export function TreeViewSettingsCard(
         <Collapse in={transformationsOpen}>
             <TreeViewOptions
                 simulationConfig={simulationConfig}
-                nodeTransformationsConfig={nodeTransformationsConfig}
+                graphTransformationsConfig={graphTransformationsConfig}
 
                 isolateDataHeaders={isolateDataHeaders}
                 selectedIsolateHeader={selectedIsolateHeader}

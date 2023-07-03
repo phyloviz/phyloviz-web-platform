@@ -10,11 +10,13 @@ import {defaultConfig, VizLink, VizNode} from "../useForceDirectedLayout";
 import {
     DEFAULT_LINK_LABEL_SIZE,
     DEFAULT_LINK_LABEL_TYPE,
-    DEFAULT_NODE_LABEL_SIZE
+    DEFAULT_NODE_LABEL_SIZE,
+    useGraphTransformationsConfig
 } from "./useGraphTransformationsConfig";
 import {
     Row
 } from "../../../../../../Services/Visualization/models/getIsolateDataProfiles/GetIsolateDataRowsOutputModel";
+import {useSimulationConfig} from "./useSimulationConfig";
 
 /**
  * This hook is responsible for fetching the data from the server and initializing the graph.
@@ -35,6 +37,10 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
     const [savingGraph, setSavingGraph] = useState<boolean>(false)
     const [clusters, setClusters] = useState<Graph[]>([])
     const dataRef = useRef<GetTreeViewOutputModel>()
+
+    const simulationConfig = useSimulationConfig(graphRef, loadingGraph)
+    const graphTransformationsConfig = useGraphTransformationsConfig(graphRef, loadingGraph)
+
     // Load graph
     useEffect(() => {
         setLoadingGraph(true)
@@ -63,8 +69,6 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
     }, [])
 
     async function loadCluster(graph: Graph) {
-        setLoadingGraph(true)
-
         const data = dataRef.current!
 
         // const isolateDataIdMap = new Map<string, number>()
@@ -76,20 +80,20 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
         //     }
         // }
 
-        const config = data.transformations != null ? {
+        const config = {
             ...defaultConfig,
-            nodeSize: data.transformations.nodeSize,
-            linkWidth: data.transformations.linkWidth,
+            nodeSize: graphRef.current ? graphTransformationsConfig.nodeSize : (data.transformations.nodeSize || defaultConfig.nodeSize),
+            linkWidth: graphRef.current ? graphTransformationsConfig.linkWidth : (data.transformations.linkWidth || defaultConfig.linkWidth),
             simulation: {
-                linkSpring: data.transformations.linkSpring,
-                linkDistance: data.transformations.linkDistance,
-                gravity: data.transformations.gravity,
-                repulsion: data.transformations.repulsion,
-                friction: data.transformations.friction,
-                repulsionTheta: data.transformations.repulsionTheta,
-                decay: data.transformations.decay
-            },
-        } : defaultConfig
+                linkSpring: graphRef.current ? simulationConfig.linkSpring : (data.transformations.linkSpring || defaultConfig.simulation?.linkSpring),
+                linkDistance: graphRef.current ? simulationConfig.linkDistance : (data.transformations.linkDistance || defaultConfig.simulation?.linkDistance),
+                gravity: graphRef.current ? simulationConfig.gravity : (data.transformations.gravity || defaultConfig.simulation?.gravity),
+                repulsion: graphRef.current ? simulationConfig.repulsion : (data.transformations.repulsion || defaultConfig.simulation?.repulsion),
+                friction: graphRef.current ? simulationConfig.friction : (data.transformations.friction || defaultConfig.simulation?.friction),
+                repulsionTheta: graphRef.current ? simulationConfig.repulsionTheta : (data.transformations.repulsionTheta || defaultConfig.simulation?.repulsionTheta),
+                decay: graphRef.current ? simulationConfig.decay : (data.transformations.decay || defaultConfig.simulation?.decay)
+            }
+        }
         //
         // config.nodeSize = (node) => {
         //     const numIsolates = isolateDataIdMap.get(node.id) ?? 0
@@ -97,6 +101,8 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
         //     const defaultNodeSize = data?.transformations?.nodeSize ?? defaultConfig.nodeSize
         //     return defaultNodeSize + Math.log(numIsolates)
         // }
+
+        setLoadingGraph(true)
 
         const treeViewGraph = new TreeViewGraph<VizNode, VizLink>(canvasRef.current!, config)
 
@@ -123,6 +129,8 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
         })
 
         await graphRef.current!.setData(nodes, links)
+        graphRef.current?.renderNodeLabels(graphTransformationsConfig.nodeLabel)
+        graphRef.current?.renderLinkLabels(graphTransformationsConfig.linkLabel)
 
         console.log("finished loading graph")
         setLoadingGraph(false)
@@ -193,6 +201,8 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
         autosave,
         switchAutosave: () => setAutosave((prev) => !prev),
         forceSave: () => setSaveFlag((prev) => !prev),
-        savingGraph
+        savingGraph,
+        simulationConfig,
+        graphTransformationsConfig,
     }
 }

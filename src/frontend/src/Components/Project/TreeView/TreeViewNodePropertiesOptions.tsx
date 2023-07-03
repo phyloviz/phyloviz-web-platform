@@ -16,7 +16,7 @@ const NODE_LABEL_SIZE_STEP = 1
 
 interface TreeViewNodePropertiesOptionsProps {
     expanded: boolean
-    nodeTransformationsConfig: GraphTransformationsConfig
+    graphTransformationsConfig: GraphTransformationsConfig
 
     onClick: () => void
 }
@@ -24,7 +24,7 @@ interface TreeViewNodePropertiesOptionsProps {
 export function TreeViewNodePropertiesOptions(
     {
         expanded,
-        nodeTransformationsConfig,
+        graphTransformationsConfig,
 
         onClick
     }: TreeViewNodePropertiesOptionsProps
@@ -42,22 +42,22 @@ export function TreeViewNodePropertiesOptions(
                   unmountOnExit>
             <Typography variant={"body2"}>Node Size</Typography>
             <InputSlider
-                value={nodeTransformationsConfig.nodeSize}
-                onChange={nodeTransformationsConfig.setNodeSize}
+                value={graphTransformationsConfig.nodeSize}
+                onChange={graphTransformationsConfig.setNodeSize}
                 min={NODE_SIZE_MIN} max={NODE_SIZE_MAX} step={NODE_SIZE_STEP}/>
 
             <FormGroup>
                 <FormControlLabel label="Node Label" control={<Checkbox
                     size="small"
-                    checked={nodeTransformationsConfig.nodeLabel}
-                    onChange={(event) => nodeTransformationsConfig.setNodeLabel(event.target.checked)}/>}/>
+                    checked={graphTransformationsConfig.nodeLabel}
+                    onChange={(event) => graphTransformationsConfig.setNodeLabel(event.target.checked)}/>}/>
             </FormGroup>
 
-            <Collapse in={nodeTransformationsConfig.nodeLabel}>
+            <Collapse in={graphTransformationsConfig.nodeLabel}>
                 <Typography variant={"body2"}>Node Label Size</Typography>
                 <InputSlider
-                    value={nodeTransformationsConfig.nodeLabelSize}
-                    onChange={nodeTransformationsConfig.setNodeLabelSize}
+                    value={graphTransformationsConfig.nodeLabelSize}
+                    onChange={graphTransformationsConfig.setNodeLabelSize}
                     min={NODE_LABEL_SIZE_MIN} max={NODE_LABEL_SIZE_MAX} step={NODE_LABEL_SIZE_STEP}/>
             </Collapse>
         </Collapse>

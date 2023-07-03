@@ -824,7 +824,7 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
                 const y = this.canvas.height - screenPosition[1] * 2.0
 
                 mat4.fromTranslation(mat, [x, y, 0]);
-                mat4.scale(mat, mat, [this.store.transform[0] * radius * 0.7, this.store.transform[0] * radius * 0.7, 1]);
+                mat4.scale(mat, mat, [this.store.transform[0] * radius * 0.9, this.store.transform[0] * radius * 0.9, 1]);
             });
 
         if (this.lines.renderLabels)

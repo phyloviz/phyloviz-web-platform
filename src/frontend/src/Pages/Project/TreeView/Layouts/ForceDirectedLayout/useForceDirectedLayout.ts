@@ -80,13 +80,12 @@ export function useForceDirectedLayout() {
         autosave,
         switchAutosave,
         forceSave,
-        savingGraph
+        savingGraph,
+        simulationConfig,
+        graphTransformationsConfig
     } = useGraph(projectId, datasetId, treeViewId, isolateDataRows)
 
     const navigate = useNavigate()
-
-    const simulationConfig = useSimulationConfig(graphRef, loadingGraph)
-    const nodeTransformationsConfig = useGraphTransformationsConfig(graphRef, loadingGraph)
 
     const [doughnutChartTitle, setDoughnutChartTitle] = useState<string>("")
     const [doughnutChartData, setDoughnutChartData] = useState<DoughnutChartData | null>(null)
@@ -125,7 +124,7 @@ export function useForceDirectedLayout() {
         },
 
         simulationConfig,
-        nodeTransformationsConfig,
+        graphTransformationsConfig,
 
         isolateDataHeaders,
         selectedIsolateHeader,

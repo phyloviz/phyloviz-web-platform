@@ -22,6 +22,7 @@ import {readPixels} from '../../helper'
 import {CosmosInputLink, CosmosInputNode} from '../../types'
 import {mat4} from 'gl-matrix'
 import {sum} from "d3-array";
+import TreeViewFontAtlasImage from "../../../../../../../../Assets/tree_view_font_atlas.png"
 
 export const MAX_NUM_SLICES = 5
 
@@ -294,7 +295,7 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
             },
         })
         const glyphImg = await loadImage(
-            'https://webglfundamentals.org/webgl/resources/8x8-font.png'
+            TreeViewFontAtlasImage
         )
         const messages: string[] = []
 

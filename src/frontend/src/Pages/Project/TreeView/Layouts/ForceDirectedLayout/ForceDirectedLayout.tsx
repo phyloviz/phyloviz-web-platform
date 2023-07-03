@@ -73,7 +73,7 @@ export default function ForceDirectedLayout() {
         resetSimulationFilters,
 
         simulationConfig,
-        nodeTransformationsConfig,
+        graphTransformationsConfig,
 
         isolateDataHeaders,
         selectedIsolateHeader,
@@ -147,7 +147,7 @@ export default function ForceDirectedLayout() {
                 onRestartAnimation={restartAnimation}
 
                 simulationConfig={simulationConfig}
-                nodeTransformationsConfig={nodeTransformationsConfig}
+                graphTransformationsConfig={graphTransformationsConfig}
 
                 isolateDataHeaders={isolateDataHeaders}
                 selectedIsolateHeader={selectedIsolateHeader}

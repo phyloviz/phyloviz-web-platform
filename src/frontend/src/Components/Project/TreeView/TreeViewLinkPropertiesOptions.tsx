@@ -32,7 +32,7 @@ enum LinkLabelType {
 
 interface TreeViewLinkPropertiesOptionsProps {
     expanded: boolean
-    nodeTransformationsConfig: GraphTransformationsConfig
+    graphTransformationsConfig: GraphTransformationsConfig
 
     onClick: () => void
 }
@@ -40,7 +40,7 @@ interface TreeViewLinkPropertiesOptionsProps {
 export function TreeViewLinkPropertiesOptions(
     {
         expanded,
-        nodeTransformationsConfig,
+        graphTransformationsConfig,
 
         onClick
     }: TreeViewLinkPropertiesOptionsProps
@@ -57,22 +57,22 @@ export function TreeViewLinkPropertiesOptions(
                   unmountOnExit>
             <Typography variant={"body2"}>Link Width</Typography>
             <InputSlider
-                value={nodeTransformationsConfig.linkWidth}
-                onChange={nodeTransformationsConfig.setLinkWidth}
+                value={graphTransformationsConfig.linkWidth}
+                onChange={graphTransformationsConfig.setLinkWidth}
                 min={LINK_WIDTH_MIN} max={LINK_WIDTH_MAX} step={LINK_WIDTH_STEP}/>
 
             <FormGroup>
                 <FormControlLabel label="Link Label" control={<Checkbox
                     size="small"
-                    checked={nodeTransformationsConfig.linkLabel}
-                    onChange={(event) => nodeTransformationsConfig.setLinkLabel(event.target.checked)}/>}/>
+                    checked={graphTransformationsConfig.linkLabel}
+                    onChange={(event) => graphTransformationsConfig.setLinkLabel(event.target.checked)}/>}/>
             </FormGroup>
 
-            <Collapse in={nodeTransformationsConfig.linkLabel}>
+            <Collapse in={graphTransformationsConfig.linkLabel}>
                 <Typography variant={"body2"}>Link Label Size</Typography>
                 <InputSlider
-                    value={nodeTransformationsConfig.linkLabelSize}
-                    onChange={nodeTransformationsConfig.setLinkLabelSize}
+                    value={graphTransformationsConfig.linkLabelSize}
+                    onChange={graphTransformationsConfig.setLinkLabelSize}
                     min={LINK_LABEL_SIZE_MIN} max={LINK_LABEL_SIZE_MAX} step={LINK_LABEL_SIZE_STEP}/>
 
                 <FormControl sx={{width: "100%", mb: 1, mt: 2}} size="small">
@@ -80,8 +80,8 @@ export function TreeViewLinkPropertiesOptions(
                     <Select
                         labelId="link-label-type"
                         label="Link Label Type"
-                        value={nodeTransformationsConfig.linkLabelType}
-                        onChange={(event) => nodeTransformationsConfig.setLinkLabelType(event.target.value)}
+                        value={graphTransformationsConfig.linkLabelType}
+                        onChange={(event) => graphTransformationsConfig.setLinkLabelType(event.target.value)}
                         MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                     >
                         {Object.values(LinkLabelType).map((value) => (

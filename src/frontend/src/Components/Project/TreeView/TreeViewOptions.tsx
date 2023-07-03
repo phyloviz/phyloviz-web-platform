@@ -12,7 +12,7 @@ import {TreeViewAssignColorsOptions} from "./TreeViewAssignColorsOptions";
 
 interface TreeViewOptionsProps {
     simulationConfig: SimulationConfig
-    nodeTransformationsConfig: GraphTransformationsConfig
+    graphTransformationsConfig: GraphTransformationsConfig
 
     isolateDataHeaders: string[]
     selectedIsolateHeader: string
@@ -27,7 +27,7 @@ interface TreeViewOptionsProps {
 export function TreeViewOptions(
     {
         simulationConfig,
-        nodeTransformationsConfig,
+        graphTransformationsConfig,
 
         isolateDataHeaders,
         selectedIsolateHeader,
@@ -61,7 +61,7 @@ export function TreeViewOptions(
 
         <TreeViewNodePropertiesOptions
             expanded={nodePropertiesExpanded}
-            nodeTransformationsConfig={nodeTransformationsConfig}
+            graphTransformationsConfig={graphTransformationsConfig}
             onClick={() => {
                 setNodePropertiesExpanded((prev) => !prev);
                 setLayoutPropertiesExpanded(false);
@@ -72,7 +72,7 @@ export function TreeViewOptions(
 
         <TreeViewLinkPropertiesOptions
             expanded={linkPropertiesExpanded}
-            nodeTransformationsConfig={nodeTransformationsConfig}
+            graphTransformationsConfig={graphTransformationsConfig}
             onClick={() => {
                 setLinkPropertiesExpanded((prev) => !prev)
                 setLayoutPropertiesExpanded(false)
@@ -101,7 +101,7 @@ export function TreeViewOptions(
             </Button>*/}
             <Button size="small" sx={{flex: 1,}} onClick={() => {
                 simulationConfig.resetAll()
-                nodeTransformationsConfig.resetAll()
+                graphTransformationsConfig.resetAll()
             }}>
                 Reset
             </Button>
