@@ -146,12 +146,12 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
             setSavingGraph(true)
             console.log("saving graph")
             VisualizationService.saveTreeView(projectId, datasetId, treeViewId, {
-                nodes: Object.entries(graphRef.current?.getNodePositions()).map(([st, coordinates]) => {
+                nodes: []/*Object.entries(graphRef.current?.getNodePositions()).map(([st, coordinates]) => {
                     return {
                         st,
                         coordinates: Object.values(coordinates)
                     }
-                }),
+                })*/,
                 transformations: {
                     linkSpring: graphRef.current.config.simulation.linkSpring!,
                     linkDistance: graphRef.current.config.simulation.linkDistance!,
