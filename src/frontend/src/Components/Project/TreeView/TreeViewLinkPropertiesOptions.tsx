@@ -68,7 +68,7 @@ export function TreeViewLinkPropertiesOptions(
                     onChange={(event) => graphTransformationsConfig.setLinkLabel(event.target.checked)}/>}/>
             </FormGroup>
 
-            <Collapse in={graphTransformationsConfig.linkLabel}>
+            {/*<Collapse in={graphTransformationsConfig.linkLabel}>
                 <Typography variant={"body2"}>Link Label Size</Typography>
                 <InputSlider
                     value={graphTransformationsConfig.linkLabelSize}
@@ -91,7 +91,7 @@ export function TreeViewLinkPropertiesOptions(
                         ))}
                     </Select>
                 </FormControl>
-            </Collapse>
+            </Collapse>*/}
         </Collapse>
     </>
 }

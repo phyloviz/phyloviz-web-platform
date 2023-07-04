@@ -53,13 +53,13 @@ export function TreeViewNodePropertiesOptions(
                     onChange={(event) => graphTransformationsConfig.setNodeLabel(event.target.checked)}/>}/>
             </FormGroup>
 
-            <Collapse in={graphTransformationsConfig.nodeLabel}>
+            {/*<Collapse in={graphTransformationsConfig.nodeLabel}>
                 <Typography variant={"body2"}>Node Label Size</Typography>
                 <InputSlider
                     value={graphTransformationsConfig.nodeLabelSize}
                     onChange={graphTransformationsConfig.setNodeLabelSize}
                     min={NODE_LABEL_SIZE_MIN} max={NODE_LABEL_SIZE_MAX} step={NODE_LABEL_SIZE_STEP}/>
-            </Collapse>
+            </Collapse>*/}
         </Collapse>
     </>
 }

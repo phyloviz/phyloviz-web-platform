@@ -35,7 +35,6 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
     const [selectedCluster, setSelectedCluster] = useState<number>(0)
 
     const [autosave, setAutosave] = useState<boolean>(false)
-    const [saveFlag, setSaveFlag] = useState<boolean>(false)
     const [savingGraph, setSavingGraph] = useState<boolean>(false)
     const [clusters, setClusters] = useState<Graph[]>([])
     const dataRef = useRef<GetTreeViewOutputModel>()
@@ -144,40 +143,47 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
         setLoadingGraph(false)
     }
 
-    // Save graph
-    useEffect(() => {
-            if (loadingGraph || !graphRef.current) return
+    function saveGraph() {
+        if (loadingGraph || !graphRef.current) return
 
-            setSavingGraph(true)
-            console.log("saving graph")
-            VisualizationService.saveTreeView(projectId, datasetId, treeViewId, {
-                nodes: []/*Object.entries(graphRef.current?.getNodePositions()).map(([st, coordinates]) => {
+        setSavingGraph(true)
+        console.log("saving graph")
+        VisualizationService.saveTreeView(projectId, datasetId, treeViewId, {
+            nodes: []/*Object.entries(graphRef.current?.getNodePositions()).map(([st, coordinates]) => {
                     return {
                         st,
                         coordinates: Object.values(coordinates)
                     }
                 })*/,
-                transformations: {
-                    linkSpring: graphRef.current.config.simulation.linkSpring!,
-                    linkDistance: graphRef.current.config.simulation.linkDistance!,
-                    gravity: graphRef.current.config.simulation.gravity!,
-                    repulsion: graphRef.current.config.simulation.repulsion!,
-                    friction: graphRef.current.config.simulation.friction!,
-                    repulsionTheta: graphRef.current.config.simulation.repulsionTheta!,
-                    decay: graphRef.current.config.simulation.decay!,
-                    nodeSize: graphRef.current.config.nodeSize,
-                    nodeLabel: graphRef.current?.nodeLabelsRendered(),
-                    nodeLabelSize: DEFAULT_NODE_LABEL_SIZE, // TODO
-                    linkWidth: graphRef.current.config.linkWidth,
-                    linkLabel: graphRef.current?.linkLabelsRendered(),
-                    linkLabelSize: DEFAULT_LINK_LABEL_SIZE, // TODO
-                    linkLabelType: DEFAULT_LINK_LABEL_TYPE // TODO
-                }
-            }).finally(() => setSavingGraph(false))
+            transformations: {
+                linkSpring: graphRef.current.config.simulation.linkSpring!,
+                linkDistance: graphRef.current.config.simulation.linkDistance!,
+                gravity: graphRef.current.config.simulation.gravity!,
+                repulsion: graphRef.current.config.simulation.repulsion!,
+                friction: graphRef.current.config.simulation.friction!,
+                repulsionTheta: graphRef.current.config.simulation.repulsionTheta!,
+                decay: graphRef.current.config.simulation.decay!,
+                nodeSize: graphRef.current.config.nodeSize,
+                nodeLabel: graphRef.current?.nodeLabelsRendered(),
+                nodeLabelSize: DEFAULT_NODE_LABEL_SIZE, // TODO
+                linkWidth: graphRef.current.config.linkWidth,
+                linkLabel: graphRef.current?.linkLabelsRendered(),
+                linkLabelSize: DEFAULT_LINK_LABEL_SIZE, // TODO
+                linkLabelType: DEFAULT_LINK_LABEL_TYPE // TODO
+            }
+        }).finally(() => setSavingGraph(false))
+    }
 
-        }, autosave ? [graphRef.current?.config, graphRef.current?.getNodePositions(), saveFlag] : [saveFlag]
-        // If autosave is enabled, save the graph every time the config or the node positions change, or if the user forces a save
-        // If autosave is disabled, only save the graph if the user forces a save
+    /*
+    Save graph
+    If autosave is enabled, save the graph every time the config (or the node positions - NOT IMPLEMENTED) change, or if the user forces a save
+    If autosave is disabled, only save the graph if the user forces a save
+    */
+    useEffect(() => {
+            if (autosave) { // do not save if autosave was disabled
+                saveGraph()
+            }
+        }, autosave ? [graphRef.current?.config, /*graphRef.current?.getNodePositions(),*/] : []
     )
 
     return {
@@ -208,7 +214,7 @@ export function useGraph(projectId: string, datasetId: string, treeViewId: strin
         numClusters: clusters.length,
         autosave,
         switchAutosave: () => setAutosave((prev) => !prev),
-        forceSave: () => setSaveFlag((prev) => !prev),
+        forceSave: () => saveGraph(),
         savingGraph,
         simulationConfig,
         graphTransformationsConfig,
