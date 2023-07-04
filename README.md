@@ -48,6 +48,9 @@ at the forefront of biomedical research.
 Discover the power and versatility of the PHYLOViZ Web Platform, and unlock new insights into phylogenetic data
 analysis, by visiting the [PHYLOViZ Web Platform](https://web.phyloviz.net/) website.
 
+To see a demo of the PHYLOViZ Web Platform in action, check out this [video](https://www.youtube.com/watch?v=761A27KgHIY). 
+It provides an overview of the platform's features and showcases its capabilities for phylogenetic analysis and visualization.
+
 ---
 
 ## Documentation
