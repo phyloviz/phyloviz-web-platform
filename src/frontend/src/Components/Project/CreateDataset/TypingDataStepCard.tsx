@@ -108,7 +108,7 @@ const typingDataExamples = {
     "  (...)\n" +
     "This files should not contain missing data. If any allele missing data is found the entire line is discarded.",
 
-    [TypingDataType.FASTA]: "The data format for the typing data should be as follows. Load a text file containing " +
+    /*[TypingDataType.FASTA]: "The data format for the typing data should be as follows. Load a text file containing " +
     "only the sequences. All the sequences should have the same length. A sequential ID identified will be " +
     "attributed to each sequence based on the order of the sequences in the file. The Fasta header will be used " +
     "to identify the isolate when you click on it. This format can also be used to analyze SNP data.  An example " +
@@ -135,5 +135,5 @@ const typingDataExamples = {
     [TypingDataType.SNP_WITHOUT_EXPLICIT_ID]: "The dataset type Single Nucleotide Polymorphism (SNP) (without " +
     "explicit ID) is designed to analyze SNP data based on the presence and absence of a SNP, and no explicit ID " +
     "was attributed to the entire SNP profile. The sequences need to be all of the same size. Sequences of " +
-    "different sizes will be excluded."
+    "different sizes will be excluded."*/
 }

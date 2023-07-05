@@ -96,7 +96,7 @@ const datasetDescriptions = {
     [TypingDataType.MLVA]: "The dataset type MLVA is designed to analyze MLVA data using its common allelic profiles " +
     "formats and adds extra distance metrics to the analyses options.",
 
-    [TypingDataType.FASTA]: "The dataset type Aligned Sequences (FASTA) is designed to analyze sequence data " +
+    /*[TypingDataType.FASTA]: "The dataset type Aligned Sequences (FASTA) is designed to analyze sequence data " +
     "available in FASTA format. The sequences need to be all of the same size. " +
     "Sequences of different sizes will be excluded.",
 
@@ -111,5 +111,5 @@ const datasetDescriptions = {
     [TypingDataType.SNP_WITHOUT_EXPLICIT_ID]: "The dataset type Single Nucleotide Polymorphism (SNP) " +
     "(without explicit ID) is designed to analyze SNP data based on the presence and absence of a SNP, and no " +
     "explicit ID was attributed to the entire SNP profile. The sequences need to be all of the same size. " +
-    "Sequences of different sizes will be excluded."
+    "Sequences of different sizes will be excluded."*/
 }

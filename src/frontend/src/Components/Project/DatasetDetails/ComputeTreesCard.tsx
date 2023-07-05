@@ -3,8 +3,8 @@ import Typography from "@mui/material/Typography"
 import {Button, Menu, MenuItem} from "@mui/material"
 import * as React from "react"
 import {useNavigate, useParams} from "react-router-dom"
-import {WebUiUris} from "../../../Pages/WebUiUris"
 import {TreesIcon} from "../../Shared/Icons";
+import {computeTreeOptions} from "../ProjectStructure/Datasets/Dataset/Trees/useTreesTreeItem"
 
 /**
  * Card for the compute trees feature.
@@ -16,29 +16,6 @@ export function ComputeTreesCard() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
     const handleClose = () => setAnchorEl(null)
-
-    const computeTreeOptions = [
-        {
-            label: "goeBURST",
-            url: WebUiUris.computeGoeburst(projectId!, datasetId!)
-        },
-        {
-            label: "goeBURST Full MST",
-            url: WebUiUris.computeGoeburstFullMst(projectId!, datasetId!)
-        },
-        {
-            label: "Hierarchical Clustering",
-            url: WebUiUris.computeHierarchicalClustering(projectId!, datasetId!)
-        },
-        // {
-        //     label: "Neighbor Joining",
-        //     url: WebUiUris.computeNeighborJoining(projectId!, datasetId!)
-        // },
-        {
-            label: "nLV Graph",
-            url: WebUiUris.computeNlvGraph(projectId!, datasetId!)
-        }
-    ]
 
     return <Paper sx={{
         p: 4,
@@ -69,7 +46,7 @@ export function ComputeTreesCard() {
             open={open}
             onClose={handleClose}
         >
-            {computeTreeOptions.map((option) => (
+            {computeTreeOptions(projectId!, datasetId!).map((option) => (
                 <MenuItem
                     key={option.label}
                     onClick={() => {

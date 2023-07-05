@@ -20,10 +20,10 @@ export enum CreateDatasetStep {
 export enum TypingDataType {
     MLST = "Multi-Locus Sequence Typing (MLST)",
     MLVA = "Multi-Locus Variable Number Tandem Repeat Analysis (MLVA)",
-    FASTA = "Aligned Sequences (FASTA)",
+    /*FASTA = "Aligned Sequences (FASTA)",
     ALIGNED_SEQUENCES = "Aligned Sequences",
     SNP = "Single Nucleotide Polymorphism (SNP)",
-    SNP_WITHOUT_EXPLICIT_ID = "Single Nucleotide Polymorphism (SNP) (without explicit ID)",
+    SNP_WITHOUT_EXPLICIT_ID = "Single Nucleotide Polymorphism (SNP) (without explicit ID)",*/
 }
 
 
