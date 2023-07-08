@@ -702,7 +702,7 @@ db['workflow-templates'].insertMany(
                     "type": "regex",
                     "pattern": "^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$"
                 },
-                "file_type": {
+                "fileType": {
                     "type": "string",
                     "allowed-values": [
                         "typing_data",
@@ -725,7 +725,7 @@ db['workflow-templates'].insertMany(
                     "taskId": "createMetadata",
                     "tool": "metadata_uploader",
                     "action": {
-                        "command": "--original_url=${url} --url=http://localhost:9444/phyloviz-web-platform/projects/${projectId}/${workflowId} --type=${file_type} --project-id=${projectId} --workflow-id=${workflowId}"
+                        "command": "--original_url=${url} --url=http://localhost:9444/phyloviz-web-platform/projects/${projectId}/${workflowId} --type=${fileType} --project-id=${projectId} --workflow-id=${workflowId}"
                     }
                 }
             ]

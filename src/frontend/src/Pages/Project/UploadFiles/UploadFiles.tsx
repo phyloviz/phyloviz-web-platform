@@ -9,7 +9,8 @@ import {
     MenuItem,
     Radio,
     RadioGroup,
-    Select
+    Select,
+    TextField
 } from "@mui/material"
 import Box from "@mui/material/Box"
 import Paper from "@mui/material/Paper"
@@ -29,6 +30,8 @@ export default function UploadFiles() {
     const {
         fileType,
         typingDataType,
+        fileUrl,
+        onFileUrlChange,
         handleFileTypeChange,
         handleTypingDataTypeChange,
         handleFileChange,
@@ -57,6 +60,9 @@ export default function UploadFiles() {
                     <Typography component="h1" variant="h4">
                         Upload Files
                     </Typography>
+                    <Typography variant="body1" sx={{mt: 2, width: "100%"}}>
+                        Here you can upload new files to the project
+                    </Typography>
                     <Box sx={{
                         width: "100%",
                         display: "flex",
@@ -72,7 +78,7 @@ export default function UploadFiles() {
                             mb: 4
                         }}>
                             <FormControl required sx={{mb: 4}}>
-                                <FormLabel>Data Type</FormLabel>
+                                <FormLabel>File Type</FormLabel>
                                 <RadioGroup value={fileType} row>
                                     {
                                         Object.values(FileType).map((value) => (
@@ -97,6 +103,7 @@ export default function UploadFiles() {
                                             label="Typing Data Type"
                                             onChange={(event) => handleTypingDataTypeChange(event.target.value as TypingDataType)}
                                             MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
+                                            sx={{mb: 2}}
                                         >
                                             {
                                                 Object.values(TypingDataType).map((typingDataType) => (
@@ -110,7 +117,24 @@ export default function UploadFiles() {
                                 )
                             }
 
+                            <Typography variant="caption" align={"justify"} sx={{mb: 1, width: "100%"}}>
+                                You can upload a file from your computer by dragging and dropping it in the box below.
+                            </Typography>
                             <FileUploader handleChange={handleFileChange} name="file" required/>
+                            <Typography variant="body2" align={"center"} sx={{mt: 2, mb: 1, width: "100%"}}>
+                                Or
+                            </Typography>
+                            <Typography variant="caption" align={"justify"} sx={{mb: 1, width: "100%"}}>
+                                You can upload a file by providing a URL to the file, if it is publicly available.
+                            </Typography>
+                            <TextField
+                                fullWidth
+                                label="URL to file"
+                                variant="outlined"
+                                sx={{mb: 1}}
+                                value={fileUrl}
+                                onChange={onFileUrlChange}
+                            />
                             <ErrorAlert error={error} clearError={clearError}/>
                         </Box>
 
@@ -125,7 +149,8 @@ export default function UploadFiles() {
                                 width: "100%",
                                 display: "flex",
                                 flexDirection: "row",
-                                justifyContent: "space-between"
+                                justifyContent: "space-between",
+                                mt: 2,
                             }}>
 
                             <Button
@@ -133,7 +158,7 @@ export default function UploadFiles() {
                                 startIcon={<CancelIcon/>}
                                 onClick={handleCancel}
                                 disabled={isUploading}
-                                sx={{mt: 4, width: "50%"}}
+                                sx={{width: "50%"}}
                             >
                                 Cancel
                             </Button>
@@ -142,7 +167,7 @@ export default function UploadFiles() {
                                 startIcon={<FinishIcon/>}
                                 onClick={handleSubmit}
                                 disabled={isUploading}
-                                sx={{mt: 4, ml: 2, width: "50%"}}
+                                sx={{ml: 2, width: "50%"}}
                             >
                                 Upload
                             </Button>

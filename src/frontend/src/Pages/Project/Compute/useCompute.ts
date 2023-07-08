@@ -17,9 +17,10 @@ export function useCompute() {
      * Creates a new workflow.
      *
      * @param workflow The workflow to create
+     * @return A promise that resolves when the workflow has been created
      */
     function createWorkflow(workflow: CreateWorkflowInputModel) {
-        ComputeService.createWorkflow(project?.projectId!, workflow)
+        return ComputeService.createWorkflow(project?.projectId!, workflow)
             .catch((err) => setError(err.message))
             .finally(() => {
                 onWorkflowsUpdate()

@@ -1,8 +1,11 @@
-import {GetWorkflowStatusOutputModel, Workflow} from "./models/getWorkflow/GetWorkflowOutputModel"
+import {
+    GetWorkflowOutputModel,
+    GetWorkflowStatusOutputModel,
+    Workflow
+} from "./models/getWorkflow/GetWorkflowOutputModel"
 import {CreateWorkflowOutputModel} from "./models/createWorkflow/CreateWorkflowOutputModel"
 import {CreateWorkflowInputModel} from "./models/createWorkflow/CreateWorkflowInputModel"
 import {GetWorkflowsOutputModel} from "./models/getWorkflows/GetWorkflowsOutputModel"
-import {GetWorkflowOutputModel} from "./models/getWorkflow/GetWorkflowOutputModel";
 
 export namespace MockComputeService {
 
@@ -42,7 +45,7 @@ export namespace MockComputeService {
         workflows!.set(workflowId, {
             workflowId,
             type: createWorkflowInputModel.type,
-            name: `Test workflow - ${createWorkflowInputModel.type}`,
+            name: `${createWorkflowInputModel.type}`,
             status: "RUNNING",
             logs: {},
             progress: 0,
@@ -53,7 +56,7 @@ export namespace MockComputeService {
             workflows!.set(workflowId, {
                 workflowId,
                 type: createWorkflowInputModel.type,
-                name: `Test workflow - ${createWorkflowInputModel.type}`,
+                name: `${createWorkflowInputModel.type}`,
                 status: "SUCCESS",
                 logs: {},
                 progress: 100,
