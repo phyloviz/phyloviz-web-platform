@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
 
 /**
- * Gateway application for the Phyloviz Web Platform.
+ * Gateway application of the Phyloviz Web Platform.
  */
 @SpringBootApplication(exclude = ReactiveUserDetailsServiceAutoConfiguration.class)
 public class GatewayApplication {

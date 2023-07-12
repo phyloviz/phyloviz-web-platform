@@ -12,5 +12,5 @@ public enum DockerAutoRemove {
     @SerializedName("success")
     SUCCESS,
     @SerializedName("force")
-    FORCE;
+    FORCE
 }

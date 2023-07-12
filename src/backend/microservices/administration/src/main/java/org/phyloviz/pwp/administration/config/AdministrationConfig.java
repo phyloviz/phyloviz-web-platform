@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
- * Configuration class for the Administration microservice.
+ * Configuration class for the Administration Microservice.
  */
 @Configuration
 @Import({ResourceServerSharedConfig.class, ResourceServerSharedPhylodbConfig.class})

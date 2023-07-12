@@ -9,6 +9,9 @@ import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewOutput;
 
 import java.util.List;
 
+/**
+ * Service for the Visualization Microservice.
+ */
 public interface VisualizationService {
 
     /**

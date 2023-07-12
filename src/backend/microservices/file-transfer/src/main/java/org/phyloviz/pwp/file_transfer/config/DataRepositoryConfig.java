@@ -35,6 +35,9 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
 
+/**
+ * Configuration class for the Data Repositories.
+ */
 @Configuration
 public class DataRepositoryConfig {
 

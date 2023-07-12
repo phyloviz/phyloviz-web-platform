@@ -69,8 +69,7 @@ export function useNeighborJoiningConfig() {
                 setStep(NeighborJoiningConfigurationStep.METHOD)
                 setCurrStep(1)
                 return
-            }
-            else if (step === NeighborJoiningConfigurationStep.METHOD) {
+            } else if (step === NeighborJoiningConfigurationStep.METHOD) {
                 setTriedSubmitting(true)
                 if (selectedCriteria === null) {
                     setError("Please select a criteria.")

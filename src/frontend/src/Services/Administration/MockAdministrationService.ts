@@ -599,7 +599,7 @@ export namespace MockAdministrationService {
             throw new Error('Isolate data not found')
         }
 
-        if(isolateData.keys.indexOf(inputModel.isolateDataKey) === -1) {
+        if (isolateData.keys.indexOf(inputModel.isolateDataKey) === -1) {
             throw new Error('Isolate data key not found')
         }
 

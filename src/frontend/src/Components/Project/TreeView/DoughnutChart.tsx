@@ -87,7 +87,7 @@ export function DoughnutChart(
                 display: "flex",
                 flexDirection: "column",
             }}>
-                <div ref={toPrintRef} style={{height:"80%"}}>
+                <div ref={toPrintRef} style={{height: "80%"}}>
                     <Typography sx={{mb: 2}}>{title}</Typography>
                     {
                         doughnutChartData.labels.length === 0

@@ -89,8 +89,7 @@ export function useHierarchicalClusteringConfig() {
                 setStep(HierarchicalClusteringConfigStep.METHOD)
                 setCurrStep(1)
                 return
-            }
-            else if (step === HierarchicalClusteringConfigStep.METHOD) {
+            } else if (step === HierarchicalClusteringConfigStep.METHOD) {
                 setTriedSubmitting(true)
                 if (selectedMethod === null) {
                     setError("Please select a method.")

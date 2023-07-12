@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-// TODO configure and comment this class
+// TODO: configure and comment this class
 public class ProblemJsonResponseBodyResultHandler extends ResponseBodyResultHandler {
     public ProblemJsonResponseBodyResultHandler(
             List<HttpMessageWriter<?>> writers,
@@ -47,7 +47,6 @@ public class ProblemJsonResponseBodyResultHandler extends ResponseBodyResultHand
 
             exchange.getResponse().setStatusCode(status);
         }
-
 
         return writeBody(body, result.getReturnTypeSource(), exchange);
     }

@@ -8,7 +8,11 @@ import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
+/**
+ * Deserializes {@link LocalDateTime} objects from JSON.
+ */
 public class LocalDateTimeDeserializer implements JsonDeserializer<LocalDateTime> {
+
     @Override
     public LocalDateTime deserialize(
             JsonElement json,

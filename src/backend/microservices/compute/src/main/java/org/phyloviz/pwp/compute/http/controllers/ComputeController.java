@@ -7,8 +7,8 @@ import org.phyloviz.pwp.compute.http.models.get_workflow.GetWorkflowOutputModel;
 import org.phyloviz.pwp.compute.http.models.get_workflow_status.GetWorkflowStatusOutputModel;
 import org.phyloviz.pwp.compute.http.models.get_workflows.GetWorkflowsOutputModel;
 import org.phyloviz.pwp.compute.service.ComputeService;
-import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowOutput;
 import org.phyloviz.pwp.compute.service.dtos.create_workflow.CreateWorkflowOutput;
+import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowOutput;
 import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutput;
 import org.phyloviz.pwp.shared.domain.User;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +73,7 @@ public class ComputeController {
 
         return new GetWorkflowStatusOutputModel(getWorkflowStatusOutput);
     }
+
     /**
      * Gets the workflow.
      *
@@ -93,6 +94,7 @@ public class ComputeController {
 
         return new GetWorkflowOutputModel(getWorkflowOutput);
     }
+
     /**
      * Gets the workflows of a project.
      *
@@ -110,18 +112,11 @@ public class ComputeController {
         List<GetWorkflowStatusOutput> getWorkflowStatusOutputList;
 
         if (running == null)
-            getWorkflowStatusOutputList = computeService.getAllWorkflows(
-                    projectId, user.getId()
-            );
-        else if (running) {
-            getWorkflowStatusOutputList = computeService.getAllRunningWorkflows(
-                    projectId, user.getId()
-            );
-        } else {
-            getWorkflowStatusOutputList = computeService.getAllNotRunningWorkflows(
-                    projectId, user.getId()
-            );
-        }
+            getWorkflowStatusOutputList = computeService.getAllWorkflows(projectId, user.getId());
+        else if (running)
+            getWorkflowStatusOutputList = computeService.getAllRunningWorkflows(projectId, user.getId());
+        else
+            getWorkflowStatusOutputList = computeService.getAllNotRunningWorkflows(projectId, user.getId());
 
         return new GetWorkflowsOutputModel(getWorkflowStatusOutputList);
     }

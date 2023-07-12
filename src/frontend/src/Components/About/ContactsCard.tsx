@@ -52,11 +52,11 @@ export function ContactsCard() {
                     href={"https://www.isel.pt/en"}
                     style={{textDecoration: "none"}}
                 >
-                <img src={IselLogo} alt="ISEL Logo" width="60%"/>
-                <Typography component="h1" variant="body2">
-                    (1) Instituto Superior de Engenharia de Lisboa, Instituto Politécnico de Lisboa, Lisboa,
-                    Portugal
-                </Typography>
+                    <img src={IselLogo} alt="ISEL Logo" width="60%"/>
+                    <Typography component="h1" variant="body2">
+                        (1) Instituto Superior de Engenharia de Lisboa, Instituto Politécnico de Lisboa, Lisboa,
+                        Portugal
+                    </Typography>
                 </a>
             </Box>
             <Box sx={{

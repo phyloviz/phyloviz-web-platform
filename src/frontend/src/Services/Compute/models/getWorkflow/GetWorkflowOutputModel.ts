@@ -14,7 +14,7 @@ export interface GetWorkflowOutputModel {
     name: string
     status: WorkflowStatus
     failureReason?: string
-    logs: {[taskName: string]: string}
+    logs: { [taskName: string]: string }
     progress: number
     data?: Map<string, any>
 }

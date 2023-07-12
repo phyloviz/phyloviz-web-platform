@@ -7,6 +7,9 @@ import org.phyloviz.pwp.compute.service.dtos.get_workflow.GetWorkflowStatusOutpu
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Service for the Compute Microservice.
+ */
 public interface ComputeService {
 
     /**

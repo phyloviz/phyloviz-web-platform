@@ -1,11 +1,10 @@
 import {get, post} from "../utils/apiFetch"
 import {WebApiUris} from "../WebApiUris"
-import {GetWorkflowStatusOutputModel} from "./models/getWorkflow/GetWorkflowOutputModel"
+import {GetWorkflowOutputModel, GetWorkflowStatusOutputModel} from "./models/getWorkflow/GetWorkflowOutputModel"
 import {CreateWorkflowOutputModel} from "./models/createWorkflow/CreateWorkflowOutputModel"
 import {CreateWorkflowInputModel} from "./models/createWorkflow/CreateWorkflowInputModel"
 import {GetWorkflowsOutputModel} from "./models/getWorkflows/GetWorkflowsOutputModel"
 import {MockComputeService} from "./MockComputeService"
-import {GetWorkflowOutputModel} from "./models/getWorkflow/GetWorkflowOutputModel";
 
 namespace ComputeService {
 

@@ -4,7 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
-import okhttp3.*;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import org.phyloviz.pwp.compute.service.flowviz.adapters.AccessDeserializer;
 import org.phyloviz.pwp.compute.service.flowviz.adapters.AccessSerializer;
 import org.phyloviz.pwp.compute.service.flowviz.adapters.LocalDateTimeDeserializer;
@@ -19,17 +24,16 @@ import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.Access;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-// TODO: Comment this class
 
 /**
  * Service for communicating with FLOWViZ API.
  */
 public class FLOWViZHttpService {
 
+    protected final Credentials credentials;
     private final String baseUrl;
     private final OkHttpClient client;
     private final Gson gson;
-    protected final Credentials credentials;
     protected Token token;
 
     public FLOWViZHttpService(String baseUrl, Credentials credentials) {
@@ -71,7 +75,16 @@ public class FLOWViZHttpService {
         }
     }
 
-
+    /**
+     * Execute a request.
+     *
+     * @param request  the request to execute
+     * @param resClazz the class of the response
+     * @param <T>      the type of the response
+     * @return the response
+     * @throws ConnectionRefusedException  if the connection was refused
+     * @throws UnexpectedResponseException if the response was unexpected
+     */
     private <T> T execute(
             Request request,
             Class<T> resClazz
@@ -99,6 +112,12 @@ public class FLOWViZHttpService {
         }
     }
 
+    /**
+     * Add the authentication token to a request.
+     *
+     * @param builder the request builder
+     * @return the request with the authentication token
+     */
     private Request addTokenToRequest(Request.Builder builder) {
         if (this.token != null)
             return builder.header("Authorization", "Bearer " + this.token.getToken()).build();
@@ -106,6 +125,12 @@ public class FLOWViZHttpService {
             return builder.build();
     }
 
+    /**
+     * Generate a request body from an object.
+     *
+     * @param body the object to generate the request body from
+     * @return the request body
+     */
     private RequestBody generateRequestBody(Object body) {
         return RequestBody.create(
                 this.gson.toJson(body),
@@ -113,9 +138,23 @@ public class FLOWViZHttpService {
         );
     }
 
-    private <T> T execute(Request.Builder reqBuilder, String path, Class<T> resClazz) throws ConnectionRefusedException, UnexpectedResponseException {
-        reqBuilder = reqBuilder
-                .url(this.baseUrl + path);
+    /**
+     * Execute a request.
+     *
+     * @param reqBuilder the request builder
+     * @param path       the path to execute the request on
+     * @param resClazz   the class of the response
+     * @param <T>        the type of the response
+     * @return the response
+     * @throws ConnectionRefusedException  if the connection was refused
+     * @throws UnexpectedResponseException if the response was unexpected
+     */
+    private <T> T execute(
+            Request.Builder reqBuilder,
+            String path,
+            Class<T> resClazz
+    ) throws ConnectionRefusedException, UnexpectedResponseException {
+        reqBuilder = reqBuilder.url(this.baseUrl + path);
 
         Request request = addTokenToRequest(reqBuilder);
 
@@ -132,42 +171,87 @@ public class FLOWViZHttpService {
         }
     }
 
-    public <T> T post(String path, Object body, Class<T> resClazz) throws ConnectionRefusedException, UnexpectedResponseException {
-        RequestBody requestBody = generateRequestBody(body);
-
+    /**
+     * Execute a POST request.
+     *
+     * @param path     the path to execute the request on
+     * @param resClazz the class of the response
+     * @param <T>      the type of the response
+     * @return the response
+     * @throws ConnectionRefusedException  if the connection was refused
+     * @throws UnexpectedResponseException if the response was unexpected
+     */
+    public <T> T post(
+            String path,
+            Object body,
+            Class<T> resClazz
+    ) throws ConnectionRefusedException, UnexpectedResponseException {
         return execute(
-                new Request.Builder()
-                        .post(requestBody),
+                new Request.Builder().post(generateRequestBody(body)),
                 path,
                 resClazz
         );
     }
 
-    public <T> T put(String path, Object body, Class<T> resClazz) throws ConnectionRefusedException, UnexpectedResponseException {
-        RequestBody requestBody = generateRequestBody(body);
-
-
+    /**
+     * Execute a PUT request.
+     *
+     * @param path     the path to execute the request on
+     * @param resClazz the class of the response
+     * @param <T>      the type of the response
+     * @return the response
+     * @throws ConnectionRefusedException  if the connection was refused
+     * @throws UnexpectedResponseException if the response was unexpected
+     */
+    public <T> T put(
+            String path,
+            Object body,
+            Class<T> resClazz
+    ) throws ConnectionRefusedException, UnexpectedResponseException {
         return execute(
-                new Request.Builder()
-                        .put(requestBody),
+                new Request.Builder().put(generateRequestBody(body)),
                 path,
                 resClazz
         );
     }
 
-    public <T> T get(String path, Class<T> resClazz) throws ConnectionRefusedException, UnexpectedResponseException {
+    /**
+     * Execute a GET request.
+     *
+     * @param path     the path to execute the request on
+     * @param resClazz the class of the response
+     * @param <T>      the type of the response
+     * @return the response
+     * @throws ConnectionRefusedException  if the connection was refused
+     * @throws UnexpectedResponseException if the response was unexpected
+     */
+    public <T> T get(
+            String path,
+            Class<T> resClazz
+    ) throws ConnectionRefusedException, UnexpectedResponseException {
         return execute(
-                new Request.Builder()
-                        .get(),
+                new Request.Builder().get(),
                 path,
                 resClazz
         );
     }
 
-    public <T> T delete(String path, Class<T> resClazz) throws ConnectionRefusedException, UnexpectedResponseException {
+    /**
+     * Execute a DELETE request.
+     *
+     * @param path     the path to execute the request on
+     * @param resClazz the class of the response
+     * @param <T>      the type of the response
+     * @return the response
+     * @throws ConnectionRefusedException  if the connection was refused
+     * @throws UnexpectedResponseException if the response was unexpected
+     */
+    public <T> T delete(
+            String path,
+            Class<T> resClazz
+    ) throws ConnectionRefusedException, UnexpectedResponseException {
         return execute(
-                new Request.Builder()
-                        .delete(),
+                new Request.Builder().delete(),
                 path,
                 resClazz
         );
