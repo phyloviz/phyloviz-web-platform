@@ -4,6 +4,9 @@ import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.UploadIsolateData
 import org.phyloviz.pwp.shared.service.dtos.files.typing_data.UploadTypingDataOutput;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Service for the File Transfer Microservice.
+ */
 public interface FileTransferService {
 
     /**

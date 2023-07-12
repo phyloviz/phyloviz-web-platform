@@ -25,15 +25,15 @@ import {mat4} from "gl-matrix";
 
 export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink> {
     public config = new GraphConfig<N, L>()
+    points: Points<N, L>
+    idToText = new Map<string, any>()
     private canvas: HTMLCanvasElement
     private canvasD3Selection: Selection<HTMLCanvasElement, undefined, null, undefined>
     private reglInstance: regl.Regl
     private requestAnimationFrameId = 0
     private isRightClickMouse = false
-
     private graph = new GraphData<N, L>()
     private store = new Store<N>()
-    points: Points<N, L>
     private lines: Lines<N, L>
     private forceGravity: ForceGravity<N, L>
     private forceCenter: ForceCenter<N, L>
@@ -46,7 +46,6 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
     private fpsMonitor: FPSMonitor | undefined
     private hasBeenRecentlyDestroyed = false
     private currentEvent: D3ZoomEvent<HTMLCanvasElement, undefined> | MouseEvent | undefined
-    idToText = new Map<string, any>()
     private updatePieCharts: boolean = false;
     private occurrencesColorMap: Map<string, { occurrences: number; color: number[] }[]> | undefined
 
@@ -625,6 +624,54 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
         this.hasBeenRecentlyDestroyed = false
     }
 
+    updateLabelPositions(time: number) {
+        const nodePositions = this.getNodePositionsMap()
+
+        if (this.points.renderLabels)
+            this.points.labelPositionsDataMatrices.forEach((mat, id) => {
+                const [nodeX, nodeY] = nodePositions.get(id)!
+
+                const screenPosition = this.spaceToScreenPosition([nodeX, nodeY])
+                const radius = this.getNodeRadiusById(id)!
+
+                const x = screenPosition[0] * 2
+                const y = this.canvas.height - screenPosition[1] * 2.0
+
+                mat4.fromTranslation(mat, [x, y, 0]);
+                mat4.scale(mat, mat, [this.store.transform[0] * radius * 0.9, this.store.transform[0] * radius * 0.9, 1]);
+            });
+
+        if (this.lines.renderLabels)
+            this.graph.completeLinks.forEach((link, key) => {
+                const hashCode = new NumberPair(link.source, link.target).hashCode()
+                const mat = this.lines.labelPositionsDataMatrices.get(hashCode)!
+
+                const [sourceX, sourceY] = nodePositions.get(link.source)!
+                const [targetX, targetY] = nodePositions.get(link.target)!
+
+                // Find middle point
+                const [middleX, middleY] = [(sourceX + targetX) / 2, (sourceY + targetY) / 2]
+
+                const screenPosition = this.spaceToScreenPosition([middleX, middleY])
+
+                const x = screenPosition[0] * 2
+                const y = this.canvas.height - screenPosition[1] * 2.0
+
+                mat4.fromTranslation(mat, [x, y, 0]);
+                mat4.scale(mat, mat, [this.store.transform[0] * 2, this.store.transform[0] * 2, 1]);
+            });
+    }
+
+    renderPieCharts(nodeSliceDataMap: Map<string, { occurrences: number; color: number[] }[]>) {
+        this.occurrencesColorMap = nodeSliceDataMap
+        this.updatePieCharts = true
+        this.points.renderPieCharts = true
+    }
+
+    removePieCharts() {
+        this.points.renderPieCharts = false
+    }
+
     private async update(runSimulation: boolean) {
         const {graph} = this
         this.store.pointsTextureSize = Math.ceil(Math.sqrt(graph.nodes.length))
@@ -807,55 +854,6 @@ export class TreeViewGraph<N extends CosmosInputNode, L extends CosmosInputLink>
 
             this.frame()
         })
-    }
-
-
-    updateLabelPositions(time: number) {
-        const nodePositions = this.getNodePositionsMap()
-
-        if (this.points.renderLabels)
-            this.points.labelPositionsDataMatrices.forEach((mat, id) => {
-                const [nodeX, nodeY] = nodePositions.get(id)!
-
-                const screenPosition = this.spaceToScreenPosition([nodeX, nodeY])
-                const radius = this.getNodeRadiusById(id)!
-
-                const x = screenPosition[0] * 2
-                const y = this.canvas.height - screenPosition[1] * 2.0
-
-                mat4.fromTranslation(mat, [x, y, 0]);
-                mat4.scale(mat, mat, [this.store.transform[0] * radius * 0.9, this.store.transform[0] * radius * 0.9, 1]);
-            });
-
-        if (this.lines.renderLabels)
-            this.graph.completeLinks.forEach((link, key) => {
-                const hashCode = new NumberPair(link.source, link.target).hashCode()
-                const mat = this.lines.labelPositionsDataMatrices.get(hashCode)!
-
-                const [sourceX, sourceY] = nodePositions.get(link.source)!
-                const [targetX, targetY] = nodePositions.get(link.target)!
-
-                // Find middle point
-                const [middleX, middleY] = [(sourceX + targetX) / 2, (sourceY + targetY) / 2]
-
-                const screenPosition = this.spaceToScreenPosition([middleX, middleY])
-
-                const x = screenPosition[0] * 2
-                const y = this.canvas.height - screenPosition[1] * 2.0
-
-                mat4.fromTranslation(mat, [x, y, 0]);
-                mat4.scale(mat, mat, [this.store.transform[0] * 2, this.store.transform[0] * 2, 1]);
-            });
-    }
-
-    renderPieCharts(nodeSliceDataMap: Map<string, { occurrences: number; color: number[] }[]>) {
-        this.occurrencesColorMap = nodeSliceDataMap
-        this.updatePieCharts = true
-        this.points.renderPieCharts = true
-    }
-
-    removePieCharts() {
-        this.points.renderPieCharts = false
     }
 
     private stopFrames(): void {

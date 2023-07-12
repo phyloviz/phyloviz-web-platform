@@ -79,7 +79,7 @@ export function TreeViewSettingsCard(
 
     return <Box sx={{
         opacity: loadingGraph ? 0.5 : 1,
-        pointerEvents: loadingGraph ? "none": "initial",
+        pointerEvents: loadingGraph ? "none" : "initial",
         position: "absolute",
         bottom: 0,
         left: 0,

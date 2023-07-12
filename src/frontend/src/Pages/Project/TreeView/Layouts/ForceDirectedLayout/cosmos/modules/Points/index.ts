@@ -37,16 +37,6 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
     public sizeFbo: regl.Framebuffer2D | undefined
     public trackedIndicesFbo: regl.Framebuffer2D | undefined
     public trackedPositionsFbo: regl.Framebuffer2D | undefined
-    // drawTextCommands: Map<string, regl.DrawCommand> = new Map()
-    private drawCommand: regl.DrawCommand | undefined
-    private drawHighlightedCommand: regl.DrawCommand | undefined
-    private updatePositionCommand: regl.DrawCommand | undefined
-    private findPointsOnAreaSelectionCommand: regl.DrawCommand | undefined
-    private findHoveredPointCommand: regl.DrawCommand | undefined
-    private clearHoveredFboCommand: regl.DrawCommand | undefined
-    private trackPointsCommand: regl.DrawCommand | undefined
-    private trackedIds: string[] | undefined
-    private trackedPositionsById: Map<string, [number, number]> = new Map()
     public drawLabelsCommand: regl.DrawCommand | undefined
     public labelPositionsTex: regl.Texture2D | undefined
     public labelPositionsData: Float32Array | undefined
@@ -59,6 +49,16 @@ export class Points<N extends CosmosInputNode, L extends CosmosInputLink> extend
     public renderPieCharts: boolean = false;
     public anglesAndColors: Float32Array | undefined;
     public slicesPerNode: Float32Array | undefined
+    // drawTextCommands: Map<string, regl.DrawCommand> = new Map()
+    private drawCommand: regl.DrawCommand | undefined
+    private drawHighlightedCommand: regl.DrawCommand | undefined
+    private updatePositionCommand: regl.DrawCommand | undefined
+    private findPointsOnAreaSelectionCommand: regl.DrawCommand | undefined
+    private findHoveredPointCommand: regl.DrawCommand | undefined
+    private clearHoveredFboCommand: regl.DrawCommand | undefined
+    private trackPointsCommand: regl.DrawCommand | undefined
+    private trackedIds: string[] | undefined
+    private trackedPositionsById: Map<string, [number, number]> = new Map()
 
     public create(): void {
         const {reglInstance, config, store, data} = this

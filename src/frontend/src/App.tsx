@@ -38,6 +38,7 @@ import ComputeForceDirectedLayout
 import ComputeRadialLayout from './Pages/Project/Compute/TreeView/ComputeRadialLayout/ComputeRadialLayout'
 import ComputeRectangularLayout
     from './Pages/Project/Compute/TreeView/ComputeRectangularLayout/ComputeRectangularLayout'
+import Workflow from "./Pages/Project/Workflow/Workflow";
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;
@@ -66,11 +67,9 @@ import EDIT_DATASET = WebUiUris.EDIT_DATASET;
 import TREE_VIEW_TYPING_DATA = WebUiUris.TREE_VIEW_TYPING_DATA;
 import TREE_VIEW_ISOLATE_DATA = WebUiUris.TREE_VIEW_ISOLATE_DATA;
 import WORKFLOW = WebUiUris.WORKFLOW;
-import Workflow from "./Pages/Project/Workflow/Workflow";
 import COMPUTE_FORCE_DIRECTED_LAYOUT = WebUiUris.COMPUTE_FORCE_DIRECTED_LAYOUT;
 import COMPUTE_RADIAL_LAYOUT = WebUiUris.COMPUTE_RADIAL_LAYOUT;
 import COMPUTE_RECTANGULAR_LAYOUT = WebUiUris.COMPUTE_RECTANGULAR_LAYOUT;
-import {useLoggedIn} from "./Session/Session";
 
 /**
  * App component.

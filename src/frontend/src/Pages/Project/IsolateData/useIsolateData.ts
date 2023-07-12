@@ -51,7 +51,7 @@ export function useIsolateData() {
                 {field: header, headerName: header, width: 100}
             )) ?? [])
 
-            setIsolateDataRows(data.rows?.rows.map((row:Row) => {
+            setIsolateDataRows(data.rows?.rows.map((row: Row) => {
                 row.row[dataset.isolateDataKey!] = row.profileId
 
                 return (
@@ -73,7 +73,7 @@ export function useIsolateData() {
     return {
         data: {
             columns: isolateDataColumns,
-            rows:   isolateDataRows,
+            rows: isolateDataRows,
             initialState: {
                 rowGrouping: {
                     groupBy: ['commodity'],

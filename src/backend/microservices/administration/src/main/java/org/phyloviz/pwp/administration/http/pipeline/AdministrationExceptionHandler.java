@@ -17,7 +17,7 @@ public class AdministrationExceptionHandler {
      * Handles Bad Request Exceptions.
      *
      * @param e the exception
-     * @return a Problem with the status BAD_REQUEST
+     * @return a Problem with the status Bad Request
      */
     @ExceptionHandler(value = {
             InvalidArgumentException.class,
@@ -36,7 +36,7 @@ public class AdministrationExceptionHandler {
      * Handles Denied Deletion Exceptions.
      *
      * @param e the exception
-     * @return a Problem with the status BAD_REQUEST
+     * @return a Problem with the status Bad Request
      */
     @ExceptionHandler(value = {
             DeniedFileDeletionException.class,

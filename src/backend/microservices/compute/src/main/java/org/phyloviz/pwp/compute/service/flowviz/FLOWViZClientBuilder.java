@@ -33,7 +33,12 @@ public class FLOWViZClientBuilder {
         return this;
     }
 
-    // TODO: Check this method name, authenticate? And comment.
+    /**
+     * Build the {@link FLOWViZClient}.
+     *
+     * @return the client
+     * @throws AuthenticationException if the credentials are invalid
+     */
     public FLOWViZClient authenticate() throws AuthenticationException {
         if (baseUrl == null)
             throw new IllegalStateException("baseUrl is required");

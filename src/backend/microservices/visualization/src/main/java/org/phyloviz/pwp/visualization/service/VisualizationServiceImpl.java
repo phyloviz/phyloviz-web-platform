@@ -1,7 +1,6 @@
 package org.phyloviz.pwp.visualization.service;
 
 import lombok.RequiredArgsConstructor;
-import org.phyloviz.pwp.shared.domain.User;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.DistanceMatrixDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.DistanceMatrixDataRepository;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.specific_data.DistanceMatrixDataRepositorySpecificData;
@@ -40,7 +39,13 @@ import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchem
 import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewInput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewOutput;
-import org.phyloviz.pwp.shared.service.exceptions.*;
+import org.phyloviz.pwp.shared.service.exceptions.DatasetNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.DistanceMatrixNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.IsolateDataNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.TreeNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.TreeViewNotFoundException;
+import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
 import org.phyloviz.pwp.visualization.service.exceptions.IndexingNeededException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -5,6 +5,9 @@ import org.phyloviz.pwp.shared_phylodb.config.ResourceServerSharedPhylodbConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+/**
+ * Configuration class for the Visualization Microservice.
+ */
 @Configuration
 @Import({ResourceServerSharedConfig.class, ResourceServerSharedPhylodbConfig.class})
 public class VisualizationConfig {

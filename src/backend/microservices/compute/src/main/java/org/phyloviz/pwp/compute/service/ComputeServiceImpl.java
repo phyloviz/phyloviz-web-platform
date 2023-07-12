@@ -195,7 +195,8 @@ public class ComputeServiceImpl implements ComputeService {
         } catch (UnexpectedResponseException e) {
             if (e.getResponse().code() == 404) {
                 return;
-            } else throw e;
+            } else
+                throw e;
         }
 
         List<AirflowWorkflowStatus> workflowRuns = workflow.getAirflow().getRuns();
@@ -239,7 +240,8 @@ public class ComputeServiceImpl implements ComputeService {
         } catch (UnexpectedResponseException e) {
             if (e.getResponse().code() == 404) {
                 return;
-            } else throw e;
+            } else
+                throw e;
         }
 
         List<AirflowWorkflowStatus> workflowRuns = workflow.getAirflow().getRuns();

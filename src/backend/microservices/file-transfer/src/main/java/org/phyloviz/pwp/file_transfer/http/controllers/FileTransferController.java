@@ -19,6 +19,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
+/**
+ * Controller for the File Transfer Microservice.
+ */
 @RestController
 @RequiredArgsConstructor
 public class FileTransferController {

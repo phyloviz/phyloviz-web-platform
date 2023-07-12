@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
+/**
+ * Serializes {@link LocalDateTime} objects to JSON.
+ */
 public class LocalDateTimeSerializer implements JsonSerializer<LocalDateTime> {
 
     @Override

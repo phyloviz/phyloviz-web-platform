@@ -42,7 +42,7 @@ export function TreeViewSaveCard(
     }}>
         <Box sx={{
             opacity: loadingGraph ? 0.5 : 1,
-            pointerEvents: loadingGraph ? "none": "initial",
+            pointerEvents: loadingGraph ? "none" : "initial",
             display: "flex",
             flexDirection: "column"
         }}>

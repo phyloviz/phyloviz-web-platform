@@ -9,6 +9,9 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+/**
+ * Resolves the {@link User} argument in the controller methods.
+ */
 @Component
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     @Override

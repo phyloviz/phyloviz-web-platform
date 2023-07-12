@@ -1,10 +1,7 @@
 package org.phyloviz.pwp.compute.service.flowviz;
 
 import lombok.Getter;
-import org.phyloviz.pwp.compute.service.flowviz.exceptions.AuthenticationException;
-import org.phyloviz.pwp.compute.service.flowviz.exceptions.UnexpectedResponseException;
 import org.phyloviz.pwp.compute.service.flowviz.identity.Credentials;
-import org.phyloviz.pwp.compute.service.flowviz.identity.Token;
 import org.phyloviz.pwp.compute.service.flowviz.models.tool.ToolService;
 import org.phyloviz.pwp.compute.service.flowviz.models.workflow.WorkflowService;
 

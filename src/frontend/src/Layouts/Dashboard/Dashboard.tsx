@@ -58,7 +58,8 @@ export default function Dashboard({children}: DashboardProps) {
                         <MenuIcon/>
                     </IconButton>
                     <Box sx={{flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <ButtonBase onClick={() => navigate(WebUiUris.HOME)} sx={{display: 'flex', alignItems: 'center'}}>
+                        <ButtonBase onClick={() => navigate(WebUiUris.HOME)}
+                                    sx={{display: 'flex', alignItems: 'center'}}>
                             <img alt="logo" src={Logo} width={40} height={40} style={{marginRight: '10px'}}/>
                             <Typography component="h1" variant="body1" color="inherit" noWrap>
                                 <strong>PHYLOViZ Web Platform</strong>

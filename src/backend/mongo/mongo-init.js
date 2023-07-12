@@ -3,9 +3,7 @@
 
 db = db.getSiblingDB('phyloviz-web-platform')
 
-db.createCollection('workflow-templates', {capped: false});
-
-//WORKFLOW_TEMPLATES
+// Tool Templates
 db['tool-templates'].insertMany(
     [
         {
@@ -235,7 +233,8 @@ db['tool-templates'].insertMany(
         }
     ]
 )
-//TOOL_TEMPLATES
+
+// Workflow Templates
 db['workflow-templates'].insertMany(
     [
         {

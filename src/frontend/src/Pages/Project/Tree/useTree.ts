@@ -9,8 +9,7 @@ import {
     DistanceMatrix,
     Tree
 } from "../../../Services/Administration/models/projects/getProject/GetProjectOutputModel";
-import {useEffect, useState} from "react";
-import VisualizationService from "../../../Services/Visualization/VisualizationService";
+import {useState} from "react";
 
 /**
  * Hook for Tree page.

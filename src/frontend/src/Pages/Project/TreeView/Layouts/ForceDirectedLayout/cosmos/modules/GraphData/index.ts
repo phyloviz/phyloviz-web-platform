@@ -14,13 +14,6 @@ export class GraphData<N extends CosmosInputNode, L extends CosmosInputLink> {
     public groupedSourceToTargetLinks: Map<number, Set<number>> = new Map()
     /** Mapping the target node index to a `Set` of source node indices connected to that node */
     public groupedTargetToSourceLinks: Map<number, Set<number>> = new Map()
-    /** Mapping the original id to the original node */
-    private idToNodeMap: Map<string, N> = new Map()
-    /** Mapping the sorted index to the original index */
-    private sortedIndexToInputIndexMap: Map<number, number> = new Map()
-    /** Mapping the original index to the sorted index of the node */
-    private inputIndexToSortedIndexMap: Map<number, number> = new Map()
-
     /** We want to display more important nodes (i.e. with the biggest number of connections)
      * on top of the other. To render them in the right order,
      * we create an array of node indices sorted by degree (number of connections)
@@ -28,6 +21,12 @@ export class GraphData<N extends CosmosInputNode, L extends CosmosInputLink> {
      * and other properties by original node index, sorted index, and id 👇. */
     /** Mapping the original id to the sorted index of the node */
     public idToSortedIndexMap: Map<string, number> = new Map()
+    /** Mapping the original id to the original node */
+    private idToNodeMap: Map<string, N> = new Map()
+    /** Mapping the sorted index to the original index */
+    private sortedIndexToInputIndexMap: Map<number, number> = new Map()
+    /** Mapping the original index to the sorted index of the node */
+    private inputIndexToSortedIndexMap: Map<number, number> = new Map()
     /** Mapping the original index to the original id of the node */
     private inputIndexToIdMap: Map<number, string> = new Map()
     /** Mapping the original id to the indegree value of the node */

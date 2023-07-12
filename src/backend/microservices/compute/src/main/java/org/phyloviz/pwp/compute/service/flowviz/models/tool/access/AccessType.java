@@ -8,5 +8,5 @@ public enum AccessType {
     @SerializedName("library")
     LIBRARY,
     @SerializedName("api")
-    API;
+    API
 }

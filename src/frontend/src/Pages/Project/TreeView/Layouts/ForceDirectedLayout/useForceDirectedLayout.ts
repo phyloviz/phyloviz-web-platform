@@ -7,12 +7,9 @@ import {useProjectContext} from "../../../useProject";
 import {useCascadingInfoTreeView} from "../../useCascadingInfoTreeView";
 import {useIsolateData} from "./utils/useIsolateData";
 import {useGraph} from "./utils/useGraph";
-import {useSimulationConfig} from "./utils/useSimulationConfig";
-import {useGraphTransformationsConfig} from "./utils/useGraphTransformationsConfig";
 import {useSelectIsolateDataHeader} from "./utils/useSelectIsolateDataHeader";
 import {WebUiUris} from "../../../../WebUiUris";
 import {DoughnutChartData} from "../../../../../Components/Project/TreeView/DoughnutChart";
-import * as cluster from "cluster";
 
 export type VizNode = {
     id: string

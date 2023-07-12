@@ -13,7 +13,7 @@ public class VisualizationExceptionHandler {
      * Handles Indexing Needed Exceptions.
      *
      * @param e the exception
-     * @return a Problem with the status BAD_REQUEST
+     * @return a Problem with the status Bad Request
      */
     @ExceptionHandler(value = {
             IndexingNeededException.class

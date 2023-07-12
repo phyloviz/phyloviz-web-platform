@@ -69,10 +69,11 @@ export function useProject() {
                 setError(null)
             })
             .catch((err: Error) => {
-                if(err instanceof Problem && err.status === 404) {
-                    navigate("not-found")
+                    if (err instanceof Problem && err.status === 404) {
+                        navigate("not-found")
+                    }
+                    setError("Could not load project: " + err.message)
                 }
-                setError("Could not load project: " + err.message)}
             )
     }
 

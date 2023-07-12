@@ -25,10 +25,10 @@ import org.zalando.problem.Status;
 public class SharedExceptionHandler {
 
     /**
-     * Handles Unauthorized Exceptions.
+     * Handles Forbidden Exceptions.
      *
      * @param e the exception
-     * @return a Problem with the status FORBIDDEN
+     * @return a Problem with the status Forbidden
      */
     @ExceptionHandler(value = {UnauthorizedException.class})
     public Problem handleForbiddenException(Exception e) {
@@ -43,7 +43,7 @@ public class SharedExceptionHandler {
      * Handles Not Found Exceptions.
      *
      * @param e the exception
-     * @return a Problem with the status NOT_FOUND
+     * @return a Problem with the status Not Found
      */
     @ExceptionHandler(value = {
             ProjectNotFoundException.class,
@@ -66,7 +66,7 @@ public class SharedExceptionHandler {
      * Handles HttpMessageNotReadableExceptions.
      *
      * @param ex the exception
-     * @return a Problem with the status BAD_REQUEST
+     * @return a Problem with the status Bad Request
      */
     @ExceptionHandler(value = {HttpMessageNotReadableException.class})
     public Problem handleHttpMessageNotReadableExceptions(
@@ -94,7 +94,7 @@ public class SharedExceptionHandler {
      * Handles MissingServletRequestPartException.
      *
      * @param ex the exception
-     * @return a Problem with the status BAD_REQUEST
+     * @return a Problem with the status Bad Request
      */
     @ExceptionHandler(value = {MissingServletRequestPartException.class})
     public Problem handleMissingServletRequestPartExceptions(
@@ -111,7 +111,7 @@ public class SharedExceptionHandler {
      * Handles Bad Request.
      *
      * @param e the exception
-     * @return a Problem with the status BAD_REQUEST
+     * @return a Problem with the status Bad Request
      */
     @ExceptionHandler(value = {
             FileCorruptedException.class,
@@ -128,7 +128,7 @@ public class SharedExceptionHandler {
     /**
      * Handles all other exceptions.
      *
-     * @return a Problem with the status INTERNAL_SERVER_ERROR
+     * @return a Problem with the status Internal Server Error
      */
     @ExceptionHandler(value = {Exception.class})
     public Problem handleInternalServerError(Exception e) {
@@ -138,5 +138,4 @@ public class SharedExceptionHandler {
                 .withStatus(Status.INTERNAL_SERVER_ERROR)
                 .build();
     }
-
 }

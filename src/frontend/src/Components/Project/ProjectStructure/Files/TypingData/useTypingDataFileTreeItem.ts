@@ -1,4 +1,4 @@
-import {Delete, Download, Visibility} from "@mui/icons-material"
+import {Delete, Visibility} from "@mui/icons-material"
 import {useNavigate, useParams} from "react-router-dom"
 import {useState} from "react"
 import {TypingDataFile} from "../../../../../Services/Administration/models/projects/getProject/GetProjectOutputModel"

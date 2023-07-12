@@ -21,10 +21,10 @@ import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TypingDataDoesNotExistException;
 import org.phyloviz.pwp.shared.utils.UUIDUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor

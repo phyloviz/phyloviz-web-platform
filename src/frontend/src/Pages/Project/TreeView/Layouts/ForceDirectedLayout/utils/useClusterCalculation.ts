@@ -36,7 +36,7 @@ export function findClusters(nodes: Node[], edges: Edge[]): Graph[] {
  */
 export function dfs(node: Node, nodes: Node[], edges: Edge[], visited: Set<string>): Graph {
     const clusterNodes: Node[] = []
-    const clusterEdges : Edge[] = []
+    const clusterEdges: Edge[] = []
     const stack: Node[] = [node]
 
     while (stack.length > 0) {

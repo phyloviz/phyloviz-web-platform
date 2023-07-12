@@ -1,13 +1,11 @@
 import * as React from "react"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
-import {Button, Container, FormControl, InputLabel, MenuItem, Select} from "@mui/material"
+import {Container} from "@mui/material"
 // @ts-ignore
 import HeatMap from "react-heatmap-grid"
 import Box from "@mui/material/Box"
 // @ts-ignore
-import {Colorscale} from 'react-colorscales'
-import {Download, Print} from "@mui/icons-material"
 import {useDistanceMatrix} from "./useDistanceMatrix"
 import {DistanceMatrixInfoCard} from "../../../Components/Project/DistanceMatrix/DistanceMatrixInfoCard"
 

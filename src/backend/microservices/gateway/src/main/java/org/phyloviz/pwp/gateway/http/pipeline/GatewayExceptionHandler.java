@@ -18,7 +18,7 @@ public class GatewayExceptionHandler {
      * Handles Authentication Exceptions.
      *
      * @param e the exception
-     * @return a Problem with the status UNAUTHORIZED
+     * @return a Problem with the status Unauthorized
      */
     @ExceptionHandler(value = {AuthenticationException.class})
     public Problem handleUnauthorizedException(Exception e) {
@@ -33,13 +33,13 @@ public class GatewayExceptionHandler {
      * Handles HttpMessageNotReadableExceptions.
      *
      * @param ex the exception
-     * @return a Problem with the status BAD_REQUEST
+     * @return a Problem with the status Bad Request
      */
     @ExceptionHandler(value = {HttpMessageNotReadableException.class})
     public Problem handleHttpMessageNotReadableExceptions(
             HttpMessageNotReadableException ex
     ) {
-        //TODO: Improve this
+        // TODO: Improve this
         String title = "Invalid request body:";
 
         if (ex.getRootCause() instanceof UnrecognizedPropertyException unrecognizedPropertyException)
@@ -60,11 +60,10 @@ public class GatewayExceptionHandler {
     /**
      * Handles all other exceptions.
      *
-     * @return a Problem with the status INTERNAL_SERVER_ERROR
+     * @return a Problem with the status Internal Server Error
      */
     @ExceptionHandler(value = {Exception.class})
     public Problem handleInternalServerError(Exception e) {
-
         return Problem.builder()
                 .withTitle(Status.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .withStatus(Status.INTERNAL_SERVER_ERROR)

@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class Access {
-
     public final AccessType type;
-
     public final AccessDetails details;
 }

@@ -23,6 +23,7 @@ import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
 import org.phyloviz.pwp.shared.service.exceptions.TypingDataNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -32,7 +33,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
