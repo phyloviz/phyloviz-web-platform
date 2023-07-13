@@ -14,6 +14,7 @@
     "buffer": "^6.0.3",
     "chart.js": "^4.3.0",
     "color-interpolate": "^1.0.5",
+    "d3": "^7.8.5",
     "d3-array": "^3.2.0",
     "d3-color": "^3.1.0",
     "d3-drag": "^3.0.0",
@@ -38,7 +39,6 @@
     "react-drag-drop-files": "^2.3.9",
     "react-draggable": "^4.4.5",
     "react-google-charts": "^4.0.0",
-    "react-heatmap-grid": "^0.9.0",
     "react-router-dom": "^6.4.3",
     "react-to-print": "^2.14.12",
     "react-window": "^1.8.9",
@@ -46,6 +46,7 @@
     "vectorize-text": "^3.2.2"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.0",
     "@types/d3-array": "^3.0.3",
     "@types/d3-color": "^3.1.0",
     "@types/d3-drag": "^3.0.2",
