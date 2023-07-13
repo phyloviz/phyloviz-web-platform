@@ -104,13 +104,56 @@ export function useDistanceMatrix() {
                 .domain(columns)
                 .padding(0.05);
 
-            // Build color scale
+            // ----------------------------------------------------------------------------------------------
+            // Color Scale
+            // ----------------------------------------------------------------------------------------------
+
             const maxDistance = Math.max(...distanceMatrix.map((d: ProfilesDistance) => d.distance))
             const myColor = d3.scaleSequential()
-                .interpolator(d3.interpolateHslLong("blue", "orange"))// TODO: maybe change colors: see color interpolation
+                .interpolator(d3.interpolateHslLong("blue", "orange"))
                 .domain([0, maxDistance])
 
-            // create a tooltip
+            const colorScaleWidth = 40
+            const colorScaleHeight = 200
+            const colorScale = d3.select("#colorscale")
+                .append("svg")
+                .attr("width", colorScaleWidth)
+                .attr("height", colorScaleHeight + 20)
+
+            const gradient = colorScale.append("defs")
+                .append("linearGradient")
+                .attr("id", "gradient")
+                .attr("x1", "0%")
+                .attr("y1", "100%")
+                .attr("x2", "0%")
+                .attr("y2", "0%")
+
+            for (let i = maxDistance; i >= 0; i--) {
+                gradient.append("stop")
+                    .attr("offset", `${(maxDistance - i) / maxDistance * 100}%`)
+                    .attr("stop-color", myColor(i))
+            }
+
+            colorScale
+                .append("rect")
+                .attr("width", colorScaleWidth / 2)
+                .attr("height", colorScaleHeight)
+                .style("fill", "url(#gradient)")
+                .attr("transform", "translate(0,5)")
+
+            // add labels to color scale
+            const colorAxis = d3.axisRight(d3.scaleLinear()
+                .domain([0, maxDistance])
+                .range([0, colorScaleHeight]))
+                .tickValues(d3.range(0, maxDistance + 1, 1))
+                .tickFormat(d3.format("d")) // integer format
+            colorScale.append("g")
+                .attr("transform", "translate(20,5)")
+                .call(colorAxis)
+
+            // ----------------------------------------------------------------------------------------------
+
+            // Create a tooltip
             const tooltip = d3.select("#heatmap")
                 .append("div")
                 .style("opacity", 0)

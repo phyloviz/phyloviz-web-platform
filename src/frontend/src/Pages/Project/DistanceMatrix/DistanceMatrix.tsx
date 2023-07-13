@@ -95,18 +95,13 @@ export default function DistanceMatrix() {
                         }}>
                             <Box sx={{
                                 width: "40%",
-                                height: "200px",
                                 display: "flex",
                                 flexDirection: "column",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                backgroundColor: "grey.100",
                                 mr: 2
                             }}>
-                                <Typography component="h1" variant="h6">
-                                    Color Scale
-                                </Typography>
-
+                                <div id="colorscale"></div>
                             </Box>
                             <Box sx={{
                                 width: "50%",
