@@ -1,5 +1,5 @@
 import * as React from "react"
-import {Button, Container, FormControl, InputLabel, MenuItem, Select, Typography} from "@mui/material"
+import {Container, FormControl, InputLabel, MenuItem, Select, Typography} from "@mui/material"
 // @ts-ignore
 import HeatMap from "react-heatmap-grid"
 import Box from "@mui/material/Box"
@@ -9,7 +9,6 @@ import {useDistanceMatrix} from "./useDistanceMatrix"
 import {DistanceMatrixInfoCard} from "../../../Components/Project/DistanceMatrix/DistanceMatrixInfoCard"
 import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
 import {ErrorAlert} from "../../../Components/Shared/ErrorAlert";
-import {Download, Print} from "@mui/icons-material"
 
 /**
  * DistanceMatrix page.
@@ -19,7 +18,10 @@ export default function DistanceMatrix() {
         loading,
         error,
         clearError,
-        distanceMatrix
+        distanceMatrix,
+        selectedOrder,
+        onOrderChange,
+        orderOptions
     } = useDistanceMatrix()
 
     // @ts-ignore
@@ -65,23 +67,21 @@ export default function DistanceMatrix() {
                         <Typography component="h1" variant="h5">
                             Options
                         </Typography>
-                        <FormControl sx={{width: "75%", mb: 1, mt: 2}}>
+                        <FormControl sx={{width: "75%", mb: 1, mt: 2}} size="small">
                             <InputLabel id="order">Order</InputLabel>
                             <Select
                                 labelId="order"
                                 label="Order"
-                                value=""
-                                onChange={() => {
-                                }}
+                                value={selectedOrder ?? ""}
+                                onChange={onOrderChange}
+                                disabled={loading}
                                 MenuProps={{PaperProps: {sx: {maxHeight: 150}}}}
                             >
-                                <MenuItem value={"st"}>ST</MenuItem>
-                                <MenuItem value={"name"}>Name</MenuItem>
-                                <MenuItem value={"location"}>Location</MenuItem>
-                                <MenuItem value={"strain"}>Strain</MenuItem>
-                                <MenuItem value={"collection"}>Collection</MenuItem>
-                                <MenuItem value={"emm-type"}>EMM Type</MenuItem>
-                                <MenuItem value={"group-carbohydrate"}>Group Carbohydrate</MenuItem>
+                                {
+                                    orderOptions.map((option, index) => {
+                                        return <MenuItem key={index} value={option}>{option}</MenuItem>
+                                    })
+                                }
                             </Select>
                         </FormControl>
                         <Box sx={{
@@ -103,7 +103,7 @@ export default function DistanceMatrix() {
                             }}>
                                 <div id="colorscale"></div>
                             </Box>
-                            <Box sx={{
+                            {/*<Box sx={{
                                 width: "50%",
                                 height: "100%",
                                 display: "flex",
@@ -127,7 +127,7 @@ export default function DistanceMatrix() {
                                     }}
                                     startIcon={<Print/>}
                                 >Print</Button>
-                            </Box>
+                            </Box>*/}
                         </Box>
                     </Box>
                 </Box>
