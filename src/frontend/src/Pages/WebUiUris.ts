@@ -12,7 +12,7 @@ export namespace WebUiUris {
     export const NEW_PROJECT = "/new-project"
     export const OPEN_PROJECT = "/open-project"
 
-    export const GET_STARTED = "https://github.com/bodybuilders-team/phyloviz-web-platform/wiki/getting-started"
+    export const GET_STARTED = "https://github.com/phyloviz/phyloviz-web-platform/wiki/getting-started"
 
     export const PROJECT = "/projects/:projectId"
     export const EDIT_PROJECT = `${PROJECT}/edit`

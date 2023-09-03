@@ -77,7 +77,7 @@ If you have any questions, concerns, or need assistance, you can reach out to th
 
 Please feel free to contact any of the authors if you have any inquiries related to the PHYLOViZ Web Platform. They will be happy to assist you.
 
-If you encounter any bugs, have feature requests, or would like to report any issues, please visit the [Issues](https://github.com/bodybuilders-team/phyloviz-web-platform/issues) section 
+If you encounter any bugs, have feature requests, or would like to report any issues, please visit the [Issues](https://github.com/phyloviz/phyloviz-web-platform/issues) section 
 on GitHub and create a new issue. 
 Your feedback and contributions are valuable to us, and we appreciate your help in improving the platform.
 
