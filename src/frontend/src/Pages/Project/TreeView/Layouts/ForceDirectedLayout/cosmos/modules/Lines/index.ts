@@ -35,16 +35,15 @@ export class NumberPair {
 }
 
 export class Lines<N extends CosmosInputNode, L extends CosmosInputLink> extends CoreModule<N, L> {
-    private drawStraightCommand: regl.DrawCommand | undefined
-    private colorBuffer: regl.Buffer | undefined
-    private widthBuffer: regl.Buffer | undefined
     public drawLabelsCommand: regl.DrawCommand | undefined
     public labelPositionsTex: regl.Texture2D | undefined
     public labelPositionsData: Float32Array | undefined
     public labelPositionsDataMatrices = new Map<number, Float32Array>()
     glyphWidth: number | undefined;
     renderLabels: boolean = false;
-
+    private drawStraightCommand: regl.DrawCommand | undefined
+    private colorBuffer: regl.Buffer | undefined
+    private widthBuffer: regl.Buffer | undefined
 
     public create(): void {
         this.updateColor()

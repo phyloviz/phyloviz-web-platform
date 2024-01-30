@@ -1,12 +1,6 @@
 import {useParams} from "react-router-dom"
 import VisualizationService from "../../../Services/Visualization/VisualizationService"
 import {useEffect, useState} from "react"
-import {
-    GetTypingDataProfilesOutputModel
-} from "../../../Services/Visualization/models/getTypingDataProfiles/GetTypingDataProfilesOutputModel"
-import {
-    GetTypingDataSchemaOutputModel
-} from "../../../Services/Visualization/models/getTypingDataSchema/GetTypingDataSchemaOutputModel"
 import {Problem} from "../../../Services/utils/Problem";
 
 export const MAX_INTEGER = 2147483646

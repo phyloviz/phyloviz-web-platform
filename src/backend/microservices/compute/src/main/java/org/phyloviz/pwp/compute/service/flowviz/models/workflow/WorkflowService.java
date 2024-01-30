@@ -20,6 +20,6 @@ public class WorkflowService extends FLOWViZHttpService {
     }
 
     public GetWorkflowTaskLogResponse getWorkflowDagRunTaskLog(String name, String dagRunId, String taskId, String logId) {
-        return this.get("/workflow/" + name + "/" + dagRunId + "/tasks/" + taskId + "/logs/"+ logId, GetWorkflowTaskLogResponse.class);
+        return this.get("/workflow/" + name + "/" + dagRunId + "/tasks/" + taskId + "/logs/" + logId, GetWorkflowTaskLogResponse.class);
     }
 }

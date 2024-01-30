@@ -14,8 +14,11 @@ import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.library.Libra
 import java.lang.reflect.Type;
 import java.util.Map;
 
-// TODO: Comment this class
+/**
+ * Deserializes an {@link Access} object from JSON.
+ */
 public class AccessDeserializer implements JsonDeserializer<Access> {
+
     @Override
     public Access deserialize(
             JsonElement json,

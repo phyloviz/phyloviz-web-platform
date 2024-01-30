@@ -11,6 +11,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import org.zalando.problem.Problem;
 import org.zalando.problem.StatusType;
 
+/**
+ * This class is responsible for handling the {@link Problem} objects returned by the controllers.
+ */
 @RestControllerAdvice
 public class ProblemJsonResponseBodyAdvice implements ResponseBodyAdvice<Problem> {
 

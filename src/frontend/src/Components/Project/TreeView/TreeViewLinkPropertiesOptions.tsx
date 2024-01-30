@@ -1,15 +1,4 @@
-import {
-    Button,
-    Checkbox,
-    Collapse,
-    FormControl,
-    FormControlLabel,
-    FormGroup,
-    InputLabel,
-    MenuItem,
-    Select,
-    Typography
-} from "@mui/material";
+import {Button, Checkbox, Collapse, FormControlLabel, FormGroup, Typography} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {InputSlider} from "./InputSlider";
 import * as React from "react";

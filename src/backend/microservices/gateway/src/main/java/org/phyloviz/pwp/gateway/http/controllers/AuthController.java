@@ -17,8 +17,14 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api")
 public class AuthController {
 
-    //TODO: If the user has been deleted in keycloak,
-    // maybe the session should be invalidated automatically without logout?
+    //TODO: If the user has been deleted in keycloak, maybe the session should be invalidated automatically without logout?
+
+    /**
+     * Gets the session information of the current user.
+     *
+     * @param authentication the authentication token of the current user
+     * @return the session information of the current user
+     */
     @GetMapping(path = "/session", produces = "application/json")
     public Mono<ResponseEntity<GetSessionOutputModel>> getSession(OAuth2AuthenticationToken authentication) {
         if (!(authentication.getPrincipal() instanceof OidcUser user))

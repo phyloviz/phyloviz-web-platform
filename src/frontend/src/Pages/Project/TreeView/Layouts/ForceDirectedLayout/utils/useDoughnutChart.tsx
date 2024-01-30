@@ -51,7 +51,7 @@ export function useDoughnutChart(
             backgroundColor: "rgb(128,128,128)"
         })
 
-        setSelectedLabelVisibility(selectedIndices.map(( ) => true).concat(true))
+        setSelectedLabelVisibility(selectedIndices.map(() => true).concat(true))
 
         setSelectedChartData({
             labels: newData.map(d => d.label),

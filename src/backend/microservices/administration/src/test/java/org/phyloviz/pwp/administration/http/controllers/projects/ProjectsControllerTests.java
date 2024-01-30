@@ -20,7 +20,6 @@ class ProjectsControllerTests {
     @MockBean
     private ProjectService projectService;
 
-    // TODO: Review tests for controllers -> use HTTP requests instead of calling service methods directly
     @Test
     void createProjectIsSuccessful() {
         CreateProjectInputModel createProjectInputModel = new CreateProjectInputModel();

@@ -11,8 +11,11 @@ import org.phyloviz.pwp.compute.service.flowviz.models.tool.access.library.Libra
 
 import java.lang.reflect.Type;
 
-// TODO: Comment this class
+/**
+ * Serializes {@link Access} objects to JSON.
+ */
 public class AccessSerializer implements JsonSerializer<Access> {
+
     @Override
     public JsonElement serialize(Access access, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject json = new JsonObject();

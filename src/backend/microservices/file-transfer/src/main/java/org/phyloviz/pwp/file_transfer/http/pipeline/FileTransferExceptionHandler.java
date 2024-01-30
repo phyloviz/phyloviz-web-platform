@@ -11,13 +11,13 @@ import org.zalando.problem.Status;
 public class FileTransferExceptionHandler {
 
     @Value("${spring.servlet.multipart.max-file-size}")
-    private String MAX_UPLOAD_SIZE;
+    private String maxUploadSize;
 
     /**
      * Handles Multipart Max Upload Size Exceptions.
      *
      * @param e the exception
-     * @return a Problem with the status BAD_REQUEST
+     * @return a Problem with the status Bad Request
      */
     @ExceptionHandler(value = {
             MaxUploadSizeExceededException.class
@@ -25,7 +25,7 @@ public class FileTransferExceptionHandler {
     public Problem handleMultipartMaxUploadException(Exception e) {
         return Problem.builder()
                 .withTitle("Bad Request")
-                .withDetail("Maximum file upload size exceeded (Max is " + MAX_UPLOAD_SIZE + ")")
+                .withDetail("Maximum file upload size exceeded (Max is " + maxUploadSize + ")")
                 .withStatus(Status.BAD_REQUEST)
                 .build();
     }

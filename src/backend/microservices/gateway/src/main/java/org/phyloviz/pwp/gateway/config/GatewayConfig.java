@@ -37,10 +37,8 @@ import org.springframework.web.util.pattern.PathPatternParser;
 import java.util.List;
 import java.util.Map;
 
-// TODO: Comment this class
-
 /**
- * Configuration for the gateway.
+ * Configuration class for the Gateway.
  */
 @Configuration
 @RequiredArgsConstructor
@@ -90,7 +88,7 @@ public class GatewayConfig {
                                 .authenticationFailureHandler(authenticationFailureHandler())
                 )
                 // This Oauth2Client appears to be adding a web filter that catches the /oauth2/authorization/phyloviz-web-platform-client
-                // so I can't change disable that endpoint...... Would be an interesting issue to add
+                // ,so I can't change disable that endpoint...... Would be an interesting issue to add
                 // to https://github.com/spring-projects/spring-security/issues
                 .oauth2Client(oAuth2ClientSpec -> oAuth2ClientSpec.authorizedClientRepository(authorizedClientRepository))
                 .logout()

@@ -41,7 +41,7 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import java.util.List;
 
 /**
- * Configuration class for the Compute microservice.
+ * Configuration class for the Compute Microservice.
  */
 @Configuration
 @Import({ResourceServerSharedConfig.class, ResourceServerSharedPhylodbConfig.class})
@@ -122,7 +122,7 @@ public class ComputeConfig {
                 new TreeViewMetadataSerializer(mongoConverter),
                 new AccessTemplateSerializer(),
                 new AccessTemplateDeserializer(mongoConverter),
-                //https://stackoverflow.com/questions/12385920/spring-mongodb-storing-retrieving-enums-as-int-not-string/30024621#30024621
+                // https://stackoverflow.com/questions/12385920/spring-mongodb-storing-retrieving-enums-as-int-not-string/30024621#30024621
                 new CaseInsensitiveEnumDeserializerFactory.CaseInsensitiveEnumDeserializer(null)
         );
 

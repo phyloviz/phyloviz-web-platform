@@ -2,8 +2,8 @@ import {Box, TextField} from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import {Search} from "@mui/icons-material"
 import * as React from "react"
-import ShuffleIcon from '@mui/icons-material/Shuffle';
 import CasinoIcon from '@mui/icons-material/Casino';
+
 /**
  * Card for searching for a specific ST in the tree view page.
  */
@@ -24,7 +24,7 @@ export function TreeViewSearchCard({loadingGraph, onSearch, focusRandom}: {
 
     return <Box sx={{
         opacity: loadingGraph ? 0.5 : 1,
-        pointerEvents: loadingGraph ? "none": "initial",
+        pointerEvents: loadingGraph ? "none" : "initial",
         position: "absolute",
         bottom: 0,
         right: 0,
