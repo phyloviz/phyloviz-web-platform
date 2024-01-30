@@ -81,6 +81,8 @@ public class S3FileRepositoryImpl implements S3FileRepository {
 
         upload.completionFuture().join();
 
+        // s3Client.listBuckets().join() -> lists all buckets, currently only one with name "phyloviz-web-platform"
+
         return true;
     }
 
