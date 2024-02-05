@@ -28,7 +28,7 @@ import java.util.concurrent.Executors;
 @Repository
 public class S3FileRepositoryImpl implements S3FileRepository {
 
-    public static final Region REGION = Region.of("custom");
+    public static final Region REGION = Region.EU_WEST_1; // Region.of("custom");
     private final String bucketName;
     private final String objectStorageEndpoint;
     private final S3AsyncClient s3Client;
@@ -37,7 +37,7 @@ public class S3FileRepositoryImpl implements S3FileRepository {
 
     public S3FileRepositoryImpl(
             @Value("${s3.endpoint}")
-            String objectStorageEndpoint,
+            String s3endpoint,
             @Value("${s3.access-key-id}")
             String accessKeyId,
             @Value("${s3.secret-access-key}")
@@ -45,11 +45,10 @@ public class S3FileRepositoryImpl implements S3FileRepository {
             @Value("${s3.bucket}")
             String bucketName
     ) {
-        AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
-
         S3AsyncClient newS3Client = S3AsyncClient.builder()
-                .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
-                .endpointOverride(URI.create(objectStorageEndpoint))
+                .forcePathStyle(true) // adding this one
+                .endpointOverride(URI.create(s3endpoint))
+                .credentialsProvider(() -> AwsBasicCredentials.create(accessKeyId, secretAccessKey))
                 .region(REGION)
                 .build();
 
@@ -57,7 +56,7 @@ public class S3FileRepositoryImpl implements S3FileRepository {
 
         this.s3Client = newS3Client;
         this.bucketName = bucketName;
-        this.objectStorageEndpoint = objectStorageEndpoint;
+        this.objectStorageEndpoint = s3endpoint;
         this.transferManager = S3TransferManager.builder().s3Client(newS3Client).build();
     }
 
