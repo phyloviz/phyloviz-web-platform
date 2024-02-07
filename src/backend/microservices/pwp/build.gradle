@@ -1,8 +1,8 @@
 plugins {
-  id 'application'
-  id 'org.springframework.boot' version '3.0.4'
-  id 'io.spring.dependency-management' version '1.1.0'
-  id "io.freefair.lombok" version "8.0.0-rc2"
+    id 'application'
+    id 'org.springframework.boot' version '3.0.4'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id "io.freefair.lombok" version "8.0.0-rc2"
 }
 
 group 'phylovizwebplatform'
@@ -10,37 +10,36 @@ version '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 ext {
-  set('jupiterVersion', "5.8.1")
+    set('jupiterVersion', "5.8.1")
 }
 
 repositories {
-  mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-  implementation project(path: ':microservices:shared-phylodb')
-  implementation project(path: ':microservices:shared')
+    implementation project(path: ':microservices:shared')
 
-  testImplementation 'org.springframework.boot:spring-boot-starter-test'
-  testImplementation 'org.junit.jupiter:junit-jupiter-api' version { jupiterVersion }
-  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine' version { jupiterVersion }
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api' version { jupiterVersion }
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine' version { jupiterVersion }
 
-  implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-  implementation 'org.springframework.boot:spring-boot-starter-web'
-  implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-  implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-  implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
-  implementation 'org.zalando:problem-spring-web-starter:0.27.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+    implementation 'org.zalando:problem-spring-web-starter:0.27.0'
 
-  implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-  implementation 'com.google.code.gson:gson:2.10.1'
-  implementation 'org.apache.commons:commons-text:1.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'org.apache.commons:commons-text:1.10.0'
 
-  implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.6'
-  testImplementation 'junit:junit:4.13.1'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.6'
+    testImplementation 'junit:junit:4.13.1'
 }
 
 test {
-  useJUnitPlatform()
+    useJUnitPlatform()
 }

@@ -1,8 +1,8 @@
 package org.phyloviz.pwp.http.models.save_tree_view;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewInput;
 import org.phyloviz.pwp.http.models.get_tree_view.NodeModel;
+import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewInput;
 
 import java.util.List;
 

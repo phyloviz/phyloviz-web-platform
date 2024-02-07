@@ -1,8 +1,8 @@
 package org.phyloviz.pwp.http.models.isolate_data.get_isolate_data_rows;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
 import org.phyloviz.pwp.http.models.isolate_data.IsolateDataRowModel;
+import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
 
 import java.util.List;
 

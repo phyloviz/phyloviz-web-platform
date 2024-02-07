@@ -17,9 +17,9 @@ data-repositories:
 
   get-distance-matrix-repository: S3
   get-tree-repository: S3
-  get-tree-view-repository: PHYLODB
-  get-typing-data-repository: PHYLODB
-  get-isolate-data-repository: PHYLODB
+  get-tree-view-repository: S3
+  get-typing-data-repository: S3
+  get-isolate-data-repository: S3
 
 flowviz:
   url: http://localhost:3000/flowapi

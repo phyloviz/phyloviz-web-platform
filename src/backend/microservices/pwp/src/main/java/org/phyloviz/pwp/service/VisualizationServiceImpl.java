@@ -1,6 +1,7 @@
 package org.phyloviz.pwp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.phyloviz.pwp.service.exceptions.IndexingNeededException;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.DistanceMatrixDataRepositoryId;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.DistanceMatrixDataRepository;
 import org.phyloviz.pwp.shared.repository.data.distance_matrix.repository.specific_data.DistanceMatrixDataRepositorySpecificData;
@@ -40,7 +41,6 @@ import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewInput;
 import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewOutput;
 import org.phyloviz.pwp.shared.service.exceptions.*;
-import org.phyloviz.pwp.service.exceptions.IndexingNeededException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -18,7 +18,6 @@ import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.converter
 import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.converters.TreeViewMetadataSerializer;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.converters.TypingDataMetadataDeserializer;
 import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.converters.TypingDataMetadataSerializer;
-import org.phyloviz.pwp.shared_phylodb.config.ResourceServerSharedPhylodbConfig;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -39,7 +38,7 @@ import java.util.List;
  * Configuration class for the Compute Microservice.
  */
 @Configuration
-@Import({ResourceServerSharedConfig.class, ResourceServerSharedPhylodbConfig.class})
+@Import({ResourceServerSharedConfig.class})
 public class PWPConfig {
     private final String flowVizUsername;
     private final String flowVizPassword;

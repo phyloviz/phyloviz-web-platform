@@ -1,6 +1,4 @@
 rootProject.name = 'phyloviz-web-platform'
 include 'microservices:gateway'
 include 'microservices:shared'
-include 'microservices:shared-phylodb'
 include 'microservices:pwp'
-findProject(':microservices:shared-phylodb')?.name = 'shared-phylodb'
