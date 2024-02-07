@@ -6,7 +6,7 @@ import org.phyloviz.pwp.http.models.tree_views.update_tree_view.UpdateTreeViewIn
 import org.phyloviz.pwp.http.models.tree_views.update_tree_view.UpdateTreeViewOutputModel;
 import org.phyloviz.pwp.service.dtos.tree_view.UpdateTreeViewOutput;
 import org.phyloviz.pwp.service.project.dataset.tree_view.TreeViewService;
-import org.phyloviz.pwp.shared.domain.User;
+import org.phyloviz.pwp.domain.User;
 import org.springframework.web.bind.annotation.*;
 
 /**

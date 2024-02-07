@@ -11,7 +11,7 @@ import org.phyloviz.pwp.service.dtos.files.isolate_data.UpdateIsolateDataOutput;
 import org.phyloviz.pwp.service.dtos.files.typing_data.UpdateTypingDataOutput;
 import org.phyloviz.pwp.service.project.file.IsolateDataService;
 import org.phyloviz.pwp.service.project.file.TypingDataService;
-import org.phyloviz.pwp.shared.domain.User;
+import org.phyloviz.pwp.domain.User;
 import org.springframework.web.bind.annotation.*;
 
 /**

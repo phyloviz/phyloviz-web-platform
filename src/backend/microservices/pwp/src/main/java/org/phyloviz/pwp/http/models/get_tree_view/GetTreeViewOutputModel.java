@@ -2,7 +2,7 @@ package org.phyloviz.pwp.http.models.get_tree_view;
 
 import lombok.Data;
 import org.phyloviz.pwp.http.models.save_tree_view.TransformationsModel;
-import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
+import org.phyloviz.pwp.service.dtos.tree_view.GetTreeViewOutput;
 
 import java.util.List;
 

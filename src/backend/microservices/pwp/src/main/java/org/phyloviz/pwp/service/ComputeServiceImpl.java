@@ -26,9 +26,9 @@ import org.phyloviz.pwp.service.flowviz.models.get_workflow.GetWorkflowResponse;
 import org.phyloviz.pwp.service.flowviz.models.tool.Tool;
 import org.phyloviz.pwp.service.flowviz.models.workflow.GetWorkflowTaskLogResponse;
 import org.phyloviz.pwp.service.flowviz.models.workflow.Workflow;
-import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
-import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
-import org.phyloviz.pwp.shared.utils.UUIDUtils;
+import org.phyloviz.pwp.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.service.exceptions.ProjectNotFoundException;
+import org.phyloviz.pwp.utils.UUIDUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,8 +36,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
-@Transactional
+//@Service
+//@Transactional
 public class ComputeServiceImpl implements ComputeService {
 
     private final ProjectRepository projectRepository;

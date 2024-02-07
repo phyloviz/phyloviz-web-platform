@@ -1,11 +1,11 @@
 package org.phyloviz.pwp.service.dtos.tree;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.TreeMetadata;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceAlgorithmDistanceMatrix;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceAlgorithmTypingData;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceFile;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.source.TreeSourceType;
+import org.phyloviz.pwp.repository.metadata.tree.documents.TreeMetadata;
+import org.phyloviz.pwp.repository.metadata.tree.documents.source.TreeSourceAlgorithmDistanceMatrix;
+import org.phyloviz.pwp.repository.metadata.tree.documents.source.TreeSourceAlgorithmTypingData;
+import org.phyloviz.pwp.repository.metadata.tree.documents.source.TreeSourceFile;
+import org.phyloviz.pwp.repository.metadata.tree.documents.source.TreeSourceType;
 
 @Data
 public class TreeInfo {

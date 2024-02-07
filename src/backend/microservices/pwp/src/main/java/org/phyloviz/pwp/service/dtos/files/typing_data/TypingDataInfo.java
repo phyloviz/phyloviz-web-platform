@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.service.dtos.files.typing_data;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.TypingDataMetadata;
+import org.phyloviz.pwp.repository.metadata.typing_data.documents.TypingDataMetadata;
 
 @Data
 public class TypingDataInfo {

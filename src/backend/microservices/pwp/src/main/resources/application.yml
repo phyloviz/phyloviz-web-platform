@@ -1,9 +1,30 @@
 server:
   port: 8088
 
+s3:
+  access-key-id: AKIATCKANASTL7VVHAEK
+  secret-access-key: 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
+  bucket: phyloviz-web-platform
+  region: eu-west-3
+  endpoint: https://s3.eu-west-3.amazonaws.com
+
 spring:
-  config:
-    import: application-shared.yml
+  data:
+    mongodb:
+      host: localhost
+      port: 28017
+      database: phyloviz-web-platform
+      authentication-database: admin
+      auto-index-creation: true
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/token/introspect
+          client-id: phyloviz-web-platform-client
+          client-secret: 3rG9M1rnH7gKX29QujY7HQedPs7KT1Iu
+#        jwt:
+#          jwk-set-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/certs
   servlet:
     multipart:
       max-file-size: 1GB

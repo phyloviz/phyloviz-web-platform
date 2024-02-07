@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.http.models.typing_data.get_typing_data_schema;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
+import org.phyloviz.pwp.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
 
 import java.util.List;
 

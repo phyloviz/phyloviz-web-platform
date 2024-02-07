@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.service.dtos.files.isolate_data;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.IsolateDataMetadata;
+import org.phyloviz.pwp.repository.metadata.isolate_data.documents.IsolateDataMetadata;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
 package org.phyloviz.pwp.service;
 
-import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
-import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
-import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
-import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
-import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewInput;
-import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewOutput;
+import org.phyloviz.pwp.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
+import org.phyloviz.pwp.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
+import org.phyloviz.pwp.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
+import org.phyloviz.pwp.service.dtos.tree_view.GetTreeViewOutput;
+import org.phyloviz.pwp.service.dtos.tree_view.SaveTreeViewInput;
+import org.phyloviz.pwp.service.dtos.tree_view.SaveTreeViewOutput;
 
 import java.util.List;
 

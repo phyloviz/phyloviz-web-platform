@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.service;
 
-import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.UploadIsolateDataOutput;
-import org.phyloviz.pwp.shared.service.dtos.files.typing_data.UploadTypingDataOutput;
+import org.phyloviz.pwp.service.dtos.files.isolate_data.UploadIsolateDataOutput;
+import org.phyloviz.pwp.service.dtos.files.typing_data.UploadTypingDataOutput;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

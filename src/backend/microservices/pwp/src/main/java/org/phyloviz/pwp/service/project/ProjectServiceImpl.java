@@ -8,10 +8,10 @@ import org.phyloviz.pwp.service.dtos.project.UpdateProjectOutput;
 import org.phyloviz.pwp.service.project.dataset.DatasetService;
 import org.phyloviz.pwp.service.project.file.IsolateDataService;
 import org.phyloviz.pwp.service.project.file.TypingDataService;
-import org.phyloviz.pwp.shared.repository.metadata.project.ProjectRepository;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
-import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
-import org.phyloviz.pwp.shared.service.exceptions.ProjectNotFoundException;
+import org.phyloviz.pwp.repository.metadata.project.ProjectRepository;
+import org.phyloviz.pwp.repository.metadata.project.documents.Project;
+import org.phyloviz.pwp.service.exceptions.InvalidArgumentException;
+import org.phyloviz.pwp.service.exceptions.ProjectNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

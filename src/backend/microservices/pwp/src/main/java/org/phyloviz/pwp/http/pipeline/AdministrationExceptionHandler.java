@@ -2,9 +2,9 @@ package org.phyloviz.pwp.http.pipeline;
 
 import org.phyloviz.pwp.service.exceptions.DeniedFileDeletionException;
 import org.phyloviz.pwp.service.exceptions.DeniedResourceDeletionException;
-import org.phyloviz.pwp.shared.service.exceptions.InvalidArgumentException;
-import org.phyloviz.pwp.shared.service.exceptions.IsolateDataDoesNotExistException;
-import org.phyloviz.pwp.shared.service.exceptions.TypingDataDoesNotExistException;
+import org.phyloviz.pwp.service.exceptions.InvalidArgumentException;
+import org.phyloviz.pwp.service.exceptions.IsolateDataDoesNotExistException;
+import org.phyloviz.pwp.service.exceptions.TypingDataDoesNotExistException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.zalando.problem.Problem;

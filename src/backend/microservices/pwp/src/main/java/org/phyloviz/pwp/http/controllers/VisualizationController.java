@@ -9,12 +9,12 @@ import org.phyloviz.pwp.http.models.save_tree_view.SaveTreeViewOutputModel;
 import org.phyloviz.pwp.http.models.typing_data.get_typing_data_profiles.GetTypingDataProfilesOutputModel;
 import org.phyloviz.pwp.http.models.typing_data.get_typing_data_schema.GetTypingDataSchemaOutputModel;
 import org.phyloviz.pwp.service.VisualizationService;
-import org.phyloviz.pwp.shared.domain.User;
-import org.phyloviz.pwp.shared.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
-import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
-import org.phyloviz.pwp.shared.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
-import org.phyloviz.pwp.shared.service.dtos.tree_view.GetTreeViewOutput;
-import org.phyloviz.pwp.shared.service.dtos.tree_view.SaveTreeViewOutput;
+import org.phyloviz.pwp.domain.User;
+import org.phyloviz.pwp.service.dtos.files.isolate_data.GetIsolateDataRowsOutput;
+import org.phyloviz.pwp.service.dtos.files.typing_data.GetTypingDataProfilesOutput;
+import org.phyloviz.pwp.service.dtos.files.typing_data.GetTypingDataSchemaOutput;
+import org.phyloviz.pwp.service.dtos.tree_view.GetTreeViewOutput;
+import org.phyloviz.pwp.service.dtos.tree_view.SaveTreeViewOutput;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

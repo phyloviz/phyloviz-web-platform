@@ -6,7 +6,7 @@ import org.phyloviz.pwp.http.models.distance_matrices.update_distance_matrix.Upd
 import org.phyloviz.pwp.http.models.distance_matrices.update_distance_matrix.UpdateDistanceMatrixOutputModel;
 import org.phyloviz.pwp.service.dtos.distance_matrix.UpdateDistanceMatrixOutput;
 import org.phyloviz.pwp.service.project.dataset.distance_matrix.DistanceMatrixService;
-import org.phyloviz.pwp.shared.domain.User;
+import org.phyloviz.pwp.domain.User;
 import org.springframework.web.bind.annotation.*;
 
 /**

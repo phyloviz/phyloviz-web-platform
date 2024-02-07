@@ -4,20 +4,19 @@ import org.phyloviz.pwp.repository.metadata.templates.tool_template.converters.A
 import org.phyloviz.pwp.repository.metadata.templates.tool_template.converters.AccessTemplateSerializer;
 import org.phyloviz.pwp.repository.metadata.templates.tool_template.converters.CaseInsensitiveEnumDeserializerFactory;
 import org.phyloviz.pwp.service.flowviz.FLOWViZClient;
-import org.phyloviz.pwp.shared.config.ResourceServerSharedConfig;
-import org.phyloviz.pwp.shared.repository.data.registry.distance_matrix.DistanceMatrixDataRepositoryRegistry;
-import org.phyloviz.pwp.shared.repository.data.registry.isolate_data.IsolateDataDataRepositoryRegistry;
-import org.phyloviz.pwp.shared.repository.data.registry.tree.TreeDataRepositoryRegistry;
-import org.phyloviz.pwp.shared.repository.data.registry.tree_view.TreeViewDataRepositoryRegistry;
-import org.phyloviz.pwp.shared.repository.data.registry.typing_data.TypingDataDataRepositoryRegistry;
-import org.phyloviz.pwp.shared.repository.metadata.distance_matrix.documents.converters.DistanceMatrixMetadataDeserializer;
-import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataDeserializer;
-import org.phyloviz.pwp.shared.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataSerializer;
-import org.phyloviz.pwp.shared.repository.metadata.tree.documents.converters.TreeMetadataDeserializer;
-import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.converters.TreeViewMetadataDeserializer;
-import org.phyloviz.pwp.shared.repository.metadata.tree_view.documents.converters.TreeViewMetadataSerializer;
-import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.converters.TypingDataMetadataDeserializer;
-import org.phyloviz.pwp.shared.repository.metadata.typing_data.documents.converters.TypingDataMetadataSerializer;
+import org.phyloviz.pwp.repository.data.registry.distance_matrix.DistanceMatrixDataRepositoryRegistry;
+import org.phyloviz.pwp.repository.data.registry.isolate_data.IsolateDataDataRepositoryRegistry;
+import org.phyloviz.pwp.repository.data.registry.tree.TreeDataRepositoryRegistry;
+import org.phyloviz.pwp.repository.data.registry.tree_view.TreeViewDataRepositoryRegistry;
+import org.phyloviz.pwp.repository.data.registry.typing_data.TypingDataDataRepositoryRegistry;
+import org.phyloviz.pwp.repository.metadata.distance_matrix.documents.converters.DistanceMatrixMetadataDeserializer;
+import org.phyloviz.pwp.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataDeserializer;
+import org.phyloviz.pwp.repository.metadata.isolate_data.documents.converters.IsolateDataMetadataSerializer;
+import org.phyloviz.pwp.repository.metadata.tree.documents.converters.TreeMetadataDeserializer;
+import org.phyloviz.pwp.repository.metadata.tree_view.documents.converters.TreeViewMetadataDeserializer;
+import org.phyloviz.pwp.repository.metadata.tree_view.documents.converters.TreeViewMetadataSerializer;
+import org.phyloviz.pwp.repository.metadata.typing_data.documents.converters.TypingDataMetadataDeserializer;
+import org.phyloviz.pwp.repository.metadata.typing_data.documents.converters.TypingDataMetadataSerializer;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -35,10 +34,10 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import java.util.List;
 
 /**
- * Configuration class for the Compute Microservice.
+ * Configuration class for the PHYLOViZ web platform (PWP).
+ * Contains beans for the FLOWViZ client, the Mongo transaction manager, and the Mongo custom conversions.
  */
 @Configuration
-@Import({ResourceServerSharedConfig.class})
 public class PWPConfig {
     private final String flowVizUsername;
     private final String flowVizPassword;

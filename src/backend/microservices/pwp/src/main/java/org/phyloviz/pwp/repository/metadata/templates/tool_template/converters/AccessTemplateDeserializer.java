@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.phyloviz.pwp.repository.metadata.templates.tool_template.documents.access.AccessDetailsTemplate;
 import org.phyloviz.pwp.repository.metadata.templates.tool_template.documents.access.AccessTemplate;
 import org.phyloviz.pwp.repository.metadata.templates.tool_template.documents.access.AccessTypeTemplate;
-import org.phyloviz.pwp.shared.repository.metadata.DocumentConversionException;
+import org.phyloviz.pwp.repository.metadata.DocumentConversionException;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;

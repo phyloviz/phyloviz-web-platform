@@ -15,7 +15,7 @@ import org.phyloviz.pwp.service.dtos.dataset.FullDatasetInfo;
 import org.phyloviz.pwp.service.dtos.dataset.SetIsolateDataOfDatasetOutput;
 import org.phyloviz.pwp.service.dtos.dataset.UpdateDatasetOutput;
 import org.phyloviz.pwp.service.project.dataset.DatasetService;
-import org.phyloviz.pwp.shared.domain.User;
+import org.phyloviz.pwp.domain.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

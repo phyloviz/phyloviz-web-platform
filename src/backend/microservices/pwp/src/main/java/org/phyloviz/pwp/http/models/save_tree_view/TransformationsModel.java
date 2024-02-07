@@ -2,7 +2,7 @@ package org.phyloviz.pwp.http.models.save_tree_view;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.phyloviz.pwp.shared.service.dtos.tree_view.Transformations;
+import org.phyloviz.pwp.service.dtos.tree_view.Transformations;
 
 /**
  * Transformations model for the Tree View.

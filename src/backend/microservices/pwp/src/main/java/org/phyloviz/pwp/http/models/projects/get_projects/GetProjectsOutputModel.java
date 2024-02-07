@@ -1,7 +1,7 @@
 package org.phyloviz.pwp.http.models.projects.get_projects;
 
 import lombok.Data;
-import org.phyloviz.pwp.shared.repository.metadata.project.documents.Project;
+import org.phyloviz.pwp.repository.metadata.project.documents.Project;
 
 import java.util.List;
 

@@ -1,4 +1,3 @@
 rootProject.name = 'phyloviz-web-platform'
 include 'microservices:gateway'
-include 'microservices:shared'
 include 'microservices:pwp'
