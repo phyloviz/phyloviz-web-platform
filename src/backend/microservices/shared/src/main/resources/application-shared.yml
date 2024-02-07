@@ -1,8 +1,10 @@
 s3:
-  access-key-id: AKIAIOSFODNN7EXAMPLE
-  secret-access-key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-  bucket: phyloviz-web-platform/
-  endpoint: http://localhost:9444
+  access-key-id: SETUP
+  secret-access-key: SETUP
+  bucket: phyloviz-web-platform
+  region: eu-west-3
+  endpoint: SETUP
+
 
 spring:
   data:

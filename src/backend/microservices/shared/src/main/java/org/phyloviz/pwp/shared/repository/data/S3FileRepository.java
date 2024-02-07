@@ -28,11 +28,4 @@ public interface S3FileRepository {
      * @return true if the file was deleted successfully, false otherwise
      */
     boolean delete(String url);
-
-    /**
-     * Get location of the repository.
-     *
-     * @return location of the repository
-     */
-    String getLocation();
 }
