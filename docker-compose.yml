@@ -74,9 +74,9 @@ services:
     depends_on:
       - tool_registry
 
-  pwp:
+  core:
     build:
-      context: ./src/backend/microservices/pwp
+      context: ./src/backend/core
       dockerfile: Dockerfile
     ports:
       - '8088:8088'
@@ -86,7 +86,7 @@ services:
 
   gateway:
     build:
-      context: ./src/backend/microservices/gateway
+      context: ./src/backend/gateway
       dockerfile: Dockerfile
     ports:
       - '8083:8083'

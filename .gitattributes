@@ -1,0 +1,5 @@
+*.yml filter=ignorelines
+
+# to delete lines commented with # gitignore in yaml files
+# git config --global filter.ignorelines.clean "sed '/^# gitignore/d'"
+# git config --global filter.ignorelines.smudge cat
