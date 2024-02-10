@@ -74,60 +74,25 @@ services:
     depends_on:
       - tool_registry
 
-  administration:
+  core:
     build:
-      context: ./src/backend/microservices/administration
+      context: ./src/backend/core
       dockerfile: Dockerfile
     ports:
       - '8088:8088'
     network_mode: host
     depends_on:
       - mongodb
-      - cache
-
-  compute:
-    build:
-      context: ./src/backend/microservices/compute
-      dockerfile: Dockerfile
-    ports:
-      - '8086:8086'
-    network_mode: host
-    depends_on:
-      - mongodb
-      - cache
-
-  file-transfer:
-    build:
-      context: ./src/backend/microservices/file-transfer
-      dockerfile: Dockerfile
-    ports:
-      - '8089:8089'
-    network_mode: host
-    depends_on:
-      - mongodb
-      - cache
 
   gateway:
     build:
-      context: ./src/backend/microservices/gateway
+      context: ./src/backend/gateway
       dockerfile: Dockerfile
     ports:
       - '8083:8083'
     network_mode: host
     depends_on:
       - mongodb
-      - cache
-
-  visualization:
-    build:
-      context: ./src/backend/microservices/visualization
-      dockerfile: Dockerfile
-    ports:
-      - '8085:8085'
-    network_mode: host
-    depends_on:
-      - mongodb
-      - cache
 
 volumes:
   keycloak_db_data:

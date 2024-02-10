@@ -1,0 +1,15 @@
+package org.phyloviz.pwp.service.dtos.files.isolate_data;
+
+import lombok.Data;
+
+import java.util.Map;
+
+/**
+ * Row for the isolate data.
+ */
+@Data
+public class IsolateDataRow {
+    private final String id;
+    private final String profileId;
+    private final Map<String, String> row;
+}

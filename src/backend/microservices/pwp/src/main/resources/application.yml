@@ -1,0 +1,52 @@
+server:
+  port: 8088
+
+s3:
+  access-key-id: AKIATCKANASTL7VVHAEK
+  secret-access-key: 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
+  bucket: phyloviz-web-platform
+  region: eu-west-3
+  endpoint: https://s3.eu-west-3.amazonaws.com
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 28017
+      database: phyloviz-web-platform
+      authentication-database: admin
+      auto-index-creation: true
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/token/introspect
+          client-id: phyloviz-web-platform-client
+          client-secret: 3rG9M1rnH7gKX29QujY7HQedPs7KT1Iu
+#        jwt:
+#          jwk-set-uri: http://localhost:8082/realms/phyloviz-web-platform/protocol/openid-connect/certs
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 1GB
+
+data-repositories:
+  upload-typing-data-repository: S3
+  download-typing-data-repository: S3
+  upload-isolate-data-repository: S3
+  download-isolate-data-repository: S3
+
+  get-distance-matrix-repository: S3
+  get-tree-repository: S3
+  get-tree-view-repository: S3
+  get-typing-data-repository: S3
+  get-isolate-data-repository: S3
+
+flowviz:
+  url: http://localhost:3000/flowapi
+  username: admin
+  password: admin
+
+logging:
+  level:
+    root: debug
