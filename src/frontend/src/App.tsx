@@ -39,6 +39,7 @@ import ComputeRadialLayout from './Pages/Project/Compute/TreeView/ComputeRadialL
 import ComputeRectangularLayout
     from './Pages/Project/Compute/TreeView/ComputeRectangularLayout/ComputeRectangularLayout'
 import Workflow from "./Pages/Project/Workflow/Workflow";
+import {useLoggedIn} from "./Session/Session";
 import HOME = WebUiUris.HOME;
 import ABOUT = WebUiUris.ABOUT;
 import NEWS = WebUiUris.NEWS;
