@@ -83,7 +83,7 @@ services:
     network_mode: host
     depends_on:
       - mongodb
-      - cache
+
   compute:
     build:
       context: ./src/backend/microservices/compute
@@ -93,7 +93,7 @@ services:
     network_mode: host
     depends_on:
       - mongodb
-      - cache
+
   file-transfer:
     build:
       context: ./src/backend/microservices/file-transfer
@@ -103,7 +103,7 @@ services:
     network_mode: host
     depends_on:
       - mongodb
-      - cache
+
   gateway:
     build:
       context: ./src/backend/microservices/gateway
@@ -113,7 +113,7 @@ services:
     network_mode: host
     depends_on:
       - mongodb
-      - cache
+
   visualization:
     build:
       context: ./src/backend/microservices/visualization
@@ -123,7 +123,7 @@ services:
     network_mode: host
     depends_on:
       - mongodb
-      - cache
+
 
 volumes:
   keycloak_db_data:
