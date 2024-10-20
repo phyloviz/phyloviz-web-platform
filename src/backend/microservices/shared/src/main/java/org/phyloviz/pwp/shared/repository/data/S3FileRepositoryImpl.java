@@ -28,7 +28,7 @@ import java.util.concurrent.Executors;
 @Repository
 public class S3FileRepositoryImpl implements S3FileRepository {
 
-    public static final Region REGION = Region.of("custom");
+    public static final Region REGION = Region.of("eu-west-3");
     private final String bucketName;
     private final String objectStorageEndpoint;
     private final S3AsyncClient s3Client;

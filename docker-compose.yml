@@ -35,6 +35,8 @@ services:
       - KC_METRICS_ENABLED=true
     depends_on:
       - keycloak_db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/realms/phyloviz-web-platform"]
 
   mongodb:
     image: mongo:6.0.6
@@ -113,6 +115,7 @@ services:
     network_mode: host
     depends_on:
       - mongodb
+      - keycloak
 
   visualization:
     build:
