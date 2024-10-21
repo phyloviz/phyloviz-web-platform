@@ -42,7 +42,7 @@ services:
     image: mongo:6.0.6
     environment:
       MONGO_APP_DATABASE: phyloviz-web-platform
-      MONGO_REPLICA_HOST: 172.17.0.1
+      MONGO_REPLICA_HOST: host.docker.internal
       MONGO_REPLICA_PORT: 27018
 
     entrypoint: >

@@ -14,7 +14,7 @@ checkDocker
 
 cd ..
 
-git clone https://github.com/devandrepascoa/FLOWViZ.git # https://github.com/DIVA-IPL-Project/FLOWViZ.git
+git clone --branch wsl https://github.com/devandrepascoa/FLOWViZ.git # https://github.com/DIVA-IPL-Project/FLOWViZ.git
 
 cd ./FLOWViZ
 

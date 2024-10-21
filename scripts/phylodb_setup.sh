@@ -14,7 +14,7 @@ checkDocker
 
 cd ..
 
-git clone https://github.com/devandrepascoa/phyloDB.git # https://github.com/phyloviz/phyloDB.git
+git clone --branch wsl https://github.com/devandrepascoa/phyloDB.git # https://github.com/phyloviz/phyloDB.git
 
 cd phyloDB/
 
