@@ -12,7 +12,7 @@ cd ../frontend || exit
 
 npm install
 
-nohup npm start &
+npm start &
 
 cd ../../ || exit
 
