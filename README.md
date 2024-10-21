@@ -48,21 +48,35 @@ at the forefront of biomedical research.
 Discover the power and versatility of the PHYLOViZ Web Platform, and unlock new insights into phylogenetic data
 analysis, by visiting the [PHYLOViZ Web Platform](https://web.phyloviz.net/) website.
 
-To see a demo of the PHYLOViZ Web Platform in action, check out this [video](https://www.youtube.com/watch?v=761A27KgHIY). 
-It provides an overview of the platform's features and showcases its capabilities for phylogenetic analysis and visualization.
+To see a demo of the PHYLOViZ Web Platform in action, check out
+this [video](https://www.youtube.com/watch?v=761A27KgHIY).
+It provides an overview of the platform's features and showcases its capabilities for phylogenetic analysis and
+visualization.
 
 ---
 
 ## Documentation
 
-The wiki of the project contains technical documentation associated with the repository, being
+### Deployment
+
+The deployment guide for the PHYLOViZ Web Platform is described in
+the [deployment](https://github.com/phyloviz/phyloviz-web-platform/wiki/deployment) section of the wiki.
+
+### Wiki
+
+The wiki of the project contains comprehensive documentation, including both technical specifications and user-oriented
+materials, associated with the repository, being
 available [here](https://github.com/phyloviz/phyloviz-web-platform/wiki).
 
-Additionally, a final report of the project is
+### Final Report
+
+Additionally, a final report of the project, delivered as part of our BSc in Informatics and Computer Engineering is
 available [here](https://github.com/phyloviz/phyloviz-web-platform/blob/master/docs/report.pdf).
 
-In the [docs](https://github.com/phyloviz/phyloviz-web-platform/blob/master/docs) folder, you can find
-additional documentation.
+### Additional Documentation
+
+In the [docs](https://github.com/phyloviz/phyloviz-web-platform/blob/master/docs) folder, you can find additional
+documentation, such as API specifications, project presentation, and other relevant materials.
 
 ---
 
