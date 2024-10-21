@@ -20,7 +20,7 @@ public class IsolateDataS3DataRepository implements IsolateDataDataRepository {
 
         s3FileRepository.upload(url, multipartFile);
 
-        return new IsolateDataS3DataRepositorySpecificData(s3FileRepository.getLocation() + "/" + url, multipartFile.getOriginalFilename());
+        return new IsolateDataS3DataRepositorySpecificData(url, multipartFile.getOriginalFilename());
     }
 
     @Override

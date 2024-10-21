@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.BytesWrapper;
 import software.amazon.awssdk.core.async.AsyncRequestBody;
 import software.amazon.awssdk.core.async.AsyncResponseTransformer;
@@ -28,36 +27,34 @@ import java.util.concurrent.Executors;
 @Repository
 public class S3FileRepositoryImpl implements S3FileRepository {
 
-    public static final Region REGION = Region.of("eu-west-3");
     private final String bucketName;
-    private final String objectStorageEndpoint;
     private final S3AsyncClient s3Client;
     private final S3TransferManager transferManager;
     private final ExecutorService executorService = Executors.newCachedThreadPool();
 
     public S3FileRepositoryImpl(
             @Value("${s3.endpoint}")
-            String objectStorageEndpoint,
+            String s3endpoint,
             @Value("${s3.access-key-id}")
             String accessKeyId,
             @Value("${s3.secret-access-key}")
             String secretAccessKey,
             @Value("${s3.bucket}")
-            String bucketName
+            String bucketName,
+            @Value("${s3.region}")
+            String region
     ) {
-        AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
-
         S3AsyncClient newS3Client = S3AsyncClient.builder()
-                .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
-                .endpointOverride(URI.create(objectStorageEndpoint))
-                .region(REGION)
+                .forcePathStyle(true)
+                .endpointOverride(URI.create(s3endpoint))
+                .credentialsProvider(() -> AwsBasicCredentials.create(accessKeyId, secretAccessKey))
+                .region(Region.of(region))
                 .build();
 
         newS3Client.createBucket(r -> r.bucket(bucketName));
 
         this.s3Client = newS3Client;
         this.bucketName = bucketName;
-        this.objectStorageEndpoint = objectStorageEndpoint;
         this.transferManager = S3TransferManager.builder().s3Client(newS3Client).build();
     }
 
@@ -81,15 +78,14 @@ public class S3FileRepositoryImpl implements S3FileRepository {
 
         upload.completionFuture().join();
 
+        // s3Client.listBuckets().join() -> lists all buckets, currently only one with name "phyloviz-web-platform"
+
         return true;
     }
 
     @Override
     public String download(String url) {
-        if (!url.startsWith(getLocation()))
-            throw new IllegalArgumentException("URL does not start with the object storage endpoint");
-
-        String key = url.substring(getLocation().length());
+        String key = url;
 
         /*s3Client.listObjectsV2(ListObjectsV2Request.builder().bucket(bucketName).build())
                 .thenAccept(response -> {
@@ -131,21 +127,13 @@ public class S3FileRepositoryImpl implements S3FileRepository {
 
     @Override
     public boolean delete(String url) {
-        if (!url.startsWith(getLocation()))
-            throw new IllegalArgumentException("URL does not start with the object storage endpoint");
-
         DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                 .bucket(bucketName)
-                .key(url.substring(getLocation().length()))
+                .key(url)
                 .build();
 
         s3Client.deleteObject(deleteObjectRequest); // TODO throw exception if not successful
 
         return true;
-    }
-
-    @Override
-    public String getLocation() {
-        return objectStorageEndpoint + "/" + bucketName.substring(0, bucketName.length() - 1);
     }
 }

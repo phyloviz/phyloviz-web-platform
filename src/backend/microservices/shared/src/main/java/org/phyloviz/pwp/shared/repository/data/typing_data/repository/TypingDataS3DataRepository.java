@@ -21,7 +21,7 @@ public class TypingDataS3DataRepository implements TypingDataDataRepository {
 
         s3FileRepository.upload(url, multipartFile);
 
-        return new TypingDataS3DataRepositorySpecificData(s3FileRepository.getLocation() + "/" + url, multipartFile.getOriginalFilename());
+        return new TypingDataS3DataRepositorySpecificData(url, multipartFile.getOriginalFilename());
     }
 
     @Override
