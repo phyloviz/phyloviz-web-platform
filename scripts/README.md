@@ -10,9 +10,9 @@ Run the script with the following command (inside the `scripts` directory):
 ./flowviz_setup.sh
 ```
 
-It creates the FLOWViZ directory and clones the repository into it, and then, as the script itself tells you, it will only execute steps 1 and 2 of the manual setup that is present here: https://github.com/devandrepascoa/FLOWViZ?tab=readme-ov-file#manual-setup
+It creates the FLOWViZ directory and clones the repository into it, and then, as the script itself tells you, it will only execute steps 1 to 3 of the manual setup that is present here: https://github.com/devandrepascoa/FLOWViZ?tab=readme-ov-file#manual-setup
 
-**After running `flowviz_setup.sh`, you still need to execute steps 3 to 6 of the manual
+**After running `flowviz_setup.sh`, you still need to execute steps 4 to 8 of the manual
 setup.**
 
 ## Clean up
