@@ -12,7 +12,9 @@ cd ../frontend || exit
 
 npm install
 
-npm start &
+nohup npm start &
+
+cd ../../ || exit
 
 docker compose up -d --build
 echo "Doing very heavy work..."
