@@ -1,8 +1,6 @@
 s3:
   access-key-id: AKIAIOSFODNN7EXAMPLE
   secret-access-key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-  bucket: phyloviz-web-platform/
-  endpoint: http://localhost:9444
   bucket: phyloviz-web-platform
   region: eu-west-3
   endpoint: https://s3.eu-west-3.amazonaws.com
