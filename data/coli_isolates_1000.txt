@@ -1,0 +1,1033 @@
+id	isolate	aliases	country	continent	region	town_or_city	year	month	isolation_date	received_date	age_yr	age_mth	sex	disease	source	epidemiology	species	penner	bioproject_accession	biosample_accession	NCBI_assembly_accession	ENA_run_accession	private_project	comments	sender	curator	date_entered	datestamp	ST (MLST)	clonal_complex (MLST)
+1	P09		Unknown											carrier	goat	carrier	Campylobacter jejuni	9							2	1	2001-02-12	2001-04-24	25	ST-45 complex
+2	P12		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	12							2	1	2001-02-12	2001-04-19	2	ST-45 complex
+3	P18	ATCC43439	Canada	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni	18							2	1	2001-02-12	2001-02-12	3	ST-49 complex
+4	P22	ATCC43448	Canada	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni	22							2	1	2001-02-12	2001-02-12	4	ST-403 complex
+5	P26	ATCC43477	Unknown											carrier	pig	carrier	Campylobacter jejuni	26							2	1	2001-02-12	2001-02-12	5	ST-353 complex
+6	P27		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	27							2	1	2001-02-12	2001-04-24	45	ST-45 complex
+7	P31		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	31							2	1	2001-02-12	2001-02-12	7	ST-354 complex
+8	P33		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	33							2	1	2001-02-12	2001-04-25	418	ST-45 complex
+9	P43		Canada	North America		Vancouver								gastroenteritis	human stool	sporadic case	Campylobacter jejuni	43							2	1	2001-02-12	2001-04-24	9	ST-508 complex
+10	P55		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	55							2	1	2001-02-12	2001-05-03	45	ST-45 complex
+11	P57		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	57							2	1	2001-02-12	2001-04-19	11	ST-45 complex
+12	P58		USA	North America	Virginia									gastroenteritis	human stool	sporadic case	Campylobacter jejuni	58							2	1	2001-02-12	2001-04-24	433	ST-433 complex
+13	PS02		Unknown											carrier	calf	carrier	Campylobacter jejuni	2							2	1	2001-02-12	2001-04-24	21	ST-21 complex
+14	PS11		Canada	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-04-24	14	ST-257 complex
+15	PS16		Unknown														Campylobacter jejuni	16							2	1	2001-02-12	2001-02-12	15	ST-48 complex
+16	PS19		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	19							2	1	2001-02-12	2001-04-24	16	ST-22 complex
+17	3157		UK [England]	Europe		Norwich	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	17	ST-257 complex
+18	2475		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	17	ST-257 complex
+19	313		UK [England]	Europe		Gateshead	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	18	ST-21 complex
+20	309		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	50	ST-21 complex
+21	3618		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	20	ST-21 complex
+22	2167		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+23	2248		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+24	3201		UK [England]	Europe		Gateshead	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	19							2	1	2001-02-12	2001-02-12	22	ST-22 complex
+25	78969		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	23							2	1	2001-02-12	2001-02-12	23	
+26	GB2		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	UT							2	1	2001-02-12	2001-07-09	22	ST-22 complex
+27	GB17		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	4,13,64							2	1	2001-02-12	2001-07-09	416	ST-48 complex
+28	1429		New Zealand	Oceania			1993							carrier	chicken	carrier	Campylobacter jejuni	9							2	1	2001-02-12	2001-02-12	25	ST-45 complex
+29	P17		Unknown														Campylobacter jejuni	17							2	1	2001-02-12	2001-04-24	26	ST-353 complex
+30	P37		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	37							2	1	2001-02-12	2001-04-19	51	ST-443 complex
+31	P53		Unknown														Campylobacter jejuni	53							2	1	2001-02-12	2001-04-24	28	
+32	GB1		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-07-09	29	
+33	304		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+34	307		UK [Scotland]	Europe	Dumfries and Galloway		1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+35	336		UK [Scotland]	Europe		Edinburgh	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	30	
+36	321		UK [England]	Europe		Manchester	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	31	ST-21 complex
+37	322		UK [England]	Europe		Poole	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	32	ST-21 complex
+38	333		UK [Scotland]	Europe		Edinburgh	1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	33	ST-21 complex
+39	335		UK [Scotland]	Europe		Edinburgh	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	34	
+40	327		UK [England]	Europe		Manchester	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	35	ST-48 complex
+41	1741		UK [England]	Europe		Blackpool	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4c							2	1	2001-02-12	2001-03-08	36	ST-61 complex
+42	1744		UK [England]	Europe		Blackpool	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	37	ST-353 complex
+43	1835		UK [England]	Europe		Lancaster	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	38	ST-48 complex
+44	GB24		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	31							2	1	2001-02-12	2001-07-09	39	ST-658 complex
+45	GB27		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	1,44							2	1	2001-02-12	2001-07-09	186	ST-21 complex
+46	P41	ATCC43460	Unknown											carrier	gazelle	carrier	Campylobacter jejuni	41							2	1	2001-02-12	2001-04-19	41	ST-41 complex
+47	108980027		The Netherlands	Europe			1998							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	36							6	1	2001-02-12	2001-02-12	42	ST-42 complex
+48	NCTC11168		UK	Europe			1977							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2						Complete genome uploaded from GenBank (accession number AL111168).	6	323	2001-02-12	2019-11-27	43	ST-21 complex
+49	161H		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni	1,44							6	1	2001-02-12	2001-02-12	44	ST-21 complex
+50	1997-1591		The Netherlands	Europe			1997							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	19							6	1	2001-02-12	2001-02-12	22	ST-22 complex
+51	41239B	99/212; CN005	UK [Scotland]	Europe										gastroenteritis	human stool	general outbreak	Campylobacter jejuni	55						Strain from Campynet project	6	1	2001-02-12	2001-02-12	45	ST-45 complex
+52	BCH1204	99/188; CN009	UK [Northern Ireland]	Europe										gastroenteritis	human stool	general outbreak	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	21	ST-21 complex
+53	943	99/210; CN022	UK [Northern Ireland]	Europe										carrier	chicken	carrier	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	46	ST-206 complex
+54	1997-1423	99/219; CN029	The Netherlands	Europe			1997							gastroenteritis	human stool		Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	42	ST-42 complex
+55	BJ1	CN037	Belgium	Europe										gastroenteritis	human stool	sporadic case	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	47	ST-21 complex
+56	5029	99/217; CN045	Denmark	Europe										gastroenteritis	human stool		Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	21	ST-21 complex
+57	11Cj	99/216; CN049	France	Europe										gastroenteritis	human stool	sporadic case	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	45	ST-45 complex
+58	Cy6412	99/201; CN052	The Netherlands	Europe			1992							carrier	cattle	carrier	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	48	ST-48 complex
+59	4039	99/202; CN056	Denmark	Europe			1999							carrier	cattle	carrier	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	45	ST-45 complex
+60	BT27/98	99/194; CN058	UK	Europe			1999							carrier	cattle	carrier	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	45	ST-45 complex
+61	C196/1	99/191; CN086	UK	Europe										carrier	chicken	carrier	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	49	ST-49 complex
+62	SVS 5051	99/206; CN093	Denmark	Europe			1999							carrier	chicken	carrier	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	21	ST-21 complex
+63	160H		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								6	1	2001-02-12	2001-02-12	51	ST-443 complex
+64	C2143		The Netherlands	Europe			1991							carrier	chicken	carrier	Campylobacter jejuni								6	1	2001-02-12	2001-02-12	52	ST-52 complex
+65	5001	99/199; CN001	Denmark	Europe											potable/drinking water		Campylobacter jejuni	2						Strain from Campynet project	6	1	2001-02-12	2001-02-12	53	ST-21 complex
+66	LP83/98	CN024	Finland	Europe													Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	54	ST-177 complex
+67	C13010	99/209; CN033	UK	Europe										gastroenteritis	human stool	sporadic case	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	60	ST-61 complex
+68	CKH3	99/214; CN041	Sweden	Europe										gastroenteritis	human stool	sporadic case	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	59	
+69	4137	99/238; CN054	UK [Northern Ireland]	Europe										carrier	cattle	carrier	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	55	ST-403 complex
+70	133f/98	99/204; CN060	UK	Europe										carrier	sheep	carrier	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	52	ST-52 complex
+71	1589	99/215; CN073	The Netherlands	Europe			1992							carrier	cattle	carrier	Campylobacter jejuni	13						Strain from Campynet project	6	1	2001-02-12	2001-02-12	61	ST-61 complex
+72	16937	CN075	UK [Northern Ireland]	Europe										carrier	cattle	carrier	Campylobacter jejuni							Strain from Campynet project	6	1	2001-02-12	2001-02-12	58	
+73	C356		The Netherlands	Europe			1991							carrier	chicken	carrier	Campylobacter jejuni	2							6	2	2001-07-10	2001-07-10	53	ST-21 complex
+74	LMG8843		Australia	Oceania			1998							gastroenteritis	human stool	sporadic case	Campylobacter jejuni							subspecies doylei	6	1	2001-02-12	2001-02-12	62	
+75	GB15		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	5,34							2	1	2001-02-12	2001-07-09	63	ST-52 complex
+76	GB22		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	13,64							2	1	2001-02-12	2001-07-09	64	ST-508 complex
+77	PS3	ATCC43431	Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	3							2	1	2001-02-12	2001-02-12	5	ST-353 complex
+78	3616		UK [England]	Europe		Manchester	1991								cows milk		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+79	323		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	65	ST-433 complex
+80	3109		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	6							2	1	2001-02-12	2001-04-25	25	ST-45 complex
+81	1951		UK [England]	Europe		Poole	1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	50	ST-21 complex
+82	2473		UK [England]	Europe		Poole	1991								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	67	ST-21 complex
+83	3105		Unknown				1991								chicken offal or meat		Campylobacter jejuni	4,16,50							2	1	2001-02-12	2001-02-12	68	ST-45 complex
+84	79201		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	69	ST-21 complex
+85	79203		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	10							2	1	2001-02-12	2001-02-12	47	ST-21 complex
+86	79228		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	38							2	1	2001-02-12	2001-04-25	408	ST-45 complex
+87	2526		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-03-08	71	
+88	1441		New Zealand	Oceania			1993							carrier	cattle	carrier	Campylobacter jejuni	13,50							2	1	2001-02-12	2001-02-12	72	ST-61 complex
+89	79199		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	5							2	1	2001-02-12	2001-02-12	73	
+90	79176		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	5							2	1	2001-02-12	2001-03-08	74	ST-177 complex
+91	3615		UK [England]	Europe		Manchester	1991								cows milk		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	75	ST-21 complex
+92	1434		New Zealand	Oceania			1993							carrier	chicken	carrier	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	76	ST-21 complex
+93	2656		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	27							2	1	2001-02-12	2001-04-25	77	ST-45 complex
+94	3779		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	19							2	1	2001-02-12	2001-02-12	78	ST-22 complex
+95	3748		UK [England]	Europe		Norwich	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	79	ST-48 complex
+96	79125		UK	Europe			1994								sand (bathing beach)		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	80	ST-179 complex
+97	79260		UK	Europe			1994								sand (bathing beach)		Campylobacter jejuni	55							2	1	2001-02-12	2001-12-18	177	ST-177 complex
+98	MF6	MFS6	The Netherlands	Europe										Miller Fisher Syndrome	human stool	sporadic case	Campylobacter jejuni	4,64							2	1	2001-02-12	2001-07-09	48	ST-48 complex
+99	MF7	MFS7	The Netherlands	Europe										Miller Fisher Syndrome	human stool	sporadic case	Campylobacter jejuni	35							2	1	2001-02-12	2001-07-09	83	
+100	GB14		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-07-09	19	ST-21 complex
+101	GB25		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-07-09	131	
+102	P10	ATCC43438	Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	10							2	1	2001-02-12	2001-04-19	56	
+103	PS4		Unknown														Campylobacter jejuni	4							2	1	2001-02-12	2001-04-24	227	ST-206 complex
+104	PS8	ATCC43436	Canada	North America		Ottawa								gastroenteritis	human stool	sporadic case	Campylobacter jejuni	8							2	1	2001-02-12	2001-04-24	87	ST-21 complex
+105	P42		Canada	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni	42							2	1	2001-02-12	2001-04-25	88	ST-45 complex
+106	P06	ATCC43434	Canada	North America		Ottawa								gastroenteritis	human stool	sporadic case	Campylobacter jejuni	6							2	1	2001-02-12	2001-04-19	89	ST-45 complex
+107	3897		UK [England]	Europe		Eastbourne	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	90	ST-21 complex
+108	79178		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	91	ST-61 complex
+109	1426		New Zealand	Oceania			1993							carrier	duck	carrier	Campylobacter jejuni	5							2	1	2001-02-12	2001-02-12	92	
+110	1529		UK [England]	Europe		Blackburn	1993							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	93	ST-61 complex
+111	1564		UK [England]	Europe		Preston	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	93	ST-61 complex
+112	1715		UK [England]	Europe		Blackpool	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4c							2	1	2001-02-12	2001-02-12	93	ST-61 complex
+113	2017		UK [England]	Europe		Poole	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4c							2	1	2001-02-12	2001-02-12	93	ST-61 complex
+114	2035		UK [England]	Europe		Bath	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4c							2	1	2001-02-12	2001-02-12	93	ST-61 complex
+115	3222		UK	Europe			1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	93	ST-61 complex
+116	3827		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	93	ST-61 complex
+117	79202		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	10							2	1	2001-02-12	2001-02-12	47	ST-21 complex
+118	3110		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	60							2	1	2001-02-12	2001-02-12	94	ST-45 complex
+119	3188		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-04-25	408	ST-45 complex
+120	2601		UK [England]	Europe		Poole	1991								chicken offal or meat		Campylobacter jejuni	1							2	34	2001-02-12	2019-11-21	96	ST-206 complex
+121	1436		New Zealand	Oceania			1993							carrier	chicken	carrier	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	97	ST-45 complex
+122	79238		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	98	ST-48 complex
+123	79129		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	5							2	1	2001-02-12	2001-02-12	99	ST-179 complex
+124	79207		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	2							2	1	2001-02-12	2001-12-18	220	ST-179 complex
+125	79373		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	101	
+126	1576		UK [England]	Europe		Preston	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+127	314		UK [England]	Europe		London	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	50	ST-21 complex
+128	337		UK [Scotland]	Europe	Dumfries and Galloway		1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	102	ST-21 complex
+129	1656		UK [England]	Europe		Newcastle	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	103	ST-61 complex
+130	3667		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	23							2	1	2001-02-12	2001-02-12	42	ST-42 complex
+131	3744		UK [England]	Europe		Hereford	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	23							2	1	2001-02-12	2001-02-12	42	ST-42 complex
+132	3782		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	104	ST-21 complex
+133	3907		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+134	3174		UK [Wales]	Europe		Rhyl	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	105	ST-21 complex
+135	3117		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	106	
+136	2945		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	107	ST-21 complex
+137	2879		UK [England]	Europe		Newcastle	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	109	ST-45 complex
+138	2809		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	55							2	1	2001-02-12	2001-02-12	108	ST-21 complex
+139	2582		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	110	ST-21 complex
+140	2546		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	111	ST-21 complex
+141	2255		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	112	ST-21 complex
+142	2254		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,50							2	1	2001-02-12	2001-02-12	113	ST-460 complex
+143	2160		UK [England]	Europe		Norwich	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	114	ST-21 complex
+144	2399		UK [England]	Europe		Cambridge	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	53	ST-21 complex
+145	2567		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+146	2836		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+147	87037		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	115	ST-1275 complex
+148	3175		UK [Wales]	Europe		Rhyl	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+149	2857		UK [England]	Europe		Poole	1991								chicken offal or meat		Campylobacter jejuni	55							2	1	2001-02-12	2001-02-12	116	ST-45 complex
+150	79045		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	5							2	1	2001-02-12	2001-02-12	117	ST-179 complex
+151	1939		UK [England]	Europe		Poole	1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	86	ST-21 complex
+152	1950		UK [England]	Europe		Poole	1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	118	
+153	2241		UK [England]	Europe		Eastbourne	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	119	ST-21 complex
+154	2856		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	120	ST-48 complex
+155	3487		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	5							2	1	2001-02-12	2001-02-12	121	ST-658 complex
+156	GB23		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	4,13,43							2	1	2001-02-12	2001-07-09	122	ST-206 complex
+157	3617		UK [England]	Europe		Manchester	1991								cows milk		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+158	3057		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	60							2	1	2001-02-12	2001-02-12	45	ST-45 complex
+159	79204		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	10							2	1	2001-02-12	2001-02-12	47	ST-21 complex
+160	79227		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	8.17							2	1	2001-02-12	2001-03-08	123	
+161	316		UK [Scotland]	Europe		Edinburgh	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+162	317		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	124	ST-21 complex
+163	319		UK [Scotland]	Europe		Aberdeen	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+164	326		UK [England]	Europe		Manchester	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	125	ST-206 complex
+165	323		UK [England]	Europe		Gateshead	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-03-08	126	ST-433 complex
+166	p7		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	7							2	1	2001-02-12	2001-02-12	45	ST-45 complex
+167	p34	ATCC43478	Unknown											carrier	marmoset	carrier	Campylobacter jejuni	34							2	1	2001-02-12	2001-02-12	127	
+168	p38		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	38							2	1	2001-02-12	2001-04-24	45	ST-45 complex
+169	p62	ATCC49300	Canada	North America		Toronto								gastroenteritis	human stool	sporadic case	Campylobacter jejuni	62							2	1	2001-02-12	2001-04-24	129	ST-353 complex
+170	p64	ATCC49302	South Africa	Africa		Cape Town								gastroenteritis	human stool	sporadic case	Campylobacter jejuni	64							2	1	2001-02-12	2001-02-12	130	
+171	p65	ATCC49303	Unknown														Campylobacter jejuni	65							2	1	2001-02-12	2001-02-12	162	
+172	GB18		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	19							2	1	2001-02-12	2001-07-09	22	ST-22 complex
+173	MF20		The Netherlands	Europe										Miller Fisher Syndrome	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-07-09	131	
+174	GB21		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	13,65							2	1	2001-02-12	2001-07-09	132	ST-508 complex
+175	GB13		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-07-09	53	ST-21 complex
+176	GB16		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	13,65							2	1	2001-02-12	2001-07-09	61	ST-61 complex
+177	1425		New Zealand	Oceania			1993							carrier	chicken	carrier	Campylobacter jejuni	13							2	1	2001-02-12	2001-03-08	134	ST-48 complex
+178	2386		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	135	ST-206 complex
+179	79205		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	10							2	1	2001-02-12	2001-02-12	136	ST-21 complex
+180	p45		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	45							2	1	2001-02-12	2001-02-12	137	ST-45 complex
+181	p56	ATCC43488	Israel	Asia										gastroenteritis	human stool	sporadic case	Campylobacter coli	56							2	3	2001-02-12	2009-07-13	138	ST-828 complex
+182	p59	ATCC43489	Unknown											carrier	pig	carrier	Campylobacter jejuni	59							2	1	2001-02-12	2001-02-12	139	
+183	GB4		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	37							2	1	2001-02-12	2001-07-09	147	
+184	GB11		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-07-09	148	ST-21 complex
+185	GB28		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-07-09	149	ST-22 complex
+186	p46	ATCC43482	Canada	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni	46							2	1	2001-02-12	2001-02-12	150	
+187	p49	ATCC43485	USA	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni	49							2	1	2001-02-12	2001-02-12	151	
+188	79371		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	152	ST-179 complex
+189	79372		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	153	ST-179 complex
+190	1439		New Zealand	Oceania			1993							carrier	chicken	carrier	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	154	
+191	ps15		Unknown														Campylobacter jejuni	15							2	1	2001-02-12	2001-02-12	155	ST-658 complex
+192	ps50		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	1	2001-02-12	2001-05-18	61	ST-61 complex
+193	330		UK [England]	Europe		Gateshead	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	157	ST-21 complex
+194	p35	ATCC43455	USA	North America		Chicago [IL]								carrier	marmoset	carrier	Campylobacter jejuni	35							2	1	2001-02-12	2001-02-12	158	
+195	2018		UK [England]	Europe		Poole	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4c							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+196	1739		UK [England]	Europe		Blackpool	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4c							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+197	2019		UK [England]	Europe		Poole	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4c							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+198	2037		UK [England]	Europe		Bath	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4c							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+199	1827		UK [England]	Europe		Southampton	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	159	ST-61 complex
+200	315		UK [England]	Europe		London	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	160	ST-206 complex
+201	1932		UK [England]	Europe		Poole	1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	140	
+202	2269		UK [England]	Europe		Eastbourne	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+203	2272		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	141	ST-21 complex
+204	2325		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	142	ST-48 complex
+205	2457		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	53	ST-21 complex
+206	2817		UK [Scotland]	Europe		Aberdeen	1991								potable/drinking water		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	50	ST-21 complex
+207	3281		UK [England]	Europe		Norwich	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	53	ST-21 complex
+208	79261		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	143	ST-177 complex
+209	79308		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	144	ST-177 complex
+210	87012		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	145	
+211	87034		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	146	ST-45 complex
+212	2924		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	4,13,50							2	1	2001-02-12	2001-02-12	45	ST-45 complex
+213	3550		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	164	ST-21 complex
+214	1953		UK [England]	Europe		Poole	1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	165	ST-21 complex
+215	2692		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	13	ST-21 complex
+216	79091		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	166	
+217	79348		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	4,16,50							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+218	2529		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	167	ST-21 complex
+219	2897		UK [Scotland]	Europe	Fife		1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	9,37							2	34	2001-02-12	2019-11-21	168	ST-45 complex
+220	2844		UK [England]	Europe		Newcastle	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	169	ST-21 complex
+221	2987		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	110	ST-21 complex
+222	3108		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	6							2	1	2001-02-12	2001-02-12	171	ST-45 complex
+223	2320		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	10							2	1	2001-02-12	2001-02-12	172	ST-52 complex
+224	3052		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	4,16,50							2	1	2001-02-12	2001-02-12	173	ST-45 complex
+225	2951		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	174	ST-48 complex
+226	78965		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	175	ST-682 complex
+227	78970		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	24							2	1	2001-02-12	2001-02-12	176	ST-682 complex
+228	79309		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	NT							2	1	2001-02-12	2001-12-18	177	ST-177 complex
+229	87060		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	178	ST-658 complex
+230	78972		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	5							2	1	2001-02-12	2001-02-12	179	ST-179 complex
+231	GB3		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	19,24							2	1	2001-02-12	2001-07-09	22	ST-22 complex
+232	GB5		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	4,64							2	1	2001-02-12	2001-07-09	185	ST-21 complex
+233	GB19		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	4,50							2	1	2001-02-12	2001-07-09	61	ST-61 complex
+234	GB26		The Netherlands	Europe										Guillain Barre Syndrome	human stool	sporadic case	Campylobacter jejuni	1,44							2	1	2001-02-12	2001-07-09	186	ST-21 complex
+235	MF8		The Netherlands	Europe										Miller Fisher Syndrome	human stool	sporadic case	Campylobacter jejuni	23,36							2	1	2001-02-12	2001-07-09	42	ST-42 complex
+236	p51	ATCC43486	Unknown														Campylobacter coli	51							2	20	2001-02-12	2009-07-13	57	ST-828 complex
+237	3846		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	193	ST-21 complex
+238	79351		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	4,13,50							2	1	2001-02-12	2001-02-12	194	ST-48 complex
+239	1612		UK [England]	Europe		Durham	1993							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	195	ST-61 complex
+240	79195		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	55							2	1	2001-02-12	2001-02-12	196	ST-177 complex
+241	79196		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	NT							2	1	2001-02-12	2001-12-18	177	ST-177 complex
+242	79310		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	198	ST-177 complex
+243	87024		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	55							2	1	2001-02-12	2001-02-12	180	ST-45 complex
+244	1938		UK [England]	Europe		Poole	1990								chicken offal or meat		Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	181	
+245	87040		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	182	ST-1275 complex
+246	87025		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	53							2	1	2001-02-12	2001-02-12	183	
+247	3018		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	184	ST-21 complex
+248	2239		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,50							2	1	2001-02-12	2001-02-12	191	
+249	3484		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	187	ST-21 complex
+250	3546		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	189	ST-45 complex
+251	3742		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	192	
+252	3775		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	188	ST-21 complex
+253	3763		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+254	3784		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	190	ST-21 complex
+255	3786		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	53	ST-21 complex
+256	78971		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	199	
+257	78968		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	200	
+258	79177		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	8,17							2	1	2001-02-12	2001-02-12	201	ST-21 complex
+259	3179		UK [Wales]	Europe		Rhyl	1994							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	202	ST-573 complex
+260	78967		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	15							2	1	2001-02-12	2001-02-12	203	ST-45 complex
+261	1982		UK [England]	Europe		Manchester	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11,31							2	1	2001-02-12	2001-02-12	17	ST-257 complex
+262	2547		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	50	ST-21 complex
+263	2686		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	19							2	1	2001-02-12	2001-02-12	204	ST-22 complex
+264	2267		UK [England]	Europe		Liverpool	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	17	ST-257 complex
+265	2455		UK [England]	Europe		Norwich	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	50	ST-21 complex
+266	2309		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	22	ST-22 complex
+267	2958		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	205	ST-48 complex
+268	3027		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,13,50							2	1	2001-02-12	2001-02-12	205	ST-48 complex
+269	2666		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+270	2323		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,16,50							2	1	2001-02-12	2001-02-12	207	ST-48 complex
+271	2155		UK [Wales]	Europe		Rhyl	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,50							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+272	3277		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	75	ST-21 complex
+273	87039		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	219	ST-61 complex
+274	87035		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	208	ST-682 complex
+275	87038		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	209	ST-1275 complex
+276	3766		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,16,50							2	1	2001-02-12	2001-02-12	210	ST-206 complex
+277	2549		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	211	ST-21 complex
+278	2640		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	212	ST-21 complex
+279	3144		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,50							2	1	2001-02-12	2001-02-12	213	ST-48 complex
+280	3666		UK [England]	Europe		Norwich	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	53	ST-21 complex
+281	D2579		USA	North America										carrier	chicken	carrier	Campylobacter jejuni								7	2	2001-08-02	2001-08-02	40	ST-607 complex
+282	79352		UK [Scotland]	Europe		Aberdeen	1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	8,17							2	1	2001-02-12	2001-02-12	214	
+283	1384		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	48	ST-48 complex
+284	3290		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+285	78966		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	215	ST-682 complex
+286	3834		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	21							2	1	2001-02-12	2001-02-12	216	ST-283 complex
+287	79262		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	217	
+288	79046		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	220	ST-179 complex
+289	3127		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	218	ST-206 complex
+290	2689		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	104	ST-21 complex
+291	2295		UK [England]	Europe		Cambridge	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	221	ST-206 complex
+292	2342		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	17							2	1	2001-02-12	2001-02-12	221	ST-206 complex
+293	2665		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	222	ST-206 complex
+294	3820		UK [England]	Europe		Eastbourne	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+295	2437		UK [England]	Europe		Birmingham	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	221	ST-206 complex
+296	3075		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+297	2835		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+298	3152		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	37							2	1	2001-02-12	2001-02-12	223	ST-443 complex
+299	3208		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	7							2	1	2001-02-12	2001-02-12	224	
+300	3210		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	225	ST-21 complex
+301	3214		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	31							2	1	2001-02-12	2001-02-12	226	
+302	3215		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+303	3758		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	16,16,50							2	1	2001-02-12	2001-02-12	227	ST-206 complex
+304	3771		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	45							2	1	2001-02-12	2001-02-12	228	ST-283 complex
+305	3772		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	229	ST-206 complex
+306	3838		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	6							2	1	2001-02-12	2001-02-12	230	ST-45 complex
+307	2085		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	231	ST-206 complex
+308	2510		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	232	ST-206 complex
+309	3217		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	27							2	1	2001-02-12	2001-02-12	233	ST-45 complex
+310	3687		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+311	3747		UK [England]	Europe		Norwich	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	227	ST-206 complex
+312	3900		UK [England]	Europe		Eastbourne	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	10							2	1	2001-02-12	2001-02-12	234	ST-607 complex
+313	3905		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	6							2	1	2001-02-12	2001-02-12	235	ST-283 complex
+314	3908		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	236	ST-48 complex
+315	2678		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	21							2	1	2001-02-12	2001-02-12	237	ST-45 complex
+316	2509		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+317	2599		UK [England]	Europe		Norwich	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	238	ST-21 complex
+318	2635		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	239	ST-21 complex
+319	2539		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	38							2	1	2001-02-12	2001-02-12	240	
+320	2658		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	6							2	1	2001-02-12	2001-02-12	241	ST-45 complex
+321	3140		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	27							2	1	2001-02-12	2001-02-12	242	ST-45 complex
+322	2643		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	37							2	1	2001-02-12	2001-02-12	51	ST-443 complex
+323	3156		UK [England]	Europe		Norwich	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	55							2	1	2001-02-12	2001-02-12	233	ST-45 complex
+324	3203		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	21							2	1	2001-02-12	2001-02-12	243	ST-45 complex
+325	3821		UK [England]	Europe		Eastbourne	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	6							2	1	2001-02-12	2001-02-12	244	ST-283 complex
+326	3842		UK [England]	Europe		Hereford	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	245	ST-52 complex
+327	3129		UK [Scotland]	Europe	Dumfries and Galloway		1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	246	ST-206 complex
+328	3205		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	6							2	1	2001-02-12	2001-02-12	247	ST-283 complex
+329	3750		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	27							2	1	2001-02-12	2001-02-12	248	ST-658 complex
+330	3756		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	249	ST-21 complex
+331	3904		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	21							2	1	2001-02-12	2001-02-12	250	ST-283 complex
+332	3185		UK [England]	Europe		Eastbourne	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	18							2	1	2001-02-12	2002-04-04	612	ST-49 complex
+333	3743		UK [England]	Europe		Hereford	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	252	ST-21 complex
+334	3790		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	21							2	1	2001-02-12	2001-02-12	253	ST-45 complex
+335	3899		UK [England]	Europe		Eastbourne	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	18							2	1	2001-02-12	2001-02-12	254	ST-49 complex
+336	3146		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,50							2	1	2001-02-12	2001-02-12	255	ST-206 complex
+337	2901		UK [Wales]	Europe		Rhyl	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+338	2182		UK [England]	Europe		Gateshead	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	256	ST-257 complex
+339	2271		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	257	ST-257 complex
+340	2634		UK [England]	Europe		Liverpool	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	50	ST-21 complex
+341	1962		UK [Scotland]	Europe		Edinburgh	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+342	2176		UK [England]	Europe		Hereford	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+343	2394		UK [England]	Europe		Gateshead	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	258	
+344	2196		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	259	ST-21 complex
+345	2971		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	16,50							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+346	2429		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,16,50							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+347	2727		UK [Scotland]	Europe	Dumfries and Galloway		1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,50							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+348	2270		UK [England]	Europe		Norwich	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	10							2	1	2001-02-12	2001-02-12	47	ST-21 complex
+349	D5494		USA	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							7	2	2001-08-02	2001-08-02	95	ST-48 complex
+350	2952		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,13							2	1	2001-02-12	2001-02-12	227	ST-206 complex
+351	3149		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+352	3240		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,13,50							2	1	2001-02-12	2001-02-12	38	ST-48 complex
+353	2302		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	205	ST-48 complex
+354	2358		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	10							2	1	2001-02-12	2001-02-12	47	ST-21 complex
+355	3125		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+356	2796		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	3,16,50							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+357	2312		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,50							2	1	2001-02-12	2001-02-12	205	ST-48 complex
+358	1356		UK [England]	Europe		Blackburn	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	61	ST-61 complex
+359	3788		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+360	450864		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	45	ST-45 complex
+361	450902		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	13							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+362	451027		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+363	451124		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	260	ST-21 complex
+364	450806		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	38	ST-48 complex
+365	450839		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	261	ST-52 complex
+366	450888		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+367	450967		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	53	ST-21 complex
+368	450978		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	263	ST-61 complex
+369	450990		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+370	451008		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+371	451056		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	264	ST-21 complex
+372	451069		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	16							2	1	2001-02-12	2001-02-12	38	ST-48 complex
+373	451125		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	35							2	1	2001-02-12	2001-02-12	265	
+374	451190		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+375	451212		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	38	ST-48 complex
+376	451218		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+377	451255		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	13							2	1	2001-02-12	2001-02-12	42	ST-42 complex
+378	C711/93		UK [England]	Europe		Exeter	1993								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+379	C185/93		UK [England]	Europe		Compton	1993							carrier	cattle	carrier	Campylobacter jejuni	2							2	34	2001-02-12	2019-11-21	43	ST-21 complex
+380	450729		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	266	ST-21 complex
+381	450762		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+382	450791		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+383	450878		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+384	450887		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+385	450894		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+386	3745		UK [England]	Europe		Hereford	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	6							2	1	2001-02-12	2001-02-12	267	ST-283 complex
+387	451241		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+388	C403/93		UK [England]	Europe		Lancaster	1993								lamb offal or meat		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+389	450716		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	268	ST-21 complex
+390	450749		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+391	450827		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	269	ST-42 complex
+392	450924		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	35							2	1	2001-02-12	2001-02-12	270	ST-403 complex
+393	451024		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+394	451000		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	271	ST-206 complex
+395	451043		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	272	ST-21 complex
+396	451157		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	13							2	1	2001-02-12	2001-02-12	266	ST-21 complex
+397	450995		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	13							2	1	2001-02-12	2001-02-12	273	ST-206 complex
+398	2258		UK [Scotland]	Europe		Aberdeen	1991								cows milk		Campylobacter jejuni	23							2	1	2001-02-12	2001-02-12	42	ST-42 complex
+399	450724		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+400	450736		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	5							2	1	2001-02-12	2001-02-12	52	ST-52 complex
+401	450759		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+402	450786		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	274	ST-21 complex
+403	450811		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	38	ST-48 complex
+404	450829		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	50	ST-21 complex
+405	450859		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	42							2	1	2001-02-12	2001-02-12	45	ST-45 complex
+406	450877		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	42							2	1	2001-02-12	2001-02-12	42	ST-42 complex
+407	450925		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	35							2	1	2001-02-12	2001-02-12	270	ST-403 complex
+408	450942		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	35							2	1	2001-02-12	2001-02-12	55	ST-403 complex
+409	450959		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	5							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+410	451007		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+411	451077		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	9							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+412	451189		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+413	451237		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	50	ST-21 complex
+414	451167		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+415	451198		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+416	450708		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	42	ST-42 complex
+417	450876		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	53	ST-21 complex
+418	451057		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	270	ST-403 complex
+419	451093		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	42	ST-42 complex
+420	451144		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+421	451159		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	275	ST-21 complex
+422	451222		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	276	ST-206 complex
+423	451252		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	22	ST-22 complex
+424	451203		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+425	2523		UK [Scotland]	Europe			1991								chicken offal or meat		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	278	
+426	306		UK [Scotland]	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+427	C724/93		UK [England]	Europe		Exeter	1993								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+428	2608		UK [England]	Europe		Poole	1991								chicken offal or meat		Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	49	ST-49 complex
+429	450720		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	42	ST-42 complex
+430	451269		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	266	ST-21 complex
+431	450997		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	68							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+432	451016		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+433	451061		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	277	ST-206 complex
+434	451118		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+435	451151		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+436	451259		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+437	451248		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+438	450790		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+439	451108		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+440	451119		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+441	451223		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+442	450714		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+443	451207		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	42	ST-42 complex
+444	451026		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+445	451085		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+446	451160		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	279	ST-42 complex
+447	450775		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	266	ST-21 complex
+448	450787		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+449	450855		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+450	451135		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+451	451204		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+452	2561		UK [England]	Europe		Poole	1990								chicken offal or meat		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	43	ST-21 complex
+453	450780		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	50	ST-21 complex
+454	451268		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	265	
+455	451150		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	280	ST-21 complex
+456	451131		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	53	ST-21 complex
+457	450979		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+458	450910		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+459	450964		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+460	451244		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	281	ST-48 complex
+461	450730		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	282	ST-21 complex
+462	3216		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	6							2	1	2001-02-12	2001-02-12	283	ST-283 complex
+463	451245		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+464	C34/92		UK	Europe			1992								beef offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+465	451192		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	56							2	1	2001-02-12	2001-02-12	284	
+466	450778		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	35							2	1	2001-02-12	2001-02-12	285	ST-403 complex
+467	C144		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	286	ST-257 complex
+468	C356		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+469	C591		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni	13							2	1	2001-02-12	2001-02-12	287	
+470	C2146		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni	5							2	1	2001-02-12	2001-02-12	288	ST-52 complex
+471	C2172		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni	1,44							2	1	2001-02-12	2001-02-12	289	ST-353 complex
+472	C2246		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	233	ST-45 complex
+473	C2264		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	290	ST-206 complex
+474	C2345		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	291	ST-283 complex
+475	C2360		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	46	ST-206 complex
+476	C2362		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	292	ST-206 complex
+477	C2412		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	293	ST-21 complex
+478	C2441		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	294	ST-257 complex
+479	C2446		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	295	ST-45 complex
+480	C2450		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	296	ST-206 complex
+481	C2461		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	297	ST-446 complex
+482	C2476		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	298	ST-21 complex
+483	C2481		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	299	ST-206 complex
+484	C2515		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	300	ST-21 complex
+485	C2535		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-10-05	11	ST-45 complex
+486	C2555		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	302	ST-21 complex
+487	C2651		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	303	ST-443 complex
+488	da9521		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	304	
+489	ha5221		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	305	ST-574 complex
+490	kc6315		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	306	ST-354 complex
+491	ba9301		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	307	ST-446 complex
+492	ia9423		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	308	ST-446 complex
+493	eb5331		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	309	
+494	ga5341		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	340	ST-21 complex
+495	ca7302		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	341	ST-21 complex
+496	ka1152		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	342	ST-21 complex
+497	ku1134		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	44	ST-21 complex
+498	141KU		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	343	ST-21 complex
+499	146KU		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	344	ST-48 complex
+500	154H		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	345	ST-21 complex
+501	156H		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	346	ST-48 complex
+502	157H		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	347	ST-21 complex
+503	185H		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	348	ST-21 complex
+504	159H		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	349	ST-607 complex
+505	4923		Australia	Oceania										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								8	2	2001-08-03	2001-08-07	128	ST-45 complex
+506	99/14		Czech Republic	Europe			1999							carrier	chicken	carrier	Campylobacter jejuni								9	2	2001-09-21	2001-09-21	133	ST-353 complex
+507	451154		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+508	451262		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+509	451149		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+510	451082		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+511	451049		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+512	451019		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+513	450909		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+514	450903		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+515	450715		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+516	C404/93		UK [England]	Europe		Lancaster	1993								beef offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+517	C379/93		UK [England]	Europe		Lancaster	1993								beef offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+518	451045		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	50							2	1	2001-02-12	2001-02-12	352	ST-61 complex
+519	451814		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	327	
+520	C547/94		UK [Wales]	Europe		Cardiff	1994							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+521	C614/94		UK [Wales]	Europe		Cardiff	1994							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	53							2	1	2001-02-12	2001-02-12	45	ST-45 complex
+522	C156/92		UK [England]	Europe		Lincoln	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+523	3831		UK	Europe			1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	2	2001-02-23	2001-02-23	310	ST-354 complex
+524	3682		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	311	ST-658 complex
+525	3182		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	44							2	1	2001-02-12	2001-02-12	312	ST-658 complex
+526	80126		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	104	ST-21 complex
+527	80195		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	334	ST-45 complex
+528	201H		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	313	ST-257 complex
+529	60219		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	122	ST-206 complex
+530	60248		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	315	ST-21 complex
+531	60364		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	316	ST-257 complex
+532	60402		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	317	ST-21 complex
+533	60413		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	318	
+534	60434		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	53	ST-21 complex
+535	60442		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	104	ST-21 complex
+536	60498		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	321	ST-42 complex
+537	70046		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	53	ST-21 complex
+538	70157		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	104	ST-21 complex
+539	70195		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	322	ST-48 complex
+540	70198		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	53	ST-21 complex
+541	70208		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	262	ST-21 complex
+542	70222		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	45	ST-45 complex
+543	70255		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	48	ST-48 complex
+544	70256		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	21	ST-21 complex
+545	70275		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	45	ST-45 complex
+546	70279		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	328	ST-45 complex
+547	70294		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	329	ST-353 complex
+548	70300		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	19	ST-21 complex
+549	70411		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	331	
+550	70467		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	332	ST-48 complex
+551	70498		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	50	ST-21 complex
+552	70510		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	21	ST-21 complex
+553	2296		UK [England]	Europe		Cambridge	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	10							2	1	2001-02-12	2001-02-12	335	ST-607 complex
+554	2301		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	336	ST-21 complex
+555	2304		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	42							2	1	2001-02-12	2001-02-12	337	ST-45 complex
+556	2318		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	5							2	1	2001-02-12	2001-02-12	52	ST-52 complex
+557	2332		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	17							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+558	2350		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	338	ST-48 complex
+559	2674		UK [England]	Europe		Norwich	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	53							2	1	2001-02-12	2001-02-12	339	ST-354 complex
+560	2687		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	353	ST-353 complex
+561	2943		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	53							2	1	2001-02-12	2001-02-12	354	ST-354 complex
+562	2985		UK [England]	Europe		Birmingham	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	16,50							2	1	2001-02-12	2001-02-12	104	ST-21 complex
+563	3060		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	18							2	1	2001-02-12	2001-02-12	49	ST-49 complex
+564	3284		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	23							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+565	3287		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+566	3470		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,50							2	1	2001-02-12	2001-02-12	355	ST-48 complex
+567	3567		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	205	ST-48 complex
+568	3676		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	206	ST-206 complex
+569	3826		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	356	ST-353 complex
+570	3769		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	31							2	1	2001-02-12	2001-02-12	311	ST-658 complex
+571	P54		Unknown														Campylobacter jejuni	54							2	1	2001-02-12	2001-02-12	357	
+572	2324		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,13,50							2	1	2001-02-12	2001-02-12	358	ST-61 complex
+573	2472		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	53							2	1	2001-02-12	2001-02-12	359	ST-354 complex
+574	2589		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,16,50							2	1	2001-02-12	2001-02-12	360	ST-61 complex
+575	3037		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,50							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+576	3536		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	361	ST-257 complex
+577	3637		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,16,50							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+578	3787		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+579	C649/94		UK	Europe										gastroenteritis	human stool	sporadic case	Campylobacter jejuni	41							2	1	2001-02-12	2001-02-12	362	ST-362 complex
+580	233.95		South Africa	Africa		Cape Town	1995							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	41						Strain owned by Dr. Al Lastovica	2	1	2001-02-12	2004-02-04	362	ST-362 complex
+581	367.95		South Africa	Africa		Cape Town	1995							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	41						Strain owned by Dr. Al Lastovica	2	1	2001-02-12	2004-02-04	362	ST-362 complex
+582	2060.94		South Africa	Africa		Cape Town	1994							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	41						Strain owned by Dr. Al Lastovica	2	1	2001-02-12	2004-02-04	362	ST-362 complex
+583	386.96		South Africa	Africa		Cape Town	1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	41						Strain owned by Dr. Al Lastovica	2	1	2001-02-12	2004-02-04	362	ST-362 complex
+584	308.95		South Africa	Africa		Cape Town	1995							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	41						Strain owned by Dr. Al Lastovica	2	1	2001-02-12	2004-02-04	362	ST-362 complex
+585	21.97		South Africa	Africa		Cape Town	1997							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	41						Strain owned by Dr. Al Lastovica	2	1	2001-02-12	2004-02-04	362	ST-362 complex
+586	378.96		South Africa	Africa		Cape Town	1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	41						Strain owned by Dr. Al Lastovica	2	1	2001-02-12	2004-02-04	362	ST-362 complex
+587	242.97		South Africa	Africa		Cape Town	1997							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	41						Strain owned by Dr. Al Lastovica	2	1	2001-02-12	2004-02-04	362	ST-362 complex
+588	411289		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	363	ST-353 complex
+589	410169		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	364	ST-464 complex
+590	400372		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	361	ST-257 complex
+591	400643		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	366	ST-257 complex
+592	401374		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	172	ST-52 complex
+593	401569		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	367	ST-257 complex
+594	401892		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	367	ST-257 complex
+595	402315		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	52	ST-52 complex
+596	402369		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	257	ST-257 complex
+597	402671		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	257	ST-257 complex
+598	2524		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	368	ST-21 complex
+599	1928		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	257	ST-257 complex
+600	318/90		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	369	ST-21 complex
+601	324/90		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	370	ST-433 complex
+602	332/90		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	371	ST-433 complex
+603	1952		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	372	ST-257 complex
+604	99/16		Czech Republic	Europe			1999							carrier	chicken	carrier	Campylobacter jejuni								9	2	2001-09-21	2001-09-21	156	ST-49 complex
+605	99/111		The Netherlands	Europe			1999							carrier	chicken	carrier	Campylobacter jejuni								9	2	2001-09-21	2001-09-21	351	ST-21 complex
+606	177H		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	374	
+607	190H		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	25	ST-45 complex
+608	60210		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	376	ST-21 complex
+609	60243		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	305	ST-574 complex
+610	60328		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	49	ST-49 complex
+611	60392		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	262	ST-21 complex
+612	70223		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	45	ST-45 complex
+613	70296		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	44	ST-21 complex
+614	70384		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	137	ST-45 complex
+615	C638/94		UK	Europe			1994							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	21	ST-21 complex
+616	C639/94		UK	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	381	ST-21 complex
+617	80251		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	382	ST-48 complex
+618	174KU		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	122	ST-206 complex
+619	3898		UK [England]	Europe		Eastbourne	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	21							2	1	2001-02-12	2001-02-12	365	ST-42 complex
+620	70232		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	383	ST-283 complex
+621	70258		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	230	ST-45 complex
+622	3761		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	385	ST-257 complex
+623	1915		UK [England]	Europe		Liverpool	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	53	ST-21 complex
+624	170H		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	1	2001-02-12	2001-02-12	386	ST-206 complex
+625	3752		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	19							2	1	2001-02-12	2001-02-12	22	ST-22 complex
+626	C34/93		UK [England]	Europe		Ashford	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	19	ST-21 complex
+627	4709		South Africa	Africa			1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	387	ST-21 complex
+628	1809		UK [England]	Europe		Manchester	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	53							2	1	2001-02-12	2001-02-12	311	ST-658 complex
+629	2181		UK [England]	Europe		Gateshead	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	388	ST-21 complex
+630	2197		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	31							2	1	2001-02-12	2001-02-12	389	ST-61 complex
+631	2216		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	37							2	1	2001-02-12	2001-02-12	390	ST-443 complex
+632	2223		UK [England]	Europe		Cambridge	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	391	ST-353 complex
+633	2273		UK [England]	Europe		Hereford	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	37							2	1	2001-02-12	2001-02-12	392	
+634	2274		UK [England]	Europe		Hereford	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	37							2	1	2001-02-12	2001-02-12	393	ST-443 complex
+635	2294		UK [England]	Europe		Cambridge	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	45	ST-45 complex
+636	2314		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,50							2	1	2001-02-12	2001-02-12	394	ST-61 complex
+637	2334		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	311	ST-658 complex
+638	2435		UK [England]	Europe		Birmingham	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	395	ST-353 complex
+639	3495		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,13,50							2	1	2001-02-12	2001-02-12	205	ST-48 complex
+640	3633		UK [England]	Europe		Hereford	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+641	3636		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,50							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+642	3818		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,50							2	1	2001-02-12	2001-02-12	38	ST-48 complex
+643	c637		UK	Europe			1994							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	2	2001-02-23	2001-02-23	396	ST-21 complex
+644	C641		UK [Wales]	Europe		Cardiff	1994							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	397	ST-257 complex
+645	C648		UK [England]	Europe		Harrogate	1994							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	397	ST-257 complex
+646	C656		UK [Wales]	Europe		Cardiff	1994							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	1	2001-02-12	2001-02-12	397	ST-257 complex
+647	2568		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	262	ST-21 complex
+648	3668		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	23							2	1	2001-02-12	2001-02-12	398	ST-42 complex
+649	3671		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	40							2	1	2001-02-12	2001-02-12	399	ST-45 complex
+650	P1		Unknown														Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	50	ST-21 complex
+651	1970		Unknown											gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,16,50							2	1	2001-02-12	2001-02-12	53	ST-21 complex
+652	3778		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	1	2001-02-12	2001-02-12	48	ST-48 complex
+653	3783		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	400	ST-353 complex
+654	c720		UK	Europe			1994							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	2	2001-02-23	2001-02-23	401	
+655	2354		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	1	2001-02-12	2001-02-12	61	ST-61 complex
+656	3632		UK [England]	Europe		Hereford	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	23							2	1	2001-02-12	2001-02-12	402	ST-42 complex
+657	1811		UK [England]	Europe		Manchester	1990							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	1	2001-02-12	2001-02-12	403	ST-403 complex
+658	3574		UK [Scotland]	Europe	Dumfries and Galloway		1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,13,16,50							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+659	3173		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	404	ST-353 complex
+660	3447		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	10							2	20	2001-02-12	2019-06-19	47	ST-21 complex
+661	2580		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	21							2	20	2001-02-12	2019-06-19	137	ST-45 complex
+662	2967		UK [England]	Europe		Norwich	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,16,50							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+663	2340		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	403	ST-403 complex
+664	3187		UK [England]	Europe		Eastbourne	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,50							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+665	2351		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	312	ST-658 complex
+666	3741		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	6							2	20	2001-02-12	2019-06-19	405	ST-353 complex
+667	C2609		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni	2							2	20	2001-02-12	2019-06-19	406	
+668	3845		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	408	ST-45 complex
+669	106H		The Netherlands	Europe			1998								chicken		Campylobacter jejuni								2	20	2001-02-12	2019-06-19	409	ST-21 complex
+670	2303		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	21							2	20	2001-02-12	2019-06-19	375	ST-48 complex
+671	2361		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	2							2	20	2001-02-12	2019-06-19	314	ST-21 complex
+672	2353		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,16,50							2	20	2001-02-12	2019-06-19	377	ST-48 complex
+673	79092		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	378	
+674	2586		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	323	ST-206 complex
+675	450148		UK	Europe			1998								chicken offal or meat		Campylobacter jejuni	50							2	20	2001-02-12	2019-06-19	324	ST-354 complex
+676	451128		UK	Europe			1998								chicken offal or meat		Campylobacter jejuni	50							2	20	2001-02-12	2019-06-19	325	ST-573 complex
+677	451188		UK	Europe			1998								chicken offal or meat		Campylobacter jejuni	50							2	20	2001-02-12	2019-06-19	325	ST-573 complex
+678	451087		UK	Europe			1998								chicken offal or meat		Campylobacter jejuni	50							2	20	2001-02-12	2019-06-19	267	ST-283 complex
+679	451270		UK	Europe			1998								chicken offal or meat		Campylobacter jejuni	2							2	20	2001-02-12	2019-06-19	326	ST-354 complex
+680	451230		UK	Europe			1998								chicken offal or meat		Campylobacter jejuni	2							2	20	2001-02-12	2019-06-19	257	ST-257 complex
+681	451202		UK	Europe			1998								chicken offal or meat		Campylobacter jejuni	2							2	20	2001-02-12	2019-06-19	257	ST-257 complex
+682	450883		UK	Europe			1998								pork offal or meat		Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	330	ST-21 complex
+683	450828		UK	Europe			1998								pork offal or meat		Campylobacter jejuni	35							2	20	2001-02-12	2019-06-19	285	ST-403 complex
+684	1917		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	50	ST-21 complex
+685	1943		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	50	ST-21 complex
+686	1936		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	50	ST-21 complex
+687	1954		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	50	ST-21 complex
+688	1931		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	50	ST-21 complex
+689	1919		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	50	ST-21 complex
+690	403168		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	384	
+691	408253		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	379	ST-52 complex
+692	99/121		The Netherlands	Europe			1999							carrier	cattle	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	373	ST-21 complex
+693	407812		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	319	ST-257 complex
+694	401996		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	367	ST-257 complex
+695	310/90		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	298	ST-21 complex
+696	406636		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	367	ST-257 complex
+697	2541		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	38							2	20	2001-02-12	2019-06-19	320	ST-45 complex
+698	C584/94		UK [Wales]	Europe		Cardiff	1994							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	53							2	20	2001-02-12	2019-06-19	354	ST-354 complex
+699	80027		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	42	ST-42 complex
+700	80160		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	380	
+701	451185		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	265	
+702	451191		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	44							2	20	2001-02-12	2019-06-19	266	ST-21 complex
+703	80168		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	42	ST-42 complex
+704	1936		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	50	ST-21 complex
+705	C6/95		UK [England]	Europe	Sunderland		1995							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	21	ST-21 complex
+706	450821		UK	Europe			1998								chicken offal or meat		Campylobacter jejuni	2							2	20	2001-02-12	2019-06-19	262	ST-21 complex
+707	3828		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	45	ST-45 complex
+708	450719		UK	Europe			1998								pork offal or meat		Campylobacter jejuni								2	20	2001-02-12	2019-06-19	262	ST-21 complex
+709	3474		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,16,50							2	20	2001-02-12	2019-06-19	205	ST-48 complex
+710	99/260		South Africa	Africa			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	442	
+711	3102		UK [England]	Europe		Southampton	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	27							2	20	2001-02-12	2019-06-19	45	ST-45 complex
+712	3184		UK [England]	Europe		Eastbourne	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	262	ST-21 complex
+713	3430		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,50							2	20	2001-02-12	2019-06-19	38	ST-48 complex
+714	3680		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	31							2	20	2001-02-12	2019-06-19	311	ST-658 complex
+715	C350		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	333	ST-21 complex
+716	3673		UK [Scotland]	Europe	Dumfries and Galloway		1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	23							2	20	2001-02-12	2019-06-19	42	ST-42 complex
+717	C2150		The Netherlands	Europe			1990							carrier	chicken	carrier	Campylobacter jejuni	4,59							2	20	2001-02-12	2019-06-19	414	ST-48 complex
+718	3751		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	17							2	20	2001-02-12	2019-06-19	410	ST-403 complex
+719	3776		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	53							2	20	2001-02-12	2019-06-19	411	ST-433 complex
+720	EX1692		UK	Europe			1998								broiler environment	environmental isolate	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	471	ST-206 complex
+721	2459		UK [England]	Europe		Hereford	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	53							2	20	2001-02-12	2019-06-19	412	ST-354 complex
+722	C662/94		UK [Wales]	Europe		Cardiff	1994							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	21	ST-21 complex
+723	C85/93		UK [England]	Europe		Exeter	1993							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	19	ST-21 complex
+724	P65		Unknown														Campylobacter jejuni	65							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+725	3143		UK [Scotland]	Europe		Aberdeen	2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	35							2	20	2001-02-12	2019-06-19	270	ST-403 complex
+726	2563		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	262	ST-21 complex
+727	407289		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	413	ST-52 complex
+728	406030		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	163	ST-257 complex
+729	408568		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	170	ST-607 complex
+730	408992		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	161	ST-52 complex
+731	409777		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	372	ST-257 complex
+732	2609		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	53							2	20	2001-02-12	2019-06-19	354	ST-354 complex
+733	406909		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-02-12	2019-06-19	417	ST-61 complex
+734	403594		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	257	ST-257 complex
+735	2190		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	419	ST-48 complex
+736	451201		UK	Europe			1998								chicken offal or meat		Campylobacter jejuni	2							2	20	2001-02-12	2019-06-19	257	ST-257 complex
+737	1941		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	50	ST-21 complex
+738	1933		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	422	ST-21 complex
+739	2348		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	257	ST-257 complex
+740	410423		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+741	410537		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+742	410768		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+743	412160		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+744	451055		UK	Europe			1998								chicken offal or meat		Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+745	2520		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	420	ST-21 complex
+746	412485		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	257	ST-257 complex
+747	405887		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	257	ST-257 complex
+748	404443		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	421	ST-257 complex
+749	1518		UK [England]	Europe		Preston	1993							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,13,50							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+750	450773		UK	Europe			1998								pork offal or meat		Campylobacter jejuni	35							2	20	2001-02-12	2019-06-19	285	ST-403 complex
+751	450772		UK	Europe			1998								pork offal or meat		Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	285	ST-403 complex
+752	1923		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	50	ST-21 complex
+753	450785		UK	Europe			1998								pork offal or meat		Campylobacter jejuni	22							2	20	2001-02-12	2019-06-19	415	ST-403 complex
+754	450866		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	50							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+755	60357		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	416	ST-48 complex
+756	70248		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	47	ST-21 complex
+757	451268		UK	Europe			1998								lamb offal or meat		Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	427	
+758	2525		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	2							2	20	2001-02-12	2019-06-19	21	ST-21 complex
+759	2522		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	423	ST-21 complex
+760	405875		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	316	ST-257 complex
+761	411557		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	367	ST-257 complex
+762	404453		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	52	ST-52 complex
+763	1956		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	257	ST-257 complex
+764	80089		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	50	ST-21 complex
+765	80169		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	42	ST-42 complex
+766	70548		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	356	ST-353 complex
+767	C48/92		UK [England]	Europe		Lancaster	1992							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	19	ST-21 complex
+768	3765		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	311	ST-658 complex
+769	400142		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	257	ST-257 complex
+770	70459		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	424	ST-48 complex
+771	79044		UK	Europe			1994								sand (bathing beach)	environmental isolate	Campylobacter jejuni	5							2	20	2001-02-12	2019-06-19	220	ST-179 complex
+772	EX2072		UK	Europe			1998								broiler environment	environmental isolate	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	472	ST-354 complex
+773	2611		UK	Europe			1991								chicken offal or meat		Campylobacter jejuni	21							2	20	2001-02-12	2019-06-19	426	ST-45 complex
+774	60362		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	356	ST-353 complex
+775	1929		UK	Europe			1990								chicken offal or meat		Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	50	ST-21 complex
+776	1443		UK [England]	Europe		Blackburn	1993							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	4,13,50							2	20	2001-02-12	2019-06-19	425	ST-61 complex
+777	450840		UK	Europe			1998								pork offal or meat		Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	428	ST-52 complex
+778	450771		UK	Europe			1998								pork offal or meat		Campylobacter jejuni	UT							2	20	2001-02-12	2019-06-19	285	ST-403 complex
+779	451181		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	50							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+780	80114		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	53	ST-21 complex
+781	80220		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	429	ST-48 complex
+782	2483		UK [Scotland]	Europe		Edinburgh	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	53							2	20	2001-02-12	2019-06-19	354	ST-354 complex
+783	3764		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	430	ST-403 complex
+784	3568		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	53							2	20	2001-02-12	2019-06-19	431	ST-433 complex
+785	EX2200		UK	Europe			1998								broiler environment	environmental isolate	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	473	ST-48 complex
+786	3774		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	47	ST-21 complex
+787	3767		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	18							2	20	2001-02-12	2019-06-19	49	ST-49 complex
+788	3200		UK [England]	Europe		Gateshead	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	10							2	20	2001-02-12	2019-06-19	47	ST-21 complex
+789	3672		UK [England]	Europe		Manchester	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	356	ST-353 complex
+790	C124/93		UK [England]	Europe		Ashford	1993							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	19	ST-21 complex
+791	C35/93		UK [England]	Europe		Ashford	1993							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	19	ST-21 complex
+792	3822		UK [England]	Europe		Eastbourne	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	27							2	20	2001-02-12	2019-06-19	52	ST-52 complex
+793	3773		UK [England]	Europe		Poole	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	10							2	20	2001-02-12	2019-06-19	47	ST-21 complex
+794	80161		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	53	ST-21 complex
+795	179H		The Netherlands	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	53	ST-21 complex
+796	60521		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	400	ST-353 complex
+797	70197		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	432	ST-61 complex
+798	412314		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	356	ST-353 complex
+799	402678		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	257	ST-257 complex
+800	3209		UK [England]	Europe		Bath	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13,50							2	20	2001-02-12	2019-06-19	578	ST-61 complex
+801	2632		UK [England]	Europe		Hereford	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	433	ST-433 complex
+802	1433		UK [England]	Europe		Gateshead	1993							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	434	ST-257 complex
+803	400527		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-02-12	2019-06-19	61	ST-61 complex
+804	450812		UK [England]	Europe		Preston	1998								pork offal or meat		Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	435	ST-403 complex
+805	406898		UK [England]	Europe		Preston	1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-02-12	2019-06-19	257	ST-257 complex
+806	192H		The Netherlands	Europe			1998							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	436	
+807	80171		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	437	ST-828 complex
+808	3181		UK [Scotland]	Europe		Aberdeen	1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	438	
+809	70205		The Netherlands	Europe			1996							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-02-12	2019-06-19	206	ST-206 complex
+810	401450		UK [England]	Europe	Preston area		1998							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	57							2	20	2001-02-12	2019-06-19	45	ST-45 complex
+811	405684		UK [England]	Europe	Preston area		1998							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	57							2	20	2001-02-12	2019-06-19	137	ST-45 complex
+812	407212		UK [England]	Europe	Preston area		1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	57							2	20	2001-02-12	2019-06-19	441	
+813	409266		UK [England]	Europe	Preston area		1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	57							2	20	2001-02-12	2019-06-19	45	ST-45 complex
+814	NCTC12552		Unknown														Campylobacter jejuni	57							2	20	2001-02-12	2019-06-19	11	ST-45 complex
+815	C2641		The Netherlands	Europe			1992							carrier	chicken	carrier	Campylobacter jejuni	12							2	20	2001-02-12	2019-06-19	444	
+816	99/27		Czech Republic	Europe			1999							carrier	chicken	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	474	ST-48 complex
+817	450767		UK	Europe			1998								beef offal or meat		Campylobacter jejuni	NT							2	20	2001-02-12	2019-06-19	445	
+818	C406/93		UK [England]	Europe		Lancaster	1993								beef offal or meat		Campylobacter jejuni	1							2	20	2001-02-12	2019-06-19	262	ST-21 complex
+819	402631		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	12							3	20	2001-03-20	2019-06-19	24	ST-21 complex
+820	405573		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	12							3	20	2001-03-20	2019-06-19	45	ST-45 complex
+821	411026		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	14							3	20	2001-03-20	2019-06-19	21	ST-21 complex
+822	411800		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	14							3	20	2001-03-20	2019-06-19	305	ST-574 complex
+823	404438		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	15							3	20	2001-03-20	2019-06-19	350	
+824	406003		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	15							3	20	2001-03-20	2019-06-19	407	
+825	407029		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	15							3	20	2001-03-20	2019-06-19	137	ST-45 complex
+826	409208		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	15							3	20	2001-03-20	2019-06-19	350	
+827	409513		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	15							3	20	2001-03-20	2019-06-19	350	
+828	403449		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	3							3	20	2001-03-20	2019-06-19	5	ST-353 complex
+829	407149		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	3							3	20	2001-03-20	2019-06-19	45	ST-45 complex
+830	406709		UK	Europe			1997							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	33							3	20	2001-03-20	2019-06-19	418	ST-45 complex
+831	401749		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	37							3	20	2001-03-20	2019-06-19	440	ST-443 complex
+832	406658		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	37							3	20	2001-03-20	2019-06-19	443	ST-443 complex
+833	400667		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	44							3	20	2001-03-20	2019-06-19	21	ST-21 complex
+834	400779		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	44							3	20	2001-03-20	2019-06-19	53	ST-21 complex
+835	409432		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							3	20	2001-03-20	2019-06-19	50	ST-21 complex
+836	411885		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	44							3	20	2001-03-20	2019-06-19	21	ST-21 complex
+837	412154		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	257							3	20	2001-03-20	2019-06-19	257	ST-257 complex
+838	2357/91		UK	Europe			1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	53							3	20	2001-03-20	2019-06-19	446	ST-446 complex
+839	MB97/19717		UK	Europe			1997							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	7							3	20	2001-03-20	2019-06-19	447	ST-42 complex
+840	MB97/20376		UK	Europe			1997							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	7							3	20	2001-03-20	2019-06-19	45	ST-45 complex
+841	99/400046		UK	Europe			1999						female	gastroenteritis	human stool	sporadic case	Campylobacter jejuni	8							3	20	2001-03-20	2019-06-19	50	ST-21 complex
+842	99/405194		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	8							3	20	2001-03-20	2019-06-19	50	ST-21 complex
+843	99/406222		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	8							3	20	2001-03-20	2019-06-19	50	ST-21 complex
+844	99/401854		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	9							3	20	2001-03-20	2019-06-19	233	ST-45 complex
+845	99/403977		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	9							3	20	2001-03-20	2019-06-19	25	ST-45 complex
+846	99/405920		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	9							3	20	2001-03-20	2019-06-19	448	
+847	99/409878		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	9							3	20	2001-03-20	2019-06-19	449	ST-581 complex
+848	99/410796		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	9							3	20	2001-03-20	2019-06-19	50	ST-21 complex
+849	402802		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	12							3	20	2001-03-28	2019-06-19	45	ST-45 complex
+850	2737/91		UK	Europe			1991							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	53							3	20	2001-03-28	2019-06-19	450	ST-446 complex
+851	MB97/17839		UK	Europe			1997							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	7							3	20	2001-03-28	2019-06-19	45	ST-45 complex
+852	99/405566		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	3							3	20	2001-04-19	2019-06-19	82	ST-353 complex
+853	99/411956		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	37							3	20	2001-04-19	2019-06-19	84	ST-443 complex
+854	99/407212		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	57							3	20	2001-04-19	2019-06-19	441	
+855	99/409266		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	57							3	20	2001-04-19	2019-06-19	45	ST-45 complex
+856	97/405533		UK	Europe			1997							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	7							3	20	2001-04-19	2019-06-19	45	ST-45 complex
+857	98/407286		UK	Europe			1998							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	7							3	20	2001-04-19	2019-06-19	447	ST-42 complex
+858	99/406908		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	8							3	20	2001-04-19	2019-06-19	45	ST-45 complex
+859	99/411048		UK	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	9							3	20	2001-04-19	2019-06-19	85	
+860	85/16320		UK	Europe			1985							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-04-27	2019-06-19	613	ST-48 complex
+861	83/14328		UK	Europe			1983							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-05-01	2019-06-19	104	ST-21 complex
+862	83/14357		UK	Europe			1983							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	18							3	20	2001-05-01	2019-06-19	49	ST-49 complex
+863	83/14359		UK	Europe			1983							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	9							3	20	2001-05-01	2019-06-19	393	ST-443 complex
+864	83/14360		UK	Europe			1983							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-05-01	2019-06-19	38	ST-48 complex
+865	83/15493		UK	Europe			1983							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	5							3	20	2001-05-01	2019-06-19	45	ST-45 complex
+866	83/23529		UK	Europe			1983							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-05-01	2019-06-19	104	ST-21 complex
+867	83/23530		UK	Europe			1983							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-05-01	2019-06-19	104	ST-21 complex
+868	84/14329		UK	Europe			1984							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	2							3	20	2001-05-01	2019-06-19	21	ST-21 complex
+869	84/23383		UK	Europe			1984							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	2							3	20	2001-05-01	2019-06-19	53	ST-21 complex
+870	84/23384		UK	Europe			1984							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-05-01	2019-06-19	613	ST-48 complex
+871	84/23386		UK	Europe			1984							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	2							3	20	2001-05-01	2019-06-19	43	ST-21 complex
+872	84/23390		UK	Europe			1984							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	NT							3	20	2001-05-01	2019-06-19	354	ST-354 complex
+873	84/23391		UK	Europe			1984							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	2							3	20	2005-02-01	2019-06-19	1	ST-21 complex
+874	84/627		UK	Europe			1984							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-05-02	2019-06-19	104	ST-21 complex
+875	85/12160		UK	Europe			1985							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-05-02	2019-06-19	613	ST-48 complex
+876	85/14443		UK	Europe			1985							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	43							3	20	2001-05-02	2019-06-19	227	ST-206 complex
+877	85/19007		UK	Europe			1985							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-05-02	2019-06-19	613	ST-48 complex
+878	85/4758		UK	Europe			1985							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-05-02	2019-06-19	6	
+879	85/7728		UK	Europe			1985							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-05-02	2019-06-19	613	ST-48 complex
+880	85/7729		UK	Europe			1985							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	NT							3	20	2001-05-02	2019-06-19	8	ST-21 complex
+881	85/7730		UK	Europe			1985							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	38							3	20	2001-05-02	2019-06-19	38	ST-48 complex
+882	85/7731		UK	Europe			1985							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-05-02	2019-06-19	227	ST-206 complex
+883	87/1301		UK	Europe			1987							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	53							3	20	2001-05-02	2019-06-19	354	ST-354 complex
+884	87/1916		UK	Europe			1987							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	23							3	20	2001-05-02	2019-06-19	353	ST-353 complex
+885	88/2035		UK	Europe			1988							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	19							3	20	2001-05-02	2019-06-19	22	ST-22 complex
+886	89/4422		UK	Europe			1989							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	15							3	20	2001-05-02	2019-06-19	45	ST-45 complex
+887	89/5679		UK	Europe			1989							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	2							3	20	2001-05-02	2019-06-19	19	ST-21 complex
+888	89/5821		UK	Europe			1989							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	5							3	20	2001-05-02	2019-06-19	52	ST-52 complex
+889	90/4818		UK	Europe			1990							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	18							3	20	2001-05-02	2019-06-19	49	ST-49 complex
+890	90/6978		UK	Europe			1990							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	1							3	20	2001-05-02	2019-06-19	50	ST-21 complex
+891	90/7543		UK	Europe			1990							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	1							3	20	2001-05-02	2019-06-19	44	ST-21 complex
+892	90/8734		UK	Europe			1990							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	11							3	20	2001-05-02	2019-06-19	22	ST-22 complex
+893	92/20627		UK	Europe			1992							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	41							3	20	2001-05-02	2019-06-19	10	ST-433 complex
+894	D0140		Japan	Asia											human stool		Campylobacter jejuni								7	20	2001-05-03	2019-06-19	451	ST-21 complex
+895	D1713		USA	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	452	ST-353 complex
+896	D2577		UK [Scotland]	Europe										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	48	ST-48 complex
+897	D2584		USA	North America										systemic disease	human blood culture	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	454	ST-21 complex
+898	D2761		USA	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	454	ST-21 complex
+899	D0597		USA	North America											human stool		Campylobacter jejuni								7	20	2001-05-03	2019-06-19	452	ST-353 complex
+900	D2583		USA	North America										systemic disease	human blood culture	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	45	ST-45 complex
+901	D0116		Japan	Asia										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	456	ST-21 complex
+902	D0983		USA	North America										carrier	chicken	carrier	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	457	ST-353 complex
+903	D0712		USA	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	2	2001-05-03	2001-10-12	429	ST-48 complex
+904	D0603		USA	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	429	ST-48 complex
+905	D2585		USA	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	459	ST-42 complex
+906	D0113		Japan	Asia											human stool	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	460	ST-460 complex
+907	D1420		USA	North America										carrier	chicken	carrier	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	461	ST-460 complex
+908	D0977		USA	North America										carrier	chicken	carrier	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	429	ST-48 complex
+909	D0835		USA	North America										carrier	chicken	carrier	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	429	ST-48 complex
+910	D2600		USA	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	452	ST-353 complex
+911	D1916		USA	North America											human stool		Campylobacter jejuni								7	20	2001-05-03	2019-06-19	429	ST-48 complex
+912	D2737		USA	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	462	ST-353 complex
+913	D2578		USA	North America										systemic disease	human blood culture	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	463	ST-443 complex
+914	D0139		Japan	Asia											human stool		Campylobacter jejuni								7	20	2001-05-03	2019-06-19	464	ST-464 complex
+915	D2588		Belgium	Europe										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	2	ST-45 complex
+916	D0131		Canada	North America											human stool		Campylobacter jejuni								7	20	2001-05-03	2019-06-19	418	ST-45 complex
+917	D2581		USA	North America										systemic disease	human blood culture	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	467	ST-49 complex
+918	D0117		USA	North America											human stool		Campylobacter jejuni								7	20	2001-05-03	2019-06-19	468	
+919	D1887		USA	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	469	ST-42 complex
+920	D0462		USA	North America										carrier	wild bird	carrier	Campylobacter jejuni								7	20	2001-05-03	2019-06-19	470	ST-177 complex
+921	84/23387		UK	Europe			1984							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	3							3	20	2001-06-13	2019-06-19	12	ST-353 complex
+922	85/4759		UK	Europe			1985							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	43							3	20	2001-06-13	2019-06-19	227	ST-206 complex
+923	89/4533		UK	Europe			1989							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	2							3	20	2001-06-13	2019-06-19	21	ST-21 complex
+924	89/5820		UK	Europe			1989							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	11							3	20	2001-06-13	2019-06-19	262	ST-21 complex
+925	91/15730		UK	Europe			1991							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	17							3	20	2001-06-13	2019-06-19	403	ST-403 complex
+926	82/11209		UK	Europe			1982							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	10							3	20	2001-06-22	2019-06-19	47	ST-21 complex
+927	82/12008		UK	Europe			1982							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	46							3	20	2001-06-22	2019-06-19	27	ST-362 complex
+928	89/4535		UK	Europe			1989							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	NT							3	20	2001-06-22	2019-06-19	53	ST-21 complex
+929	84/23389		UK	Europe			1984							systemic disease	human blood culture	hospital inpatient	Campylobacter jejuni	4							3	20	2001-06-22	2019-06-19	48	ST-48 complex
+930	9922296		Australia	Oceania										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								8	20	2001-07-04	2019-06-19	66	ST-48 complex
+931	4229		Australia	Oceania										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								8	20	2001-07-04	2019-06-19	21	ST-21 complex
+932	159		Australia	Oceania										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								8	20	2001-07-04	2019-06-19	70	ST-52 complex
+933	9918657		Australia	Oceania										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								8	20	2001-07-04	2019-06-19	66	ST-48 complex
+934	99/96		Denmark	Europe			1998							carrier	chicken	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	475	ST-48 complex
+935	88 139		UK	Europe			1988							carrier	cattle	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	476	ST-48 complex
+936	88 34		UK	Europe			1988							carrier	cattle	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	477	ST-61 complex
+937	88 3		UK	Europe			1988							carrier	cattle	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	478	ST-61 complex
+938	88 5		UK	Europe			1988							carrier	cattle	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	479	ST-61 complex
+939	88 6		UK	Europe			1988							carrier	cattle	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	480	ST-61 complex
+940	93 564		UK	Europe			1993							carrier	ostrich	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	481	
+941	88 312		UK	Europe			1988							carrier	cattle	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	482	ST-21 complex
+942	99 373	CN030	The Netherlands	Europe			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	483	ST-45 complex
+943	00 026		UK	Europe			2000							carrier	chicken	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	484	
+944	00 036		UK	Europe			2000							carrier	chicken	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	485	
+945	00 037		UK	Europe			2000							carrier	chicken	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	486	ST-21 complex
+946	00 014		UK	Europe			2000							carrier	chicken	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	487	ST-21 complex
+947	00 017		UK	Europe			2000							carrier	chicken	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	488	
+948	94 006		UK	Europe			1994							carrier	cattle	carrier	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	489	ST-21 complex
+949	00 038		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	490	ST-21 complex
+950	00 052		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								9	20	2001-09-21	2019-06-19	491	ST-354 complex
+951	6420		Australia	Oceania			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								8	20	2001-09-27	2019-06-19	492	ST-48 complex
+952	12632		Australia	Oceania			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								8	20	2001-09-27	2019-06-19	493	
+953	6866		Australia	Oceania			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								8	20	2001-09-27	2019-06-19	494	ST-61 complex
+954	99/12		Czech Republic	Europe			1999							carrier	chicken	carrier	Campylobacter jejuni								9	20	2001-10-02	2019-06-19	495	
+955	99/15		Czech Republic	Europe										carrier	chicken	carrier	Campylobacter jejuni								9	20	2001-10-02	2019-06-19	496	ST-257 complex
+956	99/258		South Africa	Africa			1999							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								9	20	2001-10-02	2019-06-19	497	ST-22 complex
+957	EX2289		UK	Europe			1998								broiler environment	environmental isolate	Campylobacter jejuni								9	20	2001-10-02	2019-06-19	498	ST-433 complex
+958	99/69		Denmark	Europe			1997							carrier	chicken	carrier	Campylobacter jejuni								9	20	2001-10-02	2019-06-19	499	ST-22 complex
+959	89 116		UK	Europe			1988							carrier	cattle	carrier	Campylobacter jejuni								9	20	2001-10-02	2019-06-19	500	ST-61 complex
+960	88 138		UK	Europe			1988							carrier	cattle	carrier	Campylobacter jejuni								9	20	2001-10-02	2019-06-19	501	ST-42 complex
+961	88 26		UK	Europe			1988							carrier	cattle	carrier	Campylobacter jejuni								9	20	2001-10-02	2019-06-19	502	ST-21 complex
+962	D0127		Canada	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-10-12	2019-06-19	301	
+963	D0143		Japan	Asia										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-10-12	2019-06-19	458	ST-22 complex
+964	83/14360		UK	Europe			1983							gastroenteritis	human stool	hospital inpatient	Campylobacter jejuni	4							7	20	2001-05-01	2019-06-19	38	ST-48 complex
+965	D2683		USA	North America										gastroenteritis	human stool	carrier	Campylobacter jejuni								7	20	2001-10-12	2019-06-19	503	
+966	D2580		USA	North America										systemic disease	human blood culture	sporadic case	Campylobacter jejuni								7	20	2001-10-12	2019-06-19	504	ST-22 complex
+967	D0144		Canada	North America										gastroenteritis	human stool	sporadic case	Campylobacter jejuni								7	20	2001-10-25	2019-06-19	455	ST-21 complex
+968	400104		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-11-20	2019-06-19	257	ST-257 complex
+969	401183		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	14							2	20	2001-11-20	2019-06-19	52	ST-52 complex
+970	401313		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	22							2	20	2001-11-20	2019-06-19	403	ST-403 complex
+971	401377		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni								2	20	2001-11-20	2019-06-19	257	ST-257 complex
+972	401502		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	18							2	20	2001-11-20	2019-06-19	354	ST-354 complex
+973	401594		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-11-20	2019-06-19	48	ST-48 complex
+974	401725		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-11-20	2019-06-19	48	ST-48 complex
+975	401923		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	11							2	20	2001-11-20	2019-06-19	21	ST-21 complex
+976	402135		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-11-20	2019-06-19	206	ST-206 complex
+977	402502		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-11-20	2019-06-19	505	ST-48 complex
+978	402661		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-20	2019-06-19	506	ST-661 complex
+979	402875		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	18							2	20	2001-11-20	2019-06-19	21	ST-21 complex
+980	403077		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-20	2019-06-19	257	ST-257 complex
+981	403237		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	44							2	20	2001-11-20	2019-06-19	507	ST-21 complex
+982	403377		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	23							2	20	2001-11-20	2019-06-19	21	ST-21 complex
+983	403510		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-20	2019-06-19	21	ST-21 complex
+984	403765		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	60							2	20	2001-11-20	2019-06-19	11	ST-45 complex
+985	404207		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	16							2	20	2001-11-20	2019-06-19	104	ST-21 complex
+986	404297		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-20	2019-06-19	262	ST-21 complex
+987	404437		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-20	2019-06-19	21	ST-21 complex
+988	404784		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	12							2	20	2001-11-20	2019-06-19	45	ST-45 complex
+989	404938		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-11-20	2019-06-19	61	ST-61 complex
+990	405051		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	21							2	20	2001-11-20	2019-06-19	137	ST-45 complex
+991	405459		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	12							2	20	2001-11-21	2019-06-19	45	ST-45 complex
+992	405516		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-11-21	2019-06-19	104	ST-21 complex
+993	405706		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-21	2019-06-19	21	ST-21 complex
+994	405750		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-21	2019-06-19	19	ST-21 complex
+995	405852		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-21	2019-06-19	257	ST-257 complex
+996	406226		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	18							2	20	2001-11-21	2019-06-19	450	ST-446 complex
+997	406319		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	43							2	20	2001-11-21	2019-06-19	132	ST-508 complex
+998	406375		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-21	2019-06-19	19	ST-21 complex
+999	406449		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-21	2019-06-19	53	ST-21 complex
+1000	406645		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-21	2019-06-19	508	ST-508 complex
+1001	406766		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	6							2	20	2001-11-21	2019-06-19	509	ST-45 complex
+1002	408446		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13							2	20	2001-11-21	2019-06-19	257	ST-257 complex
+1003	408793		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	56							2	20	2001-11-21	2019-06-19	399	ST-45 complex
+1004	408931		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-21	2019-06-19	510	ST-21 complex
+1005	409035		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13							2	20	2001-11-21	2019-06-19	257	ST-257 complex
+1006	409119		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	1							2	20	2001-11-21	2019-06-19	227	ST-206 complex
+1007	409196		UK	Europe			2001							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	37							2	20	2001-11-21	2019-06-19	5	ST-353 complex
+1008	409361		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13							2	20	2001-11-21	2019-06-19	257	ST-257 complex
+1009	410142		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-11-21	2019-06-19	104	ST-21 complex
+1010	410277		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-21	2019-06-19	104	ST-21 complex
+1011	410520		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-21	2019-06-19	45	ST-45 complex
+1012	410799		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13							2	20	2001-11-21	2019-06-19	367	ST-257 complex
+1013	410852		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	63							2	20	2001-11-21	2019-06-19	511	
+1014	411084		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-11-21	2019-06-19	48	ST-48 complex
+1015	411343		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	12							2	20	2001-11-21	2019-06-19	45	ST-45 complex
+1016	411567		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	13							2	20	2001-11-21	2019-06-19	21	ST-21 complex
+1017	411671		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	UT							2	20	2001-11-21	2019-06-19	262	ST-21 complex
+1018	411924		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	5							2	20	2001-11-21	2019-06-19	21	ST-21 complex
+1019	412000		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	5							2	20	2001-11-21	2019-06-19	104	ST-21 complex
+1020	412081		UK	Europe			2000							gastroenteritis	human stool	sporadic case	Campylobacter jejuni	50							2	20	2001-11-21	2019-06-19	48	ST-48 complex
+1021	Turkey1		UK	Europe										carrier	turkey	carrier	Campylobacter jejuni								3	20	2001-11-30	2019-06-19	45	ST-45 complex
+1022	Turkey2		UK	Europe										carrier	turkey	carrier	Campylobacter jejuni								3	20	2001-11-30	2019-06-19	257	ST-257 complex
+1023	Turkey4		UK	Europe										carrier	turkey	carrier	Campylobacter jejuni								3	20	2001-11-30	2019-06-19	45	ST-45 complex
+1024	Turkey5		UK	Europe										carrier	turkey	carrier	Campylobacter jejuni								3	20	2001-11-30	2019-06-19	45	ST-45 complex
+1025	Turkey6		UK	Europe										carrier	turkey	carrier	Campylobacter jejuni								3	20	2001-11-30	2019-06-19	45	ST-45 complex
+1026	Turkey7		UK	Europe										carrier	turkey	carrier	Campylobacter jejuni								3	20	2001-11-30	2019-06-19	45	ST-45 complex
+1027	Turkey8		UK	Europe										carrier	turkey	carrier	Campylobacter jejuni								3	20	2001-11-30	2019-06-19	45	ST-45 complex
+1028	Turkey10		UK	Europe										carrier	turkey	carrier	Campylobacter jejuni								3	20	2001-11-30	2019-06-19	45	ST-45 complex
+1029	Turkey11		UK	Europe										carrier	turkey	carrier	Campylobacter jejuni								3	20	2001-11-30	2019-06-19	45	ST-45 complex
+1030	Turkey12		UK	Europe										carrier	turkey	carrier	Campylobacter jejuni								3	20	2001-11-30	2019-06-19	45	ST-45 complex
+
+
