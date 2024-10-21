@@ -27,6 +27,7 @@ import java.util.concurrent.Executors;
 @Repository
 public class S3FileRepositoryImpl implements S3FileRepository {
 
+    private final String s3Endpoint;
     private final String bucketName;
     private final S3AsyncClient s3Client;
     private final S3TransferManager transferManager;
@@ -53,6 +54,7 @@ public class S3FileRepositoryImpl implements S3FileRepository {
 
         newS3Client.createBucket(r -> r.bucket(bucketName));
 
+        this.s3Endpoint = s3endpoint;
         this.s3Client = newS3Client;
         this.bucketName = bucketName;
         this.transferManager = S3TransferManager.builder().s3Client(newS3Client).build();
@@ -136,4 +138,10 @@ public class S3FileRepositoryImpl implements S3FileRepository {
 
         return true;
     }
+
+    @Override
+    public String getLocation() {
+        return s3Endpoint + "/" + bucketName;
+    }
+
 }

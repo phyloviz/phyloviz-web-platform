@@ -9,6 +9,6 @@ npm install
 npm start &
 
 docker compose up -d --build
-sleep 60
 echo "Doing very heavy work..."
+sleep 90
 docker compose up -d

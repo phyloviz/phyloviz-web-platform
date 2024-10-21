@@ -9,8 +9,8 @@ COPY compute_tree_view/requirements.txt /app/requirements.txt
 # Set the working directory to /app
 WORKDIR /app
 
-ENV MONGO_URI="mongodb://host.docker.internal:28017/?directConnection=true"
-ENV PHYLODB_URL="http://host.docker.internal:8081"
+ENV MONGO_URI="mongodb://172.17.0.1:28017/?directConnection=true"
+ENV PHYLODB_URL="http://172.17.0.1:8081"
 
 # Install any required packages
 RUN pip install --trusted-host pypi.python.org -r requirements.txt

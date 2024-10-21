@@ -725,7 +725,7 @@ db['workflow-templates'].insertMany(
                     "taskId": "createMetadata",
                     "tool": "metadata_uploader",
                     "action": {
-                        "command": "--original_url=${url} --url=http://localhost:9444/phyloviz-web-platform/projects/${projectId}/${workflowId} --type=${file_type} --project-id=${projectId} --workflow-id=${workflowId}"
+                        "command": "--original_url=${url} --url=https://s3.eu-west-3.amazonaws.com/phyloviz-web-platform/projects/${projectId}/${workflowId} --type=${file_type} --project-id=${projectId} --workflow-id=${workflowId}"
                     }
                 }
             ]

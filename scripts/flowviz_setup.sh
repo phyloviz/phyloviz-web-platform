@@ -8,6 +8,14 @@ cd ./FLOWViZ
 
 echo "Steps 1 and 2 of the manual setup are going to be executed..."
 
+npm install
+
+cd client
+
+npm install
+
+cd ..
+
 ./setupAirflow.sh
 
 echo "Setting up FLOWViZ docker..."

@@ -124,7 +124,7 @@ def download_s3_object(project_id, dataset_id, resource_id, resource_type, out, 
     parsed_url = urlparse(s3_url)
     path = parsed_url.path.lstrip('/')
     bucket_name = path.split('/')[0]
-    object_key = path.lstrip(f'{bucket_name}')
+    object_key = path.lstrip(f'{bucket_name}/')
 
     print("Retrieving S3 object from bucket: " + bucket_name + " and key: " + object_key)
 

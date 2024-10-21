@@ -25,7 +25,7 @@ workflows_collection = db['workflow-instances']
 datasets_collection = db['datasets']
 
 
-def tree_handler(s3_output_path, project_id, dataset_id, tree_id):
+def tree_handler(object_key, project_id, dataset_id, tree_id):
     trees_collection = db['trees']
 
     # Tree should already be indexed, so its metadata exists
@@ -38,7 +38,7 @@ def tree_handler(s3_output_path, project_id, dataset_id, tree_id):
         },
         {'$set': {
             'repositorySpecificData.s3': {
-                'url': f'http://localhost:9444/{bucket_name}{s3_output_path}'
+                'url': f'https://s3.eu-west-3.amazonaws.com/{bucket_name}/{object_key}'
             }
         }}
     )
@@ -46,7 +46,7 @@ def tree_handler(s3_output_path, project_id, dataset_id, tree_id):
     print(f'File uploaded to S3 and tree metadata updated of tree with treeId: {tree_id}')
 
 
-def distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id, distance_matrix_id, source_type,
+def distance_matrix_handler(object_key, project_id, dataset_id, workflow_id, distance_matrix_id, source_type,
                             function):
     distance_matrix_collection = db['distance-matrices']
 
@@ -69,7 +69,7 @@ def distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id,
         'source': source,
         'repositorySpecificData': {
             's3': {
-                'url': f'http://localhost:9444/{bucket_name}{s3_output_path}'
+                'url': f'https://s3.eu-west-3.amazonaws.com/{bucket_name}/{object_key}'
             }
         }
     }
@@ -119,17 +119,18 @@ def upload_file_to_s3(file_path, project_id, dataset_id, workflow_id, resource_i
 
     collection_name = get_collection_from_resource_type(resource_type)
 
-    s3_output_path = f'/{project_id}/{collection_name}/{resource_id}'
+    object_key = f'{project_id}/{collection_name}/{resource_id}'
+
     # Upload the file to S3
     with open(file_path, 'rb') as file:
-        s3.upload_fileobj(file, bucket_name, s3_output_path)
+        s3.upload_fileobj(file, bucket_name, object_key)
 
     if resource_type == "tree":
         tree_id = resource_id
-        tree_handler(s3_output_path, project_id, dataset_id, tree_id)
+        tree_handler(object_key, project_id, dataset_id, tree_id)
     elif resource_type == "distance-matrix":
         distance_matrix_id = resource_id
-        distance_matrix_handler(s3_output_path, project_id, dataset_id, workflow_id, distance_matrix_id, source_type,
+        distance_matrix_handler(object_key, project_id, dataset_id, workflow_id, distance_matrix_id, source_type,
                                 function)
     else:
         raise Exception(f'Unknown resource type: {resource_type}')
