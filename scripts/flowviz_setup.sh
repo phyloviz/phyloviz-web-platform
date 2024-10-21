@@ -1,12 +1,24 @@
 #!/bin/bash
 
+# Check if Docker is running, if not exit the script
+checkDocker() {
+    if ! docker info >/dev/null 2>&1; then
+        echo "Error: Docker is not running. Please start Docker first."
+        exit 1
+    fi
+    echo "Docker is running!"
+}
+
+echo "Checking Docker..."
+checkDocker
+
 cd ..
 
 git clone https://github.com/devandrepascoa/FLOWViZ.git # https://github.com/DIVA-IPL-Project/FLOWViZ.git
 
 cd ./FLOWViZ
 
-echo "Steps 1 to 3 of the manual setup are going to be executed..."
+echo "Steps 1 to 3 of the manual setup are going to be executed... (https://github.com/devandrepascoa/FLOWViZ?tab=readme-ov-file#manual-setup)"
 
 npm install
 
