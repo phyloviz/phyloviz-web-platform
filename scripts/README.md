@@ -10,7 +10,9 @@ Run the script with the following command (inside the `scripts` directory):
 ./flowviz_setup.sh
 ```
 
-It creates the FLOWViZ directory and clones the repository into it, and then, as the script itself tells you, it will only execute steps 1 to 3 of the manual setup that is present here: https://github.com/devandrepascoa/FLOWViZ?tab=readme-ov-file#manual-setup
+It creates the FLOWViZ directory and clones the repository into it, and then, as the script itself tells you, it will
+only execute steps 1 to 3 of the manual setup that is present
+here: https://github.com/devandrepascoa/FLOWViZ/tree/wsl?tab=readme-ov-file#manual-setup
 
 **After running `flowviz_setup.sh`, you still need to execute steps 4 to 7 of the manual
 setup.**
@@ -30,6 +32,7 @@ It will remove the FLOWViZ directory and all its contents, after having destroye
 # PhyloDB
 
 ## Setup
+
 To setup PhyloDB, the `phyloDB_setup.sh` script can be used.
 
 Run the script with the following command (inside the `scripts` directory):

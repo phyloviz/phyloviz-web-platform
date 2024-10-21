@@ -18,7 +18,7 @@ git clone --branch wsl https://github.com/devandrepascoa/FLOWViZ.git # https://g
 
 cd ./FLOWViZ
 
-echo "Steps 1 to 3 of the manual setup are going to be executed... (https://github.com/devandrepascoa/FLOWViZ?tab=readme-ov-file#manual-setup)"
+echo "Steps 1 to 3 of the manual setup are going to be executed... (https://github.com/devandrepascoa/FLOWViZ/tree/wsl?tab=readme-ov-file#manual-setup)"
 
 npm install
 
@@ -35,4 +35,4 @@ docker compose up -d
 echo "FLOWViZ docker setup completed!"
 
 echo "Steps 1 to 3 of the manual setup were executed successfully!"
-echo "Now you still need to execute steps 4 to 7 of the manual setup. (https://github.com/devandrepascoa/FLOWViZ?tab=readme-ov-file#manual-setup)"
+echo "Now you still need to execute steps 4 to 7 of the manual setup. (https://github.com/devandrepascoa/FLOWViZ/tree/wsl?tab=readme-ov-file#manual-setup)"
